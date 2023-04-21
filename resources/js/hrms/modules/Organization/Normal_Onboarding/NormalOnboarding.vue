@@ -55,7 +55,7 @@
                           <InputText
                             class="capitalize onboard-form form-control textbox"
                             type="text"  :readonly="is_emp_name_quick"
-                            v-model="v$.employee_name.$model" 
+                            v-model="v$.employee_name.$model"
                             :class="[{
                               'p-invalid': v$.employee_name.$invalid && submitted,
                             },
@@ -98,7 +98,7 @@
                             class="onboard-form form-control textbox"
 
                           /> -->
-                          <Calendar inputId="icon"  v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                          <Calendar inputId="icon"   v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
                             style="width: 350px;"   @date-select="datePicker" class="" />
                             <!-- {{employee_onboarding.dob}} -->
                           <span class="error" id="error_pan_no"></span>
@@ -157,7 +157,7 @@
                             is_doj_quick ? 'bg-gray-200' : '']"
                             class="form-control textbox"
                             onfocus="(this.type='date')"
-                            
+
                           /> -->
                           <!-- {{ageLessThanFather}} -->
                           <Calendar inputId="icon" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
@@ -1349,12 +1349,13 @@
                               >*</span
                             ></label
                           >
-
+ <!-- {{employee_onboarding.l1_manager_code.user_code}} -->
                           <Dropdown
                             editable
                             :readonly="readonly.l1_code"
                             :options="Managerdetails"
                             optionLabel="name"
+
                             placeholder="Reporting Manager Name"
                             v-model="v$.l1_manager_code.$model"
                             class="p-error"
@@ -1363,6 +1364,7 @@
                                 v$.l1_manager_code.$invalid && submitted,
                             }"
                           >
+
                             <template #value="slotProps">
                               <div v-if="slotProps.value" class="flex align-items-center">
                                 <div>
@@ -1769,8 +1771,8 @@
                           </span>
                         </div>
                       </div>
-                   
-                      
+
+
                       <div
                         v-if="sposeData"
                         class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
@@ -1834,7 +1836,7 @@
                             v-model="v$.spouse_gender.$model"
                           />
 
-                          
+
                           <Dropdown  v-else
                             v-model="v$.spouse_gender.$model"
                             :options="Gender"
@@ -1848,7 +1850,7 @@
                             :readonly="true"
                           />
 
-                          
+
 
                           <span
                             v-if="
@@ -1900,7 +1902,12 @@
                             >Date of Wedding</label
                           >
 
-                          <InputText
+                                <Calendar inputId="icon"  showIcon  v-model="v$.wedding_date.$model"  editable dateFormat="dd-mm-yy" placeholder="Date of Wedding"
+                            style="width: 350px;"      :class="{
+                              'p-invalid': v$.wedding_date.$invalid && submitted,
+                            }" @date-select="fnCalculateAge" />
+
+                          <!-- <InputText
                             class="onboard-form form-control textbox"
                             type="text"
                             placeholder="Date of Wedding"
@@ -1910,7 +1917,7 @@
                             }"
                             v-model="v$.wedding_date.$model"
                             onfocus="(this.type='date')"
-                          />
+                          /> -->
 
                           <span
                             v-if="
@@ -2051,7 +2058,7 @@
                           <input
                             type="number"
                             placeholder="HRA"
-                            name="hra" 
+                            name="hra"
                             v-model="employee_onboarding.hra"
                             class="onboard-form form-control textbox calculation_data gross_data"
                             step="0.01" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
@@ -2071,6 +2078,7 @@
                             class="onboard-form form-control textbox calculation_data gross_data"
                             step="0.01" :class="[readonly.statutory ? 'bg-gray-200' : '']"
                           />
+                          <!-- {{employee_onboarding.statutory_bonus}} -->
                         </div>
                       </div>
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -2160,6 +2168,7 @@
                             step="0.01"
                             readonly
                           />
+                          <!-- {{employee_onboarding.gross}} -->
                         </div>
                       </div>
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -2507,14 +2516,14 @@
 
                   <div class="row">
                     <div class="text-right col-12">
-                     <input
+                     <!-- <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
                         class="mr-4 text-center btn btn-orange processOnboardForm"
-                      />
+                      /> -->
 
-                      <input class="btn btn-orange" type="button" value="check" @click="compensatoryCalWhileQuick">
+                      <!-- <input class="btn btn-orange" type="button" value="check" @click="compensatoryCalWhileQuick"> -->
 
                       <button
                         type="button"
@@ -2554,7 +2563,7 @@
       </div>
     </div>
   </div>
-  <p>{{ employee_onboarding.save_draft_messege }}</p>
+  <!-- <p>{{ employee_onboarding.save_draft_messege }}</p> -->
 
   <Dialog
     v-if="
@@ -2654,7 +2663,7 @@
       </template>
     </Dialog>
 
-    
+
 </template>
 
 <script setup>
@@ -2735,6 +2744,17 @@ onMounted(() => {
 
   // Sampledata()
   // checkIsQuickOrNormal.value = 'quick'
+//     setTimeout(() => {
+//     if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.value == 'bulk'){
+//     console.log("calculation performs"); parseInt()
+//   let gross = parseInt(employee_onboarding.basic) + parseInt(employee_onboarding.hra) + parseInt(employee_onboarding.special_allowance);
+//   employee_onboarding.gross = Math.floor(gross);
+//   console.log(employee_onboarding.gross);
+
+//   }else{
+//     console.log("no calculation performs");
+//   }
+//   }, 3000);
 
   setTimeout(() => {
     if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.value == 'bulk'){
@@ -2993,7 +3013,7 @@ const spouseGenderCheck = () =>{
   if(employee_onboarding.gender == 'Others' || employee_onboarding.gender == 'others' ){
     readonly.spouse = false
   }
-  
+
 }
 
 // CheckBox Copy VAlue
@@ -3074,12 +3094,8 @@ const SaveEmployeeOnboardingData = () => {
   RequiredDocument.value = true
   compensatoryCalWhileQuick()
 
-  // if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.value == 'bulk'){
-  //   console.log("calculation performs");
-  //    compensatoryCalWhileQuick()
-  // }else{
-  //   console.log("no calculation performs");
-  // }
+
+
   if(!employee_onboarding.employee_code.length > 0 &&
       !employee_onboarding.employee_name.length > 0 ||
       !employee_onboarding.email.length > 0   &&
@@ -3111,7 +3127,7 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
-  loading.value = true
+ // loading.value = true
   let currentObj = this;
   const config = {
     headers: { "content-type": "multipart/form-data" },
@@ -3120,7 +3136,7 @@ const submit = () => {
   let formData = new FormData();
   formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
   formData.append("employee_code", employee_onboarding.employee_code);
-  formData.append("doj", employee_onboarding.doj);
+  formData.append("doj", moment(employee_onboarding.doj).format('YYYY-MM-DD'));
   formData.append("aadhar_number", employee_onboarding.aadhar_number);
   formData.append("passport_number", employee_onboarding.passport_number);
   formData.append("bank_id", employee_onboarding.bank_id);
@@ -3130,7 +3146,7 @@ const submit = () => {
   formData.append("pan_number", employee_onboarding.pan_number);
   formData.append("passport_date", employee_onboarding.passport_date);
   formData.append("AccountNumber", employee_onboarding.AccountNumber);
-  formData.append("dob", employee_onboarding.dob);
+  formData.append("dob",moment(employee_onboarding.dob).format('YYYY-MM-DD'));
   formData.append("mobile_number", employee_onboarding.mobile_number);
   formData.append("dl_no", employee_onboarding.dl_no);
   //   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);
@@ -3182,7 +3198,7 @@ const submit = () => {
   formData.append("cost_center", employee_onboarding.cost_center);
   formData.append("probation_period", employee_onboarding.probation_period);
   formData.append("work_location", employee_onboarding.work_location);
-  formData.append("l1_manager_code_id", employee_onboarding.l1_manager_code_id);
+  formData.append("l1_manager_code_id", employee_onboarding.l1_manager_code.user_code);
   formData.append("holiday_location", employee_onboarding.holiday_location);
   formData.append("officical_mail", employee_onboarding.officical_mail);
   formData.append("official_mobile", employee_onboarding.official_mobile);
@@ -3192,17 +3208,17 @@ const submit = () => {
     employee_onboarding.confirmation_period
   );
   formData.append("father_name", employee_onboarding.father_name);
-  formData.append("dob_father", employee_onboarding.dob_father);
+  formData.append("dob_father", moment(employee_onboarding.dob_father).format('YYYY-MM-DD'));
   formData.append("father_gender", employee_onboarding.father_gender);
   formData.append("father_age", employee_onboarding.father_age);
   formData.append("mother_name", employee_onboarding.mother_name);
-  formData.append("dob_mother", employee_onboarding.dob_mother);
+  formData.append("dob_mother", moment(employee_onboarding.dob_mother).format('YYYY-MM-DD'));
   formData.append("mother_gender", employee_onboarding.mother_gender);
   formData.append("mother_age", employee_onboarding.mother_age);
   formData.append("spouse_name", employee_onboarding.spouse_name);
-  formData.append("wedding_date", employee_onboarding.wedding_date);
+  formData.append("wedding_date", moment(employee_onboarding.wedding_date).format('YYYY-MM-DD'));
   formData.append("spouse_gender", employee_onboarding.spouse_gender);
-  formData.append("dob_spouse", employee_onboarding.dob_spouse);
+  formData.append("dob_spouse", moment(employee_onboarding.dob_spouse).format('YYYY-MM-DD'));
   formData.append("no_of_children", employee_onboarding.no_of_children);
   formData.append("basic", employee_onboarding.basic);
   formData.append("hra", employee_onboarding.hra);
@@ -3324,7 +3340,7 @@ const userCodeExists = () => {
       if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
         console.log("quick onboarding");
         family_details_disable.value = true
-        compensatoryCalWhileQuick()
+        // compensatoryCalWhileQuick()
       }else{
         user_code_exists.value = res.data;
 
@@ -3453,7 +3469,7 @@ const personalMailExists = () => {
       console.log(res.data);
       if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
         console.log("quick onboarding");
-        compensatoryCalWhileQuick()
+        // compensatoryCalWhileQuick()
       }else{
         personal_mail_exists.value = res.data;
       }
@@ -3479,7 +3495,7 @@ const mobileNoExists = () => {
 
  if(employee_onboarding.mobile_number.length <= 10){
   console.log("mobile no Checking");
-  compensatoryCalWhileQuick()
+//   compensatoryCalWhileQuick()
   axios
     .get(`/mobile-no-exists/${mobile}`)
     .then((res) => {
@@ -3593,6 +3609,7 @@ const gross_calculation = () => {
 };
 
 const statutory_bonus = () => {
+
   let total = employee_onboarding.statutory_bonus;
 
   let sa = employee_onboarding.special_allowance;
@@ -3826,9 +3843,10 @@ console.log("date checking");
 const compensatoryCalWhileQuick = () =>{
   compen_disable.value = false
   family_details_disable.value = true
-  let gross = employee_onboarding.basic + employee_onboarding.hra +employee_onboarding.statutory_bonus +employee_onboarding.child_education_allowance +employee_onboarding.food_coupon +employee_onboarding.lta +employee_onboarding.special_allowance +employee_onboarding.other_allowance
-  console.log(gross);
-  employee_onboarding.gross = gross
+
+  let gross = parseInt(employee_onboarding.basic) + parseInt(employee_onboarding.hra) + parseInt(employee_onboarding.special_allowance);
+  employee_onboarding.gross = Math.floor(gross);
+  console.log(employee_onboarding.gross);
 
   let net =     employee_onboarding.gross -
     employee_onboarding.epf_employee -
@@ -3836,7 +3854,7 @@ const compensatoryCalWhileQuick = () =>{
 
   console.log(net);
 
-  let ctc = employee_onboarding.gross + employee_onboarding.epf_employer_contribution + employee_onboarding.esic_employer_contribution + employee_onboarding.insurance+ employee_onboarding.graduity
+  let ctc = parseInt(employee_onboarding.gross) + parseInt(employee_onboarding.epf_employer_contribution) + parseInt(employee_onboarding.esic_employer_contribution) + parseInt(employee_onboarding.insurance) + parseInt(employee_onboarding.graduity)
 
   employee_onboarding.total_ctc = ctc
 
@@ -4091,7 +4109,7 @@ const Nationality = ref([
 const PhyChallenged = ref([
   { name: "No", value: "no" },
   { name: "Yes", value: "yes" },
- 
+
 ]);
 
 const compensation_month = ref([
@@ -4128,7 +4146,7 @@ function populateQuickOnboardData(emp_data){
 
      if(emp_data.onboard_type == 'quick' || emp_data.onboard_type == 'bulk'  ){
       console.log( emp_data.onboard_type + "Onboarding");
- 
+
         family_details_disable.value = true
         compen_disable.value = false
         is_emp_code_quick.value = true
@@ -4153,6 +4171,8 @@ function populateQuickOnboardData(emp_data){
 
 console.log(emp_data.onboard_type);
 
+//  console.log("statustoy" + emp_data.statutory_bonus);
+
     employee_onboarding.employee_code = ref(emp_data.user_code);
     employee_onboarding.employee_name = ref(emp_data.name);
     employee_onboarding.email= ref(emp_data.email);
@@ -4162,7 +4182,7 @@ console.log(emp_data.onboard_type);
     employee_onboarding.l1_manager_code = ref(emp_data.l1_manager_code);
     employee_onboarding.basic = ref(emp_data.basic);
     employee_onboarding.hra = ref(emp_data.hra);
-    employee_onboarding.statutory_bonus=ref(emp_data.statutory_bonus);
+    employee_onboarding.statutory_bonus=ref(emp_data.Statutory_bonus);
     employee_onboarding.child_education_allowance = ref(emp_data.child_education_allowance);
     employee_onboarding.food_coupon = ref(emp_data.food_coupon);
     employee_onboarding.lta = ref(emp_data.lta);
@@ -4245,7 +4265,7 @@ const Sampledata = () => {
   employee_onboarding.food_coupon = ref(0);
   employee_onboarding.lta = ref(0);
   employee_onboarding.special_allowance = ref(2200);
-  // employee_onboarding.gross = ref(1000);
+//   employee_onboarding.gross = ref(1000);
   employee_onboarding.epf_employee= ref(1000);
   employee_onboarding.epf_employer_contribution = ref(1000);
   employee_onboarding.esic_employee = ref(1000);

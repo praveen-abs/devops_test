@@ -236,14 +236,17 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                // $newEmployee->location   =    $row["work_location"] ?? '';
                 $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
+
                 if(!empty($row["marital_status"])){
                 $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
                 $newEmployee->marital_status_id = $marital_status_id ?? '';
                 }
+
                 if(!empty($row['bank_name'])){
                 $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
                 $newEmployee->bank_id   = $bank_id ?? '';
                 }
+
                 $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
                 $newEmployee->bank_account_number  = $row["account_no"] ?? '';
                 $newEmployee->current_address_line_1   = $row["current_address"] ?? '';
@@ -276,14 +279,6 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $empOffice->confirmation_period  =$row['confirmation_period']??'';
                 $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
-
-                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-                {
-                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                    updateUserRole($empOffice->l1_manager_code,"Manager");
-
-                }
-                $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
                 $empOffice->officical_mail  = $row["official_mail"] ?? ''; // => "k@k.in"
                 $empOffice->work_location  = $row["work_location"] ?? ''; // => "k"
                 $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
@@ -479,6 +474,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
+
         $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date) : '';
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
@@ -572,16 +568,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
          //dd("conf date: " .$confirmation_period);
          $empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb( $confirmation_period) : ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
-         $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
-
-         if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-         {
-             $empOffice->l1_manager_code  = $row["l1_manager_code"];
-             updateUserRole($empOffice->l1_manager_code,"Manager");
-
-         }
-
-         $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
+         $empOffice->l1_manager_code  = $row["l1_manager_code_id"] ?? ''; // => "k"
          $empOffice->work_location  = $row["work_location"] ?? ''; // => "k"
          $empOffice->officical_mail  = $row["officical_mail"] ?? ''; // => "k@k.in"
          $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
@@ -922,8 +909,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             {
                 //If date is not in 'd-m-y' format, then convert into 'd-m-y'
 
-                $processed_date = DateTime::createFromFormat('Y-m-d', $date)->format('Y-m-d');
-
+                $processed_date = DateTime::createFromFormat('Y-m-d', $date);
+                $processed_date->format('Y-m-d');
             }
 
             return $processed_date;

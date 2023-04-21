@@ -4,6 +4,7 @@
     use App\Models\VmtOnboardingDocuments;
     use App\Models\VmtEmployeeDocuments;
     use App\Models\Department;
+    use App\Models\User;
 ?>
 
 @extends('layouts.master')
@@ -57,11 +58,11 @@
     // }else{
     //     echo '<br/>bye';
     // }
-    
+    $l1_manager_code_id='DM174';
 
-    $department_id=Department::where('name',strtolower($department_name))->first()->id;
-                // $department_id = $department_id ?? ''; // => "lk"
-    echo $department_id;
+     $l1_manager_name=User::where('user_code',$l1_manager_code_id)->first()->name;
+
+    echo $l1_manager_name;
 ?>
 
 </body>
