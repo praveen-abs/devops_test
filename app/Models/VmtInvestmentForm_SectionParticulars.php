@@ -9,5 +9,5 @@ class VmtInvestmentForm_SectionParticulars extends Model
 {
     use HasFactory;
 
-    protected $table="vmt_investment_form_sectionparticulars";
+    protected $table="vmt_investment_form_secpat";
 }

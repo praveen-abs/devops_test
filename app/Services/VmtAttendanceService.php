@@ -1299,7 +1299,7 @@ class VmtAttendanceService{
             $attendanceCheckin->checkin_time  = $checkin_time;
             $attendanceCheckin->user_id       = $user_id;
             //$attendanceCheckin->shift_type    = $shift_type; Todo : Need to remove in table
-            $attendanceCheckin->work_mode      = $work_mode;//office, home
+            $attendanceCheckin->work_mode = $work_mode;//office, home
             $attendanceCheckin->checkin_comments = "";
             $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
             $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
@@ -1346,6 +1346,10 @@ class VmtAttendanceService{
 
             if($attendanceCheckout)
             {
+
+                //TODO : Need to return if check-out is already done
+
+
 
                 //Update existing record
                 $attendanceCheckout->checkout_time = $checkout_time;

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class VmtInvestmentParticulars extends Model
 {
     use HasFactory;
+    protected $table="vmt_investment_particulars";
 }

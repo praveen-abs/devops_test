@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class VmtInvestmentDeclarationsFields extends Model
 {
     use HasFactory;
+    protected $table="vmt_investment_declarations_fields";
 }

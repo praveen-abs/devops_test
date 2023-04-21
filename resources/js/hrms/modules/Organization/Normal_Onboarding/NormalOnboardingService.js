@@ -10,7 +10,6 @@ AJAX
 
 import { required, email, maxLength } from "@vuelidate/validators";
 import axios from "axios";
-
 // API's
 
 export async function getBankList() {
@@ -103,7 +102,7 @@ export default function validation(rules) {
         pan_number: {
             required,
             ValidatePan(value) {
-                const regex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+                const regex = /^[A-Za-z]{5}[0-9]{4}[a-zA-Z]{1}/;
                 return regex.test(value);
             },
         },
@@ -126,7 +125,7 @@ export default function validation(rules) {
         bank_ifsc: {
             required,
             ValidateIfscNo(value) {
-                const regex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+                const regex = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
                 return regex.test(value);
             },
         },
@@ -196,7 +195,10 @@ export default function validation(rules) {
         cost_center: {},
         probation_period: {},
         holiday_location: {},
-        officical_mail: {},
+        officical_mail: {
+            // required,
+            email
+        },
         official_mobile: {},
         probation_period: {},
         emp_notice: {},
