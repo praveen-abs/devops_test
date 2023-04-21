@@ -3,168 +3,122 @@
       <div class="row d-flex justify-content-start align-items-center ">
         <div class="d-flex">
           <div class="col-3 fs-3" style="position: relative; left: -8px;">
-            <h1>Salary Advance Feature</h1>
+            <h1>Loan With interest Feature</h1>
           </div>
           <div class="col">
-  
-  
+
+
             <button class="orange_btn "
               :class="[activetab === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
               @click="activetab = 1">Disabled</button>
             <button class="Enable_btn" :class="[activetab === 2 ? 'bg-green-700 text-white' : '']"
               @click="activetab = 2">Enable</button>
-  
+
           </div>
-  
+
           <div class="float-right" v-if="activetab == '2'">
             <button class="btn btn-border-primary">Cancel</button>
             <button class="mx-4 btn btn-primary">Save Changes</button>
           </div>
         </div>
-  
+
         <div class="col" v-if="activetab == '1'">
           <div>
-            <p class="fs-5">Please click the "Enable" button to activate the salary advance feature for use within your
+            <p class="fs-5 clr">Please click the "Enable" button to activate the Loan With interest Feature for use within your
               organization.</p>
           </div>
         </div>
         <div v-else class="row">
           <div class="col-10">
-  
-            <p class="fs-5">Please click the "Disable" button to deactivate the salary advance feature.</p>
-            <h1 class="mt-10 fs-3">Eligible Employees</h1>
-            <p class="my-2 fs-5">Kindly choose the employees who are eligible for the salary advance.</p>
+
+            <p class="fs-5 clr">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
+
           </div>
-          <div class=" col-12">
-            <div class="rounded-lg shadow-sm card">
-              <div class="card-body " style="border-top:3px solid var(--navy) ;">
-                <div class="row ">
-                  <div class="col-10">
-                    <h1 style="border-left:3px solid var(--orange); padding-left: 15px; font-size: 18px;">Employees</h1>
-                  </div>
-                  <div class="col-10 ">
-                    <span class="p-input-icon-left">
-                      <i class="pi pi-search" />
-                      <InputText placeholder="Search" class="h-15" />
-                    </span>
-                  </div>
-                  <div class="col-12">
-                    <div class="px-2 row">
-                      <div class="col">
-                        <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
-                          placeholder="Department" class="w-full text-red-500 md: border-color" />
-                        {{ opt }}
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Department" class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Designation" class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Location" class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="State"
-                          class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="Branch"
-                          class="w-full md:" />
-  
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Legal Entity" class="w-full md:" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <!-- table components  -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-  
+
+
+
           <div class="col ">
-            <h1 class="my-3 fs-3">Percentage of Salary Advance</h1>
-            <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
-  
+            <h1 class="mt-10 fs-3">Eligible Amount</h1>
+            <p class="my-2 fs-5 clr">The employees not eligible for Interest Free Loan can also claim the Loan with Interest</p>
+
             <div class="shadow-sm card border-L rounded-top">
               <div class="card-body">
                 <div class="row justify-content-start align-items-center">
-                  <div class="col-2">
-  
-                    <div class="flex flex-wrap gap-3">
-                      <div class="flex justify-content-center align-items-center">
-                        <RadioButton v-model="ingredient" inputId="ingredient1" name="pizza" value="Cheese" />
-                        <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
-                      </div>
-                    </div>
-  
+                  <div class="col d-flex justify-content-start align-items-center">
+                    <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the employees</h1>
+                    <InputText type="text" class="mx-4" v-model="value" />
                   </div>
-                  <div class="col-2 ">
-                    <div class="flex align-items-center">
-                      <RadioButton v-model="ingredient" inputId="ingredient2" name="pizza" value="Mushroom" />
-                      <label for="ingredient2" class="ml-2 fs-5">50% Of Net salary</label>
-                    </div>
-                  </div>
-                  <div class="col-1 ">
-                    <div class="flex align-items-center">
-                      <RadioButton v-model="ingredient" inputId="ingredient3" name="pizza" value="Pepper" />
-                      <label for="ingredient3" class="ml-2 fs-5">Custom</label>
-                    </div>
-                  </div>
-                  <div class="col-3 ">
-                    <div class="flex align-items-center">
-                      <InputText type="text" v-model="value" style="max-width: 100px;" />
-                      <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
-                    </div>
-                  </div>
-  
+
+
                   <!--  -->
                 </div>
               </div>
             </div>
-  
+
+            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Interest</h1>
+            <p class="my-2 fs-5 clr">Percentage of Interest.</p>
+            <div class="card border-L">
+              <div class="card-body">
+                <div class="my-3 row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <label for="" class="fs-5 clr">Enter the percentage of interest for the loan
+                      <InputText type="text" class="mx-3" v-model="value" style="max-width: 100px;" />% of the loan amount.
+                    </label>
+                  </div>
+                  <div class="col-12">
+                    <p class="fs-6" style="color: gray;">(Note: Within the declared period of time, employees can choose the month in which the
+                      amount will be deducted.)</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
             <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Deduction Method</h1>
-            <p class="my-2 fs-5">Please choose the method of deduction.</p>
+            <p class="my-2 fs-5">In the case of an interest-free loan, the EMI would only consist of repayment of the principal amount borrowed, and no interest would be charged.</p>
             <div class="card border-L">
               <div class="card-body">
                 <div class="row">
                   <div class="col-7 d-flex justify-content-start align-items-center">
                     <input type="radio" name="Dedution_method" checked>
-                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Deduct the amount in the upcoming
-                      payroll.</label>
+                    <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin deducting the EMI in the upcoming payroll.</label>
                   </div>
                 </div>
-                <div class="my-3 row">
+                <div class="my-1 row">
                   <div class="col-7 d-flex justify-content-start align-items-center">
                     <input type="radio" name="Dedution_method" checked>
-                    <label for="" class="mx-3 fs-5">The deduction can be made over a period of
-                      <InputText type="text" class="mx-3" v-model="value" style="max-width: 100px;" /> months.
+                    <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when they would like their EMI payments to begin
                     </label>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col">
-                    <p class="fs-5">(Note: Within the declared period of time, employees can choose the month in which the
-                      amount will be deducted.)</p>
+                <div class="row ml-1">
+                    <div class="col ml-4 ">
+                        <h2 class="fs-5 clr-gray">The EMI deductions should begin within
+                            <InputText type="text" v-model="value" style="max-width: 100px;" class="mx-2" />months from the date the loan is taken.</h2>
+                    </div>
+                </div>
+                <div class="row ml-1">
+                  <div class="col ml-4">
+                    <p class="fs-5 clr-gray" style="line-height: 14px;">
+                        (Note: During the specified period, employees have the option to select the month in which they would like the EMI deductions to begin.)</p>
                   </div>
                 </div>
-  
+                <div class="row">
+                    <div class="col">
+                        <p class="fs-5 clr-dark">Please specify the maximum duration or tenure for the employee to repay the loan amount
+                              <InputText type="text" v-model="value" style="max-width: 100px;" class="mx-2" />
+                              years
+                        </p>
+                    </div>
+                </div>
+
               </div>
             </div>
-  
+
             <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Approval Setting</h1>
-            <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
-  
+            <p class="my-2 fs-5">Please choose the approval flow for Loan With Interest Feature.</p>
+
             <div class="card border-L">
               <div class="card-body">
                 <div class="row">
@@ -205,49 +159,49 @@
                     <input type="radio" name="Dedution_method" checked>
                     <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
                       <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-  
+
                       Final Admin
                     </label>
                   </div>
                 </div>
-  
-  
-  
+
+
+
               </div>
             </div>
-  
+
           </div>
         </div>
-  
+
         <!--Next screen  -->
-  
-  
-  
+
+
+
       </div>
     </div>
   </template>
   <script setup>
-  
+
   import { ref, reactive, onMounted } from 'vue';
-  
+
   const value = ref();
   const options = ref(['Off', 'On']);
-  
+
   const activetab = ref(1)
   const activetab1 = ref(1)
-  
+
   const ingredient = ref('');
-  
+
   const opt = ref()
   const op = ref([
     { id: 1, dep: "res" }
   ])
-  
+
   onMounted(() => {
     opt.value = "Department"
   })
-  
-  
+
+
   </script>
   <style>
   :root {
@@ -255,42 +209,44 @@
     --white: #fff;
     --navy: #002f56;
   }
-  
+.clr{
+    color: var(--navy) !important;
+}
   .orange_btn {
     background-color: var(--orange);
     padding: 7px 30px;
     border-radius: 4px 0 0 4px;
     color: var(--white);
   }
-  
+
   .Enable_btn {
     border: 1px solid var(--navy);
     padding: 7px 30px;
     border-radius: 0 4px 4px 0;
-  
+
   }
-  
+
   .cancel_btn {
     border: 1px solid var(--navy);
     padding: 7px 30px;
     border-radius: 4px 0 0 4px;
-  
+
   }
-  
+
   .border-L {
-  
+
     border-left: 3px solid var(--navy);
   }
-  
+
   .border-color {
     color: #003154;
     border: 2px solid #003154;
   }
-  
+
   .border-color::placeholder {
     color: #002f56 !important;
   }
-  
+
   input[type=radio] {
     border: 0px;
     width: 20px;
@@ -298,9 +254,8 @@
     color: var(--orange) !important;
     background-color: var(--orange) !important;
   }
-  
+
   .p-dropdown-label.p-inputtext {
     color: var(--navy);
   }</style>
-  
-  
+

@@ -138,7 +138,7 @@
                     <div class="col">
                         <h1 class="fs-5">Is this advance can be decducted from claim</h1>
                     </div>
-                    <div class="col">
+                    <div class="col-1">
                         <div class="flex align-items-center">
                             <RadioButton v-model="ingredient" inputId="ingredient2" name="pizza" value="Mushroom" />
                             <label for="ingredient2" class="ml-2 fs-5">yes</label>
@@ -146,21 +146,51 @@
 
                     </div>
 
-                    <div class="col">
+                    <div class="col-1">
                         <div class="flex align-items-center">
                             <RadioButton v-model="ingredient" inputId="ingredient2" name="pizza" value="Mushroom" />
                             <label for="ingredient2" class="ml-2 fs-5">No</label>
                         </div>
                     </div>
 
-                    <div class="col"><h1 class="text-primary" >View Example</h1></div>
+                    <div class="col d-flex  align-items-center fs-5 txt_underline" ><h1 class="text-primary" >View Example</h1></div>
 
                 </div>
               </div>
             </div>
 
+            <h1 class="fs-3 mt-4 mb-4" >Claim Settings</h1>
+            <div class="card border-L">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 d-flex justify-content-start align-items-center">
+                            <h1 class="fs-5">is it for employess to submit bills or receipt to clam travel allowances?</h1>
+                        </div>
+                        <div class="col-1  d-flex justify-content-start align-items-center">
+                            <input type="radio" name="" style="width:50px;" checked>
+                            <p class="fs-5 mx-3">yes</p>
+                        </div>
+                        <div class="col-1 d-flex justify-content-start align-items-center">
+                            <input type="radio" style="width:50px;" checked>
+                            <p class="fs-5 mx-3">No</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10 d-flex justify-content-start align-items-center">
+                            <p class="fs-5"> The employees Sumbit the bills within <InputText type="text" class="mx-3" v-model="value" style="max-width: 100px;" /> months for the date of travel advance.</p>
+                         </div>
+
+                        <div class="col-12 d-flex justify-content-start align-items-center"><input type="checkbox" class="mr-4" style="width:20px; height: 20px;" name="" id="" >
+                             <p class="fs-5"> If bills are by the employee within the above timeframe, the amount can be deducted from the employee's subsequent payroll.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
             <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Approval Setting</h1>
-            <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
+            <p class="my-2 fs-5">Please choose the approval flow for Travel Advance.</p>
 
             <div class="card border-L">
               <div class="card-body">
@@ -288,7 +318,7 @@
     color: #002f56 !important;
   }
 
-  input[type=radio] {
+input[type=radio] {
     border: 0px;
     width: 20px;
     height: 20px;
@@ -298,5 +328,9 @@
 
   .p-dropdown-label.p-inputtext {
     color: var(--navy);
-  }</style>
+  }
+  .txt_underline{
+    text-decoration: underline #3B82F6;
+  }
+  </style>
 
