@@ -15,7 +15,7 @@
             <div class="form-control">
                 <div class="row">
                     <div class="col-md-5 col-xl-5 col-sm-12">
-                        <h6 class="text-xl font-semibold">  Employee Quick Onboarding</h6>
+                        <h6 class="text-xl font-semibold"> Employee Quick Onboarding</h6>
                         <div class="col col-form-label">
                             <ul class="list-style-numbered ">
                                 <li class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Download the
@@ -160,6 +160,13 @@
                         console.log("Got response....");
                         console.log("Status message : "+ajaxData.status);
                         console.log(ajaxData);
+                        Swal.fire({
+                            title: data.message,
+                            text: data.status,
+                            type: "success"
+                        }).then(function() {
+                            location.reload();
+                        });
 
                         $('#error-msg').html('');
                         $('#error-msg').append('<b>Upload Status : <br/></b>');
