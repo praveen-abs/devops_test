@@ -241,6 +241,7 @@ class VmtReportsController extends Controller
 
         //dd($query_years);
         //dd($query_years->value('year'));
+
         return view('reports.vmt_showPmsReviewsReports', compact('query_configPms','query_years','username'));
 
     }
@@ -278,13 +279,15 @@ class VmtReportsController extends Controller
         }else if($request->reviewed_status==""){
             $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
         }
+        // dd(session('client_id') > 1 );
 
-        if (session('client_id') != '1') {
+        if (session('client_id') > 1) {
             $query_pms_data= $query_pms_data-> where('users.client_id', session('client_id'));
             //return ($payroll_data);
         }
-
+        //dd($query_pms_data->get());
         return $query_pms_data->get();
+
     }
 
     public function generatePmsReviewsReports(Request $request){

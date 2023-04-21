@@ -152,12 +152,7 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
         $query_pms_data=VmtPMS_KPIFormReviewsModel::
                         leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
                         ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
-                        ->where([
-                            //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
-                            ['vmt_pms_kpiform_assigned.year','=',$this->year],
-                            //['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
-                            //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
-                        ])
+                        ->where('vmt_pms_kpiform_assigned.year','=',$this->year)
                         ->select(
                                   'users.user_code',
                                   'users.name',
@@ -168,8 +163,6 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                   'vmt_pms_kpiform_reviews.is_assignee_submitted',
                                    //'vmt_pms_kpiform_reviews.is_reviewer_accepted', //For Manager name
                                    'vmt_pms_kpiform_reviews.is_reviewer_submitted',
-
-
                                  );
 
 
@@ -189,11 +182,13 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                                 $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
                             }
 
-                            if (session('client_id') != '1') {
+
+
+                            if (session('client_id') >1 ) {
                                 $query_pms_data= $query_pms_data-> where('users.client_id', session('client_id'));
                                 //return ($payroll_data);
                             }
-
+                           // dd($query_pms_data->get());
 
                             $query_pms_data = $query_pms_data->get();
 
