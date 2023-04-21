@@ -268,7 +268,6 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-
         $user_id =$data['employee_code'];
         //dd( $user_id);
         $response = "";
@@ -766,7 +765,7 @@ class VmtEmployeeOnboardingController extends Controller
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-            //dd($excelRowdata);
+          //  dd($excelRowdata);
             $currentRowInExcel++;
 
             //Validation
@@ -804,7 +803,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'child_2_dob' => 'nullable|required_unless:no_of_child,null,0|date',
                 'child_3_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'child_3_dob' => 'nullable|required_unless:no_of_child,null,0|date',
-                'department' => 'required',
+                'department' => 'required|exists:vmt_department,name',
                 'process' => 'nullable',
                 'designation' => 'required',
                 'cost_center' => 'nullable',
@@ -854,7 +853,8 @@ class VmtEmployeeOnboardingController extends Controller
                 'pan_no.required_if' =>'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
                 'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
                 'required_unless' => 'Field <b>:attribute</b> is invalid',
-               
+                'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
+
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -914,39 +914,37 @@ class VmtEmployeeOnboardingController extends Controller
                                                             onboard_type  : "bulk",
                                                             onboard_import_type : "excel_bulk"
                                                              );
+              $status = $response;
+             if($response == "success")
+                $message =  $row['employee_code']  . ' added successfully';
+             else
+                $message =  $row['employee_code']  . ' has failed';
 
-        if(!empty($row["email"])){
-                     $message = "Employee OnBoard was Created   ";
+
+                   //  $message = "Employee OnBoard was Created   ";
                      $VmtGeneralInfo = VmtGeneralInfo::first();
                      $image_view = url('/') . $VmtGeneralInfo->logo_img;
-               \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+                   $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
-                            'row_number' => '',
-                            'status' => 'success',
-                            'message' => $row['employee_code'] . ' added successfully<br/>',
-                            'mail_status' => 'success',
-                            'error_fields' => [],
-                    ];
-          } else{
-                    return $rowdata_response = [
                         'row_number' => '',
-                        'status' => 'success',
-                        'message' => $row['employee_code'] . ' added successfully<br/>',
-                        'mail_status' => 'failure',
+                        'status' => $status,
+                        'message' => $message,
                         'error_fields' => [],
-                      ];
-                 }
+                    ];
+
+
             } catch(\Exception $e) {
                 //dd($e);
                // $this->deleteUser($user->id);
 
-                return $rowdata_response = [
-                    'row_number' => '',
-                    'status' => 'failure',
-                    'message' => $row['employee_code'] . ' not added<br/>',
-                    'error_fields' => json_encode(['error' => $e->getMessage()]),
-                ];
+               return $rowdata_response = [
+                'row_number' => '',
+                'status' => $status,
+                'message' => $message,
+                'mail_status'=>'failure',
+                'error_fields' => json_encode(['error' => $e->getMessage()]),
+            ];
             }
 
         }
@@ -1225,7 +1223,7 @@ class VmtEmployeeOnboardingController extends Controller
                    'email' => 'required|email:strict|unique:users,email',
                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                    'doj' => 'required|date',
-                   'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                   'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric',
                    'designation' => 'required',
                    'basic' => 'required|numeric',
                    'hra' => 'required|numeric',
