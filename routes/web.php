@@ -552,6 +552,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/fetch_all_reimbursements_as_groups',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetchAllReimbursements');
     Route::post('/reimbursements_bulk_approval',  [App\Http\Controllers\VmtApprovalsController::class, 'processReimbursementBulkApprovals'])->name('processReimbursementBulkApprovals');
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
+    Route::post('/approvals/onboarding-docs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processSingleDocumentApproval'])->name('processSingleDocumentApproval');
+    Route::post('/approvals/onboarding-bulkdocs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processBulkDocumentApprovals'])->name('processBulkDocumentApprovals');
     Route::post('/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
 
     Route::post('/getLocalConveyanceCost',[App\Http\Controllers\VmtReimbursementController::class ,'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
