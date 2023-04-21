@@ -36,6 +36,7 @@ import InputNumber from 'primevue/inputnumber';
 import SelectButton from 'primevue/selectbutton';
 import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
+import OrganizationChart from 'primevue/organizationchart';
 
 
 
@@ -81,6 +82,7 @@ app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('SelectButton' ,SelectButton)
 app.component('Checkbox' ,Checkbox)
+app.component('OrganizationChart' ,OrganizationChart)
 
 
 app.mount("#SalaryAdvanceLoan");
