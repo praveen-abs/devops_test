@@ -379,7 +379,7 @@ $(document).ready(function(){
                                 label = 'type percentage value only';
                                 pattern = "return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37";
                                 if($.isNumeric( value[increment] ) == true){
-                                    textAreaVal = value[increment] * 100+"%";
+                                    textAreaVal = value[increment] +"%";
                                 }else{
                                     textAreaVal = '';
                                     validationCheck = true;
