@@ -268,7 +268,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-       // dd($data);
+
         $user_id =$data['employee_code'];
         //dd( $user_id);
         $response = "";
@@ -294,7 +294,7 @@ class VmtEmployeeOnboardingController extends Controller
                 // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
 
                 $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, "normal","onboard_form");
-                //dd($result);
+
                 $message = "";
                 //dd($request->input('can_onboard_employee'));
                 if($result == "success")
@@ -348,10 +348,20 @@ class VmtEmployeeOnboardingController extends Controller
 
                     if($result == "success")
                     {
+                        // if($request->input('can_onboard_employee') == "1")
+                        // {
+                        //     $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
+                        //     $message="Employee onboarded successfully";
+                        // }
+                        // else
+                        // {
+                            $message="Your Onboard information Saved in draft";
+                      //  }
+
                         $response = [
                             'status' => 'success',
-                            'message' => 'Your Onboard information Saved in draft',
-                            'mail_status' => '',
+                            'message' => $message,
+                            'mail_status' => $isEmailSent ? "success" : "failure",
                             'error' => '',
                             'error_verbose' =>''
                         ];

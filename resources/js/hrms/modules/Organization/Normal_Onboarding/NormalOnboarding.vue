@@ -113,6 +113,7 @@
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
+                            optionValue="id"
                             placeholder="Select Martial Status"
                             @change="spouseDisable"
                             class="p-error"
@@ -121,6 +122,7 @@
                                 v$.marital_status.$invalid && submitted,
                             }"
                           />
+                          <!-- {{employee_onboarding.marital_status}} -->
 
                           <span
                             v-if="
@@ -495,9 +497,11 @@
                             v-model="v$.blood_group_name.$model"
                             :options="bloodGroups"
                             optionLabel="name"
+                             optionValue="id"
                             placeholder="Select Bloodgroup"
                             class="p-error"
                           />
+                          <!-- {{employee_onboarding.blood_group_name}} -->
                         </div>
                       </div>
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -524,6 +528,7 @@
                             v-model="v$.bank_name.$model"
                             :options="bankList"
                             optionLabel="bank_name"
+                             optionValue="id"
                             placeholder="Select Bank Name"
                             class="p-error"
                             :class="{
@@ -531,6 +536,7 @@
                                 v$.bank_name.$invalid && submitted,
                             }"
                           />
+                          <!-- {{employee_onboarding.bank_name}} -->
 
                           <span
                             v-if="
@@ -836,10 +842,13 @@
                               'p-invalid': v$.current_country.$invalid && submitted,
                             }"
                             :options="country"
+                            optionValue="id"
                             optionLabel="country_name"
                             placeholder="Select Country Name"
                             class="p-error"
                           />
+
+
                           <span
                             v-if="
                               (v$.current_country.$invalid && submitted) ||
@@ -853,6 +862,7 @@
                               )
                             }}</span
                           >
+
                         </div>
                       </div>
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -868,10 +878,12 @@
                               'p-invalid': v$.current_state.$invalid && submitted,
                             }"
                             :options="state"
+                              optionValue="id"
                             optionLabel="state_name"
                             placeholder="Select State Name"
                             class="p-error"
                           />
+
                           <span
                             v-if="
                               (v$.current_state.$invalid && submitted) ||
@@ -1047,6 +1059,7 @@
                               >
                               <Dropdown
                                 editable
+                                  optionValue="id"
                                 v-model="v$.permanent_country.$model"
                                 :class="{
                                   'p-invalid': v$.permanent_country.$invalid && submitted,
@@ -1056,6 +1069,7 @@
                                 placeholder="Select Country Name"
                                 class="p-error"
                               />
+
                               <span
                                 v-if="
                                   (v$.permanent_country.$invalid && submitted) ||
@@ -1080,6 +1094,7 @@
                               >
                               <Dropdown
                                 editable
+                                  optionValue="id"
                                 v-model="v$.permanent_state.$model"
                                 :class="{
                                   'p-invalid': v$.permanent_state.$invalid && submitted,
@@ -1208,6 +1223,7 @@
                             }"
                             :options="departmentDetails"
                             optionLabel="name"
+                              optionValue="id"
                             placeholder="Department"
                             name="department"
                             id="department"
@@ -3139,7 +3155,7 @@ const submit = () => {
   formData.append("doj", moment(employee_onboarding.doj).format('YYYY-MM-DD'));
   formData.append("aadhar_number", employee_onboarding.aadhar_number);
   formData.append("passport_number", employee_onboarding.passport_number);
-  formData.append("bank_id", employee_onboarding.bank_id);
+  formData.append("bank_id", employee_onboarding.bank_name);
   //   formData.append("bank_name ", employee_onboarding.bank_name.bank_name );
   formData.append("employee_name", employee_onboarding.employee_name);
   formData.append(" gender", employee_onboarding.gender);
@@ -3149,11 +3165,11 @@ const submit = () => {
   formData.append("dob",moment(employee_onboarding.dob).format('YYYY-MM-DD'));
   formData.append("mobile_number", employee_onboarding.mobile_number);
   formData.append("dl_no", employee_onboarding.dl_no);
-  //   formData.append("blood_group_name", employee_onboarding.blood_group_name.name);
-  formData.append("blood_group_id", employee_onboarding.blood_group_id);
+    formData.append("blood_group_name", employee_onboarding.blood_group_name);
+//   formData.append("blood_group_id", employee_onboarding.blood_group_id);
   formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
-  //   formData.append("marital_status", employee_onboarding.marital_status.name);
-  formData.append("marital_status_id", employee_onboarding.marital_status_id);
+    formData.append("marital_status", employee_onboarding.marital_status);
+//   formData.append("marital_status_id", employee_onboarding.marital_status_id);
   formData.append("email", employee_onboarding.email);
   formData.append("nationality", employee_onboarding.nationality);
   formData.append(
@@ -3168,10 +3184,10 @@ const submit = () => {
     "current_address_line_2",
     employee_onboarding.current_address_line_2
   );
-  //   formData.append("current_country", employee_onboarding.current_country.country_name);
-  formData.append("current_country_id", employee_onboarding.current_country_id);
-  //   formData.append("current_state", employee_onboarding.current_state.state_name);
-  formData.append("current_state_id", employee_onboarding.current_state_id);
+    formData.append("current_country", employee_onboarding.current_country);
+//   formData.append("current_country_id", employee_onboarding.current_country_id);
+    formData.append("current_state", employee_onboarding.current_state);
+//   formData.append("current_state_id", employee_onboarding.current_state_id);
   formData.append("current_city", employee_onboarding.current_city);
   formData.append("current_pincode", employee_onboarding.current_pincode);
   formData.append(
@@ -3182,17 +3198,17 @@ const submit = () => {
     "permanent_address_line_2",
     employee_onboarding.permanent_address_line_2
   );
-  //   formData.append("permanent_country", employee_onboarding.permanent_country.country_name);
-  formData.append(
-    "permanent_country_id",
-    employee_onboarding.permanent_country_id
-  );
-  //   formData.append("permanent_state", employee_onboarding.permanent_state.state_name);
-  formData.append("permanent_state_id", employee_onboarding.permanent_state_id);
+    formData.append("permanent_country", employee_onboarding.permanent_country);
+//   formData.append(
+//     "permanent_country_id",
+//     employee_onboarding.permanent_country_id
+//   );
+    formData.append("permanent_state", employee_onboarding.permanent_state);
+//   formData.append("permanent_state_id", employee_onboarding.permanent_state_id);
   formData.append("permanent_city", employee_onboarding.permanent_city);
   formData.append("permanent_pincode", employee_onboarding.permanent_pincode);
-  //   formData.append("department", employee_onboarding.department.name);
-  formData.append("department_id", employee_onboarding.department_id);
+    formData.append("department", employee_onboarding.department);
+//   formData.append("department_id", employee_onboarding.department_id);
   formData.append("process", employee_onboarding.process);
   formData.append("designation", employee_onboarding.designation);
   formData.append("cost_center", employee_onboarding.cost_center);
@@ -3216,9 +3232,18 @@ const submit = () => {
   formData.append("mother_gender", employee_onboarding.mother_gender);
   formData.append("mother_age", employee_onboarding.mother_age);
   formData.append("spouse_name", employee_onboarding.spouse_name);
+  if(employee_onboarding.wedding_date == ''){
+  formData.append("wedding_date",employee_onboarding.wedding_date);
+  }else{
   formData.append("wedding_date", moment(employee_onboarding.wedding_date).format('YYYY-MM-DD'));
+
+  }
   formData.append("spouse_gender", employee_onboarding.spouse_gender);
+  if(employee_onboarding.dob_spouse == ''){
+  formData.append("dob_spouse",employee_onboarding.dob_spouse);
+  }else{
   formData.append("dob_spouse", moment(employee_onboarding.dob_spouse).format('YYYY-MM-DD'));
+  }
   formData.append("no_of_children", employee_onboarding.no_of_children);
   formData.append("basic", employee_onboarding.basic);
   formData.append("hra", employee_onboarding.hra);

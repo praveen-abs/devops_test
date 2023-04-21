@@ -545,7 +545,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     private function createOrUpdate_EmployeeOfficeDetails($user_id,$row)
     {
-
+        try{
         $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
 
         if($empOffice->exists())
@@ -574,11 +574,15 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
          $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
          $empOffice->emp_notice  = $row["emp_notice"] ?? ''; // => "0"
          $empOffice->save();
+        }catch(\Exception $e){
+            dd("Error while saving record : ".$e);
+        }
 
     }
 
     private function createOrUpdate_EmployeeStatutoryDetails($user_id,$row)
     {
+        try{
         $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
 
         if($newEmployee_statutoryDetails->exists())
@@ -602,11 +606,15 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"] ?? '';
         $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"] ?? '';
         $newEmployee_statutoryDetails->save();
+    }catch(\Exception $e){
+        dd("Error while saving record : ".$e);
+    }
 
     }
 
     private function createOrUpdate_EmployeeFamilyDetails($user_id, $familyData,$onboard_import_type)
     {
+        try{
         //delete old records
         VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
 
@@ -648,28 +656,28 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         }
 
 
-        if ( $familyData['marital_status_id'] != 1) {
+        if ( !empty($familyData['spouse_name'])){
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
             $familyMember->gender = $familyData['spouse_gender'] ?? '';
 //for bulk onboarding if($onboard_import_type == "excel_bulk"){
-
+        }
 
              if(!empty($familyData["dob_spouse"])){
                $dob_spouse =  $familyData["dob_spouse"];
                 $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
             }
 
-            if(!empty($familyData["wedding_date"]))
+            if(!empty($familyData["wedding_date"])){
                $wedding_date = $familyData["wedding_date"];
-                $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date) ;
-
+               $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date) ;
+            }
 
             $familyMember->save();
 
-            if (!empty($familyData['child_name'])) {
+            if (!empty($familyData['child_name'])){
                 $familyMember =  new VmtEmployeeFamilyDetails;
                 $familyMember->user_id  = $user_id;
                 $familyMember->name =   $familyData['child_name'];
@@ -680,10 +688,13 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $child_dob= $familyData["child_dob"];
                 $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
                 //$familyData["child_dob"];
-
-                $familyMember->save();
             }
-        }
+                $familyMember->save();
+            }catch(\Exception $e){
+                dd("Error while saving record : ".$e);
+            }
+
+
 
     }
 
@@ -693,6 +704,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     private function createOrUpdate_EmployeeCompensatory($user_id,$row)
     {
+        try{
         $compensatory = Compensatory::where('user_id',$user_id);
 
         if($compensatory->exists())
@@ -724,9 +736,11 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
         $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
         $compensatory->labour_welfare_fund = $row["labour_welfare_fund"] ?? '' ;
-        $compensatory->net_income = $row["net_salary"] ?? '' ;
+        $compensatory->net_income = $row["net_income"] ?? '' ;
         $compensatory->save();
-
+    }catch(\Exception $e){
+        dd("Error while saving record : ".$e);
+    }
     }
 
 
