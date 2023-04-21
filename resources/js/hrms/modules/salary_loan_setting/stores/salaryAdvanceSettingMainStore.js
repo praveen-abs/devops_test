@@ -13,9 +13,9 @@ import { reactive, ref } from "vue";
 
 export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMainStore", () => {
 
-     /* 
+     /*
 
-      Salary Advance - sa 
+      Salary Advance - sa
       Loan with Interest - lwi
       Interest free Loan  - ifl
       Travel Advance - ta
@@ -26,12 +26,12 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     //   Salary Advance Begins
 
 
-    // Intially Disabled
+    // Initially Disabled
 
     const isSalaryAdvanceFeatureEnabled = ref(1)
 
     // Eligible Employees
- 
+
     const eligibleEmployeeData = ref()
 
     // Percentage of Salary Advance
@@ -57,7 +57,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
         console.log(sa);
     }
-    
+
 
     //   Salary Advance Ends
 

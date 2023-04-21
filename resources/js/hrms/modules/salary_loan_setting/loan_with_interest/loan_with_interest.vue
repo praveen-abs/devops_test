@@ -5,7 +5,7 @@
           <div class="col-3 fs-3" style="position: relative; left: -8px;">
             <h1>Loan With interest Feature</h1>
           </div>
-          <div class="col">
+          <div class="col-12">
 
 
             <button class="orange_btn "
@@ -28,7 +28,7 @@
               organization.</p>
           </div>
         </div>
-        <div v-else class="row">
+        <div v-else class="row border">
           <div class="col-10">
 
             <p class="fs-5 clr">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
@@ -37,7 +37,7 @@
 
 
 
-          <div class="col ">
+          <div class="col-10 ">
             <h1 class="mt-10 fs-3">Eligible Amount</h1>
             <p class="my-2 fs-5 clr">The employees not eligible for Interest Free Loan can also claim the Loan with Interest</p>
 
@@ -46,7 +46,7 @@
                 <div class="row justify-content-start align-items-center">
                   <div class="col d-flex justify-content-start align-items-center">
                     <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the employees</h1>
-                    <InputText type="text" class="mx-4" v-model="value" />
+                    <InputText type="text" class="mx-4 " style="width: 150px;" v-model="value" />
                   </div>
 
 
