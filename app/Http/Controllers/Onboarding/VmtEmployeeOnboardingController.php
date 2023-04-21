@@ -268,7 +268,6 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-
         $user_id =$data['employee_code'];
         //dd( $user_id);
         $response = "";
@@ -766,7 +765,7 @@ class VmtEmployeeOnboardingController extends Controller
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-            //dd($excelRowdata);
+          //  dd($excelRowdata);
             $currentRowInExcel++;
 
             //Validation
@@ -926,7 +925,7 @@ class VmtEmployeeOnboardingController extends Controller
                      $VmtGeneralInfo = VmtGeneralInfo::first();
                      $image_view = url('/') . $VmtGeneralInfo->logo_img;
                    $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
-                   
+
                     return  $rowdata_response = [
                         'row_number' => '',
                         'status' => $status,
@@ -1224,7 +1223,7 @@ class VmtEmployeeOnboardingController extends Controller
                    'email' => 'required|email:strict|unique:users,email',
                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                    'doj' => 'required|date',
-                   'mobile_no' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                   'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric',
                    'designation' => 'required',
                    'basic' => 'required|numeric',
                    'hra' => 'required|numeric',
