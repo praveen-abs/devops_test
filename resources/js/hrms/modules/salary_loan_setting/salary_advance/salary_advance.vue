@@ -230,7 +230,7 @@
 
       <!--Next screen  -->
 
-      <!-- <OrganizationChart v-model:selectionKeys="selection" :value="data" collapsible selectionMode="multiple">
+      <OrganizationChart v-model:selectionKeys="selection" :value="data" collapsible selectionMode="multiple">
         <template #person="slotProps">
             <div class="flex flex-column">
                 <div class="flex flex-column align-items-center">
@@ -243,7 +243,7 @@
             <span>{{ slotProps.node.label }}</span>
         </template>
     </OrganizationChart>
-{{ selection }} -->
+{{ selection }}
 
 
     </div>
