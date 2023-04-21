@@ -87,18 +87,20 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Date of Birth</label>
-                          <input
-                            type="text"
-                            min="2004-12-31"
+                          <!-- <input
+                            type="date"
+                            min="31/12/2004"
                             v-model="v$.dob.$model"
                             placeholder="Date of birth"
                             id="doj"
-                            name="doj"
+                            name="doj"not
                             @change="fnCalculateAge"
                             class="onboard-form form-control textbox"
-                            onfocus="(this.type='date')"
-                          />
 
+                          /> -->
+                          <Calendar inputId="icon"  v-model="v$.dob.$model"  editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                            style="width: 350px;"   @date-select="datePicker" class="" />
+                            {{employee_onboarding.dob}}
                           <span class="error" id="error_pan_no"></span>
                         </div>
                       </div>
@@ -142,9 +144,9 @@
                             >Date of Joining<span class="text-danger">*</span></label
                           >
 
-                          <InputText
-                            type="text"
-                            min="2023-01-01"
+                          <!-- <InputText
+                            type="date"
+                            min="01-01-2023"
                             v-model="v$.doj.$model"
                             placeholder="Date of Joining"
                             id="doj"
@@ -155,8 +157,14 @@
                             is_doj_quick ? 'bg-gray-200' : '']"
                             class="form-control textbox"
                             onfocus="(this.type='date')"
-                            :readonly="is_doj_quick"
-                          />
+                            
+                          /> -->
+                          <!-- {{ageLessThanFather}} -->
+                          <Calendar inputId="icon" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
+                            style="width: 350px;"   :readonly="is_doj_quick"  :class="[{
+                              'p-invalid': v$.doj.$invalid && submitted,
+                            },
+                            is_doj_quick ? 'bg-gray-200' : '']"  />
 
                           <span
                             v-if="
@@ -175,6 +183,7 @@
                             >Gender<span class="text-danger">*</span></label
                           >
                           <Dropdown editable
+                          @change="spouseGenderCheck"
                             v-model="v$.gender.$model"
                             :options="Gender"
                             optionLabel="name"
@@ -541,7 +550,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label"
-                            >Account Number<span class="text-danger">*</span></label
+                            >Bank Account Number<span class="text-danger">*</span></label
                           >
                           <InputText
                             placeholder="Account Number"
@@ -1561,6 +1570,7 @@
                           <InputText
                             class="onboard-form form-control textbox"
                             type="text"
+                            :min="employee_onboarding.dob"
                             placeholder="Date of Birth"
                             @change="fnCalculateAge"
                             :class="{
@@ -1589,7 +1599,7 @@
                       <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
-                          <input
+                          <input :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             type="text"
                             class="form-control"
                             name="father_gender"
@@ -1687,7 +1697,7 @@
                         <div class="floating">
                           <label for="" class="float-label">Gender</label>
 
-                          <input
+                          <input :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                             type="text"
                             class="form-control"
                             name="mother_gender"
@@ -1750,84 +1760,8 @@
                           </span>
                         </div>
                       </div>
-                      <div
-                        v-if="sposeData"
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
-                        <div class="floating">
-                          <label for="" class="float-label"
-                            >Date of Wedding <span class="text-danger">*</span></label
-                          >
-
-                          <InputText
-                            class="onboard-form form-control textbox"
-                            type="text"
-                            placeholder="Date of Wedding"
-                            name="wedding_date"
-                            :class="{
-                              'is-invalid': v$.wedding_date.$invalid && submitted,
-                            }"
-                            v-model="v$.wedding_date.$model"
-                            onfocus="(this.type='date')"
-                          />
-
-                          <span
-                            v-if="
-                              (v$.wedding_date.$invalid && submitted) ||
-                              v$.wedding_date.$pending.$response
-                            "
-                            class="p-error"
-                            >{{
-                              v$.wedding_date.required.$message.replace(
-                                "Value",
-                                "Date Of Wedding"
-                              )
-                            }}
-                          </span>
-                        </div>
-                      </div>
-                      <div
-                        v-if="sposeData"
-                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
-                      >
-                        <div class="floating">
-                          <label for="" class="float-label"
-                            >Gender <span class="text-danger">*</span></label
-                          >
-
-                          <select
-                            placeholder="Spouse Gender"
-                            name="spouse_gender"
-                            v-model="v$.spouse_gender.$model"
-                            id="spouse_gender"
-                            :class="{
-                              'is-invalid': v$.spouse_gender.$invalid && submitted,
-                            }"
-                            class="textbox onboard-form form-control"
-                          >
-                            <option value="" hidden selected disabled>
-                              Select Spouse Gender
-                            </option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                          </select>
-
-                          <span
-                            v-if="
-                              (v$.spouse_gender.$invalid && submitted) ||
-                              v$.spouse_gender.$pending.$response
-                            "
-                            class="p-error"
-                            >{{
-                              v$.spouse_gender.required.$message.replace(
-                                "Value",
-                                "Spouse Gender"
-                              )
-                            }}
-                          </span>
-                        </div>
-                      </div>
+                   
+                      
                       <div
                         v-if="sposeData"
                         class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
@@ -1871,6 +1805,57 @@
                         class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
                       >
                         <div class="floating">
+                          <label for="" class="float-label"
+                            >Gender <span class="text-danger">*</span></label
+                          >
+
+                          <InputText v-if="readonly.spouse"
+                            class="onboard-form form-control textbox"
+                            type="text" readonly
+                            placeholder="Select Spouse Gender"
+                            name="spouse_gender"
+                            :class="[{
+                              'is-invalid': v$.spouse_gender.$invalid && submitted,
+                            },is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            v-model="v$.spouse_gender.$model"
+                          />
+
+                          
+                          <Dropdown  v-else
+                            v-model="v$.spouse_gender.$model"
+                            :options="Gender"
+                            optionLabel="name"
+                            optionValue="value"
+                            placeholder="Select Gender"
+                            class="p-error"
+                            :class="[{
+                              'is-invalid': v$.spouse_gender.$invalid && submitted,
+                            },readonly.spouse ? 'bg-gray-200' : '']"
+                            :readonly="true"
+                          />
+
+                          
+
+                          <span
+                            v-if="
+                              (v$.spouse_gender.$invalid && submitted) ||
+                              v$.spouse_gender.$pending.$response
+                            "
+                            class="p-error"
+                            >{{
+                              v$.spouse_gender.required.$message.replace(
+                                "Value",
+                                "Spouse Gender"
+                              )
+                            }}
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        v-if="sposeData"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
+                      >
+                        <div class="floating">
                           <label for="" class="float-label">Number of Children</label>
 
                           <select
@@ -1890,6 +1875,42 @@
                             <option value="4">4</option>
                             <option value="5">5</option>
                           </select>
+                        </div>
+                      </div>
+                      <div
+                        v-if="sposeData"
+                        class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3"
+                      >
+                        <div class="floating">
+                          <label for="" class="float-label"
+                            >Date of Wedding</label
+                          >
+
+                          <InputText
+                            class="onboard-form form-control textbox"
+                            type="text"
+                            placeholder="Date of Wedding"
+                            name="wedding_date"
+                            :class="{
+                              'is-invalid': v$.wedding_date.$invalid && submitted,
+                            }"
+                            v-model="v$.wedding_date.$model"
+                            onfocus="(this.type='date')"
+                          />
+
+                          <span
+                            v-if="
+                              (v$.wedding_date.$invalid && submitted) ||
+                              v$.wedding_date.$pending.$response
+                            "
+                            class="p-error"
+                            >{{
+                              v$.wedding_date.required.$message.replace(
+                                "Value",
+                                "Date Of Wedding"
+                              )
+                            }}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -2628,6 +2649,7 @@ import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { ref } from "@vue/runtime-core";
 import { inject } from "vue";
+import moment from 'moment';
 import validation from "./NormalOnboardingService";
 
 import {
@@ -2693,8 +2715,8 @@ onMounted(() => {
 
   employee_onboarding.nationality = 'Indian'
   NationalityCheck()
-  // compensatoryCalWhileQuick()
-  // spouseEnable()
+  compensatoryCalWhileQuick()
+  spouseEnable()
 
   // Sampledata()
 
@@ -2868,6 +2890,8 @@ const RequiredDocument = ref(false);
 const SumbitDisable = ref(true);
 const v$ = useVuelidate(validation, employee_onboarding);
 
+const ageLessThanFather = ref()
+
 const AadharDocFrontInvalid = ref(false);
 const AadharDocBackInvalid = ref(false);
 const PancardInvalid = ref(false);
@@ -2936,6 +2960,25 @@ const spouseEnable = () => {
   }
 };
 
+const spouseGenderCheck = () =>{
+  if(employee_onboarding.gender == 'Male' || employee_onboarding.gender == 'Male' ){
+    console.log("0" + employee_onboarding.gender);
+      employee_onboarding.spouse_gender = 'Female'
+      console.log(employee_onboarding.spouse_gender);
+      readonly.spouse = true
+  }
+
+  if(employee_onboarding.gender == 'Female' || employee_onboarding.gender == 'female' ){
+    employee_onboarding.spouse_gender = 'Male'
+    console.log("1" + employee_onboarding.gender);
+    console.log(employee_onboarding.spouse_gender);
+    readonly.spouse = true
+  }
+  if(employee_onboarding.gender == 'Others' || employee_onboarding.gender == 'others' ){
+    readonly.spouse = false
+  }
+  
+}
 
 // CheckBox Copy VAlue
 
@@ -3204,6 +3247,8 @@ const submit = () => {
       console.log(error);
     });
 };
+
+
 
 const get_id = () => {
   employee_onboarding.bank_id = employee_onboarding.bank_name.id;
@@ -3754,6 +3799,13 @@ const epf_esic_calculation = () => {
 };
 
 
+const datePicker = () =>{
+console.log("date checking");
+  console.log(moment(employee_onboarding.dob).format('DD-MM-YYYY'));
+  ageLessThanFather.value = moment(employee_onboarding.dob).format('DD-MM-YYYY')
+  console.log(ageLessThanFather.value);
+}
+
 
 const compensatoryCalWhileQuick = () =>{
   compen_disable.value = false
@@ -4026,9 +4078,9 @@ const ReleivingLetter = (e) => {
 // for Testing Post Data
 
 const Gender = ref([
-  { name: "Male", value: "male" },
-  { name: "Female", value: "female" },
-  { name: "Others", value: "others" },
+  { name: "Male", value: "Male" },
+  { name: "Female", value: "Female" },
+  { name: "Others", value: "Others" },
 ]);
 
 const Nationality = ref([
@@ -4037,8 +4089,9 @@ const Nationality = ref([
 ]);
 
 const PhyChallenged = ref([
-  { name: "Yes", value: "yes" },
   { name: "No", value: "no" },
+  { name: "Yes", value: "yes" },
+ 
 ]);
 
 const compensation_month = ref([
@@ -4060,7 +4113,8 @@ const readonly = reactive({
     other:false,
     l1_code:false,
     designation:false,
-    mobile:false
+    mobile:false,
+    spouse:false
 
 })
 
@@ -4208,7 +4262,7 @@ const Sampledata = () => {
 };
 </script>
 
-<style scoped>
+<style >
 .form-control {
   height: 2.9em;
 }
@@ -4319,4 +4373,35 @@ form {
     width: 80%;
   }
 }
+
+.p-datepicker .p-datepicker-header {
+    padding: 0.5rem;
+    color: #061328;
+    background: #002f56;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+    padding: 0.5rem;
+}
+
+.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+    background: #002f56;
+    color: black;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #002f56;
+}
+
 </style>

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class VmtInvestmentsController extends Controller
 {
     public function getInvestmentsFormDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
-        //dd($request->all());
+      //  dd($request->all());
 
         return $serviceVmtInvestmentsService->getInvestmentsFormDetails($request->form_name);
     }
