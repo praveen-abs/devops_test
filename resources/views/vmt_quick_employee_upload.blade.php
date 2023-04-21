@@ -89,8 +89,8 @@
                                         <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Employee Number,Employee Name, Email, Date of joining
                                             and Location fields are required to add employees in.</li>
                                         <li class="my-4"><i class="text-green-500 fa fa-check"></i> Enter  mobile number is mandatory while adding employee </li>
-                                 
-                              
+
+
                                         <li class="my-4"><i class="text-green-500 fa fa-check"></i> Email id should be valid to receive all notifications such as leave request
                                             notifications, Attendance request notification and Timesheet reminder
                                             notifications etc. </li>
@@ -160,13 +160,14 @@
                         console.log("Got response....");
                         console.log("Status message : "+ajaxData.status);
                         console.log(ajaxData);
-                        Swal.fire({
-                            title: data.message,
-                            text: data.status,
+                        if(ajaxData.status == 'success'){
+                            Swal.fire({
+                            title: ajaxData.message,
+                            text: ajaxData.status,
                             type: "success"
-                        }).then(function() {
-                            location.reload();
-                        });
+                        })
+                        }
+
 
                         $('#error-msg').html('');
                         $('#error-msg').append('<b>Upload Status : <br/></b>');
