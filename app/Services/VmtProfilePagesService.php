@@ -142,4 +142,74 @@ class VmtProfilePagesService
             ];
         }
     }
+
+
+    public function addFamilyDetails($user_code, $name, $relationship, $dob, $phone_number)
+    {
+        try {
+            // dd($request->all());
+            $user_id = user::where('user_code', $user_code)->first()->id;
+            $emp_familydetails = new VmtEmployeeFamilyDetails;
+            $emp_familydetails->user_id = $user_id;
+            $emp_familydetails->name = $name;
+            $emp_familydetails->relationship = $relationship;
+            $emp_familydetails->dob = $dob;
+            $emp_familydetails->phone_number = $phone_number;
+            $emp_familydetails->save();
+
+            return  $response = [
+                'status' => 'success',
+                'message' => "Family details Added successfully"
+            ];
+        } catch (\Exception $e) {
+            return $response = [
+                'status' => 'failure',
+                'message' => 'Error while Adding Family Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+    }
+    public function UpdateFamilyDetails($record_id, $name, $relationship, $dob, $phone_number)
+    {
+        try {
+            //dd($request->all());
+            //$user_id = user::where('user_code', $user_code)->first()->id;
+            $emp_familydetails = VmtEmployeeFamilyDetails::find('id', $record_id);
+            $emp_familydetails->name = $name;
+            $emp_familydetails->relationship = $relationship;
+            $emp_familydetails->dob = $dob;
+            $emp_familydetails->phone_number = $phone_number;
+            $emp_familydetails->save();
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Family Details Upadated Successfully ',
+            ];
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Family Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+    }
+    public function deleteFamilyDetails($record_id, $user_code)
+    {
+        try {
+            $user_id = user::where('user_code', $user_code)->first()->id;
+
+            $familyDetails = VmtEmployeeFamilyDetails::where('id', $record_id)->first();
+            $familyDetails->where('user_id', $user_id)->delete();
+            return $response = [
+                'status' => 'success',
+                'message' => "Family details deleted successfully"
+            ];
+        } catch (\Exception $e) {
+            return   $response = [
+                'status' => 'failure',
+                'message' => 'Error while Deletining Family Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+    }
 }

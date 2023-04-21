@@ -1,7 +1,5 @@
 <template>
     <Toast />
-
-
     <div>
         <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -63,7 +61,7 @@
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
+                        <span >
                             <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve"
                                 @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2.5em" />
                             <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Reject"
@@ -95,15 +93,15 @@
                                       icon="pi pi-eye"
                                       class="p-button-success Button"
                                       label="View"
-                                      @click="showConfirmDialog(slotProps.data, 'Approve')"
+                                      @click="showDocDialog(slotProps.data.doc_url)"
                                       style="height: 2em"
-                                      text raised
+
                                     />
                                   </template>
                             </Column>
                             <Column field="" header="Action">
                                 <template #body="slotProps">
-                                    <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
+                                    <span >
                                         <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve"
                                             @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2.5em" />
                                         <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Reject"
@@ -117,8 +115,18 @@
                 </template>
             </DataTable>
 
+            <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
+
+
+                <img   :src="`http://127.0.0.1:8000/${doc_url}`"
+                :alt="doc_url" class="block pb-3 m-auto" />
+
+        </Dialog>
+
             <div v-for="doc in data_review_documents" :key="doc">
                 <img :src="doc.doc_url" alt="">
+                    <button class="btn btn-success mr-3" >Edit</button>
+                    <button class="btn btn-danger"  >Delete</button>
             </div>
         </div>
     </div>
@@ -133,7 +141,7 @@ import { useToast } from "primevue/usetoast";
 import moment from 'moment'
 import { watch } from "vue";
 
-
+const visible = ref(false)
 let data_review_documents = ref();
 let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
@@ -152,6 +160,14 @@ const metaKey = ref(true);
 const data = () => {
     show.value = true;
 
+}
+
+const doc_url = ref()
+
+const showDocDialog = (doc) =>{
+    console.log(doc);
+    doc_url.value = doc
+    visible.value = true
 }
 
 
