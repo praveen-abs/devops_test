@@ -202,12 +202,8 @@ onMounted(() => {
 
 
 function ajax_GetReviewDocumentData() {
-    let url_all_review_documents =
-        window.location.origin + "/fetch-onboarded-doc";
 
-    console.log("AJAX URL : " + url_all_review_documents);
-
-    axios.get(url_all_review_documents).then((response) => {
+    axios.get("/fetch-onboarded-doc").then((response) => {
         // console.log("Axios : " + response.data);
         data_review_documents.value = response.data;
         console.log(response.data);

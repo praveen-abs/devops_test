@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class VmtEmployeeService {
 
@@ -957,39 +957,51 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
         $json_response = array();
 
-        $array_unique_users = User::where('is_onboarded' ,1)->get(['id','user_code','name']);
-        foreach($array_unique_users as $single_user){
+        //Get all the  doc for the given user_id
+        $query_pending_onboard_docs = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                        ->join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
+                                        ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
+                                        ->where('vmt_employee_documents.status',"Pending")
+                                        ->get([
+                                            'users.name as name',
+                                            'vmt_employee_details.doj as doj',
+                                            'users.user_code as user_code',
+                                            'vmt_onboarding_documents.document_name as doc_name',
+                                            'vmt_employee_documents.status as doc_status',
+                                            'vmt_employee_documents.doc_url as doc_url'
+                                        ]);
 
-            //dd($single_user->user_id);
-            $single_user_data["user_id"] = $single_user->id;
-            $single_user_data["employee_name"] = $single_user->name;
-            $single_user_data["user_code"] = $single_user->user_code;
+        // //store all the documents in single key
+        foreach($query_pending_onboard_docs as $single_pending_docs){
 
+            $user_code = $single_pending_docs->user_code;
 
+            if(array_key_exists($user_code, $json_response))
+            {
+                array_push($json_response[$user_code]["documents"], [
+                                            "doc_name" => $single_pending_docs->doc_name,
+                                            "doc_url" => $single_pending_docs->doc_url,
+                                            "doc_status" => $single_pending_docs->doc_status
+                ]);
+            }
+            else
+            {
+                $user_details = [
+                    "name" => $single_pending_docs->name,
+                    "user_code" =>  $single_pending_docs->user_code,
+                    "doj" => $single_pending_docs->doj,
+                    "documents" => array([
+                                    "doc_name" => $single_pending_docs->doc_name,
+                                    "doc_url" => $single_pending_docs->doc_url,
+                                    "doc_status" => $single_pending_docs->doc_status
+                                   ]),
+                ];
 
-            //Get all the  doc for the given user_id
-            $onboard_doc = VmtEmployeeDocuments::join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
-                                ->where('user_id',$single_user->id)
-                                ->get(['vmt_onboarding_documents.document_name','doc_url']);
-
-            $onboard_doc->each(function ($item, int $key) use ($single_user){
-
-                $item["doc_url"] = "employees/". $single_user->user_code."/onboarding_documents/".$item["doc_url"];
-                  //dd($item["doc_url"]);
-            });
-
-
-
-
-            $single_user_data["onboard_doc"] = $onboard_doc->toArray();
-
-            //dd($single_user_data);
-
-            array_push($json_response, $single_user_data);
-
+                $json_response[$user_code] = $user_details;
+                //array_push(, $user_details);
+            }
         }
 
-        //dd($json_response);
 
         return $json_response;
 
