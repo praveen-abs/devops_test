@@ -1235,7 +1235,7 @@ class VmtEmployeeOnboardingController extends Controller
                    'email' => 'required|email:strict|unique:users,email',
                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                    'doj' => 'required|date',
-                   'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric',
+                   'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',
                    'designation' => 'required',
                    'basic' => 'required|numeric',
                    'hra' => 'required|numeric',
