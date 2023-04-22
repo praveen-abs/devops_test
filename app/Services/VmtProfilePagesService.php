@@ -107,7 +107,7 @@ class VmtProfilePagesService
         }
     }
 
-    public function updateEmployeeContactInformation($user_code, $personal_email, $office_email, $mobile_number, $current_address, $permanent_address)
+    public function updateEmployeeContactInformation($user_code, $personal_email, $office_email, $mobile_number, $current_address_line_1, $current_address_line_2, $permanent_address_line_1 , $permanent_address_line_2)
     {
 
 
@@ -127,6 +127,12 @@ class VmtProfilePagesService
 
             if ($details->exists()) {
                 $details->mobile_number = $mobile_number;
+
+                $details->current_address_line_1 = $current_address_line_1;
+                $details->current_address_line_2 = $current_address_line_2;
+                $details->permanent_address_line_1 = $permanent_address_line_1;
+                $details->permanent_address_line_2 = $permanent_address_line_2;
+
                 $details->save();
             }
 
