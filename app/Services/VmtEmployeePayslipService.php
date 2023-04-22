@@ -579,6 +579,8 @@ class VmtEmployeePayslipService {
 
             }
 
+            // Normal JOINS style : JSON structure is not coming properly. Keeping here for reference only
+            //
             // $response['payslip_data'] = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
             //                             ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
             //                             ->join('vmt_employee_statutory_details','vmt_employee_statutory_details.user_id','=','users.id')
@@ -590,15 +592,6 @@ class VmtEmployeePayslipService {
             //                                 'vmt_employee_statutory_details.*',
             //                                 'vmt_employee_payslip.*'
             //                             ]);
-
-            // $response['payslip_data'] = User::with([
-            //                                         'getEmployeeDetails',
-            //                                         'getEmployeeOfficeDetails',
-            //                                         'getStatutoryDetails',
-            //                                         'payslip_details:EMP_NO'
-            //                                 ])
-            //                                 ->where('users.id',$user_id)
-            //                                 ->get();
 
             /*
                     ::with() works only if you specify the foreign key . Else it will return empty
