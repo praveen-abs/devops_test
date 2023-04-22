@@ -479,11 +479,11 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar_number"] ?? '';
-        $newEmployee->marital_status_id = $row["marital_status_id"] ?? '';;
+        $newEmployee->marital_status_id = $row["marital_status"] ?? '';;
         $newEmployee->nationality = $row["nationality"] ?? '';
         $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
         $newEmployee->mobile_number  = $data_mobile_number;
-        $newEmployee->blood_group_id  = $row["blood_group_id"] ?? '';
+        $newEmployee->blood_group_id  = $row["blood_group_name"] ?? '';
         $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
         $newEmployee->bank_id   = $row["bank_id"] ?? '';
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
@@ -494,10 +494,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
         $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
         $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
-        $newEmployee->current_country_id   = $row["current_country_id"] ?? '';
-        $newEmployee->permanent_country_id   = $row["permanent_country_id"] ?? '';
-        $newEmployee->current_state_id   = $row["current_state_id"] ?? '';
-        $newEmployee->permanent_state_id   = $row["permanent_state_id"] ?? '';
+        $newEmployee->current_country_id   = $row["current_country"] ?? '';
+        $newEmployee->permanent_country_id   = $row["permanent_country"] ?? '';
+        $newEmployee->current_state_id   = $row["current_state"] ?? '';
+        $newEmployee->permanent_state_id   = $row["permanent_state"] ?? '';
         $newEmployee->current_city   = $row["current_city"] ?? '';
         $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
         $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
@@ -560,7 +560,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         //dd($row);
          $confirmation_period= $row['confirmation_period'] ?? '';
          $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
-         $empOffice->department_id = $row["department_id"] ?? ''; // => "lk"
+         $empOffice->department_id = $row["department"] ?? ''; // => "lk"
          $empOffice->process = $row["process"] ?? ''; // => "k"
          $empOffice->designation = $row["designation"] ?? ''; // => "k"
          $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
@@ -662,20 +662,24 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
             $familyMember->gender = $familyData['spouse_gender'] ?? '';
+
 //for bulk onboarding if($onboard_import_type == "excel_bulk"){
-        }
+
 
              if(!empty($familyData["dob_spouse"])){
                $dob_spouse =  $familyData["dob_spouse"];
                 $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
+
             }
 
             if(!empty($familyData["wedding_date"])){
                $wedding_date = $familyData["wedding_date"];
                $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date) ;
-            }
 
+            }
             $familyMember->save();
+        }
+
 
             if (!empty($familyData['child_name'])){
                 $familyMember =  new VmtEmployeeFamilyDetails;
@@ -684,12 +688,14 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $familyMember->relationship = 'Children';
                 $familyMember->gender = '---';
 
-                if(isset($familyData["child_dob"]))
+                if(!empty($familyData["child_dob"])){
                 $child_dob= $familyData["child_dob"];
                 $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+                }
                 //$familyData["child_dob"];
-            }
                 $familyMember->save();
+            }
+
             }catch(\Exception $e){
                 dd("Error while saving record : ".$e);
             }
