@@ -967,6 +967,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                                             'vmt_employee_details.doj as doj',
                                             'users.user_code as user_code',
                                             'vmt_onboarding_documents.document_name as doc_name',
+                                            'vmt_employee_documents.id as record_id',
                                             'vmt_employee_documents.status as doc_status',
                                             'vmt_employee_documents.doc_url as doc_url'
                                         ]);
@@ -979,6 +980,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             if(array_key_exists($user_code, $json_response))
             {
                 array_push($json_response[$user_code]["documents"], [
+                                            "record_id" => $single_pending_docs->record_id,
                                             "doc_name" => $single_pending_docs->doc_name,
                                             "doc_url" => $single_pending_docs->doc_url,
                                             "doc_status" => $single_pending_docs->doc_status
@@ -991,6 +993,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     "user_code" =>  $single_pending_docs->user_code,
                     "doj" => $single_pending_docs->doj,
                     "documents" => array([
+                                    "record_id" => $single_pending_docs->record_id,
                                     "doc_name" => $single_pending_docs->doc_name,
                                     "doc_url" => $single_pending_docs->doc_url,
                                     "doc_status" => $single_pending_docs->doc_status
@@ -1003,25 +1006,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         }
 
 
-        return $json_response;
+        return array_values($json_response);
 
     }
 
 
-    public function processEmployeeDocumentsBulkApprovals($data){
-        $reimbursement_data = $data['reimbursement_id']["reimbursement_data"];
-      //  dd( $reimbursement_data);
-             for($i=0;$i<count($reimbursement_data);$i++){
-                if($reimbursement_data[$i]['status']=='Pending'){
-                    VmtEmployeeReimbursements::where('id',$reimbursement_data[$i]['id'])
-                                            ->update([
-                                                'status' => $data['status']
-                                            ]);
-                }
-
-             }
-
-
-    }
 
 }

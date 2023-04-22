@@ -44,7 +44,8 @@
             "app/Services/VmtProfilePagesService.php",
             "app/Services/VmtDashboardService.php",
             "app/Services/VmtInvestmentsService.php",
-            "app/Services/VmtHolidayService.php"
+            "app/Services/VmtHolidayService.php",
+            "app/Services/VmtApprovalsService.php"
 
         ]
     },
