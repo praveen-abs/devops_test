@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //Payslip API
-    Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
+    Route::post('/payroll/payslip/getEmployeePayslipDetails', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetails']);
 
     Route::post('employee_monthly_leave_details', [
         VmtAPIAttendanceController::class,
