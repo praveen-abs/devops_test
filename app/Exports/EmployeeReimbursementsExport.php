@@ -39,15 +39,17 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
     protected $month_name;
     protected $year;
     protected $client_name;
+    protected $client_logo_path;
     protected $employee_details;
 
-    function __construct($employee_details,$reimbursement_data,$legal_entity,$month_name,$year,$client_name,$totals){
+    function __construct($employee_details,$reimbursement_data,$legal_entity,$month_name,$year,$client_name, $client_logo_path,$totals){
         $this->employee_details = $employee_details;
         $this->reimbursements_details = $reimbursement_data;
         $this->legal_entity = $legal_entity;
         $this->month_name = $month_name;
         $this->year = $year;
         $this->client_name = $client_name;
+        $this->client_logo_path = $client_logo_path;
         $this->totals=$totals;
         $this->total_row=count($this->reimbursements_details)+6;
     }
@@ -191,7 +193,7 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
           $drawing = new Drawing();
           $drawing->setName($this->client_name);
           $drawing->setDescription($this->client_name);
-          $drawing->setPath(public_path('assets/images/'.$this->client_name.'_logo.jpg'));
+          $drawing->setPath(public_path($this->client_logo_path));
           $drawing->setHeight(60);
           $drawing->setWidth(65);
           $drawing->setCoordinates('H1');
