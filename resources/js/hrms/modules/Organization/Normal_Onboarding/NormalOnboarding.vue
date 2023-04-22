@@ -3143,7 +3143,7 @@ const SubmitEmployeeOnboardingData = () => {
 };
 
 const submit = () => {
- // loading.value = true
+  loading.value = true
   let currentObj = this;
   const config = {
     headers: { "content-type": "multipart/form-data" },
@@ -3224,11 +3224,19 @@ const submit = () => {
     employee_onboarding.confirmation_period
   );
   formData.append("father_name", employee_onboarding.father_name);
+  if(employee_onboarding.dob_father == ''){
+  formData.append("dob_father",employee_onboarding.dob_father);
+  }else{
   formData.append("dob_father", moment(employee_onboarding.dob_father).format('YYYY-MM-DD'));
+  }
   formData.append("father_gender", employee_onboarding.father_gender);
   formData.append("father_age", employee_onboarding.father_age);
   formData.append("mother_name", employee_onboarding.mother_name);
+  if(employee_onboarding.dob_mother == ''){
+  formData.append("dob_mother",employee_onboarding.dob_mother);
+  }else{
   formData.append("dob_mother", moment(employee_onboarding.dob_mother).format('YYYY-MM-DD'));
+  }
   formData.append("mother_gender", employee_onboarding.mother_gender);
   formData.append("mother_age", employee_onboarding.mother_age);
   formData.append("spouse_name", employee_onboarding.spouse_name);
@@ -3236,7 +3244,6 @@ const submit = () => {
   formData.append("wedding_date",employee_onboarding.wedding_date);
   }else{
   formData.append("wedding_date", moment(employee_onboarding.wedding_date).format('YYYY-MM-DD'));
-
   }
   formData.append("spouse_gender", employee_onboarding.spouse_gender);
   if(employee_onboarding.dob_spouse == ''){
