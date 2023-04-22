@@ -13,6 +13,10 @@ use App\Services\VmtProfilePagesService;
 class VmtAPIProfilePagesController extends HRMSBaseAPIController
 {
 
+    public function updateProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->updateProfilePicture($request->user_code, $request->file_object);
+    }
+
     public function fetchEmployeeProfileDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
     {
 

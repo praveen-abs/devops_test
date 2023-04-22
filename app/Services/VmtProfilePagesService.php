@@ -21,9 +21,84 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
 use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 
 class VmtProfilePagesService
 {
+
+
+    /*
+        Store employee profile pic in 'storage\employees\PLIPL068\profile_pic'
+        Add entry in Users table
+    */
+    public function updateProfilePicture($user_code, $file_object){
+
+       //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'file_object' => $file_object
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'file_object' => 'required'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+
+        try{
+
+            //Create file name
+            $date = date('d-m-Y_H-i-s');
+            $file_name =  'pic_'.$user_code.'_'.$date.'.'.$file_object->extension();
+            $path = $user_code.'/profile_pics';
+
+            //Store the file in private path
+            $file_object->storeAs($path, $file_name, 'private');
+
+            //Get the user record and update avatar column
+            $query_user = User::where('user_code',$user_code)->first();
+            $query_user->avatar = $file_name;
+            $query_user->save();
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture updated successfully",
+                "data" => '',
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Failed tp save profile picture",
+                "data" => $e,
+            ]);
+
+        }
+
+    }
+
+    public function getProfilePicture($user_code){
+
+    }
 
     /*
 
@@ -61,6 +136,7 @@ class VmtProfilePagesService
 
         //Add the documents details
 
+        $response['avatar'] ="ASDFJASDJFLKAJSDF";
 
 
         //Remove ID from user table
