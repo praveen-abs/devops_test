@@ -58,11 +58,20 @@
     // }else{
     //     echo '<br/>bye';
     // }
-    $l1_manager_code_id='DM174';
 
-     $l1_manager_name=User::where('user_code',$l1_manager_code_id)->first()->name;
+    $employee_name='vishnu'
+    $employee_code='DM001'
+    $VmtGeneralInfo = VmtGeneralInfo::first();
+               $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-    echo $l1_manager_name;
+               \Mail::to($row["email"])->send(new QuickOnboardLink('employee_name', 'employee_code', 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+
+               return $rowdata_response = [
+                   'row_number' => '',
+                   'status' => $status,
+                   'message' => $message,
+                   'error_fields' => [],
+               ];
 ?>
 
 </body>
