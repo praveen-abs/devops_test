@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\VmtAPIDashboardController;
 use App\Http\Controllers\Api\VmtAPIAttendanceController;
 use App\Http\Controllers\Api\VmtAPIPaySlipController;
 use App\Http\Controllers\Api\VmtAPIProfilePagesController;
+use App\Http\Controllers\Api\VmtAPIInvestmentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,4 +102,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
     Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
+
+
+    //Investments
+    Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
+    Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
+
+
 });
