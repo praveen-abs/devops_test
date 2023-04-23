@@ -1289,7 +1289,7 @@ class VmtAttendanceService{
         return $query_response;
     }
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin)
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
     {
 
             $user_id = User::where('user_code', $user_code)->first()->id;
@@ -1318,6 +1318,7 @@ class VmtAttendanceService{
             $attendanceCheckin->checkin_comments = "";
             $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
             $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
             $attendanceCheckin->save();
 
             // processing and storing base64 files in public/selfies folder
@@ -1351,7 +1352,7 @@ class VmtAttendanceService{
 
     }
 
-    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout)
+    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
     {
 
             $user_id = User::where('user_code', $user_code)->first()->id;
@@ -1370,6 +1371,7 @@ class VmtAttendanceService{
                 $attendanceCheckout->checkout_time = $checkout_time;
                 $attendanceCheckout->checkout_comments = "";
                 $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
+                $attendanceCheckout->checkout_lat_long = $checkout_lat_long ?? '';
 
                 $attendanceCheckout->save();
 

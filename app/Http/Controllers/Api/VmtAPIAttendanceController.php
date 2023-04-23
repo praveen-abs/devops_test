@@ -34,6 +34,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 "checkin_time" => "required",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkin" => "required", //mobile, web
+                "checkin_lat_long" => "nullable", //stores in lat , long
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -49,7 +50,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             ]);
         }
 
-        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin);
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin,$request->checkin_lat_long);
 
         return $response;
     }
@@ -65,6 +66,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 "checkout_time" => "required",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
+                "checkout_lat_long" => "nullable", //lat, long
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -80,7 +82,13 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             ]);
         }
 
-        $response =  $serviceVmtAttendanceService->performAttendanceCheckOut($request->user_code, $request->date, $request->checkout_time, $request->selfie_checkout, $request->shift_type, $request->work_mode, $request->attendance_mode_checkout);
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckOut($request->user_code,
+                                                                             $request->date,
+                                                                             $request->checkout_time,
+                                                                             $request->selfie_checkout,
+                                                                             $request->work_mode,
+                                                                             $request->attendance_mode_checkout,
+                                                                             $request->checkout_lat_long);
 
         return $response;
     }
