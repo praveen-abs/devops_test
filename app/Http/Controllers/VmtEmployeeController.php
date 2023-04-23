@@ -1014,6 +1014,11 @@ class VmtEmployeeController extends Controller
         return 'User Account Status : ' . $request->input('status');
     }
 
+    /*
+        TODO: Need to check query execution count and speed for this...
+
+
+    */
     public function fetchAllActiveEmployees(Request $request)
     {
         $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -1044,13 +1049,16 @@ class VmtEmployeeController extends Controller
         else
             $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
 
-        //Add reporting manager name
+        //Add reporting manager name, bloodgroup, profile completeness
         foreach($query_vmtEmployees as $singleEmp)
         {
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
             $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+
+            $singleEmp['profile_completeness'] = calculateProfileCompleteness($singleEmp['user_id']);
+            $singleEmp['blood_group_name'] = VmtBloodGroup::find($singleEmp['blood_group_id'])->name;
         }
 
         //dd($query_vmtEmployees);
