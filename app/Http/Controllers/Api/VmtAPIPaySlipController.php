@@ -23,6 +23,21 @@ class VmtAPIPaySlipController extends Controller
     }
 
 
+    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayslipService $serviceEmployeePayslipService){
+
+       $response = $serviceEmployeePayslipService->getEmployeePayslipDetailsAsPDF( user_code : $request->user_code,
+                                                                    year : $request->year,
+                                                                    month : $request->month
+                                                                );
+
+        return $response;
+    }
+
+
+
+
+
+
     /*
         Input : year, month
 

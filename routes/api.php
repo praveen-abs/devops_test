@@ -40,15 +40,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
 
+    Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
     //HOLIDAYS
     Route::get('/holidays/getAllHolidays', [HRMSBaseAPIController::class, 'getAllHolidays']);
-
-
-
-
-
-
 
 
     //PMS Forms
@@ -88,13 +83,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Payslip API
     Route::post('/payroll/payslip/getEmployeePayslipDetails', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetails']);
+    Route::post('/payroll/payslip/getEmployeePayslipDetailsAsPDF', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsPDF']);
 
-    Route::post('employee_monthly_leave_details', [
-        VmtAPIAttendanceController::class,
-        'employeeMonthlyLeaveDetails'
-    ]);
 
-    Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
     //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
