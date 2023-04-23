@@ -13,6 +13,8 @@ use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtGeneralInfo;
 
+use App\Services\VmtNotificationsService;
+
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 
@@ -255,7 +257,9 @@ class VmtAttendanceService{
             $compensatory_work_days_ids
 
     */
-    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days, $compensatory_work_days_ids, $leave_session, $leave_type_name, $leave_reason, $notifications_users_id){
+    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days,
+                                        $compensatory_work_days_ids, $leave_session, $leave_type_name,
+                                         $leave_reason, $notifications_users_id, VmtNotificationsService $serviceNotificationsService){
 
         //Core values needed
         $query_user = User::where('id',$user_id)->first();
@@ -486,6 +490,17 @@ class VmtAttendanceService{
             $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$notifications_users_id)->pluck('officical_mail');
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+
+        //Save in notifications table
+        $serviceNotificationsService->saveNotification(user_code: $query_user->user_code,
+                                                                 notification_title: "Leave request applied",
+                                                                 notification_body: "Kindly take action",
+                                                                 redirect_to_module : "Leave Approvals",
+                                                                 recipient_user_code : $manager_emp_code,
+                                                                 is_read : 0
+
+
+        );
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : $query_user->name,

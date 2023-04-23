@@ -98,4 +98,8 @@ class User extends Authenticatable
     function single_payslip_detail(){
         return $this->hasOne(VmtEmployeePaySlip::class,'user_id');
     }
+
+    function array_notifications(){
+        return $this->hasMany(VmtNotifications::class,'user_id');
+    }
 }
