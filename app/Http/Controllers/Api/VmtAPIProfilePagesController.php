@@ -17,6 +17,10 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
         return $serviceProfilePagesService->updateProfilePicture($request->user_code, $request->file_object);
     }
 
+    public function getProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->getProfilePicture($request->user_code);
+    }
+
     public function fetchEmployeeProfileDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
     {
 

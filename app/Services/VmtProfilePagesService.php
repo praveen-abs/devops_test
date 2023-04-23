@@ -21,6 +21,7 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
 use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class VmtProfilePagesService
@@ -88,7 +89,7 @@ class VmtProfilePagesService
 
             return response()->json([
                 "status" => "failure",
-                "message" => "Failed tp save profile picture",
+                "message" => "Failed to save profile picture",
                 "data" => $e,
             ]);
 
@@ -97,7 +98,67 @@ class VmtProfilePagesService
     }
 
     public function getProfilePicture($user_code){
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
 
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            //Get the user record and update avatar column
+            $avatar_filename = User::where('user_code',$user_code)->first()->avatar;
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $response = Storage::disk('private')->get($user_code."/profile_pics/".$avatar_filename);
+
+            if($response)
+            {
+                $response = base64_encode($response);
+            }
+            else// If no file found, then send this
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Profile picture doesnt exist for the given user"
+                ]);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture fetched successfully",
+                "data" => $response,
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" => $e,
+            ]);
+
+        }
     }
 
     /*

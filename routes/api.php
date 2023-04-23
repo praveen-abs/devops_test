@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+    Route::post('/profile-pages/getProfilePicture', [VmtAPIProfilePagesController::class, 'getProfilePicture']);
     Route::post('/profile-pages/updateProfilePicture', [VmtAPIProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
     Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
