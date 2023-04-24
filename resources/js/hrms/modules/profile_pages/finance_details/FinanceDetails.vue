@@ -284,11 +284,10 @@
 
                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
 
-                        <ul class="personal-info" >
+                        <!-- <ul class="personal-info" >
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable  }} -->
                                     {{ pf_applicable }}
 
                                 </div>
@@ -296,16 +295,13 @@
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.epf_no }} -->
                                 {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number }}
 
                                 </div>
                             </li>
-                            <!-- Vishnu V24, [31-03-2023 15:40] -->
                             <li>
                                 <div class="title">UAN Number</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.uan_no }} -->
 
                                     {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number }}
 
@@ -315,8 +311,6 @@
                             <li>
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.esic_applicable }} -->
-                                    <!-- {{   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable }} -->
                                     {{ esic_applicable }}
 
                                 </div>
@@ -324,15 +318,12 @@
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text" >
-                              <!-- {{ statutory_info.esic_no }} -->
 
-                              <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }} -->
                               {{_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number   }}
-                              <!-- {{ esic_number }} -->
 
                                 </div>
                             </li>
-                        </ul>
+                        </ul> -->
 
 
 
@@ -460,7 +451,7 @@ const saveBankinfoDetails = () => {
 
             if (res.data.status == "success") {
                 //  window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Bank information updated', life: 3000 });
 
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;

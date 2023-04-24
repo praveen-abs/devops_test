@@ -191,6 +191,7 @@ const current_table_id = ref()
 
 
 const saveFamilyDetails = () => {
+    _instance_profilePagesStore.loading_screen = true
 
 //    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
 //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
@@ -208,8 +209,8 @@ const saveFamilyDetails = () => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                //  window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Family information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
@@ -225,7 +226,10 @@ const saveFamilyDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
+            });
         // window.location.reload();
         DialogFamilyinfovisible.value = false;
     }

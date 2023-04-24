@@ -30,10 +30,10 @@ class VmtProfilePagesController extends Controller
         $user = null;
 
         //If empty, then show current user profile page
-        if (empty($request->user_id)) {
+        if (empty($request->uid)) {
             $user = auth()->user();
         } else {
-            $user = User::find(Crypt::decryptString($request->user_id));
+            $user = User::find(Crypt::decryptString($request->uid));
             //dd("Enc User details from request : ".$user);
         }
 

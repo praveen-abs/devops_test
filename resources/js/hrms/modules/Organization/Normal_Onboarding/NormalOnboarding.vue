@@ -41,6 +41,7 @@
                           <span v-if="user_code_exists" class="p-error"
                             >Employee code Already Exists</span
                           >
+                          <!-- {{user_code_exists}} -->
 
                         </div>
                       </div>
@@ -113,7 +114,7 @@
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
-                            optionValue="id"
+
                             placeholder="Select Martial Status"
                             @change="spouseDisable"
                             class="p-error"
@@ -246,7 +247,7 @@
 
                         </div>
 
-                        <span v-if="is_mobile_no_exists">
+                        <span class="text-danger" v-if="is_mobile_no_exists">
                                Mobile Number Is Already Exists
                         </span>
                         <span v-if="invalid_mobile_no" class="text-danger">
@@ -1537,7 +1538,7 @@
 
               <!-- Family Detials Start -->
 
-              <div class="p-2 my-6 shadow card profile-box card-top-border" v-if="family_details_disable">
+              <div class="p-2 my-6 shadow card profile-box card-top-border" >
                 <div class="card-body justify-content-center align-items-center">
                   <div class="flex my-4 header-card-text">
                     <img src="../../../assests/images/family_image.png" alt="" style="height: 20px;">
@@ -3168,7 +3169,7 @@ const submit = () => {
     formData.append("blood_group_name", employee_onboarding.blood_group_name);
 //   formData.append("blood_group_id", employee_onboarding.blood_group_id);
   formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
-    formData.append("marital_status", employee_onboarding.marital_status);
+    formData.append("marital_status", employee_onboarding.marital_status.id);
 //   formData.append("marital_status_id", employee_onboarding.marital_status_id);
   formData.append("email", employee_onboarding.email);
   formData.append("nationality", employee_onboarding.nationality);
@@ -3263,11 +3264,13 @@ const submit = () => {
   formData.append("lta", employee_onboarding.lta);
   formData.append("special_allowance", employee_onboarding.special_allowance);
   formData.append("other_allowance", employee_onboarding.other_allowance);
+  formData.append("gross", employee_onboarding.gross);
   formData.append(
     "epf_employer_contribution",
     employee_onboarding.epf_employer_contribution
   );
   formData.append("graduity", employee_onboarding.graduity);
+  formData.append("insurance", employee_onboarding.insurance);
   formData.append("cic", employee_onboarding.total_ctc);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
@@ -3369,12 +3372,12 @@ const userCodeExists = () => {
     .get(`/user-code-exists/${user_code}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
+      if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk' ){
         console.log("quick onboarding");
         family_details_disable.value = true
-        // compensatoryCalWhileQuick()
       }else{
         user_code_exists.value = res.data;
+        console.log("working");
 
       }
 
@@ -3415,9 +3418,6 @@ const AadharCardExits = () => {
   console.log("working");
   let aadhar_no = employee_onboarding.aadhar_number;
 
-
-
-    if(employee_onboarding.aadhar_number.length >= 12){
       var regexp=/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
 
            if(regexp.test(employee_onboarding.aadhar_number))
@@ -3445,9 +3445,6 @@ const AadharCardExits = () => {
 
               }
 
-    }else{
-      console.log("checking");
-    }
 
 
 };
@@ -3499,7 +3496,7 @@ const personalMailExists = () => {
     .get(`/personal-mail-exists/${mail}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
+      if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk' ){
         console.log("quick onboarding");
         // compensatoryCalWhileQuick()
       }else{
@@ -3523,20 +3520,20 @@ const is_mobile_no_exists = ref(false)
 const invalid_mobile_no = ref(false)
 
 const mobileNoExists = () => {
-  let mobile = employee_onboarding.mobile_number;
 
- if(employee_onboarding.mobile_number.length <= 10){
+    let mobile = employee_onboarding.mobile_number
+
   console.log("mobile no Checking");
 //   compensatoryCalWhileQuick()
+console.log(mobile);
   axios
     .get(`/mobile-no-exists/${mobile}`)
-    .then((res) => {
+    .then((res) =>{
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
+      if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk' ){
         console.log("quick onboarding");
       }else{
         is_mobile_no_exists.value = res.data;
-
       }
 
     })
@@ -3546,11 +3543,9 @@ const mobileNoExists = () => {
     .finally(() => {
       console.log("completed");
     });
- }else{
-   console.log("invalid no");
-   invalid_mobile_no.value = true
- }
-};
+
+}
+
 
 const is_ac_no_exists = ref(false)
 
@@ -3880,10 +3875,9 @@ const compensatoryCalWhileQuick = () =>{
   employee_onboarding.gross = Math.floor(gross);
   console.log(employee_onboarding.gross);
 
-  let net =     employee_onboarding.gross -
-    employee_onboarding.epf_employee -
-    employee_onboarding.esic_employee;
+  let net =   employee_onboarding.gross -  employee_onboarding.epf_employee -employee_onboarding.esic_employee;
 
+  employee_onboarding.net_income = net
   console.log(net);
 
   let ctc = parseInt(employee_onboarding.gross) + parseInt(employee_onboarding.epf_employer_contribution) + parseInt(employee_onboarding.esic_employer_contribution) + parseInt(employee_onboarding.insurance) + parseInt(employee_onboarding.graduity)

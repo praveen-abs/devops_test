@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <!-- {{ _instance_profilePagesStore.employeeDetails }} -->
+
         <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.employee_documents"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
@@ -23,53 +23,24 @@
                 <template #body="slotProps">
                     <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="view"
                         @click="showDocument(slotProps.data)" style="height: 2em" />
-                    <!-- <a :href="`employees/${_instance_profilePagesStore.employeeDetails.user_code}/onboarding_documents/${slotProps.data.doc_url}`">click</a> -->
-                    <!-- <a :href="view-profile-private-file">click</a> -->
+
                 </template>
 
             </Column>
 
-            <!-- <Column style="width: 300px" field="" header="view">
-                <template #body="slotProps">
-                    <span v-if="slotProps.data.status == 'Pending'">
-                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
-                            @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
-                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Rejected"
-                            style="margin-left: 8px; height: 2em" @click="showConfirmDialog(slotProps.data, 'Reject')" />
-                    </span>
-                </template>
-            </Column> -->
-
-            <!-- <Column style="width: 300px" field="" header="view">
-                <template #body="slotProps">
-                    <span v-if="slotProps.data.status == 'Pending'">
-                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
-                            @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
-                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Rejected"
-                            style="margin-left: 8px; height: 2em" @click="showConfirmDialog(slotProps.data, 'Reject')" />
-                    </span>
-                </template>
-            </Column> -->
-
-
         </DataTable>
 
         <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
-            <!-- <img v-if="view_document.doc_url" :src="`data:image/jpeg;base64,${btoa(documentPath)}`"
-                :alt="view_document.doc_url" class="block pb-3 m-auto" /> -->
 
-                <img v-if="view_document.doc_url" :src="`http://127.0.0.1:8000/employees/${_instance_profilePagesStore.employeeDetails.user_code}/onboarding_documents/${view_document.doc_url}`"
-                :alt="view_document.doc_url" class="block pb-3 m-auto" />
-                <!-- <img v-if="view_document.doc_url" v-bind:src="`http://127.0.0.1:8000/view-profile-private-file/${_instance_profilePagesStore.employeeDetails.user_code}/onboarding_documents/${view_document.doc_url}`"
-                :alt="view_document.doc_url" class="block pb-3 m-auto" /> -->
-<!--
-                /view-private-file -->
+                <img v-if="view_document.doc_url" v-bind:src="`data:image/png;base64,${documentPath}`"
+                 />
+                <!-- <img :src="`data:image/png;base64,${}`" /> -->
+
                 <img src="" alt="">
                 <a href=""></a>
 
         </Dialog>
-        <!-- {{ _instance_profilePagesStore.employeeDetails.employee_documents }} -->
-        <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details }} -->
+
     </div>
 </template>
 
@@ -114,16 +85,17 @@ const showDocument = (document) => {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
         document_name:view_document.value.document_name
         }).then(res=>{
-            console.log(res.data);
-
-            documentPath.value = res.data
-            console.log("data sent");
+            console.log(res.data.data);
+            documentPath.value = res.data.data
+            console.log("data sent", documentPath.value);
     });
 }
 
 // function getImageBlob (image_url) {
 //     return axios.get(image_url).then(response => window.URL.createObjectURL(response.data))
 //   }
+
+
 
 
 

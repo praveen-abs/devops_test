@@ -13,6 +13,8 @@ use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtGeneralInfo;
 
+use App\Services\VmtNotificationsService;
+
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 
@@ -255,7 +257,9 @@ class VmtAttendanceService{
             $compensatory_work_days_ids
 
     */
-    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days, $compensatory_work_days_ids, $leave_session, $leave_type_name, $leave_reason, $notifications_users_id){
+    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days,
+                                        $compensatory_work_days_ids, $leave_session, $leave_type_name,
+                                         $leave_reason, $notifications_users_id, VmtNotificationsService $serviceNotificationsService){
 
         //Core values needed
         $query_user = User::where('id',$user_id)->first();
@@ -486,6 +490,17 @@ class VmtAttendanceService{
             $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$notifications_users_id)->pluck('officical_mail');
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+
+        //Save in notifications table
+        $serviceNotificationsService->saveNotification(user_code: $query_user->user_code,
+                                                                 notification_title: "Leave request applied",
+                                                                 notification_body: "Kindly take action",
+                                                                 redirect_to_module : "Leave Approvals",
+                                                                 recipient_user_code : $manager_emp_code,
+                                                                 is_read : 0
+
+
+        );
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : $query_user->name,
@@ -1274,7 +1289,7 @@ class VmtAttendanceService{
         return $query_response;
     }
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin)
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
     {
 
             $user_id = User::where('user_code', $user_code)->first()->id;
@@ -1303,6 +1318,7 @@ class VmtAttendanceService{
             $attendanceCheckin->checkin_comments = "";
             $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
             $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
             $attendanceCheckin->save();
 
             // processing and storing base64 files in public/selfies folder
@@ -1336,7 +1352,7 @@ class VmtAttendanceService{
 
     }
 
-    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout)
+    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
     {
 
             $user_id = User::where('user_code', $user_code)->first()->id;
@@ -1355,6 +1371,7 @@ class VmtAttendanceService{
                 $attendanceCheckout->checkout_time = $checkout_time;
                 $attendanceCheckout->checkout_comments = "";
                 $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
+                $attendanceCheckout->checkout_lat_long = $checkout_lat_long ?? '';
 
                 $attendanceCheckout->save();
 

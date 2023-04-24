@@ -70,5 +70,5 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('ProgressBar', ProgressBar)
 
-app.mount("#ManageEmployee");
+app.mount("#vjs_manage_employee");
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\VmtAPIAttendanceController;
 use App\Http\Controllers\Api\VmtAPIPaySlipController;
 use App\Http\Controllers\Api\VmtAPIProfilePagesController;
 use App\Http\Controllers\Api\VmtAPIInvestmentsController;
+use App\Http\Controllers\Api\VmtApiNotificationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Investments
     Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
     Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
+
+    //Notifications
+    Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);
+    Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class,'saveNotification']);
+    Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class,'updateNotificationReadStatus']);
 
 
 });

@@ -1,53 +1,48 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
-import { useToast } from "primevue/usetoast";
 import axios from "axios";
-import moment from "moment";
 
-export const Service = defineStore("Service", () => {
+export const useManageEmployeesStore = defineStore("manageEmployees", () => {
 
-    // Notification service
-    const toast = useToast();
 
     // Variable Declarations
-
-    const active_employees_data = ref()
+    const array_active_employees = ref()
     const yet_to_active_employees_data = ref()
     const exit_employees_data = ref()
 
     // Events
 
-    const ajax_active_employees_data = () => {
+    async function getActiveEmployees(){
 
         let url = window.location.origin + "/vmt-activeemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
-        axios.get(url).then((response) => {
-            console.log("Axios : " + response.data);
-            active_employees_data.value = response.data;
+        await axios.get(url).then((response) => {
+            array_active_employees.value = response.data;
           });
-
     }
-    const ajax_yet_to_active_employees_data = () => {
+
+    async function ajax_yet_to_active_employees_data(){
 
         let url = window.location.origin + "/vmt-yet-to-activeemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
-        axios.get(url).then((response) => {
+        await axios.get(url).then((response) => {
             console.log("Axios : " + response.data);
             yet_to_active_employees_data.value = response.data;
           });
 
     }
-    const ajax_exit_employees_data = () => {
+
+    async function ajax_exit_employees_data(){
 
         let url = window.location.origin + "/vmt-exitemployees-fetchall";
 
         console.log("AJAX URL : " + url);
 
-        axios.get(url).then((response) => {
+       await axios.get(url).then((response) => {
             console.log("Axios : " + response.data);
             exit_employees_data.value = response.data;
           });
@@ -61,11 +56,11 @@ export const Service = defineStore("Service", () => {
 
         // Varaible Declartion
 
-        active_employees_data, yet_to_active_employees_data, exit_employees_data,
+        array_active_employees, yet_to_active_employees_data, exit_employees_data,
 
-        // Events
+        // Functions
 
-        ajax_active_employees_data, ajax_yet_to_active_employees_data, ajax_exit_employees_data
+        getActiveEmployees, ajax_yet_to_active_employees_data, ajax_exit_employees_data
 
 
 

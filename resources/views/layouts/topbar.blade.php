@@ -168,12 +168,8 @@ if ($query_clientMaster) {
         return color;
     }
 
-
-
     function generateProfileShortName_Topbar() {
-        var username =
-            '{{ auth()->user()->name ??
-                '
+        var username = "{{ trim(auth()->user()->name) }}";
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ' }}';
         const splitArray = username.split(" ");
         var finalname = "empty111";
