@@ -23,7 +23,7 @@
                             <div class="progress-wrapper border-bottom-liteAsh ">
                                 <div class="mb-1 text-center">
                                     <h6 class="text-center">
-                                        {{ service.current_user_name }}
+                                        {{ _instance_profilePagesStore.employeeDetails.name }}
                                     </h6>
                                 </div>
                                 <div class="mx-auto mb-1 d-flex justify-content-between">
@@ -37,7 +37,7 @@
                                         aria-valuenow="{{ 100 }}" aria-valuemin="0"
                                         aria-valuemax="100"></div>
                                 </div>
-                                <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
+                                <!-- <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p> -->
                             </div>
 
                             <div class="mb-4 text-center profile-mid-right-content ">
@@ -62,26 +62,24 @@
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Designation</p>
                                     <p class="f-15 fw-bold">
-                                        <!-- {{
-                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation
-                                        }} -->
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation  }}
                                     </p>
 
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Location</p>
                                     <p class=" f-15 fw-bold">
-                                        <!-- {{
+                                        {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location
-                                        }} -->
+                                        }}
                                     </p>
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Department</p>
                                     <p class=" f-15 fw-bold">
-                                        <!-- {{
+                                        {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id
-                                        }} -->
+                                        }}
                                     </p>
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
@@ -89,6 +87,9 @@
                                     <p class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name
+                                        }} -
+                                        {{
+                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code
                                         }}
                                     </p>
                                 </div>
