@@ -47,14 +47,11 @@
     //     echo $query_client->client_name;
     // else
     //     echo "";
-    $mobile_number="8248023344";
-    $user_code ='DM001';
-    if(!empty($mobile_number)){
-
-    echo VmtEmployee::where('mobile_number',$mobile_number)->exists() ? "true" : "false";
-   }
-   else
-   echo false;
+    $doc_filename='AadharCardBack_B090_17-04-2023_12-22-55.jpg';
+    $user_code='B090';
+    $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" . $doc_filename);
+    // $response = base64_encode($response);
+    dd($response);
 
 ?>
 

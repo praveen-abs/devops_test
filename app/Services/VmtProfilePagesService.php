@@ -209,10 +209,48 @@ class VmtProfilePagesService
     public function getEmployeePrivateDocumentFile($user_code, $doc_name)
     {
 
-        $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
-        $doc_filename = VmtEmployeeDocuments::where('doc_id', $doc_id)->first()->doc_url;
-        $private_file = $user_code . "/onboarding_documents/" . $doc_filename;
-        //dd(file(storage_path('employees/'.$private_file)));
+        try{
+            // $user_id=User::where('')
+            $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
+
+            $doc_filename = VmtEmployeeDocuments::where('doc_id', $doc_id)->first()->doc_url;
+
+            // $private_file = $user_code . "/onboarding_documents/" . $doc_filename;
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" .'AadharCardBack_DM001_19-04-2023_15-03-36.jpg');
+            dd($response);
+            if($response)
+            {
+                $response = base64_encode($response);
+            }
+            else// If no file found, then send this
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Profile picture doesnt exist for the given user"
+                ]);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture fetched successfully",
+                "data" => $response,
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" => $e,
+            ]);
+
+        }
         return response()->file(storage_path('employees/' . $private_file));
     }
 
