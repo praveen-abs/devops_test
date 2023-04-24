@@ -733,6 +733,10 @@
 
         }
 
+
+
+
+
         // Upload file enable upload button
         $('#upload_file').change(function() {
             if ($(this).is(':valid')) {
@@ -799,6 +803,23 @@
 
         // Save/Draft Assignee Reviews
         $('#save_table').click(function(e) {
+            // var formInvalid = false;
+            //  $('#employee_self_review').each(function() {
+            //      console.log($(j).val());
+            //    if ($(this).val() === '') {
+            //      formInvalid = true;
+            //    }
+            //  });
+            //    console.log(formInvalid);
+            //  if(formInvalid){
+            //     formInvalid = false;
+            //     return Swal.fire({
+            //    icon: 'error',
+            //    title: 'Oops...',
+            //    text: 'One or Two fields are empty. Please fill up all fields!'
+            //       });
+            //  }
+
             e.preventDefault();
             $('#formSubmitType').val(0);
             $('.loader').show();
