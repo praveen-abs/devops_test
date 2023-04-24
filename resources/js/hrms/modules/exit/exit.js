@@ -34,6 +34,7 @@ import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber'
 import OverlayPanel from 'primevue/overlaypanel';
+import Tag from 'primevue/tag';
 
 import Exit from './exit.vue'
   
@@ -70,6 +71,7 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('OverlayPanel',OverlayPanel)
+app.component('Tag',Tag)
 
 app.mount("#Exit");
 

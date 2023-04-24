@@ -32,13 +32,13 @@
 
 
 
-  <!-- @vite('resources/js/hrms/modules/exit/exit.js')
-   <div id="Exit"></div>  -->
+  @vite('resources/js/hrms/modules/exit/exit.js')
+   <div id="Exit"></div>
 
 
-<!--
+
  @vite('resources/js/hrms/modules/approvals/resignation/resignation_approval.js')
-   <div id="Resignation"></div>  -->
+   <!-- <div id="Resignation"></div>  -->
 
 
    @vite('resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js')

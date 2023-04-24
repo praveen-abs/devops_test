@@ -176,28 +176,26 @@
   ],
   "exit": [
     {
-      "dori": "06-Mar-1972",
+      "dori": "24-Feb-1994",
       "resignation": "",
-      "npd": "1988-07-04",
+      "npd": "1983-09-22",
       "elwd": "",
-      "ped": "2003-12-15",
+      "ped": "2004-06-25",
+      "exlRes": "",
+      "wr": "",
+      "status": "pending",
       "id": 1
     },
     {
-      "dori": "06-Mar-1972",
-      "resignation": "",
-      "npd": "1988-07-04",
-      "elwd": "",
-      "ped": "2003-12-15",
+      "dori": "21-Jun-1983",
+      "resignation": "Illness",
+      "npd": "1983-03-11",
+      "elwd": "2023-04-11",
+      "ped": "1987-07-03",
+      "exlRes": "",
+      "wr": "",
+      "status": "pending",
       "id": 2
-    },
-    {
-      "dori": "05-Dec-2012",
-      "resignation": "Marriage & Relocating",
-      "npd": "2021-12-19",
-      "elwd": "",
-      "ped": "2020-05-16",
-      "id": 3
     }
   ]
 }

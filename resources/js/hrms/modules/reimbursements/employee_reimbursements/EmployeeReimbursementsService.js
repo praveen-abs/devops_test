@@ -285,7 +285,7 @@ export const employee_reimbursment_service = defineStore(
         const selected_date = ref()
         const generate_ajax = () => {
 
-            loading_spinner.value = true
+            // loading_spinner.value = true
 
             console.log(selected_date.value);
 
@@ -371,7 +371,7 @@ export const employee_reimbursment_service = defineStore(
 
             // PDF Download
 
-            generate_ajax,download_ajax,selected_date
+            generate_ajax, download_ajax, selected_date
 
         };
     }
