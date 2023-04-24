@@ -4,6 +4,7 @@
     use App\Models\VmtOnboardingDocuments;
     use App\Models\VmtEmployeeDocuments;
     use App\Models\Department;
+    use App\Models\User;
 ?>
 
 @extends('layouts.master')
@@ -57,11 +58,20 @@
     // }else{
     //     echo '<br/>bye';
     // }
-    
 
-    $department_id=Department::where('name',strtolower($department_name))->first()->id;
-                // $department_id = $department_id ?? ''; // => "lk"
-    echo $department_id;
+    $employee_name='vishnu'
+    $employee_code='DM001'
+    $VmtGeneralInfo = VmtGeneralInfo::first();
+               $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+               \Mail::to($row["email"])->send(new QuickOnboardLink('employee_name', 'employee_code', 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+
+               return $rowdata_response = [
+                   'row_number' => '',
+                   'status' => $status,
+                   'message' => $message,
+                   'error_fields' => [],
+               ];
 ?>
 
 </body>

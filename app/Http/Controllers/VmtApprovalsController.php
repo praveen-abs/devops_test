@@ -10,8 +10,11 @@ use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Services\VmtReimbursementsService;
+use App\Services\VmtApprovalsService;
+use App\Models\VmtEmployeeDocuments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class VmtApprovalsController extends Controller
 {
@@ -392,5 +395,74 @@ class VmtApprovalsController extends Controller
 
         return "success";
     }
+
+    /*
+        Used on onboarding docs approvals page
+
+    */
+    public function processSingleDocumentApproval(Request $request, VmtApprovalsService $serviceApprovalService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'record_id' => 'required|exists:vmt_employee_documents,id',
+                'status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                //'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response = $serviceApprovalService->processSingleDocumentApproval($request->record_id, $request->status);
+
+        return response()->json([
+            "status"=>$response,
+            "message"=>"Document status updated successfully",
+        ]);
+
+    }
+
+    public function processBulkDocumentApprovals(Request $request, VmtApprovalsService $serviceApprovalService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'record_ids' => 'required',// Need to check the given ids inside service class.
+                'status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                //'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response = $serviceApprovalService->processBulkDocumentApprovals($request->record_ids, $request->status);
+
+        return response()->json([
+            "status"=>$response,
+            "message"=>"All documents status updated successfully",
+        ]);
+
+    }
+
 }
 

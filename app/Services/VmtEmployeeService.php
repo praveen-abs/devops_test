@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class VmtEmployeeService {
 
@@ -236,14 +236,17 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                // $newEmployee->location   =    $row["work_location"] ?? '';
                 $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
+
                 if(!empty($row["marital_status"])){
                 $marital_status_id=VmtMaritalStatus::where('name',ucfirst($row["marital_status"]) )->first()->id; // to get marital status id
                 $newEmployee->marital_status_id = $marital_status_id ?? '';
                 }
+
                 if(!empty($row['bank_name'])){
                 $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
                 $newEmployee->bank_id   = $bank_id ?? '';
                 }
+
                 $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
                 $newEmployee->bank_account_number  = $row["account_no"] ?? '';
                 $newEmployee->current_address_line_1   = $row["current_address"] ?? '';
@@ -276,14 +279,6 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $empOffice->confirmation_period  =$row['confirmation_period']??'';
                 $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
                 $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
-
-                if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-                {
-                    $empOffice->l1_manager_code  = $row["l1_manager_code"];
-                    updateUserRole($empOffice->l1_manager_code,"Manager");
-
-                }
-                $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
                 $empOffice->officical_mail  = $row["official_mail"] ?? ''; // => "k@k.in"
                 $empOffice->work_location  = $row["work_location"] ?? ''; // => "k"
                 $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
@@ -479,15 +474,16 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
+
         $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date) : '';
 
         //$newEmployee->pan_ack   =    $row["pan_ack"];
         $newEmployee->aadhar_number = $row["aadhar_number"] ?? '';
-        $newEmployee->marital_status_id = $row["marital_status_id"] ?? '';;
+        $newEmployee->marital_status_id = $row["marital_status"] ?? '';;
         $newEmployee->nationality = $row["nationality"] ?? '';
         $data_mobile_number = empty($row["mobile_number"]) ? "" : strval($row["mobile_number"]);
         $newEmployee->mobile_number  = $data_mobile_number;
-        $newEmployee->blood_group_id  = $row["blood_group_id"] ?? '';
+        $newEmployee->blood_group_id  = $row["blood_group_name"] ?? '';
         $newEmployee->physically_challenged  = $row["physically_challenged"] ?? 'no';
         $newEmployee->bank_id   = $row["bank_id"] ?? '';
         $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
@@ -498,10 +494,10 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->current_address_line_2   = $row["current_address_line_2"] ?? '' ;
         $newEmployee->permanent_address_line_1   = $row["permanent_address_line_1"] ?? '';
         $newEmployee->permanent_address_line_2   = $row["permanent_address_line_2"] ?? '';
-        $newEmployee->current_country_id   = $row["current_country_id"] ?? '';
-        $newEmployee->permanent_country_id   = $row["permanent_country_id"] ?? '';
-        $newEmployee->current_state_id   = $row["current_state_id"] ?? '';
-        $newEmployee->permanent_state_id   = $row["permanent_state_id"] ?? '';
+        $newEmployee->current_country_id   = $row["current_country"] ?? '';
+        $newEmployee->permanent_country_id   = $row["permanent_country"] ?? '';
+        $newEmployee->current_state_id   = $row["current_state"] ?? '';
+        $newEmployee->permanent_state_id   = $row["permanent_state"] ?? '';
         $newEmployee->current_city   = $row["current_city"] ?? '';
         $newEmployee->permanent_city   = $row["permanent_city"] ?? '';
         $newEmployee->current_pincode   = $row["current_pincode"] ?? '';
@@ -549,7 +545,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     private function createOrUpdate_EmployeeOfficeDetails($user_id,$row)
     {
-
+        try{
         $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
 
         if($empOffice->exists())
@@ -564,7 +560,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         //dd($row);
          $confirmation_period= $row['confirmation_period'] ?? '';
          $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
-         $empOffice->department_id = $row["department_id"] ?? ''; // => "lk"
+         $empOffice->department_id = $row["department"] ?? ''; // => "lk"
          $empOffice->process = $row["process"] ?? ''; // => "k"
          $empOffice->designation = $row["designation"] ?? ''; // => "k"
          $empOffice->cost_center = $row["cost_center"] ?? ''; // => "k"
@@ -572,26 +568,21 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
          //dd("conf date: " .$confirmation_period);
          $empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb( $confirmation_period) : ''; // => "k"
          $empOffice->holiday_location  = $row["holiday_location"] ?? ''; // => "k"
-         $empOffice->l1_manager_code  = $row["l1_manager_code"] ?? ''; // => "k"
-
-         if ( !empty($row["l1_manager_code"]) && $this->isUserExist($row["l1_manager_code"]))
-         {
-             $empOffice->l1_manager_code  = $row["l1_manager_code"];
-             updateUserRole($empOffice->l1_manager_code,"Manager");
-
-         }
-
-         $empOffice->l1_manager_name  = $row["l1_manager_name"] ?? ''; // => "k"
+         $empOffice->l1_manager_code  = $row["l1_manager_code_id"] ?? ''; // => "k"
          $empOffice->work_location  = $row["work_location"] ?? ''; // => "k"
          $empOffice->officical_mail  = $row["officical_mail"] ?? ''; // => "k@k.in"
          $empOffice->official_mobile  = $row["official_mobile"] ?? ''; // => "1234567890"
          $empOffice->emp_notice  = $row["emp_notice"] ?? ''; // => "0"
          $empOffice->save();
+        }catch(\Exception $e){
+            dd("Error while saving record : ".$e);
+        }
 
     }
 
     private function createOrUpdate_EmployeeStatutoryDetails($user_id,$row)
     {
+        try{
         $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
 
         if($newEmployee_statutoryDetails->exists())
@@ -615,11 +606,15 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee_statutoryDetails->tax_regime = $row["tax_regime"] ?? '';
         $newEmployee_statutoryDetails->lwf_location_state_id = $row["lwf_location"] ?? '';
         $newEmployee_statutoryDetails->save();
+    }catch(\Exception $e){
+        dd("Error while saving record : ".$e);
+    }
 
     }
 
     private function createOrUpdate_EmployeeFamilyDetails($user_id, $familyData,$onboard_import_type)
     {
+        try{
         //delete old records
         VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
 
@@ -661,42 +656,51 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         }
 
 
-        if ( $familyData['marital_status_id'] != 1) {
+        if ( !empty($familyData['spouse_name'])){
             $familyMember =  new VmtEmployeeFamilyDetails;
             $familyMember->user_id  = $user_id;
             $familyMember->name =   $familyData['spouse_name'];
             $familyMember->relationship = 'Spouse';
             $familyMember->gender = $familyData['spouse_gender'] ?? '';
+
 //for bulk onboarding if($onboard_import_type == "excel_bulk"){
 
 
              if(!empty($familyData["dob_spouse"])){
                $dob_spouse =  $familyData["dob_spouse"];
                 $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
+
             }
 
-            if(!empty($familyData["wedding_date"]))
+            if(!empty($familyData["wedding_date"])){
                $wedding_date = $familyData["wedding_date"];
-                $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date) ;
+               $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date) ;
 
-
+            }
             $familyMember->save();
+        }
 
-            if (!empty($familyData['child_name'])) {
+
+            if (!empty($familyData['child_name'])){
                 $familyMember =  new VmtEmployeeFamilyDetails;
                 $familyMember->user_id  = $user_id;
                 $familyMember->name =   $familyData['child_name'];
                 $familyMember->relationship = 'Children';
                 $familyMember->gender = '---';
 
-                if(isset($familyData["child_dob"]))
+                if(!empty($familyData["child_dob"])){
                 $child_dob= $familyData["child_dob"];
                 $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
+                }
                 //$familyData["child_dob"];
-
                 $familyMember->save();
             }
-        }
+
+            }catch(\Exception $e){
+                dd("Error while saving record : ".$e);
+            }
+
+
 
     }
 
@@ -706,6 +710,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
     private function createOrUpdate_EmployeeCompensatory($user_id,$row)
     {
+        try{
         $compensatory = Compensatory::where('user_id',$user_id);
 
         if($compensatory->exists())
@@ -737,9 +742,11 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $compensatory->esic_employee = $row["esic_employee"] ?? '' ;
         $compensatory->professional_tax = $row["professional_tax"] ?? '' ;
         $compensatory->labour_welfare_fund = $row["labour_welfare_fund"] ?? '' ;
-        $compensatory->net_income = $row["net_salary"] ?? '' ;
+        $compensatory->net_income = $row["net_income"] ?? '' ;
         $compensatory->save();
-
+    }catch(\Exception $e){
+        dd("Error while saving record : ".$e);
+    }
     }
 
 
@@ -922,8 +929,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             {
                 //If date is not in 'd-m-y' format, then convert into 'd-m-y'
 
-                $processed_date = DateTime::createFromFormat('Y-m-d', $date)->format('Y-m-d');
-
+                $processed_date = DateTime::createFromFormat('Y-m-d', $date);
+                $processed_date->format('Y-m-d');
             }
 
             return $processed_date;
@@ -956,59 +963,59 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
         $json_response = array();
 
-        $array_unique_users = User::where('is_onboarded' ,1)->get(['id','user_code','name']);
-        foreach($array_unique_users as $single_user){
+        //Get all the  doc for the given user_id
+        $query_pending_onboard_docs = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                        ->join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
+                                        ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
+                                        ->where('vmt_employee_documents.status',"Pending")
+                                        ->get([
+                                            'users.name as name',
+                                            'vmt_employee_details.doj as doj',
+                                            'users.user_code as user_code',
+                                            'vmt_onboarding_documents.document_name as doc_name',
+                                            'vmt_employee_documents.id as record_id',
+                                            'vmt_employee_documents.status as doc_status',
+                                            'vmt_employee_documents.doc_url as doc_url'
+                                        ]);
 
-            //dd($single_user->user_id);
-            $single_user_data["user_id"] = $single_user->id;
-            $single_user_data["employee_name"] = $single_user->name;
-            $single_user_data["user_code"] = $single_user->user_code;
+        // //store all the documents in single key
+        foreach($query_pending_onboard_docs as $single_pending_docs){
 
+            $user_code = $single_pending_docs->user_code;
 
+            if(array_key_exists($user_code, $json_response))
+            {
+                array_push($json_response[$user_code]["documents"], [
+                                            "record_id" => $single_pending_docs->record_id,
+                                            "doc_name" => $single_pending_docs->doc_name,
+                                            "doc_url" => $single_pending_docs->doc_url,
+                                            "doc_status" => $single_pending_docs->doc_status
+                ]);
+            }
+            else
+            {
+                $user_details = [
+                    "name" => $single_pending_docs->name,
+                    "user_code" =>  $single_pending_docs->user_code,
+                    "doj" => $single_pending_docs->doj,
+                    "documents" => array([
+                                    "record_id" => $single_pending_docs->record_id,
+                                    "doc_name" => $single_pending_docs->doc_name,
+                                    "doc_url" => $single_pending_docs->doc_url,
+                                    "doc_status" => $single_pending_docs->doc_status
+                                   ]),
+                ];
 
-            //Get all the  doc for the given user_id
-            $onboard_doc = VmtEmployeeDocuments::join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
-                                ->where('user_id',$single_user->id)
-                                ->get(['vmt_onboarding_documents.document_name','doc_url']);
-
-            $onboard_doc->each(function ($item, int $key) use ($single_user){
-
-                $item["doc_url"] = "employees/". $single_user->user_code."/onboarding_documents/".$item["doc_url"];
-                  //dd($item["doc_url"]);
-            });
-
-
-
-
-            $single_user_data["onboard_doc"] = $onboard_doc->toArray();
-
-            //dd($single_user_data);
-
-            array_push($json_response, $single_user_data);
-
+                $json_response[$user_code] = $user_details;
+                //array_push(, $user_details);
+            }
         }
 
-        //dd($json_response);
 
-        return $json_response;
-
-    }
-
-
-    public function processEmployeeDocumentsBulkApprovals($data){
-        $reimbursement_data = $data['reimbursement_id']["reimbursement_data"];
-      //  dd( $reimbursement_data);
-             for($i=0;$i<count($reimbursement_data);$i++){
-                if($reimbursement_data[$i]['status']=='Pending'){
-                    VmtEmployeeReimbursements::where('id',$reimbursement_data[$i]['id'])
-                                            ->update([
-                                                'status' => $data['status']
-                                            ]);
-                }
-
-             }
-
+        return array_values($json_response);
 
     }
+
+
 
 }

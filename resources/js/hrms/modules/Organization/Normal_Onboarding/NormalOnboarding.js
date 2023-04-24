@@ -46,6 +46,7 @@ import RadioButton from 'primevue/radiobutton';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
+import OrganizationChart from 'primevue/organizationchart';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import Textarea from 'primevue/textarea';
@@ -95,6 +96,8 @@ app.component('ProgressSpinner', ProgressSpinner);
 app.component('RadioButton', RadioButton);
 app.component('Toast', Toast)
 app.component('Textarea', Textarea)
+app.component('OrganizationChart', OrganizationChart)
+
 // app.component('FontAwesomeIcon',FontAwesomeIcon)
 
 app.mount("#vjs_normal_onboarding");

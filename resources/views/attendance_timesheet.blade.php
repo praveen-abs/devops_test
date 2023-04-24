@@ -803,7 +803,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start">' +
-                            '<p class="fw-bold text-primary text-capitalize">' + element.name + '</p>' +
+                            '<p class="fw-bold text-primary text-capitalize">' + element.trim() + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
                             '</a>' +
@@ -879,7 +879,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start ">' +
-                            '<p class="fw-bold text-primary text-capitalize" >' + element.name +
+                            '<p class="fw-bold text-primary text-capitalize" >' + element.name.trim() +
                             '</p>' +
                             '<p class=" text-muted f-11 text-capitalize">' + element.designation +
                             '</p>' +
@@ -944,7 +944,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 avatar_data +
                 '</div>' +
                 '<div class="user_content text-start">' +
-                '<p class="fw-bold text-primary text-capitalize">{{ $current_employee_detail->name }}</p>' +
+                '<p class="fw-bold text-primary text-capitalize">{{ trim($current_employee_detail->name) }}</p>' +
                 '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
                 '</a>' +

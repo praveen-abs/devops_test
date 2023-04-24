@@ -34,11 +34,11 @@
 
                     <div class="tab-pane fade " id="not_active_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-                        <YetToActiveEmployees />
+                        <!-- <YetToActiveEmployees /> -->
                     </div>
                     <div class="tab-pane fade " id="exit_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-                        <ExitEmployees />
+                        <!-- <ExitEmployees /> -->
                     </div>
                 </div>
             </div>
@@ -50,8 +50,6 @@
 import ActiveEmployees from './active_employees/active_employees.vue'
 import YetToActiveEmployees from './yet_to_active_employees/yet_to_active_employees.vue'
 import ExitEmployees from './exit_employees/exit_employees.vue'
-
-
 
 
 
