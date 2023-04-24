@@ -60,6 +60,20 @@ class VmtTestingController extends Controller
         return response()->file(storage_path('employees/' . $private_file));
     }
 
+
+    public function viewBASE64_PrivateFile()
+    {
+        //dd("asda");
+
+        //$private_file = "B090/onboarding_documents/AadharCardBack_B090_13-04-2023_18-23-34.jpg";
+        $private_file = "PLIPL068/profile_pics/mk.jpg";
+        //dd(file(storage_path('employees/'.$private_file)));
+        $output =File::get(storage_path('employees/' . $private_file));
+
+        return base64_encode($output);
+
+    }
+
     public function testingpdf()
     {
         $client_name = 'brandavatar';

@@ -50,6 +50,7 @@
                 </div>
                 <div class="col-12">
                   <div class="px-2 row">
+
                     <div class="col">
 
                         <div style="padding: 10px ;" class="border rounded d-flex justify-content-start align-items-center border-color" >
@@ -88,6 +89,7 @@
                         <Dropdown v-model="opt5" editable :options="op" optionLabel="dep" optionValue="dep"
                           placeholder="Legal Entity" class="w-full text-red-500 md: border-color" />
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -186,7 +188,7 @@
                     <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
                     HR
                     <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    Final Admin
+                    Finance Admin
                   </label>
                 </div>
               </div>
@@ -197,7 +199,7 @@
                     <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
                     HR
                     <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    Final Admin
+                    Finance Admin
                   </label>
                 </div>
               </div>
@@ -216,7 +218,7 @@
                   <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
                     <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
 
-                    Final Admin
+                    Finance Admin
                   </label>
                 </div>
               </div>

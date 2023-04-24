@@ -46,16 +46,15 @@
                                                 <i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i>
                                                         <input name="file" type="file" required>
                                                     </div> --}}
-                                                   
+
                                                     <div class="p-2 my-4 bg-gray-100 rounded-lg">
-                                                  
-                                                  <span class="choose-file ms-1">
-                                                <input name="file" type="file" required>
-                                                <i class="fa fa-file" aria-hidden="true"></i>
-                                                Choose file
-                                            </span>
-                                            <span style="width: 300px;" class="mx-4 text-bold" id="uploaded_doc"></span>
-                                        </div>
+                                                        <span class="choose-file ms-1">
+                                                      <input name="file" type="file" required>
+                                                      <i class="fa fa-file" aria-hidden="true"></i>
+                                                      Choose file
+                                                  </span>
+                                                  <span style="width: 500px;" class="mx-4 text-bold" id="uploaded_doc"></span>
+                                              </div>
                                             <!-- <span class="choose-file ms-1">
                                                 <input name="file" type="file">
                                                 <i class="fa fa-file" aria-hidden="true"></i>
@@ -1038,6 +1037,13 @@
                         console.log("Got response....");
                         console.log("Status message : "+ajaxData.status);
                         console.log(ajaxData);
+                         if(ajaxData.status == 'success'){
+                            Swal.fire({
+                            title: ajaxData.message,
+                            text: ajaxData.status,
+                            type: "success"
+                        })
+                    }
 
                         $('#error-msg').html('');
                         $('#error-msg').append('<b>Upload Status : <br/></b>');
@@ -1073,11 +1079,12 @@
                 })
             });
 
-            
+
        $(document).ready(function(){
         $('input[type="file"]').change(function(e){
             var fileName = e.target.files[0].name;
             $("#uploaded_doc").html(fileName)
+            console.log(fileName);
         });
     });
 

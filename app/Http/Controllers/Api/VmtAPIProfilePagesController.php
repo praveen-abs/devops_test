@@ -13,6 +13,14 @@ use App\Services\VmtProfilePagesService;
 class VmtAPIProfilePagesController extends HRMSBaseAPIController
 {
 
+    public function updateProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->updateProfilePicture($request->user_code, $request->file_object);
+    }
+
+    public function getProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->getProfilePicture($request->user_code);
+    }
+
     public function fetchEmployeeProfileDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
     {
 
@@ -92,14 +100,13 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             $request->all(),
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
-                //"personal_email" => 'required|email:rfc,dns',
-                "personal_email" =>
-                'required|email:rfc,dns',
+                "personal_email" => 'required|email:rfc,dns',
                 "office_email"  => 'required|email:rfc,dns',
                 "mobile_number"  => 'required',
-                "current_address"  => 'required',
-                "permanent_address"  => 'required',
-
+                "current_address_line_1"  => 'required',
+                "current_address_line_2"  => 'required',
+                "permanent_address_line_1"  => 'required',
+                "permanent_address_line_2"  => 'required',
 
 
             ],
@@ -120,12 +127,13 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
 
         $response = $serviceVmtProfilePagesService->updateEmployeeContactInformation(
             user_code: $request->user_code,
-
             personal_email: $request->personal_email,
             office_email: $request->office_email,
             mobile_number: $request->mobile_number,
-            current_address: $request->current_address,
-            permanent_address: $request->permanent_address
+            current_address_line_1: $request->current_address_line_1,
+            current_address_line_2: $request->current_address_line_1,
+            permanent_address_line_1: $request->permanent_address_line_1,
+            permanent_address_line_2: $request->permanent_address_line_2,
         );
 
         return response()->json([

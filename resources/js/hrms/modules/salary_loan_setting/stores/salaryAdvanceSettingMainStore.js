@@ -32,7 +32,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Eligible Employees
 
-    const eligibleEmployeeData = ref()
+    const eligibleSalaryAdvanceEmployeeData = ref()
 
     // Percentage of Salary Advance
     // Deduction Method
@@ -62,13 +62,103 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     //   Salary Advance Ends
 
 
+    // Interest Free Loan Feature Begins
+
+    // Initially Disabled
+
+    const isInterestFreeLoaneature = ref(1)
+
+    // Eligible Employees and Amount
+    // Deduction Method
+    const ifl = reactive({
+        minEligibile:'',
+        availPerInCtc:'',
+        deductMethod:'',
+        cusDeductMethod:'',
+        maxTenure:''
+
+    })
+
+    const saveInterestfreeLoan = () =>{
+        if(isInterestFreeLoaneature.value == '1'){
+             console.log("disabled");
+        }else{
+            console.log(ifl);
+        }
+        
+    }
+
+    // Interest Free Loan Feature Ends
+
+
+    // Travel Advance Feature Begins
+
+    const isTravelAdvanceFeatureEnabled = ref(1)
+
+    
+    // Eligible Employees
+
+    const eligibleTravelAdvanceEmployeeData = ref(1)
+
+    // Travel Advance Limit
+    // Deduction 
+    // Claim Settings
+
+    const ta = reactive({
+        tdl:'',
+        deductMethod:'',
+        sumbitWithIn:'',
+        isDeductedInsubsequentpayroll:''
+    })
+
+
+    // Travel Advance Feature Ends
+
+
+    // Loan With interest Feature Begins
+
+    const isLoanWithInterestFeature = ref(1)
+
+    const lwif = reactive({
+        minEligibile:'',
+        availPerInCtc:'',
+        deductMethod:'',
+        cusDeductMethod:'',
+        maxTenure:''
+
+    })
+
+
+    // Loan With interest Feature Ends
+
+
+
+
+
+
+
+
 
 
     return {
 
     // SalaryAdvanceFeature
 
-    isSalaryAdvanceFeatureEnabled,eligibleEmployeeData,sa,SalaryAdvanceFeatureApprovalFlow,saveSalaryAdvanceFeature
+    isSalaryAdvanceFeatureEnabled,eligibleSalaryAdvanceEmployeeData,sa,SalaryAdvanceFeatureApprovalFlow,saveSalaryAdvanceFeature,
+
+    // Interest Free Loan
+
+    isInterestFreeLoaneature,ifl,saveInterestfreeLoan,
+
+    // Travel Advance Feature 
+
+    isTravelAdvanceFeatureEnabled,eligibleTravelAdvanceEmployeeData,ta,
+    
+
+    // Loan With interest Feature
+    isLoanWithInterestFeature,lwif
+
+
 
 
 

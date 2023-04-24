@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\VmtAPIDashboardController;
 use App\Http\Controllers\Api\VmtAPIAttendanceController;
 use App\Http\Controllers\Api\VmtAPIPaySlipController;
 use App\Http\Controllers\Api\VmtAPIProfilePagesController;
+use App\Http\Controllers\Api\VmtAPIInvestmentsController;
+use App\Http\Controllers\Api\VmtApiNotificationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,16 +39,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllUsers', [HRMSBaseAPIController::class, 'getAllUsers']);
     Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
+    Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
 
+    Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
     //HOLIDAYS
     Route::get('/holidays/getAllHolidays', [HRMSBaseAPIController::class, 'getAllHolidays']);
-
-
-
-
-
-
 
 
     //PMS Forms
@@ -85,20 +83,30 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //Payslip API
-    Route::get('payslip_getmonthlypayslipdata', [VmtAPIPaySlipController::class, 'getMonthlyPayslipData']);
+    Route::post('/payroll/payslip/getEmployeePayslipDetails', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetails']);
+    Route::post('/payroll/payslip/getEmployeePayslipDetailsAsPDF', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsPDF']);
 
-    Route::post('employee_monthly_leave_details', [
-        VmtAPIAttendanceController::class,
-        'employeeMonthlyLeaveDetails'
-    ]);
 
-    Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
     //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
+    Route::post('/profile-pages/getProfilePicture', [VmtAPIProfilePagesController::class, 'getProfilePicture']);
+    Route::post('/profile-pages/updateProfilePicture', [VmtAPIProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
     Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
     Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
+
+
+    //Investments
+    Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
+    Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
+
+    //Notifications
+    Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);
+    Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class,'saveNotification']);
+    Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class,'updateNotificationReadStatus']);
+
+
 });

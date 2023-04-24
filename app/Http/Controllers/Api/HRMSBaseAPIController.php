@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\VmtBloodGroup;
+use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Request;
 
@@ -38,5 +39,10 @@ class HRMSBaseAPIController extends Controller
     public function getAllMaritalStatus(Request $request)
     {
         return VmtMaritalStatus::all()->pluck('name');
+    }
+
+    public function getAllLeaveTypes(Request $request)
+    {
+        return VmtLeaves::all()->pluck('leave_type');
     }
 }

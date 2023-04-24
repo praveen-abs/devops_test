@@ -21,9 +21,145 @@ use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
 use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class VmtProfilePagesService
 {
+
+
+    /*
+        Store employee profile pic in 'storage\employees\PLIPL068\profile_pic'
+        Add entry in Users table
+    */
+    public function updateProfilePicture($user_code, $file_object){
+
+       //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'file_object' => $file_object
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'file_object' => 'required'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+
+        try{
+
+            //Create file name
+            $date = date('d-m-Y_H-i-s');
+            $file_name =  'pic_'.$user_code.'_'.$date.'.'.$file_object->extension();
+            $path = $user_code.'/profile_pics';
+
+            //Store the file in private path
+            $file_object->storeAs($path, $file_name, 'private');
+
+            //Get the user record and update avatar column
+            $query_user = User::where('user_code',$user_code)->first();
+            $query_user->avatar = $file_name;
+            $query_user->save();
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture updated successfully",
+                "data" => '',
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Failed to save profile picture",
+                "data" => $e,
+            ]);
+
+        }
+
+    }
+
+    public function getProfilePicture($user_code){
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            //Get the user record and update avatar column
+            $avatar_filename = User::where('user_code',$user_code)->first()->avatar;
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $response = Storage::disk('private')->get($user_code."/profile_pics/".$avatar_filename);
+
+            if($response)
+            {
+                $response = base64_encode($response);
+            }
+            else// If no file found, then send this
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Profile picture doesnt exist for the given user"
+                ]);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Profile picture fetched successfully",
+                "data" => $response,
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" => $e,
+            ]);
+
+        }
+    }
 
     /*
 
@@ -61,6 +197,7 @@ class VmtProfilePagesService
 
         //Add the documents details
 
+        $response['avatar'] ="ASDFJASDJFLKAJSDF";
 
 
         //Remove ID from user table
@@ -107,7 +244,7 @@ class VmtProfilePagesService
         }
     }
 
-    public function updateEmployeeContactInformation($user_code, $personal_email, $office_email, $mobile_number, $current_address, $permanent_address)
+    public function updateEmployeeContactInformation($user_code, $personal_email, $office_email, $mobile_number, $current_address_line_1, $current_address_line_2, $permanent_address_line_1 , $permanent_address_line_2)
     {
 
 
@@ -127,6 +264,12 @@ class VmtProfilePagesService
 
             if ($details->exists()) {
                 $details->mobile_number = $mobile_number;
+
+                $details->current_address_line_1 = $current_address_line_1;
+                $details->current_address_line_2 = $current_address_line_2;
+                $details->permanent_address_line_1 = $permanent_address_line_1;
+                $details->permanent_address_line_2 = $permanent_address_line_2;
+
                 $details->save();
             }
 

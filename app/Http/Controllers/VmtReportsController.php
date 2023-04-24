@@ -439,6 +439,7 @@ class VmtReportsController extends Controller
                                 ->join('vmt_department AS dep','dep.id','=','office.department_id')
                                 ->where('users.id',auth()->user()->id)
                                 ->select('users.user_code','users.name AS name','dep.name AS department','details.location')->first();
+
         foreach($reimbursementService->fetchEmployeeReimbursement($user_id,$year,$month) as $single_data){
 
             $overall_distance = $overall_distance+(int)$single_data->distance_travelled;
@@ -460,6 +461,7 @@ class VmtReportsController extends Controller
 
 
         $client_name=sessionGetSelectedClientName();
+
         if( $client_name=='Protocol'){
            $legal_entity='PROTOCOL LABELS INDIA PRIVATE LIMITED';
            $client_name=strtolower( $client_name);
@@ -467,6 +469,9 @@ class VmtReportsController extends Controller
            $legal_entity=  $client_name;
            $client_name=strtolower( $client_name);
         }
+
+        $client_logo_path = session()->get('client_logo_url');
+
         $file_name=date("F", strtotime('00-'.$month.'-01'))."-".$year;
         $month_name=strtoupper(date("F", strtotime('00-'.$month.'-01')));
 
@@ -474,7 +479,7 @@ class VmtReportsController extends Controller
 
 
         return  Excel::download(new EmployeeReimbursementsExport($employee_details,$reimbursement_data,$legal_entity,
-                                                                $month_name,$year,$client_name,$totals),
+                                                                $month_name,$year,$client_name,$client_logo_path, $totals),
                                                                 $employee_details['user_code'].'_'. $employee_details['name'].'_'.$file_name.' Reimbursements Reports.xlsx');
     }
 }
