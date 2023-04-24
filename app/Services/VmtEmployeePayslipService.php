@@ -697,13 +697,16 @@ class VmtEmployeePayslipService {
                                                     $query->whereYear('PAYROLL_MONTH', $year)
                                                     ->whereMonth('PAYROLL_MONTH', $month)
                                                    ->select(['id','user_id', 'PAYROLL_MONTH','MONTH_DAYS','Worked_Days','LOP','ArrearS_Days','BASIC','HRA','SPL_ALW',
-                                                            'Overtime','travel_conveyance','TOTAL_EARNED_GROSS','PROF_TAX','income_tax','SAL_ADV','OTHER_DEDUC','TOTAL_DEDUCTIONS',
-                                                            'NET_TAKE_HOME']);
+                                                            'Overtime','travel_conveyance','TOTAL_EARNED_GROSS','PROF_TAX','income_tax','SAL_ADV','OTHER_DEDUC','TOTAL_DEDUCTIONS','EPFR','EMPLOYEE_ESIC',
+                                                            'NET_TAKE_HOME','EMPLOYER_ESI']);
                                                 },
                                             ])
                                             ->where('users.id',$user_id)
                                             ->get(['users.id','users.name','users.user_code','users.email']);
 
+            // $response['bank'] = Bank::with([
+            //                         'get_bank_name'
+            // ])->get();
 
 
             $response['client_logo'] = '';
