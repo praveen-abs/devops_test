@@ -253,7 +253,7 @@
               </Dialog>
               <!-- {{ employee_service.data_local_convergance }} -->
               <DataTable ref="dt" :value="employee_service.data_local_convergance" dataKey="id" :paginator="true"
-                :rows="8"
+                :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -269,7 +269,7 @@
                   </template>
                 </Column> -->
 
-                <Column field="date" header="Date" style="min-width: 12rem" dataType="date" sortable>
+                <Column field="date" header="Date" style="min-width: 8rem" dataType="date" sortable>
                   <template #body="slotProps">
                     {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
                   </template>
@@ -290,18 +290,18 @@
                     {{ slotProps.data.to }}
                   </template>
                 </Column>
-                <Column field="distance_travelled" header="Total Distance" style="min-width: 12rem">
+                <Column field="distance_travelled" header="Total Distance" style="min-width: 4rem">
                   <template #body="slotProps">
                     {{ slotProps.data.distance_travelled }}
                   </template>
                 </Column>
-                <Column field="Amt_km" header="Amt/Km" style="min-width: 12rem">
+                <Column field="Amt_km" header="Amt/Km" style="min-width:4rem"> 
                   <template #body="slotProps">
                     {{ slotProps.data.amt_per_km }}
                   </template>
                 </Column>
 
-                <Column field="total_expenses" header="Amount" style="min-width: 12rem">
+                <Column field="total_expenses" header="Amount" style="min-width: 6rem">
                   <template #body="slotProps">
                     {{ slotProps.data.total_expenses }}
                   </template>
@@ -498,9 +498,6 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
-// .main-content {
-//   width: 85%;
-// }
 
 .p-datatable .p-datatable-thead>tr>th {
   text-align: center;
