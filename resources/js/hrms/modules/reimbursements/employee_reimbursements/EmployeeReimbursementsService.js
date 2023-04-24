@@ -283,7 +283,7 @@ export const employee_reimbursment_service = defineStore(
         }
 
         const selected_date = ref()
-        const generate_ajax = () => {
+        async function generate_ajax() {
 
             loading_spinner.value = true
 
@@ -303,7 +303,7 @@ export const employee_reimbursment_service = defineStore(
             console.log(month);
 
 
-            axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
+           await axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
                 params: {
                     selected_year: year,
                     selected_month: month
