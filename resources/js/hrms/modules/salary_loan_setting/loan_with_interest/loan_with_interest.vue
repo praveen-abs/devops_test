@@ -1,45 +1,32 @@
 <template>
     <div class="px-5">
       <div class="row d-flex justify-content-start align-items-center ">
-        <div class="d-flex">
-          <div class="col-3 fs-3" style="position: relative; left: -8px;">
-            <h1>Loan With interest Feature</h1>
+        <div class="d-flex mt-4">
+          <div class="col-4 fs-3 " style="position: relative; left: -8px;">
+            <h1 class="fw-bolder">Loan With interest Feature</h1>
           </div>
+
           <div class="col-12">
-
-
             <button class="orange_btn "
               :class="[activetab === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
               @click="activetab = 1">Disabled</button>
             <button class="Enable_btn" :class="[activetab === 2 ? 'bg-green-700 text-white' : '']"
               @click="activetab = 2">Enable</button>
-
           </div>
 
-          <div class="float-right" v-if="activetab == '2'">
-            <button class="btn btn-border-primary">Cancel</button>
-            <button class="mx-4 btn btn-primary">Save Changes</button>
-          </div>
         </div>
 
         <div class="col" v-if="activetab == '1'">
-          <div>
-            <p class="fs-5 clr">Please click the "Enable" button to activate the Loan With interest Feature for use within your
+
+            <p class="fs-5 ">Please click the "Enable" button to activate the Loan With interest Feature for use within your
               organization.</p>
-          </div>
         </div>
-        <div v-else class="row border">
-          <div class="col-10">
-
-            <p class="fs-5 clr">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
-
-          </div>
-
-
+        <div v-else class="row  ">
 
           <div class="col-10 ">
-            <h1 class="mt-10 fs-3">Eligible Amount</h1>
-            <p class="my-2 fs-5 clr">The employees not eligible for Interest Free Loan can also claim the Loan with Interest</p>
+            <p class="fs-5 ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
+            <h1 class="mt-10 fs-3 fw-bolder">Eligible Amount</h1>
+            <p class="my-2 fs-5 ">The employees not eligible for Interest Free Loan can also claim the Loan with Interest</p>
 
             <div class="shadow-sm card border-L rounded-top">
               <div class="card-body">
@@ -55,12 +42,12 @@
               </div>
             </div>
 
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Interest</h1>
-            <p class="my-2 fs-5 clr">Percentage of Interest.</p>
+            <h1 class="my-3 fs-3 fw-bolder " style="margin-top: 30px !important;">Interest</h1>
+            <p class="my-2 fs-5 ">Percentage of Interest.</p>
             <div class="card border-L">
               <div class="card-body">
                 <div class="my-3 row">
-                  <div class="col-7 d-flex justify-content-start align-items-center">
+                  <div class="col-8 d-flex justify-content-start align-items-center">
                     <label for="" class="fs-5 clr">Enter the percentage of interest for the loan
                       <InputText type="text" class="mx-3" v-model="value" style="max-width: 100px;" />% of the loan amount.
                     </label>
@@ -75,8 +62,8 @@
             </div>
 
 
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Deduction Method</h1>
-            <p class="my-2 fs-5">In the case of an interest-free loan, the EMI would only consist of repayment of the principal amount borrowed, and no interest would be charged.</p>
+            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
+            <p class="my-2 fs-6">In the case of an interest-free loan, the EMI would only consist of repayment of the principal amount borrowed, and no interest would be charged.</p>
             <div class="card border-L">
               <div class="card-body">
                 <div class="row">
@@ -100,7 +87,7 @@
                 </div>
                 <div class="row ml-1">
                   <div class="col ml-4">
-                    <p class="fs-5 clr-gray" style="line-height: 14px;">
+                    <p class="fs-6 clr-gray text-wrap" style="line-height: 14px;">
                         (Note: During the specified period, employees have the option to select the month in which they would like the EMI deductions to begin.)</p>
                   </div>
                 </div>
@@ -116,7 +103,7 @@
               </div>
             </div>
 
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Approval Setting</h1>
+            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
             <p class="my-2 fs-5">Please choose the approval flow for Loan With Interest Feature.</p>
 
             <div class="card border-L">
@@ -175,7 +162,14 @@
 
         <!--Next screen  -->
 
-
+        <div class="row">
+                <div class="col">
+                    <div class="float-right" v-if="activetab == '2'">
+                        <button class="btn btn-border-primary">Cancel</button>
+                        <button class="mx-4 btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+        </div>
 
       </div>
     </div>

@@ -1,8 +1,8 @@
 <template>
     <div class="px-5">
       <div class="row d-flex justify-content-start align-items-center ">
-        <div class="d-flex">
-          <div class="col-3 fs-3" style="position: relative; left: -8px;">
+        <div class="d-flex mt-4">
+          <div class="col-3 fs-3" style="position: relative; left: -8px; font-weight: 700;">
             <h1>Interest Free Loan Feature</h1>
           </div>
 
@@ -15,10 +15,10 @@
 
           </div>
 
-          <div class="float-right" v-if="activetab == '2'">
+          <!-- <div class="float-right" v-if="activetab == '2'">
             <button class="btn btn-border-primary">Cancel</button>
             <button class="mx-4 btn btn-primary">Save Changes</button>
-          </div>
+          </div> -->
         </div>
 
         <div class="col" v-if="activetab == '1'">
@@ -29,10 +29,10 @@
         </div>
         <div v-else class="row">
           <div class="col-10">
-
             <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
-            <h1 class="mt-10 fs-3">Eligible Employees and Amount</h1>
-            <p class="my-2 fs-5">The employee's eligibility for the loan amount can be determined based on the number of years they have served in the organization.</p>
+
+            <h1 class="mt-10 fs-3 fw-bolder">Eligible Employees and Amount</h1>
+            <p class=" fs-5">The employee's eligibility for the loan amount can be determined based on the number of years they have served in the organization.</p>
           </div>
           <div class=" col-12">
             <div class="rounded-lg shadow-sm card border-L ">
@@ -54,7 +54,7 @@
           </div>
 
           <div class="col ">
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Deduction Method</h1>
+            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
             <p class="my-2 fs-5">In the case of an interest-free loan, the EMI would only consist of repayment of the principal amount borrowed, and no interest would be charged.</p>
             <div class="card border-L">
               <div class="card-body">
@@ -95,7 +95,7 @@
               </div>
             </div>
 
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Approval Setting</h1>
+            <h1 class="my-3 fs-3 " style="margin-top: 30px !important; font-weight: 700;">Approval Setting</h1>
             <p class="my-2 fs-5">Please choose the approval flow for Interest Free Loan Feature.</p>
 
             <div class="card border-L">
@@ -150,7 +150,15 @@
             </div>
 
           </div>
+
+          <div class="col-12">
+                      <div class="float-right" v-if="activetab == '2'">
+                                <button class="btn btn-border-primary">Cancel</button>
+                                <button class="mx-4 btn btn-primary">Save Changes</button>
+                            </div>
+          </div>
         </div>
+
 
         <!--Next screen  -->
 

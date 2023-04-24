@@ -1,9 +1,9 @@
 <template>
     <div class="px-5">
       <div class="row d-flex justify-content-start align-items-center ">
-        <div class="d-flex">
+        <div class="d-flex mt-4">
           <div class="col-3 fs-3" style="position: relative; left: -8px;">
-            <h1>Travel Advance Feature</h1>
+            <h1 class="fw-bolder">Travel Advance Feature</h1>
           </div>
           <div class="col">
 
@@ -16,10 +16,10 @@
 
           </div>
 
-          <div class="float-right" v-if="activetab == '2'" >
+          <!-- <div class="float-right" v-if="activetab == '2'" >
             <button class="btn btn-border-primary">Cancel</button>
             <button class="mx-4 btn btn-primary">Save Changes</button>
-          </div>
+          </div> -->
         </div>
 
         <div class="col" v-if="activetab == '1'" >
@@ -32,7 +32,7 @@
           <div class="col-10">
 
             <p class="fs-5">Please click the "Disable" button to deactivate the Travel Advance Feature.</p>
-            <h1 class="mt-10 fs-3">Eligible Employees</h1>
+            <h1 class="mt-10 fs-3 fw-bolder">Eligible Employees</h1>
             <p class="my-2 fs-5">Kindly choose the employees who are eligible for the Travel Advance Feature.</p>
           </div>
           <div class=" col-12">
@@ -50,36 +50,44 @@
                   </div>
                   <div class="col-12">
                     <div class="px-2 row">
-                      <div class="col">
-                        <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
-                          placeholder="Department" class="w-full text-red-500 md: border-color" />
-                        {{ opt }}
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Department" class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Designation" class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Location" class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="State"
-                          class="w-full md:" />
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="Branch"
-                          class="w-full md:" />
+                        <div class="col">
 
-                      </div>
-                      <div class="col">
-                        <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                          placeholder="Legal Entity" class="w-full md:" />
-                      </div>
+                            <div style="padding: 10px ;" class="border rounded d-flex justify-content-start align-items-center border-color" >
+                                <input type="checkbox" class="mr-3" style="width:20px ; height: 20px; ">
+                                <h1>Clear Filters</h1>
+                            </div>
+
+                        <!-- <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="Department" class="w-full text-red-500 md: border-color" /> -->
+
+                        <!-- {{ opt }} -->
+                        </div>
+                        <div class="col">
+                            <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="Department" class="w-full text-red-500 md: border-color" />
+                        </div>
+                        <div class="col">
+                            <Dropdown v-model="opt1" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="Designation" class="w-full text-red-500 md: border-color" />
+                        </div>
+                        <div class="col">
+                            <Dropdown v-model="opt2" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="Location" class="w-full text-red-500 md: border-color" />
+                        </div>
+                        <div class="col">
+                            <Dropdown v-model="opt3" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="State" class="w-full text-red-500 md: border-color" />
+                        </div>
+                        <div class="col">
+
+                            <Dropdown v-model="opt4" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="Branch" class="w-full text-red-500 md: border-color" />
+
+                        </div>
+                        <div class="col">
+                            <Dropdown v-model="opt5" editable :options="op" optionLabel="dep" optionValue="dep"
+                            placeholder="Legal Entity" class="w-full text-red-500 md: border-color" />
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -93,7 +101,7 @@
           </div>
 
           <div class="col ">
-            <h1 class="my-3 fs-3">Travel Advance Limit</h1>
+            <h1 class="my-3 fs-3 fw-bolder">Travel Advance Limit</h1>
             <p class="my-2 fs-5">What is the maximum Limit for the travel allowance that can be availed.</p>
 
             <div class="shadow-sm card border-L rounded-top">
@@ -130,7 +138,7 @@
               </div>
             </div>
 
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Deduction </h1>
+            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Deduction </h1>
             <p class="my-2 fs-5">Please choose the method of deduction.</p>
             <div class="card border-L">
               <div class="card-body">
@@ -159,7 +167,7 @@
               </div>
             </div>
 
-            <h1 class="fs-3 mt-4 mb-4" >Claim Settings</h1>
+            <h1 class="fs-3 mt-4 mb-4 fw-bolder" >Claim Settings</h1>
             <div class="card border-L">
                 <div class="card-body">
                     <div class="row">
@@ -189,7 +197,7 @@
                 </div>
             </div>
 
-            <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Approval Setting</h1>
+            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
             <p class="my-2 fs-5">Please choose the approval flow for Travel Advance.</p>
 
             <div class="card border-L">
@@ -251,6 +259,14 @@
 
 
       </div>
+      <div class="row">
+                <div class="col">
+                    <div class="float-right" v-if="activetab == '2'">
+                        <button class="btn btn-border-primary">Cancel</button>
+                        <button class="mx-4 btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+        </div>
     </div>
   </template>
   <script setup>

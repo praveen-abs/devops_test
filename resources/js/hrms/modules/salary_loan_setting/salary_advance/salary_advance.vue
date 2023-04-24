@@ -1,9 +1,9 @@
 <template>
   <div class="px-5">
-    <div class="row d-flex justify-content-start align-items-center ">
-      <div class="d-flex">
+    <div class="row d-flex justify-content-start align-items-center mt-4">
+      <div class="d-flex mt-4">
         <div class="col-3 fs-3" style="position: relative; left: -8px;">
-          <h1>Salary Advance Feature</h1>
+          <h1 class="fw-bolder">Salary Advance Feature</h1>
         </div>
         <div class="col">
 
@@ -16,10 +16,10 @@
 
         </div>
 
-        <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '2'">
+        <!-- <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '2'">
           <button class="btn btn-border-primary">Cancel</button>
           <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
-        </div>
+        </div> -->
       </div>
 
       <div class="col" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '1'">
@@ -32,15 +32,15 @@
         <div class="col-10">
 
           <p class="fs-5">Please click the "Disable" button to deactivate the salary advance feature.</p>
-          <h1 class="mt-10 fs-3">Eligible Employees</h1>
+          <h1 class="mt-12 fs-3 fw-bolder">Eligible Employees</h1>
           <p class="my-2 fs-5">Kindly choose the employees who are eligible for the salary advance.</p>
         </div>
         <div class=" col-12">
           <div class="rounded-lg shadow-sm card">
-            <div class="card-body " style="border-top:3px solid var(--navy) ;">
+            <div class="card-body " style="border-top:4px solid var(--navy) ; border-radius: 4px 4px 0 0 ;">
               <div class="row ">
                 <div class="col-10">
-                  <h1 style="border-left:3px solid var(--orange); padding-left: 15px; font-size: 18px;">Employees</h1>
+                  <h1 style="border-left:4px solid var(--orange); padding-left: 15px; font-size: 18px;">Employees</h1>
                 </div>
                 <div class="col-10 ">
                   <span class="p-input-icon-left">
@@ -53,7 +53,7 @@
                     <div class="col">
 
                         <div style="padding: 10px ;" class="border rounded d-flex justify-content-start align-items-center border-color" >
-                            <input type="checkbox" class="mr-3" style="width:20px ; height: 20px;">
+                            <input type="checkbox" class="mr-3" style="width:20px ; height: 20px; ">
                             <h1>Clear Filters</h1>
                         </div>
 
@@ -63,29 +63,30 @@
                       <!-- {{ opt }} -->
                     </div>
                     <div class="col">
-                      <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Department" class="w-full md: border-color" />
+                        <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
+                          placeholder="Department" class="w-full text-red-500 md: border-color" />
                     </div>
                     <div class="col">
-                      <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Designation" class="w-full md: border-color" />
+                        <Dropdown v-model="opt1" editable :options="op" optionLabel="dep" optionValue="dep"
+                          placeholder="Designation" class="w-full text-red-500 md: border-color" />
                     </div>
                     <div class="col">
-                      <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Location" class="w-full md: border-color" />
+                        <Dropdown v-model="opt2" editable :options="op" optionLabel="dep" optionValue="dep"
+                          placeholder="Location" class="w-full text-red-500 md: border-color" />
                     </div>
                     <div class="col">
-                      <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="State"
-                        class="w-full md: border-color" />
+                        <Dropdown v-model="opt3" editable :options="op" optionLabel="dep" optionValue="dep"
+                          placeholder="State" class="w-full text-red-500 md: border-color" />
                     </div>
                     <div class="col">
-                      <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="Branch"
-                        class="w-full md: border-color" />
+
+                        <Dropdown v-model="opt4" editable :options="op" optionLabel="dep" optionValue="dep"
+                          placeholder="Branch" class="w-full text-red-500 md: border-color" />
 
                     </div>
                     <div class="col">
-                      <Dropdown v-model="selectedCity" editable :options="cities" optionLabel="name"
-                        placeholder="Legal Entity" class="w-full md: border-color" />
+                        <Dropdown v-model="opt5" editable :options="op" optionLabel="dep" optionValue="dep"
+                          placeholder="Legal Entity" class="w-full text-red-500 md: border-color" />
                     </div>
                   </div>
                 </div>
@@ -99,8 +100,8 @@
           </div>
         </div>
 
-        <div class="col ">
-          <h1 class="my-3 fs-3">Percentage of Salary Advance</h1>
+        <div class="col mt-4">
+          <h1 class="my-3 fs-3 fw-bolder">Percentage of Salary Advance</h1>
           <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
           <div class="shadow-sm card border-L rounded-top">
@@ -114,7 +115,7 @@
                       <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
                     </div>
                   </div>
-              
+
 
                 </div>
                 <div class="col-2 ">
@@ -141,7 +142,7 @@
             </div>
           </div>
 
-          <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Deduction Method</h1>
+          <h1 class="my-3 fs-3 mt-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
           <p class="my-2 fs-5">Please choose the method of deduction.</p>
           <div class="card border-L">
             <div class="card-body">
@@ -171,7 +172,7 @@
             </div>
           </div>
 
-          <h1 class="my-3 fs-3 " style="margin-top: 30px !important;">Approval Setting</h1>
+          <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
           <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
           <div class="card border-L">
@@ -247,6 +248,16 @@
 
 
     </div>
+    <div class="row">
+                <div class="col">
+                    <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '2'">
+                        <button class="btn btn-border-primary">Cancel</button>
+                        <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
+                    </div>
+                </div>
+    </div>
+
+
   </div>
 </template>
 <script setup>
@@ -260,8 +271,11 @@ const salaryStore = salaryAdvanceSettingMainStore()
 
 onMounted(() => {
   opt.value = "Department"
-
-
+  opt1.value = "Designation"
+  opt2.value = "Location"
+  opt3.value = "State"
+  opt4.value = "Branch"
+  opt5.value = "Legal Entity"
 })
 
 
@@ -276,6 +290,15 @@ const ingredient = ref('');
 
 
 const opt = ref()
+const opt1 =ref()
+const opt2 =ref();
+const opt3 =ref();
+const opt4 =ref();
+const opt5 =ref();
+const opt6 =ref();
+
+
+
 const op = ref([
   { id: 1, dep: "res" }
 ])
@@ -368,8 +391,7 @@ const data = ref({
 }
 
 .border-L {
-
-  border-left: 3px solid var(--navy);
+  border-left: 4px solid var(--navy) !important;
 }
 
 .border-color {

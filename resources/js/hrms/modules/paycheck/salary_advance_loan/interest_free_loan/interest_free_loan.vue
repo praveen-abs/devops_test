@@ -7,10 +7,60 @@
                             class="text-lg"> 100%</strong> of their monthly salary.</p>
                 </div>
 
-                <div class="float-right ">
+                <div class="float-right">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New
-                        Request</button>
+                    <button class="mx-4 btn btn-orange" @click="dialog_NewInterestFreeLoanRequest = true">
+                        <i class="mx-2 fa fa-plus" aria-hidden="true"></i>
+                        New Request
+                    </button>
+
+                    <Dialog v-model:visible="dialog_NewInterestFreeLoanRequest" header="Header" :style="{ width: '50vw' }" :position="position" :modal="true" :draggable="false">
+                        <template #header>
+                            <div><h1 style="border-left: 3px solid var( --orange);padding-left: 5px ;" class="fs-4">New Interest Free Loan Request</h1></div>
+                        </template>
+                        <div class="card bg-gray-100 bottom-0 mb-4" style="border:none">
+                            <div class="card-body">
+                                <div class="row mx-2">
+                                    <div class="col mx-2">
+                                        <h1 class="fs-5 my-2">Required Amount</h1>
+                                        <InputText type="text" v-model="value" placeholder="&#8377; Enter The Required Amount" />
+                                        <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000</p>
+                                    </div>
+                                    <div class="col mx-2">
+                                        <h1 class="fs-5 my-2">Monthly EMI</h1>
+                                        <InputText type="text" v-model="value" placeholder="&#8377; " />
+                                    </div>
+                                    <div class="col mx-2">
+                                        <h1 class="fs-5 my-2">Term</h1>
+                                        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="1" class="w-full md:w-10rem" />
+                                        <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
+                            <div class="card-body mx-4">
+                                <div class="row">
+                                    <h1 class="fs-5 my-2">EMI Dedution</h1>
+                                    <h1 class="">The EMI Dedution Will begin from the Upcoming Payroll</h1>
+                                        <div class="col">
+                                            <h1 class="fs-5 my-2">EMI Start Month</h1>
+                                            <Calendar v-model="date" showIcon />
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <template #footer>
+                            <Button label="" icon="pi pi-times" @click="visible = false" text />
+                            <Button label="Yes" icon="pi pi-check" @click="visible = false" text />
+                        </template>
+                    </Dialog>
                 </div>
             </div>
 
@@ -110,6 +160,18 @@ const activetab = ref(1)
 const activetab1 = ref(1)
 
 const ingredient = ref('');
+const dialog_NewInterestFreeLoanRequest =ref(false);
+
+const selectedCity = ref();
+    const cities = ref([
+        { name: '1.5', code: 'NY' },
+        { name: '2', code: 'RM' },
+        { name: '2.5', code: 'LDN' },
+        { name: '3', code: 'IST' },
+        { name: '3.5', code: 'PRS' }
+    ]);
+
+    const date = ref();
 
 
 </script>
@@ -118,6 +180,7 @@ const ingredient = ref('');
     --orange: #FF4D00;
     --white: #fff;
     --navy: #002f56;
+    --clr-gray:#959595;
 }
 
 .orange_btn {
@@ -139,5 +202,39 @@ const ingredient = ref('');
     padding: 7px 30px;
     border-radius: 4px 0 0 4px;
 
-}</style>
+}
+.p-button.p-component.p-button-icon-only.p-datepicker-trigger {
+    /* background: #002f56; */
+    color: #002f56;
+}
+.p-calendar .p-component .p-inputwrapper .p-calendar-w-btn{
+margin: 0;
+}
+</style>
+
+{
+
+
+    <!-- <template>
+        <div class="card flex justify-content-center">
+            <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
+        </div>
+    </template>
+
+    <script setup>
+    import { ref } from "vue";
+
+    const selectedCity = ref();
+    const cities = ref([
+        { name: 'New York', code: 'NY' },
+        { name: 'Rome', code: 'RM' },
+        { name: 'London', code: 'LDN' },
+        { name: 'Istanbul', code: 'IST' },
+        { name: 'Paris', code: 'PRS' }
+    ]);
+    </script>
+
+-->
+
+}
 
