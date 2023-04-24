@@ -69,7 +69,7 @@ class VmtEmployeeOnboardingController extends Controller
         //dd(User::where('email',$request->mail)->exists());
 
         if(!empty($request->aadhar_number))
-            return User::where('user_code',$request->aadhar_number)->exists() ? "true" : "false";
+            return VmtEmployee::where('aadhar_number',$request->aadhar_number)->exists() ? "true" : "false";
         else
             return false;
     }
@@ -78,16 +78,18 @@ class VmtEmployeeOnboardingController extends Controller
         //dd(User::where('email',$request->mail)->exists());
 
         if(!empty($request->pan_number))
-            return User::where('user_code',$request->pan_number)->exists() ? "true" : "false";
+            return VmtEmployee::where('pan_number',$request->pan_number)->exists() ? "true" : "false";
         else
             return false;
     }
     public function isMobileNoAlreadyExists(Request $request){
-        //dd($request->all());
+       // dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
 
-        if(!empty($request->mobile_number))
-            return User::where('user_code',$request->mobile_number)->exists() ? "true" : "false";
+        if(!empty($request->mobile_number)){
+
+            return VmtEmployee::where('mobile_number',$request->mobile_number)->exists() ? "true" : "false";
+        }
         else
             return false;
     }
