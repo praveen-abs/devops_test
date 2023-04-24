@@ -1,9 +1,9 @@
 <template>
   <Toast />
   <!-- Loading Spinner -->
-  <Transition name="modal">
+  <!-- <Transition name="modal">
     <ABS_loading_spinner v-if="employee_service.loading_spinner" />
-  </Transition>
+  </Transition> -->
   <div class="reimbursement-wrapper mt-30">
     <div class="mb-2 card left-line">
       <div class="pt-1 pb-1 card-body">
@@ -23,7 +23,7 @@
                 </a>
               </li> -->
 
-              <li class="nav-item text-muted ms-5" role="presentation">
+              <li class="nav-item text-muted " role="presentation">
                 <a
                   class="pb-2 nav-link active"
                   data-bs-toggle="tab"
@@ -43,22 +43,22 @@
           <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy" class="mx-4"
                 style=" border: 1px solid orange; border-radius: 7px;" />
 
-            <button label="Submit" class="btn btn-primary mx-4" severity="danger"
+            <button label="Submit" class="mx-4 my-auto btn btn-primary" severity="danger" style="height: 33px;"
                 :disabled="!employee_service.selected_date == '' ? false : true" @click="employee_service.generate_ajax"> <i class="fa fa-cog me-2"></i>
                 Generate</button>
-                <button class="btn btn-primary" :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success"
-            @click="employee_service.download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
+                <button class="my-auto btn btn-primary" :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success" style="height: 33px;"
+            @click="employee_service.download_ajax"><i class="fas fa-file-download me-2" ></i>Download</button>
             <!-- <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
-              class="btn btn-orange mx-4"
+              class="mx-4 btn btn-orange"
             >
               <i class="fa fa-plus-circle me-1"></i>Add Claim
             </button> -->
 
             <button
               @click="employee_service.onclickOpenLocalConverganceDailog"
-              class="btn btn-orange mx-4"
+              class="mx-4 my-auto btn btn-orange" style="height: 33px;"
             >
               <i class="fa fa-plus-circle me-1"></i>Add Claim
             </button>
@@ -71,7 +71,7 @@
       <div class="card-body">
         <!--<div class="tab-content" id="pills-tabContent">
           <div
-            class="tab-pane  fade active"
+            class="tab-pane fade active"
             id="reimbursement"
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
@@ -251,7 +251,7 @@
         >
           <div>
             <div class="card">
-              <!-- <Dialog
+              <Dialog
                 header="Header"
                 v-model:visible="employee_service.loading_spinner"
                 :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -272,7 +272,7 @@
                 <template #footer>
                   <h5 style="text-align: center">Please wait...</h5>
                 </template>
-              </Dialog> -->
+              </Dialog>
 <!-- {{ employee_service.data_local_convergance }} -->
               <DataTable
                 ref="dt"
@@ -405,7 +405,7 @@
                 />
               </div>
 
-              <div class=" formgrid flex">
+              <div class="flex formgrid">
                 <div class="field col">
                   <label for="Eligible Amount">From <span class="text-danger">*</span> </label>
                   <InputText
@@ -823,5 +823,11 @@ employee_service.selected_date = new Date()
 ::-ms-input-placeholder {
   /* Microsoft Edge */
   color: red;
+}
+.p-calendar .p-inputtext {
+  flex: 1 1 auto;
+  width: 1%;
+   font-weight: 600;
+   color: #003056;
 }
 </style>

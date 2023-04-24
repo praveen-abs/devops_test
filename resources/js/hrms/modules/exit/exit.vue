@@ -29,7 +29,7 @@
 
                     </div>
                     <div class="col-3 text-end">
-                        <button class="btn btn-primary" id="apply_resignation" @click="visible = true">Apply
+                        <button class="btn btn-primary" id="apply_resignation" @click="applyResignationDailog = true">Apply
                             Resignation</button>
                     </div>
                 </div>
@@ -92,18 +92,21 @@
                         </template> -->
                                 </Column>
                                 <Column field="" header="Withdraw " style="min-width: 12rem">
-                                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                                    <template #body>
+                                        <div @click="WithdrawResignationDailog = true" class="btn btn-border-orange">
+                                            Withdraw
+                                        </div>
+                                    </template>
                                 </Column>
 
-                                <Column field="Status" header="Status" style="min-width: 12rem">
-                                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                                <Column header="Status" style="min-width: 12rem">
+                                    <template #body="slotProps">
+                                        <Tag :value="slotProps.data.status" style="font-weight: 600;" :severity="getSeverity(slotProps.data)" />
+                                    </template>
                                 </Column>
 
                             </DataTable>
+
 
 
 
@@ -111,7 +114,7 @@
                     </div>
 
 
-                    <Dialog v-model:visible="visible" modal header="Resignation"
+                    <Dialog v-model:visible="applyResignationDailog" modal header="Resignation"
                         :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                         <div class="resignation-content " id="resignation_form">
                             <form class="" id="resignationForm">
@@ -127,18 +130,9 @@
                                         <div class="mb-3">
                                             <label for="" class="">Resignation Type</label>
                                             <Dropdown style="height: 2.9em;"
-                                                class="w-full text-sm text-gray-900 border rounded-lg "
-                                               :options="reason" optionLabel="name" v-model="exit.resignation"
-                                                optionValue="code" placeholder="Select a Property" />
-                                            <!-- <select name="" id="" class="form-select form-control"
-                                                v-model="exit.resignation">
-                                                <option value="">Better Prospect</option>
-                                                <option value="">Marriage & Relocating</option>
-                                                <option value="">Illness</option>
-                                                <option value="">Difficult Work Environment</option>
-                                                <option value="">Career Prospect</option>
-                                                <option value="">Others</option>
-                                            </select> -->
+                                                class="w-full text-sm text-gray-900 border rounded-lg " :options="reason"
+                                                optionLabel="name" v-model="exit.resignation" optionValue="code"
+                                                placeholder="Select a Property" />
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-lg-6 col-xxl-6 col-xl-6 col-md-6">
@@ -158,14 +152,15 @@
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                                         title="Edit Your Expected Last working Date"></button>
                                                 </div>
-                                                <button
+                                                <button @click="expected_lastDate = true" type="button"
                                                     class="bg-transparent border-0 outline-none btn fa text-info fa-pencil"
                                                     id="expectedDate_reasonButton">
                                                 </button>
 
                                             </div>
-                                            <input type="Date" class="form-control" id="expected_lastDate"
-                                                v-model="exit.elwd" aria-describedby="" disabled>
+                                            <input type="Date" :class="[!expected_lastDate ? 'bg-gray-300' : '']"
+                                                class=" form-control" id="expected_lastDate" v-model="exit.elwd"
+                                                aria-describedby="" :readonly="!expected_lastDate">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-lg-6 col-xxl-6 col-xl-6 col-md-6">
@@ -174,12 +169,13 @@
                                             <input type="Date" class="form-control" id="" v-model="exit.ped">
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-lg-6 col-xxl-6 col-xl-6 col-md-6">
-                                        <div class="mb-3" id="reason_dialogueBox" style="display:none">
+                                    <div class="col-sm-12 col-lg-6 col-xxl-6 col-xl-6 col-md-6" v-if="expected_lastDate">
+                                        <div class="mb-3" id="reason_dialogueBox">
                                             <label for="" class="">Reason For Change In Last Working
                                                 Date</label>
-                                            <textarea name="" id="" cols="30" rows="2"
-                                                class="resize-none form-control"></textarea>
+                                            <Textarea v-model="exit.wr" name="" id="" class="my-3" cols="30" rows="3"
+                                                autoResize placeholder="Add Your Reason Here...."> </Textarea>
+
                                         </div>
                                     </div>
 
@@ -193,6 +189,24 @@
                         </div>
                     </Dialog>
 
+
+
+                    <Dialog v-model:visible="WithdrawResignationDailog" modal header="Withdraw"
+                        :style="{ width: '40vw', borderTop: '5px solid #002f56' }">
+
+                        <p class="font-bold text-gray-600 ">Please fill the reason for Resignation Withdrawal and click
+                            Submit to proceed further </p>
+
+                        <Textarea v-model="exit.wr" name="" id="" class="my-3" cols="30" rows="3" autoResize
+                            placeholder="Add Your Reason Here...."> </Textarea>
+
+                        <template #footer>
+                            <div class="col-sm-12 col-lg-12 col-xxl-12 col-xl-12 col-md-12 text-end">
+                                <button type="button" class="btn btn-border-orange me-2" @click="save">Save</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </template>
+                    </Dialog>
 
 
                     <div class="tab-pane fade " id="team-resignation" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -523,7 +537,10 @@ const exit = reactive({
     resignation: '',
     npd: '',
     elwd: '',
-    ped: ''
+    ped: '',
+    exlRes: '',
+    wr: '',
+    status: 'pending'
 })
 
 const exit_data = ref()
@@ -540,10 +557,12 @@ const save = () => {
     console.log(exit);
     axios.post('http://localhost:3000/exit', exit).then(res => {
         console.log(res.data);
+
+    }).finally(() => {
         fetch()
     })
 
-    visible.value = false
+    applyResignationDailog.value = false
 }
 
 onMounted(() => {
@@ -559,9 +578,52 @@ const reason = ref([
     { name: 'Others', code: 'Others' },
 ])
 
+const changeLastWorking = () => {
 
-const visible = ref(false)
+    expected_lastDate.value = true
+
+}
+
+const applyResignationDailog = ref(false)
+
+const WithdrawResignationDailog = ref(false)
+
+const expected_lastDate = ref(false)
+
+const getSeverity = (status) => {
+
+    console.log(status.status)
+    switch (status.status) {
+        case 'Approved':
+            return 'success';
+
+        case 'pending':
+            return 'warning';
+
+        case 'Rejected':
+            return 'danger';
+
+        default:
+            return null;
+    }
+
+}
+
+
 
 
 
 </script>
+
+<style > label {
+     font-style: normal;
+     font-weight: 500;
+     font-size: 16px;
+     line-height: 28px;
+     color: #003056;
+ }
+
+
+ 
+ 
+ </style>

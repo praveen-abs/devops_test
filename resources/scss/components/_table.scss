@@ -69,7 +69,7 @@
     //         transition: 0.3s ease-out !important;
 
     //         &:hover {
-    //             transform: translateY(-8px);
+    //             transform: translateY(-2px);
     //             border: 0px !important;
     //             // box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
     //             box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
@@ -114,3 +114,6 @@
 .p-column-header-content {
     justify-content: center !important;
 }
+.p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+    background: #e1f0f7;
+  }
