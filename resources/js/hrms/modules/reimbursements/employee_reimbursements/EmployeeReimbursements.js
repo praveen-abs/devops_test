@@ -33,6 +33,10 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
 
+import OverlayPanel from 'primevue/overlaypanel';
+
+
+
 
 import  employee_reimbursement from './EmployeeReimbursements.vue'
 
@@ -60,6 +64,7 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
 app.component('Toast', Toast);
+app.component('OverlayPanel', OverlayPanel);
 app.component('ConfirmDialog',ConfirmDialog);
 app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);

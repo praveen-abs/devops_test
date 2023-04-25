@@ -206,22 +206,32 @@ class VmtProfilePagesService
 
         return $response;
     }
-    public function getEmployeePrivateDocumentFile($user_code, $doc_name)
+    public function getEmployeePrivateDocumentFile($user_code, $doc_name, $emp_doc_record_id=null)
     {
+        // dd($user_code);
 
         try{
-            $user_id=User::where('user_code',$user_code)->first()->id;
 
-            $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
+            if(empty($emp_doc_record_id))
+            {
+                $user_id=User::where('user_code',$user_code)->first()->id;
 
-            $doc_filename = VmtEmployeeDocuments::where('user_id',$user_id)->where('doc_id', $doc_id)->first()->doc_url;
+                $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
 
+                $doc_filename = VmtEmployeeDocuments::where('user_id',$user_id)->where('doc_id', $doc_id)->first()->doc_url;
+            }
+            else
+            {
+                //Get the filename directly from the record_id
+                $query_emp_doc = VmtEmployeeDocuments::find($emp_doc_record_id);
+                $user_code = User::find($query_emp_doc->user_id)->user_code;
+                $doc_filename = $query_emp_doc->doc_url;
 
-            // $private_file = $user_code . "/onboarding_documents/" . $doc_filename;
+            }
 
             //Get the image from PRIVATE disk and send as BASE64
             $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" .$doc_filename);
-    
+
             if($response)
             {
                 $response = base64_encode($response);
@@ -230,13 +240,13 @@ class VmtProfilePagesService
             {
                 return response()->json([
                     'status' => 'failure',
-                    'message' => "Profile picture doesnt exist for the given user"
+                    'message' => "Employee document doesnt exist for the given user"
                 ]);
             }
 
             return response()->json([
                 "status" => "success",
-                "message" => "Profile picture fetched successfully",
+                "message" => "Employee document fetched successfully",
                 "data" => $response,
             ]);
 
