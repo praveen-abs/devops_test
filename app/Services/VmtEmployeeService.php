@@ -999,6 +999,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     "user_code" =>  $single_pending_docs->user_code,
                     "doj" => $single_pending_docs->doj,
                     "documents" => array([
+                                   "user_code" =>  $single_pending_docs->user_code,
                                     "record_id" => $single_pending_docs->record_id,
                                     "doc_name" => $single_pending_docs->doc_name,
                                     "doc_url" => $single_pending_docs->doc_url,

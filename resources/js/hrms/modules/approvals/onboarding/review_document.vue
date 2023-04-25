@@ -19,7 +19,8 @@
                 <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
             <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processSingleDocumentApproveReject()" class="p-button-text" autofocus />
+                <Button label="Yes" icon="pi pi-check" @click="processSingleDocumentApproveReject()" class="p-button-text"
+                    autofocus />
                 <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
             </template>
         </Dialog>
@@ -31,16 +32,17 @@
                 <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of this employee?</span>
             </div>
             <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processBulkDocumentsApproveReject()" class="p-button-text" autofocus />
+                <Button label="Yes" icon="pi pi-check" @click="processBulkDocumentsApproveReject()" class="p-button-text"
+                    autofocus />
                 <Button label="No" icon="pi pi-times" @click="hideBulkConfirmDialog(true)" class="p-button-text" />
             </template>
         </Dialog>
 
         <div>
-            <DataTable :value="data_review_documents" :paginator="true" :rows="10" class=" " dataKey="user_code"
+            <DataTable :value="data_review_documents" :paginator="true" :rows="10" class="" dataKey="user_code"
                 @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
                 v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
-                @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                @row-select="onRowSelect" @row-unselect="onRowUnselect" :rowsPerPageOptions="[5, 10, 25]"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty> No Onboarding documents for the selected status filter </template>
@@ -50,34 +52,46 @@
                 <Column field="user_code" header="Employee Id" sortable></Column>
 
                 <Column field="name" header="Employee Name">
-                    <!-- <template #body="slotProps">
-                        {{ slotProps.data.employee_name }}
-                    </template>
-                    <template #filter="{ filterModel, filterCallback }">
-                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
-                            class="p-column-filter" :showClear="true" />
-                    </template> -->
                 </Column>
 
                 <Column class="fontSize13px" field="doj" header="Date Of Joining">
                     <template #body="slotProps">
-                        {{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY')  }}
+                        {{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}
                     </template>
                 </Column>
 
-
-                <Column class="fontSize13px" field="total_expenses" header="Approval Status" :sortable="false">
-                    <!-- <template #body="slotProps">
-                        {{ "&#8377; " + slotProps.data.total_expenses }}
-                    </template> -->
+                <Column field="status" header="Status" icon="pi pi-check">
+                    <template #body="{ data }">
+                        <Tag :value="data.status" :severity="getSeverity(data.status)" />
+                    </template>
+                    <!-- <template #body="{ data }">
+            <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
+          </template> -->
+                    <template #filter="{ filterModel, filterCallback }">
+                        <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses"
+                            placeholder="Select" class="p-column-filter" :showClear="true">
+                            <template #value="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{
+                                    slotProps.value
+                                }}</span>
+                                <span v-else>{{ slotProps.placeholder }}</span>
+                            </template>
+                            <template #option="slotProps">
+                                <span :class="'customer-badge status-' + slotProps.option">{{
+                                    slotProps.option
+                                }}</span>
+                            </template>
+                        </Dropdown>
+                    </template>
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <span >
-                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve All"
-                                @click="showBulkConfirmDialog(slotProps.data, 'Approve')" style="height: 2.5em" />
-                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Reject All"
-                                style="margin-left: 8px; height: 2.5em"
+                        <span>
+                            <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"
+                                label="Approve All" @click="showBulkConfirmDialog(slotProps.data, 'Approve')"
+                                style="height: 2.5em" />
+                            <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button"
+                                label="Reject All" style="margin-left: 8px; height: 2.5em"
                                 @click="showBulkConfirmDialog(slotProps.data, 'Reject')" />
                         </span>
                     </template>
@@ -101,24 +115,18 @@
                             <Column field="doc_status" header="Status"></Column>
                             <Column field="" header="View">
                                 <template #body="slotProps">
-                                    <Button
-                                      type="button"
-                                      icon="pi pi-eye"
-                                      class="p-button-success Button"
-                                      label="View"
-                                      @click="showDocDialog(slotProps.data.doc_url)"
-                                      style="height: 2em"
-
-                                    />
-                                  </template>
+                                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                                        @click="showDocDialog(slotProps.data)" style="height: 2em" />
+                                </template>
                             </Column>
                             <Column field="" header="Action">
                                 <template #body="slotProps">
-                                    <span >
-                                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve"
-                                            @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2.5em" />
-                                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Reject"
-                                            style="margin-left: 8px; height: 2.5em"
+                                    <span>
+                                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"
+                                            label="Approve" @click="showConfirmDialog(slotProps.data, 'Approve')"
+                                            style="height: 2.5em" />
+                                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button"
+                                            label="Reject" style="margin-left: 8px; height: 2.5em"
                                             @click="showConfirmDialog(slotProps.data, 'Reject')" />
                                     </span>
                                 </template>
@@ -130,9 +138,8 @@
 
             <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
 
-
-                <img   :src="`http://127.0.0.1:8000/${doc_url}`"
-                :alt="doc_url" class="block pb-3 m-auto" />
+                <img v-if="documentPath" v-bind:src="`data:image/png;base64,${documentPath}`" />
+                <!-- <img :src="`data:image/png;base64,${}`" /> -->
 
             </Dialog>
 
@@ -141,12 +148,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onRenderTracked, onUpdated, nextTick,onBeforeMount, onBeforeUpdate } from "vue";
+import { ref, onMounted, onRenderTracked, onUpdated, nextTick, onBeforeMount, onBeforeUpdate } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useToast } from "primevue/usetoast";
 import dayjs from 'dayjs';
-import map from 'lodash/map';
 
 const visible = ref(false)
 let data_review_documents = ref();
@@ -157,14 +163,23 @@ const toast = useToast();
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
 
-const doc_url = ref()
+const documentPath = ref()
 
-const showDocDialog = (doc) =>{
-    console.log(doc);
-    doc_url.value = doc
+
+const showDocDialog = (document) => {
+
+    console.log(document);
     visible.value = true
-}
 
+    axios.post('/view-profile-private-file', {
+        user_code: document.user_code,
+        document_name: document.doc_url
+    }).then(res => {
+        console.log(res.data.data);
+        documentPath.value = res.data.data
+        console.log("data sent", documentPath.value);
+    });
+}
 
 
 
@@ -186,9 +201,9 @@ let currentlySelectedRowData = null;
 
 onMounted(() => {
 
-   data_review_documents.value = [];
+    data_review_documents.value = [];
 
-   ajax_GetReviewDocumentData();
+    ajax_GetReviewDocumentData();
 
 
 });
@@ -232,40 +247,11 @@ function showBulkConfirmDialog(selectedRowData, status) {
     console.log("Selected Bulk Row Data : " + JSON.stringify(selectedRowData));
 }
 
-function hideConfirmDialog(canClearData) {
-    canShowConfirmation.value = false;
 
-    if (canClearData) resetVars();
-}
 
-function hideBulkConfirmDialog(canClearData) {
-    canShowBulkConfirmation.value = false;
-
-    if (canClearData) resetVars();
-}
-
-function resetVars() {
-    currentlySelectedStatus = "";
-    currentlySelectedRowData = null;
-}
 
 const selected_status = ref()
 
-const generate_ajax = () => {
-
-    axios.post(window.location.origin + "/fetch_all_reimbursements_as_groups", {
-        selected_year: year,
-        selected_month: month,
-        selected_status: selected_status.value,
-    }).then(res => {
-        console.log("data sent");
-        console.log("data from " + res.employee_name);
-        get_data.value = res.data
-    }).catch(err => {
-        console.log(err);
-    })
-
-}
 
 
 const css_statusColumn = (data) => {
@@ -287,15 +273,15 @@ function processSingleDocumentApproveReject() {
     console.log("currentlySelectedStatus : " + currentlySelectedStatus);
 
     axios.post("/approvals/onboarding-docs-approve-reject", {
-            record_id: currentlySelectedRowData.record_id,
-            status:
-                currentlySelectedStatus == "Approve"
-                    ? "Approved"
-                    : currentlySelectedStatus == "Reject"
-                        ? "Rejected"
-                        : currentlySelectedStatus,
-            reviewer_comments: "",
-        })
+        record_id: currentlySelectedRowData.record_id,
+        status:
+            currentlySelectedStatus == "Approve"
+                ? "Approved"
+                : currentlySelectedStatus == "Reject"
+                    ? "Rejected"
+                    : currentlySelectedStatus,
+        reviewer_comments: "",
+    })
         .then((response) => {
             console.log(response.data);
             ajax_GetReviewDocumentData();
@@ -322,20 +308,20 @@ function processBulkDocumentsApproveReject() {
     console.log("currentlySelectedStatus : " + currentlySelectedStatus);
 
     //Get the doc ids of the selected employees rowdata
-    let processed_doc_ids = map(currentlySelectedRowData.documents,'record_id');
+    let processed_doc_ids = map(currentlySelectedRowData.documents, 'record_id');
 
-    console.log("Processed doc record ids : "+processed_doc_ids);
+    console.log("Processed doc record ids : " + processed_doc_ids);
 
     axios.post("/approvals/onboarding-bulkdocs-approve-reject", {
-            record_ids: processed_doc_ids,
-            status:
-                currentlySelectedStatus == "Approve"
-                    ? "Approved"
-                    : currentlySelectedStatus == "Reject"
-                        ? "Rejected"
-                        : currentlySelectedStatus,
-            reviewer_comments: "",
-        })
+        record_ids: processed_doc_ids,
+        status:
+            currentlySelectedStatus == "Approve"
+                ? "Approved"
+                : currentlySelectedStatus == "Reject"
+                    ? "Rejected"
+                    : currentlySelectedStatus,
+        reviewer_comments: "",
+    })
         .then((response) => {
             console.log(response.data);
             ajax_GetReviewDocumentData();
@@ -353,13 +339,26 @@ function processBulkDocumentsApproveReject() {
         });
 }
 
+const getSeverity = (status) => {
+    switch (status) {
+        case 'Rejected':
+            return 'danger';
+
+        case 'Approved':
+            return 'success';
+
+
+        case 'Pending':
+            return 'warning';
+
+    }
+};
 
 
 
 </script>
 
 <style lang="scss">
-
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
     padding: 1.3rem 1rem;
@@ -544,4 +543,5 @@ function processBulkDocumentsApproveReject() {
 .pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-}</style>
+}
+</style>
