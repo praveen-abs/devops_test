@@ -181,7 +181,6 @@ class VmtProfilePagesService
                 // 'getEmployeeDocuments',
             ]
         )
-            //->join('vmt_onboarding_documents', 'vmt_onboarding_documents.id', '=', 'vmt_employee_documents.doc_id')
             ->where('users.id', $user_id)
             ->first();
 
@@ -196,8 +195,11 @@ class VmtProfilePagesService
         $response['employee_documents'] = $response_docs;
 
         //Add the documents details
+        $response['avatar'] = $this->getProfilePicture($response->user_code);
+        $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name;
 
-        $response['avatar'] ="ASDFJASDJFLKAJSDF";
+
+        $response['profile_completeness'] = calculateProfileCompleteness($user_id);
 
 
         //Remove ID from user table

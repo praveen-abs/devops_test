@@ -37,10 +37,10 @@
                                     <div class="progress-bar " role="progressbar" id="profile_progressBar"
                                         aria-valuenow="{{ 100 }}" aria-valuemin="0"
                                         aria-valuemax="100"></div>
-                               
+
 
                                 </div> -->
-                                <!-- <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.get_employee_details.profile_completeness"></ProgressBar> -->
+                                <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.profile_completeness"></ProgressBar>
                                 <!-- <ProgressBar  :value="60"></ProgressBar> -->
                                 <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                             </div>
@@ -91,9 +91,9 @@
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Department</p>
-                                    <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id" class=" f-15 fw-bold">
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name" class=" f-15 fw-bold">
                                         {{
-                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id
+                                            _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name
                                         }}
                                     </p>
                                     <p v-else class=" f-15 fw-bold">
@@ -169,6 +169,6 @@ const profilePhoto = (e) => {
 
 <style>
 .p-progressbar.p-component.p-progressbar-determinate{
-    height: 10px;
+    height: 13px;
 }
 </style>
