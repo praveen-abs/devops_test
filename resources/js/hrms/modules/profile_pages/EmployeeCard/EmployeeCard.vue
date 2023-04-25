@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Designation</p>
-                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.designation" class="f-15 fw-bold">
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.designation" class="f-15 fw-bold">
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation  }}
                                     </p>
                                     <p v-else class="f-15 fw-bold">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Location</p>
-                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location" class=" f-15 fw-bold">
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location" class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location
                                         }}
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Department</p>
-                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id" class=" f-15 fw-bold">
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id" class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id
                                         }}
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code " class=" f-15 fw-bold">
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code " class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name
                                         }} -
