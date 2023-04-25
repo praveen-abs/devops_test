@@ -603,7 +603,7 @@ public function addExperienceInfo(Request $request)
     public function getEmployeePrivateDocumentFile(Request $request,VmtProfilePagesService $profilepagesservice){
 
 
-        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code,$request->document_name);
+        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code, $request->document_name, $request->emp_doc_record_id);
         return $response;
 
     }
