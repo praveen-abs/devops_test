@@ -64,7 +64,7 @@
 
             </h6>
             <!-- {{ _instance_profilePagesStore.employeeDetails.get_family_details }} -->
-            <div class="table-responsive my-6">
+            <div class="my-6 table-responsive">
                 <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -85,7 +85,7 @@
                     <Column :exportable="false" header="Action" style="min-width:8rem">
                         <template #body="slotProps">
 
-                            <button class="btn btn-success mr-3"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
+                            <button class="mr-3 btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
                             <button class="btn btn-danger"  @click="diolog_DeleteFamilyDetails(slotProps.data)">Delete</button>
 
 
@@ -635,7 +635,7 @@ span {
     </script>
 
 <template>
-    <div class="card flex justify-content-center">
+    <div class="flex card justify-content-center">
         <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
         <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
             <p>

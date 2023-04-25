@@ -21,7 +21,7 @@ import InputText from 'primevue/inputtext';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
 import ProgressSpinner from 'primevue/progressspinner';
-
+import ProgressBar from 'primevue/progressbar';
 import  {useConfirm}  from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
@@ -40,7 +40,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 
 const app = createApp(EmployeeCard);
-const pinia=createPinia()
+const pinia=createPinia();
 app.component('TabView', TabView);
 app.component('TabPanel', TabPanel);
 app.component('FileUpload', FileUpload);
@@ -54,6 +54,7 @@ app.component('Calendar',Calendar);
 app.component('InputText',InputText);
 app.component('ConfirmDialog',ConfirmDialog);
 app.component('ProgressSpinner', ProgressSpinner);
+app.component('ProgressBar', ProgressBar);
 
 
 app.component('useConfirm',useConfirm);

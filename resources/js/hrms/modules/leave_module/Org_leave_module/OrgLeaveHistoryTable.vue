@@ -25,7 +25,8 @@
             </template>
         </Dialog>
         <div>
-            <DataTable :value="Leave_data" :paginator="true" :rows="5" dataKey="id"
+
+            <DataTable :value="Leave_data" :paginator="true" :rows="5" dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                 v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
@@ -432,5 +433,8 @@ function processApproveReject() {
 
 .p-button-success span {
     color: #fff !important;
+}
+.p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
+  margin-left: 30px;
 }
 </style>

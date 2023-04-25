@@ -192,9 +192,8 @@ export const employee_reimbursment_service = defineStore(
             });
         };
 
-        const post_data_for_local_convergance = (e) => {
+        const post_data_for_local_convergance = () => {
 
-            e.preventDefault();
             let currentObj = this;
 
             const config = {

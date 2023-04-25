@@ -89,7 +89,7 @@
                     </Dialog>
 
                 </h6>
-                <div class="table-responsive my-6">
+                <div class="my-6 table-responsive">
                     <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_experience_details"
                         dataKey="id" :paginator="true" :rows="10"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -130,7 +130,7 @@
                         <Column :exportable="false" header="Action" style="min-width:12rem">
                         <template #body="slotProps">
 
-                            <button class="btn btn-success mr-3"  @click="editExperienceDetails(slotProps.data)">Edit</button>
+                            <button class="mr-3 btn btn-success"  @click="editExperienceDetails(slotProps.data)">Edit</button>
                             <button class="btn btn-danger"  @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
 
                             <template>

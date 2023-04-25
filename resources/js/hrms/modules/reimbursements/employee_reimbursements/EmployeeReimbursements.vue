@@ -42,8 +42,17 @@
               Generate</button>
             <button class="my-auto btn btn-primary"
               :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success"
-              style="height: 33px;" @click="employee_service.download_ajax"><i
+              style="height: 33px;" @click="toggle"><i
                 class="fas fa-file-download me-2"></i>Download</button>
+            <OverlayPanel ref="op">
+              <div class="py-1">
+                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                <a class="block px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:bg-gray-100" role="menuitem" tabindex="-1"   @click="employee_service.download_ajax"
+                  id="menu-item-0">Excel</a>
+                <a class="block px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:bg-gray-100" role="menuitem" tabindex="-1"
+                  id="menu-item-1">Pdf</a>
+              </div>
+            </OverlayPanel>
             <!-- <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
@@ -295,7 +304,7 @@
                     {{ slotProps.data.distance_travelled }}
                   </template>
                 </Column>
-                <Column field="Amt_km" header="Amt/Km" style="min-width:4rem"> 
+                <Column field="Amt_km" header="Amt/Km" style="min-width:4rem">
                   <template #body="slotProps">
                     {{ slotProps.data.amt_per_km }}
                   </template>
@@ -411,6 +420,8 @@
       </div>
     </div>
   </div>
+
+  <!-- <Button type="button" icon="pi pi-image" label="Image" @click="toggle" /> -->
 </template>
 
 <script setup>
@@ -422,14 +433,10 @@ import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import moment from 'moment'
 import axios from "axios";
 
-// const v$ = useVuelidate(validation, employee_onboarding);
-
-// const handleSubmit = (isFormValid) => {
-//     if (!isFormValid) {
-// return;
-// }
-
-// }
+const op = ref();
+const toggle = (event) => {
+  op.value.toggle(event);
+}
 
 const employee_service = employee_reimbursment_service();
 
@@ -481,7 +488,6 @@ const download_ajax = () => {
   let URL = '/reports/generate-employee-reimbursements-reports?selected_year=' + year + '&selected_month=' +
     month + '&_token={{ csrf_token() }}';
   window.location = URL;
-  setTimeout(greet, 1000);
 
 }
 
@@ -498,7 +504,6 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
-
 .p-datatable .p-datatable-thead>tr>th {
   text-align: center;
   padding: 1rem 1rem;
