@@ -92,10 +92,8 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
-                        <div class="text ml-4">
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(0,4) }} -->
+                        <div class="ml-4 text">
                             {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
-
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
@@ -218,7 +216,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Personal Email</div>
-                        <div class="text ml-4">
+                        <div class="ml-4 text">
                             {{ _instance_profilePagesStore.employeeDetails.email }}
 
                         </div>

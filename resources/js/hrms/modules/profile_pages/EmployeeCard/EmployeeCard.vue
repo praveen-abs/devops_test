@@ -15,7 +15,7 @@
                                  <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt="" srcset=""  style="border:6px solid #c2c2c2c2">
                             <label class="cursor-pointer edit-icon " style="position: relative; top: -30px;" data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
                                 <i class="fa fa-camera"></i></label>
-                        <!-- <input type="file" name="" id="upload" hidden @change="profilePhoto($event)"> -->
+                        <input type="file" name="" id="upload" hidden @change="profilePhoto($event)">
 
                         </div>
 
@@ -40,7 +40,7 @@
                                
 
                                 </div> -->
-                                <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.get_employee_details.profile_completeness"></ProgressBar>
+                                <!-- <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.get_employee_details.profile_completeness"></ProgressBar> -->
                                 <!-- <ProgressBar  :value="60"></ProgressBar> -->
                                 <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                             </div>
@@ -60,43 +60,58 @@
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                    <p class=" f-15 fw-bold">
+                                    <p v-if="_instance_profilePagesStore.employeeDetails.user_code" class=" f-15 fw-bold">
                                         {{ _instance_profilePagesStore.employeeDetails.user_code }}
+                                    </p>
+                                    <p v-else class=" f-15 fw-bold">
+                                        -
                                     </p>
 
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Designation</p>
-                                    <p class="f-15 fw-bold">
+                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.designation" class="f-15 fw-bold">
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.designation  }}
+                                    </p>
+                                    <p v-else class="f-15 fw-bold">
+                                        -
                                     </p>
 
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Location</p>
-                                    <p class=" f-15 fw-bold">
+                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location" class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.work_location
                                         }}
                                     </p>
+                                    <p v-else class=" f-15 fw-bold">
+                                        -
+                                    </p>
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Department</p>
-                                    <p class=" f-15 fw-bold">
+                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id" class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_id
                                         }}
                                     </p>
+                                    <p v-else class=" f-15 fw-bold">
+                                     -
+                                    </p>
                                 </div>
                                 <div class="py-2 border-bottom-liteAsh">
                                     <p class="text-muted f-12 fw-bold">Reporting To</p>
-                                    <p class=" f-15 fw-bold">
+                                    <p v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code " class=" f-15 fw-bold">
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name
                                         }} -
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code
                                         }}
+                                    </p>
+                                    <p v-else class=" f-15 fw-bold">
+                                      -
                                     </p>
                                 </div>
                             </div>

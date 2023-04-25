@@ -143,7 +143,7 @@
                         <ul class="personal-info"   >
                                 <li  >
                                     <div class="title">Bank Name</div>
-                                    <div class="text ml-4">
+                                    <div class="ml-4 text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
@@ -281,18 +281,18 @@
 
                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
 
-                        <!-- <ul class="personal-info" >
+                        <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info" >
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    {{ pf_applicable }}
+                                    <!-- {{ pf_applicable }} -->
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
-                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number }}
+                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
 
                                 </div>
                             </li>
@@ -300,7 +300,7 @@
                                 <div class="title">UAN Number</div>
                                 <div class="text">
 
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
 
                                 </div>
                             </li>
@@ -316,11 +316,11 @@
                                 <div class="title">ESIC Number</div>
                                 <div class="text" >
 
-                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number   }}
+                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number   }}
 
                                 </div>
                             </li>
-                        </ul> -->
+                        </ul>
 
 
 
@@ -374,7 +374,7 @@
 
     </div>
 
-
+<!-- {{ statutory }} -->
 
 </template>
 <script setup>
@@ -388,6 +388,9 @@ const _instance_profilePagesStore = profilePagesStore()
 
 const fetch_data = Service()
 
+const statutory = ref([])
+
+statutory.value.push(_instance_profilePagesStore.employeeDetails.get_statutory_details)
 
 onMounted(() => {
     // fetchData();
