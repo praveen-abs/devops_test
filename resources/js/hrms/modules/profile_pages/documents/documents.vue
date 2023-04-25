@@ -32,8 +32,12 @@
 
         <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
 
-                <img v-if="view_document.doc_url" v-bind:src="`data:image/png;base64,${documentPath}`" />
+                <img v-if="view_document.doc_url" v-bind:src="`data:image/png;base64,${documentPath}`"
+                 />
                 <!-- <img :src="`data:image/png;base64,${}`" /> -->
+
+                <img src="" alt="">
+                <a href=""></a>
 
         </Dialog>
 
