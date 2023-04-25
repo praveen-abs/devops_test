@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <ConfirmDialog></ConfirmDialog> -->
     <Toast />
     <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
       :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -137,7 +136,7 @@ const filters = ref({
     matchMode: FilterMatchMode.CONTAINS,
   },
 
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
 const statuses = ref(["Pending", "Approved", "Rejected"]);
