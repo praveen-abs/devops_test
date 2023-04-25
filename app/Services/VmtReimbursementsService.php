@@ -103,6 +103,13 @@ class VmtReimbursementsService {
 
     }
 
+    public function getReimbursementVehicleTypes(){
+        return VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+    }
+
+    public function getReimbursementTypes(){
+        return VmtReimbursements::all(['id','reimbursement_type']);
+    }
 
     function fetchAllReimbursementsAsGroups($year, $month, $status ,$reimbursement_type_id){
 

@@ -129,19 +129,6 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
     }
 
-    public function saveReimbursementData(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
-
-        return $serviceVmtReimbursementsService->saveReimbursementData_LocalConveyance( user_code: $request->user_code,
-                                                                                        date : $request->date,
-                                                                                        reimbursement_type: $request->reimbursement_type,
-                                                                                        vehicle_type: $request->vehicle_type,
-                                                                                        from:  $request->from,
-                                                                                        to: $request->to,
-                                                                                        distance_travelled: $request->distance_travelled,
-                                                                                        user_comments:   $request->user_comments);
-
-    }
-
 
     /*
         attendanceMonthlyReport():
