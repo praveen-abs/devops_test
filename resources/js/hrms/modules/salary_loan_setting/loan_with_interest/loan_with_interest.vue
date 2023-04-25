@@ -2,7 +2,7 @@
   <div class="px-2">
     <div class="row d-flex justify-content-start align-items-center ">
       <div class="d-flex">
-        <div class="col-3 fs-3" style="position: relative; left: -8px;">
+        <div class="col-3 fs-4" style="position: relative; left: -8px;">
           <h1 class="fw-bolder">Loan With interest Feature</h1>
         </div>
         <div class="col">
@@ -30,7 +30,7 @@
 
           <div class="col-10 ">
             <p class="fs-5 ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
-            <h1 class="mt-10 fs-3 fw-bolder">Eligible Amount</h1>
+            <h1 class="mt-10 fs-4 fw-bolder">Eligible Amount</h1>
             <p class="my-2 fs-5 ">The employees not eligible for Interest Free Loan can also claim the Loan with Interest</p>
 
             <div class=" col-12">
@@ -49,7 +49,7 @@
             </div>
 
             <div class="col-12">
-                <h1 class="fw-bolder fs-3">Interest</h1>
+                <h1 class="fw-bolder fs-4">Interest</h1>
                 <p class=" my-2 fs-5">Percentage of Interest </p>
                 <div class="card border-L">
                     <div class="card-body">
@@ -66,7 +66,7 @@
             </div>
 
             <div class="col">
-                <h1 class="fs-3 fw-bolder mt-2">Deduction Method</h1>
+                <h1 class="fs-4 fw-bolder mt-2">Deduction Method</h1>
                 <p class="fs-5 my-2">The EMI, or Equated Monthly Installment, is the sum of the principal amount borrowed and the interest charged on the loan.</p>
 
                <div class="row">
@@ -129,7 +129,7 @@
 
             </div>
 
-            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+            <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
             <p class="my-2 fs-5">Please choose the approval flow for Loan With Interest Feature.</p>
 
           <div class="card border-L">

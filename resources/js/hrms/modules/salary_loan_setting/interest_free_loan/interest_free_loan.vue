@@ -3,7 +3,7 @@
 
     <div class="row d-flex justify-content-start align-items-center ">
       <div class="d-flex mt-5">
-        <div class="col-3 fs-3 fw-bolder" >
+        <div class="col-3 fs-4 fw-bolder" >
           <h1 style="position: relative; left:-8px">Interest Free Loan Feature</h1>
         </div>
 
@@ -25,7 +25,7 @@
           <div class="col-10">
             <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
 
-            <h1 class="mt-10 fs-3 fw-bolder">Eligible Employees and Amount</h1>
+            <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees and Amount</h1>
             <p class=" fs-5 mt-3">The employee's eligibility for the loan amount can be determined based on the number of years they have served in the organization.</p>
           </div>
           <div class=" col-12">
@@ -48,7 +48,7 @@
           </div>
 
           <div class="col">
-            <h1 class="fs-3 fw-bolder mt-2">Deduction Method</h1>
+            <h1 class="fs-4 fw-bolder mt-2">Deduction Method</h1>
             <p class="fs-5 my-2">In the case of an interest-free loan, the EMI would only consist of repayment of the principal amount borrowed, and no interest would be charged.</p>
 
                     <div class="row">
@@ -107,7 +107,7 @@
                     </div>
           </div>
           <div class="col">
-            <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+            <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
             <p class="my-2 fs-5">Please choose the approval flow for Interest Free Loan Feature.</p>
 
                 <div class="card border-L">

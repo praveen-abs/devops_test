@@ -33,7 +33,7 @@
 
 
   @vite('resources/js/hrms/modules/exit/exit.js')
-   <div id="Exit"></div>
+   {{-- <div id="Exit"></div> --}}
 
 
 

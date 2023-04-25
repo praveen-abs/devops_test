@@ -2,11 +2,10 @@
   <div class="px-5">
     <div class="row d-flex justify-content-start align-items-center mt-4">
       <div class="d-flex mt-4">
-        <div class="col-3 fs-3" style="position: relative; left: -8px;">
+        <div class="col-3 fs-4" style="position: relative; left: -8px;">
           <h1 class="fw-bolder">Salary Advance Feature</h1>
         </div>
         <div class="col">
-
 
           <button class="orange_btn "
             :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
@@ -32,7 +31,7 @@
         <div class="col-10">
 
           <p class="fs-5">Please click the "Disable" button to deactivate the salary advance feature.</p>
-          <h1 class="mt-12 fs-3 fw-bolder">Eligible Employees</h1>
+          <h1 class="mt-12 fs-4 fw-bolder">Eligible Employees</h1>
           <p class="my-2 fs-5">Kindly choose the employees who are eligible for the salary advance.</p>
         </div>
         <div class=" col-12">
@@ -103,7 +102,7 @@
         </div>
 
         <div class="col mt-4">
-          <h1 class="my-3 fs-3 fw-bolder">Percentage of Salary Advance</h1>
+          <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
           <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
           <div class="shadow-sm card border-L rounded-top">
@@ -144,7 +143,7 @@
             </div>
           </div>
 
-          <h1 class="my-3 fs-3 mt-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
+          <h1 class="my-3 fs-4 mt-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
           <p class="my-2 fs-5">Please choose the method of deduction.</p>
           <div class="card border-L">
             <div class="card-body">
@@ -174,7 +173,7 @@
             </div>
           </div>
 
-          <h1 class="my-3 fs-3 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+          <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
           <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
           <div class="card border-L">
