@@ -106,7 +106,7 @@
                                       icon="pi pi-eye"
                                       class="p-button-success Button"
                                       label="View"
-                                      @click="showDocDialog(slotProps.data.doc_url)"
+                                      @click="showDocDialog(slotProps.data.record_id)"
                                       style="height: 2em"
 
                                     />
@@ -128,10 +128,10 @@
                 </template>
             </DataTable>
 
-            <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
+            <Dialog v-model:visible="dialog_visible" modal header="Documents" :style="{ width: '40vw' }">
 
 
-                <img   :src="`http://127.0.0.1:8000/${doc_url}`"
+                <img   :src="`data:image/png;base64,${documentPath}`"
                 :alt="doc_url" class="block pb-3 m-auto" />
 
             </Dialog>
@@ -148,7 +148,8 @@ import { useToast } from "primevue/usetoast";
 import dayjs from 'dayjs';
 import map from 'lodash/map';
 
-const visible = ref(false)
+
+const dialog_visible = ref(false)
 let data_review_documents = ref();
 let canShowConfirmation = ref(false);
 let canShowBulkConfirmation = ref(false);
@@ -157,17 +158,23 @@ const toast = useToast();
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
 
-const doc_url = ref()
+const documentPath = ref()
 
-const showDocDialog = (doc) =>{
-    console.log(doc);
-    doc_url.value = doc
-    visible.value = true
+
+const showDocDialog = (record_id) => {
+
+    dialog_visible.value = true
+
+    axios.post('/view-profile-private-file', {
+        emp_doc_record_id: record_id,
+    }).then(res => {
+        console.log(res.data.data);
+        documentPath.value = res.data.data
+        console.log("data sent", documentPath.value);
+    });
+
+
 }
-
-
-
-
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: {
@@ -300,8 +307,7 @@ function processSingleDocumentApproveReject() {
             console.log(response.data);
             ajax_GetReviewDocumentData();
             canShowLoadingScreen = false;
-
-            //toast.add({ severity: "success", summary: "", detail: " Successfully Approved !", life: 3000 });
+            toast.add({ severity: "success", summary: "", detail: " Successfully !", life: 3000 });
 
             resetVars();
         })
