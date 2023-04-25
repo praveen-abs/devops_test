@@ -130,7 +130,9 @@ class VmtReimbursementsService {
         if($status!=null){
             $array_unique_users=$array_unique_users->where('vmt_employee_reimbursements.status', $status);
         }
+
         $array_unique_users=$array_unique_users->get();
+
         foreach($array_unique_users as $single_user){
 
             //dd($single_user->user_id);
@@ -143,10 +145,13 @@ class VmtReimbursementsService {
 
             //Get all the reimbursement data for the given user_id
             $reimbursement_data = VmtEmployeeReimbursements::where('user_id',$single_user->user_id)
+                                ->join('vmt_reimbursement_vehicle_types','vmt_reimbursement_vehicle_types.id','=','vmt_employee_reimbursements.vehicle_type_id')
+                                ->join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                                 ->whereYear('vmt_employee_reimbursements.date',$year)
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
-                                ->where('reimbursement_type_id',$reimbursement_type_id)
-                                ->select('id','reimbursement_type_id','date','from','to','vehicle_type_id','distance_travelled','total_expenses','status');
+                                ->where('vmt_employee_reimbursements.reimbursement_type_id',$reimbursement_type_id)
+                                ->select('vmt_employee_reimbursements.id','vmt_employee_reimbursements.reimbursement_type_id','vmt_employee_reimbursements.date',
+                                'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to', 'vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
 
             if($status!=null){
                 $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);

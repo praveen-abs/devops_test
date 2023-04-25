@@ -98,6 +98,10 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->name;
     });
+    Route::get('/currentUserCode', function() {
+
+        return auth()->user()->user_code;
+    });
 
 
 
