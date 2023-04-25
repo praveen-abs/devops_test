@@ -5,8 +5,10 @@
     use App\Models\VmtEmployeeDocuments;
     use App\Models\VmtEmployee;
     use App\Models\Department;
+    use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
+    use App\Mail\QuickOnboardLink;
 ?>
 
 @extends('layouts.master')
@@ -47,11 +49,27 @@
     //     echo $query_client->client_name;
     // else
     //     echo "";
-    $doc_filename='AadharCardBack_B090_17-04-2023_12-22-55.jpg';
-    $user_code='B090';
-    $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" . $doc_filename);
-    // $response = base64_encode($response);
-    dd($response);
+    // $doc_filename='AadharCardBack_B090_17-04-2023_12-22-55.jpg';
+    // $user_code='B090';
+    // $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" . $doc_filename);
+    // // $response = base64_encode($response);
+    // dd($response);
+
+    //   $value='DM001';
+
+    //   $emp_client_code = preg_replace('/\d+/', '', $value );
+
+    //   $result = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+//    $aadhar_number=str_replace(" ",'','3004 6226 9097');
+//     if(!empty($aadhar_number))
+//             echo VmtEmployee::where('aadhar_number',$aadhar_number)->exists() ? "true" : "false";
+//         else
+//             echo false;
+
+$VmtGeneralInfo = VmtGeneralInfo::first();
+                     $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                   $mail_send = \Mail::to("vvishva185@gmail.com")->send(new QuickOnboardLink('Vishnu', 'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+                  echo  $mail_send->exists();
 
 ?>
 

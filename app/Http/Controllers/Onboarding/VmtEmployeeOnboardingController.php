@@ -65,16 +65,18 @@ class VmtEmployeeOnboardingController extends Controller
             return false;
     }
     public function isAadharNoAlreadyExists(Request $request){
-        //dd($request->all());
+        //dd($request->aadhar_number);
         //dd(User::where('email',$request->mail)->exists());
 
+        $aadhar_number = str_replace(" ",'',$request->aadhar_number);
+
         if(!empty($request->aadhar_number))
-            return VmtEmployee::where('aadhar_number',$request->aadhar_number)->exists() ? "true" : "false";
+            return VmtEmployee::where('aadhar_number',$aadhar_number)->exists() ? "true" : "false";
         else
             return false;
     }
     public function isPanCardAlreadyExists(Request $request){
-        //dd($request->all());
+        //dd($request->pan_number);
         //dd(User::where('email',$request->mail)->exists());
 
         if(!empty($request->pan_number))
@@ -270,7 +272,6 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
-
         $user_id =$data['employee_code'];
         //dd( $user_id);
         $response = "";
@@ -784,7 +785,17 @@ class VmtEmployeeOnboardingController extends Controller
 
             //Validation
             $rules = [
-                'employee_code' => 'nullable|unique:users,user_code',
+                'employee_code' => ['unique:users,user_code',
+                        function ($attribute, $value, $fail) {
+
+                            $emp_client_code = preg_replace('/\d+/', '', $value );
+                            $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
+
+                            if (!$result) {
+                                $fail('No matching client exists for the given <b> Employee Code <b>: '.$value);
+                            }
+                        },
+                    ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'nullable|email:strict|unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
@@ -811,12 +822,8 @@ class VmtEmployeeOnboardingController extends Controller
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
                 'no_of_child' => 'nullable|numeric',
-                'child_1_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_1_dob' => 'nullable|required_unless:no_of_child,null,0|date',
-                'child_2_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_2_dob' => 'nullable|required_unless:no_of_child,null,0|date',
-                'child_3_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_3_dob' => 'nullable|required_unless:no_of_child,null,0|date',
+                'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'child_dob' => 'nullable|required_unless:no_of_child,null,0|date',
                 'department' => 'required|exists:vmt_department,name',
                 'process' => 'nullable',
                 'designation' => 'required',
@@ -1232,7 +1239,7 @@ class VmtEmployeeOnboardingController extends Controller
                // var_dump($excelRowdata);exit();
                //Validation
                $rules = [
-                   'employee_code' => ['nullable|unique:users,user_code',
+                   'employee_code' => ['unique:users,user_code',
                         function ($attribute, $value, $fail) {
 
                             $emp_client_code = preg_replace('/\d+/', '', $value );
