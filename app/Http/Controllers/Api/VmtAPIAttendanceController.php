@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\VmtEmployeeReimbursements;
 use App\Models\User;
+use App\Services\VmtReimbursementsService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\HRMSBaseAPIController;
 use App\Models\VmtEmployeeAttendance;
@@ -128,38 +129,16 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
     }
 
-    public function saveReimbursementData(Request $request){
+    public function saveReimbursementData(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
 
-
-        //Save the reimbursement data
-        $emp_reimbursement_data = new VmtEmployeeReimbursements;
-        $emp_reimbursement_data->date = $request->date;
-        $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$request->reimbursement_type)->first()->value('id');
-        $emp_reimbursement_data->user_id = Auth::user()->id;
-        $emp_reimbursement_data->status = $request->status;
-
-        //reimbursement details
-        $emp_reimbursement_data->from = $request->from;
-        $emp_reimbursement_data->to = $request->to;
-        $emp_reimbursement_data->vehicle_type = $request->vehicle_type;
-        $emp_reimbursement_data->distance_travelled = $request->distance_travelled;
-        $emp_reimbursement_data->user_comments = $request->user_comments ?? "";
-
-        if($request->vehicle_type == "2-Wheeler")
-            $emp_reimbursement_data-> total_expenses  = $request->distance_travelled * $this->cost_per_km_2wheeler;
-        else
-        if($request->vehicle_type == "4-Wheeler")
-            $emp_reimbursement_data-> total_expenses  = $request->distance_travelled * $this->cost_per_km_4wheeler;
-        else
-            $emp_reimbursement_data-> total_expenses = $request->distance_travelled;
-
-        $emp_reimbursement_data->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Reimbursement detailed saved',
-            'data'=> $request->all()
-        ]);
+        return $serviceVmtReimbursementsService->saveReimbursementData_LocalConveyance( user_code: $request->user_code,
+                                                                                        date : $request->date,
+                                                                                        reimbursement_type: $request->reimbursement_type,
+                                                                                        vehicle_type: $request->vehicle_type,
+                                                                                        from:  $request->from,
+                                                                                        to: $request->to,
+                                                                                        distance_travelled: $request->distance_travelled,
+                                                                                        user_comments:   $request->user_comments);
 
     }
 

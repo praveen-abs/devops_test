@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('saveReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveReviewerReviews');
 
 
-    Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
+    Route::post('/reimbursements/save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
 
     ////Attendance
 
