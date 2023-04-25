@@ -37,13 +37,14 @@
 
     <div>
       <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[5, 10, 25]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
         v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-        <template #empty> No customers found. </template>
+        <template #empty> No Employeee found. </template>
         <template #loading> Loading customers data. Please wait. </template>
 
-        <Column field="employee_name" header="Employee Name">
+        <Column class="font-bold" field="employee_name" header="Employee Name">
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
           </template>
@@ -60,7 +61,7 @@
         <Column field="regularization_type" header="Type"></Column>
         <Column field="user_time" header="Actual Time"></Column>
         <Column field="regularize_time" header="Regularize Time"></Column>
-        <Column field="reason_type" header="Reason">
+        <Column field="reason_type" header="Reason" style="min-width: 18rem;">
           <template #body="slotProps">
 
             <span v-if="slotProps.data.reason_type == 'Others'">
@@ -75,8 +76,11 @@
 
         <Column field="status" header="Status" icon="pi pi-check">
           <template #body="{ data }">
+                    <Tag :value="data.status" :severity="getSeverity(data.status)" />
+                </template>
+          <!-- <template #body="{ data }">
             <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
-          </template>
+          </template> -->
           <template #filter="{ filterModel, filterCallback }">
             <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses" placeholder="Select"
               class="p-column-filter" :showClear="true">
@@ -93,11 +97,11 @@
             </Dropdown>
           </template>
         </Column>
-        <Column style="width: 300px" field="" header="Action">
+        <Column  field="" header="Action">
           <template #body="slotProps">
             <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
                         <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
-            <span v-if="slotProps.data.status == 'Pending'">
+            <span style="width: 250px;display: block;" v-if="slotProps.data.status == 'Pending'">
               <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
                 @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
               <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Rejected"
@@ -175,6 +179,21 @@ function resetVars() {
   currentlySelectedStatus = "";
   currentlySelectedRowData = null;
 }
+
+const getSeverity = (status) => {
+    switch (status) {
+        case 'Rejected':
+            return 'danger';
+
+        case 'Approved':
+            return 'success';
+
+
+        case 'Pending':
+            return 'warning';
+
+    }
+};
 
 ////PrimeVue ConfirmDialog code -- Keeping here for reference
 //const confirm = useConfirm();
@@ -425,5 +444,8 @@ function processApproveReject() {
 .pi-sort-amount-up-alt::before {
   content: "\e9a2";
   color: white;
+}
+.p-datatable .p-datatable-thead > tr > th >.p-column-header-content>.p-column-title:nth-child(1){
+  margin-left:30px;
 }
 </style>
