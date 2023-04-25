@@ -92,7 +92,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
-                        <div class="text">
+                        <div class="text ml-4">
                             <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(0,4) }} -->
                             {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
 
@@ -100,7 +100,7 @@
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Gender </div>
-                        <div class="text">
+                        <div class="text ">
                             <!-- {{ emp_details.gender.name }} -->
                             {{ computedGenderValue }}
 
@@ -218,7 +218,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Personal Email</div>
-                        <div class="text">
+                        <div class="text ml-4">
                             {{ _instance_profilePagesStore.employeeDetails.email }}
 
                         </div>

@@ -143,7 +143,7 @@
                         <ul class="personal-info"   >
                                 <li  >
                                     <div class="title">Bank Name</div>
-                                    <div class="text">
+                                    <div class="text ml-4">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
@@ -212,9 +212,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-
-
 
                                     <div class="col-md-6 ">
                                         <div class="mb-3 form-group">
