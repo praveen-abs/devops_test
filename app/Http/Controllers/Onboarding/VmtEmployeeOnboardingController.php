@@ -1232,7 +1232,17 @@ class VmtEmployeeOnboardingController extends Controller
                // var_dump($excelRowdata);exit();
                //Validation
                $rules = [
-                   'employee_code' => 'nullable|unique:users,user_code',
+                   'employee_code' => ['nullable|unique:users,user_code',
+                        function ($attribute, $value, $fail) {
+
+                            $emp_client_code = preg_replace('/\d+/', '', $value );
+                            $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
+
+                            if (!$result) {
+                                $fail('No matching client exists for the given Employee Code : '.$value);
+                            }
+                        },
+                    ],
                    'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                    'email' => 'required|email:strict|unique:users,email',
                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
