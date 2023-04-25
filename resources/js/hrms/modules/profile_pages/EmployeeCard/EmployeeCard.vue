@@ -11,18 +11,19 @@
                     <div class="text-center col-12">
 
 
-                        <div class="mx-auto rounded-circle img-xl userActive-status profile-img"
-                            style="border:6px solid #c2c2c2c2">
+                        <div class="mx-auto rounded-circle img-xl userActive-status profile-img">
+                                 <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt="" srcset=""  style="border:6px solid #c2c2c2c2">
+                            <label class="cursor-pointer edit-icon " style="position: relative; top: -30px;" data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
+                                <i class="fa fa-camera"></i></label>
+                        <!-- <input type="file" name="" id="upload" hidden @change="profilePhoto($event)"> -->
 
-                            <a class="edit-icon " data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="">
-                                <i class="fa fa-camera"></i></a>
                         </div>
-
 
                         <div class="mt-4">
                             <div class="progress-wrapper border-bottom-liteAsh ">
-                                <div class="mb-1 text-center">
-                                    <h6 class="text-center">
+                                <span class="mx-auto opacity-0 border-1"></span>
+                                <div class="mb-1 text-center px-auto">
+                                    <h6 class="text-center ">
                                         {{ _instance_profilePagesStore.employeeDetails.name }}
                                     </h6>
                                 </div>
@@ -40,7 +41,7 @@
 
                                 </div> -->
                                 <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.get_employee_details.profile_completeness"></ProgressBar>
-
+                                <!-- <ProgressBar  :value="60"></ProgressBar> -->
                                 <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
                             </div>
                             <!-- <ProgressBar class="bg-red-600" :value="10"></ProgressBar> -->
@@ -114,12 +115,41 @@
 
 
 <script setup>
+import axios from 'axios';
+import { ref } from 'vue';
 import { Service } from '../../Service/Service'
 import { profilePagesStore } from '../stores/ProfilePagesStore'
 
 const service = Service()
 
+const profile = ref()
+
 let _instance_profilePagesStore = profilePagesStore();
+
+const profilePhoto = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    // Get uploaded file
+    (profile.value= e.target.files[0])
+      // Get file size
+    // Print to console
+    console.log(profile.value);
+  };
+
+  let form = new FormData()
+
+  form.append('Profile',profile.value)
+
+  let url = 'weew'
+  axios.post(url,form).then(res=>{
+    console.log(res.data);
+  }).finally(()=>{
+    console.log("Photo Sent");
+  })
+  }
+
+
+
 </script>
 
 <style>
