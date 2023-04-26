@@ -65,11 +65,13 @@
 //             echo VmtEmployee::where('aadhar_number',$aadhar_number)->exists() ? "true" : "false";
 //         else
 //             echo false;
-
-$VmtGeneralInfo = VmtGeneralInfo::first();
-                     $image_view = url('/') . $VmtGeneralInfo->logo_img;
-                   $mail_send = \Mail::to("vvishva185@gmail.com")->send(new QuickOnboardLink('Vishnu', 'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
-                  echo  $mail_send->exists();
+$record_ids='228';
+ $query_docs = VmtEmployeeDocuments::where('User_id','366')->pluck('Status');
+dd($query_docs);
+// $VmtGeneralInfo = VmtGeneralInfo::first();
+//                      $image_view = url('/') . $VmtGeneralInfo->logo_img;
+//                    $mail_send = \Mail::to("vvishva185@gmail.com")->send(new QuickOnboardLink('Vishnu', 'DM001', 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+//                   echo  $mail_send->exists();
 
 ?>
 
