@@ -418,14 +418,16 @@ const bank_information = reactive({
 
 
 const  esic_applicable =computed(()=>{
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable  == "no") return "No";
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable == "yes") return "Yes";
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
+   else
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
 })
 
 const pf_applicable =computed(()=>{
 
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "no") return "No" ;
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "yes") return "Yes" ;
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No" ;
+   else
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes" ;
 
 
 })
@@ -551,13 +553,6 @@ axios.post(url, {
     dialog_statutory_visible.value = false;
 
 }
-
-
-
-
-
-
-
 
 </script>
 

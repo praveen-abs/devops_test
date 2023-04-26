@@ -2,41 +2,15 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Collection;
+use App\Models\VmtReimbursementVehicleType;
 use Illuminate\Session\SessionManager;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
-use Dompdf\Dompdf;
-use \stdClass;
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeReimbursements;
-use App\Models\VmtPMS_KPIFormReviewsModel;
-use App\Models\VmtPMS_KPIFormAssignedModel;
-use Illuminate\Support\Facades\Auth;
+use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\VmtLocalConveyanceVehicles;
-// use App\Models\VmtEmployeeReimbursements;
-
-use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\Compensatory;
-use App\Models\VmtEmployeeStatutoryDetails;
-use App\Models\VmtEmployeeFamilyDetails;
-use App\Models\VmtOrgRoles;
-use App\Notifications\ViewNotification;
-use Illuminate\Support\Facades\Notification;
-use App\Mail\WelcomeMail;
-
-
 class VmtReimbursementsService {
-
-    protected $kmsCost_2_wheeler = 0;
-    protected $kmsCost_4_wheeler = 0;
-
     protected $instance;
 
     /**
@@ -47,11 +21,6 @@ class VmtReimbursementsService {
     public function __construct(SessionManager $session)
     {
         //$query_LocalConveyance = VmtLocalConveyanceVehicles::all();
-
-        $this->kmsCost_2_wheeler = 3.5;
-        $this->kmsCost_4_wheeler = 6;
-        $this->kmsCost_misc = 1;
-
     }
 
     private function getLocalConveyanceCost($vehicle_type){
@@ -69,51 +38,78 @@ class VmtReimbursementsService {
     }
 
 
-    public function createReimbursement_LocalConveyance($local_conveyance_data)
+    public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
     {
 
-       //dd($local_conveyance_data['date']);
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'date' => $date,
+                'reimbursement_type' => $reimbursement_type,
+                'vehicle_type' => $vehicle_type,
+                'from' => $from,
+                'to' => $to,
+                'distance_travelled' => $distance_travelled,
+                'user_comments' => $user_comments,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => "required",
+                "reimbursement_type" => 'required|exists:vmt_reimbursements,reimbursement_type',
+                "vehicle_type" => "required|exists:vmt_reimbursement_vehicle_types,vehicle_type",
+                "from" => "required",
+                "to" => "required",
+                "distance_travelled" => "required",
+                "user_comments" => "nullable",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
 
-        try{
-
-            //Save in DB
-            $emp_reimbursements = new VmtEmployeeReimbursements;
-            $emp_reimbursements->user_id = $local_conveyance_data['user_id'];
-            $emp_reimbursements->reimbursement_type_id = $local_conveyance_data['reimbursement_type_id'];
-            $emp_reimbursements->date = $local_conveyance_data['date'];
-            if($local_conveyance_data['user_comments']!=null){
-            $emp_reimbursements->user_comments = $local_conveyance_data['user_comments'];
-            }
-            $emp_reimbursements->status = $local_conveyance_data['status'];
-            $emp_reimbursements->vehicle_type = $local_conveyance_data['vehicle_type'];
-            $emp_reimbursements->from =  $local_conveyance_data['from'];
-            $emp_reimbursements->to = $local_conveyance_data['to'];
-            $emp_reimbursements->distance_travelled = $local_conveyance_data['distance_travelled'];
-            $emp_reimbursements->total_expenses = $local_conveyance_data['total_expenses'];
-            $emp_reimbursements->save();
-
-            return [
-                "status" => "success",
-                "message" => "Reimbursement data saved"
-            ];
-
-
-
-
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
         }
-        catch(Exception $e){
 
-            return $e;
+        $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();;
 
-        }
+        //Save the reimbursement data
+        $emp_reimbursement_data = new VmtEmployeeReimbursements;
+        $emp_reimbursement_data->date = $date;
+        $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
+        $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
+        $emp_reimbursement_data->status = "Pending";
+
+        //reimbursement details
+        $emp_reimbursement_data->from = $from;
+        $emp_reimbursement_data->to = $to;
+        $emp_reimbursement_data->vehicle_type_id = $query_reimbursements_vehicle_types->id;
+        $emp_reimbursement_data->distance_travelled = $distance_travelled;
+        $emp_reimbursement_data->user_comments = $user_comments ?? "";
+
+        $emp_reimbursement_data->total_expenses  = $distance_travelled *  $query_reimbursements_vehicle_types->cost_per_km;
+
+        $emp_reimbursement_data->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message'=> 'Reimbursement details saved',
+            'data'=> ''
+        ]);
 
     }
 
-
-    function createReimbursement($reimbursement_type_id, $claim_type, $claim_amount, $eligible_amount, $user_comments, $status,$date_of_dispatch, $proof_of_delivery){
-
+    public function getReimbursementVehicleTypes(){
+        return VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
     }
 
+    public function getReimbursementTypes(){
+        return VmtReimbursements::all(['id','reimbursement_type']);
+    }
 
     function fetchAllReimbursementsAsGroups($year, $month, $status ,$reimbursement_type_id){
 
@@ -134,7 +130,9 @@ class VmtReimbursementsService {
         if($status!=null){
             $array_unique_users=$array_unique_users->where('vmt_employee_reimbursements.status', $status);
         }
+
         $array_unique_users=$array_unique_users->get();
+
         foreach($array_unique_users as $single_user){
 
             //dd($single_user->user_id);
@@ -147,10 +145,13 @@ class VmtReimbursementsService {
 
             //Get all the reimbursement data for the given user_id
             $reimbursement_data = VmtEmployeeReimbursements::where('user_id',$single_user->user_id)
+                                ->join('vmt_reimbursement_vehicle_types','vmt_reimbursement_vehicle_types.id','=','vmt_employee_reimbursements.vehicle_type_id')
+                                ->join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                                 ->whereYear('vmt_employee_reimbursements.date',$year)
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
-                                ->where('reimbursement_type_id',$reimbursement_type_id)
-                                ->select('id','reimbursement_type_id','date','from','to','vehicle_type','distance_travelled','total_expenses','status');
+                                ->where('vmt_employee_reimbursements.reimbursement_type_id',$reimbursement_type_id)
+                                ->select('vmt_employee_reimbursements.id','vmt_employee_reimbursements.reimbursement_type_id','vmt_employee_reimbursements.date',
+                                'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to', 'vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
 
             if($status!=null){
                 $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);
@@ -201,23 +202,13 @@ class VmtReimbursementsService {
     }
 
     public function fetchEmployeeReimbursement($user_id,$year,$month){
-        $employee_reimbursement_data_query = VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','reimbursement_type_id')
+        $employee_reimbursement_data_query = VmtEmployeeReimbursements::join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
+                                                                      ->join('vmt_reimbursement_vehicle_types','vmt_reimbursement_vehicle_types.id','=','vmt_employee_reimbursements.vehicle_type_id')
                                                                       ->where('user_id',$user_id)
                                                                       ->whereYear('date',$year)
                                                                       ->whereMonth('date',$month)
-                                                                      ->get(['date','vmt_reimbursements.reimbursement_type','from','to','vehicle_type',
+                                                                      ->get(['date','vmt_reimbursements.reimbursement_type','from','to','vmt_reimbursement_vehicle_types.vehicle_type','vmt_reimbursement_vehicle_types.cost_per_km',
                                                                        'distance_travelled','total_expenses','user_comments']);
-            foreach( $employee_reimbursement_data_query as $single_data){
-                if($single_data['vehicle_type']=='2-Wheeler'){
-                    $single_data['amt_per_km']=3.5;
-                }else if($single_data['vehicle_type']=='4-Wheeler'){
-                     $single_data['amt_per_km']=3.5;
-                }else{
-                    $single_data['amt_per_km']='';
-                }
-
-            }
-
 
             return $employee_reimbursement_data_query;
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\VmtAPIPaySlipController;
 use App\Http\Controllers\Api\VmtAPIProfilePagesController;
 use App\Http\Controllers\Api\VmtAPIInvestmentsController;
 use App\Http\Controllers\Api\VmtApiNotificationsController;
+use App\Http\Controllers\Api\VmtAPIReimbursementsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,8 +57,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('getReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@getReviewerReviews');
     Route::post('saveReviewerReviews', 'App\Http\Controllers\Api\VmtAPIPMSModuleController@saveReviewerReviews');
 
-
-    Route::post('save_reimbursement_data', [VmtAPIAttendanceController::class, 'saveReimbursementData']);
+    //Reimbursements
+    Route::post('/reimbursements/save_reimbursement_data', [VmtAPIReimbursementsController::class, 'saveReimbursementData']);
+    Route::get('/reimbursements/getReimbursementVehicleTypes', [VmtAPIReimbursementsController::class, 'getReimbursementVehicleTypes']);
+    Route::get('/reimbursements/getReimbursementTypes', [VmtAPIReimbursementsController::class, 'getReimbursementTypes']);
 
     ////Attendance
 

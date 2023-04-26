@@ -1058,7 +1058,11 @@ class VmtEmployeeController extends Controller
             $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
 
             $singleEmp['profile_completeness'] = calculateProfileCompleteness($singleEmp['user_id']);
-            $singleEmp['blood_group_name'] = VmtBloodGroup::find($singleEmp['blood_group_id'])->name;
+
+            if(!empty($singleEmp['blood_group_id']))
+                $singleEmp['blood_group_name'] = VmtBloodGroup::find($singleEmp['blood_group_id'])->name;
+            else
+                $singleEmp['blood_group_name'] = '';
         }
 
         //dd($query_vmtEmployees);

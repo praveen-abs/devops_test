@@ -39,14 +39,14 @@
                                     <div class="progress-bar " role="progressbar" id="profile_progressBar"
                                         aria-valuenow="{{ 100 }}" aria-valuemin="0"
                                         aria-valuemax="100"></div>
-                               
+
 
                                 </div> -->
-                            <!-- <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.get_employee_details.profile_completeness"></ProgressBar> -->
-                            <!-- <ProgressBar  :value="60"></ProgressBar> -->
-                            <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
-                        </div>
-                        <!-- <ProgressBar class="bg-red-600" :value="10"></ProgressBar> -->
+                                <ProgressBar  :value="_instance_profilePagesStore.employeeDetails.profile_completeness"></ProgressBar>
+                                <!-- <ProgressBar  :value="60"></ProgressBar> -->
+                                <p class="mb-2 text-muted f-10 text-start fw-bold">Your profile is completed</p>
+                            </div>
+                            <!-- <ProgressBar class="bg-red-600" :value="10"></ProgressBar> -->
 
                         <div class="mb-4 text-center profile-mid-right-content ">
                             <div class="py-2 border-bottom-liteAsh">
@@ -236,7 +236,7 @@ onMounted(() => {
 </script>
 
 <style>
-.p-progressbar.p-component.p-progressbar-determinate {
-    height: 10px;
+.p-progressbar.p-component.p-progressbar-determinate{
+    height: 13px;
 }
 </style>
