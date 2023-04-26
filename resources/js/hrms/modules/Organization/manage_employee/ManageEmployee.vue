@@ -34,11 +34,11 @@
 
                     <div class="tab-pane fade " id="not_active_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-                        <!-- <YetToActiveEmployees /> -->
+                        <YetToActiveEmployees />
                     </div>
                     <div class="tab-pane fade " id="exit_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-                        <!-- <ExitEmployees /> -->
+                        <ExitEmployees />
                     </div>
                 </div>
             </div>

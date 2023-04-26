@@ -14,7 +14,7 @@
 
 <div class=" approval_documents-wrapper card mt-30">
     <div class="card-body">
-        <h6 class="mb-3 text-lg font-semibold">Documents Approvals</h6>
+        
 
 
                @vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
