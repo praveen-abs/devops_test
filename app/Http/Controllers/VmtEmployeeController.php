@@ -1167,6 +1167,14 @@ class VmtEmployeeController extends Controller
         return view('vmt_manageEmployee',compact('client_id'));
     }
 
+    public function showManageEmployeePage_v2(Request $request)
+    {
+        //Read session value
+        $client_id = 0;
+
+        return view('vmt_manageEmployee_v2');
+    }
+
     public function isUserExist($t_emp_code)
     {
         if (empty(User::where('user_code', $t_emp_code)->where('is_ssa', '0')->first()))
