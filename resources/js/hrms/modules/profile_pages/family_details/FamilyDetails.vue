@@ -64,7 +64,7 @@
 
             </h6>
             <!-- {{ _instance_profilePagesStore.employeeDetails.get_family_details }} -->
-            <div class="table-responsive my-6">
+            <div class="my-6 table-responsive">
                 <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -85,7 +85,7 @@
                     <Column :exportable="false" header="Action" style="min-width:8rem">
                         <template #body="slotProps">
 
-                            <button class="btn btn-success mr-3"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
+                            <button class="mr-3 btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
                             <button class="btn btn-danger"  @click="diolog_DeleteFamilyDetails(slotProps.data)">Delete</button>
 
 
@@ -191,6 +191,7 @@ const current_table_id = ref()
 
 
 const saveFamilyDetails = () => {
+    _instance_profilePagesStore.loading_screen = true
 
 //    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
 //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
@@ -208,8 +209,8 @@ const saveFamilyDetails = () => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                //  window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Family information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
@@ -225,7 +226,10 @@ const saveFamilyDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
+            });
         // window.location.reload();
         DialogFamilyinfovisible.value = false;
     }
@@ -631,7 +635,7 @@ span {
     </script>
 
 <template>
-    <div class="card flex justify-content-center">
+    <div class="flex card justify-content-center">
         <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
         <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
             <p>

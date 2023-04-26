@@ -24,30 +24,35 @@
               </li> -->
 
               <li class="nav-item text-muted " role="presentation">
-                <a
-                  class="pb-2 nav-link active"
-                  data-bs-toggle="tab"
-                  href="#localConveyance"
-                  aria-selected="true"
-                  role="tab"
-                  @click="employee_service.onclickSwitchToLocalCoverganceTab"
-                >
+                <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#localConveyance" aria-selected="true"
+                  role="tab" @click="employee_service.onclickSwitchToLocalCoverganceTab">
                   Local Conveyance
                 </a>
               </li>
             </ul>
           </div>
-          <div
-            class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex justify-content-end"
-          >
-          <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy" class="mx-4"
-                style=" border: 1px solid orange; border-radius: 7px;" />
+          <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex justify-content-end">
+            <label for="" class="my-auto text-lg font-semibold">Select Month</label>
+            <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy" class="mx-4 "
+              style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
 
             <button label="Submit" class="mx-4 my-auto btn btn-primary" severity="danger" style="height: 33px;"
-                :disabled="!employee_service.selected_date == '' ? false : true" @click="employee_service.generate_ajax"> <i class="fa fa-cog me-2"></i>
-                Generate</button>
-                <button class="my-auto btn btn-primary" :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success" style="height: 33px;"
-            @click="employee_service.download_ajax"><i class="fas fa-file-download me-2" ></i>Download</button>
+              :disabled="!employee_service.selected_date == '' ? false : true" @click="employee_service.generate_ajax"> <i
+                class="fa fa-cog me-2"></i>
+              Generate</button>
+            <button class="my-auto btn btn-primary"
+              :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success"
+              style="height: 33px;" @click="toggle"><i
+                class="fas fa-file-download me-2"></i>Download</button>
+            <OverlayPanel ref="op">
+              <div class="py-1">
+                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                <a class="block px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:bg-gray-100" role="menuitem" tabindex="-1"   @click="employee_service.download_ajax"
+                  id="menu-item-0">Excel</a>
+                <a class="block px-4 py-2 text-sm font-semibold text-gray-700 cursor-pointer hover:bg-gray-100" role="menuitem" tabindex="-1"
+                  id="menu-item-1">Pdf</a>
+              </div>
+            </OverlayPanel>
             <!-- <button
               v-if="employee_service.reimbursementsScreen"
               @click="employee_service.onclickOpenReimbursmentDailog"
@@ -56,10 +61,8 @@
               <i class="fa fa-plus-circle me-1"></i>Add Claim
             </button> -->
 
-            <button
-              @click="employee_service.onclickOpenLocalConverganceDailog"
-              class="mx-4 my-auto btn btn-orange" style="height: 33px;"
-            >
+            <button @click="employee_service.onclickOpenLocalConverganceDailog" class="mx-4 my-auto btn btn-orange"
+              style="height: 33px;">
               <i class="fa fa-plus-circle me-1"></i>Add Claim
             </button>
           </div>
@@ -243,48 +246,26 @@
         <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
 
         <!-- Local conveyance -->
-        <div
-          class="tab-pane fade show"
-          id="localConveyance"
-          role="tabpanel"
-          aria-labelledby="pills-profile-tab"
-        >
+        <div class="tab-pane fade show" id="localConveyance" role="tabpanel" aria-labelledby="pills-profile-tab">
           <div>
             <div class="card">
-              <Dialog
-                header="Header"
-                v-model:visible="employee_service.loading_spinner"
-                :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-                :style="{ width: '25vw'  }"
-                :modal="true"
-                :closable="false"
-                :closeOnEscape="false"
-              >
+              <Dialog header="Header" v-model:visible="employee_service.loading_spinner"
+                :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true"
+                :closable="false" :closeOnEscape="false">
                 <template #header>
-                  <ProgressSpinner
-                    style="width: 50px; height: 50px"
-                    strokeWidth="8"
-                    fill="var(--surface-ground)"
-                    animationDuration="2s"
-                    aria-label="Custom ProgressSpinner"
-                  />
+                  <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
                 </template>
                 <template #footer>
-                  <h5 style="text-align: center">Please wait...</h5>
+                  <h5 style="text-align: center" class="font-bold">Please wait...</h5>
                 </template>
               </Dialog>
-<!-- {{ employee_service.data_local_convergance }} -->
-              <DataTable
-                ref="dt"
-                :value="employee_service.data_local_convergance"
-                dataKey="id"
-                :paginator="true"
-                :rows="8"
+              <!-- {{ employee_service.data_local_convergance }} -->
+              <DataTable ref="dt" :value="employee_service.data_local_convergance" dataKey="id" :paginator="true"
+                :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                responsiveLayout="scroll"
-              >
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <!-- <Column :exportable="false" style="min-width: 8rem">
                   <template #body="slotProps">
                     <Button
@@ -297,13 +278,7 @@
                   </template>
                 </Column> -->
 
-                <Column
-                  field="date"
-                  header="Date"
-                  style="min-width: 12rem"
-                  dataType="date"
-                  sortable
-                >
+                <Column field="date" header="Date" style="min-width: 8rem" dataType="date" sortable>
                   <template #body="slotProps">
                     {{ moment(slotProps.data.date).format('DD-MMM-YYYY') }}
                   </template>
@@ -324,35 +299,23 @@
                     {{ slotProps.data.to }}
                   </template>
                 </Column>
-                <Column
-                  field="distance_travelled"
-                  header="Total Distance"
-                  style="min-width: 12rem"
-                >
+                <Column field="distance_travelled" header="Total Distance" style="min-width: 4rem">
                   <template #body="slotProps">
                     {{ slotProps.data.distance_travelled }}
                   </template>
                 </Column>
-                <Column field="Amt_km" header="Amt/Km" style="min-width: 12rem">
+                <Column field="Amt_km" header="Amt/Km" style="min-width:4rem">
                   <template #body="slotProps">
                     {{ slotProps.data.amt_per_km }}
                   </template>
                 </Column>
 
-                <Column
-                  field="total_expenses"
-                  header="Amount"
-                  style="min-width: 12rem"
-                >
+                <Column field="total_expenses" header="Amount" style="min-width: 6rem">
                   <template #body="slotProps">
                     {{ slotProps.data.total_expenses }}
                   </template>
                 </Column>
-                <Column
-                  field="user_comments"
-                  header="Remarks"
-                  style="min-width: 12rem"
-                >
+                <Column field="user_comments" header="Remarks" style="min-width: 12rem">
                   <template #body="slotProps">
                     {{ slotProps.data.user_comments }}
                   </template>
@@ -373,129 +336,83 @@
               </DataTable>
             </div>
 
-            <Dialog
-              v-model:visible="employee_service.localconvergance_dailog"
-              :style="{width: '450px'}"
-              header="Local Conveyance"
-              :modal="true"
-              class="p-fluid"
-            >
+            <Dialog v-model:visible="employee_service.localconvergance_dailog" :style="{ width: '450px' }"
+              header="Local Conveyance" :modal="true" class="p-fluid">
 
               <div class="field">
                 <label for="name">Date <span class="text-danger">*</span></label>
-                <Calendar
-                  inputId="dateformat"
-                  v-model="employee_service.employee_local_conveyance.travelled_date"
-                  dateFormat="dd/mm/yy"
-                />
+                <Calendar inputId="dateformat" v-model="employee_service.employee_local_conveyance.travelled_date"
+                  dateFormat="dd/mm/yy" />
 
                 <!-- {{ employee_local_conveyance.travelled_date }} -->
               </div>
 
               <div class="field col">
                 <label for="Claim Amount">Mode of transport <span class="text-danger">*</span> </label>
-                <Dropdown
-                  v-model="employee_service.employee_local_conveyance.mode_of_transport"
-                  :options="employee_service.local_Conveyance_Mode_of_transport"
-                  optionLabel="label"
-                  optionValue="value"
-                  placeholder="Select Mode Of Transport"
-                  class="w-full"
-                  @change="employee_service.amountperKm(employee_service.employee_local_conveyance.mode_of_transport)"
-                />
+                <Dropdown v-model="employee_service.employee_local_conveyance.mode_of_transport"
+                  :options="employee_service.local_Conveyance_Mode_of_transport" optionLabel="label" optionValue="value"
+                  placeholder="Select Mode Of Transport" class="w-full"
+                  @change="employee_service.amountperKm(employee_service.employee_local_conveyance.mode_of_transport)" />
               </div>
 
               <div class="flex formgrid">
                 <div class="field col">
                   <label for="Eligible Amount">From <span class="text-danger">*</span> </label>
-                  <InputText
-                    v-model="employee_service.employee_local_conveyance.travel_from"
-                  />
+                  <InputText v-model="employee_service.employee_local_conveyance.travel_from" />
                 </div>
                 <div class="field col">
                   <label for="Claim Amount">To <span class="text-danger">*</span> </label>
-                  <InputText
-                    v-model="employee_service.employee_local_conveyance.travel_to"
-                  />
+                  <InputText v-model="employee_service.employee_local_conveyance.travel_to" />
                 </div>
               </div>
               <div class="flex formgrid">
                 <div class="field col">
                   <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
-                  <InputText
-                    v-model="
-                      employee_service.employee_local_conveyance.total_distance_travelled
-                    "
-                    @input="employee_service.amount_calculation"
-                  />
+                  <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled
+                    " @input="employee_service.amount_calculation" />
                 </div>
-                <div class="field col" v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
+                <div class="field col"
+                  v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
                   <label for="Eligible Amount">Actual Amount <span class="text-danger">*</span> </label>
-                  <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
-                  'Public Transport'
-                    ? false
-                    : true"
-                    v-model="
-                      employee_service.employee_local_conveyance.local_convenyance_total_amount
-                    "
-                  />
+                  <InputText :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
+                      'Public Transport'
+                      ? false
+                      : true" v-model="employee_service.employee_local_conveyance.local_convenyance_total_amount
+      " />
                 </div>
                 <div class="field col" v-else>
                   <label for="Eligible Amount">Amt/Km <span class="text-danger">*</span></label>
-                  <InputText  :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
-                  'Public Transport'
-                    ? false
-                    : true"
-                    v-model="
-                      employee_service.employee_local_conveyance.Amt_km
-                    "
-                  />
+                  <InputText :readonly="employee_service.employee_local_conveyance.mode_of_transport ==
+                      'Public Transport'
+                      ? false
+                      : true" v-model="employee_service.employee_local_conveyance.Amt_km
+      " />
                 </div>
               </div>
 
-              <div
-                class="field col"
-                :hidden="
-                  employee_service.employee_local_conveyance.mode_of_transport ==
+              <div class="field col" :hidden="employee_service.employee_local_conveyance.mode_of_transport ==
                   'Public Transport'
-                    ? true
-                    : false
-                "
-              >
+                  ? true
+                  : false
+                ">
                 <label for="Eligible Amount">Amount <span class="text-danger">*</span> </label>
-                <InputText   @input="employee_service.amountperKm"
-                  v-model="
-                    employee_service.employee_local_conveyance
-                      .local_convenyance_total_amount
-                  "
-                />
+                <InputText @input="employee_service.amountperKm" v-model="employee_service.employee_local_conveyance
+                    .local_convenyance_total_amount
+                  " />
               </div>
               <div class="field col">
                 <label for="Eligible Amount">Remarks</label>
-                <Textarea
-                  v-model="
-                    employee_service.employee_local_conveyance.local_conveyance_remarks
-                  "
-                  autoResize
-                  rows="2"
-                  cols="30"
-                />
+                <Textarea v-model="employee_service.employee_local_conveyance.local_conveyance_remarks
+                  " autoResize rows="2" cols="30" />
               </div>
 
               <template #footer>
+                <Button label="Cancel" icon="pi pi-times" style="height: 30px; color: black" class="p-button-text"
+                  @click="employee_service.hideDialog" />
                 <Button
-                  label="Cancel"
-                  icon="pi pi-times"
-                  style="height: 30px; color: black"
-                  class="p-button-text"
-                  @click="employee_service.hideDialog"
-                />
-                <Button :disabled="!employee_service.employee_local_conveyance.travelled_date == '' &&  !employee_service.employee_local_conveyance.mode_of_transport == ''  ? false : true "
-                  label="Save"
-                  icon="pi pi-check"
-                  style="height: 30px; background: rgb(255 135 38); color: white"
-                  @click="employee_service.post_data_for_local_convergance"
-                />
+                  :disabled="!employee_service.employee_local_conveyance.travelled_date == '' && !employee_service.employee_local_conveyance.mode_of_transport == '' ? false : true"
+                  label="Save" icon="pi pi-check" style="height: 30px; background: rgb(255 135 38); color: white"
+                  @click="employee_service.post_data_for_local_convergance" />
               </template>
             </Dialog>
           </div>
@@ -503,96 +420,91 @@
       </div>
     </div>
   </div>
+
+  <!-- <Button type="button" icon="pi pi-image" label="Image" @click="toggle" /> -->
 </template>
 
 <script setup>
 // import { useVuelidate } from "@vuelidate/core";
 // import { required, email, maxLength } from "@vuelidate/validators";
-import {ref, onMounted, reactive} from "vue";
-import {employee_reimbursment_service} from "./EmployeeReimbursementsService";
+import { ref, onMounted, reactive } from "vue";
+import { employee_reimbursment_service } from "./EmployeeReimbursementsService";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import moment from 'moment'
 import axios from "axios";
 
-// const v$ = useVuelidate(validation, employee_onboarding);
-
-// const handleSubmit = (isFormValid) => {
-//     if (!isFormValid) {
-// return;
-// }
-
-// }
+const op = ref();
+const toggle = (event) => {
+  op.value.toggle(event);
+}
 
 const employee_service = employee_reimbursment_service();
 
 const selected_date = ref()
 const generate_ajax = () => {
 
-    employee_service.loading_spinner = true
+  employee_service.loading_spinner = true
 
-    console.log(selected_date.value);
+  console.log(selected_date.value);
 
-let filter_date = new Date(selected_date.value);
+  let filter_date = new Date(selected_date.value);
 
-let year = filter_date.getFullYear();
-let month = filter_date.getMonth() + 1;
+  let year = filter_date.getFullYear();
+  let month = filter_date.getMonth() + 1;
 
-console.log((selected_date.value).toString());
+  console.log((selected_date.value).toString());
 
 
-//show_table.value=true
+  //show_table.value=true
 
-//data_checking.value = true
+  //data_checking.value = true
   console.log(month);
 
 
   axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
-       params: {
-        selected_year: year,
-        selected_month: month
-       }
-     }).then(res => {
-             console.log("data sent");
-             console.log("data from " + res.employee_name);
-             employee_service.data_local_convergance = res.data
-            employee_service.loading_spinner = false
-    }).catch(err => {
-              console.log(err);
-     })
+    params: {
+      selected_year: year,
+      selected_month: month
+    }
+  }).then(res => {
+    console.log("data sent");
+    console.log("data from " + res.employee_name);
+    employee_service.data_local_convergance = res.data
+    employee_service.loading_spinner = false
+  }).catch(err => {
+    console.log(err);
+  })
 
-  }
+}
 
-  const download_ajax = () => {
-    let filter_date = new Date(selected_date.value);
-
-
-    let year = filter_date.getFullYear();
-    let month = filter_date.getMonth() + 1;
+const download_ajax = () => {
+  let filter_date = new Date(selected_date.value);
 
 
-    let URL = '/reports/generate-employee-reimbursements-reports?selected_year=' + year + '&selected_month=' +
+  let year = filter_date.getFullYear();
+  let month = filter_date.getMonth() + 1;
+
+
+  let URL = '/reports/generate-employee-reimbursements-reports?selected_year=' + year + '&selected_month=' +
     month + '&_token={{ csrf_token() }}';
-    window.location = URL;
-    setTimeout(greet, 1000);
+  window.location = URL;
 
 }
 
 
 
 
-onMounted(() => {
+onMounted(async () => {
   //    employee_service.fetch_data_from_reimbursment()
-//   employee_service.fetch_data_for_local_convergance();
-employee_service.selected_date = new Date()
+
+  employee_service.selected_date = new Date()
+
+  await employee_service.generate_ajax();
 });
 </script>
 
 <style lang="scss">
-// .main-content {
-//   width: 85%;
-// }
-
-.p-datatable .p-datatable-thead > tr > th {
+.p-datatable .p-datatable-thead>tr>th {
   text-align: center;
   padding: 1rem 1rem;
   border: 1px solid #dee2e6;
@@ -639,9 +551,7 @@ employee_service.selected_date = new Date()
   }
 }
 
-.p-column-filter-overlay-menu
-  .p-column-filter-constraint
-  .p-column-filter-matchmode-dropdown {
+.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
   margin-bottom: 0.5rem;
   visibility: hidden;
   position: absolute;
@@ -651,7 +561,7 @@ employee_service.selected_date = new Date()
   background-color: #003056;
 }
 
-.p-datatable .p-datatable-tbody > tr {
+.p-datatable .p-datatable-tbody>tr {
   font-size: 13px;
 
   .employee_name {
@@ -721,7 +631,7 @@ employee_service.selected_date = new Date()
   visibility: hidden;
 }
 
-.p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
+.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
   color: white;
   border-color: transparent;
 }
@@ -734,7 +644,7 @@ employee_service.selected_date = new Date()
   background: none;
 }
 
-.p-datatable .p-datatable-thead > tr > th .p-column-filter {
+.p-datatable .p-datatable-thead>tr>th .p-column-filter {
   width: 50%;
 }
 
@@ -824,10 +734,11 @@ employee_service.selected_date = new Date()
   /* Microsoft Edge */
   color: red;
 }
+
 .p-calendar .p-inputtext {
   flex: 1 1 auto;
   width: 1%;
-   font-weight: 600;
-   color: #003056;
+  font-weight: 600;
+  color: #003056;
 }
 </style>

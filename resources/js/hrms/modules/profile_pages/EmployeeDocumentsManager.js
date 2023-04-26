@@ -14,6 +14,7 @@ import Toast from 'primevue/toast';
 
 
 
+
 // Primevue Services
 import DialogService from 'primevue/dialogservice';
 import ToastService from 'primevue/toastservice';
@@ -28,7 +29,10 @@ app.component('TabView', TabView);
 app.component('TabPanel', TabPanel);
 app.component('FileUpload', FileUpload);
 app.component('Button', Button)
-app.component('Toast',Toast )
+app.component('Toast',Toast );
+
+
+
 
 app.use(PrimeVue, { ripple: true });
 app.use(DialogService)

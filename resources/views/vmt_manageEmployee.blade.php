@@ -640,8 +640,7 @@
                             name: 'View Profile',
                             formatter: function formatter(enc_user_id) {
 
-                                var routeURL = "{{ route('pages-profile-new') }}" + "/" +
-                                    enc_user_id;
+                                var routeURL = "{{ route('pages-profile-new') }}" + "?uid=" + enc_user_id;
                                 //routeURL.replace(':user_id',user_id);
                                 //console.log("User URL : "+routeURL);
 

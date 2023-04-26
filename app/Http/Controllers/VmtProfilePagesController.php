@@ -30,10 +30,10 @@ class VmtProfilePagesController extends Controller
         $user = null;
 
         //If empty, then show current user profile page
-        if (empty($request->user_id)) {
+        if (empty($request->uid)) {
             $user = auth()->user();
         } else {
-            $user = User::find(Crypt::decryptString($request->user_id));
+            $user = User::find(Crypt::decryptString($request->uid));
             //dd("Enc User details from request : ".$user);
         }
 
@@ -106,6 +106,15 @@ class VmtProfilePagesController extends Controller
         //dd($documents_filenames);
         return view('profilePage_new', compact('user','department','allDepartments', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
+
+    public function updateProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->updateProfilePicture($request->user_code, $request->file_object);
+    }
+
+    public function getProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->getProfilePicture($request->user_code);
+    }
+
 
     public function updateReportingManager(Request $request){
 
@@ -603,7 +612,7 @@ public function addExperienceInfo(Request $request)
     public function getEmployeePrivateDocumentFile(Request $request,VmtProfilePagesService $profilepagesservice){
 
 
-        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code,$request->document_name);
+        $response = $profilepagesservice->getEmployeePrivateDocumentFile($request->user_code, $request->document_name, $request->emp_doc_record_id);
         return $response;
 
     }

@@ -684,17 +684,30 @@ class VmtEmployeePayslipService {
             */
 
             $response['payslip_data'] = User::with([
-                                            'getEmployeeDetails',
-                                            'getEmployeeOfficeDetails',
-                                            'getStatutoryDetails',
+                                            'getEmployeeDetails' => function($query){
+                                               $query->select(['id','userid','dob','doj','location','pan_number','bank_id','bank_account_number','bank_ifsc_code']);
+                                            },
+                                            'getEmployeeOfficeDetails' => function($query){
+                                                    $query->select(['id','user_id','designation']);
+                                            },
+                                            'getStatutoryDetails' =>function($query){
+                                                $query->select(['id','user_id','epf_number','esic_number','uan_number']);
+                                            },
                                             'single_payslip_detail' => function($query) use ($year, $month) {
                                                     $query->whereYear('PAYROLL_MONTH', $year)
                                                     ->whereMonth('PAYROLL_MONTH', $month)
-                                                    ->select(['id','user_id', 'PAYROLL_MONTH']);
-                                                }
+                                                   ->select(['id','user_id', 'PAYROLL_MONTH','MONTH_DAYS','Worked_Days','LOP','ArrearS_Days','BASIC','HRA','SPL_ALW',
+                                                            'Overtime','travel_conveyance','TOTAL_EARNED_GROSS','PROF_TAX','income_tax','SAL_ADV','OTHER_DEDUC','TOTAL_DEDUCTIONS','EPFR','EMPLOYEE_ESIC',
+                                                            'NET_TAKE_HOME','EMPLOYER_ESI']);
+                                                },
                                             ])
                                             ->where('users.id',$user_id)
-                                            ->get(['users.id','users.name','users.user_code']);
+                                            ->get(['users.id','users.name','users.user_code','users.email']);
+
+            // $response['bank'] = Bank::with([
+            //                         'get_bank_name'
+            // ])->get();
+
 
             $response['client_logo'] = '';
 

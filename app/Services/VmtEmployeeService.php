@@ -18,6 +18,7 @@ use App\Models\VmtEmployee;
 use App\Models\Department;
 use App\Models\VmtMaritalStatus;
 use App\Models\Bank;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -138,7 +139,7 @@ class VmtEmployeeService {
 
         try
         {
-            if(! empty($user_id))
+            if(!empty($user_id))
             {
 
                 $newUser = User::where('id',$user_id)->first();;
@@ -151,7 +152,7 @@ class VmtEmployeeService {
                 }
                 //$newUser->password = Hash::make('Abs@123123');
                 //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
-                $newUser->user_code = strtoupper($data['employee_code']);
+
                 //$newUser->active = '0';
                 $newUser->is_onboarded = $can_onboard_employee;
                 //$newUser->onboard_type = 'normal';
@@ -193,6 +194,10 @@ class VmtEmployeeService {
         $newUser->password = Hash::make('Abs@123123');
         //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
         $newUser->user_code = strtoupper($data['employee_code']);
+
+        $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']) );
+        $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+
         $newUser->active = '0';
         $newUser->is_default_password_updated = '0';
 
@@ -344,7 +349,11 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     $familyMember->user_id  = $user_id;
                     $familyMember->name =   $row['spouse_name'];
                     $familyMember->relationship = 'Spouse';
-                    $familyMember->gender = $row['spouse_gender'] ?? '';
+                    if(!empty($row['gender']=='Male')){
+                    $familyMember->gender = 'Female';
+                    }else{
+                        $familyMember->gender = 'Male';
+                    }
         //for bulk onboarding
                         if(!empty($row["spouse_dob"])){
                         $dob_spouse =  $row["spouse_dob"];
@@ -353,45 +362,20 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                         }
                         $familyMember->save();
 
-                    if (!empty($row['child_1_name'])) {
+                    if (!empty($row['child_name'])) {
                         $familyMember =  new VmtEmployeeFamilyDetails;
                         $familyMember->user_id  = $user_id;
-                        $familyMember->name =  $row['child_1_name'];
+                        $familyMember->name =  $row['child_name'];
                         $familyMember->relationship = 'Children';
                         $familyMember->gender = '---';
 
-                        if(!empty($row["child_1_dob"]))
-                        $child_dob= $row["child_1_dob"];
+                        if(!empty($row["child_dob"]))
+                        $familyMember->dob= $row["child_dob"];
                         //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
                     }
                     $familyMember->save();
 
-                    if (!empty($row['child_2_name'])) {
-                        $familyMember =  new VmtEmployeeFamilyDetails;
-                        $familyMember->user_id  = $user_id;
-                        $familyMember->name =   $row['child_2_name'];
-                        $familyMember->relationship = 'Children';
-                        $familyMember->gender = '---';
 
-                        if(!empty($row["child_2_dob"]))
-                        $child_dob= $row["child_2_dob"];
-                        // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
-                    }
-                    $familyMember->save();
-
-                    if (!empty($row['child_3_name'])) {
-                        $familyMember =  new VmtEmployeeFamilyDetails;
-                        $familyMember->user_id  = $user_id;
-                        $familyMember->name =   $row['child_3_name'];
-                        $familyMember->relationship = 'Children';
-                        $familyMember->gender = '---';
-
-                        if(!empty($row["child_3_dob"]))
-                        $child_dob= $row["child_3_dob"];
-                        // $familyMember->dob = $this->getdateFormatForDb( $child_dob) ;
-                    }
-
-                    $familyMember->save();
 
         //store employee_compensatory Details details
 
@@ -968,6 +952,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                                         ->join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
                                         ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
                                         ->where('vmt_employee_documents.status',"Pending")
+                                        ->where('users.is_ssa',"0")
+                                        ->where('users.active','<>',"-1")
                                         ->get([
                                             'users.name as name',
                                             'vmt_employee_details.doj as doj',

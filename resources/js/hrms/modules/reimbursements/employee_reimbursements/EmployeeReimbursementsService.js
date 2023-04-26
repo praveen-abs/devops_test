@@ -3,11 +3,13 @@ import { ref, onMounted, reactive } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment/moment";
+import { Service } from '../../Service/Service'
 
 export const employee_reimbursment_service = defineStore(
     "employee_reimbursment_service",
     () => {
         const toast = useToast();
+        const service = Service()
 
         // Reimbursment Varaible Declarations
 
@@ -42,7 +44,7 @@ export const employee_reimbursment_service = defineStore(
         const localconvergance_dailog = ref(false);
 
         const employee_local_conveyance = reactive({
-            type_id: 1,
+            reimbursement_type: "Local Conveyance",
             travelled_date: "",
             mode_of_transport: "",
             travel_from: "",
@@ -91,8 +93,8 @@ export const employee_reimbursment_service = defineStore(
 
         const local_Conveyance_Mode_of_transport = ref([
             { label: "Public Transport", value: "Public Transport" },
-            { label: "Car", value: "4-Wheeler" },
-            { label: "Bike", value: "2-Wheeler" },
+            { label: "Car", value: "4 - Wheeler" },
+            { label: "Bike", value: "2 - Wheeler" },
         ]);
 
 
@@ -192,9 +194,8 @@ export const employee_reimbursment_service = defineStore(
             });
         };
 
-        const post_data_for_local_convergance = (e) => {
+        const post_data_for_local_convergance = () => {
 
-            e.preventDefault();
             let currentObj = this;
 
             const config = {
@@ -203,17 +204,18 @@ export const employee_reimbursment_service = defineStore(
 
             let formData = new FormData();
 
-            formData.append('reimbursement_type_id', employee_local_conveyance.type_id)
+            formData.append('user_code', service.current_user_code)
+            formData.append('reimbursement_type', employee_local_conveyance.type_id)
             formData.append('date', moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
             formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
             formData.append('from', employee_local_conveyance.travel_from)
             formData.append('to', employee_local_conveyance.travel_to)
-            formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
+            // formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
             formData.append('vehicle_type', employee_local_conveyance.mode_of_transport)
             formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled)
 
 
-            let url_all_local_convergance = window.location.origin + '/saveReimbursementsData';
+            let url_all_local_convergance = '/reimbursements/saveReimbursementsData';
 
             console.log("AJAX URL : " + url_all_local_convergance);
 
@@ -283,7 +285,7 @@ export const employee_reimbursment_service = defineStore(
         }
 
         const selected_date = ref()
-        const generate_ajax = () => {
+        async function generate_ajax() {
 
             // loading_spinner.value = true
 
@@ -303,7 +305,7 @@ export const employee_reimbursment_service = defineStore(
             console.log(month);
 
 
-            axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
+            await axios.get(window.location.origin + "/fetch_employee_reimbursement_data", {
                 params: {
                     selected_year: year,
                     selected_month: month
@@ -315,6 +317,8 @@ export const employee_reimbursment_service = defineStore(
                 loading_spinner.value = false
             }).catch(err => {
                 console.log(err);
+            }).finally(()=>{
+                loading_spinner.value = false
             })
 
         }

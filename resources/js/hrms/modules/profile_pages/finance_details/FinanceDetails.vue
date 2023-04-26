@@ -143,7 +143,7 @@
                         <ul class="personal-info"   >
                                 <li  >
                                     <div class="title">Bank Name</div>
-                                    <div class="text">
+                                    <div class="ml-4 text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
@@ -213,9 +213,6 @@
                                         </div>
                                     </div>
 
-
-
-
                                     <div class="col-md-6 ">
                                         <div class="mb-3 form-group">
                                             <label>EPF Number</label>
@@ -284,30 +281,26 @@
 
                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
 
-                        <ul class="personal-info" >
+                        <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info" >
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable  }} -->
-                                    {{ pf_applicable }}
+                                    <!-- {{ pf_applicable }} -->
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.epf_no }} -->
-                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number }}
+                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
 
                                 </div>
                             </li>
-                            <!-- Vishnu V24, [31-03-2023 15:40] -->
                             <li>
                                 <div class="title">UAN Number</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.uan_no }} -->
 
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
 
                                 </div>
                             </li>
@@ -315,8 +308,6 @@
                             <li>
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.esic_applicable }} -->
-                                    <!-- {{   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable }} -->
                                     {{ esic_applicable }}
 
                                 </div>
@@ -324,11 +315,8 @@
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text" >
-                              <!-- {{ statutory_info.esic_no }} -->
 
-                              <!-- {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }} -->
-                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number   }}
-                              <!-- {{ esic_number }} -->
+                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number   }}
 
                                 </div>
                             </li>
@@ -386,7 +374,7 @@
 
     </div>
 
-
+<!-- {{ statutory }} -->
 
 </template>
 <script setup>
@@ -400,6 +388,9 @@ const _instance_profilePagesStore = profilePagesStore()
 
 const fetch_data = Service()
 
+const statutory = ref([])
+
+statutory.value.push(_instance_profilePagesStore.employeeDetails.get_statutory_details)
 
 onMounted(() => {
     // fetchData();
@@ -427,14 +418,16 @@ const bank_information = reactive({
 
 
 const  esic_applicable =computed(()=>{
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable  == "no") return "No";
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable == "yes") return "Yes";
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
+   else
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
 })
 
 const pf_applicable =computed(()=>{
 
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "no") return "No" ;
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable == "yes") return "Yes" ;
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No" ;
+   else
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes" ;
 
 
 })
@@ -460,7 +453,7 @@ const saveBankinfoDetails = () => {
 
             if (res.data.status == "success") {
                 //  window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Bank information updated', life: 3000 });
 
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;
@@ -560,13 +553,6 @@ axios.post(url, {
     dialog_statutory_visible.value = false;
 
 }
-
-
-
-
-
-
-
 
 </script>
 

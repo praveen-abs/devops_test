@@ -34,6 +34,8 @@ class VmtProfilePagesService
     */
     public function updateProfilePicture($user_code, $file_object){
 
+        // dd($user_code,$file_object);
+
        //Validate
         $validator = Validator::make(
             $data = [
@@ -181,7 +183,6 @@ class VmtProfilePagesService
                 // 'getEmployeeDocuments',
             ]
         )
-            //->join('vmt_onboarding_documents', 'vmt_onboarding_documents.id', '=', 'vmt_employee_documents.doc_id')
             ->where('users.id', $user_id)
             ->first();
 
@@ -196,8 +197,11 @@ class VmtProfilePagesService
         $response['employee_documents'] = $response_docs;
 
         //Add the documents details
+        $response['avatar'] = $this->getProfilePicture($response->user_code);
+        $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name;
 
-        $response['avatar'] ="ASDFJASDJFLKAJSDF";
+
+        $response['profile_completeness'] = calculateProfileCompleteness($user_id);
 
 
         //Remove ID from user table
@@ -206,13 +210,63 @@ class VmtProfilePagesService
 
         return $response;
     }
-    public function getEmployeePrivateDocumentFile($user_code, $doc_name)
+    public function getEmployeePrivateDocumentFile($user_code, $doc_name, $emp_doc_record_id=null)
     {
+        // dd($user_code);
 
-        $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
-        $doc_filename = VmtEmployeeDocuments::where('doc_id', $doc_id)->first()->doc_url;
-        $private_file = $user_code . "/onboarding_documents/" . $doc_filename;
-        //dd(file(storage_path('employees/'.$private_file)));
+        try{
+
+            if(empty($emp_doc_record_id))
+            {
+                $user_id=User::where('user_code',$user_code)->first()->id;
+
+                $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
+
+                $doc_filename = VmtEmployeeDocuments::where('user_id',$user_id)->where('doc_id', $doc_id)->first()->doc_url;
+            }
+            else
+            {
+                //Get the filename directly from the record_id
+                $query_emp_doc = VmtEmployeeDocuments::find($emp_doc_record_id);
+                $user_code = User::find($query_emp_doc->user_id)->user_code;
+                $doc_filename = $query_emp_doc->doc_url;
+
+            }
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" .$doc_filename);
+
+            if($response)
+            {
+                $response = base64_encode($response);
+            }
+            else// If no file found, then send this
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => "Employee document doesnt exist for the given user"
+                ]);
+            }
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Employee document fetched successfully",
+                "data" => $response,
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" => $e,
+            ]);
+
+        }
         return response()->file(storage_path('employees/' . $private_file));
     }
 

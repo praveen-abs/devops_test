@@ -89,7 +89,7 @@
                     </Dialog>
 
                 </h6>
-                <div class="table-responsive my-6">
+                <div class="my-6 table-responsive">
                     <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_experience_details"
                         dataKey="id" :paginator="true" :rows="10"
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -97,39 +97,40 @@
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                         responsiveLayout="scroll">
 
-                        <Column header="Company Name" field="company_name" style="min-width: 8rem">
+                        <Column header="Company Name" field="company_name" style="min-width: 12rem">
                             <!-- <template #body="slotProps">
                         {{  slotProps.data.claim_type }}
                       </template> -->
                         </Column>
 
-                        <Column field="location" header="Location" style="min-width: 12rem">
+                        <Column field="location" header="Location" style="min-width: 8rem">
                             <!-- <template #body="slotProps">
                         {{ "&#x20B9;" + slotProps.data.claim_amount }}
                       </template> -->
                         </Column>
 
-                        <Column field="job_position" header="Job Position " style="min-width: 12rem">
+                        <Column field="job_position" header="Job Position " style="min-width: 10rem">
                             <!-- <template #body="slotProps">
                           {{ "&#x20B9;" + slotProps.data.eligible_amount }}
                         </template> -->
                         </Column>
 
-                        <Column field="period_from" header="Period from" style="min-width: 12rem">
+                        <Column field="period_from" header="Period from" style="min-width: 6rem">
                             <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
                         </Column>
 
-                        <Column field="period_to" header="Period To" style="min-width: 12rem">
+                        <Column field="period_to" header="Period To" style="min-width: 6rem">
                             <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
+
                         </Column>
-                        <Column :exportable="false" header="Action" style="min-width:8rem">
+                        <Column :exportable="false" header="Action" style="min-width:12rem">
                         <template #body="slotProps">
 
-                            <button class="btn btn-success mr-3"  @click="editExperienceDetails(slotProps.data)">Edit</button>
+                            <button class="mr-3 btn btn-success"  @click="editExperienceDetails(slotProps.data)">Edit</button>
                             <button class="btn btn-danger"  @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
 
                             <template>
@@ -252,6 +253,8 @@ const saveExperienceDetails = () => {
 
     console.log(ExperienceInfo);
 
+_instance_profilePagesStore.loading_screen = true
+
     // if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
 
     //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
@@ -271,8 +274,7 @@ const saveExperienceDetails = () => {
             .then((res) => {
 
                 if (res.data.status == "success") {
-                    window.location.reload();
-                    toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                    toast.add({ severity: 'success', summary: 'Updated', detail: 'Experiance information updated', life: 3000 });
                     // _instance_profilePagesStore.employeeDetails.get_experience_details.company_name = ExperienceInfo.company_name
 
                     // _instance_profilePagesStore.employeeDetails.get_experience_details.location = ExperienceInfo.location;
@@ -285,7 +287,10 @@ const saveExperienceDetails = () => {
             })
             .catch((err) => {
                 console.log(err);
-            });
+            }).finally(()=>{
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
+            })
         // window.location.reload();
 
         dialog_ExperienceInfovisible.value = false;

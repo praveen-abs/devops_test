@@ -33,7 +33,7 @@ if ($query_clientMaster) {
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
 
-                    {{ sessionGetSelectedClientName() }}
+                    {{ getClientName(auth()->user()->id) }}
 
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"

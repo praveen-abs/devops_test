@@ -30,7 +30,7 @@
                       <div class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                           <label for="" class="float-label">Employee Code</label>
-                          <InputText   :class="[is_emp_code_quick ? 'bg-gray-200' : '']"
+                          <InputText   :class="[is_emp_code_quick ? 'bg-gray-200' : '',user_code_exists ? 'p-invalid' : '']"
                             class="capitalize form-onboard-form form-control textbox"
                             type="text" :readonly="is_emp_code_quick"
                             v-model="v$.employee_code.$model"
@@ -41,6 +41,7 @@
                           <span v-if="user_code_exists" class="p-error"
                             >Employee code Already Exists</span
                           >
+                          <!-- {{user_code_exists}} -->
 
                         </div>
                       </div>
@@ -98,7 +99,7 @@
                             class="onboard-form form-control textbox"
 
                           /> -->
-                          <Calendar inputId="icon"   v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                          <Calendar inputId="icon"  :maxDate="dobFormat"  v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
                             style="width: 350px;"   @date-select="datePicker" class="" />
                             <!-- {{employee_onboarding.dob}} -->
                           <span class="error" id="error_pan_no"></span>
@@ -113,7 +114,7 @@
                             v-model="v$.marital_status.$model"
                             :options="maritalDetails"
                             optionLabel="name"
-                            optionValue="id"
+
                             placeholder="Select Martial Status"
                             @change="spouseDisable"
                             class="p-error"
@@ -162,7 +163,7 @@
 
                           /> -->
                           <!-- {{ageLessThanFather}} -->
-                          <Calendar inputId="icon" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
+                          <Calendar inputId="icon" :minDate="dojFormat" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
                             style="width: 350px;"   :readonly="is_doj_quick" showIcon   :class="[{
                               'p-invalid': v$.doj.$invalid && submitted,
                             },
@@ -241,12 +242,12 @@
                             class="form-control textbox"
                             :class="[{
                               'p-invalid': v$.mobile_number.$invalid && submitted,
-                            }, readonly.mobile ? 'bg-gray-200' : '']"
+                            }, readonly.mobile ? 'bg-gray-200' : '',is_mobile_no_exists ? 'p-invalid' : '']"
                           />
 
                         </div>
 
-                        <span v-if="is_mobile_no_exists">
+                        <span class="text-danger" v-if="is_mobile_no_exists">
                                Mobile Number Is Already Exists
                         </span>
                         <span v-if="invalid_mobile_no" class="text-danger">
@@ -276,7 +277,7 @@
                             placeholder="Email ID"
                             :class="[{
                               'p-invalid': v$.email.$invalid && submitted,
-                            }, is_email_quick ? 'bg-gray-200' : '']"
+                            }, is_email_quick ? 'bg-gray-200' : '',personal_mail_exists ? 'p-invalid' : '']"
                             @focusout="personalMailExists"
                             v-model="v$.email.$model"
                             class="form-control textbox"
@@ -317,9 +318,9 @@
                             mask="9999 9999 9999"
                             placeholder="9999 9999 9999"
                             v-model="v$.aadhar_number.$model"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.aadhar_number.$invalid && submitted,
-                            }"
+                            },aadhar_card_exists ? 'p-invalid' : '',invalid_aadhar_check ? 'p-invalid' : '']"
 
                           />
 
@@ -360,9 +361,9 @@
                             placeholder="AHFCS1234F"
                             style="text-transform: uppercase"
                             class="form-control textbox"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.pan_number.$invalid && submitted,
-                            }"
+                            },pan_card_exists ? 'p-invalid' : '',invalid_pan_no ? 'p-invalid' : '']"
                           />
 
                           <span v-if="pan_card_exists" class="text-danger">
@@ -596,11 +597,12 @@
                             >Bank IFSC Code<span class="text-danger">*</span></label
                           >
                           <InputText
+                           @input="ValidateIfscNo"
                             type="text"
                             v-model="v$.bank_ifsc.$model"
-                            :class="{
+                            :class="[{
                               'p-invalid': v$.bank_ifsc.$invalid && submitted,
-                            }"
+                            },ifsc ? 'p-invalid' : '']"
                             class=" onboard-form form-control textbox"
                             minlength="11"
                             maxlength="11"
@@ -620,6 +622,8 @@
                               'p-invalid': v$.bank_ifsc.$invalid && submitted,
                             }"
                           /> -->
+                          <span class="p-error" v-if="ifsc">Invalid Ifsc Code</span>
+
 
                           <span
                             v-if="
@@ -1537,7 +1541,7 @@
 
               <!-- Family Detials Start -->
 
-              <div class="p-2 my-6 shadow card profile-box card-top-border" v-if="family_details_disable">
+              <div class="p-2 my-6 shadow card profile-box card-top-border" >
                 <div class="card-body justify-content-center align-items-center">
                   <div class="flex my-4 header-card-text">
                     <img src="../../../assests/images/family_image.png" alt="" style="height: 20px;">
@@ -1598,7 +1602,7 @@
                             onfocus="(this.type='date')"
                           /> -->
 
-                          <Calendar inputId="icon" showIcon   v-model="v$.dob_father.$model"  editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                          <Calendar inputId="icon" :maxDate="parentFormat" showIcon   v-model="v$.dob_father.$model"  editable dateFormat="dd-mm-yy" placeholder="Date of birth"
                             style="width: 350px;"    :class="{
                               'p-invalid': v$.dob_father.$invalid && submitted,
                             }" @date-select="fnCalculateAge" />
@@ -1700,7 +1704,7 @@
                             @change="fnCalculateAge"
                             onfocus="(this.type='date')"
                           /> -->
-                          <Calendar inputId="icon" showIcon   v-model="v$.dob_mother.$model"  editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                          <Calendar inputId="icon" :maxDate="parentFormat" showIcon   v-model="v$.dob_mother.$model"  editable dateFormat="dd-mm-yy" placeholder="Date of birth"
                             style="width: 350px;"     :class="{
                               'p-invalid': v$.dob_mother.$invalid && submitted,
                             }" @date-select="fnCalculateAge" />
@@ -2679,7 +2683,6 @@
       </template>
     </Dialog>
 
-
 </template>
 
 <script setup>
@@ -2960,6 +2963,12 @@ const is_email_quick = ref(false)
 const compen_disable = ref(true)
 
 
+
+const dobFormat = ref(new Date('2004/12/31'))
+const dojFormat = ref(new Date('2023/01/01'))
+const parentFormat = ref(new Date('1995/12/31'))
+
+
 //   Events
 
 const handleSubmit = (isFormValid) => {
@@ -3168,7 +3177,7 @@ const submit = () => {
     formData.append("blood_group_name", employee_onboarding.blood_group_name);
 //   formData.append("blood_group_id", employee_onboarding.blood_group_id);
   formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
-    formData.append("marital_status", employee_onboarding.marital_status);
+    formData.append("marital_status", employee_onboarding.marital_status.id);
 //   formData.append("marital_status_id", employee_onboarding.marital_status_id);
   formData.append("email", employee_onboarding.email);
   formData.append("nationality", employee_onboarding.nationality);
@@ -3263,11 +3272,13 @@ const submit = () => {
   formData.append("lta", employee_onboarding.lta);
   formData.append("special_allowance", employee_onboarding.special_allowance);
   formData.append("other_allowance", employee_onboarding.other_allowance);
+  formData.append("gross", employee_onboarding.gross);
   formData.append(
     "epf_employer_contribution",
     employee_onboarding.epf_employer_contribution
   );
   formData.append("graduity", employee_onboarding.graduity);
+  formData.append("insurance", employee_onboarding.insurance);
   formData.append("cic", employee_onboarding.total_ctc);
   formData.append("epf_employee", employee_onboarding.epf_employee);
   formData.append("esic_employee", employee_onboarding.esic_employee);
@@ -3369,12 +3380,12 @@ const userCodeExists = () => {
     .get(`/user-code-exists/${user_code}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
+      if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk' ){
         console.log("quick onboarding");
         family_details_disable.value = true
-        // compensatoryCalWhileQuick()
       }else{
         user_code_exists.value = res.data;
+        console.log("working");
 
       }
 
@@ -3415,9 +3426,6 @@ const AadharCardExits = () => {
   console.log("working");
   let aadhar_no = employee_onboarding.aadhar_number;
 
-
-
-    if(employee_onboarding.aadhar_number.length >= 12){
       var regexp=/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
 
            if(regexp.test(employee_onboarding.aadhar_number))
@@ -3445,9 +3453,6 @@ const AadharCardExits = () => {
 
               }
 
-    }else{
-      console.log("checking");
-    }
 
 
 };
@@ -3499,7 +3504,7 @@ const personalMailExists = () => {
     .get(`/personal-mail-exists/${mail}`)
     .then((res) => {
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
+      if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk' ){
         console.log("quick onboarding");
         // compensatoryCalWhileQuick()
       }else{
@@ -3523,20 +3528,20 @@ const is_mobile_no_exists = ref(false)
 const invalid_mobile_no = ref(false)
 
 const mobileNoExists = () => {
-  let mobile = employee_onboarding.mobile_number;
 
- if(employee_onboarding.mobile_number.length <= 10){
+    let mobile = employee_onboarding.mobile_number
+
   console.log("mobile no Checking");
 //   compensatoryCalWhileQuick()
+console.log(mobile);
   axios
     .get(`/mobile-no-exists/${mobile}`)
-    .then((res) => {
+    .then((res) =>{
       console.log(res.data);
-      if(checkIsQuickOrNormal.value == 'quick' || emp_data.onboard_type == 'bulk' ){
+      if(checkIsQuickOrNormal.value == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk' ){
         console.log("quick onboarding");
       }else{
         is_mobile_no_exists.value = res.data;
-
       }
 
     })
@@ -3546,21 +3551,16 @@ const mobileNoExists = () => {
     .finally(() => {
       console.log("completed");
     });
- }else{
-   console.log("invalid no");
-   invalid_mobile_no.value = true
- }
-};
+
+}
+
 
 const is_ac_no_exists = ref(false)
 
 const ValidateAccountNo =()=> {
 
              let Ac_no = employee_onboarding.AccountNumber
-              const acno = /^[0-9]{9,18}$/;
-               if( acno.test(employee_onboarding.AccountNumber)){
-                  console.log("valid");
-                  axios
+               axios
               .get(`/ac-no-exists/${Ac_no}`)
               .then((res) => {
                 console.log(res.data);
@@ -3572,19 +3572,18 @@ const ValidateAccountNo =()=> {
               .finally(() => {
                 console.log("completed");
               });
+            
+            }      
+
+           const ifsc = ref(false)
+          const ValidateIfscNo =()=> {
+              const ifscck = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
+               if( ifscck.test(employee_onboarding.bank_ifsc)){
+                ifsc.value = false
+                 console.log("valid");
                }else{
                 console.log("invalid");
-               }
-    }
-
-const ifsc = ref(false)
-const ValidateIfscNo =()=> {
-              const ifsc = /^[A-Z]{4}0[A-Z0-9]{6}$/;
-               if( acn0.test(employee_onboarding.bank_ifsc)){
-                  console.log("valid");
-
-               }else{
-                console.log("invalid");
+                ifsc.value = true
                }
     }
 
@@ -3880,10 +3879,9 @@ const compensatoryCalWhileQuick = () =>{
   employee_onboarding.gross = Math.floor(gross);
   console.log(employee_onboarding.gross);
 
-  let net =     employee_onboarding.gross -
-    employee_onboarding.epf_employee -
-    employee_onboarding.esic_employee;
+  let net =   employee_onboarding.gross -  employee_onboarding.epf_employee -employee_onboarding.esic_employee;
 
+  employee_onboarding.net_income = net
   console.log(net);
 
   let ctc = parseInt(employee_onboarding.gross) + parseInt(employee_onboarding.epf_employer_contribution) + parseInt(employee_onboarding.esic_employer_contribution) + parseInt(employee_onboarding.insurance) + parseInt(employee_onboarding.graduity)

@@ -98,6 +98,10 @@ Route::middleware(['auth'])->group(function () {
 
         return auth()->user()->name;
     });
+    Route::get('/currentUserCode', function() {
+
+        return auth()->user()->user_code;
+    });
 
 
 
@@ -113,7 +117,10 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('isEmailExists');
 
+    // Profile Page 
 
+    Route::post('/profile-pages/getProfilePicture', [App\Http\Controllers\VmtProfilePagesController::class, 'getProfilePicture']);
+    Route::post('/profile-pages/updateProfilePicture', [App\Http\Controllers\VmtProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateReportingManager', [App\Http\Controllers\VmtProfilePagesController::class, 'updateReportingManager'])->name('profile-pages-update-reporting-mgr');
     Route::post('/profile-pages/updateDepartment', [App\Http\Controllers\VmtProfilePagesController::class, 'updateDepartment'])->name('profile-pages-updatedepartment');
 
@@ -474,10 +481,10 @@ Route::middleware(['auth'])->group(function () {
 
     //Documents Approvals
     Route::get('approvals-documents', 'App\Http\Controllers\VmtApprovalsController@showDocumentsApprovalPage')->name('vmt-approvals-emp-documents');
-    Route::get('/employee-documents/{user_code}', 'App\Http\Controllers\VmtApprovalsController@fetchDocsForUser')->name('vmt-documents-routes');
+    //Route::get('/employee-documents/{user_code}', 'App\Http\Controllers\VmtApprovalsController@fetchDocsForUser')->name('vmt-documents-routes');
     Route::get('/documents-review-page/{user_code}', 'App\Http\Controllers\VmtApprovalsController@showDocumentsReviewPage')->name('vmt-emp-documents-review');
     Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
-    Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
+    //Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
 
 
     //PMS Approvals
@@ -554,7 +561,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
     Route::post('/approvals/onboarding-docs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processSingleDocumentApproval'])->name('processSingleDocumentApproval');
     Route::post('/approvals/onboarding-bulkdocs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processBulkDocumentApprovals'])->name('processBulkDocumentApprovals');
-    Route::post('/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
+    Route::post('/reimbursements/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
 
     Route::post('/getLocalConveyanceCost',[App\Http\Controllers\VmtReimbursementController::class ,'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
     Route::post('/testCreateLocalCovergance',[App\Http\Controllers\VmtReimbursementController::class ,'testCreateLocalCovergance'])->name('testCreateLocalCovergance');
