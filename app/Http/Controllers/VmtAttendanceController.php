@@ -60,11 +60,19 @@ class VmtAttendanceController extends Controller
 
         //dd($leaveData_currentUser->toArray());
 
+        //Accrued Leave Year Frame
+        $time_periods_of_year_query = VmtTimePeriod::where('abbrevation','FY')
+                                                   ->first(['id','start_month','end_month','abbrevation']);
+
         //Accrued Leave Years
-        $time_periods_of_year_query = VmtTimePeriod::get(['start_month','end_month','abbrevation']);
-        foreach($time_periods_of_year_query  as $single_time_periods){
-              dd(Carbon::parse($single_time_periods->start_month)->format('M'));
-            // $starting_of_time_period =
+        $active_years = VmtOrgTimePeriod::where('vmt_time_period_id',$time_periods_of_year_query->id)->pluck('year');
+
+        foreach(  $active_years as $each_year){
+
+              $starting_year=Carbon::parse($each_year)->format('Y');
+              $starting_month=Carbon::parse( $time_periods_of_year_query->start_month)->format('-d-m');
+             $starting_of_time_period =  $starting_year.$starting_month;
+             dd($starting_of_time_period);
             // $ending_of_time_period =
         }
 
