@@ -373,7 +373,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 @endif
 
                 <!-- PMS module -->
-                @if (!Str::contains(getCurrentClientName(), 'Protocol'))
+                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines']))
 
                     <li class="nav-item">
                         <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down"
@@ -562,10 +562,10 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     role="button"><span>Salary
                                         Details</span></a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('vmt_investments_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('vmt_form16_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>

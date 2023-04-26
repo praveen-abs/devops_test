@@ -727,4 +727,52 @@ class VmtEmployeePayslipService {
         }
     }
 
+    public function getEmployeeAllPayslipList($user_code){
+
+            //Validate
+            $validator = Validator::make(
+                $data = [
+                    "user_code" => $user_code,
+                ],
+                $rules = [
+                    "user_code" => 'required|exists:users,user_code',
+                ],
+                $messages = [
+                    'required' => 'Field :attribute is missing',
+                    'exists' => 'Field :attribute is invalid',
+                ]
+
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+                ]);
+            }
+
+
+            try{
+
+                $user_id = User::where('user_code', $user_code)->first()->id;
+
+                $query_payslips = VmtEmployeePaySlip::where('user_id',$user_id)
+                                                    ->orderBy('PAYROLL_MONTH', 'ASC')
+                                                    ->get(['id','PAYROLL_MONTH','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
+
+                return response()->json([
+                    "status" => "success",
+                    "message" => "",
+                    "data" =>$query_payslips
+                ]);
+            }
+            catch(\Exception $e){
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Error while fetching payslip data",
+                    "data" =>$e
+                ]);
+            }
+    }
+
 }
