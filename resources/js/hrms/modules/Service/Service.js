@@ -4,7 +4,7 @@ import {
 import axios from "axios";
 import { ref } from "vue";
 
-export const Service1 = defineStore("Service", () => {
+export const Service = defineStore("Service", () => {
 
     const current_user_id = ref()
     const current_user_code = ref()
