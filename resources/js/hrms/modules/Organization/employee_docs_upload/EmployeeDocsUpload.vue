@@ -61,9 +61,7 @@
               class="onboard-form form-control file"
             />
 
-            <span v-if="PancardInvalid" class="p-error"
-              >Pan Card is Required</span
-            >
+            <span v-if="PancardInvalid" class="p-error">Pan Card is Required</span>
           </div>
           <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
             <label for="" class="float-label"> Passport</label>
@@ -108,7 +106,7 @@
             />
           </div>
           <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
-            <label for="" class="float-label">Educations Certificate</label>
+            <label for="" class="float-label">Educations Certificate<span class="text-danger">*</span></label>
             <input
               type="file"
               accept="image/png, image/gif, image/jpeg"
@@ -220,7 +218,6 @@ const PancardInvalid = ref(false);
 const EducationCertificateInvalid = ref(false);
 
 const SubmitEmployeeDocsUpload = () => {
-
   let formData = new FormData();
 
   if (EmployeeDocs_upload.AadharCardFront != undefined)
@@ -261,16 +258,33 @@ const SubmitEmployeeDocsUpload = () => {
       console.log(Object(response.data));
 
       if (response.data.status == "Success") {
-        Swal.fire(response.data.status, response.data.message, "success");
-        window.location.reload()
+        // Swal.fire(response.data.status, response.data.message, "success");
+        // window.location.reload()
+         Swal.fire({
+          title:response.data.status = "Success" ,
+          text: response.data.message,
+          icon: "success",
+          showCancelButton: false,
+        }).then((result) => {
+          window.location.reload();
+        });
+
 
       }
+      else if (response.data.status == "Failure") {
+        Swal.fire({
+          title:response.data.status = "Failure" ,
+          text: response.data.message,
 
-      if (response.data.status == "Failure") {
-        + Swal.fire(response.data.status, response.data.message, "error");
-         window.location.reload()
-
+          icon: "error",
+          showCancelButton: false,
+        }).then((result) => {
+        //   window.location.reload();
+        });
       }
+    })
+    .finally(() => {
+      console.log("completed");
     })
     .catch(function (error) {
       // currentObj.output = error;
@@ -298,15 +312,15 @@ const AadharFront = (e) => {
     (EmployeeDocs_upload.AadharCardFront = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.AadharCardFront.fileSize =
-        Math.round(
-          (EmployeeDocs_upload.AadharCardFront.size / 1024 / 1024) * 100
-        ) / 100),
+        Math.round((EmployeeDocs_upload.AadharCardFront.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EmployeeDocs_upload.AadharCardFront.fileExtention =
-        EmployeeDocs_upload.AadharCardFront.name.split(".").pop()),
+      (EmployeeDocs_upload.AadharCardFront.fileExtention = EmployeeDocs_upload.AadharCardFront.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.AadharCardFront.fileName =
-        EmployeeDocs_upload.AadharCardFront.name.split(".").shift()),
+      (EmployeeDocs_upload.AadharCardFront.fileName = EmployeeDocs_upload.AadharCardFront.name
+        .split(".")
+        .shift()),
       // Check if file is an image
       (EmployeeDocs_upload.AadharCardFront.isImage = [
         "jpg",
@@ -325,15 +339,15 @@ const AadharBack = (e) => {
     (EmployeeDocs_upload.AadharCardBack = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.AadharCardBack.fileSize =
-        Math.round(
-          (EmployeeDocs_upload.AadharCardBack.size / 1024 / 1024) * 100
-        ) / 100),
+        Math.round((EmployeeDocs_upload.AadharCardBack.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EmployeeDocs_upload.AadharCardBack.fileExtention =
-        EmployeeDocs_upload.AadharCardBack.name.split(".").pop()),
+      (EmployeeDocs_upload.AadharCardBack.fileExtention = EmployeeDocs_upload.AadharCardBack.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.AadharCardBack.fileName =
-        EmployeeDocs_upload.AadharCardBack.name.split(".").shift()),
+      (EmployeeDocs_upload.AadharCardBack.fileName = EmployeeDocs_upload.AadharCardBack.name
+        .split(".")
+        .shift()),
       // Check if file is an image
       (EmployeeDocs_upload.AadharCardBack.isImage = [
         "jpg",
@@ -352,21 +366,19 @@ const PanCard = (e) => {
     (EmployeeDocs_upload.PanCardDoc = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.PanCardDoc.fileSize =
-        Math.round((EmployeeDocs_upload.PanCardDoc.size / 1024 / 1024) * 100) /
-        100),
+        Math.round((EmployeeDocs_upload.PanCardDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EmployeeDocs_upload.PanCardDoc.fileExtention =
-        EmployeeDocs_upload.PanCardDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.PanCardDoc.fileExtention = EmployeeDocs_upload.PanCardDoc.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.PanCardDoc.fileName =
-        EmployeeDocs_upload.PanCardDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.PanCardDoc.fileName = EmployeeDocs_upload.PanCardDoc.name
+        .split(".")
+        .shift()),
       // Check if file is an image
-      (EmployeeDocs_upload.PanCardDoc.isImage = [
-        "jpg",
-        "jpeg",
-        "png",
-        "gif",
-      ].includes(EmployeeDocs_upload.PanCardDoc.fileExtention));
+      (EmployeeDocs_upload.PanCardDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        EmployeeDocs_upload.PanCardDoc.fileExtention
+      ));
     // Print to console
     console.log(EmployeeDocs_upload.PanCardDoc);
   }
@@ -378,21 +390,19 @@ const Passport = (e) => {
     (EmployeeDocs_upload.PassportDoc = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.PassportDoc.fileSize =
-        Math.round((EmployeeDocs_upload.PassportDoc.size / 1024 / 1024) * 100) /
-        100),
+        Math.round((EmployeeDocs_upload.PassportDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EmployeeDocs_upload.PassportDoc.fileExtention =
-        EmployeeDocs_upload.PassportDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.PassportDoc.fileExtention = EmployeeDocs_upload.PassportDoc.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.PassportDoc.fileName =
-        EmployeeDocs_upload.PassportDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.PassportDoc.fileName = EmployeeDocs_upload.PassportDoc.name
+        .split(".")
+        .shift()),
       // Check if file is an image
-      (EmployeeDocs_upload.PassportDoc.isImage = [
-        "jpg",
-        "jpeg",
-        "png",
-        "gif",
-      ].includes(EmployeeDocs_upload.PassportDoc.fileExtention));
+      (EmployeeDocs_upload.PassportDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        EmployeeDocs_upload.PassportDoc.fileExtention
+      ));
     // Print to console
     console.log(EmployeeDocs_upload.PassportDoc);
   }
@@ -404,15 +414,16 @@ const DrivingLisence = (e) => {
     (EmployeeDocs_upload.DrivingLicenseDoc = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.DrivingLicenseDoc.fileSize =
-        Math.round(
-          (EmployeeDocs_upload.DrivingLicenseDoc.size / 1024 / 1024) * 100
-        ) / 100),
+        Math.round((EmployeeDocs_upload.DrivingLicenseDoc.size / 1024 / 1024) * 100) /
+        100),
       // Get file extension
-      (EmployeeDocs_upload.DrivingLicenseDoc.fileExtention =
-        EmployeeDocs_upload.DrivingLicenseDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.DrivingLicenseDoc.fileExtention = EmployeeDocs_upload.DrivingLicenseDoc.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.DrivingLicenseDoc.fileName =
-        EmployeeDocs_upload.DrivingLicenseDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.DrivingLicenseDoc.fileName = EmployeeDocs_upload.DrivingLicenseDoc.name
+        .split(".")
+        .shift()),
       // Check if file is an image
       (EmployeeDocs_upload.DrivingLicenseDoc.isImage = [
         "jpg",
@@ -431,21 +442,19 @@ const VoterId = (e) => {
     (EmployeeDocs_upload.VoterIdDoc = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.VoterIdDoc.fileSize =
-        Math.round((EmployeeDocs_upload.VoterIdDoc.size / 1024 / 1024) * 100) /
-        100),
+        Math.round((EmployeeDocs_upload.VoterIdDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EmployeeDocs_upload.VoterIdDoc.fileExtention =
-        EmployeeDocs_upload.VoterIdDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.VoterIdDoc.fileExtention = EmployeeDocs_upload.VoterIdDoc.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.VoterIdDoc.fileName =
-        EmployeeDocs_upload.VoterIdDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.VoterIdDoc.fileName = EmployeeDocs_upload.VoterIdDoc.name
+        .split(".")
+        .shift()),
       // Check if file is an image
-      (EmployeeDocs_upload.VoterIdDoc.isImage = [
-        "jpg",
-        "jpeg",
-        "png",
-        "gif",
-      ].includes(EmployeeDocs_upload.VoterIdDoc.fileExtention));
+      (EmployeeDocs_upload.VoterIdDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        EmployeeDocs_upload.VoterIdDoc.fileExtention
+      ));
     // Print to console
     console.log(EmployeeDocs_upload.VoterIdDoc);
   }
@@ -457,21 +466,19 @@ const EductionCertifacte = (e) => {
     (EmployeeDocs_upload.EductionDoc = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.EductionDoc.fileSize =
-        Math.round((EmployeeDocs_upload.EductionDoc.size / 1024 / 1024) * 100) /
-        100),
+        Math.round((EmployeeDocs_upload.EductionDoc.size / 1024 / 1024) * 100) / 100),
       // Get file extension
-      (EmployeeDocs_upload.EductionDoc.fileExtention =
-        EmployeeDocs_upload.EductionDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.EductionDoc.fileExtention = EmployeeDocs_upload.EductionDoc.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.EductionDoc.fileName =
-        EmployeeDocs_upload.EductionDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.EductionDoc.fileName = EmployeeDocs_upload.EductionDoc.name
+        .split(".")
+        .shift()),
       // Check if file is an image
-      (EmployeeDocs_upload.EductionDoc.isImage = [
-        "jpg",
-        "jpeg",
-        "png",
-        "gif",
-      ].includes(EmployeeDocs_upload.EductionDoc.fileExtention));
+      (EmployeeDocs_upload.EductionDoc.isImage = ["jpg", "jpeg", "png", "gif"].includes(
+        EmployeeDocs_upload.EductionDoc.fileExtention
+      ));
     // Print to console
     console.log(EmployeeDocs_upload.EductionDoc);
   }
@@ -483,15 +490,16 @@ const ReleivingLetter = (e) => {
     (EmployeeDocs_upload.RelievingLetterDoc = e.target.files[0]),
       // Get file size
       (EmployeeDocs_upload.RelievingLetterDoc.fileSize =
-        Math.round(
-          (EmployeeDocs_upload.RelievingLetterDoc.size / 1024 / 1024) * 100
-        ) / 100),
+        Math.round((EmployeeDocs_upload.RelievingLetterDoc.size / 1024 / 1024) * 100) /
+        100),
       // Get file extension
-      (EmployeeDocs_upload.RelievingLetterDoc.fileExtention =
-        EmployeeDocs_upload.RelievingLetterDoc.name.split(".").pop()),
+      (EmployeeDocs_upload.RelievingLetterDoc.fileExtention = EmployeeDocs_upload.RelievingLetterDoc.name
+        .split(".")
+        .pop()),
       // Get file name
-      (EmployeeDocs_upload.RelievingLetterDoc.fileName =
-        EmployeeDocs_upload.RelievingLetterDoc.name.split(".").shift()),
+      (EmployeeDocs_upload.RelievingLetterDoc.fileName = EmployeeDocs_upload.RelievingLetterDoc.name
+        .split(".")
+        .shift()),
       // Check if file is an image
       (EmployeeDocs_upload.RelievingLetterDoc.isImage = [
         "jpg",

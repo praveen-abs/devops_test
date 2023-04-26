@@ -1467,7 +1467,7 @@ class VmtEmployeeOnboardingController extends Controller
              {
                 return $rowdata_response = [
                     'status' => 'Failure',
-                    'message' => 'Documents uploaded. Please upload the remaining documents to successfully onboard',
+                    'message' => 'Please upload all mandatory documents',
                 ];
 
              }
