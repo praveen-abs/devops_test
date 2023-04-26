@@ -851,7 +851,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'esic_employee' => 'required|numeric',
                 'professional_tax' => 'required|numeric',
                 'labour_welfare_fund' => 'nullable|numeric',
-                'uan_number' => 'required|numeric',
+                'uan_number' => 'nullable|numeric',
                 'pf_applicable' => 'nullable|in:yes,Yes,no,No',
                 'esic_applicable' => 'nullable|in:yes,Yes,no,No',
                 'ptax_location' => 'nullable',
