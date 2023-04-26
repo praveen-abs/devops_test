@@ -3,8 +3,9 @@
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
                 <div class=" fs-4">
-                    <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
-                            class="text-lg"> 100%</strong> of their monthly salary.</p>
+                    <p class="text-xl font-medium">You are eligible for Travel Advance as per the
+                        <span class="text-lg text-primary text-decoration-underline">Company's Loan Policy</span>
+                    </p>
                 </div>
 
                 <div class="float-right ">
@@ -177,26 +178,3 @@ const ingredient = ref('');
 }
 </style>
 
-
-{
-    <!--
-
-<template>
-    <div class="card flex justify-content-center">
-        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </Dialog>
-    </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-
-</script>
-     -->
-}

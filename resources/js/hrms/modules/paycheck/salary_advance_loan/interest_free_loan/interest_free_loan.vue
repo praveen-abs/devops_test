@@ -3,8 +3,8 @@
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
                 <div class=" fs-4">
-                    <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
-                            class="text-lg"> 100%</strong> of their monthly salary.</p>
+                    <p class="text-xl font-medium">You are eligible for the Interest Free Loan as per the
+                        <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span></p>
                 </div>
 
                 <div class="float-right">
