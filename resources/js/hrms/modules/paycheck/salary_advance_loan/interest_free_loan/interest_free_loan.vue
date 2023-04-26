@@ -9,12 +9,12 @@
 
                 <div class="float-right">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange" @click="dialog_NewInterestFreeLoanRequest = true">
+                    <button class="mx-4 btn btn-orange" @click="openPosition('top')" >
                         <i class="mx-2 fa fa-plus" aria-hidden="true"></i>
                         New Request
                     </button>
 
-                    <Dialog v-model:visible="dialog_NewInterestFreeLoanRequest" header="Header" :style="{ width: '58vw' }" :position="position" :modal="true" :draggable="false">
+                    <Dialog v-model:visible="useEmpStore.dialog_NewInterestFreeLoanRequest" header="Header" :style="{ width: '58vw' }" modal :position="position" >
                         <template #header>
                             <div><h1 style="border-left: 3px solid var( --orange);padding-left: 5px ;" class="fs-4">New Interest Free Loan Request</h1></div>
                         </template>
@@ -23,16 +23,16 @@
                                 <div class="row mx-2">
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Required Amount</h1>
-                                        <InputText type="text" v-model="value" placeholder="&#8377; Enter The Required Amount" />
+                                        <InputText type="text" v-model="useEmpStore.ifl.Ra" placeholder="&#8377; Enter The Required Amount" />
                                         <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000</p>
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                        <InputText type="text" v-model="value" placeholder="&#8377; " />
+                                        <InputText type="text" v-model="useEmpStore.ifl.M_EMI" placeholder="&#8377; " />
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
+                                        <Dropdown v-model="useEmpStore.ifl.Term" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
                                         <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                                     </div>
                                 </div>
@@ -50,16 +50,16 @@
                                     <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar v-model="date" showIcon />
+                                            <Calendar v-model="useEmpStore.ifl.EMI_Start_Month" showIcon />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar v-model="date" showIcon />
+                                            <Calendar v-model="data" showIcon />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
-                                            <InputText type="text" v-model="value" style="width: 150px !important;" />
+                                            <InputText type="text" v-model="useEmpStore.ifl.Total_Months" style="width: 150px !important;" />
                                         </div>
                                 </div>
                             </div>
@@ -67,14 +67,14 @@
 
                         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
                             <span class="font-semibold ">Reason</span>
-                            <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+                            <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.ifl.Reason" />
                         </div>
 
 
                         <template #footer>
                             <div class="float-right ">
                                 <button class="btn btn-border-orange"  @click="dialog_NewInterestFreeLoanRequest = false">Cancel</button>
-                                <button  class="mx-4 btn btn-orange">Submit</button>
+                                <button  class="mx-4 btn btn-orange" @click="useEmpStore.saveInterestfreeLoan">Submit</button>
                             </div>
                             <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
                             <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
@@ -110,6 +110,7 @@
             </div>
 
             <div class="table-responsive">
+                {{ useEmpStore.isInterestFreeLoaneature }}
                 <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -153,12 +154,9 @@
 
         </div>
     </div>
-    <!-- <Dialog visible="false" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+<!--
 
-
-    </Dialog>
-
-    <Dialog header="Header" visible="false" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
+    <Dialog header="Header" v-model="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
         :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -168,18 +166,32 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog> -->
+
+
+
 </template>
+
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import {useEmpSalaryAdvanceStore}  from '../../stores/employeeSalaryAdvanceLoanMainStore'
+
+const useEmpStore = useEmpSalaryAdvanceStore();
+
+onMounted(() => {
+   useEmpStore.fetchInterestfreeLoan()
+})
+
+const position = ref('center');
+
+const openPosition = (pos) => {
+    position.value = pos;
+    useEmpStore.dialog_NewInterestFreeLoanRequest = true
+}
+
 
 const value = ref();
-const options = ref(['Off', 'On']);
 
-const activetab = ref(1)
-const activetab1 = ref(1)
 
-const ingredient = ref('');
-const dialog_NewInterestFreeLoanRequest =ref(false);
 
 const selectedCity = ref();
     const cities = ref([

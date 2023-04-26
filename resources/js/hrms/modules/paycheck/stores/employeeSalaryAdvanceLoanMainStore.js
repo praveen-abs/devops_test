@@ -1,7 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 /*
     This Pinia code will store the ajax values of the
@@ -14,50 +14,65 @@ import { ref } from "vue";
 export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", () => {
 
 
-    /*
+    // Loading Screen
 
- Salary Advance - sa
- Loan with Interest - lwi
- Interest free Loan  - ifl
- Travel Advance - ta
+    const canShowLoading = ref(false)
 
-*/
+
+            /*
+        Salary Advance - sa
+        Loan with Interest - lwi
+        Interest free Loan  - ifl
+        Travel Advance - ta
+        */
 
 
     //   Salary Advance Begins
 
 
-    // Initially Disabled
+    // Salary Advance Dailog
 
-    const isSalaryAdvanceFeatureEnabled = ref(1)
+    const dailogSalaryAdvance = ref(false)
 
     // Eligible Employees
 
-    const eligibleSalaryAdvanceEmployeeData = ref()
-
-    // Percentage of Salary Advance
-    // Deduction Method
+    const salaryAdvanceEmployeeData = ref()
 
     const sa = reactive({
-        perOfSalAdvance: '',
-        cusPerOfSalAdvance: '',
-        deductMethod: '',
-        cusDeductMethod: ''
+        ymi:'',
+        ra:'',
+        reason:'',
     })
 
-    // Approval Flow
 
-    const SalaryAdvanceFeatureApprovalFlow = ref({})
+    const fetchSalaryAdvance = () => {
 
-
-    const saveSalaryAdvanceFeature = () => {
-        if (isSalaryAdvanceFeatureEnabled.value == '1') {
-            console.log("salary Advance Disabled");
-        } {
-            console.log("salary Advance Enabled");
-        }
+        canShowLoading.value = true
         console.log(sa);
+        console.log("fetching SA");
+
+        axios.get('http://localhost:3000/salary').then(res=>{
+            salaryAdvanceEmployeeData.value = res.data
+            console.log(res.data);
+
+        }).finally(()=>{
+            canShowLoading.value = false
+        })
     }
+
+    const saveSalaryAdvance = () => {
+
+        canShowLoading.value = true
+        console.log(sa);
+        console.log("Saving SA");
+
+        axios.post('http://localhost:3000/salary',sa).finally(()=>{
+            canShowLoading.value = false
+            fetchSalaryAdvance()
+        })
+    }
+
+    // interest free loan
 
 
     //   Salary Advance Ends
@@ -67,7 +82,9 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     // Initially Disabled
 
-    const isInterestFreeLoaneature = ref(1)
+    const dialog_NewInterestFreeLoanRequest = ref(false)
+
+    const isInterestFreeLoaneature = ref()
 
     // Eligible Employees and Amount
     // Deduction Method
@@ -76,17 +93,45 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
-        maxTenure: ''
-
+        maxTenure: '',
+        Ra:'',
+        M_EMI:'',
+        Term:'',
+        EMI_Start_Month:'',
+        Total_Months:'',
+        Reason:''
     })
 
-    const saveInterestfreeLoan = () => {
-        if (isInterestFreeLoaneature.value == '1') {
-            console.log("disabled");
-        } else {
-            console.log(ifl);
-        }
 
+    const fetchInterestfreeLoan = () => {
+
+        canShowLoading.value = true
+
+        console.log("fetching SA");
+
+        axios.get('http://localhost:3000/Interst_free_loan').then(res=>{
+
+        isInterestFreeLoaneature.value = res.data
+            console.log(res.data);
+
+        }).finally(()=>{
+            canShowLoading.value = false
+        })
+    }
+
+    const saveInterestfreeLoan = () => {
+
+
+        canShowLoading.value = true
+        console.log("Saving SA");
+
+        axios.post('http://localhost:3000/Interst_free_loan',ifl).finally(()=>{
+            canShowLoading.value = false
+
+            fetchInterestfreeLoan();
+
+        })
+        dialog_NewInterestFreeLoanRequest.value = false
     }
 
     // Interest Free Loan Feature Ends
@@ -102,7 +147,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const eligibleTravelAdvanceEmployeeData = ref(1)
 
     // Travel Advance Limit
-    // Deduction 
+    // Deduction
     // Claim Settings
 
     const ta = reactive({
@@ -139,15 +184,17 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
         // varaible Declarations
 
+        canShowLoading,
+
         // SalaryAdvanceFeature
 
-        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature,
+        dailogSalaryAdvance, salaryAdvanceEmployeeData, sa,fetchSalaryAdvance, saveSalaryAdvance,
 
         // Interest Free Loan
 
-        isInterestFreeLoaneature, ifl, saveInterestfreeLoan,
+        dialog_NewInterestFreeLoanRequest,isInterestFreeLoaneature, ifl, saveInterestfreeLoan,fetchInterestfreeLoan,
 
-        // Travel Advance Feature 
+        // Travel Advance Feature
 
         isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,
 
