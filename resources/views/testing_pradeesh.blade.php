@@ -27,8 +27,12 @@
     {{-- <!-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
    <div id="Investments"></div> -->--}}
 
-   @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-   <div id="SalaryAdvanceLoan"></div>
+   {{-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js') --}}
+   {{-- <div id="SalaryAdvanceLoan"></div> --}}
+
+     @vite('resources\js\hrms\modules\leave_policy_Settings\Leave_Policy_Setting_Master\Leave_Policy_Setting_Master.js')
+     <div id="Leave_Policy_Setting_Master"></div>
+
 
 </body>
 </html>

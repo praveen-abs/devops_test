@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1 class="mb-4 fs-3 d-flex  align-items-center fw-bolder"  style="color: #003056" ><i class='fas fa-cog fs-3 mr-3 '></i> Salary Advance & Loan Settings</h1>
+    <div style="position: relative; top:-15px ">
+        <h1 class="mb-4 fs-3 d-flex  align-items-center fw-bolder"  style="color: #003056; " ><i class='fas fa-cog fs-3 mr-3 '></i> Salary Advance & Loan Settings</h1>
 
         <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">

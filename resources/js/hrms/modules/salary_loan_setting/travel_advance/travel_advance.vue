@@ -188,7 +188,7 @@
                                 </div>
 
                                 <div class="col d-flex align-items-center fs-5 txt_underline">
-                                    <h1 class="text-primary" @click="dialog_ViewExample_Visible = true">
+                                    <h1 class="text-primary" @click="dialog_ViewExample_Visible = true" >
                                         View Example
                                     </h1>
                                 </div>
@@ -197,7 +197,7 @@
                                     <div class="card flex justify-content-center">
                                         <Button label="Show" icon="pi pi-external-link" />
                                         <Dialog v-model:visible="dialog_ViewExample_Visible" modal header="Header"
-                                            :style="{ width: '50vw' }">
+                                            :style="{ width: '60vw' }">
                                             <template #header>
                                                 <div>
                                                     <h1 style="border-left: 3px solid var(--orange); padding-left: 8px;" class="fs-4 ">Travel Advance Deduction Example</h1>
@@ -210,10 +210,48 @@
                                                       showGridlines>
 
                                                         <Column field="selected" header="if Selected" class="bg-light"></Column>
-                                                        <Column field="ta" header="Travel Advance "> </Column>
-                                                        <Column field="bs" header="Bills Submited"> </Column>
-                                                        <Column field="category" header="Payable Amount to the Employee">
+                                                        <Column field="ta" header="Travel Advance ">
                                                         </Column>
+                                                        <Column field="bs" header="Bills Submited"> </Column>
+                                                        <Column field="epa" header="Payable Amount to the Employee">
+                                                            <template #body="slotprops">
+                                                                <div v-if="slotprops.data.epa == '56,000'">
+
+                                                                    {{ slotprops.data.epa }}  <br>
+                                                                    <span>(Note: The Total amount be will Deducted in FNF)</span>
+
+                                                                </div>
+                                                                
+                                                                <div v-if="slotprops.data.epa == '6,000'">
+                                                                    {{ slotprops.data.epa }}
+                                                                    <br>
+                                                                    <span>(Note: Total amount be will refunded in subsequent payroll)</span>
+                                                                </div>
+                                                                <div v-if="slotprops.data.epa == '-2000'">
+                                                                    {{ slotprops.data.epa }}
+                                                                    <br>
+                                                                    <span>(Note: The Total amount be will Deducted in subsequent Payroll)</span>
+
+                                                                </div>
+
+                                                            </template>
+                                                        </Column>
+
+                                                        <template #body>
+                                                            <div >
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+
+                                                            </div>
+                                                        </template>
+
                                                     </DataTable>
                                                 </div>
 
@@ -361,18 +399,20 @@ const opt = ref();
 const op = ref([{ id: 1, dep: "res" }]);
 
 onMounted(() => {
+
     opt.value = "Department";
     opt1.value = "Designation";
     opt2.value = "Location";
     opt3.value = "State";
     opt4.value = "Branch";
     opt5.value = "Legal Entity";
+
 });
 
 const sample = ref([
-    {id:1,selected:"Yes",ta:"50,000","bs":'48,000',epa:100},
-    {id:2,selected:"Yes",ta:"50,000","bs":'56,000',epa:100},
-    {id:3,selected:"No",ta:"10","bs":100,epa:'6,000',}
+    {id:1,selected:"Yes",ta:"50,000","bs":'56,000',epa:'6,000'},
+    {id:2,selected:"Yes",ta:"50,000","bs":'48,000',epa:'-2000'},
+    {id:3,selected:"No",ta:"50,000","bs":'56,000',epa:'56,000'}
 
 ]
 )
@@ -389,6 +429,20 @@ const opt6 = ref();
     --orange: #ff4d00;
     --white: #fff;
     --navy: #002f56;
+}
+.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td:last-child {
+  border-width: none !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: none !important;
+    /* border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  border-width: 0 0 1px 0;
+  padding: 1rem 1rem; */
 }
 
 .orange_btn {

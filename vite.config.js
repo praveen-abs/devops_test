@@ -31,7 +31,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
                 'resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js',
 
-                // Approval Module   
+                // Approval Module
                 'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
                 'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
                 'resources/js/hrms/modules/approvals/resignation/resignation_approval.js',
@@ -61,7 +61,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
 
-                // Paycheck 
+                // Paycheck
 
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
                 'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
@@ -104,7 +104,11 @@ export default defineConfig({
 
 
 
-                'resources/js/hrms/modules/exit/exit.js'
+                'resources/js/hrms/modules/exit/exit.js',
+
+                // Leave_Policy_Setting_Master
+
+                'resources/js/hrms/modules/leave_policy_Settings/Leave_Policy_Setting_Master/Leave_Policy_Setting_Master.js'
 
 
 
