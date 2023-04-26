@@ -107,6 +107,15 @@ class VmtProfilePagesController extends Controller
         return view('profilePage_new', compact('user','department','allDepartments', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
     }
 
+    public function updateProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->updateProfilePicture($request->user_code, $request->file_object);
+    }
+
+    public function getProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
+        return $serviceProfilePagesService->getProfilePicture($request->user_code);
+    }
+
+
     public function updateReportingManager(Request $request){
 
         $emp_id = $request->current_user_id;

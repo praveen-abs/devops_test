@@ -34,6 +34,8 @@ class VmtProfilePagesService
     */
     public function updateProfilePicture($user_code, $file_object){
 
+        // dd($user_code,$file_object);
+
        //Validate
         $validator = Validator::make(
             $data = [
