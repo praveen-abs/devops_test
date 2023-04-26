@@ -2,7 +2,7 @@
   <div class="mr-4 card">
     <div class="px-5 row d-flex justify-content-start align-items-center card-body">
       <div class="flex justify-between gap-6 my-2">
-        <div class=" fs-4">
+        <div class="w-8 fs-4" >
           <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
               class="text-lg"> 100%</strong> of their monthly salary.</p>
         </div>
@@ -89,7 +89,7 @@
 
   <Dialog v-model:visible="visible" modal :position="position" :style="{ width: '50vw', borderTop: '5px solid #002f56',height:'100vh' }">
     <template #header>
-      <h1 class="mx-3 fs-4  text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary Advance Request</h1>
+      <h1 class="mx-3 fs-4 text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary Advance Request</h1>
     </template>
 
     <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
@@ -106,13 +106,13 @@
       </div>
     </div>
 
-    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+    <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
       <span class="font-semibold ">Repayment</span>
-      <p class="my-2 fs-5 text-gray-600 text-md ">The advance amount will be deducted from the next month's
-        salary <strong class="fs-5 text-black">(ie, March 31, 2023)</strong> </p>
+      <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
+        salary <strong class="text-black fs-5">(ie, March 31, 2023)</strong> </p>
     </div>
 
-    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+    <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
       <span class="font-semibold ">Reason</span>
       <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
     </div>

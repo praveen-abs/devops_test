@@ -14,12 +14,16 @@ import { reactive, ref } from "vue";
 
 export const investmentMainStore = defineStore("investmentMainStore", () => {
 
+    // Formula Store 
     const formula = investmentFormulaStore()
 
+    // Notification Service
+
     const toast = useToast();
+
     // Steps for Investment and exemption tab's  Next and Previous Button
 
-    const investment_exemption_steps = ref(3)
+    const investment_exemption_steps = ref(2)
 
     // loading Spinner
 
@@ -85,8 +89,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         axios.get(' http://localhost:3000/rental').then(res => {
             console.log(res.data);
             hra_data.value = res.data
+        }).catch(e => console.log(e)).finally(()=>{
             canShowLoading.value = false
-        }).catch(e => console.log(e))
+        })
 
     }
 
@@ -143,6 +148,28 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
     // Section 80C & 80CCC Begins
+
+
+    const sec80c80cc_data = ref()
+
+    const  sec80c80cc = reactive({
+        EPF:"",
+        VPF:"",
+        PPF:"",
+        LIP:"",
+        SD_RCD:"",
+        MD:"",
+        NSC:"",
+        ULIP:"",
+        YTSFDR:"",
+        DAP:"",
+        SAP:"",
+        SSY:"",
+        STBIBNAR:"",
+        SPF:"",
+    })
+
+    
 
 
 

@@ -61,118 +61,122 @@
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                            <h6 class="">Bank Information
-                                <span class="personal-edit">
-                                    <a href="#" class="edit-icon" @click="onClick_EditButton_BankInfo"><i class="ri-pencil-fill"></i>
-                                    </a>
-                                </span>
-                            </h6>
+                        <h6 class="">Bank Information
+                            <span class="personal-edit">
+                                <a href="#" class="edit-icon" @click="onClick_EditButton_BankInfo"><i
+                                        class="ri-pencil-fill"></i>
+                                </a>
+                            </span>
+                        </h6>
 
-                            <Dialog v-model:visible="dialog_Bankvisible" modal header="Header"
+                        <Dialog v-model:visible="dialog_Bankvisible" modal header="Header"
                             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                                <template #header>
-                                    <div>
-                                        <h5
-                                            :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                            Bank Information</h5>
-                                    </div>
-                                </template>
-
+                            <template #header>
                                 <div>
-                                    <div class="modal-body">
+                                    <h5
+                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                        Bank Information</h5>
+                                </div>
+                            </template>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3 form-group">
-                                                    <label>Bank Name</label>
+                            <div>
+                                <div class="modal-body">
 
-                                                    <Dropdown editable :options="bankNameList" optionLabel="bank_name"
-                                                        placeholder="Select Bank Name" class="w-full form-controls "
-                                                        v-model="bank_information.bank_id" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label>Bank Name</label>
 
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3 form-group">
-                                                    <label>Bank Account No</label>
-                                                    <div class="cal-icon">
-
-                                                    </div>
-                                                    <InputText class="form-controls onboard-form" inputId="integeronly"
-                                                        name="account_no" :min="0" :max="100" type="number"
-                                                        v-model="bank_information.bank_ac_no" />
-                                                </div>
+                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name"
+                                                    placeholder="Select Bank Name" class="w-full form-controls "
+                                                    v-model="bank_information.bank_id" />
 
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3 form-group">
-                                                    <label>IFSC Code</label>
-                                                    <!-- <input name="bank_ifsc" class="form-control onboard-form"
-                                                                                value="" type="text"
-                                                                                pattern-data="ifsc" required> -->
-                                                    <InputText type="text" name="bank_ifsc_" class="form-controls"
-                                                        v-model="bank_information.ifsc_code" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3 form-group">
-                                                    <label>PAN No</label>
-                                                    <!-- <input name="pan_no" class="form-control onboard-form"
-                                                                                value="" type="text"
-                                                                                pattern-data="pan" required> -->
-                                                    <InputText type="text" name="pan_nos" class="form-controls"
-                                                        v-model="bank_information.pan_no" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label>Bank Account No</label>
+                                                <div class="cal-icon">
 
                                                 </div>
+                                                <InputText class="form-controls onboard-form" inputId="integeronly"
+                                                    name="account_no" :min="0" :max="100" type="number"
+                                                    v-model="bank_information.bank_ac_no" />
                                             </div>
 
                                         </div>
-                                        <div class="col-12">
-                                            <div class="text-right">
-                                                <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                                    @click="saveBankinfoDetails">Submit</button>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label>IFSC Code</label>
+                                                <!-- <input name="bank_ifsc" class="form-control onboard-form"
+                                                                                value="" type="text"
+                                                                                pattern-data="ifsc" required> -->
+                                                <InputText type="text" name="bank_ifsc_" class="form-controls"
+                                                    v-model="bank_information.ifsc_code" />
                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label>PAN No</label>
+                                                <!-- <input name="pan_no" class="form-control onboard-form"
+                                                                                value="" type="text"
+                                                                                pattern-data="pan" required> -->
+                                                <InputText type="text" name="pan_nos" class="form-controls"
+                                                    v-model="bank_information.pan_no" />
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-right">
+                                            <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                                @click="saveBankinfoDetails">Submit</button>
                                         </div>
                                     </div>
                                 </div>
-                            </Dialog>
+                            </div>
+                        </Dialog>
 
 
 
-                    <div  >
-                        <ul class="personal-info"   >
-                                <li  >
+                        <div>
+                            <ul class="personal-info">
+                                <li>
                                     <div class="title">Bank Name</div>
                                     <div class="ml-4 text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
-                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id }}
 
                                     </div>
                                 </li>
-                                <li  >
+                                <li>
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
                                         <!-- {{ bank_info.pan_no }} -->
 
-                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number}}
+                                        {{
+                                            _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number
+                                        }}
 
-                                       </div>
-                                </li>
-                                <li  >
-                                    <div class="title">IFSC Code</div>
-                                    <div class="text">
-                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code}}
                                     </div>
                                 </li>
-                                <li >
+                                <li>
+                                    <div class="title">IFSC Code</div>
+                                    <div class="text">
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code
+                                        }}
+                                    </div>
+                                </li>
+                                <li>
                                     <div class="title">PAN No</div>
                                     <div class="text">
-                                        {{_instance_profilePagesStore.employeeDetails.get_employee_details.pan_number}}
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number }}
                                     </div>
                                 </li>
                             </ul>
-                    </div>
+                        </div>
                     </div>
                 </div>
 
@@ -180,7 +184,7 @@
                     <div class="card-body">
                         <h6 class="">Statutory Information
                             <span class="personal-edit">
-                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info() ">
+                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info()">
                                     <i class="ri-pencil-fill"></i>
                                 </a>
                             </span>
@@ -204,7 +208,7 @@
                                                 Applicable<span class="text-danger">*</span></label>
                                             <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
                                                 class="onboard-form form-control textbox select2_form_without_search"
-                                                 v-model="statutory_information.pf_applicable">
+                                                v-model="statutory_information.pf_applicable">
                                                 <option value="" hidden selected disabled>PF
                                                     Applicable</option>
                                                 <option value="yes">Yes</option>
@@ -225,8 +229,8 @@
                                         <div class="mb-3 form-group">
                                             <label>UAN Number</label>
                                             <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
-                                                class="form-control onboard-form"  type="text" pattern-data="ifsc"
-                                                required v-model="statutory_information.uan_no">
+                                                class="form-control onboard-form" type="text" pattern-data="ifsc" required
+                                                v-model="statutory_information.uan_no">
                                         </div>
                                     </div>
 
@@ -269,8 +273,8 @@
 
                                 <div class="col-12">
                                     <div class="text-right">
-                                        <button id="btn_submit_statutory_info"
-                                            class="btn btn-border-orange submit-btn" @click="saveinfo_statutoryDetails">Save</button>
+                                        <button id="btn_submit_statutory_info" class="btn btn-border-orange submit-btn"
+                                            @click="saveinfo_statutoryDetails">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +285,7 @@
 
                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
 
-                        <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info" >
+                        <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info">
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
@@ -292,7 +296,7 @@
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
-                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
 
                                 </div>
                             </li>
@@ -300,7 +304,7 @@
                                 <div class="title">UAN Number</div>
                                 <div class="text">
 
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
 
                                 </div>
                             </li>
@@ -314,9 +318,9 @@
                             </li>
                             <li>
                                 <div class="title">ESIC Number</div>
-                                <div class="text" >
+                                <div class="text">
 
-                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number   }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number }}
 
                                 </div>
                             </li>
@@ -344,7 +348,7 @@
 
                                 <div id="" class="ember-view">
                                     <div class="table-responsive ">
-                                        <table class="table table-hover">
+                                        <!-- <table class="table table-hover">
 
                                             <thead class="fw-bold text-muted h5">
                                                 <tr>
@@ -359,7 +363,48 @@
                                                 </tr>
                                             </thead>
 
-                                        </table>
+                                        </table> -->
+                                        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
+                                            :value="_instance_profilePagesStore.employeeDetails.get_family_details"
+                                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                            :rowsPerPageOptions="[5, 10, 25]"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                                            responsiveLayout="scroll">
+
+                                            <Column header="Month" field="name" style="min-width: 8rem">
+                                            </Column>
+
+                                            <Column field="Gross" header="Gross Pay" style="min-width: 8rem">
+                                            </Column>
+
+                                            <Column field="Reimbursements" header="Reimbursements" style="min-width: 8rem">
+                                            </Column>
+
+                                            <Column field="Deductions" header="Deductions" style="min-width: 8rem">
+                                            </Column>
+                                            <Column field="Take" header="Take Home" style="min-width: 8rem">
+                                            </Column>
+                                            <Column field="Payslip" header="Payslip" style="min-width:8rem">
+                                                <template #body="slotProps">
+                                                    <button class="mr-3 btn btn-success"
+                                                        @click="diolog_EditFamilyDetails(slotProps.data)">View</button>
+                                                </template>
+                                            </Column>
+                                            <Column field="phone_number" header="Tax Worksheet" style="min-width: 8rem">
+                                                <template #body="slotProps">
+                                                    <button class="mr-3 btn btn-success"
+                                                        @click="diolog_EditFamilyDetails(slotProps.data)">View</button>
+                                                </template>
+                                            </Column>
+                                            <Column :exportable="false" header="Action" style="min-width:8rem">
+                                                <template #body="slotProps">
+
+                                                    <button class="mr-3 btn btn-success"
+                                                        @click="diolog_EditFamilyDetails(slotProps.data)">Download Pdf</button>
+                                                </template>
+                                            </Column>
+                                        </DataTable>
+
                                     </div>
                                 </div>
 
@@ -374,11 +419,10 @@
 
     </div>
 
-<!-- {{ statutory }} -->
-
+    <!-- {{ statutory }} -->
 </template>
 <script setup>
-import { ref, onMounted, reactive, onUpdated ,computed} from 'vue';
+import { ref, onMounted, reactive, onUpdated, computed } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
@@ -404,8 +448,8 @@ onMounted(() => {
 const dialog_Bankvisible = ref(false);
 const dialog_statutory_visible = ref(false);
 
-const bank_info_data =ref()
-const statutory_info_data =ref()
+const bank_info_data = ref()
+const statutory_info_data = ref()
 
 const bankNameList = ref();
 
@@ -417,17 +461,17 @@ const bank_information = reactive({
 })
 
 
-const  esic_applicable =computed(()=>{
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
-   else
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
+const esic_applicable = computed(() => {
+    if (_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "no") return "No";
+    else
+        if (_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
 })
 
-const pf_applicable =computed(()=>{
+const pf_applicable = computed(() => {
 
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No" ;
-   else
-   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes" ;
+    if (_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No";
+    else
+        if (_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes";
 
 
 })
@@ -443,12 +487,12 @@ const saveBankinfoDetails = () => {
     let url = `/update-bank-info/${id}`;
 
     axios.post(url, {
-            user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            bank_id: bank_information.bank_id.id,
-            account_no: bank_information.bank_ac_no,
-            bank_ifsc: bank_information.ifsc_code,
-            pan_no: bank_information.pan_no
-        })
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        bank_id: bank_information.bank_id.id,
+        account_no: bank_information.bank_ac_no,
+        bank_ifsc: bank_information.ifsc_code,
+        pan_no: bank_information.pan_no
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
@@ -457,7 +501,7 @@ const saveBankinfoDetails = () => {
 
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;
-                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.ifsc_code ;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.ifsc_code;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
 
 
@@ -469,38 +513,38 @@ const saveBankinfoDetails = () => {
             console.log(err);
         });
 
-        dialog_Bankvisible.value = false;
+    dialog_Bankvisible.value = false;
 
 }
 
-function onClick_EditButton_BankInfo(){
+function onClick_EditButton_BankInfo() {
     console.log("Opening General Info Dialog");
 
     // Assign json values into dialog elements also
 
-     bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  ;
-     bank_information.bank_ac_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number ;
-     bank_information.ifsc_code   =  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
-     bank_information.pan_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number ;
-     dialog_Bankvisible.value = true;
+    bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id;
+    bank_information.bank_ac_no = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number;
+    bank_information.ifsc_code = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
+    bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number;
+    dialog_Bankvisible.value = true;
 
 
 }
 
 
-function onClick_EditButton_Statutory_Info(){
+function onClick_EditButton_Statutory_Info() {
     console.log("Opening General Info Dialog");
 
     // Assign json values into dialog elements also
 
-     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
-     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number ;
-     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number ;
-     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
-     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number ;
+    statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable;
+    statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number;
+    statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number;
+    statutory_information.esic_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable;
+    statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number;
 
 
-     dialog_statutory_visible.value = true;
+    dialog_statutory_visible.value = true;
 
 }
 
@@ -522,12 +566,12 @@ const statutory_information = reactive({
 
 const saveinfo_statutoryDetails = () => {
 
-let id = fetch_data.current_user_id;
+    let id = fetch_data.current_user_id;
 
 
-let url = `/update-statutory-info/${id}`;
+    let url = `/update-statutory-info/${id}`;
 
-axios.post(url, {
+    axios.post(url, {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
         pf_applicable: statutory_information.pf_applicable,
         epf_number: statutory_information.epf_no,
@@ -535,20 +579,20 @@ axios.post(url, {
         esic_applicable: statutory_information.esic_applicable,
         esic_number: statutory_information.esic_no
     })
-    .then((res) => {
+        .then((res) => {
 
-        if (res.data.status == "success") {
+            if (res.data.status == "success") {
 
-            toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
 
-        } else if (res.data.status == "failure") {
-            leave_data.leave_request_error_messege = res.data.message;
-        }
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
     dialog_statutory_visible.value = false;
 
