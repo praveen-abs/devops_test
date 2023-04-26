@@ -1,105 +1,64 @@
 <template>
-  <div>
+  <div class="w-full">
     <!-- <ConfirmDialog></ConfirmDialog> -->
     <Toast />
-    <Dialog
-      header="Header"
-      v-model:visible="loading"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }"
-      :modal="true"
-      :closable="false"
-      :closeOnEscape="false"
-    >
+    <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
       <template #header>
-        <ProgressSpinner
-          style="width: 50px; height: 50px"
-          strokeWidth="8"
-          fill="var(--surface-ground)"
-          animationDuration="2s"
-          aria-label="Custom ProgressSpinner"
-        />
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+          animationDuration="2s" aria-label="Custom ProgressSpinner" />
       </template>
       <template #footer>
         <h5 style="text-align: center">Please wait...</h5>
       </template>
     </Dialog>
-    <Dialog
-      header="Header"
-      v-model:visible="canShowLoadingScreen"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }"
-      :modal="true"
-      :closable="false"
-      :closeOnEscape="false"
-    >
+    <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
       <template #header>
-        <ProgressSpinner
-          style="width: 50px; height: 50px"
-          strokeWidth="8"
-          fill="var(--surface-ground)"
-          animationDuration="2s"
-          aria-label="Custom ProgressSpinner"
-        />
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+          animationDuration="2s" aria-label="Custom ProgressSpinner" />
       </template>
       <template #footer>
         <h5 style="text-align: center">Please wait...</h5>
       </template>
     </Dialog>
 
-    <Dialog
-      header="Confirmation"
-      v-model:visible="canShowConfirmation"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '350px' }"
-      :modal="true"
-    >
+    <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+        <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
         <span>Proceed to save the shift details?</span>
       </div>
       <template #footer>
-        <Button
-          label="Yes"
-          icon="pi pi-check"
-          @click="saveWorkShiftDetails()"
-          class="p-button-text"
-          autofocus
-        />
-        <Button
-          label="No"
-          icon="pi pi-times"
-          @click="hideConfirmDialog(true)"
-          class="p-button-text"
-        />
+        <Button label="Yes" icon="pi pi-check" @click="saveWorkShiftDetails()" class="p-button-text" autofocus />
+        <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
       </template>
     </Dialog>
 
-    <div>
-      <span>Shift Name</span>
-      <span><InputText type="text" v-model="txt_shift_name" /></span>
+    <div class="py-4">
+
+      <span class="text-lg font-semibold">Shift Name</span>
+      <span>
+        <InputText type="text" v-model="txt_shift_name" />
+      </span>
       &nbsp;&nbsp;&nbsp;
       <span>Shift Start Time</span>
-      <span><InputText type="text" v-model="txt_shift_start_time" /></span>
+      <span>
+        <InputText type="text" v-model="txt_shift_start_time" />
+      </span>
       &nbsp;&nbsp;&nbsp;
       <span>Shift End Time</span>
-      <span><InputText type="text" v-model="txt_shift_end_time" /></span>
+      <span>
+        <InputText type="text" v-model="txt_shift_end_time" />
+      </span>
       <br />
     </div>
     <div>
-      <DataTable
-        :value="att_emp_details"
-        v-model:selection="selectedEmployees"
-        :paginator="true"
-        :rows="10"
+      <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="10"
         dataKey="emp_code"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-        v-model:filters="filters"
-        filterDisplay="menu"
-        :loading="loading2"
-        :globalFilterFields="['name', 'status']"
-      >
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters"
+        filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
         <template #empty> No Employee found </template>
         <template #loading> Loading employee data. Please wait. </template>
         <Column selectionMode="multiple" headerStyle="width: 1em"></Column>
@@ -108,13 +67,8 @@
             {{ slotProps.data.emp_code }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              placeholder="Search"
-              class="p-column-filter"
-              :showClear="true"
-            />
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
           </template>
         </Column>
         <Column headerStyle="width: 20em" field="employee_name" header="Employee Name">
@@ -122,13 +76,8 @@
             {{ slotProps.data.employee_name }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              placeholder="Search"
-              class="p-column-filter"
-              :showClear="true"
-            />
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
           </template>
         </Column>
         <Column headerStyle="width: 20em" field="designation" header="Designation">
@@ -136,13 +85,8 @@
             {{ slotProps.data.designation }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              placeholder="Search"
-              class="p-column-filter"
-              :showClear="true"
-            />
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
           </template>
         </Column>
         <Column headerStyle="width: 20em" field="department_name" header="Department">
@@ -150,13 +94,8 @@
             {{ slotProps.data.department_name }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              placeholder="Search"
-              class="p-column-filter"
-              :showClear="true"
-            />
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
           </template>
         </Column>
         <Column headerStyle="width: 5em" field="work_location" header="Location">
@@ -164,13 +103,8 @@
             {{ slotProps.data.work_location }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-              v-model="filterModel.value"
-              @input="filterCallback()"
-              placeholder="Search"
-              class="p-column-filter"
-              :showClear="true"
-            />
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
           </template>
         </Column>
       </DataTable>
@@ -389,7 +323,7 @@ function saveWorkShiftDetails() {
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
 
-.p-datatable .p-datatable-thead > tr > th {
+.p-datatable .p-datatable-thead>tr>th {
   text-align: center;
   padding: 1.3rem 1rem;
   border: 1px solid #dee2e6;
@@ -403,18 +337,23 @@ function saveWorkShiftDetails() {
   background: #003056;
   transition: box-shadow 0.2s;
   font-size: 13px;
+
   .p-column-title {
     font-size: 13px;
   }
+
   .p-column-filter {
     width: 100%;
   }
+
   #pv_id_2 {
     height: 30px;
   }
+
   .p-fluid .p-dropdown .p-dropdown-label {
     margin-top: -10px;
   }
+
   .p-dropdown .p-dropdown-label.p-placeholder {
     margin-top: -12px;
   }
@@ -423,15 +362,15 @@ function saveWorkShiftDetails() {
     color: white;
     margin-left: 10px;
   }
+
   .p-column-filter-menu-button:hover {
     color: white;
     border-color: transparent;
     background: #023e70;
   }
 }
-.p-column-filter-overlay-menu
-  .p-column-filter-constraint
-  .p-column-filter-matchmode-dropdown {
+
+.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
   margin-bottom: 0.5rem;
   visibility: hidden;
   position: absolute;
@@ -441,14 +380,16 @@ function saveWorkShiftDetails() {
   background-color: #003056;
 }
 
-.p-datatable .p-datatable-tbody > tr {
+.p-datatable .p-datatable-tbody>tr {
   font-size: 13px;
+
   .employee_name {
     font-weight: bold;
     font-size: 13.5px;
   }
 }
-.p-datatable .p-datatable-tbody > tr > td {
+
+.p-datatable .p-datatable-tbody>tr>td {
   text-align: left;
   border: 1px solid #dee2e6;
   border-top-width: 1px;
@@ -458,15 +399,19 @@ function saveWorkShiftDetails() {
   border-width: 0 0 1px 0;
   padding: 1rem 0.6rem;
 }
-.p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
+
+.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
   width: 200px;
 }
-.p-datatable .p-datatable-tbody > tr > td:nth-child(3) {
+
+.p-datatable .p-datatable-tbody>tr>td:nth-child(3) {
   width: 150px;
 }
-.p-datatable .p-datatable-tbody > tr > td:nth-child(6) {
+
+.p-datatable .p-datatable-tbody>tr>td:nth-child(6) {
   width: 200px;
 }
+
 // .main-content {
 //   width: 105%;
 // }
@@ -478,6 +423,7 @@ function saveWorkShiftDetails() {
 .approved {
   font-weight: 700;
 }
+
 .p-button.p-component.p-button-success.Button {
   padding: 8px;
 }
@@ -486,6 +432,7 @@ function saveWorkShiftDetails() {
   font-weight: 700;
   color: #ff2634;
 }
+
 .p-button.p-component.p-button-danger.Button {
   padding: 8px;
 }
@@ -493,24 +440,30 @@ function saveWorkShiftDetails() {
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
   color: red;
 }
+
 .p-button.p-component.p-confirm-dialog-accept {
   background-color: #003056;
 }
+
 .p-button.p-component.p-confirm-dialog-reject.p-button-text {
   color: #003056;
 }
+
 .p-column-filter-overlay-menu .p-column-filter-buttonbar {
   padding: 1.25rem;
   position: absolute;
   visibility: hidden;
 }
-.p-datatable .p-datatable-thead > tr > th .p-column-filter {
+
+.p-datatable .p-datatable-thead>tr>th .p-column-filter {
   width: 44%;
 }
-.p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
+
+.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
   color: white;
   border-color: transparent;
 }
+
 .p-column-filter-menu-button.p-column-filter-menu-button-open {
   background: none;
 }
@@ -525,9 +478,11 @@ function saveWorkShiftDetails() {
   background: #003056;
   color: white;
 }
+
 .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
   color: white;
 }
+
 .p-datatable .p-sortable-column.p-highlight {
   background: #003056;
   color: white;
@@ -537,18 +492,22 @@ function saveWorkShiftDetails() {
   background: #003056;
   color: white;
 }
+
 .p-datatable .p-sortable-column:focus {
   box-shadow: none;
   outline: none;
   color: white;
 }
+
 .p-datatable .p-sortable-column .p-sortable-column-icon {
   color: white;
 }
+
 .pi-sort-amount-down::before {
   content: "\e9a0";
   color: white;
 }
+
 .pi-sort-amount-up-alt::before {
   content: "\e9a2";
   color: white;

@@ -153,7 +153,8 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
-                <span class="personal-edit"><a href="#" class="edit-icon"
+                <span class="personal-edit">
+                    <a href="#" class="edit-icon"
                         @click="onClick_EditButtonContacttInfo" ><i class="ri-pencil-fill"></i></a>
                 </span>
 
