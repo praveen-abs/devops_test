@@ -9,7 +9,7 @@
 
                 <div class="float-right ">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New
+                    <button class="mx-4 btn btn-orange" @click="dialog_New_Travel_visible=true"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New
                         Request</button>
                 </div>
             </div>
@@ -84,12 +84,43 @@
 
         </div>
     </div>
-    <!-- <Dialog visible="false" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+    <Dialog v-model:visible="dialog_New_Travel_visible" modal  :style="{ width: '50vw' }">
+        <template #header>
+            <div>
+                <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New Travel Advance Request</h1>
+            </div>
+        </template>
+        <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
 
+            <div class="w-5 p-4 mx-4">
+                <span class="font-semibold">Required Amount</span>
+                <input id="rentFrom_month"
+                class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : 20,000</p>
+            </div>
 
-    </Dialog>
+        </div>
 
-    <Dialog header="Header" visible="false" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
+        <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+            <span class="font-semibold ">Repayment</span>
+            <p class="my-2 fs-5 text-gray-600 text-md ">The deadline to submit the bills is on
+                salary <strong class="fs-5 text-black">12/07/2023</strong>
+            </p>
+        </div>
+
+        <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+            <span class="font-semibold ">Reason</span>
+            <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+        </div>
+
+        <div class="float-right ">
+          <button class="btn btn-border-orange">Cancel</button>
+          <button  class="mx-4 btn btn-orange">Submit</button>
+        </div>
+
+        </Dialog>
+
+    <!-- <Dialog header="Header" visible="false" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
         :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -99,12 +130,16 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog> -->
+
+
 </template>
 <script setup>
 import { ref, reactive } from 'vue';
 
 const value = ref();
 const options = ref(['Off', 'On']);
+
+const dialog_New_Travel_visible = ref(false);
 
 const activetab = ref(1)
 const activetab1 = ref(1)
@@ -142,3 +177,26 @@ const ingredient = ref('');
 }
 </style>
 
+
+{
+    <!--
+
+<template>
+    <div class="card flex justify-content-center">
+        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
+        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </Dialog>
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+
+</script>
+     -->
+}

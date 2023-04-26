@@ -28,7 +28,7 @@
           {{-- <div id="Investments"></div> --}}
 
    @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-        <div id="SalaryAdvanceLoan"></div>
+        {{-- <div id="SalaryAdvanceLoan"></div> --}}
 
 
 
@@ -41,8 +41,9 @@
    <!-- <div id="Resignation"></div>  -->
 
 
+
    @vite('resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js')
-   {{-- <div id="EmpSalaryAdvanceLoan"></div> --}}
+   <div id="EmpSalaryAdvanceLoan"></div>
 
 
 

@@ -87,9 +87,9 @@
 
 
 
-  <Dialog v-model:visible="visible" modal :position="position" :style="{ width: '70vw', borderTop: '5px solid #002f56',height:'100vh' }">
+  <Dialog v-model:visible="visible" modal :position="position" :style="{ width: '50vw', borderTop: '5px solid #002f56',height:'100vh' }">
     <template #header>
-      <h1 class="mx-3 font-semibold text-xxl">New Salary Advance Request</h1>
+      <h1 class="mx-3 fs-4  text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary Advance Request</h1>
     </template>
 
     <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
@@ -106,15 +106,15 @@
       </div>
     </div>
 
-    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-7">
+    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
       <span class="font-semibold ">Repayment</span>
-      <p class="my-2 font-semibold text-gray-500 text-md ">The advance amount will be deducted from the next month's
-        salary <strong class="font-semibold text-black">(ie, March 31, 2023)</strong></p>
+      <p class="my-2 fs-5 text-gray-600 text-md ">The advance amount will be deducted from the next month's
+        salary <strong class="fs-5 text-black">(ie, March 31, 2023)</strong> </p>
     </div>
 
-    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-7">
+    <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
       <span class="font-semibold ">Reason</span>
-      <Textarea  class="my-4 capitalize form-control textbox" autoResize type="text" rows="3" />
+      <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
     </div>
 
     <div class="float-right ">

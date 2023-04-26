@@ -106,6 +106,8 @@ import { ref, reactive } from 'vue';
 const value = ref();
 const options = ref(['Off', 'On']);
 
+
+
 const activetab = ref(1)
 const activetab1 = ref(1)
 

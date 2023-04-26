@@ -14,11 +14,11 @@
                         New Request
                     </button>
 
-                    <Dialog v-model:visible="dialog_NewInterestFreeLoanRequest" header="Header" :style="{ width: '50vw' }" :position="position" :modal="true" :draggable="false">
+                    <Dialog v-model:visible="dialog_NewInterestFreeLoanRequest" header="Header" :style="{ width: '58vw' }" :position="position" :modal="true" :draggable="false">
                         <template #header>
                             <div><h1 style="border-left: 3px solid var( --orange);padding-left: 5px ;" class="fs-4">New Interest Free Loan Request</h1></div>
                         </template>
-                        <div class="card bg-gray-100 bottom-0 mb-4" style="border:none">
+                        <div class="card bg-gray-100 bottom-0 mb-10" style="border:none">
                             <div class="card-body">
                                 <div class="row mx-2">
                                     <div class="col mx-2">
@@ -32,7 +32,7 @@
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="1" class="w-full md:w-10rem" />
+                                        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
                                         <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                                     </div>
                                 </div>
@@ -45,20 +45,39 @@
                         <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
                             <div class="card-body mx-4">
                                 <div class="row">
-                                    <h1 class="fs-5 my-2">EMI Dedution</h1>
-                                    <h1 class="">The EMI Dedution Will begin from the Upcoming Payroll</h1>
-                                        <div class="col">
-                                            <h1 class="fs-5 my-2">EMI Start Month</h1>
+                                    <!-- fw-bolder -->
+                                    <h1 class="fs-4 my-2  ">EMI Dedution</h1>
+                                    <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
+                                        <div class="col-4">
+                                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
                                             <Calendar v-model="date" showIcon />
+                                        </div>
+
+                                        <div class="col-4 mx-2">
+                                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
+                                            <Calendar v-model="date" showIcon />
+                                        </div>
+                                        <div class="col-3">
+                                            <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
+                                            <InputText type="text" v-model="value" style="width: 150px !important;" />
                                         </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+                            <span class="font-semibold ">Reason</span>
+                            <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+                        </div>
+
 
                         <template #footer>
-                            <Button label="" icon="pi pi-times" @click="visible = false" text />
-                            <Button label="Yes" icon="pi pi-check" @click="visible = false" text />
+                            <div class="float-right ">
+                                <button class="btn btn-border-orange"  @click="dialog_NewInterestFreeLoanRequest = false">Cancel</button>
+                                <button  class="mx-4 btn btn-orange">Submit</button>
+                            </div>
+                            <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
+                            <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
                         </template>
                     </Dialog>
                 </div>
@@ -182,7 +201,9 @@ const selectedCity = ref();
     --navy: #002f56;
     --clr-gray:#959595;
 }
-
+ .pi-calendar , .p-button-label{
+    color: white !important;
+}
 .orange_btn {
     background-color: var(--orange);
     padding: 7px 30px;

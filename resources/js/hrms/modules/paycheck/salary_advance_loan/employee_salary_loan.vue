@@ -1,10 +1,10 @@
 <template>
     <div>
-   
-        <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">     
+
+        <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class="mx-2 nav-item " role="presentation"  >
-                    <a class="nav-link " id="" data-bs-toggle="pill" href="" 
+                    <a class="nav-link " id="" data-bs-toggle="pill" href=""
                         role="tab" aria-controls="" aria-selected="true" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']">
                         Salary Advance
                     </a>
@@ -19,7 +19,7 @@
                 <li class="mx-3 nav-item " role="presentation"  >
                     <a class="mx-4 text-center nav-link" id="" data-bs-toggle="pill" href=""  @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
                         role="tab" aria-controls="" aria-selected="true">
-                        
+
                         Travel Advance
                     </a>
                 </li>
@@ -29,13 +29,7 @@
                          Loan With Interest
                         </a>
                 </li>
-
-
-      
-            
-
             </ul>
-
         </div>
 
 
@@ -55,7 +49,7 @@
             <div  v-if="activetab === 4">
                 <LoanWithInterest />
             </div>
-     
+
 
         </div>
     </div>
