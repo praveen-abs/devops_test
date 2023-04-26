@@ -31,6 +31,7 @@ import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar'
 import moment from 'moment'
 import Checkbox from 'primevue/checkbox'
+import Tag from 'primevue/tag'
 
 import ReviewDocuments from './review_document.vue'
 
@@ -62,6 +63,7 @@ app.component('ProgressSpinner', ProgressSpinner);
 app.component('Calendar', Calendar);
 app.component('moment',moment);
 app.component('Checkbox',Checkbox)
+app.component('Tag',Tag)
 
 app.mount("#ReviewDocuments");
 
