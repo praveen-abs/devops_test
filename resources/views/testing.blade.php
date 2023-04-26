@@ -19,21 +19,18 @@
 </head>
 <body>
 
+     @vite('resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js')
+     <div id="vjs_manage_employee"></div>
+    <!-- {{-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
+   <div id="Investments"></div> --}} -->
 
-   <!-- {{-- @vite('resources/js/hrms/modules/Organization/manage_employee/manage_employee.js')
-   <div id="ManageEmployee"></div> --}} -->
-
-
-    {{-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
-   <div id="Investments"></div> --}}
-
-    @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+    <!-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js') -->
    <!-- <div id="SalaryAdvanceLoan"></div> -->
 
 
 
-   @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
-   <div id="vjs_Attendance_master"></div>
+   <!-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js') -->
+   <!-- <div id="vjs_Attendance_master"></div> -->
    
 
 

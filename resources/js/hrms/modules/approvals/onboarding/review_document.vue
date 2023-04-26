@@ -1,5 +1,10 @@
 <template>
     <Toast />
+    <h6 class="mb-3 text-lg font-semibold">Documents Approvals</h6>
+    <div>
+        <Button type="button" icon="pi pi-times-circle" severity="success" v-if="!selectedAllEmployee == ''"
+        label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" />
+    </div>
     <div>
         <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">

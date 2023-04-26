@@ -118,3 +118,18 @@
 .p-datatable .p-datatable-tbody > tr:nth-child(odd) {
     background: #e1f0f7;
   }
+
+.p-progressbar-value.p-progressbar-value-animate{
+width: 65%;
+display: flex;
+background-color: $primary-blue !important;
+
+  }
+  .p-progressbar.p-component.p-progressbar-determinate{
+    height: 14px;
+    font-size: 8px;
+  }
+  .p-progressbar-determinate .p-progressbar-label {
+    display: inline-flex;
+    font-size: 9px;
+  }

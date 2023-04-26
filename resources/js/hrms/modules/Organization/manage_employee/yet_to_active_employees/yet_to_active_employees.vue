@@ -2,16 +2,6 @@
   <div>
     <!-- <ConfirmDialog></ConfirmDialog> -->
     <Toast />
-    <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-      <template #header>
-        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-          animationDuration="2s" aria-label="Custom ProgressSpinner" />
-      </template>
-      <template #footer>
-        <h5 style="text-align: center">Please wait...</h5>
-      </template>
-    </Dialog>
     <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
       :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
       <template #header>
@@ -34,11 +24,11 @@
         <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
       </template>
     </Dialog>
-<!-- {{ employee.yet_to_active_employees_data }} -->
+     <!-- {{ manageEmployeesStore.yet_to_active_employees_data }} -->
     <div>
-      <DataTable :value="employee.yet_to_active_employees_data" :paginator="true" :rows="10" dataKey="id"
+      <DataTable :value="manageEmployeesStore.yet_to_active_employees_data" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :rowsPerPageOptions="[5, 10, 25]"
         v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
         <template #empty> No customers found. </template>
         <template #loading> Loading customers data. Please wait. </template>
@@ -53,36 +43,26 @@
           </template>
         </Column>
         <Column field="emp_code" header="Employee Code" :sortable="true"></Column>
-        <Column field="emp_designation" header="Designation"></Column>
+        <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
         <Column field="l1_manager_name" header="Reporting Manager"></Column>
         <Column field="doj" header="DOJ"></Column>
         <Column field="blood_group_id" header="Blood Group"></Column>
         <Column field="profile_completeness" header="Profile Completeness">
-
             <template #body="slotProps">
               <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar>
-               
-          
           </template>
-
         </Column>
         <Column field="emp_status" header="Onboarding Status"></Column>
         <Column field="emp_status" header="Approval Status"></Column>
         <Column field="" header="View Profile">
           <template #body>
-            <Button icon="pi pi-eye" severity="success" label="View" style="height: 2em" raised />
+            <Button icon="pi pi-eye" severity="success" label="View" class="btn btn-orange " style="height: 2em" raised />
           </template>
         </Column>
         <Column style="width: 300px" field="" header="Action">
           <template #body="slotProps">
-            <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
-                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
-            <span v-if="slotProps.data.status == 'Pending'">
-              <Button type="button" icon="pi pi-check-circle" severity="success" label="Approval"
-                @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
-              <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Rejected"
-                style="margin-left: 8px; height: 2em" @click="showConfirmDialog(slotProps.data, 'Reject')" />
-            </span>
+              <Button  icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button" 
+                @click="showConfirmDialog(slotProps.data, 'Active')" style="height: 2em" />
           </template>
         </Column>
       </DataTable>
@@ -96,13 +76,13 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 
-import { Service } from '../manage_service'
+import { useManageEmployeesStore } from '../manage_service'
 
-const employee = Service()
+const manageEmployeesStore = useManageEmployeesStore()
 
 
 onMounted(() => {
-  employee.ajax_yet_to_active_employees_data()
+  manageEmployeesStore.ajax_yet_to_active_employees_data()
 });
 
 let att_regularization = ref();
