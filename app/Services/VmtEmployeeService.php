@@ -32,6 +32,7 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 
 class VmtEmployeeService {
 
@@ -1003,5 +1004,46 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     }
 
 
+    public function updateEmployeeActiveStatus($user_code, $active_status){
 
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'active_status' => $active_status
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                'active_status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $query_user = User::where('user_code',$user_code)->first();
+
+        if(!empty($query_user))
+        {
+            $query_user->active = $active_status;
+            $query_user->save();
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "User not found"
+            ]);
+        }
+    }
 }

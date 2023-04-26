@@ -1490,4 +1490,10 @@ class VmtEmployeeOnboardingController extends Controller
        return response()->file(storage_path($private_file));
 
     }
+
+    public function updateEmployeeActiveStatus(Request $request, VmtEmployeeService $employeeService){
+
+       return $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
+
+    }
 }
