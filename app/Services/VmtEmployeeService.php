@@ -249,7 +249,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
                 if(!empty($row['bank_name'])){
                 $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
-                $newEmployee->bank_id   = $bank_id ?? '';
+                $newEmployee->bank_id  = $bank_id ?? '';
                 }
 
                 $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';

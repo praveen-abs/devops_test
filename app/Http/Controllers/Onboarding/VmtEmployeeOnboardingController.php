@@ -811,7 +811,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
                 'mobile_no' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-                'bank_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'bank_name' => 'required|exists:vmt_banks,bank_name',
                 'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
                 'account_no' => 'required',
                 'current_address' => 'nullable',
