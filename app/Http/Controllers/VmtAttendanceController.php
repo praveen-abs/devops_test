@@ -54,27 +54,21 @@ class VmtAttendanceController extends Controller
         $leaveData_Org = null;
 
         $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
-
+       // dd( $leaveData_currentUser->get());
         //Get how many leaves taken for each leave_type
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
 
         //dd($leaveData_currentUser->toArray());
 
         //Accrued Leave Year Frame
-        $time_periods_of_year_query = VmtTimePeriod::where('abbrevation','FY')
-                                                   ->first(['id','start_month','end_month','abbrevation']);
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('abbrevation','FY')->where('status',1)->first();
+        $start_date =  $time_periods_of_year_query->start_date;
+        $end_date   = $time_periods_of_year_query->end_date;
+        $calender_type = $time_periods_of_year_query->abbrevation;
+       // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+       $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
+      // dd( $time_frame);
 
-        //Accrued Leave Years
-        $active_years = VmtOrgTimePeriod::where('vmt_time_period_id',$time_periods_of_year_query->id)->pluck('year');
-
-        foreach(  $active_years as $each_year){
-
-              $starting_year=Carbon::parse($each_year)->format('Y');
-              $starting_month=Carbon::parse( $time_periods_of_year_query->start_month)->format('-d-m');
-             $starting_of_time_period =  $starting_year.$starting_month;
-             dd($starting_of_time_period);
-            // $ending_of_time_period =
-        }
 
 
         //Generate Team leave data
@@ -92,7 +86,7 @@ class VmtAttendanceController extends Controller
 
 
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -221,6 +215,11 @@ class VmtAttendanceController extends Controller
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
         $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
 
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('abbrevation','FY')->where('status',1)->first();
+         $start_date =  $time_periods_of_year_query->start_date;
+
+        $end_date   = $time_periods_of_year_query->end_date;
+
         if ($request->type == 'org') {
             $employeeLeaves_Org = '';
 
@@ -282,6 +281,9 @@ class VmtAttendanceController extends Controller
         }
         else
         if ($request->type == 'employee') {
+            dd(VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)
+                                                                 ->whereBetween('start_date',[$start_date,$end_date])
+                                                                 ->whereBetween('end_date',[$start_date,$end_date])->get());
             return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)->get();
         }
     }

@@ -264,7 +264,7 @@
                                 <label class="input-group-text " for="inputGroupSelect01"><i
                                         class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                                 <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                    <option selected>FY 2022-23</option>
+                                    <option selected>{{ $time_frame }}</option>
 
                                 </select>
                             </div>
