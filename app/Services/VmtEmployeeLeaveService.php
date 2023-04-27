@@ -53,7 +53,7 @@ class VmtEmployeeLeaveService
     public function processEmployeeLeaveBalance($user_id, $leave_type_id){
 
 
-        $calendar_type =ConfigPms::first()->calendar_type;
+        $calendar_type = ConfigPms::first()->calendar_type;
         $employee[$user_id] = array();
         //dd( $calendar_type);
         $accrualLeaveAdd_startDate = 15; //TODO : Move to Leave Settings page
@@ -61,6 +61,8 @@ class VmtEmployeeLeaveService
         $current_month = date('n');
         $today = Carbon::now();
         $date = date('Y-m-d');
+
+
 
 
         $emp_doj = VmtEmployee::where('userid',$user_id)->first()->doj;
@@ -74,77 +76,70 @@ class VmtEmployeeLeaveService
 
 
 
-        // if($calendar_type=='financial_year'){
-        //         $time_period_current_year = VmtOrgTimePeriod::whereYear('year',Carbon::now()->format('Y'))->first();
-        //         $time_period = VmtTimePeriod::where('id',  $time_period_current_year->vmt_time_period_id)->first();
-        //         $time_period_start_month = Carbon::parse($time_period->start_month)->format('m');
-        //         $time_period_start_day = Carbon::parse($time_period->start_month)->format('d');
-        //         $accrued_leave_start_date =Carbon::parse(substr($time_period_current_year->year, 0, 4).'-'.$time_period_start_month.'-'.$time_period_start_day);
-        //         if( $time_period->type == 'Financial Year' ){
-        //             $time_period_end_year = Carbon::parse( $time_period_current_year->year.'-'.$time_period_start_month.'-'.$time_period_start_day)->addYear()->format('Y');
-        //             $time_period_end_month = Carbon::parse($time_period->end_month)->format('m');
-        //             $time_period_end_day = Carbon::parse($time_period->end_month)->format('d');
-        //             $accrued_leave_end_date = Carbon::parse($time_period_end_year.'-'.$time_period_end_month.'-'.$time_period_end_day);
-        //         }else{
-        //             $time_period_end_month = Carbon::parse($time_period->end_month)->format('m');
-        //             $time_period_end_day = Carbon::parse($time_period->end_month)->format('d');
-        //             $accrued_leave_end_date = Carbon::parse( substr($time_period_current_year->year, 0, 4).'-'.$time_period_end_month.'-'.$time_period_end_day);
+       // if($calendar_type=='financial_year'){
+                // $time_period_current_year = VmtOrgTimePeriod::whereYear('year',Carbon::now()->format('Y'))->first();
+                // $time_period = VmtTimePeriod::where('id',  $time_period_current_year->vmt_time_period_id)->first();
+                // $time_period_start_month = Carbon::parse($time_period->start_month)->format('m');
+                // $time_period_start_day = Carbon::parse($time_period->start_month)->format('d');
+                // $accrued_leave_start_date =Carbon::parse(substr($time_period_current_year->year, 0, 4).'-'.$time_period_start_month.'-'.$time_period_start_day);
+                $time_period_active_year = VmtOrgTimePeriod::where('status',1)->first();
+                $accrued_leave_start_date = Carbon::parse($time_period_active_year->start_date);
+                $accrued_leave_end_date = Carbon::parse($time_period_active_year->end_date);
 
-        //         }
+                if(Carbon::now()->lte( $accrued_leave_end_date)){
+                    //till this date accured leave will be added
+                    $end_date = Carbon::now();
 
-        //         if(Carbon::now()->lte( $accrued_leave_end_date)){
-        //             //till this date accured leave will be added
-        //             $end_date = Carbon::now();
-        //         }else{
-        //            $end_date =  $accrued_leave_end_date;
-        //         }
+                }else{
+                   $end_date =  $accrued_leave_end_date;
+                }
 
 
-        //        $emp_doj = Carbon::parse($emp_doj);
+               $emp_doj = Carbon::parse($emp_doj);
 
-        //        if($emp_doj->between( $accrued_leave_start_date,$end_date )){
+               if($emp_doj->between( $accrued_leave_start_date,$end_date )){
 
-        //         while($end_date->gte($emp_doj)){
-        //             $year= $emp_doj->format('Y');
-        //             $month= $emp_doj->format('n');
+                while($end_date->gte($emp_doj)){
+                    $year= $emp_doj->format('Y');
+                    $month= $emp_doj->format('n');
 
-        //             if($emp_doj_Array ['month']==$month){
-        //                 if($emp_doj_Array ['day']==15){
-        //                     $accrual_leave_count='0.5';
-        //                 }else if($emp_doj_Array ['day']>15){
-        //                     $accrual_leave_count='0';
-        //                 }else if($emp_doj_Array ['day']<15){
-        //                     $accrual_leave_count='1';
-        //                 }
-        //             }else{
-        //                 $accrual_leave_count='1';
-        //             }
+                    if($emp_doj_Array ['month']==$month){
+                        if($emp_doj_Array ['day']==15){
+                            $accrual_leave_count='0.5';
+                        }else if($emp_doj_Array ['day']>15){
+                            $accrual_leave_count='0';
+                        }else if($emp_doj_Array ['day']<15){
+                            $accrual_leave_count='1';
+                        }
+                    }else{
+                        $accrual_leave_count='1';
+                    }
 
-        //             if($month<10)
-        //             $month='0'.$month;
+                    if($month<10)
+                    $month='0'.$month;
 
-        //            $date=$year."-".$month."-15";
-        //            $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
+                   $date=$year."-".$month."-15";
+                   $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
 
-        //            $emp_doj->addMonth();
-        //         }
+                   $emp_doj->addMonth();
+                }
 
-        //        }else{
-        //         while($end_date->gte( $accrued_leave_start_date)){
-        //             $year= $accrued_leave_start_date->format('Y');
-        //             $month= $accrued_leave_start_date->format('n');
+               }else{
+                while($end_date->gte( $accrued_leave_start_date)){
+                    $year= $accrued_leave_start_date->format('Y');
+                    $month= $accrued_leave_start_date->format('n');
 
-        //             if($month<10)
-        //              $month='0'.$month;
+                    if($month<10)
+                     $month='0'.$month;
 
-        //             $date=$year."-".$month."-15";
-        //             $accrual_leave_count='1';
-        //             $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
-        //             $accrued_leave_start_date->addMonth();
-        //         }
+                    $date=$year."-".$month."-15";
+                    $accrual_leave_count='1';
+                    $employee[$user_id] = array_merge($employee[$user_id],$this->insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count));
+                    $accrued_leave_start_date->addMonth();
+                }
 
-        //        }
-        // }
+               }
+       // }
         // else if($calendar_type=='calendar_year'){
         //     $monthsSinceJoin = $today->diffInMonths($emp_doj);
 
