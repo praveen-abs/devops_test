@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeReimbursements;
+use App\Models\User;
+use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeeWorkShifts;
 use Carbon\Carbon;
+Use Exception;
 
 class VmtCorrectionController extends Controller
 {
@@ -60,6 +64,77 @@ class VmtCorrectionController extends Controller
          }
 
          return $response;
+    }
+
+    //Adding Work Shift for dunamis
+    public function addingWorkShiftForAllEmployees(Request $request){
+        $number_of_flexi_shift=3;
+        $all_employees=User::where('is_ssa',0)->get();
+        foreach( $all_employees as $single_employee){
+           if($single_employee->user_code=='DM054'||$single_employee->user_code=='DM145'||$single_employee->user_code=='DM178'||
+             $single_employee->user_code=='DM176'||$single_employee->user_code=='DM183'){
+                try
+                {
+                 $employee_work_shift = new VmtEmployeeWorkShifts;
+                 $employee_work_shift->user_id = $single_employee->id;
+                 $employee_work_shift->work_shift_id = 2;
+                 $employee_work_shift->is_active = 1;
+                 $employee_work_shift->save();
+                }
+                catch(Exception $e)
+                {
+                   dd($e->getMessage());
+                }
+           }else if($single_employee->user_code=='DM109'){
+                   try
+                   {
+                    $employee_work_shift = new VmtEmployeeWorkShifts;
+                    $employee_work_shift->user_id = $single_employee->id;
+                    $employee_work_shift->work_shift_id = 3;
+                    $employee_work_shift->is_active = 1;
+                    $employee_work_shift->save();
+                   }
+                   catch(Exception $e)
+                   {
+                      dd($e->getMessage());
+            }
+           }else if($single_employee->user_code=='DM182'||$single_employee->user_code=='DM150'|| $single_employee->user_code=='DM179'|| $single_employee->user_code=='DM095'||
+           $single_employee->user_code=='DMC101'||$single_employee->user_code=='DMC136'||$single_employee->user_code=='DMC133'||$single_employee->user_code=='DMC129'||$single_employee->user_code=='DM019'||
+           $single_employee->user_code=='DM165'||$single_employee->user_code=='DM153'||$single_employee->user_code=='DM170'||$single_employee->user_code=='DMC069'||$single_employee->user_code=='DM045'){
+                                   for($i=1;$i<=$number_of_flexi_shift;$i++){
+                                    try
+                                    {
+                                     $employee_work_shift = new VmtEmployeeWorkShifts;
+                                     $employee_work_shift->user_id = $single_employee->id;
+                                     $employee_work_shift->work_shift_id = VmtWorkShifts::where('shift_type','Shift '.$i)->first('id')->id;
+                                     $employee_work_shift->is_active = 1;
+                                     $employee_work_shift->save();
+                                    }
+                                      catch(Exception $e)
+                                    {
+                                       dd($e->getMessage());
+                                   }
+
+                                   }
+
+           }else{
+            try
+            {
+             $employee_work_shift = new VmtEmployeeWorkShifts;
+             $employee_work_shift->user_id = $single_employee->id;
+             $employee_work_shift->work_shift_id = 1;
+             $employee_work_shift->is_active = 1;
+             $employee_work_shift->save();
+            }
+            catch(Exception $e)
+            {
+               dd($e->getMessage());
+           }
+           }
+        }
+
+        return "Employee Work Shift Added";
+
     }
 
 }
