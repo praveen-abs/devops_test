@@ -808,7 +808,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict|unique:users,email',
+                'email' => 'nullable|email:strict',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -817,8 +817,8 @@ class VmtEmployeeOnboardingController extends Controller
                 'father_gender' => 'nullable|in:Male,male,Female,female,other',
                 'father_dob' => 'nullable|date',
 
-                'pan_no' => 'nullable|required_if:pan_ack,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                'pan_ack' => 'nullable|required_if:pan_no,null',
+                'pan_no' => 'nullable|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
+                'pan_ack' => 'nullable',
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
                 'mobile_no' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
@@ -954,9 +954,9 @@ class VmtEmployeeOnboardingController extends Controller
 
 
                    //  $message = "Employee OnBoard was Created   ";
-                     $VmtGeneralInfo = VmtGeneralInfo::first();
-                     $image_view = url('/') . $VmtGeneralInfo->logo_img;
-                   $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
+                //      $VmtGeneralInfo = VmtGeneralInfo::first();
+                //      $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                //    $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
                         'row_number' => '',
@@ -1262,7 +1262,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                    'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                   'email' => 'required|email:strict|unique:users,email',
+                   'email' => 'nullable|email:strict|unique:users,email',
                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                    'doj' => 'required|date',
                    'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',

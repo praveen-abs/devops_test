@@ -112,9 +112,10 @@
                                 </p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
-                                <p class="text-muted f-12 fw-bold">Reporting To <a href="#" class="edit-icon"
-                                        @click="editReportingManager(_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name)"><i
-                                            class="ri-pencil-fill"></i></a></p>
+                                <p class="text-muted f-12 fw-bold">Reporting To
+                                     <a href="#" class="edit-icon"
+                                        @click="editReportingManager(_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name)"><i  class="ri-pencil-fill"></i>
+                                        </a></p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code"
                                     class=" f-15 fw-bold">
                                     {{
@@ -169,7 +170,7 @@
 
 
 
-    <!-- <Dropdown :options="departmentOption" optionLabel="name" v-model="dep" 
+    <!-- <Dropdown :options="departmentOption" optionLabel="name" v-model="dep"
             placeholder="Select Department" class="w-full form-selects" optionValue="id" /> -->
 </template>
 
@@ -249,6 +250,7 @@ const editReportingManager = (rm) => {
     console.log(rm);
     dailogReporting.value = true
     employee_card.reporting_manager = rm
+    console.log( employee_card.reporting_manager +"hiihihhi");
 }
 
 
@@ -261,6 +263,7 @@ const setvalue = () => {
 onMounted(() => {
     service.DepartmentDetails().then((res) => {
         departmentOption.value = res.data
+        console.log( "testing" +_instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name);
     })
     service.ManagerDetails().then(res => {
         reportManagerOption.value = res.data
