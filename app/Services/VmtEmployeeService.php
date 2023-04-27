@@ -149,7 +149,7 @@ class VmtEmployeeService {
                 $newUser->name = $data['employee_name'];
 
                 if(!empty($data["email"])){
-                    $newUser->email = $data["email"];
+                    $newUser->email = $data["email"] ?? '';;
                 }
                 //$newUser->password = Hash::make('Abs@123123');
                 //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
@@ -189,7 +189,7 @@ class VmtEmployeeService {
         $newUser = new User;
         $newUser->name =$data['employee_name'];
         if(!empty($data["email"])){
-            $newUser->email = $data["email"];
+            $newUser->email = $data["email"] ?? '';
         }
 
         $newUser->password = Hash::make('Abs@123123');
@@ -240,7 +240,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
                // $newEmployee->location   =    $row["work_location"] ?? '';
-                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "PANNOTAVBL";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
 
                 if(!empty($row["marital_status"])){
@@ -456,7 +456,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "PANNOTAVBL";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
 

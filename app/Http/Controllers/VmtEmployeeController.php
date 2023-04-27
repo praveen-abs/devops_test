@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtMaritalStatus;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtApprovalsService;
 
 class VmtEmployeeController extends Controller
 {
@@ -1070,7 +1071,7 @@ class VmtEmployeeController extends Controller
         return json_encode($query_vmtEmployees);
     }
 
-    public function fetchAllYetToActiveEmployees(Request $request)
+    public function fetchAllYetToActiveEmployees(Request $request, VmtApprovalsService $serviceVmtApprovalsService)
     {
 
         $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -1108,6 +1109,7 @@ class VmtEmployeeController extends Controller
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
             $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+            $singleEmp['doc_status'] = $serviceVmtApprovalsService->isAllOnboardingDocumentsApproved($singleEmp['emp_code'])->getData()->data;
 
         }
 
@@ -1118,7 +1120,7 @@ class VmtEmployeeController extends Controller
     {
 
         $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
                 'users.name as emp_name',
                 'users.user_code as emp_code',

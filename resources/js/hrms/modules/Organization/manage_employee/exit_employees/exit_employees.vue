@@ -55,19 +55,18 @@
         <Column field="emp_code" header="Employee Code" :sortable="true"></Column>
         <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
         <Column field="l1_manager_name" header="Reporting Manager"></Column>
-        <Column field="doj" header="DOJ"></Column>
+        <Column field="doj" header="DOJ"  style="min-width: 10rem;">
+          <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
+        </Column>
         <Column field="blood_group_id" header="Blood Group"></Column>
         <Column field="profile_completeness" header="Profile Completeness">
           <template #body="slotProps">
             <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar>
           </template>
         </Column>
-        <Column field="emp_status" header="Onboarding Status"></Column>
-        <Column field="emp_status" header="Approval Status"></Column>
-        <Column style="width: 300px" field="" header="View Profile">
+        <Column field="enc_user_id" header="View Profile">
           <template #body="slotProps">
-            <Button type="button" icon="pi pi-eye" class="btn btn-orange Button" label="View"
-              @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" text raised />
+            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data.enc_user_id)" class="btn btn-orange " style="height: 2em" raised />
           </template>
         </Column>
       </DataTable>
@@ -75,6 +74,8 @@
   </div>
 </template>
 <script setup>
+import dayjs from 'dayjs';
+
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
@@ -109,109 +110,11 @@ const filters = ref({
   status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
-const statuses = ref(["Pending", "Approved", "Rejected"]);
-
-let currentlySelectedStatus = null;
-let currentlySelectedRowData = null;
-
-
-
-function ajax_GetAttRegularizationData() {
-  let url = window.location.origin + "/fetch-att-regularization-data";
-
-  console.log("AJAX URL : " + url);
-
-  axios.get(url).then((response) => {
-    console.log("Axios : " + response.data);
-    att_regularization.value = response.data;
-    loading.value = false;
-  });
+function openProfilePage(uid){
+    window.location.href = "/pages-profile-new?uid="+uid;
 }
 
-function showConfirmDialog(selectedRowData, status) {
-  canShowConfirmation.value = true;
-  currentlySelectedStatus = status;
-  currentlySelectedRowData = selectedRowData;
 
-  console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
-}
-
-function hideConfirmDialog(canClearData) {
-  canShowConfirmation.value = false;
-
-  if (canClearData) resetVars();
-}
-
-function resetVars() {
-  currentlySelectedStatus = "";
-  currentlySelectedRowData = null;
-}
-
-////PrimeVue ConfirmDialog code -- Keeping here for reference
-//const confirm = useConfirm();
-
-// function confirmDialog(selectedRowData, status) {
-//     console.log("Showing confirm dialog now...");
-
-//     confirm.require({
-//         message: 'Are you sure you want to proceed?',
-//         header: 'Confirmation',
-//         icon: 'pi pi-exclamation-triangle',
-//         accept: () => {
-//             toast.add({severity:'info', summary:'Confirmed', detail:'You have '+status, life: 3000});
-//         },
-//         reject: () => {
-//             console.log("Rejected");
-//             //toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-//         }
-//     });
-// }
-
-const css_statusColumn = (data) => {
-  return [
-    {
-      pending: data.status === "Pending",
-      approved: data.status === "Approved",
-      rejected: data.status === "Rejected",
-    },
-  ];
-};
-
-function processApproveReject() {
-  hideConfirmDialog(false);
-
-  canShowLoadingScreen.value = true;
-
-  console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
-
-  axios
-    .post(window.location.origin + "/attendance-regularization-approvals", {
-      id: currentlySelectedRowData.id,
-      status:
-        currentlySelectedStatus == "Approve"
-          ? "Approved"
-          : currentlySelectedStatus == "Reject"
-            ? "Rejected"
-            : currentlySelectedStatus,
-      status_text: "",
-    })
-    .then((response) => {
-      console.log("Response : " + response);
-
-      canShowLoadingScreen.value = false;
-
-      toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
-      ajax_GetAttRegularizationData();
-
-      resetVars();
-    })
-    .catch((error) => {
-      canShowLoadingScreen.value = false;
-      resetVars();
-
-      console.log(error.toJSON());
-    });
-}
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
