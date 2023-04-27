@@ -1,9 +1,9 @@
 <template>
-    <div class="conainer-fluid main-body p-5">
+    <div class="p-5 conainer-fluid main-body">
         <div class="head-contant d_spc_bt">
             <h3>Holiday Summary</h3>
 
-            <div class="holiday-settings-btns mb-4">
+            <div class="mb-4 holiday-settings-btns">
                 <ul class="d-flex">
                     <li><button class="cancel_btn">Cancel</button></li>
                     <li><button class="view_Lists">View Lists</button></li>
@@ -17,11 +17,11 @@
             <div class="row">
 
             <div class="col-lg ">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -32,15 +32,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -57,12 +57,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg  ">
-                <div class="card-title m-0 d_spc_bt">
+            <div class="col-lg ">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>May day</h3>
                     <span>May1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/May_day.jpg" class="card-img-top" alt="..."> -->
 
                     <div class="overlay"></div>
@@ -81,15 +81,15 @@
 
 
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -107,11 +107,11 @@
                 </div>
             </div>
             <div class="col-lg ">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -122,15 +122,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -148,11 +148,11 @@
                 </div>
             </div>
             <div class="col-lg ">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -163,15 +163,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -194,11 +194,11 @@
         <div class="row">
 
             <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -209,15 +209,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -235,11 +235,11 @@
                 </div>
             </div>
             <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -250,15 +250,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -276,11 +276,11 @@
                 </div>
             </div>
             <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -291,15 +291,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />
@@ -318,11 +318,11 @@
             </div>
 
             <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
+                <div class="m-0 card-title d_spc_bt">
                     <h3>New year</h3>
                     <span>Jan1 (sunday)</span>
                 </div>
-                <div class="card  clr-trans card-w">
+                <div class="card clr-trans card-w">
                     <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
                     <div class="overlay"></div>
                     <div class="hover_btn_div d-ard">
@@ -333,15 +333,15 @@
                                     <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
                                 </div>
                                 <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Festival Title</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Description</label>
                                         <InputText id="username" v-model="value" aria-describedby="username-help" />
                                     </div>
-                                    <div class="flex flex-column gap-2 mt-5">
+                                    <div class="flex gap-2 mt-5 flex-column">
                                         <label for="username">Date</label>
                                         <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                             :minDate="new Date()" />

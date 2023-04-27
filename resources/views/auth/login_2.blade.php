@@ -3,7 +3,7 @@
 @lang('translation.signin')
 @endsection
 @section('content')
-<div class="auth-page-wrapper pt-5">
+<div class="pt-5 auth-page-wrapper">
    
     <!-- auth page content -->
     <div class="auth-page-content">
@@ -19,19 +19,19 @@
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <div class="mt-sm-5 mb-2 p-4">
+                    <div class="p-4 mb-2 mt-sm-5">
                         <div class="text-center ">
                             <a href="index" class="d-inline-block auth-logo">
                                 <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="" style="width:100%;height: auto;">
                             </a>
                         </div>
-                        <p class="mt-3 fs-15 fw-medium text-left">{{$generalInfo->short_name}}<!-- Performance Management System --></p>
-                        <p class="mt-2 fs-12 fw-medium text-left">{{$generalInfo->login_instruction}}<!-- Performance Management System --></p>
+                        <p class="mt-3 text-left fs-15 fw-medium">{{$generalInfo->short_name}}<!-- Performance Management System --></p>
+                        <p class="mt-2 text-left fs-12 fw-medium">{{$generalInfo->login_instruction}}<!-- Performance Management System --></p>
                     </div>
                 <!-- <div class="row "> -->
                     <!-- <div class="col-md-12 col-lg-12 col-xl-12"> -->
-                        <div class="sm-5 mb-4 p-4">                       
-                                <!-- <div class="text-center mt-2">
+                        <div class="p-4 mb-4 sm-5">                       
+                                <!-- <div class="mt-2 text-center">
                                     <h5 class="text-primary">Welcome Back !</h5>
                                     <p class="text-muted"></p>
                                 </div> -->
@@ -53,9 +53,9 @@
                                                 <a href="auth-pass-reset-basic" class="text-muted">Forgot password?</a>
                                             </div>
                                             <label class="form-label" for="password-input">Password</label>
-                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <div class="mb-3 position-relative auth-pass-inputgroup">
                                                 <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Enter password" id="password-input" value="123456">
-                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <button class="top-0 btn btn-link position-absolute end-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="align-middle ri-eye-fill"></i></button>
                                                 @error('password')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -102,5 +102,4 @@
 <script src="{{ URL::asset('assets/libs/particles.js/particles.js.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/particles.app.js') }}"></script>
 <script src="{{ URL::asset('assets/js/pages/password-addon.init.js') }}"></script>
-
 @endsection

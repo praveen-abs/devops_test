@@ -26,6 +26,8 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+import Calendar from 'primevue/calendar';
+import Checkbox from 'primevue/checkbox'
 
 import Attendance_master from './Attendance_setting_Master.vue'
 
@@ -54,6 +56,8 @@ app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
+app.component('Calendar', Calendar)
+app.component('Checkbox', Checkbox)
 
 app.mount("#vjs_Attendance_master");
 
