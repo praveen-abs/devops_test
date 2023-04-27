@@ -818,7 +818,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'father_dob' => 'nullable|date',
 
                 'pan_no' => 'nullable|required_if:pan_ack,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                'pan_ack' => 'required_if:pan_no,null',
+                'pan_ack' => 'nullable|required_if:pan_no,null',
                 'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
                 'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
                 'mobile_no' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
