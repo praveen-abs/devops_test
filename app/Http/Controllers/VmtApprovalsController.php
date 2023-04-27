@@ -465,5 +465,9 @@ class VmtApprovalsController extends Controller
 
     }
 
+
+    public function isAllOnboardingDocumentsApproved(Request $request, VmtApprovalsService $serviceApprovalService){
+            return $serviceApprovalService->isAllOnboardingDocumentsApproved($request->user_code);
+    }
 }
 
