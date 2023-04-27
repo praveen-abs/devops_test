@@ -10,7 +10,7 @@
 
                 <div class="float-right ">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange" @click="dialog_New_Travel_visible=true"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New
+                    <button class="mx-4 btn btn-orange" @click="openPosition('top')"><i class="mx-2 fa fa-plus" aria-hidden="true"></i>New
                         Request</button>
                 </div>
             </div>
@@ -85,7 +85,7 @@
 
         </div>
     </div>
-    <Dialog v-model:visible="dialog_New_Travel_visible" modal  :style="{ width: '50vw' }">
+    <Dialog v-model:visible="useEmpStore.dialog_TravelAdvance" modal  :style="{ width: '50vw' }">
         <template #header>
             <div>
                 <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New Travel Advance Request</h1>
@@ -95,7 +95,7 @@
 
             <div class="w-5 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
-                <input id="rentFrom_month"
+                <input id="rentFrom_month" v-model="useEmpStore.ta.ra"
                 class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : 20,000</p>
             </div>
@@ -111,12 +111,12 @@
 
         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
             <span class="font-semibold ">Reason</span>
-            <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+            <Textarea  v-model="useEmpStore.ta.reason" class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
         </div>
 
         <div class="float-right ">
-          <button class="btn btn-border-orange">Cancel</button>
-          <button  class="mx-4 btn btn-orange">Submit</button>
+          <button class="btn btn-border-orange " @click="useEmpStore.dialog_TravelAdvance = false">Cancel</button>
+          <button  class="mx-4 btn btn-orange" @click="useEmpStore.saveTravelAdvance">Submit</button>
         </div>
 
         </Dialog>
@@ -135,17 +135,26 @@
 
 </template>
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive ,onMounted} from 'vue';
+import {useEmpSalaryAdvanceStore} from '../../stores/employeeSalaryAdvanceLoanMainStore'
+
+const useEmpStore = useEmpSalaryAdvanceStore()
+
+onMounted(() => {
+   useEmpStore.fetchTraveladvance();
+})
 
 const value = ref();
 const options = ref(['Off', 'On']);
 
-const dialog_New_Travel_visible = ref(false);
 
-const activetab = ref(1)
-const activetab1 = ref(1)
+const position = ref('center');
 
-const ingredient = ref('');
+const openPosition = (pos) => {
+    position.value = pos;
+    useEmpStore.dialog_TravelAdvance = true
+}
+
 
 
 </script>

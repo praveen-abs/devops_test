@@ -1,4 +1,5 @@
 import axios from "axios";
+import { constant } from "lodash";
 import { defineStore } from "pinia";
 
 import { reactive, ref } from "vue";
@@ -141,10 +142,11 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const isTravelAdvanceFeatureEnabled = ref(1)
 
+   const dialog_TravelAdvance = ref(false);
 
     // Eligible Employees
 
-    const eligibleTravelAdvanceEmployeeData = ref(1)
+    const eligibleTravelAdvanceEmployeeData = ref()
 
     // Travel Advance Limit
     // Deduction
@@ -154,25 +156,105 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
         tdl: '',
         deductMethod: '',
         sumbitWithIn: '',
-        isDeductedInsubsequentpayroll: ''
+        isDeductedInsubsequentpayroll: '',
+        ra:'',
+        reason:''
+
     })
+
+    const fetchTraveladvance = ()=>{
+
+        canShowLoading.value = true
+
+        console.log("fetching SA");
+
+        axios.get('http://localhost:3000/TravelAdvance').then(res=>{
+
+        eligibleTravelAdvanceEmployeeData.value = res.data
+            console.log(res.data);
+
+        }).finally(()=>{
+            canShowLoading.value = false
+        })
+
+    }
+
+    const saveTravelAdvance = ()=>{
+
+        canShowLoading.value = true;
+        axios.post('http://localhost:3000/TravelAdvance',ta).finally(()=>{
+            canShowLoading.value = false
+
+            fetchTraveladvance();
+
+        })
+        dialog_TravelAdvance.value = false
+
+    }
+
 
 
     // Travel Advance Feature Ends
+
+    // dialog box varible
+    const dialogInterestwithLoan = ref(true);
 
 
     // Loan With interest Feature Begins
 
     const isLoanWithInterestFeature = ref(1)
 
+    const InterestWithLoanData = ref();
+
     const lwif = reactive({
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
-        maxTenure: ''
+        maxTenure: '',
+        ra:'',
+        Term:'',
+        Interest_rate:'',
+        month_EMI:'',
+        EMI_END_Month:'',
+        Total_Month:'',
+        Reason:'',
+
 
     })
+
+    const fetchInterstWithLoan = ()=>{
+
+        canShowLoading.value = true;
+
+        axios.get('http://localhost:3000/TravelAdvance').then(res=>{
+
+        InterestWithLoanData.value = res.data
+            console.log(res.data);
+
+        }).finally(()=>{
+            canShowLoading.value = false
+        })
+
+
+
+    }
+
+    const saveinterestWithLoan = ()=>{
+
+        canShowLoading.value = true;
+
+        axios.post(' http://localhost:3000/InterestWithLoan',lwif).finally(()=>{
+            canShowLoading.value = false
+
+            fetchInterstWithLoan();
+
+        })
+
+        dialogInterestwithLoan.value = false;
+
+
+    }
 
 
     // Loan With interest Feature Ends
@@ -196,11 +278,11 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
         // Travel Advance Feature
 
-        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,
+        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta ,dialog_TravelAdvance,saveTravelAdvance,fetchTraveladvance,
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif
+        isLoanWithInterestFeature, lwif,dialogInterestwithLoan,saveinterestWithLoan,InterestWithLoanData,fetchInterstWithLoan,
 
 
     };

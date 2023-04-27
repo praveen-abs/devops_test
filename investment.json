@@ -182,8 +182,28 @@
       "id": 1
     }
   ],
-  "Interst_free_loan": [
+  "Interst_free_loan": [],
+  "TravelAdvance": [
+    {
+      "tdl": "",
+      "deductMethod": "",
+      "sumbitWithIn": "",
+      "isDeductedInsubsequentpayroll": "",
+      "ra": "",
+      "reason": "",
+      "id": 1
+    },
+    {
+      "tdl": "",
+      "deductMethod": "",
+      "sumbitWithIn": "",
+      "isDeductedInsubsequentpayroll": "",
+      "ra": "11",
+      "reason": "Obcaecati est assume",
+      "id": 2
+    }
   ],
+  "InterestWithLoan":[],
   "exit": [
     {
       "dori": "24-Feb-1994",

@@ -10,7 +10,7 @@
 
                 <div class="float-right ">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange" @click="dialog_NewInterestWithLoanRequest = true">
+                    <button class="mx-4 btn btn-orange" @click="openPosition('top')" >
                         <i class="mx-2 fa fa-plus" aria-hidden="true"></i>
                         New Request
                     </button>
@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <Dialog v-model:visible="dialog_NewInterestWithLoanRequest" modal header="Header" :style="{ width: '60vw' }">
+    <Dialog v-model:visible="useEmpStore.dialogInterestwithLoan" modal header="Header" :style="{ width: '60vw' }">
         <template #header>
             <div>
                 <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New interest With Loan Request</h1>
@@ -113,7 +113,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 pr-5">
-                                <button class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded" @click="Calculate_EMI =true">Calculate EMI</button>
+                                <button class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded">Calculate EMI</button>
                             </div>
                         </div>
                     </div>
@@ -175,22 +175,11 @@
         </div>
 
         <div class="float-right ">
-          <button class="btn btn-border-dark border-dark px-5">Cancel</button>
-          <button  class="mx-4 btn btn-orange px-5">Submit</button>
+          <button class="btn btn-border-dark border-dark px-5" @click="useEmpStore.dialogInterestwithLoan = false">Cancel</button>
+          <button  class="mx-4 btn btn-orange px-5" @click="useEmpStore.saveinterestWithLoan " >Submit</button>
         </div>
 
     </Dialog>
-
-
-    <Dialog v-model:visible="Calculate_EMI" modal header="Header" :style="{ width: '50vw' }">
-        <template #header>
-            <div>
-                <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New interest With Loan Request</h1>
-            </div>
-        </template>
-
-    </Dialog>
-
 
 
 
@@ -213,19 +202,25 @@
     </Dialog> -->
 </template>
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive ,onMounted} from 'vue';
+import {useEmpSalaryAdvanceStore} from '../../stores/employeeSalaryAdvanceLoanMainStore'
+
+const useEmpStore = useEmpSalaryAdvanceStore()
+
+onMounted(() => {
+    useEmpStore.fetchInterstWithLoan();
+})
 
 const value = ref();
 const options = ref(['Off', 'On']);
 
-const dialog_NewInterestWithLoanRequest =ref(false);
 
-const Calculate_EMI = ref(false);
+const position = ref('center');
 
-const activetab = ref(1)
-const activetab1 = ref(1)
-
-const ingredient = ref('');
+const openPosition = (pos) => {
+    position.value = pos;
+    useEmpStore.dialogInterestwithLoan = true
+}
 
 
 </script>
@@ -265,26 +260,4 @@ const ingredient = ref('');
 </style>
 
 
-{
-    <!--
-
-<template>
-    <div class="card flex justify-content-center">
-        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-        </Dialog>
-    </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-
-</script>
-     -->
-}
 
