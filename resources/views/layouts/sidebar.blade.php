@@ -725,7 +725,11 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             Template
                                         </span></a>
                                 </li>
-
+                                <li class="nav-item">
+                                    <a href="{{ route('manage_emp_mail_notifications') }}" class="nav-link"><span>Document
+                                            Manage Employee Mail Notifications
+                                        </span></a>
+                                </li>
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                 <li class="nav-item">

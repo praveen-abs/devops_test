@@ -46,7 +46,8 @@
             "app/Services/VmtInvestmentsService.php",
             "app/Services/VmtHolidayService.php",
             "app/Services/VmtApprovalsService.php",
-            "app/Services/VmtLoginService.php"
+            "app/Services/VmtLoginService.php",
+            "app/Services/Admin/VmtEmployeeMailNotifMgmtService.php"
         ]
     },
     "autoload-dev": {

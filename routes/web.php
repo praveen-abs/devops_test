@@ -256,13 +256,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/retrive-files', [App\Http\Controllers\VmtTestingController::class, 'retriveFiles'])->name('retriveFiles');
     Route::get('/testSendBulkMail', [App\Http\Controllers\VmtTestingController::class, 'testSendBulkMail'])->name('testSendBulkMail');
 
-    
+
         Route::get('email-test', function(){
-        
+
             $details['email'] = 'sheltonfdo23@gmail.com';
-        
+
             dispatch(new App\Jobs\SendEmailJob($details));
-        
+
             dd('done');
         });
     // notifications
@@ -736,6 +736,11 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     //Investments
 
     Route::get('/get-investments-form-details', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetails'])->name('getInvestmentsFormDetails');
+
+
+    //Emp Mail Notifications
+    Route::get('/configs/manage_emp_mail_notifications', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'fetchAllEmployees_WelcomeMail_Details'])->name('fetchAllEmployees_WelcomeMail_Details');
+
 
     //Testing controller
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
