@@ -10,18 +10,18 @@
                 {{_instance_profilePagesStore.employeeDetails.employee_documents.document_name }}
             </Column>
 
-            <Column field="doc_url" header="Status" style="min-width: 12rem">
-                {{_instance_profilePagesStore.employeeDetails.employee_documents.doc_url }}
+            <Column field="status" header="Status" style="min-width: 12rem">
+                {{_instance_profilePagesStore.employeeDetails.employee_documents.status }}
 
             </Column>
 
-            <Column field="doc_url" header="Reason " style="min-width: 12rem">
+            <Column field="reason" header="Reason " style="min-width: 12rem">
 
             </Column>
 
             <Column field="" header="View " style="min-width: 12rem">
                 <template #body="slotProps">
-                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="view"
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
                         @click="showDocument(slotProps.data)" style="height: 2em" />
 
                 </template>
