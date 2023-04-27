@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
+use App\Mail\WelcomeMail;
+
 
 class VmtTestingController extends Controller
 {
@@ -214,6 +216,35 @@ class VmtTestingController extends Controller
         //     ->first();
 
         // dd([$invesform, $invesdec, $invessec_pat, $investsec, $investparticular]);
+    }
+
+    public function testSendBulkMail()
+    {
+
+        $array_mail = ["sheltonfdo23@gmail.com","praveenkumar.techdev@gmail.com"];
+
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+        $response  = array();
+        try{
+
+            foreach ($array_mail as $recipient) {
+                $isSent = \Mail::to($recipient)->send(new WelcomeMail("emp_code 123", 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+
+                $temp[$recipient] = $isSent;
+
+                array_push($response, $temp);
+            }
+
+            return response()->json([
+                "output" => $response
+            ]);
+        }
+        catch(\Exception $e){
+            dd("Error : ".$e);
+        }
+
     }
 
 }
