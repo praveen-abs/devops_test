@@ -126,7 +126,7 @@ class VmtEmployeeService {
             }
         }
         else{
-            var_dump("ERROR : createOrUpdate_User() response is ");
+            dd("ERROR : createOrUpdate_User() response is empty");
             //dd($response);
             return "failure :: createOrUpdate_User() response obj is null ".__LINE__;
         }
@@ -148,9 +148,8 @@ class VmtEmployeeService {
                 //Update existing user
                 $newUser->name = $data['employee_name'];
 
-                if(!empty($data["email"])){
-                    $newUser->email = $data["email"];
-                }
+                $newUser->email = empty($data["email"]) ? '' : $data["email"];
+
                 //$newUser->password = Hash::make('Abs@123123');
                 //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
 
@@ -185,32 +184,38 @@ class VmtEmployeeService {
 
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
+        try
+        {
 
-        $newUser = new User;
-        $newUser->name =$data['employee_name'];
-        if(!empty($data["email"])){
-            $newUser->email = $data["email"];
+            $newUser = new User;
+            $newUser->name =$data['employee_name'];
+
+            $newUser->email = empty($data["email"]) ? '' : $data["email"];
+
+
+            $newUser->password = Hash::make('Abs@123123');
+            //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
+            $newUser->user_code = strtoupper($data['employee_code']);
+
+            $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']) );
+            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+
+            $newUser->active = '0';
+            $newUser->is_default_password_updated = '0';
+
+            $newUser->is_onboarded = $can_onboard_employee;
+
+            $newUser->onboard_type = $onboard_type; //normal, quick, bulk
+
+            $newUser->org_role = '5';
+            $newUser->is_ssa = '0';
+            $newUser->save();
+
+            return $newUser;
         }
-
-        $newUser->password = Hash::make('Abs@123123');
-        //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
-        $newUser->user_code = strtoupper($data['employee_code']);
-
-        $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']) );
-        $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
-
-        $newUser->active = '0';
-        $newUser->is_default_password_updated = '0';
-
-        $newUser->is_onboarded = $can_onboard_employee;
-
-        $newUser->onboard_type = $onboard_type; //normal, quick, bulk
-
-        $newUser->org_role = '5';
-        $newUser->is_ssa = '0';
-        $newUser->save();
-
-        return $newUser;
+        catch(\Exception $e){
+            dd("Error in VmtEmployeeService::CreateNewUser() : ".$e);
+        }
     }
 
     //for bulck onboard
@@ -240,7 +245,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
                // $newEmployee->location   =    $row["work_location"] ?? '';
-                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "PANNOTAVBL";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
 
                 if(!empty($row["marital_status"])){
@@ -331,7 +336,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                         }
                     $familyMember->save();
                 }
-                    if(!empty($row['mother_name'])){
+
+                if(!empty($row['mother_name'])){
                     $familyMember =  new VmtEmployeeFamilyDetails;
                     $familyMember->user_id  = $user_id;
                     $familyMember->name =   $row['mother_name'];
@@ -350,31 +356,35 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     $familyMember->user_id  = $user_id;
                     $familyMember->name =   $row['spouse_name'];
                     $familyMember->relationship = 'Spouse';
+
                     if(!empty($row['gender']=='Male')){
-                    $familyMember->gender = 'Female';
+                        $familyMember->gender = 'Female';
                     }else{
                         $familyMember->gender = 'Male';
                     }
-        //for bulk onboarding
-                        if(!empty($row["spouse_dob"])){
+                     //for bulk onboarding
+                    if(!empty($row["spouse_dob"])){
                         $dob_spouse =  $row["spouse_dob"];
                         $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
-                        }
-                        }
-                        $familyMember->save();
-
-                    if (!empty($row['child_name'])) {
-                        $familyMember =  new VmtEmployeeFamilyDetails;
-                        $familyMember->user_id  = $user_id;
-                        $familyMember->name =  $row['child_name'];
-                        $familyMember->relationship = 'Children';
-                        $familyMember->gender = '---';
-
-                        if(!empty($row["child_dob"]))
-                        $familyMember->dob= $row["child_dob"];
-                        //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
                     }
+
                     $familyMember->save();
+
+                }
+
+                if (!empty($row['child_name'])) {
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =  $row['child_name'];
+                    $familyMember->relationship = 'Children';
+                    $familyMember->gender = '---';
+
+                    if(!empty($row["child_dob"]))
+                    $familyMember->dob= $row["child_dob"];
+                    //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
+                    $familyMember->save();
+
+                }
 
 
 
@@ -456,7 +466,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "PANNOTAVBL";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
 

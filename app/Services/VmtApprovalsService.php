@@ -104,7 +104,7 @@ class VmtApprovalsService {
             return response()->json([
                 'status' => 'success',
                 'message' => "",
-                'data' => $query_user_docs_count > 0 ? 'false' : 'true'
+                'data' => $query_user_docs_count > 0 ? false : true
             ]);
 
         }
@@ -116,7 +116,6 @@ class VmtApprovalsService {
                 'data' => $e
             ]);
         }
-
 
     }
 }

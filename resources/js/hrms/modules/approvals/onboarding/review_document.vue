@@ -2,10 +2,10 @@
     <Toast />
     <div class="flex justify-between my-2">
         <h6 class="mb-3 text-lg font-semibold">Documents Approvals</h6>
-
+<!--
         <Button type="button" icon="pi pi-times-circle" severity="success" v-if="!selectedAllEmployee == ''"
             class="mx-4 p-button-success Button" label="Approve all" style=" height: 2.5em"
-            @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')" />
+            @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')" /> -->
     </div>
     <div>
         <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -346,7 +346,7 @@ function processSingleDocumentApproveReject() {
             console.log(response.data);
             ajax_GetReviewDocumentData();
             canShowLoadingScreen = false;
-            toast.add({ severity: "success", summary: "", detail: " Successfully !", life: 3000 });
+            toast.add({ severity: "success", summary: "Status", detail: "Processed Successfully !", life: 3000 });
 
             resetVars();
         })

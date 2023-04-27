@@ -44,10 +44,9 @@
           </template>
           <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
         </Column>
-        <Column style="width: 300px" field="" header="View Profile">
+        <Column field="enc_user_id" header="View Profile">
           <template #body="slotProps">
-            <Button type="button" icon="pi pi-eye" class="btn btn-orange Button" label="View"
-              @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" text raised />
+            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data.enc_user_id)" class="btn btn-orange " style="height: 2em" raised />
           </template>
         </Column>
       </DataTable>
@@ -90,6 +89,10 @@ onMounted(async () => {
   canShowLoadingScreen.value = false;
 
 });
+
+function openProfilePage(uid){
+    window.location.href = "/pages-profile-new?uid="+uid;
+}
 
 </script>
 <style lang="scss">
