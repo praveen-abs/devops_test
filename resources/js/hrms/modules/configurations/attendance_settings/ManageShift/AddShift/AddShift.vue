@@ -2,20 +2,20 @@
 
 
     <div class="w-full pr-8">
-      <div class="w-full tabs ">
-        <a class="px-6 col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
+      <div class="w-full tabs row ">
+        <a class="flex px-6 col-lg-2 col-xl-2 col-md-2" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
           ><div class="md:text-sm" :style="{width:'25px' }">1</div>Shift Details</a
         >
-        <a class="px-6 col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
+        <a class="flex px-6 col-lg-2 col-xl-2 col-md-2" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
           ><div>2</div>Shift Time Range</a
         >
-        <a class="px-6 col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
+        <a class="flex px-6 col-lg-2 col-xl-2 col-md-2" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
           ><div>3</div>Break Time Range</a
         >
-        <a class="px-6 col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
+        <a class="flex px-6 col-lg-2 col-xl-2 col-md-2" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
           ><div>4</div>Working Hours</a
         >
-        <a class="px-6 col-lg-3 col-xl-2 col-md-3 d-flex" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
+        <a class="flex px-6 col-lg-2 col-xl-2 col-md-2" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
           ><div>5</div>Late&Early Going
         </a>
     
@@ -76,6 +76,7 @@
     border-right: none;
     background-color: #003056;
     font-weight: 600;
+    min-width: 17.5rem;
   }
   .tabs a > div {
       color: #aaa;

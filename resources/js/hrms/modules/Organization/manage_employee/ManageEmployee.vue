@@ -54,3 +54,11 @@ import ExitEmployees from './exit_employees/exit_employees.vue'
 
 
 </script>
+
+<style>
+
+.p-datatable .p-datatable-thead > tr > th >.p-column-header-content>.p-column-title:nth-child(1){
+  margin-left:30px;
+}
+
+</style>

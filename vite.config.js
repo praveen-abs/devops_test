@@ -53,7 +53,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js',
 
                 // Assign Shift
-                'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
+                //'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
 
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',

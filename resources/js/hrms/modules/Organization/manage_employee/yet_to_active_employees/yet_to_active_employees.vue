@@ -62,7 +62,11 @@
         </Column>
         <Column field="doc_status" header="Docs Approval Status">
           <template #body="slotProps">
-            {{ slotProps.data.doc_status ? "Done" : "Not Done" }}
+            {{
+                slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Done" : "Not Done")
+                    : "NA"
+
+            }}
           </template>
         </Column>
         <Column field="enc_user_id" header="View Profile">
@@ -72,8 +76,14 @@
         </Column>
         <Column style="width: 300px" field="" header="Action">
           <template #body="slotProps">
+            <!-- ACTIVATE button wont be shown if is_onboarded and doc_status are FALSE -->
+            <div v-if="slotProps.data.is_onboarded && slotProps.data.doc_status">
               <Button  icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button"
                 @click="showConfirmDialog(slotProps.data, 'Active')" style="height: 2em" />
+            </div>
+            <div v-else>
+
+            </div>
           </template>
         </Column>
       </DataTable>
@@ -207,11 +217,11 @@ function processApproveReject() {
     .then((response) => {
       console.log("Response : " + response);
 
-      canShowLoadingScreen.value = false;
+
 
       toast.add({ severity: "success", summary: "Activated", detail: `${currentlySelectedRowData.emp_name} Activated Successfully`, life: 3000 });
-      manageEmployeesStore.ajax_yet_to_active_employees_data();
-       window.location.reload();
+      //manageEmployeesStore.ajax_yet_to_active_employees_data();
+    //    window.location.reload();
 
       resetVars();
     })
@@ -220,6 +230,11 @@ function processApproveReject() {
       resetVars();
 
     //   console.log(error.toJSON());
+    }).finally(()=>{
+        manageEmployeesStore.ajax_yet_to_active_employees_data();
+        manageEmployeesStore.getActiveEmployees();
+
+        canShowLoadingScreen.value = false;
     });
 }
 </script>

@@ -93,7 +93,7 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
                         <div class="ml-4 text">
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
+                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY') }}
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
@@ -108,8 +108,7 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.doj.slice(0,4) }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }}
+                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY') }}
 
                         </div>
                     </li>
@@ -328,6 +327,7 @@
 
 
 <script setup>
+import dayjs from 'dayjs';
 
 import { ref, onMounted, reactive, computed } from "vue";
 import moment from "moment";
