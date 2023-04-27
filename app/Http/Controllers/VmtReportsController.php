@@ -13,6 +13,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\User;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtEmployeeAttendanceRegularization;
 use Illuminate\Support\Facades\DB;
 use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
