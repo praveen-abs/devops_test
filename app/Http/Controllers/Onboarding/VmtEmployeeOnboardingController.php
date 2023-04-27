@@ -76,14 +76,25 @@ class VmtEmployeeOnboardingController extends Controller
             return false;
     }
     public function isPanCardAlreadyExists(Request $request){
-        //dd($request->pan_number);
-        //dd(User::where('email',$request->mail)->exists());
 
+
+
+        if(!empty($request->pan_number) && !empty($request->user_code))
+        {
+            $user_id = User::where('user_code', $request->user_code)->first()->id;
+
+            //Check if pan exists for user other than given user_code user
+            return VmtEmployee::where('pan_number',$request->pan_number)
+                                ->where('userid','<>',$user_id)
+                                ->exists() ? "true" : "false";
+        }
+        else
         if(!empty($request->pan_number))
             return VmtEmployee::where('pan_number',$request->pan_number)->exists() ? "true" : "false";
         else
             return false;
     }
+
     public function isMobileNoAlreadyExists(Request $request){
        // dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
