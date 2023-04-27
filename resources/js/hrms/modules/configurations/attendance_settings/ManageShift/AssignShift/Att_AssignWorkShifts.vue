@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full pr-8">
     <!-- <ConfirmDialog></ConfirmDialog> -->
     <Toast />
     <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -35,80 +35,86 @@
       </template>
     </Dialog>
 
-    <div class="py-4">
+    <div class="flex px-4 pt-6 gap-9">
 
-      <span class="text-lg font-semibold">Shift Name</span>
-      <span>
-        <InputText type="text" v-model="txt_shift_name" />
-      </span>
-      &nbsp;&nbsp;&nbsp;
-      <span>Shift Start Time</span>
-      <span>
-        <InputText type="text" v-model="txt_shift_start_time" />
-      </span>
-      &nbsp;&nbsp;&nbsp;
-      <span>Shift End Time</span>
-      <span>
-        <InputText type="text" v-model="txt_shift_end_time" />
-      </span>
-      <br />
+      <div>
+        <span class="text-lg font-semibold">Shift Name</span>
+        <span class="mx-2">
+          <InputText type="text" v-model="txt_shift_name" placeholder="Enter the shift name" />
+        </span>
+      </div>
+      <div >
+        <span class="text-lg font-semibold">Shift Code</span>
+        <span class="mx-2">
+          <InputText type="text" v-model="txt_shift_start_time" placeholder="Enter the shift code" />
+        </span>
+      </div>
+       <div class="flex my-2">
+        <p class="text-lg font-semibold">Is Default</p> <Checkbox class="mx-3"  :binary="true" />
+
+       </div>
     </div>
-    <div>
-      <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="10"
-        dataKey="emp_code"
+      <div class="flex mx-4 my-6">
+        <span class="text-lg font-semibold">Assign To</span>
+      <span class="p-2 mx-4 my-auto mb-5 rounded-lg bg-red-50 fotn-bold"> <strong class="text-orange-300">Note:</strong> Particular employees cannot be assigned to more than one shift unless he or she is assigned to a flexible shift.</span>
+      </div>
+
+      <div class="flex justify-between mx-4">
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Department" class="w-full md:w-14rem" />
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Designation" class="w-full md:w-14rem" />
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem" />
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a State" class="w-full md:w-14rem" />
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Legal Entity" class="w-full md:w-14rem" />
+      </div>
+  
+    <!-- <Calendar id="calendar-timeonly"  timeOnly hourFormat="12" /> -->
+    <div class="mx-4">
+      <InputText type="text" v-model="txt_shift_name" placeholder="Search..." class="my-4" />
+<!-- {{ att_emp_details }} -->
+      <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="2"
+        dataKey="emp_code" :rowsPerPageOptions="[5, 10, 25]"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters"
         filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
         <template #empty> No Employee found </template>
         <template #loading> Loading employee data. Please wait. </template>
-        <Column selectionMode="multiple" headerStyle="width: 1em"></Column>
-        <Column headerStyle="width: 20em" field="emp_code" header="Employee ID">
+        <Column selectionMode="multiple"></Column>
+        <Column field="emp_code" header="Employee ID" style="min-width: 2rem;">
           <template #body="slotProps">
             {{ slotProps.data.emp_code }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
-          </template>
+       
         </Column>
-        <Column headerStyle="width: 20em" field="employee_name" header="Employee Name">
+        <Column field="employee_name" header="Employee Name" style="min-width: 8rem;">
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
-          </template>
+        
         </Column>
-        <Column headerStyle="width: 20em" field="designation" header="Designation">
+        <Column field="designation" header="Designation" style="min-width: 10rem;">
           <template #body="slotProps">
             {{ slotProps.data.designation }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
-          </template>
+       
         </Column>
-        <Column headerStyle="width: 20em" field="department_name" header="Department">
+        <Column style="min-width: 10rem;" field="department_name" header="Department">
           <template #body="slotProps">
             {{ slotProps.data.department_name }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
-          </template>
+        
         </Column>
-        <Column headerStyle="width: 5em" field="work_location" header="Location">
+        <Column style="min-width: 10rem;" field="work_location" header="Location">
           <template #body="slotProps">
             {{ slotProps.data.work_location }}
           </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
+        </Column>
+        <Column style="min-width: 10rem;" field="work_location" header="State">
+          <template #body="slotProps">
+            {{ slotProps.data.work_location }}
           </template>
         </Column>
       </DataTable>
-      <Button label="Assign" @click="showConfirmDialog()" />
+
     </div>
   </div>
 </template>
@@ -127,6 +133,15 @@ let selectedEmployees = ref();
 let txt_shift_name = ref();
 const confirm = useConfirm();
 const toast = useToast();
+
+const selectedCity = ref();
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -320,7 +335,7 @@ function saveWorkShiftDetails() {
 //     });
 // }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
 
 .p-datatable .p-datatable-thead>tr>th {
@@ -400,17 +415,17 @@ function saveWorkShiftDetails() {
   padding: 1rem 0.6rem;
 }
 
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-  width: 200px;
-}
+// .p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
+//   width: 200px;
+// }
 
-.p-datatable .p-datatable-tbody>tr>td:nth-child(3) {
-  width: 150px;
-}
+// .p-datatable .p-datatable-tbody>tr>td:nth-child(3) {
+//   width: 150px;
+// }
 
-.p-datatable .p-datatable-tbody>tr>td:nth-child(6) {
-  width: 200px;
-}
+// .p-datatable .p-datatable-tbody>tr>td:nth-child(6) {
+//   width: 200px;
+// }
 
 // .main-content {
 //   width: 105%;
@@ -511,5 +526,37 @@ function saveWorkShiftDetails() {
 .pi-sort-amount-up-alt::before {
   content: "\e9a2";
   color: white;
+}
+
+.p-datatable .p-datatable-thead>tr>th .p-column-title {
+  font-size: 13px;
+  margin-left: 50px;
+}
+.p-dialog .p-dialog-header {
+  border-bottom: 0 none;
+  background: #ffff;
+  color: #495057;
+  padding: 1.5rem;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+.p-dialog .p-dialog-content {
+  background: #ffff;
+  color: #495057;
+  padding: 0 1.5rem 2rem 1.5rem;
+}
+.p-dropdown-label.p-inputtext.p-placeholder {
+  color: #003056; 
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: #003360;
+}
+.p-dropdown {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+  border: 1px solid #003056;
 }
 </style>

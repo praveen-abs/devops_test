@@ -33,7 +33,7 @@
         <template #empty> No customers found. </template>
         <template #loading> Loading customers data. Please wait. </template>
 
-        <Column field="emp_name" header="Employee Name">
+        <Column class="font-bold" field="emp_name" header="Employee Name">
           <template #body="slotProps">
             {{ slotProps.data.emp_name }}
           </template>
