@@ -95,7 +95,12 @@ export default defineConfig({
                 // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
                 //Payroll
-                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js'
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+
+
+                // testing_pradeesh
+
+              'resources\js\testings\pradeesh\testing_padeesh.js'
 
             ],
             refresh: true,
