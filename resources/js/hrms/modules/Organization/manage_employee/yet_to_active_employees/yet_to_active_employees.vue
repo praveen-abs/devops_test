@@ -56,12 +56,12 @@
         <Column field="emp_status" header="Approval Status"></Column>
         <Column field="" header="View Profile">
           <template #body>
-            <Button icon="pi pi-eye" severity="success" label="View" class="btn btn-orange " style="height: 2em" raised />
+            <Button icon="pi pi-eye" severity="success" label="View" @click="view_btn" class="btn btn-orange " style="height: 2em" raised />
           </template>
         </Column>
         <Column style="width: 300px" field="" header="Action">
           <template #body="slotProps">
-              <Button  icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button" 
+              <Button  icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button"
                 @click="showConfirmDialog(slotProps.data, 'Active')" style="height: 2em" />
           </template>
         </Column>
@@ -91,6 +91,10 @@ let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
 // const loading = ref(true);
+
+const view_btn = ()=>{
+    window.location.href = `http://127.0.0.1:8000/pages-profile-new`;
+}
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
