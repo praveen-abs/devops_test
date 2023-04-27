@@ -49,6 +49,7 @@
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
+                    {{ useEmpStore.salaryAdvanceEmployeeData }}
 
                     <Column header="Request ID" field="section" style="min-width: 8rem">
                         <!-- <template #body="slotProps">
@@ -102,12 +103,12 @@
                         <div class="row  ">
                             <div class="col-6   " style="margin-right: 30px;">
                                 <h1 class="fs-5 my-2 ">Required Amount</h1>
-                                <InputText type="text" v-model="value" placeholder="&#8377; Enter The Required Amount" />
+                                <InputText type="text" v-model="useEmpStore.lwif.ra" placeholder="&#8377; Enter The Required Amount" />
                                 <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000</p>
                             </div>
                             <div class="col mx-2">
                                 <h1 class="fs-5 my-2">Term</h1>
-                                <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
+                                <Dropdown v-model="useEmpStore.lwif.Term" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
                                 <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                             </div>
                         </div>
@@ -126,7 +127,8 @@
                     <div class="col-12 pl-8 pr-8 " >
 
                         <div class="div p-4  allcenter rounded" style="background: #CEE3F4 ; ">
-                            <h1 class="fw-bolder fs-4">2.5%</h1>
+                            <!-- <h1 class="fw-bolder fs-4">2.5%</h1> -->
+                            <input class="fw-bolder fs-4 clr" style="width: 45px;background: #CEE3F4  ;" v-model="useEmpStore.lwif.Interest_rate"   />
                             <h1  class=" fw-bolder mt-2">Interest Rate</h1>
                         </div>
 
@@ -134,7 +136,14 @@
 
                     <div class="col  pl-8 pr-8 " >
                         <div class="div allcenter p-4 rounded " style="background: #FDCFCF;" >
-                            <h1 class="fw-bolder fs-4">&#8377; 0</h1>
+
+                            <div class="div d-flex justify-content-center align-items-center">
+
+                                <h1 class="fw-bolder fs-4">&#8377; </h1>
+                                <input class="fw-bolder fs-4 clr pl-2" style="width: 45px;background: #FDCFCF  ;" v-model="useEmpStore.lwif.month_EMI"   />
+
+                            </div>
+
                             <h1 class="fw-bolder mt-2" >Month EMI</h1>
 
                         </div>
@@ -154,16 +163,16 @@
                     <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
                         <div class="col-4">
                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                            <Calendar v-model="date" showIcon />
+                            <Calendar v-model="useEmpStore.lwif.EMI_Start_Month" showIcon />
                         </div>
 
                         <div class="col-4 mx-2">
-                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                            <Calendar v-model="date" showIcon />
+                            <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
+                            <Calendar v-model="useEmpStore.lwif.EMI_END_Month" showIcon />
                         </div>
                         <div class="col-3">
                             <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
-                            <InputText type="text" v-model="value" style="width: 150px !important;" />
+                            <InputText type="text" v-model="useEmpStore.lwif.Total_Month" style="width: 150px !important;" />
                         </div>
                 </div>
             </div>
@@ -171,7 +180,7 @@
 
         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
             <span class="font-semibold ">Reason</span>
-            <Textarea  class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+            <Textarea  v-model="useEmpStore.lwif.Reason" class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
         </div>
 
         <div class="float-right ">
@@ -185,21 +194,18 @@
 
 
 
-    <!-- <Dialog visible="false" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
+    :modal="true" :closable="false" :closeOnEscape="false">
+    <template #header>
+      <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+        animationDuration="2s" aria-label="Custom ProgressSpinner" />
+    </template>
+    <template #footer>
+      <h5 style="text-align: center">Please wait...</h5>
+    </template>
+  </Dialog>
 
 
-    </Dialog>
-
-    <Dialog header="Header" visible="false" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
-        :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog> -->
 </template>
 <script setup>
 import { ref, reactive ,onMounted} from 'vue';

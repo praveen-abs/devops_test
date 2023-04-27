@@ -214,8 +214,9 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
         maxTenure: '',
         ra:'',
         Term:'',
-        Interest_rate:'',
-        month_EMI:'',
+        Interest_rate:'2.5%',
+        month_EMI:'0',
+        EMI_Start_Month:'',
         EMI_END_Month:'',
         Total_Month:'',
         Reason:'',
@@ -225,9 +226,11 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const fetchInterstWithLoan = ()=>{
 
+        console.log(lwif);
+
         canShowLoading.value = true;
 
-        axios.get('http://localhost:3000/TravelAdvance').then(res=>{
+        axios.get('http://localhost:3000/InterestWithLoan').then(res=>{
 
         InterestWithLoanData.value = res.data
             console.log(res.data);

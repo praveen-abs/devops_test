@@ -29,31 +29,32 @@ if ($query_clientMaster) {
 
         <div class="d-flex">
             <div class="notify-content d-flex justify-content-center align-items-center">
-                <button type="button" class="form-select outline-none border-0 fw-bold" id="page-header-user-dropdown"
+                <button type="button" class="form-select outline-none border-0 fw-bold text-gray-900 fas fs-4 " id="page-header-user-dropdown"
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
-                    aria-expanded="false">
-
+                    aria-expanded="false" >
                     {{ getClientName(auth()->user()->id) }}
+                    &#xf107;
 
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
                     style="top: 50px;border-radius:10px 0px 0px 0px">
-                    <div class="offcanvas-header pb-0 bg-ash  align-items-center border-0 ">
-                        <a role="button" href="{{ route('pages-profile-new') }}"
-                            class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
-                            data-bs-placement="right" title="View Profile">
-                            <i class="fa fa-user text-muted fs-15"></i>
-                        </a>
+                    <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
 
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
-                            data-bs-dismiss="offcanvas" aria-label="Close">
+                        <a role="button" href="{{ route('pages-profile-new') }}"
+                                    class="text-dark profile-icon d-flex align-items-center "  >
+                                    <i class="fa fa-user fs-4 text-primary " ></i>
+                                    <h1 class="ml-3 text-primary">View Profile</h1>
+                                </a>
+
+                        <button type="button" class="close outline-none  h3"
+                            data-bs-dismiss="offcanvas" aria-label="Close" style="" >
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="offcanvas-body overflow-hidden p-0">
+                    <div class="offcanvas-body overflow-hidden p-0 ">
                         <div
-                            class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column">
+                            class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column pt-3">
                             <?php
                             //dd($currentUser);
                             $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
@@ -69,15 +70,16 @@ if ($query_clientMaster) {
                                     src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                             @endif
 
-                            <p class="text-dark text-center  fs-15  mb-1">
+                            <p class="text-dark text-center  fs-4 m my-2">
                                 {{ Auth::user()->name }}</p>
                             <p class="text-muted text-center mb-1"><span class="">User Id :</span>
                                 {{ Auth::user()->user_code }}</p>
 
-                            <div class="mb-3">
-                                <a class="text-danger " href="javascript:void();"
+                            <div class="mb-3 w-100 d-flex justify-content-center align-items-center ">
+
+                                <a class="text-light profile-icon py-1 px-3 mt-4 d-flex align-items-center bg-danger rounded-1 "  href="javascript:void();"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                                        class="bx bx-power-off fs-16 align-middle me-1 "></i> <span key="t-logout">Sign
+                                        class="bx bx-power-off   align-middle me-1 "></i> <span key="t-logout">Sign
                                         Out</span></a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
@@ -215,3 +217,12 @@ if ($query_clientMaster) {
         updateGlobalClient(selectedClientID);
     });
 </script>
+
+
+{
+    {{-- <a role="button" href="{{ route('pages-profile-new') }}"
+                            class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
+                            data-bs-placement="right" title="View Profile">
+                            <i class="fa fa-user text-muted fs-15"></i>
+                        </a> --}}
+}
