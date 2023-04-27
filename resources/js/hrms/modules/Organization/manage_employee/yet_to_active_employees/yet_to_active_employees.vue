@@ -202,7 +202,7 @@ function processApproveReject() {
   axios
     .post(window.location.origin + "/onboarding/updateEmployeeActive", {
        user_code:currentlySelectedRowData.emp_code,
-      active_status:currentlySelectedRowData.emp_status
+      active_status: 1
     })
     .then((response) => {
       console.log("Response : " + response);
@@ -210,7 +210,8 @@ function processApproveReject() {
       canShowLoadingScreen.value = false;
 
       toast.add({ severity: "success", summary: "Activated", detail: `${currentlySelectedRowData.emp_name} Activated Successfully`, life: 3000 });
-      ajax_yet_to_active_employees_data();
+      manageEmployeesStore.ajax_yet_to_active_employees_data();
+       window.location.reload();
 
       resetVars();
     })
