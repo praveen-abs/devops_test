@@ -13,6 +13,7 @@ use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtOrgTimePeriod;
 
 
 
@@ -27,7 +28,7 @@ function getLeaveCountDetails($user_id){
                                                 ->groupBy('leave_type_id')->get();
 
     //Add leave names to the array
-    
+
     foreach($leaveCountDetails_user as $singleData){
         $singleData->leave_name = $leaveTypes[$singleData->leave_type_id]["leave_type"];
     }
@@ -85,6 +86,18 @@ function checkRegularizationType($user_time, $attendance_type){
         {
             return null;
         }
+
+    }
+
+}
+function calculateLeaveDetails($user_id,$start_date,$end_date){
+    $accrued_leave_types = VmtLeaves::where('is_accrued',1)->get();
+    foreach($accrued_leave_types as $single_leave_types){
+        $leave_type=$single_leave_types->leave_type;
+
+        $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)->sum('total_leave_datetime');
+        dd( $total_avalied_leaves);
+        dd($single_leave_types);
 
     }
 
