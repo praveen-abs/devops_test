@@ -32,8 +32,14 @@ if ($query_clientMaster) {
                 <button type="button" class="form-select outline-none border-0 fw-bold" id="page-header-user-dropdown"
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
+                    <?php
+                        $client_name = sessionGetSelectedClientName();
 
-                    {{ sessionGetSelectedClientName() }}
+                        if(empty( $client_name  ) ){
+                            echo "Client not assigned";
+                        }
+                    ?>
+                    {{-- {{ empty(  ) ? "Client not assigned" :  }} --}}
 
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
