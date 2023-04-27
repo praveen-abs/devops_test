@@ -250,7 +250,7 @@ const editReportingManager = (rm) => {
     console.log(rm);
     dailogReporting.value = true
     employee_card.reporting_manager = rm
-    console.log( employee_card.reporting_manager +"hiihihhi");
+
 }
 
 

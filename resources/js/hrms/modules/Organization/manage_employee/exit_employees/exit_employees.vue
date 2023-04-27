@@ -36,10 +36,10 @@
     </Dialog>
 
     <div>
-      <DataTable :value="manageEmployeesStore.exit_employees_data" :paginator="true" :rows="10" dataKey="id"
+      <DataTable :value="manageEmployeesStore.exit_employees_data" :paginator="true" :rows="10" dataKey="id" 
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"   :rowsPerPageOptions="[5, 10, 25]"
-        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['emp_name', 'emp_code', 'status']">
         <template #empty> No customers found. </template>
         <template #loading> Loading customers data. Please wait. </template>
 
@@ -52,7 +52,15 @@
               :showClear="true" />
           </template>
         </Column>
-        <Column field="emp_code" header="Employee Code" :sortable="true"></Column>
+        <Column field="emp_code" header="Employee Code" >
+          <template #body="slotProps">
+            {{ slotProps.data.emp_code }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
+          </template>
+        </Column>
         <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
         <Column field="l1_manager_name" header="Reporting Manager"></Column>
         <Column field="doj" header="DOJ"  style="min-width: 10rem;">
@@ -97,10 +105,15 @@ let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
 // const loading = ref(true);
-
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  employee_name: {
+  emp_name: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
+  emp_code: {
     value: null,
     matchMode: FilterMatchMode.STARTS_WITH,
     matchMode: FilterMatchMode.EQUALS,
@@ -109,6 +122,7 @@ const filters = ref({
 
   status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
+
 
 function openProfilePage(uid){
     window.location.href = "/pages-profile-new?uid="+uid;

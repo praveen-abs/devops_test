@@ -28,7 +28,13 @@
    <div id="Investments"></div> -->--}}
 
    @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-   <div id="SalaryAdvanceLoan"></div>
+   {{-- <div id="SalaryAdvanceLoan"></div> --}}
+
+   @vite('resources\js\testings\pradeesh\testing_padeesh.js')
+   <div id="testing_padeesh"></div>
+
+
+
 
 </body>
 </html>
