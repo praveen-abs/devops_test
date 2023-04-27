@@ -10,6 +10,7 @@ use App\Models\VmtLeaves;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
 use \Datetime;
@@ -39,6 +40,7 @@ class VmtAttendanceReportsService{
     }
 
     public function basicAttendanceReport($year,$month,$client_domain){
+        ini_set('max_execution_time', 300);
          //dd($month);
         $reportresponse=array();
         $user = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
@@ -70,7 +72,8 @@ class VmtAttendanceReportsService{
 
 
 
-            $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+            $work_shift_id = VmtEmployeeWorkShifts::where('user_id',$singleUser->id)->first()->work_shift_id;
+            $regularTime  = VmtWorkShifts::where('id', $work_shift_id)->first();
 
              $requestedDate = $year . '-' . $month . '-01';
              $currentDate = Carbon::now();
@@ -201,7 +204,7 @@ class VmtAttendanceReportsService{
                 ///$month_array[""]
               }
 
-              if($client_domain=='brandavatar.abshrms.com'){
+              if($client_domain=='brandavatar.abshrms.com'||sessionGetSelectedClientCode() == "DM"){
                 array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total Late LOP","Total Leave","Total Halfday","Total On Duty","Total LC","Total EG","Total Payable Days");
               }else{
                 array_push($heading_dates, "Total Weekoff", "Total Holiday","Total Present", "Total Absent","Total Leave","Total Halfday","Total On Duty","Total Payable Days");
@@ -481,14 +484,19 @@ class VmtAttendanceReportsService{
                    }
                  } else if($attendanceResponseArray[$key]['checkin_time']!=null || $attendanceResponseArray[$key]['checkout_time']!=null) {
 
-                    if($client_domain=='brandavatar.abshrms.com'){
+                    if($client_domain=='brandavatar.abshrms.com'||sessionGetSelectedClientCode() == "DM"){
                         if($attendanceResponseArray[$key]['isLC']=='Rejected' || $attendanceResponseArray[$key]['isLC']=='Not Applied'){
                             array_push($arrayReport,'P/LC');
                             $total_present++;
-                            $total_lop =  $total_lop+0.5;
+                            if( $total_LC>=4){
+                                $total_lop =  $total_lop+0.5;
+                            }
                          }else if($attendanceResponseArray[$key]['isEG']=='Rejected'|| $attendanceResponseArray[$key]['isEG'] =='Not Applied'){
                             array_push($arrayReport,'P/EG');
                             $total_present++;
+                            if(  $total_EG >=4){
+                                $total_lop =  $total_lop+0.5;
+                            }
                          }else{
                             array_push($arrayReport,'P');
                             $total_present++;
@@ -522,7 +530,7 @@ class VmtAttendanceReportsService{
               //dd(($attendanceResponseArray));
 
            // dd();
-           if( $client_domain=='brandavatar.abshrms.com'){
+           if( $client_domain=='brandavatar.abshrms.com'||sessionGetSelectedClientCode() == "DM"){
             $total_payable_days=($total_weekoff+$total_holidays+$total_present+$total_leave+$total_halfday+$total_OD)-$total_lop;
             array_push($arrayReport,$total_weekoff,$total_holidays,$total_present,$total_absent, $total_lop,$total_leave, $total_halfday,$total_OD,$total_LC,$total_EG, $total_payable_days);
            }else{
