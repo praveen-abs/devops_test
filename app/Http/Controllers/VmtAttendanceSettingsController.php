@@ -72,4 +72,9 @@ class VmtAttendanceSettingsController extends Controller
 
 
     }
+
+    public function fetchWorkShifts(Request $request){
+        return VmtWorkShifts::get();
+
+    }
 }
