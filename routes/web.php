@@ -663,6 +663,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     //Attendance Reports
     Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+    Route::get('/reports/fetchDetailedAttendanceReport/{user_id}/{month}/{year}',  [App\Http\Controllers\VmtReportsController::class, 'fetchDetailedAttendanceReport'])->name('fetchDetailedAttendanceReport'); //By Praveen April 27th
+
     Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/generate-detailed-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
