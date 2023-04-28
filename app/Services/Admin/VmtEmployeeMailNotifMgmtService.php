@@ -28,8 +28,16 @@ class VmtEmployeeMailNotifMgmtService {
 
     public function getAllEmployees_WelcomeMailStatus_Details(){
 
-
-
+        $user_email= User::join('vmt_user_mail_status','vmt_user_mail_status.user_id','users.id')
+        ->where('users.active','<>','-1')
+        ->select(
+                'users.User_code as empcode',
+                'users.name as empname'  ,
+                'vmt_employee_office_details.officical_mail as officialmail',
+                'vmt_user_mail_status.welcome_mail_status as welcomemailstatus'
+              )
+        ->get();
+        return json_encode( $user_email);
     }
 
     public function send_AccActivationMailNotification($user_code){
@@ -58,17 +66,29 @@ class VmtEmployeeMailNotifMgmtService {
 
 
         try{
-
-            $user_official_mail = " ";
+            $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+            ->where('users.user_code',$user_code)
+            ->first()->email;
 
             $VmtGeneralInfo = VmtGeneralInfo::first();
             $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-            $response  = array();
 
-            $isSent = \Mail::to($user_official_mail)->send(new WelcomeMail("emp_code 123", 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
 
             //Store the sent status in ' vmt_user_mail_status'
+            if($isSent){
+                $mail_status='1';
+            }
+            else{
+              $mail_status='0';
+            }
+            //to store mailstatus
+            $Welcome_mail_status= new VmtUserMailStatus;
+            $user_id=User::where('user_code',$user_code)->first()->id;
+            $Welcome_mail_status->user_id=$user_id;
+            $Welcome_mail_status->acc_activation_mail_status=$mail_status;
+            $Welcome_mail_status->save();
 
 
             return response()->json([

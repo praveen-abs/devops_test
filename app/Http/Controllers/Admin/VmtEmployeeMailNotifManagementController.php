@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\VmtEmployeeMailNotifMgmtService;
+use App\Service\VmtEmployeeMailNotifMgmtService;
+
 use Illuminate\Http\Request;
 /*
     DB Table columns:
@@ -17,9 +18,9 @@ use Illuminate\Http\Request;
 class VmtEmployeeMailNotifManagementController extends Controller
 {
 
-    public function getAllEmployees_WelcomeMailStatus_Details(Request $request)
+    public function getAllEmployees_WelcomeMailStatus_Details(Request $request,VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
     {
-            //User, vmt_user_mail_status JOIN
+        return $serviceVmtEmployeeMailNotifMgmtService->getAllEmployees_WelcomeMailStatus_Details();
     }
 
     public function getAllEmployees_AccActivationMailStatus_Details(Request $request)
