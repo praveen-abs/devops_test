@@ -53,7 +53,7 @@
           </template>
         </Column>
         <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
-        <Column field="l1_manager_name" header="Reporting Manager"></Column>
+        <Column field="reporting_manager_name" header="Reporting Manager"></Column>
         <Column field="doj" header="DOJ" style="min-width: 10rem;">
           <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
         </Column>
