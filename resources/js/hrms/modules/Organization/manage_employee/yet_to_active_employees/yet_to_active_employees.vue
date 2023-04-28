@@ -24,12 +24,13 @@
         <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
       </template>
     </Dialog>
-     <!-- {{ manageEmployeesStore.yet_to_active_employees_data }} -->
+    <!-- {{ manageEmployeesStore.yet_to_active_employees_data }} -->
     <div>
       <DataTable :value="manageEmployeesStore.yet_to_active_employees_data" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :rowsPerPageOptions="[5, 10, 25]"
-        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu" :loading="loading2"
+        :globalFilterFields="['emp_name', 'emp_code', 'status']">
         <template #empty> No customers found. </template>
         <template #loading> Loading customers data. Please wait. </template>
 
@@ -42,16 +43,24 @@
               :showClear="true" />
           </template>
         </Column>
-        <Column field="emp_code" header="Employee Code" :sortable="true"></Column>
+        <Column field="emp_code" header="Employee Code">
+          <template #body="slotProps">
+            {{ slotProps.data.emp_code }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
+          </template>
+        </Column>
         <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
         <Column field="l1_manager_name" header="Reporting Manager"></Column>
-        <Column field="doj" header="DOJ"  style="min-width: 10rem;">
+        <Column field="doj" header="DOJ" style="min-width: 10rem;">
           <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
         </Column>
         <Column field="blood_group_id" header="Blood Group"></Column>
         <Column field="profile_completeness" header="Profile Completeness">
-            <template #body="slotProps">
-              <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar>
+          <template #body="slotProps">
+            <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar>
           </template>
         </Column>
         <Column field="is_onboarded" header="Onboarding Status">
@@ -63,22 +72,23 @@
         <Column field="doc_status" header="Docs Approval Status">
           <template #body="slotProps">
             {{
-                slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Done" : "Not Done")
-                    : "NA"
+              slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Done" : "Not Done")
+              : "NA"
 
             }}
           </template>
         </Column>
         <Column field="enc_user_id" header="View Profile">
           <template #body="slotProps">
-            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data.enc_user_id)" class="btn btn-orange " style="height: 2em" raised />
+            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data.enc_user_id)"
+              class="btn btn-orange " style="height: 2em" raised />
           </template>
         </Column>
         <Column style="width: 300px" field="" header="Action">
           <template #body="slotProps">
             <!-- ACTIVATE button wont be shown if is_onboarded and doc_status are FALSE -->
             <div v-if="slotProps.data.is_onboarded && slotProps.data.doc_status">
-              <Button  icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button"
+              <Button icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button"
                 @click="showConfirmDialog(slotProps.data, 'Active')" style="height: 2em" />
             </div>
             <div v-else>
@@ -114,13 +124,19 @@ const confirm = useConfirm();
 const toast = useToast();
 // const loading = ref(true);
 
-function openProfilePage(uid){
-    window.location.href = "/pages-profile-new?uid="+uid;
+function openProfilePage(uid) {
+  window.location.href = "/pages-profile-new?uid=" + uid;
 }
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  employee_name: {
+  emp_name: {
+    value: null,
+    matchMode: FilterMatchMode.STARTS_WITH,
+    matchMode: FilterMatchMode.EQUALS,
+    matchMode: FilterMatchMode.CONTAINS,
+  },
+  emp_code: {
     value: null,
     matchMode: FilterMatchMode.STARTS_WITH,
     matchMode: FilterMatchMode.EQUALS,
@@ -149,10 +165,10 @@ let currentlySelectedRowData = null;
 // }
 
 function showConfirmDialog(selectedRowData, status) {
-     let user_code = selectedRowData.emp_code
-     let emp_status = selectedRowData.emp_status
-     console.log(useManageEmployeesStore.emp_status);
-      console.log(selectedRowData.emp_status);
+  let user_code = selectedRowData.emp_code
+  let emp_status = selectedRowData.emp_status
+  console.log(useManageEmployeesStore.emp_status);
+  console.log(selectedRowData.emp_status);
 
   canShowConfirmation.value = true;
   currentlySelectedStatus = status;
@@ -211,7 +227,7 @@ function processApproveReject() {
 
   axios
     .post(window.location.origin + "/onboarding/updateEmployeeActive", {
-       user_code:currentlySelectedRowData.emp_code,
+      user_code: currentlySelectedRowData.emp_code,
       active_status: 1
     })
     .then((response) => {
@@ -221,7 +237,7 @@ function processApproveReject() {
 
       toast.add({ severity: "success", summary: "Activated", detail: `${currentlySelectedRowData.emp_name} Activated Successfully`, life: 3000 });
       //manageEmployeesStore.ajax_yet_to_active_employees_data();
-    //    window.location.reload();
+      //    window.location.reload();
 
       resetVars();
     })
@@ -229,12 +245,12 @@ function processApproveReject() {
       canShowLoadingScreen.value = false;
       resetVars();
 
-    //   console.log(error.toJSON());
-    }).finally(()=>{
-        manageEmployeesStore.ajax_yet_to_active_employees_data();
-        manageEmployeesStore.getActiveEmployees();
+      //   console.log(error.toJSON());
+    }).finally(() => {
+      manageEmployeesStore.ajax_yet_to_active_employees_data();
+      manageEmployeesStore.getActiveEmployees();
 
-        canShowLoadingScreen.value = false;
+      canShowLoadingScreen.value = false;
     });
 }
 </script>

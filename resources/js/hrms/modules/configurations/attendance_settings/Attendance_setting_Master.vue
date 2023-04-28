@@ -47,7 +47,7 @@
         aria-labelledby="pills-offer-completed-tab">
         <div class="card-body">
           <div class="my-4 offer-pending-content">
-
+            <FlexibleShift />
           </div>
 
         </div>
@@ -55,8 +55,7 @@
       <div class="tab-pane fade " id="pills-offer-resent" role="tabpanel" aria-labelledby="pills-offer-resent-tab">
         <div class="card-body">
           <div class="offer-pending-content">
-
-
+            <RotationalShift />
           </div>
         </div>
       </div>
@@ -77,6 +76,8 @@
 <script setup>
 import { onMounted } from 'vue'
 import ManageShift from './ManageShift/ManageShift.vue';
+import RotationalShift from './RotationalShift/RotationalShift.vue';
+import FlexibleShift from './FlexibleShift/FlexibleShift.vue'
 
 import Holidays_Lists from '../holidays/Holidays_Lists.vue';
 
