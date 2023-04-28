@@ -16,7 +16,7 @@
 
                     </div>
                     <div class="col-4 col-sm-12 col-xl-4 col-lg-4 col-xxl-4 col-md-6">
-                        <div class="card" style="width:">
+                        <div class="card" >
 
                             <img src="{{ URL::asset('assets/images/holiday/Diwali.png') }}" class="rounded" alt="">
                             <div class="card-body py-1 px-2">

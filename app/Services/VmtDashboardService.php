@@ -23,6 +23,7 @@ use DateInterval;
 use \Datetime;
 
 use App\Services\VmtAttendanceService;
+use App\Services\VmtHolidayService;
 
 
 class VmtDashboardService{
@@ -44,22 +45,33 @@ class VmtDashboardService{
 
     }
 
-    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService){
+    public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService){
 
         $response = array();
-        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->toArray();
-        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query[0]['id'])->first()->designation;
-       // dd($employee_designation);
-        //converting profile pic into base64
-        $avatar_path = public_path("assets/images/".$employee_details_query[0]['avatar']);
+        $user_id = User::where('user_code',$user_code)->first()->id;
 
-        if(File::exists( $avatar_path)){
-            $avatar_type = File::mimeType($avatar_path);
-            $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
-        }else{
+        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->first();
+        $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
+
+        $profile_pic = null;
+
+        //If AVATAR filename present in DB column....
+        $emp_avatar = $employee_details_query->avatar;
+
+        if(!empty($emp_avatar))
+        {
+            //converting profile pic into base64
+            $avatar_path = public_path("assets/images/".$emp_avatar);
+
+            if(File::exists( $avatar_path)){
+                $avatar_type = File::mimeType($avatar_path);
+                $profile_pic = "data:".$avatar_type.";base64,".base64_encode(file_get_contents($avatar_path));
+            }
+        }
+        else
+        {
             $profile_pic='';
         }
-
 
         //Get the current year and month
         $year = date("Y");
@@ -71,7 +83,9 @@ class VmtDashboardService{
 
         //Get monthly attendance report data
         $attendance_DailyReport_PerMonth = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
-        for($i=01;$i<=$day;$i++){
+
+        for($i=01;$i<=$day;$i++)
+        {
             $month = date('m');
             if($i<10){
                 $i='0'.$i;
@@ -92,7 +106,7 @@ class VmtDashboardService{
 
         }
 
-        $response['name']=$employee_details_query[0]['name'];
+        $response['name']=$employee_details_query->name;
         $response['designation']=$employee_designation;
 
         //Get the employee profile pic
@@ -100,14 +114,31 @@ class VmtDashboardService{
 
 
          //Get the Present, Leave, Absent data from above JSON response
-         $response["attendance"]["present_count"] = $present_count;
-         $response["attendance"]["absent_count"] = $absent_count;
-         $response["attendance"]["leave_count"]= $leave_count;
+        $response["attendance"]["present_count"] = $present_count;
+        $response["attendance"]["absent_count"] = $absent_count;
+        $response["attendance"]["leave_count"]= $leave_count;
 
+        //Get current day attendance checkin/checkout status
+
+        $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
+        $response["holidays"] = $serviceHolidayService->getAllHolidays();
+        $response["all_employee_details"] = $this->getAllUsersDOJ_DOB();
 
         return $response;
     }
 
+    public function getAllUsersDOJ_DOB(){
+        return User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+            ->get(['users.name','users.name','vmt_employee_details.doj','vmt_employee_details.dob']);
+    }
+
+    private function getAllEmployeeBirthdayDetails(){
+
+    }
+
+    private function getAllHolidays(){
+
+    }
 }
 
 

@@ -4,6 +4,12 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import { faFamily} from '@fortawesome/free-solid-svg-icons'
+
+// library.add(faUserSecret)
+
 
 import { createApp } from "vue";
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -40,6 +46,7 @@ import RadioButton from 'primevue/radiobutton';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
 import Toast from 'primevue/toast';
+import OrganizationChart from 'primevue/organizationchart';
 import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import Textarea from 'primevue/textarea';
@@ -89,6 +96,9 @@ app.component('ProgressSpinner', ProgressSpinner);
 app.component('RadioButton', RadioButton);
 app.component('Toast', Toast)
 app.component('Textarea', Textarea)
+app.component('OrganizationChart', OrganizationChart)
+
+// app.component('FontAwesomeIcon',FontAwesomeIcon)
 
 app.mount("#vjs_normal_onboarding");
 

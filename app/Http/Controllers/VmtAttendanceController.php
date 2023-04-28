@@ -124,7 +124,7 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejectRevokeLeaveRequest(Request $request)
+    public function approveRejetRevokeLeaveRequest(Request $request)
     {
 
         // $approval_status = $request->status;
@@ -358,6 +358,11 @@ class VmtAttendanceController extends Controller
     }
 
     public function applyLeaveRequest(Request $request){
+
+
+        // dd($request ->all());
+
+
         $leave_month = date('m',strtotime($request->start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
 
@@ -686,19 +691,41 @@ class VmtAttendanceController extends Controller
 
                 $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
 
-                $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                    ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                    ->whereDate('date', $dateString)
-                    ->where('direction', 'out')
-                    ->where('user_Id', $userCode)
-                    ->first(['check_out_time']);
+                //Need to process the checkin and checkout time based on the client.
+                //Since some client's biometric data has "in/out" direction and some will have only "in" direction
 
-                $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                    ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                    ->whereDate('date', $dateString)
-                    ->where('direction', 'in')
-                    ->where('user_Id', $userCode)
-                    ->first(['check_in_time']);
+                //If direction is only "in"
+                if(sessionGetSelectedClientCode() == "DM")
+                {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id', $userCode)
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id', $userCode)
+                        ->first(['check_in_time']);
+
+                }
+                else //If direction is only "in" and "out"
+                {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'out')
+                        ->where('user_Id', $userCode)
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'in')
+                        ->where('user_Id', $userCode)
+                        ->first(['check_in_time']);
+                }
 
                 $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                 $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
@@ -1141,12 +1168,13 @@ class VmtAttendanceController extends Controller
         if(Str::contains(currentLoggedInUserRole(), ['Manager']))
         {
             //fetch team level data
-           $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->user_code);
+           $response = $attendanceService->fetchAttendanceRegularizationData(auth()->user()->user_code, null, null);
         }
         else
         {
+
             //Fetch all data
-           $response = $attendanceService->fetchAttendanceRegularizationData(null);
+           $response = $attendanceService->fetchAttendanceRegularizationData(null, null, null);
         }
 
         return $response;

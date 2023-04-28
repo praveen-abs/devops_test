@@ -55,6 +55,7 @@ class VmtMainDashboardController extends Controller
         if(auth()->user()->active == 0)
         {
 
+
             if(auth()->user()->is_onboarded == 0)
             {
 
@@ -114,7 +115,7 @@ class VmtMainDashboardController extends Controller
         {
             if (!$request->session()->has('client_id')) {
                 //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
                 $this->updateSessionVariables($assigned_client_id);
             }
@@ -124,7 +125,7 @@ class VmtMainDashboardController extends Controller
         {
             if (!$request->session()->has('client_id')) {
                 //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
                 $this->updateSessionVariables($assigned_client_id);
             }

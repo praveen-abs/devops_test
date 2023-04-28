@@ -1,9 +1,9 @@
 <template>
     <div>
-        <DataTable :value="leave_data" responsiveLayout="scroll" :paginator="true"
+        <DataTable :value="leave_data" responsiveLayout="scroll" :paginator="true" :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :rows="5" v-model:filters="filters"
             filterDisplay="menu" :globalFilterFields="['name']" style="white-space: nowrap;">
-            <Column field="employee_name" header="Employee Name">
+            <Column  class="font-bold" field="employee_name" header="Employee Name">
                 <template #body="slotProps">
                     {{ slotProps.data.employee_name }}
                 </template>
@@ -273,4 +273,8 @@ onMounted(() => {
 .pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-}</style>
+}
+.p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
+  margin-left: 30px;
+}
+</style>

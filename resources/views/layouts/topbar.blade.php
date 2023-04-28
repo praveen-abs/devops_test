@@ -10,8 +10,9 @@ if ($query_clientMaster) {
 
 
 
-<header id="page-topbar">
+<header id="page-topbar" class="border ">
     <div class="navbar-header d-flex justify-content-between align-items-center ">
+
         <div class="d-flex ">
             <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger border-0 outline-none"
                 id="topnav-hamburger-icon">
@@ -29,11 +30,18 @@ if ($query_clientMaster) {
 
         <div class="d-flex">
             <div class="notify-content d-flex justify-content-center align-items-center">
-                <button type="button" class="form-select outline-none border-0 fw-bold" id="page-header-user-dropdown"
+                <button type="button" class="form-select outline-none border-0 fw-bold fas fs-5" id="page-header-user-dropdown"
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
+                    <?php
+                        $client_name = sessionGetSelectedClientName();
 
-                    {{ sessionGetSelectedClientName() }}
+                        if(empty( $client_name  ) ){
+                            echo "Client not assigned";
+                        }
+                    ?>
+                        &#xf107;
+                    {{-- {{ empty(  ) ? "Client not assigned" :  }} --}}
 
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
@@ -41,10 +49,14 @@ if ($query_clientMaster) {
                     style="top: 50px;border-radius:10px 0px 0px 0px">
                     <div class="offcanvas-header pb-0 bg-ash  align-items-center border-0 ">
                         <a role="button" href="{{ route('pages-profile-new') }}"
-                            class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
+                            {{-- class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
                             data-bs-placement="right" title="View Profile">
                             <i class="fa fa-user text-muted fs-15"></i>
-                        </a>
+                        </a> --}}
+                        class="text-dark profile-icon d-flex align-items-center "  >
+                        <i class="fa fa-user fs-4 text-primary" ></i>
+                        <h1 class="ml-3 text-primary">View Profile</h1>
+                    </a>
 
                         <button type="button" class="close outline-none bg-transparent border-0 h3"
                             data-bs-dismiss="offcanvas" aria-label="Close">
@@ -69,16 +81,18 @@ if ($query_clientMaster) {
                                     src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                             @endif
 
-                            <p class="text-dark text-center  fs-15  mb-1">
+                            <p class="text-dark text-center  fs-5 my-2">
                                 {{ Auth::user()->name }}</p>
-                            <p class="text-muted text-center mb-1"><span class="">User Id :</span>
-                                {{ Auth::user()->user_code }}</p>
+                            <div class="text-muted fs-5 d-flex justify-items-center">
+                                <span class="fs-5 text-center">User Id :{{ Auth::user()->user_code }}</span>
+                            </div>
 
-                            <div class="mb-3">
-                                <a class="text-danger " href="javascript:void();"
+                            <div class="mb-3 mt-3">
+                                <a class="bg-danger p-2 rounded-1 d-flex justify-items-center align-items-center" href="javascript:void();"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                                        class="bx bx-power-off fs-16 align-middle me-1 "></i> <span key="t-logout">Sign
-                                        Out</span></a>
+                                        class="bx bx-power-off fs-5 text-light "></i>
+                                        <span key="t-logout " class="text-light">Sign Out</span>
+                                </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
                                     @csrf
@@ -88,7 +102,7 @@ if ($query_clientMaster) {
 
                         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']) && hasSubClients())
                             <?php
-                            $clientsList = fetchClients();
+                            $clientsList = fetchClients() ;
                             $currentClientID = session('client_id');
 
                             ?>
@@ -168,12 +182,8 @@ if ($query_clientMaster) {
         return color;
     }
 
-
-
     function generateProfileShortName_Topbar() {
-        var username =
-            '{{ auth()->user()->name ??
-                '
+        var username = "{{ trim(auth()->user()->name) }}";
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ' }}';
         const splitArray = username.split(" ");
         var finalname = "empty111";

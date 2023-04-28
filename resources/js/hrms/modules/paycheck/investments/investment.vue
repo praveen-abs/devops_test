@@ -1,0 +1,151 @@
+<template>
+    <div class=" mt-30 investments-wrapper">
+        <div class="mb-2 shadow card left-line ">
+            <div class="pt-1 pb-0 card-body">
+                <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
+                    <li class="mx-4 nav-item ember-view" role="presentation">
+                        <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
+                            data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
+                            Declaration</a>
+                    </li>
+                    <li class="mx-4 nav-item ember-view" role="presentation">
+                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                            data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
+                            Investments and Exemptions</a>
+                    </li>
+                    <li class="mx-4 nav-item ember-view" role="presentation">
+                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                            data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
+                            Form 12 BB</a>
+                    </li>
+                    <li class="mx-4 nav-item ember-view" role="presentation">
+                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href="" data-bs-target="#tax_filling"
+                            role="tab" aria-controls="pills-home" aria-selected="true">
+                            Tax Filling</a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="mb-0 card top-line">
+            <div class="card-body">
+                <div class="tab-content " id="pills-tabContent">
+                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
+                        aria-labelledby="pills-home-tab">
+                        <Declaration />
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="exemptions" role="tabpanel">
+                  <InvestmentAndExemption />
+
+                </div>
+                <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
+
+
+
+                </div>
+                <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade " id="form_12bb" role="tabpanel">
+
+        </div>
+        <div class="tab-pane fade " id="tax_filling" role="tabpanel">
+
+        </div>
+    </div>
+</template>
+
+
+<script setup>
+
+
+import Declaration from  './declaration/declaration.vue'
+import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
+
+</script>
+
+
+<style scoped>
+.p-dropdown .p-dropdown-label.p-placeholder {
+    position: relative;
+    top: -5px;
+    border: 1px solid red;
+    color: #6c757d;
+}
+
+.p-button .p-fileupload-choose {
+    /* height: 2.1em; */
+}
+
+i,
+span,
+.tabview-custom {
+    vertical-align: middle;
+}
+
+span {
+    margin: 0 0.5rem;
+}
+
+.AadharCardFront {
+    margin-left: 20px;
+}
+
+.label {
+    width: 170px;
+}
+
+.p-tabview p {
+    line-height: 1.5;
+    margin: 0;
+}
+
+dialog>header {
+    color: #002f56 !important;
+}
+
+.form-selects {
+    padding: 0;
+    width: 100%;
+    height: 2.5rem;
+}
+
+.save {
+    border: 1px solid #e63b1f;
+    color: #e63b1f;
+}
+
+.p-dialog-header {
+    border-left: #e63b1f 5px solid !important;
+}
+
+.form-selects ::-webkit-scrollbar {
+    width: 10px !important;
+    border-radius: 12px !important;
+}
+
+/* Track */
+.form-selects ::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+}
+
+/* Handle */
+.form-selects ::-webkit-scrollbar-thumb {
+    background: #888 !important;
+    border-radius: 12px !important;
+}
+
+/* Handle on hover */
+.form-selects ::-webkit-scrollbar-thumb:hover {
+    background: #252222 !important;
+    border-radius: 12px !important;
+}
+
+Dialog {
+    color: #002f56;
+}
+</style>

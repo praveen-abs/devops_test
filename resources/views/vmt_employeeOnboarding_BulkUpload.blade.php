@@ -13,15 +13,15 @@
     @endcomponent --}}
     <div class="uploadEmployee-wrpper mt-30">
 
-        <div class="card shadow profile-box ">
+        <div class="shadow card profile-box ">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 ">
                         <div class="col-form-label">
-                            <h6 Instructions> Employee Onboarding Bulk Upload</h6>
+                            <h6 Instructions class="text-xl font-semibold"> Employee Onboarding Bulk Upload</h6>
                             <div class="col col-form-label">
-                                <ul class="list-style-numbered list-style-circle p-4">
-                                    <li>Download the
+                                <ul class="p-4 list-style-numbered list-style">
+                                    <li  class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Download the
                                         {{-- <a href="{{ url('/assets/sample_employeeBulkOnboarding.xlsx')  }}" target="_blank">
                                                 <span class="text-link" style=" color: blue;">Sample File</span></a> --}}
 
@@ -33,32 +33,41 @@
                                         </a>
 
                                     </li>
-                                    <li>Read the upload instructions on the right before uploading .</li>
-                                    <li>Fill the information in excel template</li>
-                                    <li>
+                                    <li  class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Read the upload instructions on the right before uploading .</li>
+                                    <li  class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Fill the information in excel template</li>
+                                    <li  class="my-4">
                                         <form method="POST" id='role-form' action="{{ url('/vmt-employess/bulk-upload') }}"
                                             enctype="multipart/form-data">
                                             @csrf
                                             {{-- <div > --}}
-                                            <label>Please Upload the employees details excel-sheet.</label>
                                             {{-- </div> --}}
                                             {{-- <div class="mb-3 row"> --}}
                                             {{-- <div class="col-md-10">
+                                                <i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i>
                                                         <input name="file" type="file" required>
                                                     </div> --}}
-                                            <span class="choose-file ms-1">
+
+                                                    <div class="p-2 my-4 bg-gray-100 rounded-lg">
+                                                        <span class="choose-file ms-1">
+                                                      <input name="file" type="file" required>
+                                                      <i class="fa fa-file" aria-hidden="true"></i>
+                                                      Choose file
+                                                  </span>
+                                                  <span style="width: 500px;" class="mx-4 text-bold" id="uploaded_doc"></span>
+                                              </div>
+                                            <!-- <span class="choose-file ms-1">
                                                 <input name="file" type="file">
                                                 <i class="fa fa-file" aria-hidden="true"></i>
                                                 Choose file
-                                            </span>
+                                            </span> -->
                                             {{-- </div> --}}
-                                            <div class="row mt-2">
+                                            <div class="mt-2 row">
                                                 <div class="text-end col-xl-12">
                                                     <button type="submit" class="btn btn-orange"><i class="bi bi-file-earmark-arrow-up me-1"></i> Upload</button>
                                                 </div>
                                             </div>
 
-                                            <div class="row mt-4">
+                                            <div class="mt-4 row">
                                                 <div class="col-xl-12">
                                                     <div id="success-msg"></div>
                                                     <div id="error-msg"></div>
@@ -78,38 +87,38 @@
                     <div class="col-md-6 ">
                         <div class="col-form-label">
                             <h6> Upload Instructions</h4>
-                                <div class="alert py-2 f-12 alert-warning"><i class='fa fa-warning text-danger'></i> Read
+                                <div class="py-2 my-4 alert f-12 alert-warning"><i class='fa fa-warning text-danger'></i> Read
                                     these instructions before uploading the file.</div>
                                 <div>
-                                    <ul class="list-style-circle">
-                                        <li> Employee Number, First name, Last name, Display name, Email, Date of joining
+                                    <ul class="list-style">
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Employee Number, First name, Last name, Display name, Email, Date of joining
                                             and Location fields are required to add employees in . </li>
-                                        <li> Either email or mobile number is required while adding employee incase of login
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Either email or mobile number is required while adding employee incase of login
                                             with OTP </li>
-                                        <li> Date of Birth is required to show Upcoming birthdays notification in Home page
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Date of Birth is required to show Upcoming birthdays notification in Home page
                                             widget, Income tax and Professional Tax calculation. </li>
-                                        <li> Gender is required to validate Statutory leave(Maternity or Paternity Leave)
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Gender is required to validate Statutory leave(Maternity or Paternity Leave)
                                             and Professional Tax Calculation. </li>
-                                        <li> PAN number is required to generate Bank Transfer statements for Salary
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> PAN number is required to generate Bank Transfer statements for Salary
                                             payments. </li>
-                                        <li> Email id should be valid to receive all notifications such as leave request
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Email id should be valid to receive all notifications such as leave request
                                             notifications, Attendance request notification and Timesheet reminder
                                             notifications etc. </li>
-                                        <li> Employee email is unique across . So, cannot add same employee in two
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Employee email is unique across . So, cannot add same employee in two
                                             Organizations with same email. </li>
-                                        <li> Job Title is optional but it will help to identify employees in People picker
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Job Title is optional but it will help to identify employees in People picker
                                             search results when 2 or more employees have same Name. </li>
-                                        <li> Department is useful to search or filter employees by Department in few
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Department is useful to search or filter employees by Department in few
                                             reports. </li>
-                                        <li> PAN information(Name on PAN, DOB on Pan, Father name on Pan) and Bank
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> PAN information(Name on PAN, DOB on Pan, Father name on Pan) and Bank
                                             Information(Bank Payment Mode, Bank Name, IFSC code, Account Number, Name on
                                             Bank account) are required to generate Bank Transfer statements for Salary
                                             payments. </li>
-                                        <li> Provident Fund Information(PF Number, PF Joining date, Name on PF account,
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Provident Fund Information(PF Number, PF Joining date, Name on PF account,
                                             UAN), Aadhar Information(Aadhar number, Name on Aadhar, Aadhar enrollment
                                             number) are required for PF Monthly Electronic Return(ECR) and Reports. </li>
-                                        <li> ESI Information(ESI number) is required for ESI Reports. </li>
-                                        <li> Please check email notifications in Junk / Spam / Filtered folders if they are
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> ESI Information(ESI number) is required for ESI Reports. </li>
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Please check email notifications in Junk / Spam / Filtered folders if they are
                                             not visible in Inbox. </li>
                                         <!---->
                                     </ul>
@@ -119,15 +128,15 @@
                     </div>
                 </div>
 
-                {{-- <div class="card-header border-0 align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">
+                {{-- <div class="border-0 card-header align-items-center d-flex">
+                    <h4 class="mb-0 card-title flex-grow-1">
                 </div>
 
-                <div class="card-body  pb-2">
+                <div class="pb-2 card-body">
                     <xhr-file-upload>
                                     <div class="d-inline-flex justify-content-center align-items-center">
                                         <div containerclass="max-w-300" container="body" class="d-inline-block position-relative"><button class="btn btn-sm btn-primary">Upload Excel File</button><input type="file" name="fileupload" class="input-file" accept=".xlsx"></div>
-                                        <div class="ml-8"><span containerclass="max-w-300" container="body" class="icon ic-info cursor-pointer"></span>
+                                        <div class="ml-8"><span containerclass="max-w-300" container="body" class="cursor-pointer icon ic-info"></span>
 
                             </div>
                             <xhr-file-upload>
@@ -142,7 +151,7 @@
                     <input name="file" type="file">
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="mt-2 row">
                 <div class="text-end col-xl-12">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
@@ -155,12 +164,12 @@
     {{-- </div>end col --}}
     {{-- </div>end row --}}
     <div style="z-index: 11">
-        <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert"
+        <div id="borderedToast2" class="mt-3 overflow-hidden toast toast-border-success" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0 me-2">
-                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                        <i class="align-middle ri-checkbox-circle-fill"></i>
                     </div>
                     <div class="flex-grow-1">
                         <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
@@ -175,13 +184,13 @@
     {{-- <div class="row">
     <div class="col-xl-8">
         <div class="card">
-            <div class="card-header border-0 align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">
+            <div class="border-0 card-header align-items-center d-flex">
+                <h4 class="mb-0 card-title flex-grow-1">
                     <!-- Please Fill Form -->
                 </h4>
             </div><!-- end card header -->
 
-            <div class="card-body  pb-2">
+            <div class="pb-2 card-body">
                 <div>
                     <form method="POST" id='role-form' action="{{url('/vmt-employess/bulk-upload')}}"
                         enctype="multipart/form-data">
@@ -194,7 +203,7 @@
                                 <input name="file" type="file" required>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="mt-2 row">
                             <div class="text-end col-xl-12">
                                 <button type="submit" class="btn btn-orange"><i class="bi bi-file-earmark-arrow-up"></i>Upload</button>
                             </div>
@@ -206,12 +215,12 @@
     </div><!-- end col -->
 </div><!-- end row --> --}}
     <div style="z-index: 11">
-        <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert"
+        <div id="borderedToast2" class="mt-3 overflow-hidden toast toast-border-success" role="alert"
             aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0 me-2">
-                        <i class="ri-checkbox-circle-fill align-middle"></i>
+                        <i class="align-middle ri-checkbox-circle-fill"></i>
                     </div>
                     <div class="flex-grow-1">
                         <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
@@ -231,9 +240,9 @@
             tabindex="-1">
 
             <div class="modal-content">
-                <div class="modal-header py-2 ">
+                <div class="py-2 modal-header ">
 
-                    <div class="w-100 modal-header-content d-flex align-items-center py-2">
+                    <div class="py-2 w-100 modal-header-content d-flex align-items-center">
                         <h5 class="modal-title " id="exampleModalToggleLabel2">Create New
                             Employee
                         </h5>
@@ -243,32 +252,32 @@
                 </div>
                 <div class="modal-body h-50">
 
-                    <div class="section-content w-100  my-4 d-flex justify-content-center">
-                        <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
-                            <li class="nav-item d-flex w-100 align-items-center justify-content-center  "
+                    <div class="my-4 section-content w-100 d-flex justify-content-center">
+                        <ul class="mb-4 nav nav-pills w-100" id="pills-tab" role="tablist">
+                            <li class="nav-item d-flex w-100 align-items-center justify-content-center "
                                 role="presentation">
-                                <button class="nav-link active rounded-circle  mx-2 " id="pills-basic-btn"
+                                <button class="mx-2 nav-link active rounded-circle " id="pills-basic-btn"
                                     data-bs-toggle="pill" data-bs-target="#pills-basic-details" type="button"
                                     role="tab" aria-controls="pills-home" aria-selected="true">1
                                 </button><span>BASIC DETAILS</span>
                             </li>
-                            <li class="nav-item d-flex w-100 align-items-center justify-content-center  "
+                            <li class="nav-item d-flex w-100 align-items-center justify-content-center "
                                 role="presentation">
-                                <button class="nav-link rounded-circle mx-2 " id="pills-job-btn" data-bs-toggle="pill"
+                                <button class="mx-2 nav-link rounded-circle " id="pills-job-btn" data-bs-toggle="pill"
                                     data-bs-target="#pills-job-details" type="button" role="tab"
                                     aria-controls="pills-profile" aria-selected="false">2</button> <span>JOB
                                     DETAILS</span>
                             </li>
                             <li class="nav-item d-flex w-100 align-items-center justify-content-center "
                                 role="presentation">
-                                <button class="nav-link rounded-circle mx-2 " id="pills-work-btn" data-bs-toggle="pill"
+                                <button class="mx-2 nav-link rounded-circle " id="pills-work-btn" data-bs-toggle="pill"
                                     data-bs-target="#pills-work-details" type="button" role="tab"
                                     aria-controls="pills-contact" aria-selected="false">3</button>
                                 <span> WORK DETAILS</span>
                             </li>
                             <li class="nav-item d-flex w-100 align-items-center justify-content-center "
                                 role="presentation">
-                                <button class="nav-link rounded-circle mx-2 " id="pills-compension-btn"
+                                <button class="mx-2 nav-link rounded-circle " id="pills-compension-btn"
                                     data-bs-toggle="pill" data-bs-target="#pills-compension" type="button"
                                     role="tab" aria-controls="pills-contact" aria-selected="false">4
                                 </button>
@@ -281,7 +290,7 @@
                             aria-labelledby="pills-home-tab">
                             <div class="row">
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         First Name
@@ -290,7 +299,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Middle Name
@@ -299,7 +308,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Last Name
@@ -308,7 +317,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Display Name
@@ -320,27 +329,27 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3 ">
+                                <div class="mb-3 col-xl-3 col-md-3 ">
 
                                     <label for="firstName" class="form-label">
                                         Gender
                                     </label>
                                     <div class="d-flex">
-                                        <div class="form-check mx-2">
+                                        <div class="mx-2 form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                 id="flexRadioDefault1">
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 Male
                                             </label>
                                         </div>
-                                        <div class="form-check mx-2">
+                                        <div class="mx-2 form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                 id="flexRadioDefault1">
                                             <label class="form-check-label" for="flexRadioDefault1">
                                                 Female
                                             </label>
                                         </div>
-                                        <div class="form-check mx-2">
+                                        <div class="mx-2 form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                 id="flexRadioDefault1">
                                             <label class="form-check-label" for="flexRadioDefault1">
@@ -349,7 +358,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Date Of Birth
@@ -358,7 +367,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Email
@@ -367,7 +376,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Mobile Number
@@ -378,7 +387,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Work Type
@@ -394,7 +403,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Work Type
@@ -410,7 +419,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="empNuber" class="form-label">
                                         Employee Number
@@ -424,11 +433,11 @@
                                 <div class="row">
                                     <div class="col-12 ">
                                         <div class="d-flex">
-                                            <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
+                                            <ul class="mb-4 nav nav-pills w-100" id="pills-tab" role="tablist">
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                     role="presentation">
                                                     <button data-bs-dismiss="modal"
-                                                        class="btn btn-primary mx-2 p-2">Cancel</button>
+                                                        class="p-2 mx-2 btn btn-primary">Cancel</button>
                                                     <button class="btn btn-primary waves-effect waves-light"
                                                         id="pills-profile-tab" data-bs-toggle="pill"
                                                         data-bs-target="#pills-job-details" type="button" role="tab"
@@ -448,7 +457,7 @@
                         <div class="tab-pane fade" id="pills-job-details" role="tabpanel"
                             aria-labelledby="pills-profile-tab">
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Joining Date
@@ -457,7 +466,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Job Title
@@ -474,7 +483,7 @@
 
                                 </div>
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Time Type
@@ -491,7 +500,7 @@
 
                                 </div>
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Business Unit
@@ -513,7 +522,7 @@
 
                             <div class="row">
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Department
@@ -530,7 +539,7 @@
 
                                 </div>
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Location
@@ -546,7 +555,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="empNuber" class="form-label">
                                         Reporting Manager
@@ -556,7 +565,7 @@
 
                                 </div>
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="empNuber" class="form-label">
                                         Dotted Line Manager
@@ -572,7 +581,7 @@
                                 <h5>Advanced</h5>
 
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Probation Policy
@@ -588,7 +597,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Notice Period
@@ -604,7 +613,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <a href="#" class="d-flex align-items-center justifu-content-center">
                                         <i class="ri-plus-2-line"></i>
@@ -621,10 +630,10 @@
                                 <div class="row">
                                     <div class="col-12 ">
                                         <div class="d-flex">
-                                            <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
+                                            <ul class="mb-4 nav nav-pills w-100" id="pills-tab" role="tablist">
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                     role="presentation">
-                                                    <button class="btn btn-primary mx-2 p-6" id="pills-profile-tab"
+                                                    <button class="p-6 mx-2 btn btn-primary" id="pills-profile-tab"
                                                         data-bs-toggle="pill" data-bs-target="#pills-basic-details"
                                                         type="button" role="tab" aria-controls="pills-profile"
                                                         aria-selected="false">
@@ -646,7 +655,7 @@
                         <div class="tab-pane fade" id="pills-work-details" role="tabpanel"
                             aria-labelledby="pills-contact-tab">
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value=""
@@ -657,7 +666,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
 
                                     <div class="form-check">
@@ -668,7 +677,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
 
                                     <select class="form-control">
@@ -686,7 +695,7 @@
                             <div class="row">
 
                                 <h5>Time & Advanced Settings</h5>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Leave Plan
@@ -702,7 +711,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Shift
@@ -718,7 +727,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Week Off
@@ -734,7 +743,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Holiday List
@@ -753,7 +762,7 @@
                             </div>
                             <div class="row">
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Attandance Tracking Policy
@@ -769,7 +778,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Attandance Capture Scheme
@@ -785,7 +794,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Over Time Policy
@@ -802,7 +811,7 @@
 
                                 </div>
 
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="empNuber" class="form-label">
                                         Attandance Number
@@ -818,7 +827,7 @@
                             <div class="row">
 
                                 <h5>Other Settings</h5>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Expense Policy
@@ -834,10 +843,10 @@
                                 <div class="row">
                                     <div class="col-12 ">
                                         <div class="d-flex">
-                                            <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
+                                            <ul class="mb-4 nav nav-pills w-100" id="pills-tab" role="tablist">
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                     role="presentation">
-                                                    <button class="btn btn-primary mx-2 p-6" id="pills-profile-tab"
+                                                    <button class="p-6 mx-2 btn btn-primary" id="pills-profile-tab"
                                                         data-bs-toggle="pill" data-bs-target="#pills-job-details"
                                                         type="button" role="tab" aria-controls="pills-profile"
                                                         aria-selected="false">
@@ -861,14 +870,14 @@
                             aria-labelledby="pills-contact-tab">
 
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                 </div>
                             </div>
 
 
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Pay Group
@@ -884,7 +893,7 @@
 
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
                                     <label for="firstName" class="form-label">
                                         Pay Group
                                     </label>
@@ -901,7 +910,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value=""
                                             id="flexCheckDefault">
@@ -911,7 +920,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value=""
@@ -925,7 +934,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
 
                                     <label for="firstName" class="form-label">
                                         Salary Structure Type
@@ -939,7 +948,7 @@
                                     </select>
 
                                 </div>
-                                <div class="col-xl-3 mb-3 col-md-3">
+                                <div class="mb-3 col-xl-3 col-md-3">
                                     <label for="firstName" class="form-label">
                                         Tax Regime To Cosider
                                     </label>
@@ -964,10 +973,10 @@
                                 <div class="row">
                                     <div class="col-12 ">
                                         <div class="d-flex">
-                                            <ul class="nav nav-pills w-100 mb-4" id="pills-tab" role="tablist">
+                                            <ul class="mb-4 nav nav-pills w-100" id="pills-tab" role="tablist">
                                                 <li class="nav-item d-flex w-100 align-items-center justify-content-end "
                                                     role="presentation">
-                                                    <button class="btn btn-orange mx-2 p-6" id="pills-profile-tab"
+                                                    <button class="p-6 mx-2 btn btn-orange" id="pills-profile-tab"
                                                         data-bs-toggle="pill" data-bs-target="#pills-work-details"
                                                         type="button" role="tab" aria-controls="pills-profile"
                                                         aria-selected="false">
@@ -1028,6 +1037,13 @@
                         console.log("Got response....");
                         console.log("Status message : "+ajaxData.status);
                         console.log(ajaxData);
+                         if(ajaxData.status == 'success'){
+                            Swal.fire({
+                            title: ajaxData.message,
+                            text: ajaxData.status,
+                            type: "success"
+                        })
+                    }
 
                         $('#error-msg').html('');
                         $('#error-msg').append('<b>Upload Status : <br/></b>');
@@ -1062,5 +1078,15 @@
                     }
                 })
             });
+
+
+       $(document).ready(function(){
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            $("#uploaded_doc").html(fileName)
+            console.log(fileName);
+        });
+    });
+
         </script>
     @endsection

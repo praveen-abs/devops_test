@@ -1,8 +1,9 @@
 @import "./components/table";
 @import "./utilities/variable";
-// @import "./components/card";
+@import "./components/card";
+@import "./components/calendar";
 // @import "./utilities/helpers";
-@import "./components/buttons";
+
 
 * {
     // font-size: 1vw;
@@ -10,13 +11,27 @@
     box-sizing: border-box;
 }
 
-label,
-p,
-span {
-    color: $gray-600;
-}
+// label,
+// p,
+// span {
+//     color: $gray-600;
+// }
 
 body {
     background-color: $bg-body;
 }
+
+.collapse {
+    visibility: visible !important;
+}
+
+.investment_dropDown .dropdown-toggle:after {
+    display: none;
+}
+
+.investment_dropDown .dropdown-menu {
+    min-width: 120px;
+}
+
+
 

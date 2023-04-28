@@ -22,9 +22,6 @@ $font-weights: (
     fw-bolder: $font-weight-bolder,
 );
 
-
-
-
 // colors:declaration variable
 $navyblue-600: #002f56;
 $blue-600: #1a64a2;
@@ -37,7 +34,7 @@ $black: #000;
 $gray-100: #f7f7f7;
 $gray-200: #d9d9d9;
 $gray-300: #c1c1c1;
-$gray-400: #9E9E9E;
+$gray-400: #9e9e9e;
 // $gray-300: #8D8686;
 $gray-500: #706f6f;
 $gray-600: #626262;
@@ -192,7 +189,6 @@ $color-yellowish: (
     }
 }
 
-
 $sky-blue-lighten: #d3f6ff;
 $sky-blue-median: #5b92a4;
 $sky-blue-darken: #6bd4ed;
@@ -272,6 +268,10 @@ $color-pink: (
 
 .font-medium {
     font-weight: $font-weight-medium;
+}
+
+.primary-blue {
+    color: $primary-blue;
 }
 
 // $yellow-100: tint-color($yellow, 80%);

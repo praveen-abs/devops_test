@@ -11,30 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Services\VmtDashboardService;
 use App\Services\VmtAttendanceService;
+use App\Services\VmtHolidayService;
 
 class VmtAPIDashboardController extends HRMSBaseAPIController
 {
-
-    public function getDashboardData() {
-
-
-        $data = [
-
-            'username'=> auth()->user()->name,
-            'appointments'=> "1",
-            'meetings'=> "2",
-            'visits'=> "4",
-
-        ];
-
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Not implemented',
-            'data'   => $data
-        ]);
-    }
-
-    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService  $serviceHolidayService ){
 
         $validator = Validator::make(
             $request->all(),
@@ -56,7 +37,7 @@ class VmtAPIDashboardController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService);
+        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
 
 
 
