@@ -73,7 +73,6 @@ class VmtEmployeeLeaveService
                 if(Carbon::now()->lte( $accrued_leave_end_date)){
                     //till this date accured leave will be added
                     $end_date = Carbon::now();
-                    dd($end_date);
 
                 }else{
                    $end_date =  $accrued_leave_end_date;

@@ -109,8 +109,7 @@ function calculateLeaveDetails($user_id,$start_date,$end_date){
                                                       ->sum('accrued_leave_count');
             $leave_balance =  $total_accrued -  $total_avalied_leaves;
             $avalied_balance= array('avalied_leaves'=> $total_avalied_leaves,'leave_balance'=>$leave_balance);
-            $leave_type_balance = array($single_leave_types->leave_type=>$avalied_balance);
-            array_push($leave_balance_for_selected_leaves,$leave_type_balance);
+            $leave_balance_for_selected_leaves[$single_leave_types->leave_type]=$avalied_balance;
 
          }else if($single_leave_types->is_carry_forward==1){
             $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
@@ -120,16 +119,15 @@ function calculateLeaveDetails($user_id,$start_date,$end_date){
             $total_accrued = VmtEmployeesLeavesAccrued::where('user_id',$user_id)
                                                      ->where('leave_type_id',$single_leave_types->id)
                                                      ->sum('accrued_leave_count');
-                                                     dd($total_accrued);
+
             $leave_balance =  $total_accrued -  $total_avalied_leaves;
             $avalied_balance= array('avalied_leaves'=> $total_avalied_leaves,'leave_balance'=>$leave_balance);
-            $leave_type_balance = array( $single_leave_types->leave_type=>$avalied_balance);
-            array_push($leave_balance_for_selected_leaves,$leave_type_balance);
+            $leave_balance_for_selected_leaves[$single_leave_types->leave_type]=$avalied_balance;
 
          }
 
     }
-    dd($leave_balance_for_selected_leaves);
+    return $leave_balance_for_selected_leaves;
 
 }
 

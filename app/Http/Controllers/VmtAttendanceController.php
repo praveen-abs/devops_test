@@ -61,7 +61,7 @@ class VmtAttendanceController extends Controller
         //dd($leaveData_currentUser->toArray());
 
         //Accrued Leave Year Frame
-        $time_periods_of_year_query = VmtOrgTimePeriod::where('abbrevation','FY')->where('status',1)->first();
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
         $start_date =  $time_periods_of_year_query->start_date;
         $end_date   = $time_periods_of_year_query->end_date;
         $calender_type = $time_periods_of_year_query->abbrevation;
@@ -85,9 +85,10 @@ class VmtAttendanceController extends Controller
         }
          //Calculate Leave Balance
          $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
-          dd( calculateLeaveDetails(auth::user()->id,$start_date,$end_date));
+
+        // dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -282,10 +283,9 @@ class VmtAttendanceController extends Controller
         }
         else
         if ($request->type == 'employee') {
-            dd(VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)
-                                                                 ->whereBetween('start_date',[$start_date,$end_date])
-                                                                 ->whereBetween('end_date',[$start_date,$end_date])->get());
-            return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)->get();
+
+            return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)
+                                    ->whereBetween('start_date',[$start_date,$end_date])->get();
         }
     }
 
@@ -1539,6 +1539,18 @@ class VmtAttendanceController extends Controller
     public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
 
         return $serviceVmtAttendanceService->employeeProfile($request);
+    }
+
+    public function getEmployeeLeaveBalance(Request $request){
+          //Accrued Leave Year Frame
+          $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+          $start_date =  $time_periods_of_year_query->start_date;
+          $end_date   = $time_periods_of_year_query->end_date;
+          $calender_type = $time_periods_of_year_query->abbrevation;
+         // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+         $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
+        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
+        return  $leave_balance_details;
     }
 
 }
