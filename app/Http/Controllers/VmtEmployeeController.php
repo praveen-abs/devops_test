@@ -23,6 +23,7 @@ use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtGeneralInfo;
 use App\Models\Compensatory;
+use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
 use Illuminate\Support\Facades\Hash;
@@ -1523,6 +1524,7 @@ class VmtEmployeeController extends Controller
     */
     public function showEmployeeDocumentsPage(Request $request)
     {
+
         //Get the existing filenames
         $existing_doc_filenames = VmtEmployee::where('userid', auth()->user()->id)->first([
             'aadhar_card_file',
@@ -1537,6 +1539,11 @@ class VmtEmployeeController extends Controller
 
         //Check if all necessary docs are uploaded
         $is_emp_onboarded = User::where('id', auth()->user()->id)->first()->is_onboarded;
+        $all_document_approved =VmtEmployeeDocuments::where('user_id',auth()->user()->id)->where('Status','Rejected')->first();
+         if(!empty($all_document_approved)){
+            $all_document_approved->doc_id;
+          dd($all_document_approved->doc_id);
+         }
         //dd($is_emp_onboarded);
         if( $is_emp_onboarded == '1'){
 
