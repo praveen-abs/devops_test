@@ -137,17 +137,21 @@ class VmtProfilePagesController extends Controller
 
     public function updateDepartment(Request $request){
 
-        $emp_id = $request->emp_id;
-        $department_id = $request->department_id;
+        $user_id = User::where('user_code',$request->user_code)->first()->id;
 
-        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
+        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first();
 
         if($query_EmpOfficeDetails){
-            $query_EmpOfficeDetails->department_id = $department_id;
+            $query_EmpOfficeDetails->department_id = $request->department_id;
             $query_EmpOfficeDetails->save();
         }
 
-        return redirect()->back();
+        return $response = [
+            'status' => 'success',
+            'message' => 'Department updated successfully',
+            'data' => ''
+         ];
+
     }
 
     public function updateGeneralInfo(Request $request) {
