@@ -94,10 +94,11 @@ function calculateLeaveDetails($user_id,$start_date,$end_date){
     $accrued_leave_types = VmtLeaves::where('is_accrued',1)->get();
     foreach($accrued_leave_types as $single_leave_types){
         $leave_type=$single_leave_types->leave_type;
+         dd($single_leave_types);
+        $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                                   ->whereBetween('start_date',[$start_date,$end_date])
+                                                   ->sum('total_leave_datetime');
 
-        $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)->sum('total_leave_datetime');
-        dd( $total_avalied_leaves);
-        dd($single_leave_types);
 
     }
 

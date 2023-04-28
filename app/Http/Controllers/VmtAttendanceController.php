@@ -85,7 +85,7 @@ class VmtAttendanceController extends Controller
         }
          //Calculate Leave Balance
          $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
-
+          dd( calculateLeaveDetails(auth::user()->id,$start_date,$end_date));
         //dd($leaveTypes->toArray());
         return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame'));
     }
