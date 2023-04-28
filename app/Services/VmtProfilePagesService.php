@@ -198,8 +198,12 @@ class VmtProfilePagesService
 
         //Add the documents details
         $response['avatar'] = $this->getProfilePicture($response->user_code);
-        $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name ?? 'NA';
-        $response['getEmployeeOfficeDetails']['l1_manager_name'] = User::where('user_code','DMC184')->first()->name;
+
+        if(!empty($response['getEmployeeOfficeDetails']['department_id']))
+            $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name ?? 'NA';
+
+        if(!empty($response['getEmployeeOfficeDetails']['l1_manager_code']))
+            $response['getEmployeeOfficeDetails']['l1_manager_name'] = User::where('user_code',$response['getEmployeeOfficeDetails']['l1_manager_code'])->first()->name;
 
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);

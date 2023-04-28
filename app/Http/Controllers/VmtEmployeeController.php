@@ -1109,6 +1109,7 @@ class VmtEmployeeController extends Controller
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
             $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+            $singleEmp['blood_group_name'] = VmtBloodGroup::find($singleEmp['blood_group_id'])->name ?? "";
             $singleEmp['doc_status'] = $serviceVmtApprovalsService->isAllOnboardingDocumentsApproved($singleEmp['emp_code'])->getData()->data;
 
         }
