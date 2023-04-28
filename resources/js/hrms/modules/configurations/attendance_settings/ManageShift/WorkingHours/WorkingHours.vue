@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full p-6 pr-8 my-4 shadow-sm rounded-xl bg-blue-50 ">
+    <div class="w-full p-6 my-4 shadow-sm rounded-xl bg-blue-50 ">
         <div class="flex gap-4 pt-1 row ">
             <div class="col-4">
                 <p class="font-semibold py-auto">Half Day Minimum Working Hours Required</p>
@@ -23,6 +23,13 @@
             </div>
           
 
+        </div>
+        <div class="my-3 text-end">
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
+            <button
+                class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 ">Previous</button>
+            <button
+                class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
         </div>
     </div>
 </template>

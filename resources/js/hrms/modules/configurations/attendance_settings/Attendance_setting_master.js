@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
@@ -32,11 +33,14 @@ import Checkbox from 'primevue/checkbox'
 import Attendance_master from './Attendance_setting_Master.vue'
 
 const app = createApp(Attendance_master);
+const pinia=createPinia()
+
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);
