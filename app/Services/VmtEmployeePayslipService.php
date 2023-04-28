@@ -727,6 +727,18 @@ class VmtEmployeePayslipService {
         }
     }
 
+    public function fetchEmployeePayslipDetails($year, $month){
+
+
+        $emp_name= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
+                        ->whereYear('PAYROLL_MONTH', $year)
+                        ->whereMonth('PAYROLL_MONTH',$month)
+                        ->get();
+
+                   // dd($emp_name);
+                        return $emp_name;
+        }
+
     public function getEmployeeAllPayslipList($user_code){
 
             //Validate

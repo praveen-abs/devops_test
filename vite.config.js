@@ -102,7 +102,6 @@ export default defineConfig({
 
                 // testing_pradeesh
 
-              'resources\js\testings\pradeesh\testing_padeesh.js'
 
             ],
             refresh: true,
