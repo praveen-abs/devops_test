@@ -26,9 +26,6 @@
         <Column field="emp_code" header="Employee Code" :sortable="true"></Column>
         <Column field="emp_designation" header="Welcome Mail status " style="min-width: 15rem;"></Column>
 
-
-
-
         <Column style="width: 300px" field="" header="Action">
           <template #body="slotProps">
               <Button  icon="pi pi-check-circle" severity="success" label="Activate" class="p-button-success Button"
