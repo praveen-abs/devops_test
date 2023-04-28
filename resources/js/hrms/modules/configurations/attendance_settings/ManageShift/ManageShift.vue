@@ -1,11 +1,14 @@
 <template>
   <div class="w-full">
-    <div>
-      <Button label="Show" icon="pi pi-external-link"  @click="openPosition('top')" />
+    <div class="flex justify-between">
+      <div></div>
+    <div class="">
+      <button   class="mx-4 my-4 btn btn-orange" @click="canShowAssignShift = true">
+          <i class="fa fa-plus-circle me-2"></i>Add Shift
+        </button>
+    </div>
 
-      <button class="float-right mx-4 my-3 cursor-pointer btn btn-orange" @click="canShowAssignShift = true">
-        <i class="fa fa-plus-circle me-2"></i>Add Shift
-      </button>
+      <!-- <button class="float-right btn btn-orange " @click="canShowAssignShift = true">click</button> -->
     </div>
     <div>
       <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="5"
@@ -59,15 +62,7 @@ import { ref, onMounted } from "vue";
 
 import AddShift from '../ManageShift/AddShift/AddShift.vue'
 
-const position = ref("center");
-let canShowAssignShift = ref(false);
-
-const openPosition = (pos) => {
-  position.value = pos;
-  canShowAssignShift.value = true;
-};
-
-
+const  canShowAssignShift = ref(false);
 
 
 </script>

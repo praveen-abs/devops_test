@@ -1,7 +1,7 @@
 <template>
 
 
-    <div class="w-full pr-8">
+    <div class="w-full pr-2">
       <div class="w-full tabs row ">
         <a class="flex px-6 col-lg-2 col-xl-2 col-md-2" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
           ><div class="md:text-sm" :style="{width:'25px' }">1</div>Shift Details</a
