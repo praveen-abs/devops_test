@@ -1,8 +1,8 @@
 <template>
     <div class="w-full pr-8">
         <div class="flex row">
-        <div class="p-3 mx-4 my-4 rounded-lg bg-red-50 col-8 ">
-            <p><Strong class="text-lg text-orange-400">Note:</Strong><span class="text-lg font-semibold text-gray-600">Below assigned employees are able to work any shift that the company offers.</span></p>
+        <div class="p-2 mx-4 my-4 rounded-lg bg-red-50 col-8 ">
+            <p><Strong class="text-lg font-semibold text-orange-400">Note:</Strong><span class="mx-2 text-lg font-semibold text-gray-600">Below assigned employees are able to work any shift that the company offers.</span></p>
         </div>
         <div class="col-3">
             <button class="float-right mx-4 my-4 cursor-pointer btn btn-orange " @click="canShowLoadingScreen = true">
@@ -50,13 +50,15 @@
         <Dialog  v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
           :style="{ width: '100vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="true" :closeOnEscape="false">
           <template #header>
-              <h6 class=" modal-title fs-21">
-                Assigned To
-                <div class="p-3 mx-4 my-4 rounded-lg bg-red-50">
-            <p><Strong class="text-lg">Note:</Strong><span class="text-lg font-semibold text-gray-600">Flexible Shift employees are able to work any shift that the company offers.</span></p>
-        </div></h6>
+            <div class="flex">
+              <h6 class="mx-2 my-2 modal-title fs-21 ">
+                Assigned To</h6>
+                <div class="p-2.5 mx-2 rounded-lg bg-red-50">
+                <p ><Strong class="text-lg">Note:</Strong><span class="text-lg font-semibold text-gray-600">Flexible Shift employees are able to work any shift that the company offers.</span></p>
+             </div>
+            </div>
           </template>
-          
+         
   
         <div class="flex justify-between mx-4">
           <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Department" class="w-full md:w-14rem" />
@@ -122,7 +124,7 @@
         </Dialog>
   
       </div>
-      <Button label="Show" icon="pi pi-external-link"  @click="openPosition('top')" />
+      <!-- <Button label="Show" icon="pi pi-external-link"  @click="openPosition('top')" /> -->
   </template>
   <script setup>
   import { ref, onMounted } from "vue";

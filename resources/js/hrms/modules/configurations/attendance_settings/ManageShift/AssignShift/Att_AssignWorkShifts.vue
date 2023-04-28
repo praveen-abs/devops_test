@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full pr-8">
+  <div class="w-full ">
     <!-- <ConfirmDialog></ConfirmDialog> -->
     <Toast />
     <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -43,34 +43,42 @@
           <InputText type="text" v-model="txt_shift_name" placeholder="Enter the shift name" />
         </span>
       </div>
-      <div >
+      <div>
         <span class="text-lg font-semibold">Shift Code</span>
         <span class="mx-2">
           <InputText type="text" v-model="txt_shift_start_time" placeholder="Enter the shift code" />
         </span>
       </div>
-       <div class="flex my-2">
-        <p class="text-lg font-semibold">Is Default</p> <Checkbox class="mx-3"  :binary="true" />
+      <div class="flex my-2">
+        <p class="text-lg font-semibold">Is Default</p>
+        <Checkbox class="mx-3" :binary="true" />
 
-       </div>
+      </div>
     </div>
-      <div class="flex mx-4 my-6">
-        <span class="text-lg font-semibold">Assign To</span>
-      <span class="p-2 mx-4 my-auto mb-5 rounded-lg bg-red-50 fotn-bold"> <strong class="text-orange-300">Note:</strong> Particular employees cannot be assigned to more than one shift unless he or she is assigned to a flexible shift.</span>
-      </div>
+    <div class="flex mx-4 my-6">
+      <span class="text-lg font-semibold">Assign To</span>
+      <span class="p-2 mx-4 my-auto mb-5 rounded-lg bg-red-50 fotn-bold"> <strong class="text-orange-300">Note:</strong>
+        Particular employees cannot be assigned to more than one shift unless he or she is assigned to a flexible
+        shift.</span>
+    </div>
 
-      <div class="flex justify-between mx-4">
-        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Department" class="w-full md:w-14rem" />
-        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Designation" class="w-full md:w-14rem" />
-        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Location" class="w-full md:w-14rem" />
-        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a State" class="w-full md:w-14rem" />
-        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Legal Entity" class="w-full md:w-14rem" />
-      </div>
-  
+    <div class="flex justify-between mx-4">
+      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Department"
+        class="w-full md:w-14rem" />
+      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Designation"
+        class="w-full md:w-14rem" />
+      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Location"
+        class="w-full md:w-14rem" />
+      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a State"
+        class="w-full md:w-14rem" />
+      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Legal Entity"
+        class="w-full md:w-14rem" />
+    </div>
+
     <!-- <Calendar id="calendar-timeonly"  timeOnly hourFormat="12" /> -->
     <div class="mx-4">
       <InputText type="text" v-model="txt_shift_name" placeholder="Search..." class="my-4" />
-<!-- {{ att_emp_details }} -->
+      <!-- {{ att_emp_details }} -->
       <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="2"
         dataKey="emp_code" :rowsPerPageOptions="[5, 10, 25]"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -83,25 +91,25 @@
           <template #body="slotProps">
             {{ slotProps.data.emp_code }}
           </template>
-       
+
         </Column>
         <Column field="employee_name" header="Employee Name" style="min-width: 8rem;">
           <template #body="slotProps">
             {{ slotProps.data.employee_name }}
           </template>
-        
+
         </Column>
         <Column field="designation" header="Designation" style="min-width: 10rem;">
           <template #body="slotProps">
             {{ slotProps.data.designation }}
           </template>
-       
+
         </Column>
         <Column style="min-width: 10rem;" field="department_name" header="Department">
           <template #body="slotProps">
             {{ slotProps.data.department_name }}
           </template>
-        
+
         </Column>
         <Column style="min-width: 10rem;" field="work_location" header="Location">
           <template #body="slotProps">
@@ -115,6 +123,11 @@
         </Column>
       </DataTable>
 
+    </div>
+    <div class="my-3 text-end">
+      <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
+      <button
+        class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
     </div>
   </div>
 </template>
@@ -136,11 +149,11 @@ const toast = useToast();
 
 const selectedCity = ref();
 const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
+  { name: 'New York', code: 'NY' },
+  { name: 'Rome', code: 'RM' },
+  { name: 'London', code: 'LDN' },
+  { name: 'Istanbul', code: 'IST' },
+  { name: 'Paris', code: 'PRS' }
 ]);
 
 const filters = ref({
@@ -532,6 +545,7 @@ function saveWorkShiftDetails() {
   font-size: 13px;
   margin-left: 50px;
 }
+
 .p-dialog .p-dialog-header {
   border-bottom: 0 none;
   background: #ffff;
@@ -540,23 +554,25 @@ function saveWorkShiftDetails() {
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
 }
+
 .p-dialog .p-dialog-content {
   background: #ffff;
   color: #495057;
   padding: 0 1.5rem 2rem 1.5rem;
 }
+
 .p-dropdown-label.p-inputtext.p-placeholder {
-  color: #003056; 
+  color: #003056;
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
   color: #003360;
 }
+
 .p-dropdown {
   display: inline-flex;
   cursor: pointer;
   position: relative;
   user-select: none;
   border: 1px solid #003056;
-}
-</style>
+}</style>
