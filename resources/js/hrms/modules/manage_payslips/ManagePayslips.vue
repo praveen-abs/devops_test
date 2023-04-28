@@ -21,8 +21,11 @@
                     <Button class="btn-primary" label="view" @click="viewemployee(slotProps.data)" /></template>
             </Column>
             <Column header="Action">
+
                 <template #body="slotProps">
-                    <Button class="btn-success" label="Send" @click="viewemployee(slotProps.data)" /></template>
+                    <!-- <Button class="btn-success" label="Send" @click="viewemployee(slotProps.data)" /> -->
+                    <Button class="btn-success" label="Send" @click="sendEmail(slotProps.data)" />
+                </template>
             </Column>
         </DataTable>
     </div>
@@ -38,20 +41,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive ,inject} from "vue";
 import axios from "axios";
+
 // import { FilterMatchMode, FilterOperator } from "primevue/api";
 // import { useConfirm } from "primevue/useconfirm";
 // import { useToast } from "primevue/usetoast";
 
-const dailog_employeeDetails = ref(false);
+const swal = inject("$swal");
 
+const dailog_employeeDetails = ref(false);
 
 const employeeDetails = ref()
 
 const viewemployee = (emp) => {
     employeeDetails.value = { emp }
-    console.log(emp);
+    console.log(emp.user_code);
     dailog_employeeDetails.value = true
 }
 
@@ -67,6 +72,31 @@ const emp = reactive({
     selectedProduct: '',
 });
 
+const sendEmail = (data)=>{
+    employeeDetails.value = data
+    axios.post('http://localhost:3000/sendEmail',{
+        user_code:data.user_code,
+    }).then((res)=>{
+        if (response.data.status == "Success") {
+        // Swal.fire(response.data.status, response.data.message, "success");
+        // window.location.reload()
+         Swal.fire({
+          title:response.data.status = "Success" ,
+          text: response.data.message,
+          icon: "success",
+          showCancelButton: false,
+        }).then((result) => {
+          window.location.reload();
+        })
+        console.log(res.data);
+    }}).catch((res)=>{
+        console.log(res.data);
+
+    }).finally((res)=>{
+
+        console.log(res.data);
+    })
+}
 
 
 axios.get(`/db/getuserName`).then(res => {
