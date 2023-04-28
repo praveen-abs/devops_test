@@ -8,6 +8,7 @@ use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\ConfigPms;
 use App\Models\VmtOrgTimePeriod;
 use App\Models\VmtTimePeriod;
+Use Exception;
 
 class VmtEmployeeLeaveService
 {
@@ -25,14 +26,17 @@ class VmtEmployeeLeaveService
     */
 
     private function insertAccrualLeaveRecord($user_id, $date, $leave_type_id, $accrual_leave_count){
-        $current_month = Carbon::parse($date)->format('n');
+        $year = Carbon::parse($date)->format('Y');
+        $month = Carbon::parse($date)->format('n');
 
-        if(!VmtEmployeesLeavesAccrued::whereMonth('date',$current_month)
+        if(!VmtEmployeesLeavesAccrued::whereYear('date',$year)
+                                      ->whereMonth('date',$month)
                                       ->where('user_id',$user_id)
                                       ->where('leave_type_id',$leave_type_id)
                                       ->exists())
         {
 
+          try{
             $leavesAccrued = new VmtEmployeesLeavesAccrued;
             $leavesAccrued->user_id = $user_id;
             $leavesAccrued->date = $date;
@@ -40,6 +44,10 @@ class VmtEmployeeLeaveService
             $leavesAccrued->accrued_leave_count = $accrual_leave_count;
             $leavesAccrued->save();
             return array($date=>'Added');
+          }catch(Exception $e)
+          {
+             dd($e->getMessage());
+          }
         }else{
             return array($date=>'Already Exists');
         }
@@ -52,51 +60,26 @@ class VmtEmployeeLeaveService
 
     public function processEmployeeLeaveBalance($user_id, $leave_type_id){
 
-
-        $calendar_type = ConfigPms::first()->calendar_type;
         $employee[$user_id] = array();
-        //dd( $calendar_type);
         $accrualLeaveAdd_startDate = 15; //TODO : Move to Leave Settings page
-
-        $current_month = date('n');
-        $today = Carbon::now();
         $date = date('Y-m-d');
 
-
-
-
         $emp_doj = VmtEmployee::where('userid',$user_id)->first()->doj;
-
         $emp_doj_Array = date_parse_from_format('Y-m-d', $emp_doj);
-        // dd($empDateArray['month']);
 
-
-
-
-
-
-
-       // if($calendar_type=='financial_year'){
-                // $time_period_current_year = VmtOrgTimePeriod::whereYear('year',Carbon::now()->format('Y'))->first();
-                // $time_period = VmtTimePeriod::where('id',  $time_period_current_year->vmt_time_period_id)->first();
-                // $time_period_start_month = Carbon::parse($time_period->start_month)->format('m');
-                // $time_period_start_day = Carbon::parse($time_period->start_month)->format('d');
-                // $accrued_leave_start_date =Carbon::parse(substr($time_period_current_year->year, 0, 4).'-'.$time_period_start_month.'-'.$time_period_start_day);
                 $time_period_active_year = VmtOrgTimePeriod::where('status',1)->first();
                 $accrued_leave_start_date = Carbon::parse($time_period_active_year->start_date);
                 $accrued_leave_end_date = Carbon::parse($time_period_active_year->end_date);
-
                 if(Carbon::now()->lte( $accrued_leave_end_date)){
                     //till this date accured leave will be added
                     $end_date = Carbon::now();
+                    dd($end_date);
 
                 }else{
                    $end_date =  $accrued_leave_end_date;
                 }
 
-
                $emp_doj = Carbon::parse($emp_doj);
-
                if($emp_doj->between( $accrued_leave_start_date,$end_date )){
 
                 while($end_date->gte($emp_doj)){
@@ -128,7 +111,6 @@ class VmtEmployeeLeaveService
                 while($end_date->gte( $accrued_leave_start_date)){
                     $year= $accrued_leave_start_date->format('Y');
                     $month= $accrued_leave_start_date->format('n');
-
                     if($month<10)
                      $month='0'.$month;
 
