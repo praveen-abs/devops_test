@@ -61,12 +61,16 @@ class VmtPayrollController extends Controller
 
     }
 
-    public function fetchEmployeePayslipDetails(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+    public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayslipService $employeePaySlipService){
 
-         return $employeePaySlipService->fetchEmployeePayslipDetails($request->year, $request->month);
+         return $employeePaySlipService->getAllEmployeesPayslipDetails($request->year, $request->month);
 
     }
 
+    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+        return $employeePaySlipService->showPaySlip_HTMLView($request->user_id, $request->payroll_month);
+
+    }
 
 
     public function showPayrollSetup(Request $request){

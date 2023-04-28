@@ -452,7 +452,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
-    Route::get('payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
+
+    Route::get('/payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
+    Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayrollController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
+
     Route::get('payroll/setup',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
     Route::get('payroll/work_location',  [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
 
