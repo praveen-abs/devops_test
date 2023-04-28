@@ -64,19 +64,20 @@ const viewemployee =(emp) =>{
 
 
 const Month = ref([
-    {Name:'January'},
-    {Name:'Febraury'},
-    {Name:'March'},
-    {Name:'April'},
-    {Name:'May'},
-    {Name:'June'},
-    {Name:'July'},
-    {Name:'August'},
-    {Name:'September'},
-    {Name:'October'},
-    {Name:'November'},
-    {Name:'December'},
+    {Name:'January',value:'01'},
+    {Name:'Febraury',value:'02'},
+    {Name:'March',value:'03'},
+    {Name:'April',value:'04'},
+    {Name:'May',value:'05'},
+    {Name:'June',value:'06'},
+    {Name:'July',value:'07'},
+    {Name:'August',value:'08'},
+    {Name:'September',value:'09'},
+    {Name:'October',value:'10'},
+    {Name:'November',value:'11'},
+    {Name:'December',value:'12'},
 ]);
+
 const Year = ref([
     {Name:'2023'},
     {Name:'2022'},
@@ -212,16 +213,19 @@ axios.get(`/db/getuserName`).then(res=>{
 //     console.log(error.toJSON());
 //     });
 // }
-
 function monthYear(){
     axios.post('/payroll/fetchEmployeePayslipDetails',{
-        month: emp.selectmonth.Name,
+        month: emp.selectmonth.value,
         year: emp.selectyear.Name,
-        selected:emp.selectedProduct,
-    }) .then((res) => console.log(res.data))
+        //selected:emp.selectedProduct,
+    }) .then((res) => {
+        ajaxData_employees_list.value = res.data;
+        console.log(res.data);
+    })
     .catch((error) => console.log(error));
 
 }
+
 
 
 
