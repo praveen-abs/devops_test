@@ -755,6 +755,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
 
+    Route::get('/testing/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtTestingController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
+
 });
 
 Route::post('/payroll/fetchEmployeePayslipDetails',  [App\Http\Controllers\VmtPayrollController::class, 'fetchEmployeePayslipDetails'])->name('fetchEmployeePayslipDetails');

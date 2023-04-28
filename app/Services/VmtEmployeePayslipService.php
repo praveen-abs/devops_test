@@ -738,7 +738,7 @@ class VmtEmployeePayslipService {
                    // dd($emp_name);
                         return $emp_name;
         }
-        
+
     public function getEmployeeAllPayslipList($user_code){
 
             //Validate

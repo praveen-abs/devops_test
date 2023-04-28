@@ -11,7 +11,6 @@
                 </div>
                 <div class="text-center col-12">
 
-
                     <div class="mx-auto rounded-circle img-xl userActive-status profile-img">
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
