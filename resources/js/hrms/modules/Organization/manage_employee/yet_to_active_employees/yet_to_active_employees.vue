@@ -65,15 +65,15 @@
         </Column>
         <Column field="is_onboarded" header="Onboarding Status">
           <template #body="slotProps">
-            {{ slotProps.data.is_onboarded ? "Done" : "Not Done" }}
+            {{ slotProps.data.is_onboarded ? "Completed" : "Pending" }}
           </template>
 
         </Column>
         <Column field="doc_status" header="Docs Approval Status">
           <template #body="slotProps">
             {{
-              slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Done" : "Not Done")
-              : "NA"
+              slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Approved" : "Not Done")
+              : "Pending"
 
             }}
           </template>
