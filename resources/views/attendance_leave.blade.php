@@ -85,19 +85,18 @@
                         </div>
                         <div class="row">
 
-                            @foreach ($leaveTypes as $singleLeaveType)
-                                @if ($singleLeaveType->is_finite == '1')
+                            @foreach (    $leave_balance_details['Leave Balance'] as $key=>$value)
                                     <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                         <div class="card border-rtb left-line w-100">
                                             <div class="text-center card-body">
-                                                <p class="mb-2 text-ash-medium f-13 ">{{ $singleLeaveType->leave_type }}</p>
+                                                <p class="mb-2 text-ash-medium f-13 ">{{ $key }}</p>
                                                 <h5 class="mb-0">
-                                                    {{ $singleLeaveType->days_annual - ($leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0) }}
+                                                    {{ $value }}
                                                 </h5>
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+
                             @endforeach
                         </div>
                         <div class="row">
@@ -105,15 +104,13 @@
                                 <h6 class="text-left fw-bold">Leave Availed</h6>
                             </div>
 
-                            @foreach ($leaveTypes as $singleLeaveType)
+                            @foreach ( $leave_balance_details['Avalied Leaves'] as $Leave_type=>$balance)
                                 <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                     <div class="card border-rtb left-line w-100">
                                         <div class="text-center card-body">
-                                            <p class="mb-2 text-ash-medium f-13 ">{{ $singleLeaveType->leave_type }}</p>
+                                            <p class="mb-2 text-ash-medium f-13 ">{{  $Leave_type }}</p>
                                             <h5 class="mb-0">
-                                                <?php
-                                                echo $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? '0';
-                                                ?>
+                                               {{ $balance }}
                                             </h5>
 
                                         </div>
