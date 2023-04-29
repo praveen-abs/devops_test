@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Imports\VmtPaySlip;
 use App\Models\Bank;
 
-class VmtEmployeePayslipService {
+class VmtEmployeePayCheckService {
 
     /*
         NOTE:

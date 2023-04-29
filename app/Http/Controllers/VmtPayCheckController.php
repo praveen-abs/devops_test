@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Imports\VmtPaySlip;
-use App\Services\VmtEmployeePayslipService;
+use App\Services\VmtEmployeePayCheckService;
+
+/*
 
 
+
+
+*/
 class VmtPayCheckController extends Controller
 {
      public function showPaycheckDashboard(Request $request){
@@ -29,13 +34,13 @@ class VmtPayCheckController extends Controller
                 // code...
         // dd($value->epfemployer);
             $dataVmtHome = [];
-            $dataVmtHome['NET_TAKE_HOME'] = $value->NET_TAKE_HOME;
-            $dataVmtHome['TOTAL_DEDUCTIONS'] = $value->TOTAL_DEDUCTIONS;
-            $dataVmtHome['TOTAL_CON'] = $value->TOTAL_DEDUCTIONS+$value->NET_TAKE_HOME;
-            $dataVmtHome['epfemployer'] = $value->epfemployer;
-            $dataVmtHome['your_employee'] = $value->epfemployee;
-            $dataVmtHome['TOTAL_FIXED_GROSS'] = $value->TOTAL_FIXED_GROSS;
-            $dataVmtHome['dob'] = $value->dob;
+            $dataVmtHome['NET_TAKE_HOME'] = $value->NET_TAKE_HOME ?? "" ;
+            $dataVmtHome['TOTAL_DEDUCTIONS'] = $value->TOTAL_DEDUCTIONS ?? "" ;
+            $dataVmtHome['TOTAL_CON'] = $value->TOTAL_DEDUCTIONS+$value->NET_TAKE_HOME ?? "" ;
+            $dataVmtHome['epfemployer'] = $value->epfemployer ?? "" ;
+            $dataVmtHome['your_employee'] = $value->epfemployee ?? "" ;
+            $dataVmtHome['TOTAL_FIXED_GROSS'] = $value->TOTAL_FIXED_GROSS ?? "" ;
+            $dataVmtHome['dob'] = $value->dob ?? "" ;
             $json_PayCheck = json_encode($dataVmtHome);
             }
 
@@ -65,7 +70,8 @@ class VmtPayCheckController extends Controller
                 $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
             }
             foreach($data as $d) {
-                $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+                //$result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+                $result['TOTAL_PF_WAGES'] += 0;
             }
 
             return view('paycheckDashboard' , compact('data', 'result', 'compensatory','json_PayCheck'));
@@ -83,11 +89,11 @@ class VmtPayCheckController extends Controller
     }
 
 
-    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
         return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     }
 
-    public function showPaySlip_PDFView(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+    public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
         return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     }
 

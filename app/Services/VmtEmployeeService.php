@@ -131,7 +131,6 @@ class VmtEmployeeService {
             return "failure :: createOrUpdate_User() response obj is null ".__LINE__;
         }
 
-        return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
