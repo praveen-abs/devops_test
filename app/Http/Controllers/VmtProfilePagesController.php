@@ -442,7 +442,9 @@ public function addExperienceInfo(Request $request)
 
     public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePaySlipService)
     {
-        return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        //return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        return $employeePaySlipService->getEmployeePayslipDetailsAsPDF(Crypt::decryptString($request->user_code), $request->year, $request->month);
+
     }
 
 

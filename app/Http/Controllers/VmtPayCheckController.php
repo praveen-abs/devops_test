@@ -94,10 +94,21 @@ class VmtPayCheckController extends Controller
     }
 
     public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-        return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        return $employeePaySlipService->getEmployeePayslipDetailsAsPDF(Crypt::decryptString($request->user_code), $request->year, $request->month);
     }
 
-/*
+        /*
+        Get all payslip details of all employees for the given month, year.
+        Contains entire payslip detail for the given month
+
+    */
+    public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+
+        return $employeePaySlipService->getAllEmployeesPayslipDetails($request->year, $request->month);
+
+   }
+
+    /*
         Fetch payslips for currently logged in user
 
     */

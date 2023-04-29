@@ -832,41 +832,5 @@ class VmtEmployeePayCheckService {
             }
     }
 
-    // public function getAllEmployeesMonthlyPayslipsDetails($year, $month){
-    //     //Validate
-    //     $validator = Validator::make(
-    //         $data = [
-    //             "year" => $year,
-    //             "month" => $month,
-    //         ],
-    //         $rules = [
-    //             "year" => 'required',
-    //             "month" => 'required',
-    //         ],
-    //         $messages = [
-    //             'required' => 'Field :attribute is missing',
-    //             'exists' => 'Field :attribute is invalid',
-    //         ]
 
-    //     );
-
-    //     if($validator->fails()){
-    //         return response()->json([
-    //             'status' => 'failure',
-    //             'message' => $validator->errors()->all()
-    //         ]);
-    //     }
-
-    //     $array_emplist= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
-    //                 ->whereYear('PAYROLL_MONTH', $year)
-    //                 ->whereMonth('PAYROLL_MONTH',$month)
-    //                 ->where('users.is_ssa','0')
-    //                 ->where('users.active','1')
-    //                 ->get();
-
-
-    //     return $array_emplist;
-
-
-    // }
 }

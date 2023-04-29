@@ -18,13 +18,15 @@
             <Column field="user_code" header="Employee Code"></Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
-            <Column header="View Payslips">
+            <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View " @click="viewemployee(slotProps.data)" /></template>
+                    <Button class="btn-primary" label="View " @click="viewemployee(slotProps.data)" />
+                </template>
             </Column>
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendPayslipMail(slotProps.data)" /></template>
+                    <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendPayslipMail(slotProps.data)" />
+                </template>
             </Column>
         </DataTable>
     </div>
@@ -71,11 +73,8 @@ const emp = reactive({
 
 onMounted(async () => {
 
-    async function getAllEmployeesPayslipDetails(month, year) {
-        await managePayslipStore.getAllEmployeesPayslipDetails();
-    }
-})
 
+});
 
 
 // function showConfirmDialog(selectedRowData, status) {
@@ -141,25 +140,6 @@ onMounted(async () => {
 //     console.log(error.toJSON());
 //     });
 // }
-function monthYear() {
-    let year = emp.selectDate.getFullYear();
-    let month = emp.selectDate.getMonth() + 1;
-
-    axios.post('/payroll/fetchEmployeePayslipDetails', {
-        month: month,
-        year: year,
-        //selected:emp.selectedProduct,
-    }).then((res) => {
-        ajaxData_employees_list.value = res.data;
-        console.log(res.data);
-    })
-        .catch((error) => console.log(error));
-
-}
-
-
-
-
 
 </script>
 

@@ -61,16 +61,7 @@ class VmtPayrollController extends Controller
 
     }
 
-    /*
-        Get all payslip details of all employees for the given month, year.
-        Contains entire payslip detail for the given month
 
-    */
-    public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-
-         return $employeePaySlipService->getAllEmployeesPayslipDetails($request->year, $request->month);
-
-    }
 
 
     public function showPayrollSetup(Request $request){

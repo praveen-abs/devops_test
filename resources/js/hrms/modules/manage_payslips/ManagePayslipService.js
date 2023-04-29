@@ -23,10 +23,10 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     //
 
-    const sendPayslipMail = (data)=>{
-        console.log(data.user_code);
+    async function sendPayslipMail(user_code){
+
         axios.post('http://localhost:3000/sendEmail',{
-            user_code:data.user_code,
+            user_code: user_code,
         }).then((data)=>{
             console.log(data);
         })
