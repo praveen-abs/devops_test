@@ -1735,13 +1735,17 @@
 
         }
         $('#inputGroupSelect01').on('change',function(){
+            var time_fram =  $('#inputGroupSelect01').val();
+            var time_frame_array = time_fram.split('/');
+            var start_date = time_frame_array[0];
+            var end_date = time_frame_array[1];
             $.ajax({
-                url: "{{ route('getEmployeeLeaveBalance') }}",
-                type: "POST",
+                url: "{{ route('fetchEmployeeLeaveBalance') }}",
+                type: "GET",
                 dataType: "json",
                 data: {
-                    'leave_id': $('#btn_revoke').attr("data-leave-id"),
-                    'status': status,
+                    'start_date':start_date,
+                    'end_date':end_date,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {

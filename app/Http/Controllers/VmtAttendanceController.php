@@ -1593,4 +1593,9 @@ class VmtAttendanceController extends Controller
         return  $leave_balance_details;
     }
 
+    public function fetchEmployeeLeaveBalance(Request $request){
+        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
+        return $leave_balance_details;
+    }
+
 }
