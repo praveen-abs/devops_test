@@ -21,6 +21,29 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         });
     }
 
+    //
+
+    const sendPayslipMail = (data)=>{
+        console.log(data.user_code);
+        axios.post('http://localhost:3000/sendEmail',{
+            user_code:data.user_code,
+        }).then((data)=>{
+            console.log(data);
+        })
+        .catch((data)=>{
+            console.log(data);
+
+        })
+
+    }
+
+
+
+
+
+
+
+
     // async function getAllEmployeesMonthlyPayslipsDetails(month, year){
 
     //     axios.post('payroll/getAllEmployeesMonthlyPayslipsDetails', {
@@ -53,6 +76,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     // }
 
+
+
     return {
 
         // Varaible Declartion
@@ -61,10 +86,9 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         // Functions
 
-        getAllEmployeesPayslipDetails
+        getAllEmployeesPayslipDetails,
 
-
-
+        sendPayslipMail
 
     };
 });
