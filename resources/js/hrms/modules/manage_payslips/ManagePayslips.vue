@@ -94,14 +94,13 @@ const sendEmail = (data)=>{
         console.log(res.data);
 
     }).finally((res)=>{
+        canShowLoadingScreen.value = false;
 
         console.log(res.data);
     })
 }
 
-  canShowLoadingScreen.value = false;
 
-});
 
 async function getAllEmployeesPayslipDetails(month, year){
     await managePayslipStore.getAllEmployeesPayslipDetails();
