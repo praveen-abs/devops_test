@@ -963,6 +963,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                                         ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
                                         ->where('vmt_employee_documents.status',"Pending")
                                         ->where('users.is_ssa',"0")
+                                        ->where('users.is_onboarded',"1")
                                         ->where('users.active','<>',"-1")
                                         ->get([
                                             'users.name as name',
