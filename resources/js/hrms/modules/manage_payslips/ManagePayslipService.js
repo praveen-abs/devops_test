@@ -47,7 +47,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             year: year,
             //selected:emp.selectedProduct,
         }).then((res) => {
-            ajaxData_employees_list.value = res.data;
+            array_employees_list.value = res.data;
             console.log(res.data);
         })
             .catch((error) => console.log(error));
