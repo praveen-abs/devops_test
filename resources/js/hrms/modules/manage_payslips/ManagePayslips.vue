@@ -3,11 +3,11 @@
         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
         <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="emp.selectDate"
             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
-        <Button class="mb-2 h-10 btn btn-orange" label="Generate" @click="monthYear()" />
+        <Button class="mb-2 h-10 btn btn-orange" label="Generate" @click="managePayslipStore.getAllEmployeesPayslipDetails( emp.selectDate.getMonth() + 1 , emp.selectDate.getFullYear())" />
     </div>
     <div class="my-4">
 
-        <DataTable :value="ajaxData_employees_list" :paginator="true" :rows="10" dataKey="id"
+        <DataTable :value="managePayslipStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]" v-model:selection="emp.selectedProduct"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
@@ -21,8 +21,11 @@
                     <Button class="btn-primary" label="view" @click="viewemployee(slotProps.data)" /></template>
             </Column>
             <Column header="Action">
+
                 <template #body="slotProps">
-                    <Button class="btn-success" label="Send" @click="viewemployee(slotProps.data)" /></template>
+                    <!-- <Button class="btn-success" label="Send" @click="viewemployee(slotProps.data)" /> -->
+                    <Button class="btn-success" label="Send" @click="sendEmail(slotProps.data)" />
+                </template>
             </Column>
         </DataTable>
     </div>
@@ -38,20 +41,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive ,inject} from "vue";
 import axios from "axios";
+
 // import { FilterMatchMode, FilterOperator } from "primevue/api";
 // import { useConfirm } from "primevue/useconfirm";
 // import { useToast } from "primevue/usetoast";
 
+const swal = inject("$swal");
+
 const dailog_employeeDetails = ref(false);
+let canShowLoadingScreen = ref(true);
 
 
 const employeeDetails = ref()
 
 const viewemployee = (emp) => {
     employeeDetails.value = { emp }
-    console.log(emp);
+    console.log(emp.user_code);
     dailog_employeeDetails.value = true
 }
 
@@ -64,18 +71,42 @@ const emp = reactive({
     selectmonth: '',
     selectDate: '',
     selectyear: '',
-    selectedProduct: '',
 });
 
+const sendEmail = (data)=>{
+    employeeDetails.value = data
+    axios.post('http://localhost:3000/sendEmail',{
+        user_code:data.user_code,
+    }).then((res)=>{
+        if (response.data.status == "Success") {
+        // Swal.fire(response.data.status, response.data.message, "success");
+        // window.location.reload()
+         Swal.fire({
+          title:response.data.status = "Success" ,
+          text: response.data.message,
+          icon: "success",
+          showCancelButton: false,
+        }).then((result) => {
+          window.location.reload();
+        })
+        console.log(res.data);
+    }}).catch((res)=>{
+        console.log(res.data);
 
+    }).finally((res)=>{
 
-axios.get(`/db/getuserName`).then(res => {
+        console.log(res.data);
+    })
+}
 
-    ajaxData_employees_list.value = res.data;
-
-    console.log(ajaxData_employees_list.value);
+  canShowLoadingScreen.value = false;
 
 });
+
+async function getAllEmployeesPayslipDetails(month, year){
+    await managePayslipStore.getAllEmployeesPayslipDetails();
+}
+
 
 
 // function showConfirmDialog(selectedRowData, status) {

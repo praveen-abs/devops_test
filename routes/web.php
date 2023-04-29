@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PMS\VmtPMSModuleController;
 use App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController;
-use App\Http\Controllers\Onboarding\VmtEmployeeMailNotifManagementController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -457,7 +456,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
-    Route::get('payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
+
+    Route::get('/payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
+    Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayrollController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
+
     Route::get('payroll/setup',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
     Route::get('payroll/work_location',  [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
 
@@ -747,7 +749,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     //Emp Mail Notifications
     Route::get('/configs/manage_emp_mail_notifications', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'fetchAllEmployees_WelcomeMail_Details'])->name('fetchAllEmployees_WelcomeMail_Details');
-    Route::get('/fetch_all_employees_welcome_mail_status', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'send_AccActivationMailNotification'])->name('/configs/all_employees_welcome_mail_status');
+    Route::post('/fetch_all_employees_welcome_mail_status', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'send_AccActivationMailNotification'])->name('/configs/all_employees_welcome_mail_status');
 
 
     //Testing controller

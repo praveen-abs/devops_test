@@ -24,14 +24,17 @@ import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
+import { createPinia } from "pinia";
 
 import ManagePayslips from './ManagePayslips.vue';
 
 const app = createApp(ManagePayslips);
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
+app.use(pinia)
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
