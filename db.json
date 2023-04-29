@@ -42,6 +42,23 @@
       "id": 4
     }
   ],
+  "Work_location": [
+    {
+      "work_location": "qwqw",
+      "state": {
+        "id": 3,
+        "country_id": "359",
+        "country_code": "IN",
+        "state_name": "Arunachal Pradesh",
+        "status": "A"
+      },
+      "address": "asas",
+      "city": "fdzfzz",
+      "pincode": "22",
+      "ph_no": "aa",
+      "id": 1
+    }
+  ],
   "FinanceDetails": [
     {
       "bank_name": {

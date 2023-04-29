@@ -41,9 +41,13 @@
             "app/Services/VmtEmployeePayslipService.php",
             "app/Services/VmtAttendanceService.php",
             "app/Services/VmtReimbursementsService.php",
-            "app/Services/VmtProfilePagesService.php",
-            "app/Services/VmtDashboardService.php"
-
+            "app/Services/VmtProfilePagesService.php",,
+            "app/Services/VmtDashboardService.php",
+            "app/Services/VmtInvestmentsService.php",
+            "app/Services/VmtHolidayService.php",
+            "app/Services/VmtApprovalsService.php",
+            "app/Services/VmtLoginService.php",
+            "app/Services/Admin/VmtEmployeeMailNotifMgmtService.php"
         ]
     },
     "autoload-dev": {

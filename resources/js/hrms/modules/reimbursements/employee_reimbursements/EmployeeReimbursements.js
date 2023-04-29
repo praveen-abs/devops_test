@@ -2,6 +2,7 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import '../.././../assests/tailwind.css'
 
 
 import { createApp } from "vue";
@@ -32,6 +33,10 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
 
+import OverlayPanel from 'primevue/overlaypanel';
+
+
+
 
 import  employee_reimbursement from './EmployeeReimbursements.vue'
 
@@ -59,6 +64,7 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
 app.component('Toast', Toast);
+app.component('OverlayPanel', OverlayPanel);
 app.component('ConfirmDialog',ConfirmDialog);
 app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);

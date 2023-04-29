@@ -91,6 +91,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+     
         $request->validate([
             'user_code' => 'required',
             'password' => 'required',
@@ -99,7 +100,6 @@ class LoginController extends Controller
         // Remember token set to false
         $save_credentials = false;
         $user = User::where('user_code', $request->user_code)->where('can_login', 1)->first();
-        //dd($user);
 
         if($user)
         {

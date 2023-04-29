@@ -13,6 +13,8 @@ use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtGeneralInfo;
 
+use App\Services\VmtNotificationsService;
+
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 
@@ -21,11 +23,16 @@ use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
 use \Datetime;
+use Illuminate\Support\Facades\File;
+
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class VmtAttendanceService{
 
 
-    public function fetchAttendanceRegularizationData($manager_user_code = null)
+    public function fetchAttendanceRegularizationData($manager_user_code = null, $month, $year)
     {
 
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
@@ -35,20 +42,27 @@ class VmtAttendanceService{
         //If manager ID not set, then show all employees
         if(empty($manager_user_code))
         {
-            //If manager ID set, then show only the team level employees
-
-            $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
-
+            if(empty($month) && empty($year))
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+            else
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
+                                                                            ->whereMonth('attendance_date', $month)
+                                                                            ->get();
         }
         else
         {
+            //If manager ID set, then show only the team level employees
 
             $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
 
-            //dd($employees_id);
 
-            $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',$employees_id)->get();
-            //dd($allEmployees_lateComing);
+            if(empty($month) && empty($year))
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',$employees_id)->get();
+            else
+                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id',$employees_id)
+                                                                                ->whereYear('attendance_date', $year)
+                                                                                ->whereMonth('attendance_date', $month)
+                                                                                ->get();
 
         }
 
@@ -76,8 +90,13 @@ class VmtAttendanceService{
         }
 
        // dd($allEmployees_lateComing);
-        return $allEmployees_lateComing;
+        // return [
+        //     "status"=>"success",
+        //     "message"=>"",
+        //     "data"=>$allEmployees_lateComing
+        // ];
 
+        return $allEmployees_lateComing;
     }
 
     /*
@@ -198,10 +217,7 @@ class VmtAttendanceService{
     {
         $response = array();
 
-          $leaveTypes = VmtLeaves::all();
-         $sickLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '1')->count();
-         $CausalLeaveCount =  VmtEmployeeLeaves::where('leave_type_id', '=', '2')->count();
-        $earnedleave_count =  VmtEmployeeLeaves::where('leave_type_id', '=', '3')->count();
+        $leaveTypes = VmtLeaves::all();
 
         $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','vmt_employee_leaves.leave_type_id')
                                             ->where('user_id', '=' , '174');
@@ -224,6 +240,7 @@ class VmtAttendanceService{
     private function createLeaveRange($start_date, $end_date){
         $start_date = new DateTime($start_date);
         $end_date = new DateTime($end_date);
+        $end_date->modify('+1 day'); //For PHP < 8.2, Adding extra date so that the late date is considered. In PHP 8.2 , we have flag to include END DATE
 
         $interval = new DateInterval('P1D');
         $daterange = new DatePeriod($start_date, $interval ,$end_date);
@@ -240,78 +257,176 @@ class VmtAttendanceService{
             $compensatory_work_days_ids
 
     */
-    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days, $compensatory_work_days_ids, $leave_session, $leave_type_name, $leave_reason, $notifications_users_id){
+    public function  applyLeaveRequest($user_id, $leave_request_date, $start_date, $end_date, $hours_diff, $no_of_days,
+                                        $compensatory_work_days_ids, $leave_session, $leave_type_name,
+                                         $leave_reason, $notifications_users_id, VmtNotificationsService $serviceNotificationsService){
 
-        //Get the user_code
+        //Core values needed
         $query_user = User::where('id',$user_id)->first();
+        $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
+        $leave_type_id = VmtLeaves::where('leave_type',$leave_type_name)->value('id');
+
+        //Check whether this user has manager
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $user_id)->value('l1_manager_code');
+
+        if(empty($manager_emp_code))
+        {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Manager not found for the given user ".$user_id." . Kindly contact the admin"
+            ]);
+        }
+
+        $query_manager = User::where('user_code', $manager_emp_code)->first();
+        $manager_name = $query_manager->name;
+        $manager_id = $query_manager->id;
+
+        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
+
+        if(empty($reviewer_mail))
+        {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Manager mail not defined. Kindly contact the admin"
+            ]);
+        }
+
+
+        //Need to split the validation based on leave type so that mandatory fields are checked correctly.
+        if (isPermissionLeaveType($leave_type_id)) {
+
+            if(empty($hours_diff))
+            {
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "hours_diff is missing for given permission type = ".$leave_type_name
+                ]);
+            }
+
+        }
+        else
+        if($leave_type_id == $compensatory_leavetype_id)
+        {
+            if(empty($compensatory_work_days_ids))
+            {
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "compensatory work days are missing for given leave type = ".$leave_type_name
+                ]);
+            }
+        }
+        else // full day, half-day, custom
+        {
+            //if half day
+            if($no_of_days == '0.5')
+            {
+                if(empty($leave_session))
+                {
+                    return response()->json([
+                        "status" => "failure",
+                        "message" => "leave_session is missing for given half-day leave type = ".$leave_type_name
+                    ]);
+                }
+            }
+            else //fullday and custom
+            {
+                //All the validations are done in API level.
+                //Need to write in common place for using in web request also
+            }
+        }
+
+        ////Check whether leave request already exists for the given leave dates
 
         $leave_month = date('m',strtotime($start_date));
-        $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
 
-        $leave_type_id = VmtLeaves::where('leave_type',$leave_type_name)->value('id');
-        //dd($leave_type_id);
         //get the existing Pending/Approved leaves. No need to check Rejected
-        $existingNonPendingLeaves = VmtEmployeeLeaves::where('user_id', $user_id)
+        $existingLeavesRequests = VmtEmployeeLeaves::where('user_id', $user_id)
                                     ->whereMonth('start_date','>=',$leave_month)
                                     ->whereIn('status',['Pending','Approved'])
                                     ->get(['start_date','end_date','status']);
 
-        foreach($existingNonPendingLeaves as $singleLeaveRange){
-            //$endDate = new Carbon($singleLeaveRange->end_date);
-            //$endDate->addDay();
 
-            //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+        foreach($existingLeavesRequests as $singleExistingLeaveRequest){
 
-            //dd($leave_range);
+            //If start date and end date of an existing leave request is same, then no need to call createLeaveRange().
+            //Just compare start_date with current start_date/end_date leave
+            if($singleExistingLeaveRequest->start_date == $singleExistingLeaveRequest->end_date)
+            {
 
-            //check with the user given leave range
-            foreach ($leave_range as $date) {
-                //if date already exists in previous leaves
-                // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
-                if ($start_date == $date->format('Y-m-d') || $end_date == $date->format('Y-m-d') )
+                $processedStartDate = substr($singleExistingLeaveRequest->start_date,0,10);
+                $processedEndDate = substr($singleExistingLeaveRequest->end_date,0,10);
+
+                if ( $processedStartDate == $start_date || $processedEndDate == $start_date ||
+                     $processedStartDate == $end_date || $processedEndDate == $end_date)
                 {
+                    //dd("single date leave collision");
+
                     return $response = [
                         'status' => 'failure',
-                        'message' => 'Leave Request already applied for this date',
-                        'mail_status' => '',
-                        'error' => '',
-                        'error_verbose' => ''
+                        'message' => 'Leave Request already applied for the given dates',
                     ];
+                }
+
+            }
+            else
+            {
+
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleExistingLeaveRequest->start_date, $singleExistingLeaveRequest->end_date);
+
+                //check with the user given leave range
+                foreach ($leave_range as $date) {
+
+                    //dd("Given start,end date : ".$start_date. " , ".$end_date);
+                    //dd("Currently checking start,end date : ".$date->format('Y-m-d'));
+
+                    //if date already exists in previous leaves
+                    // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
+                    if ($start_date == $date->format('Y-m-d') || $end_date == $date->format('Y-m-d') )
+                    {
+                        return $response = [
+                            'status' => 'failure',
+                            'message' => 'Leave Request already applied for the given dates',
+                        ];
+                    }
+
                 }
             }
         }
 
-        $diff="ERROR";
+        //dd("Leave doesnt exists");
+
         $mailtext_total_leave = " 0-0";
 
 
           //Check if its Leave or Permission
         if (isPermissionLeaveType($leave_type_id)) {
 
-            $diff = $hours_diff;
-            $mailtext_total_leave = $diff . " Hour(s)";
+            $no_of_days = $hours_diff;
+            $mailtext_total_leave = $hours_diff . " Hour(s)";
         } else {
             //Now its leave type
 
+            $text_content = 'ERROR';
             ////Check if its 0.5 day leave, then handle separately
 
             if($no_of_days == '0.5')
             {
                 if($leave_session == "FN"){
-                    $diff = "Fore-noon ";
+                    $text_content = "Fore-noon";
                 } else
                 if($leave_session == "AN"){
-                    $diff = "After-noon ";
+                    $text_content = "After-noon";
                 }
             }
             else
             {
                 //If its not half day leave, then its fullday or custom days
-                $diff = intval($no_of_days);
+                $text_content = intval($no_of_days);
+                $leave_session = '';//reset
             }
 
-            $mailtext_total_leave = $diff . " Day(s)";
+            $mailtext_total_leave = $text_content . " Day(s)";
         }
 
 
@@ -325,16 +440,10 @@ class VmtAttendanceService{
         $emp_leave_details->leave_reason = $leave_reason;
         $emp_leave_details->total_leave_datetime = $no_of_days." ".$leave_session;
 
-        // $emp_leave_details->total_leave_datetime = $diff;
-
 
         //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', $user_id)->value('l1_manager_code');
-        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
-        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
 
         $emp_leave_details->reviewer_user_id = $manager_id;
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
 
         if (!empty($notifications_users_id))
             $emp_leave_details->notifications_users_id = implode(",", $notifications_users_id);
@@ -367,7 +476,6 @@ class VmtAttendanceService{
         ////
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
 
         $message = "";
         $mail_status = "";
@@ -375,12 +483,24 @@ class VmtAttendanceService{
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-        // dd($request->leave_type_id);
+        //To store notif emails, if no notif emails given , then send this empty array to Mail::
+        $notification_mails = array();
+
         if(!empty($notifications_users_id))
             $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id',$notifications_users_id)->pluck('officical_mail');
-        else
-            $notification_mails = array();
 
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+
+        //Save in notifications table
+        $serviceNotificationsService->saveNotification(user_code: $query_user->user_code,
+                                                                 notification_title: "Leave request applied",
+                                                                 notification_body: "Kindly take action",
+                                                                 redirect_to_module : "Leave Approvals",
+                                                                 recipient_user_code : $manager_emp_code,
+                                                                 is_read : 0
+
+
+        );
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : $query_user->name,
@@ -1135,6 +1255,165 @@ class VmtAttendanceService{
         ];
     }
 
+
+    public function fetchAttendanceStatus($user_code, $date){
+
+        //Sub-query approach : Need to compare the speed with the below uncommented query
+        // $query_response = VmtEmployeeAttendance::where('user_id',  function (Builder $query) use ($user_code) {
+        //     $query->select('id')
+        //         ->from('users')
+        //         ->where('user_code',$user_code);
+        // })->get();
+
+        //Joins approach : Need to compare with above query
+        $query_response = VmtEmployeeAttendance::join('users','users.id','=','vmt_employee_attendance.user_id')
+                                                ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_attendance.vmt_employee_workshift_id')
+                                                ->where('users.user_code',$user_code)
+                                                ->where('vmt_employee_attendance.date',$date)
+                                                ->first([
+                                                    'users.user_code as employee_code',
+                                                    'vmt_employee_attendance.date',
+
+                                                    'vmt_work_shifts.shift_type as shift_type',
+                                                    'vmt_work_shifts.shift_start_time as shift_start_time',
+                                                    'vmt_work_shifts.shift_end_time as shift_end_time',
+
+                                                    'vmt_employee_attendance.checkin_time as checkin_time',
+                                                    'vmt_employee_attendance.checkout_time as checkout_time',
+
+                                                    'vmt_employee_attendance.attendance_mode_checkin as attendance_mode_checkin',
+                                                    'vmt_employee_attendance.attendance_mode_checkout as attendance_mode_checkout',
+
+                                                ]);
+
+        return $query_response;
+    }
+
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
+    {
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //Check if user already checked-in
+            $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
+
+            if($attendanceCheckin)
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message'=> 'Check-in already done',
+                    'data'   => ""
+                ]);
+            }
+
+
+            //If check-in not done already , then create new record
+
+            $attendanceCheckin           = new VmtEmployeeAttendance;
+            $attendanceCheckin->date          = $date;
+            $attendanceCheckin->checkin_time  = $checkin_time;
+            $attendanceCheckin->user_id       = $user_id;
+            //$attendanceCheckin->shift_type    = $shift_type; Todo : Need to remove in table
+            $attendanceCheckin->work_mode = $work_mode;//office, home
+            $attendanceCheckin->checkin_comments = "";
+            $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
+            $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
+            $attendanceCheckin->save();
+
+            // processing and storing base64 files in public/selfies folder
+            if(!empty('selfie_checkin')){
+
+                $emp_selfiedir_path = public_path('employees/'.$user_code.'/selfies/');
+
+                // dd($emp_document_path);
+                if(!File::isDirectory($emp_selfiedir_path))
+                    File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                $selfieFileEncoded  =  $selfie_checkin;
+
+                $fileName = $attendanceCheckin->id.'_checkin.png';
+
+                \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+                $attendanceCheckin->selfie_checkin = $fileName;
+            }
+
+            $attendanceCheckin->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Check-in success',
+                'data'   => ''
+            ]);
+
+
+    }
+
+    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
+    {
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //Check if user already checked-in
+            $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
+
+            if($attendanceCheckout)
+            {
+
+                //TODO : Need to return if check-out is already done
+
+
+
+                //Update existing record
+                $attendanceCheckout->checkout_time = $checkout_time;
+                $attendanceCheckout->checkout_comments = "";
+                $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
+                $attendanceCheckout->checkout_lat_long = $checkout_lat_long ?? '';
+
+                $attendanceCheckout->save();
+
+
+                // processing and storing base64 files in public/selfies folder
+                if(!empty('selfie_checkout')){
+
+                    $emp_selfiedir_path = public_path('employees/'.$user_code.'/selfies/');
+
+                    // dd($emp_document_path);
+                    if(!File::isDirectory($emp_selfiedir_path))
+                        File::makeDirectory($emp_selfiedir_path, 0777, true, true);
+
+
+                    $selfieFileEncoded  =  $selfie_checkout;
+
+                    $fileName = $attendanceCheckout->id.'_checkout.png';
+
+                    \File::put($emp_selfiedir_path.$fileName, base64_decode($selfieFileEncoded));
+
+                    $attendanceCheckout->selfie_checkout = $fileName;
+                }
+
+                $attendanceCheckout->save();
+
+
+                return response()->json([
+                    'status' => 'success',
+                    'message'=> 'Check-out success',
+                    'data'   => ''
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message'=> 'Unable to check-out since Check-in is not done for the given date',
+                    'data'   => ""
+                ]);
+            }
+
+    }
 }
 
 

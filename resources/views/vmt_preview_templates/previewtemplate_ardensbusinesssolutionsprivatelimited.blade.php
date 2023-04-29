@@ -6,14 +6,58 @@
     <link href="{{ URL::asset('assets/css/preview_template.css') }}" rel="stylesheet">
     <style>
         table.arderns_salaryTable {
-
-            font-size: 14px !important;
+            font-size: 13px !important;
         }
 
         table.arderns_salaryTable tr td,
         table.arderns_salaryTable tr {
             border: 1px solid #000 !important;
             padding: 0px 10px;
+        }
+
+        table {
+            width: 100%;
+            vertical-align: middle;
+
+        }
+
+
+        .border-less {
+            border: 0px !important;
+        }
+
+        tr {
+            height: 12.55pt;
+        }
+
+        td {
+            width: 81.35pt
+        }
+
+
+        .margin-0 {
+            margin: 0px;
+        }
+
+        .main-page img {
+            display: revert !important;
+        }
+
+        .payslip_table tr p,
+        .payslip_table td p {
+            font-size: 9pt;
+            margin-top: 3pt;
+            margin-bottom: 3pt;
+            padding: 0px 5px;
+        }
+
+        .header-row {
+            height: 50px;
+        }
+
+        .payslip_table tr .bg-ash,
+        .payslip_table td .bg-ash {
+            background-color: #9e9e9e5c;
         }
     </style>
 @endsection
@@ -115,17 +159,17 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>
+                                                                    <td class="my-3">
                                                                         <ol style="list-style: none">
 
-                                                                            <li>
+                                                                            <li class="my-2">
                                                                                 <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                                                     alt=""
                                                                                     style="padding-right:10px ">
                                                                                 <span> Log in to </span><a
                                                                                     href="ess.abshrms.com">ess.abshrms.com</a>
                                                                             </li>
-                                                                            <li>
+                                                                            <li class="my-2">
                                                                                 <img src="{{ URL::asset('assets/images/list_style.png') }}"
                                                                                     alt=""
                                                                                     style="padding-right:10px ">
@@ -137,8 +181,9 @@
                                                                         </ol>
                                                                     </td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <td colspan="12" style=" " align="left">
+                                                                <tr class="">
+                                                                    <td colspan="12" class="my-4" style=" "
+                                                                        align="left">
                                                                         <p class="txt-left a">
                                                                             <b>Our Core Values:</b>
                                                                             Our core values are the framework of our
@@ -157,10 +202,11 @@
                                                                             <li>
                                                                                 <p class="pt-10">
                                                                                     <img src="{{ URL::asset('assets/images/list_style.png') }}"
-                                                                                    alt=""
-                                                                                    style="padding-right:10px ">
+                                                                                        alt=""
+                                                                                        style="padding-right:10px ">
                                                                                     <b>Professionalism:</b>
-                                                                                    Our staff expertise responds to high complex
+                                                                                    Our staff expertise responds to high
+                                                                                    complex
                                                                                     needs
                                                                                 </p>
 
@@ -169,8 +215,8 @@
 
                                                                                 <p class="txt-left a pt-10">
                                                                                     <img src="{{ URL::asset('assets/images/list_style.png') }}"
-                                                                                    alt=""
-                                                                                    style="padding-right:10px ">
+                                                                                        alt=""
+                                                                                        style="padding-right:10px ">
                                                                                     <b>Proximity:</b>
                                                                                     Build open relationships with clients
                                                                                 </p>
@@ -179,8 +225,8 @@
 
                                                                                 <p class="txt-left a pt-10">
                                                                                     <img src="{{ URL::asset('assets/images/list_style.png') }}"
-                                                                                    alt=""
-                                                                                    style="padding-right:10px ">
+                                                                                        alt=""
+                                                                                        style="padding-right:10px ">
                                                                                     <b>Proactivity: </b>
                                                                                     Not only follow the customer demand but
                                                                                     anticipate and customize intelligent
@@ -192,8 +238,8 @@
 
                                                                                 <p class="txt-left a pt-10">
                                                                                     <img src="{{ URL::asset('assets/images/list_style.png') }}"
-                                                                                    alt=""
-                                                                                    style="padding-right:10px ">
+                                                                                        alt=""
+                                                                                        style="padding-right:10px ">
                                                                                     <b>Proficiency: </b>
                                                                                     High standards, ability to use
                                                                                     innovative
@@ -204,8 +250,8 @@
 
                                                                                 <p class="txt-left a pt-10">
                                                                                     <img src="{{ URL::asset('assets/images/list_style.png') }}"
-                                                                                    alt=""
-                                                                                    style="padding-right:10px ">
+                                                                                        alt=""
+                                                                                        style="padding-right:10px ">
                                                                                     <b>People: </b>
                                                                                     Finally, payroll is all about people.
                                                                                     Our
@@ -220,8 +266,8 @@
 
                                                                                 <p class="txt-left a pt-10">
                                                                                     <img src="{{ URL::asset('assets/images/list_style.png') }}"
-                                                                                    alt=""
-                                                                                    style="padding-right:10px ">
+                                                                                        alt=""
+                                                                                        style="padding-right:10px ">
                                                                                     <b>Progress: </b>
                                                                                     Innovation is at the core of our
                                                                                     business
@@ -268,9 +314,8 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td>
-                                                        <div class="logo"
-                                                            style="width:100%;height:100px;">
+                                                    <td style="padding-top:43px">
+                                                        <div class="logo" style="width:100%;height:100px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
@@ -442,7 +487,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="logo"
-                                                            style="width:100%;height:160px;padding-top:63px;">
+                                                            style="width:100%;height:160px;padding-top:61px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;width:100%;">
@@ -620,8 +665,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="logo"
-                                                            style="width:100%;padding-top:151px;">
+                                                        <div class="logo" style="width:100%;padding-top:151px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;width:100%;">
@@ -759,8 +803,9 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        <div class="logo" style="width:100%;height:100px;padding-top:12px;">
+                                                    <td style="padding-top:16px">
+                                                        <div class="logo"
+                                                            style="width:100%;height:100px;padding-top:12px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
@@ -933,7 +978,7 @@
                                                                         <p class="fw-600  ">
                                                                             Introduction
                                                                         </p>
-                                                                        <p class="txt-left pt-10">
+                                                                        <p class="text-justify pt-10">
                                                                             ABS recognizes people as its most important
                                                                             asset and is committed to ensuring a safe and
                                                                             healthy work environment for all its employees
@@ -949,14 +994,14 @@
                                                                             treat their direct employees in matters of
                                                                             health & safety.
                                                                         </p>
-                                                                        <p class="txt-left pt-10">
+                                                                        <p class="text-justify pt-10">
                                                                             This document is to be read and thoroughly
                                                                             understood by all ABS AWs at the time of joining
                                                                             an assignment; it requires them to be aware of
                                                                             the policy and our recommendations for safe
                                                                             working practices
                                                                         </p>
-                                                                        <p class="txt-left pt-10">
+                                                                        <p class="text-justify pt-10">
                                                                             We assure that we will not depute an AW to a
                                                                             client site, which causes an Occupational Hazard
                                                                             or risk to Health. We will only work with
@@ -966,7 +1011,7 @@
                                                                             that an AW might encounter and could be a
                                                                             potential health & safety issue.
                                                                         </p>
-                                                                        <p class="txt-left pt-10">
+                                                                        <p class="text-justify pt-10">
                                                                             We also ask our AWs not to endanger themselves
                                                                             or their colleagues at work by violating any
                                                                             safety rules, and to comply with workplace
@@ -989,7 +1034,7 @@
                                                                         <p class="pt-10 fw-600">
                                                                             Health & Safety Policy:
                                                                         </p>
-                                                                        <p class=" pt-10">
+                                                                        <p class="text-justify pt-10">
                                                                             Health & Safety in the work place is every ones
                                                                             responsibility. ABS regards promotion of Health
                                                                             & Safety measures as a mutual objective for the
@@ -1007,21 +1052,25 @@
                                                                         </p>
 
                                                                         <ol>
-                                                                            <li class="pt-10">Ensure that you are aware of
+                                                                            <li class=" text-justify pt-10">Ensure that you
+                                                                                are aware of
                                                                                 your own
                                                                                 responsibilities in respect of relevant
                                                                                 health, safety and environmental matters.
                                                                             </li>
-                                                                            <li style="" class="pt-10">Follow
+                                                                            <li style="" class="text-justify pt-10">
+                                                                                Follow
                                                                                 instructions the way it is meant to be. Use
                                                                                 entries and exits, lifts in the manner it is
                                                                                 meant to be.</li>
-                                                                            <li style="" class="pt-10">Ensure you
+                                                                            <li style="" class="text-justify pt-10">
+                                                                                Ensure you
                                                                                 have
                                                                                 your AW ID card on your person at all times
                                                                                 with your photograph, ABS contact details
                                                                                 and Nos. displayed in a clear manner.</li>
-                                                                            <li style="" class="pt-10">If you have
+                                                                            <li style="" class="text-justify pt-10">
+                                                                                If you have
                                                                                 a
                                                                                 visitor, ensure your visitor signs in and
                                                                                 receives a security pass. Do not take your
@@ -1039,7 +1088,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
+                                                    <td style="padding-top:75px">
                                                         <div class="logo"
                                                             style="width:100%;height:100px;padding-top:23px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
@@ -1076,12 +1125,10 @@
                                                     <td align="center" style="padding:1cm 1cm 0">
                                                         <table class="table-one">
                                                             <tbody>
-
-
                                                                 <tr>
                                                                     <td>
                                                                         <ol style="" start="5">
-                                                                            <li>
+                                                                            <li class="text-justify">
 
                                                                                 You
                                                                                 will not
@@ -1091,7 +1138,7 @@
                                                                                 which may endanger your health or safety
                                                                                 and/or that of any other person
                                                                             </li>
-                                                                            <li>
+                                                                            <li class="text-justify">
 
                                                                                 of fact
                                                                                 that many things which may be obvious
@@ -1110,13 +1157,15 @@
                                                                 </tr>
 
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
+                                                                    <td colspan="12" align="left"
+                                                                        style="padding-top:1%">
                                                                         <p class="txt-left a">
                                                                             <b>Fire Safety:</b>
                                                                         </p>
 
-                                                                        <ol>
-                                                                            <li class="pt-10">Ensure familiarity with the
+                                                                        <ol class="text-justify">
+                                                                            <li class="pt-10 text-justify">Ensure
+                                                                                familiarity with the
                                                                                 fire safety
                                                                                 procedures in work place. Most organizations
                                                                                 have fire safety training as a statutory
@@ -1143,11 +1192,12 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
+                                                                    <td colspan="12" align="left"
+                                                                        style="padding-top: 1em">
                                                                         <p class="txt-left a">
                                                                             <b>Accident & First Aid:</b>
                                                                         </p>
-                                                                        <p class="txt-left a pt-10">
+                                                                        <p class="text-justify a pt-10">
                                                                             Familiarize yourself with the First Aid
                                                                             arrangements at your workplace. Do not leave
                                                                             vehicles or items relating to your work in
@@ -1155,7 +1205,7 @@
                                                                             will help prevent accidents.
                                                                         </p>
 
-                                                                        <ol>
+                                                                        <ol class="text-justify">
                                                                             <li class="pt-10">Follow rules on speed limit
                                                                                 and wearing
                                                                                 safety gear as is prescribed at the work
@@ -1182,12 +1232,14 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left fw-600 a">
-                                                                            As a ABS AW, you have the right to:
-                                                                        </p>
+                                                                    <td colspan="12" align="left"
+                                                                        style="padding-top:1em">
 
-                                                                        <ol>
+                                                                        <b  style="padding-bottom:1em"> As a ABS AW, you have the right to:</b>
+
+
+
+                                                                        <ol class="text-justify">
                                                                             <li class="pt-10">Work in places where all the
                                                                                 risks to your
                                                                                 health and safety are properly controlled.
@@ -1217,7 +1269,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <td>
+                                                    <td style="padding-top: 6.7em;">
                                                         <div class="logo"
                                                             style="width:100%;height:100px;padding-top:84px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
@@ -1253,13 +1305,14 @@
                                                         <table class="table-one">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td colspan="12" style=" " align="left">
-                                                                        <p class="txt-left fw-600 a">
-                                                                            Recommendations for Common Safe Working
-                                                                            Practices:
-                                                                        </p>
+                                                                    <td colspan="12"  align="left">
 
-                                                                        <ol>
+                                                                        <b style="padding-bottom: 1em">    Recommendations for Common Safe Working
+                                                                            Practices:</b>
+
+
+
+                                                                        <ol style="text-align: justify">
                                                                             <li class="pt-10">Do not smoke in areas
                                                                                 prohibited.</li>
                                                                             <li style="" class="pt-10">Do not
@@ -1295,7 +1348,7 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td colspan="12"align="left">
+                                                                    <td colspan="12"align="left" style="padding-top:2em">
 
                                                                         <p class="txt-left">
                                                                             <b>For Ardens Business Solutions Private
@@ -1354,8 +1407,9 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>
-                                                        <div class="logo" style="width:100%;height:100px;padding-top:279px;">
+                                                    <td style="padding-top:2.3em">
+                                                        <div class="logo"
+                                                            style="width:100%;height:100px;padding-top:279px;">
                                                             <img src="{{ URL::asset('assets/images/abs_footer-label.jpg') }}"
                                                                 alt="" class=""
                                                                 style="height:100px;;width:100%;">
@@ -1388,441 +1442,536 @@
                 </div>
                 <div class="tab-pane fade  " id="payslips" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                    <div class="container-fluid m-2 pdf-container ">
-                        <div class="main-page">
-                            <div class="sub-page" style="text-align: justify;font-size: 15px;">
-                                <div class="table-responsive">
-                                    <table cellspacing="0" cellpadding="0" class="payslip_table">
-                                        <tr class="header-row" aria-rowcount="">
-                                            <td colspan="8" class="border-less p3" rowspan="">
-                                                <div class="header-cotent">
+                    <div class="main-page">
+                        <div class="sub-page" style="text-align: justify;">
+                            <table cellspacing="0" cellpadding="0" class="payslip_table ardens">
+                                <tr class="header-row">
+                                    <td colspan="8" class="border-less">
+                                        <div class="header-cotent" style="margin: 1px;">
+                                            <p class=" text-strong"
+                                                style="color: #002f56;
+                                            padding-left: 5px;font-size:17px;margin:0px;">
+                                                Ardens Business Solutions Private Limited</p>
+                                            <p class="mb-0" style="margin:0px;"> North Phase Industrial Estate</p>
+                                            <p class="mb-0" style="margin:0px;">42, 5th Cross St, Kalaimagal
+                                                Nagar,Ekkatuthangal</p>
+                                            <p class="mb-0" style="margin:0px;"> Chennai, Tamil Nadu 600032 </p>
+
+                                        </div>
+                                    </td>
+                                    <td colspan="4" class="border-less">
+
+                                        <div class="header-img txt-right" style="">
+                                            {{-- <img src={{ $client_logo }} style="height: 50px;width:150px;margin:10px" title=""> --}}
+                                            <img src={{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}
+                                                style="height: 35px;width:150px;margin:10px" title="">
+
+                                        </div>
 
 
-                                                </div>
-                                            </td>
-                                            <td colspan="4" class="border-less p3">
-
-                                                <div class="header-img txt-right d-flex align-items-center">
-                                                    <img src="{{ URL::asset('assets/images/logo.png') }}" class=""
-                                                        alt="" style="height: 50px;width:180px;">
-                                                </div>
+                                    </td>
+                                </tr>
 
 
-                                            </td>
-                                        </tr>
+                                <tr>
+                                    <td colspan="12" class=" bg-ash">
+                                        <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF &ndash;
+                                            <span style="text-transform:uppercase;">
+                                                -</span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>EMPLOYEE NAME</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>EMPLOYEE CODE</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>DATE OF BIRTH</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>DATE OF JOINING</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>DESIGNATION</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>LOCATION</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>EPF NUMBER</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>ESIC NUMBER</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>UAN</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash text-strong">
+                                        <p>PAN</p>
+                                    </td>
+                                    <td colspan="3">
+                                        <p>-</p>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="bg-ash ">
+                                        <p class="text-strong txt-center">BANK NAME</p>
+                                    </td>
+
+                                    <td colspan="4" class="bg-ash ">
+                                        <p class="text-strong txt-center">ACCOUNT NUMBER</p>
+                                    </td>
+                                    <td colspan="4" class="bg-ash ">
+                                        <p class="text-strong txt-center">IFSC CODE</p>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="">
+
+                                        <p class="txt-center">-</p>
+                                    </td>
+                                    <td colspan="4" class="">
+                                        <p class="txt-center">-</p>
+                                    </td>
+                                    <td colspan="4" class="">
+                                        <p class="txt-center">-</p>
+                                    </td>
 
 
-                                        <tr>
-                                            <td colspan="12" class=" bg-ash ">
-                                                <p class="sub-header txt-center text-strong">PAYSLIP FOR THE MONTH OF – NOV
-                                                    – 2022</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>EMPLOYEE NAME</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>EMPLOYEE CODE</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
+                                </tr>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>DATE OF BIRTH</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>DATE OF JOINING</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
+                                <tr>
+                                    <td colspan="3" class="bg-ash ">
+                                        <p class="text-strong txt-center">MONTH DAYS</p>
+                                    </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>DESIGNATION</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>LOCATION</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
+                                    <td colspan="3" class="bg-ash ">
+                                        <p class="text-strong txt-center">WORKED DAYS</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash ">
+                                        <p class="text-strong txt-center">LOSS OF PAY</p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash ">
+                                        <p class="text-strong txt-center">ARREAR DAYS</p>
+                                    </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>EPF NUMBER</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>ESIC NUMBER</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="">
+                                        <p class="txt-center">-</p>
+                                    </td>
+                                    <td colspan="3" class="">
+                                        <p class="txt-center">-</p>
+                                    </td>
+                                    <td colspan="3" class="">
+                                        <p class="txt-center">-</p>
+                                    </td>
+                                    <td colspan="3" class="">
+                                        <p class="txt-center">-</p>
+                                    </td>
+                                </tr>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>UAN</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash text-strong">
-                                                <p>PAN</p>
-                                            </td>
-                                            <td colspan="3">
-                                                <p></p>
-                                            </td>
+                                <tr>
+                                    <td colspan="12">
+                                        <p class="padding-md">&nbsp; </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-center text-strong">DESCRIPTION</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-center text-strong">FIXED GROSS</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-center text-strong">ARREAR GROSS</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-center text-strong">EARNED GROSS</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-center text-strong">DEDUCTION</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-center text-strong">AMOUNT</p>
+                                    </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="bg-ash ">
-                                                <p class="text-strong txt-center">BANK NAME</p>
-                                            </td>
-
-                                            <td colspan="4" class="bg-ash ">
-                                                <p class="text-strong txt-center">ACCOUNT NUMBER</p>
-                                            </td>
-                                            <td colspan="4" class="bg-ash ">
-                                                <p class="text-strong txt-center">IFSC CODE</p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-                                            <td colspan="4" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-                                            <td colspan="4" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-
-
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">MONTH DAYS</p>
-                                            </td>
-
-                                            <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">WORKED DAYS</p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">LOSS OF PAY</p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash ">
-                                                <p class="text-strong txt-center">ARREAR DAYS</p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center">-</p>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td colspan="12">
-                                                <p class="padding-md"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">DESCRIPTION</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">AMOUNT</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">ARREAR AMOUNT</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">EARNED AMOUNT</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">DEDUCTION</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-center text-strong">AMOUNT</p>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">BASIC</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">EPF</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">HRA</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right">
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">ESIC</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">SPECIAL ALLOWANCE </p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">PT</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">BASIC</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">EPF</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">HRA</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">- </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">ESIC</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">SPECIAL ALLOWANCE</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">PT</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
 
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">COMMUNICATION ALLOWANCE </p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">INCOME TAX</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">COMMUNICATION ALLOWANCE</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">INCOME TAX</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">FOOD ALLOWANCE </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">FOOD DEDUCTION</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong"> </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">CANT-DEDUCTION</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"> <img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong"> </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">SALARY ADVANCE</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"> <img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong"> </p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"></p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-left text-strong">OTHER DEDUCTIONS</p>
+                                    </td>
+                                    <td colspan="2" class="">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr class="text-strong">
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-left  text-strong">TOTAL EARNINGS</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-right"></p>
+                                    </td>
+
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-left text-strong">TOTAL DEDUCTION</p>
+                                    </td>
+                                    <td colspan="2" class="bg-ash">
+                                        <p class="txt-right"><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12">
+                                        <p class="padding-md">&nbsp; </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="bg-ash">
+                                        <p class="txt-left text-strong">NET PAY</p>
+                                    </td>
+                                    <td colspan="8" class="">
+                                        <p class="txt-center "><img height="8.5" width="12"
+                                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right"
+                                                alt="" style="padding-right:0px;">-
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="bg-ash">
+                                        <p class="txt-left text-strong">NET PAY IN WORDS</p>
+                                    </td>
+                                    <td colspan="8" class="">
+                                        <p class="txt-center ">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12">
+                                        <p class="padding-md">&nbsp; </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="bg-ash">
+                                        <p class="txt-center text-strong">TRANSACTION ID</p>
+                                    </td>
+                                    <td colspan="3" class="">
+                                        <p class="txt-center"></p>
+                                    </td>
+                                    <td colspan="3" class="bg-ash">
+                                        <p class="txt-center text-strong">Paid Date</p>
+                                    </td>
+                                    <td colspan="3" class="">
+                                        <p class="txt-center"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12">
+                                        <p class="padding-md">&nbsp; </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12">
+                                        <p class="txt-center">This is a computer-generated slip does not require signature
+                                        </p>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-less">
+                                    <td colspan="8" class="border-less border-r-0" style="    padding: 10px 0px;">
+                                        <p class="txt-left">Please
+                                            reach out to us for any payroll queries at - payroll@ardens.in</p>
+                                    </td>
+                                    <td colspan="3" class="border-less border-x-0 txt-right"
+                                        style="    padding: 10px 0px;">
+                                        <p>Generated By</p>
 
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> FOOD ALLOWANCE </p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
+                                    </td>
+                                    <td colspan="1" class="border-less border-l-0" style="    padding: 10px 0px;">
+                                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
+                                            width="100px" height="18px" alt="" class="">
+                                    </td>
+                                </tr>
 
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> FOOD DEDUCTION</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> </p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">SALARY ADVANCE</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong"> </p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-left text-strong">OTHER DEDUCTION</p>
-                                            </td>
-                                            <td colspan="2" class="">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                        </tr>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-left text-strong">TOTAL EARNINGS</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-right"></p>
-                                            </td>
-
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-left text-strong">TOTAL DEDUCTION</p>
-                                            </td>
-                                            <td colspan="2" class="bg-ash">
-                                                <p class="txt-right"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12">
-                                                <p class="padding-md">&nbsp; </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="bg-ash">
-                                                <p class="txt-left text-strong">NET PAY</p>
-                                            </td>
-                                            <td colspan="8" class="">
-                                                <p class="txt-center "></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" class="bg-ash">
-                                                <p class="txt-left text-strong">NET PAY IN WORDS</p>
-                                            </td>
-                                            <td colspan="8" class="">
-                                                <p class="txt-center "></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12">
-                                                <p class="padding-md">&nbsp; </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">TRANSACTION ID</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center"></p>
-                                            </td>
-                                            <td colspan="3" class="bg-ash">
-                                                <p class="txt-center text-strong">Paid Date</p>
-                                            </td>
-                                            <td colspan="3" class="">
-                                                <p class="txt-center"></p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="12">
-                                                <p class="padding-md">&nbsp; </p>
-                                            </td>
-                                        </tr>
-
-
-
-                                        <tr>
-                                            <td colspan="12">
-                                                <p class="txt-center">This is a computer-generated slip does not require
-                                                    signature</p>
-                                            </td>
-                                        </tr>
-
-                                        <tr class="border-less">
-                                            <td colspan="8" class="border-less">
-                                                <p class="txt-left">Please reach out to us for any payroll queries at
-                                                    -hr.admin@imcvasa.in</p>
-                                            </td>
-                                            <td colspan="2" class="border-less ">
-                                                <p class="txt-right">Generated By</p>
-
-
-                                            </td>
-                                            <td colspan="2" class="border-less">
-                                                <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
-                                                alt="" class="">
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                </div>
-                            </div>
+                            </table>
                         </div>
                     </div>
+
+
                 </div>
 
             </div>

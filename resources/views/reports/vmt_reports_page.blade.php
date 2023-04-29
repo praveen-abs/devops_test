@@ -9,6 +9,8 @@
     <div class="cotainer-fluid mt-30 payroll_wrapper">
         <div class="card left-line  mb-2">
             <div class="pt-1 pb-0 card-body">
+        <div class="card left-line  mb-2">
+            <div class="pt-1 pb-0 card-body">
                 <ul class="nav  nav-pills nav-tabs-dashed" role="tablist">
                     <li class="nav-item text-muted" role="presentation">
                         <a class="nav-link active pb-2" data-bs-toggle="tab" href="#payroll_tab" aria-selected="true"
@@ -34,8 +36,8 @@
                     </li>
 
                     <li class="nav-item text-muted " role="presentation">
-                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab"
-                            aria-selected="false" tabindex="-1" role="tab">
+                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab" aria-selected="false" tabindex="-1"
+                            role="tab">
                             PMS/OKR</a>
                     </li>
 
@@ -122,6 +124,22 @@
                                         <li class=""><a href="#" class="">Activity Logs</a></li>
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="attendance_tab" class="tab-pane fade show active">
+                <div class="card top-line mb-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <ul class=' list-style-circle px-4'>
+                                    <li class=""><a href="#" class="">Detailed Report</a></li>
+                                    <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic Report</a></li>
+                                </ul>
                             </div>
                         </div>
 

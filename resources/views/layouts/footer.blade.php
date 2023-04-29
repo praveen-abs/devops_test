@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="d-flex align-items-center p-1 justify-content-end">
-        <span class="f-12 text-ash">
+        <span class="f-12 text-ash inline-flex">
             Powered By
             <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px" height="15px"
                 alt="" class="">

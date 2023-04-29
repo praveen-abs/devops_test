@@ -1,11 +1,9 @@
-@use "../utilities/variable" as v;
+@import "../utilities/variable";
 
 .p-datatable {
-    white-space: nowrap;
     .p-datatable-header {
         border: 0px !important;
         background: none !important;
-
     }
 }
 
@@ -52,62 +50,44 @@
         }
         th {
             // background-color: var(--#{$prefix-variable}primary) !important;
-            background-color: v.$primary-blue !important;
+            background-color: $primary-blue !important;
             color: var(--white) !important;
             border: 0 !important;
+            white-space: nowrap;
             border-width: 0 !important;
-            padding: 0.8em 0.6em !important;
-            div,span{
-                color: #ffffff;
-            }
-
+            font-weight: 700;
+        }
+        .p-column-title{
+            font-weight: 600;
         }
     }
-    .p-datatable-tbody {
-        tr {
-            outline: none !important;
-            transition: 0.3s ease-out !important;
+    // .p-datatable-tbody {
+    //     tr {
+    //         outline: none !important;
+    //         transition: 0.3s ease-out !important;
 
-            &:hover {
-                //transform: translateY(-8px);
-                border: 0px !important;
-                // box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
-                //box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-                background-color: v.$white !important;
-                cursor: pointer;
-                > td {
-                    font-weight: v.$font-weight-medium;
-                    >div,span,p{
-                        font-weight: v.$font-weight-medium;
-                    }
-                }
-            }
+    //         &:hover {
+    //             transform: translateY(-8px);
+    //             border: 0px !important;
+    //             // box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
+    //             box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    //             background-color: $white !important;
+    //             > td {
+    //                 font-weight: 500;
+    //             }
+    //         }
 
-            &:focus {
-                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-            }
-        }
-    }
+    //         &:focus {
+    //             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    //         }
+    //     }
+    // }
     td {
         text-align: center !important;
         font-weight: var(--font-regular);
         padding: 0.8rem 1rem !important;
-        button.p-button {
-            padding: 0.6em 1em !important;
-            height: 2.5em !important;
-            span {
-                color: v.$white;
-            }
-            &-success {
-                background-color: v.$green-darken;
-            }
-            &-danger {
-                background-color: v.$red-darken;
-            }
-        }
-        div,span {
-            font-weight: v.$font-weight-regular;
-        }
+     
+        
     }
 }
 
@@ -127,10 +107,29 @@
     }
 }
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    color: v.$white !important;
+    color: $white !important;
     background: #00305663 !important;
 }
 
 .p-column-header-content {
     justify-content: center !important;
 }
+
+.p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+    background: #e1f0f7;
+  }
+
+.p-progressbar-value.p-progressbar-value-animate{
+width: 65%;
+display: flex;
+background-color: $primary-blue !important;
+
+  }
+  .p-progressbar.p-component.p-progressbar-determinate{
+    height: 14px;
+    font-size: 8px;
+  }
+  .p-progressbar-determinate .p-progressbar-label {
+    display: inline-flex;
+    font-size: 9px;
+  }

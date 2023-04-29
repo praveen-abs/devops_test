@@ -1,13 +1,13 @@
 <template>
-    <div class=" w-full m-2 bg-white">
+    <div class="w-full m-2 bg-white ">
         <div class="mb-2">
-            <h3 class="font-bold text-2xl">Create Offer  template</h3>
+            <h3 class="text-2xl font-bold">Create Offer  template</h3>
         </div>
-        <div class=" grid-cols-2 gap-6 my-4 flex ">
-            <div class="border-1 border-gray-400 w-7 rounded-lg p-4 shadow-md">
+        <div class="flex grid-cols-2 gap-6 my-4 ">
+            <div class="p-4 border-gray-400 rounded-lg shadow-md border-1 w-7">
                     <div class="my-4">
-                        <h5 class="my-2 font-semibold text-lg">Template Name</h5>
-                        <div class="flex justify-evenly gap-8">
+                        <h5 class="my-2 text-lg font-semibold">Template Name</h5>
+                        <div class="flex gap-8 justify-evenly">
                           <div class="w-6">
                             <InputText class="w-full" type="text"  v-model="re.named" />{{re.named}}</div>
                           <div class="" >
@@ -18,20 +18,20 @@
                     </div>
                     <button @click="hn">hn</button>
                     <div class="my-4 ">
-                        <h5 class="my-2 font-semibold text-lg">Description</h5>
-                        <div class="flex justify-evenly gap-5">
+                        <h5 class="my-2 text-lg font-semibold">Description</h5>
+                        <div class="flex gap-5 justify-evenly">
                           <div><Textarea autoResize rows="1" cols="53" /></div>
 
                         </div>
                     </div>
-                    <div class="my-4  grid-cols-2 flex gap-8 place-content-center border-gray-200">
+                    <div class="flex grid-cols-2 gap-8 my-4 border-gray-200 place-content-center">
 
                      <div class="w-6">
-                        <h5 class="my-2 font-semibold text-lg">Logo</h5>
+                        <h5 class="my-2 text-lg font-semibold">Logo</h5>
                         <div>file</div>
                      </div>
                      <div class="">
-                        <h5 class="my-2 font-semibold text-lg">Authorised Sign</h5>
+                        <h5 class="my-2 text-lg font-semibold">Authorised Sign</h5>
                         <div>file</div>
                      </div>
 
@@ -39,53 +39,53 @@
                 </div>
 
 
-            <div class="border-1 border-gray-400 w-4 p-4 shadow-md rounded-lg">
-                <h1 class="my-2 font-bold text-xl">Select the input tags to insert in offer template</h1>
+            <div class="w-4 p-4 border-gray-400 rounded-lg shadow-md border-1">
+                <h1 class="my-2 text-xl font-bold">Select the input tags to insert in offer template</h1>
                 <p class="my-2">the values for these should be given during offer letter generation </p>
 
-                <div class=" my-4 h-2 w-96 ">
-                    <div class="flex mx-2 my-2 gap-4">
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg  mx-2 my-2 ">Employee name</div>
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg  mx-2 my-2">Job Title</div>
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg  mx-2 my-2">Doj</div>
+                <div class="h-2 my-4 w-96">
+                    <div class="flex gap-4 mx-2 my-2">
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26 ">Employee name</div>
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26">Job Title</div>
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26">Doj</div>
                     </div>
-                    <div class="flex mx-2 my-2 gap-4">
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg  mx-2 my-2">Manager name</div>
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg mx-2 my-2 ">Offer Expire Date</div>
-                        <!-- <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg mx-2 my-2 ">Employee name</div> -->
+                    <div class="flex gap-4 mx-2 my-2">
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26">Manager name</div>
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26 ">Offer Expire Date</div>
+                        <!-- <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26 ">Employee name</div> -->
                     </div>
-                    <div class="flex mx-2 my-2 gap-4">
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg  mx-2 my-2">Location</div>
-                        <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg mx-2 my-2 ">CTC</div>
-                        <!-- <div class="border-1 border-orange-300 p-2 text-orange-500 w-26  rounded-lg mx-2 my-2 ">Employee name</div> -->
+                    <div class="flex gap-4 mx-2 my-2">
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26">Location</div>
+                        <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26 ">CTC</div>
+                        <!-- <div class="p-2 mx-2 my-2 text-orange-500 border-orange-300 rounded-lg border-1 w-26 ">Employee name</div> -->
                     </div>
                 </div>
             </div>
 
         </div>
         <div class="flex grid-cols-2 gap-6 my-6">
-            <div class="border-1 border-gray-400 w-7 shadow-md rounded-lg">
+            <div class="border-gray-400 rounded-lg shadow-md border-1 w-7">
                 <form @submit="onSubmit">
                 <Editor v-model="value" editorStyle="height: 320px" />
                 </form>
 
             </div>
             <!-- ... -->
-            <div class="border-1 border-gray-400 w-4 shadow-md rounded-lg">
+            <div class="w-4 border-gray-400 rounded-lg shadow-md border-1">
 
-                <h4 class="text-center my-4  font-bold text-xl">Select the salary structure pay-group</h4>
-                <div style="height: 50px;" class="border-1 border-gray-200 w-10 px-4 mx-auto my-4 rounded-lg bg-orange-100   ">
-                    <h1 class="my-3 font-semibold text-xl">PayGroup_1</h1>
+                <h4 class="my-4 text-xl font-bold text-center">Select the salary structure pay-group</h4>
+                <div style="height: 50px;" class="w-10 px-4 mx-auto my-4 bg-orange-100 border-gray-200 rounded-lg border-1 ">
+                    <h1 class="my-3 text-xl font-semibold">PayGroup_1</h1>
                 </div>
-                <div style="height: 50px;" class="border-1 border-gray-200 w-10 px-4 mx-auto my-4 rounded-lg bg-pink-100  ">
-                    <h1 class="my-3 font-semibold text-xl">PayGroup_2</h1>
+                <div style="height: 50px;" class="w-10 px-4 mx-auto my-4 bg-pink-100 border-gray-200 rounded-lg border-1 ">
+                    <h1 class="my-3 text-xl font-semibold">PayGroup_2</h1>
                 </div>
-                <div style="height: 50px;" class="border-1 border-gray-200 w-10 px-4 mx-auto my-4 rounded-lg bg-yellow-100 ">
-                    <h1 class="my-3 font-semibold text-xl">PayGroup_3</h1>
+                <div style="height: 50px;" class="w-10 px-4 mx-auto my-4 bg-yellow-100 border-gray-200 rounded-lg border-1 ">
+                    <h1 class="my-3 text-xl font-semibold">PayGroup_3</h1>
 
                 </div>
-                <div style="height: 50px;" class="border-1 border-gray-200 w-10 px-4 mx-auto my-4 rounded-lg bg-orange-300 ">
-                    <h1 class="my-3 font-semibold text-xl">PayGroup_4</h1>
+                <div style="height: 50px;" class="w-10 px-4 mx-auto my-4 bg-orange-300 border-gray-200 rounded-lg border-1 ">
+                    <h1 class="my-3 text-xl font-semibold">PayGroup_4</h1>
                 </div>
 
             </div>

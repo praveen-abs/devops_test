@@ -88,42 +88,44 @@
             $('#notificationModal').addClass('fade');
         });
 
-        $('#submit_button').on('click', function(e) {
-            console.log("Submitting documents");
+        // $('#submit_button').on('click', function(e) {
+        //      console.log("Submitting documents");
 
-            if ($('#form-documentsupload').valid()) {
+        //     if ($('#form-documentsupload').valid()) {
 
-                //alert("1 st one");
-                var form_data1 = new FormData(document.getElementById("form-documentsupload"));
+        //         //alert("1 st one");
+        //         var form_data1 = new FormData(document.getElementById("form-documentsupload"));
+        //         console.log("Form data : "+form_data1);
+        //         $.ajax({
+        //             url: "{{ route('vmt-storedocuments-route') }}",
+        //             type: "POST",
+        //             dataType: "json",
+        //             data: form_data1,
+        //             contentType: false,
+        //             processData: false,
+        //             success: function(data) {
 
-                $.ajax({
-                    url: "{{ route('vmt-storedocuments-route') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: form_data1,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
+        //                 if (data.status == "success") {
+        //                     $('#modalNot').html(data.message);
+        //                     $('#notificationModal').show();
+        //                     $('#notificationModal').removeClass('fade');
+        //                 } else {
+        //                     $('#modalNot').html(data.message);
+        //                     $('#notificationModal').show();
+        //                     $('#notificationModal').removeClass('fade');
+        //                 }
+        //                 console.log(data);
 
-                        if (data.status == "success") {
-                            $('#modalNot').html(data.message);
-                            $('#notificationModal').show();
-                            $('#notificationModal').removeClass('fade');
-                        } else {
-                            $('#modalNot').html(data.message);
-                            $('#notificationModal').show();
-                            $('#notificationModal').removeClass('fade');
-                        }
-                        console.log(data);
+        //             },
+        //             error: function(data) {
 
-                    },
-                    error: function(data) {
+        //             }
+        //         });
 
-                    }
-                });
+        //     }
+        // });
 
-            }
-        });
+
 
         $('#form-1').validate({
             errorPlacement: function(error, element) {
@@ -142,5 +144,6 @@
         $("#button_close").click(function() {
             window.location.reload();
         });
+
     </script>
 @endsection

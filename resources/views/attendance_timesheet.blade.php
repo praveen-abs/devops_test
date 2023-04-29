@@ -803,7 +803,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start">' +
-                            '<p class="fw-bold text-primary text-capitalize">' + element.name + '</p>' +
+                            '<p class="fw-bold text-primary text-capitalize">' + element.trim() + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
                             '</a>' +
@@ -849,7 +849,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         if (empAvatarDetails.type == 'shortname') {
 
                             var userBgColor = empAvatarDetails.color;
-                            console.log("color", empAvatarDetails.color);
+                          //  console.log("color", empAvatarDetails.color);
                             avatar_data =
                                 ' <div class="' + userBgColor +
                                 '  user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +
@@ -879,7 +879,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start ">' +
-                            '<p class="fw-bold text-primary text-capitalize" >' + element.name +
+                            '<p class="fw-bold text-primary text-capitalize" >' + element.name.trim() +
                             '</p>' +
                             '<p class=" text-muted f-11 text-capitalize">' + element.designation +
                             '</p>' +
@@ -944,7 +944,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                 avatar_data +
                 '</div>' +
                 '<div class="user_content text-start">' +
-                '<p class="fw-bold text-primary text-capitalize">{{ $current_employee_detail->name }}</p>' +
+                '<p class="fw-bold text-primary text-capitalize">{{ trim($current_employee_detail->name) }}</p>' +
                 '<p class=" text-muted f-11">{{ $current_employee_detail->designation }}</p>' +
                 '</div>' +
                 '</a>' +
@@ -1644,11 +1644,10 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                     else{
                                         cell.innerHTML = " <div class='p-2 w-100 h-100' style='background: #fad8d8;'><p class='show_date' >" + date +
-                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
+                                                "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-start'><div class='mt-2 w-100 d-flex check-out f-10 text-danger' style='position: relative;top: -34px;'><span style='margin-left: 45px;font-size: 13px;color: red;font-weight: 700;' class='f-11' id='checkout_time_" +
                                                 year + "-" + (month + 1) + "-" + dateText +
-                                                "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span>";
+                                                "'>Absent</span><span style='margin-left: 7px'><i class='fa fa-exclamation-circle fs-15 text-warning me-2' title='Not Applied'></i></span></div></div><div><button><a  style='font-weight: 700' href='/attendance-leave'></a></button></div>";
 
-                                                console.log("attendence_mode"+ajax_data_currentdate.attendance_mode_checkin)
                                     }
 
                                     }
@@ -1703,27 +1702,27 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
-                                    const clientName = "  {{ sessionGetSelectedClientName() }} ";
+                                    const clientName = "{{ sessionGetSelectedClientName() }}";
 
-                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') ){
+                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines')){
 
-                                    if (ajax_data_currentdate.isLC) {
-                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
-                                            .lc_status);
+                                        if (ajax_data_currentdate.isLC) {
+                                            final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
+                                        }
+
                                     }
-
-                                    }  else
+                                    else
                                     if (ajax_data_currentdate.isMIP) {
-                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mip_status);
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
-                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') ){
+                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines'))
+                                     {
                                         if (ajax_data_currentdate.isEG) {
-                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
-                                            .eg_status);
-                                    }
-                                     }else
+                                            final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
+                                        }
+                                     }
+                                     else
                                     if (ajax_data_currentdate.isMOP) {
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);

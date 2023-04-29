@@ -58,7 +58,7 @@
                                     <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
                                         optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
-                                {{dialog_general_information.blood_group_id  }}
+                                <!-- {{dialog_general_information.blood_group_id  }} -->
 
                             </div>
                         </div>
@@ -92,15 +92,13 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
-                        <div class="text">
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.dob.slice(0,4) }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
-
+                        <div class="ml-4 text">
+                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY') }}
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Gender </div>
-                        <div class="text">
+                        <div class="text ">
                             <!-- {{ emp_details.gender.name }} -->
                             {{ computedGenderValue }}
 
@@ -110,8 +108,7 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.doj.slice(0,4) }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }}
+                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY') }}
 
                         </div>
                     </li>
@@ -155,7 +152,8 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="">Contact Information
-                <span class="personal-edit"><a href="#" class="edit-icon"
+                <span class="personal-edit">
+                    <a href="#" class="edit-icon"
                         @click="onClick_EditButtonContacttInfo" ><i class="ri-pencil-fill"></i></a>
                 </span>
 
@@ -218,7 +216,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Personal Email</div>
-                        <div class="text">
+                        <div class="ml-4 text">
                             {{ _instance_profilePagesStore.employeeDetails.email }}
 
                         </div>
@@ -324,10 +322,12 @@
 
         </div>
     </div>
+
 </template>
 
 
 <script setup>
+import dayjs from 'dayjs';
 
 import { ref, onMounted, reactive, computed } from "vue";
 import moment from "moment";
@@ -735,6 +735,14 @@ dialog>header {
 Dialog {
     color: #002f56;
 }
+
+
+
+
+
+
+
+
 </style>
 
 

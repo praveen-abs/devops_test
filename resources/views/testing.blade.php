@@ -18,38 +18,26 @@
 
 </head>
 <body>
-    <?php
-        $encr_userCode = Crypt::encryptString('186');
-        echo "Encr UserCode : ". $encr_userCode;
+<!-- 
+     @vite('resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js')
+     <div id="vjs_manage_employee"></div> -->
+    <!-- {{-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
+   <div id="Investments"></div> --}} -->
 
-        $encr_userCode =  Crypt::encryptString("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddAddddddddddddddddddddddddddddddddddddddddddddddddddddddddA");
-       // echo  request()->getSchemeAndHttpHost()."/".$encr_userCode;
-       echo "<br/> Content <p>".$encr_userCode."</p>";
-
-        echo "<br/> Length ".strlen($encr_userCode);
-
-        $compressed_string = gzcompress("Praveen",9);
-        echo "<br/> Compressed String : ".$compressed_string ." Length : ".strlen($compressed_string);
-
-        $uncompressed_string = gzuncompress($compressed_string,9);
-
-        echo "<br/> Uncompressed String : ".$uncompressed_string ." Length : ".strlen($uncompressed_string);
+    <!-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js') -->
+   <!-- <div id="SalaryAdvanceLoan"></div> -->
 
 
 
-        $test_payload = "eyJpdiIss6IkRpODhqUXZmNGRYcE1NT0VTenU0M1E9PSIsInZhbHVlIjoielluRUtmYVozN0N3eEZtUmJBTkVrdz09IiwibWFjIjoiNzUxNDQ2M2UzOTU2ZTlkMjBhYTI0MjIzM2NmMTJlMGQyNjJiMDE2ODU3YzIyYWMxMWNhNmNjNWQwMjBkYjM1NiIsInRhZyI6IiJ9";
+   <!-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
+   <div id="vjs_Attendance_master"></div> -->
+   
+   <!-- @vite('resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js')
+  <div id="vjs_leaveapply_v2"></div> -->
 
-        try{
-            echo "<br /><br/>Decrypted payload : ".Crypt::decrypt($test_payload);
-        }
-        catch(\Exception $e)
-        {
-            echo "Decrypt Error : ".$e->getMessage();
-        }
-    ?>
+  @vite('resources/js/hrms/modules/leave_module/leave_balance/leave_balance.js')
+  <div id="LeaveBalance"></div>
 
-   {{-- @vite('resources/js/hrms/modules/Organization/manage_employee/manage_employee.js')
-   <div id="ManageEmployee"></div> --}}
 </body>
 </html>
 @endsection

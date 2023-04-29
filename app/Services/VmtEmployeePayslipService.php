@@ -27,6 +27,7 @@ use App\Models\VmtEmployeePaySlip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 
 use App\Imports\VmtPaySlip;
 use App\Models\Bank;
@@ -527,6 +528,263 @@ class VmtEmployeePayslipService {
         return $pdf->download($user->id."_".$selectedPaySlipMonth."_Payslip.pdf");
         //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
 
+    }
+
+    public function getEmployeePayslipDetailsAsPDF($user_code, $year, $month){
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "year" => $year,
+                "month" => $month,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+
+            $query_user = User::where('user_code', $user_code)->first();
+            $user_id = $query_user->id;
+
+            //Check whether the payslip data exists or not
+            $query_payslip = VmtEmployeePaySlip::where('user_id',$user_id)
+                            ->whereYear('PAYROLL_MONTH', $year)
+                            ->whereMonth('PAYROLL_MONTH', $month);
+
+            if(!$query_payslip->exists())
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Payslip not found for the given MONTH and YEAR'
+                ]);
+
+            }
+
+
+            ////Generate the Payslip PDF
+
+            $data['employee_payslip'] = $query_payslip->first();
+
+            $data['employee_name'] = $query_user->name;
+            $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
+            $data['employee_details'] = VmtEmployee::where('userid',$user_id)->first();
+            $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user_id)->first();
+
+            $query_client = VmtClientMaster::find($query_user->client_id);
+
+            $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
+            $client_name = $query_client->client_name;
+
+            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+            $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+
+            $html = $view->render();
+            $html = preg_replace('/>\s+</', "><", $html);
+            $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
+
+            return $pdf->download($user_code."_".$year.'_'.$month."_payslip.pdf");
+
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching payslip data",
+                "data" =>$e
+            ]);
+        }
+    }
+
+
+    public function getEmployeePayslipDetails($user_code, $year, $month){
+
+
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "year" => $year,
+                "month" => $month,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //Check whether the payslip data exists or not
+            $query_payslip = VmtEmployeePaySlip::where('user_id',$user_id)
+                            ->whereYear('PAYROLL_MONTH', $year)
+                            ->whereMonth('PAYROLL_MONTH', $month);
+
+            if(!$query_payslip->exists())
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Payslip not found for the given MONTH and YEAR'
+                ]);
+
+            }
+
+            // Normal JOINS style : JSON structure is not coming properly. Keeping here for reference only
+            //
+            // $response['payslip_data'] = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+            //                             ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+            //                             ->join('vmt_employee_statutory_details','vmt_employee_statutory_details.user_id','=','users.id')
+            //                             ->join('vmt_employee_payslip','vmt_employee_payslip.user_id','=','users.id')
+            //                             ->whereMonth('vmt_employee_payslip.PAYROLL_MONTH','=',$month)
+            //                             ->whereYear('vmt_employee_payslip.PAYROLL_MONTH','=',$year)
+            //                             ->where('users.id','=',$user_id)
+            //                             ->get([
+            //                                 'vmt_employee_statutory_details.*',
+            //                                 'vmt_employee_payslip.*'
+            //                             ]);
+
+            /*
+                    ::with() works only if you specify the foreign key . Else it will return empty
+
+            */
+
+            $response['payslip_data'] = User::with([
+                                            'getEmployeeDetails' => function($query){
+                                               $query->select(['id','userid','dob','doj','location','pan_number','bank_id','bank_account_number','bank_ifsc_code']);
+                                            },
+                                            'getEmployeeOfficeDetails' => function($query){
+                                                    $query->select(['id','user_id','designation']);
+                                            },
+                                            'getStatutoryDetails' =>function($query){
+                                                $query->select(['id','user_id','epf_number','esic_number','uan_number']);
+                                            },
+                                            'single_payslip_detail' => function($query) use ($year, $month) {
+                                                    $query->whereYear('PAYROLL_MONTH', $year)
+                                                    ->whereMonth('PAYROLL_MONTH', $month)
+                                                   ->select(['id','user_id', 'PAYROLL_MONTH','MONTH_DAYS','Worked_Days','LOP','ArrearS_Days','BASIC','HRA','SPL_ALW',
+                                                            'Overtime','travel_conveyance','TOTAL_EARNED_GROSS','PROF_TAX','income_tax','SAL_ADV','OTHER_DEDUC','TOTAL_DEDUCTIONS','EPFR','EMPLOYEE_ESIC',
+                                                            'NET_TAKE_HOME','EMPLOYER_ESI']);
+                                                },
+                                            ])
+                                            ->where('users.id',$user_id)
+                                            ->get(['users.id','users.name','users.user_code','users.email']);
+
+            // $response['bank'] = Bank::with([
+            //                         'get_bank_name'
+            // ])->get();
+
+
+            $response['client_logo'] = '';
+
+            return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" =>$response
+            ]);
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching payslip data",
+                "data" =>$e
+            ]);
+        }
+    }
+
+    public function fetchEmployeePayslipDetails($year, $month){
+
+
+        $emp_name= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
+                        ->whereYear('PAYROLL_MONTH', $year)
+                        ->whereMonth('PAYROLL_MONTH',$month)
+                        ->get();
+
+                   // dd($emp_name);
+                        return $emp_name;
+        }
+
+    public function getEmployeeAllPayslipList($user_code){
+
+            //Validate
+            $validator = Validator::make(
+                $data = [
+                    "user_code" => $user_code,
+                ],
+                $rules = [
+                    "user_code" => 'required|exists:users,user_code',
+                ],
+                $messages = [
+                    'required' => 'Field :attribute is missing',
+                    'exists' => 'Field :attribute is invalid',
+                ]
+
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+                ]);
+            }
+
+
+            try{
+
+                $user_id = User::where('user_code', $user_code)->first()->id;
+
+                $query_payslips = VmtEmployeePaySlip::where('user_id',$user_id)
+                                                    ->orderBy('PAYROLL_MONTH', 'ASC')
+                                                    ->get(['id','PAYROLL_MONTH','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
+
+                return response()->json([
+                    "status" => "success",
+                    "message" => "",
+                    "data" =>$query_payslips
+                ]);
+            }
+            catch(\Exception $e){
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Error while fetching payslip data",
+                    "data" =>$e
+                ]);
+            }
     }
 
 }

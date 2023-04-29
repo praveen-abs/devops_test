@@ -143,7 +143,7 @@
                         <ul class="personal-info"   >
                                 <li  >
                                     <div class="title">Bank Name</div>
-                                    <div class="text">
+                                    <div class="ml-4 text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
@@ -180,7 +180,7 @@
                     <div class="card-body">
                         <h6 class="">Statutory Information
                             <span class="personal-edit">
-                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info ">
+                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info() ">
                                     <i class="ri-pencil-fill"></i>
                                 </a>
                             </span>
@@ -212,9 +212,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-
-
 
                                     <div class="col-md-6 ">
                                         <div class="mb-3 form-group">
@@ -284,29 +281,26 @@
 
                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
 
-                        <ul class="personal-info"   >
+                        <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info" >
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text">
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable  }}
+                                    <!-- {{ pf_applicable }} -->
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.epf_no }} -->
-                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number }}
+                                {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
 
                                 </div>
                             </li>
-                            <!-- Vishnu V24, [31-03-2023 15:40] -->
                             <li>
                                 <div class="title">UAN Number</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.uan_no }} -->
 
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number }}
+                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
 
                                 </div>
                             </li>
@@ -314,17 +308,15 @@
                             <li>
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
-                                    <!-- {{ statutory_info.esic_applicable }} -->
-                                    {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_applicable }}
+                                    {{ esic_applicable }}
 
                                 </div>
                             </li>
                             <li>
                                 <div class="title">ESIC Number</div>
-                                <div class="text">
-                              <!-- {{ statutory_info.esic_no }} -->
+                                <div class="text" >
 
-                              {{  _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number }}
+                              {{_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number   }}
 
                                 </div>
                             </li>
@@ -382,10 +374,11 @@
 
     </div>
 
+<!-- {{ statutory }} -->
 
 </template>
 <script setup>
-import { ref, onMounted, reactive, onUpdated } from 'vue';
+import { ref, onMounted, reactive, onUpdated ,computed} from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
@@ -395,6 +388,9 @@ const _instance_profilePagesStore = profilePagesStore()
 
 const fetch_data = Service()
 
+const statutory = ref([])
+
+statutory.value.push(_instance_profilePagesStore.employeeDetails.get_statutory_details)
 
 onMounted(() => {
     // fetchData();
@@ -421,6 +417,22 @@ const bank_information = reactive({
 })
 
 
+const  esic_applicable =computed(()=>{
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
+   else
+   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
+})
+
+const pf_applicable =computed(()=>{
+
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No" ;
+   else
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes" ;
+
+
+})
+
+
 
 
 const saveBankinfoDetails = () => {
@@ -440,13 +452,14 @@ const saveBankinfoDetails = () => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                //  window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Bank information updated', life: 3000 });
 
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.ifsc_code ;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
+
 
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
@@ -469,9 +482,9 @@ function onClick_EditButton_BankInfo(){
      bank_information.bank_ac_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number ;
      bank_information.ifsc_code   =  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
      bank_information.pan_no   =   _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number ;
-
-
      dialog_Bankvisible.value = true;
+
+
 }
 
 
@@ -486,7 +499,9 @@ function onClick_EditButton_Statutory_Info(){
      statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
      statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number ;
 
+
      dialog_statutory_visible.value = true;
+
 }
 
 
@@ -523,14 +538,9 @@ axios.post(url, {
     .then((res) => {
 
         if (res.data.status == "success") {
-             window.location.reload();
+
             toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
-            _instance_profilePagesStore.employeeDetails.get_employee_details.pf_applicable = statutory_information.pf_applicable;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.epf_number = statutory_information.epf_no;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.uan_number = statutory_information.uan_no;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.esic_applicable = statutory_information.esic_applicable;
-            _instance_profilePagesStore.employeeDetails.get_employee_details.esic_number = statutory_information.esic_no
 
         } else if (res.data.status == "failure") {
             leave_data.leave_request_error_messege = res.data.message;
@@ -543,13 +553,6 @@ axios.post(url, {
     dialog_statutory_visible.value = false;
 
 }
-
-
-
-
-
-
-
 
 </script>
 

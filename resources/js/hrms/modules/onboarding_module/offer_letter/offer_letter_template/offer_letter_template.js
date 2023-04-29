@@ -31,14 +31,14 @@ import Textarea from 'primevue/textarea'
 import Checkbox from 'primevue/checkbox'
 
 import offer_template from './offer_letter_template.vue'
-import { quillEditor } from 'vue3-quill'
+// import { quillEditor } from 'vue3-quill'
 
 
 const app = createApp(offer_template);
 
 app.use(PrimeVue, { ripple: true });
 app.use(router);
-app.use(quillEditor)
+// app.use(quillEditor)
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
