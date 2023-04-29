@@ -1,12 +1,12 @@
 <?php //getCurrentClientName()
 
 //Notification counts
-$approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
-    ->where('status', 'Pending')
-    ->count();
-$approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
-    ->where('status', 'Pending')
-    ->count();
+// $approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
+//     ->where('status', 'Pending')
+//     ->count();
+// $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
+//     ->where('status', 'Pending')
+//     ->count();
 
 //dd($approvals_leave_notif_count);
 

@@ -14,16 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vmt_employee_office_details', function (Blueprint $table) {
-                $table->dropColumn("emp_id");
-                $table->dropColumn("l2_manager_code");
-                $table->dropColumn("l2_manager_designation");
-                $table->dropColumn("l2_manager_name");
-                $table->dropColumn("l3_manager_code");
-                $table->dropColumn("l3_manager_designation");
-                $table->dropColumn("l3_manager_name");
-                $table->dropColumn("l4_manager_code");
-                $table->dropColumn("l4_manager_designation");
-                $table->dropColumn("l4_manager_name");
+
+            dropColumnIfExists('vmt_employee_office_details',"emp_id");
+            dropColumnIfExists('vmt_employee_office_details',"l2_manager_code");
+            dropColumnIfExists('vmt_employee_office_details',"l2_manager_designation");
+            dropColumnIfExists('vmt_employee_office_details',"l2_manager_name");
+            dropColumnIfExists('vmt_employee_office_details',"l3_manager_code");
+            dropColumnIfExists('vmt_employee_office_details',"l3_manager_designation");
+            dropColumnIfExists('vmt_employee_office_details',"l3_manager_name");
+            dropColumnIfExists('vmt_employee_office_details',"l4_manager_code");
+            dropColumnIfExists('vmt_employee_office_details',"l4_manager_designation");
+            dropColumnIfExists('vmt_employee_office_details',"l4_manager_name");
         });
     }
 

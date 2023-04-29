@@ -11,11 +11,23 @@ use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 function required()
 {
     $required = "<span class='text-danger required_star'>*</span>";
     return $required;
+}
+
+function dropColumnIfExists($table_name, $column_name){
+    if (Schema::hasColumn($table_name, $column_name)) //check the column
+    {
+        Schema::table($table_name, function (Blueprint $table) use ($column_name)
+        {
+            $table->dropColumn($column_name); //drop it
+        });
+    }
 }
 
 function fetchMasterConfigValue($config_name)
