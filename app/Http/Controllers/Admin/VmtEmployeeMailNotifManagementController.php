@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Service\VmtEmployeeMailNotifMgmtService;
+use App\Services\VmtEmployeeMailNotifMgmtService;
 
 use Illuminate\Http\Request;
 /*
