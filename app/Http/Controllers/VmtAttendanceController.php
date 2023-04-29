@@ -61,13 +61,20 @@ class VmtAttendanceController extends Controller
         //dd($leaveData_currentUser->toArray());
 
         //Accrued Leave Year Frame
+        $available_time_frames = array();
         $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
         $start_date =  $time_periods_of_year_query->start_date;
         $end_date   = $time_periods_of_year_query->end_date;
         $calender_type = $time_periods_of_year_query->abbrevation;
        // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
-       $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
-      // dd( $time_frame);
+       $available_time_frame_query = VmtOrgTimePeriod::get();
+       foreach($available_time_frame_query as $single_time_frame){
+        $time_frame_start_date=$single_time_frame->start_date;
+        $time_frame_end_date=$single_time_frame->end_date;
+        $available_time_frames[$single_time_frame->start_date."/".$single_time_frame->end_date]=$single_time_frame->abbrevation.' '.substr($time_frame_start_date, 0, 4).'-'.substr($time_frame_end_date, 0, 4);
+       }
+      $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
+
 
 
 
@@ -88,7 +95,7 @@ class VmtAttendanceController extends Controller
 
         // dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -1571,7 +1578,12 @@ class VmtAttendanceController extends Controller
 
     public function getEmployeeLeaveBalance(Request $request){
           //Accrued Leave Year Frame
-          $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+          if(empty($request->all())){
+            $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+          }else{
+            $time_periods_of_year_query = VmtOrgTimePeriod::whereYear('start_date',)->whereMonth('start_date',)
+                                                           ->whereYear('end_date',)->whereMonth('end_date',)->first();
+          }
           $start_date =  $time_periods_of_year_query->start_date;
           $end_date   = $time_periods_of_year_query->end_date;
           $calender_type = $time_periods_of_year_query->abbrevation;

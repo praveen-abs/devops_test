@@ -42,8 +42,9 @@
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                <option selected>FY 2023-24</option>
-
+                                @foreach ($available_time_frames as $key=>$value )
+                                <option value={{ $key }} > {{ $value }} </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -1733,5 +1734,24 @@
 
 
         }
+        $('#inputGroupSelect01').on('change',function(){
+            $.ajax({
+                url: "{{ route('getEmployeeLeaveBalance') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'leave_id': $('#btn_revoke').attr("data-leave-id"),
+                    'status': status,
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                   console.log(data);
+                },
+                error: function(data) {
+
+
+                }
+            });
+        });
     </script>
 @endsection
