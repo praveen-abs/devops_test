@@ -186,7 +186,7 @@
         <div class="card p-3 d-flex justify-items-center align-items-center  "
             style="width: 18rem; margin-left: 90px;flex-direction: column !important;">
 
-            <img src=" {{ URL::asset(session()->get('client_logo_url')) }}" alt="" class=""
+            <img src="" alt="" class=""
                 style="height: 40px;width:140px; ">
 
             <div class="card-body d-flex justify-items-center align-items-center " style="flex-direction: column ">

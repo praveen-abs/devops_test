@@ -15,7 +15,7 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
-use App\Services\VmtEmployeePayslipService;
+use App\Services\VmtEmployeePayCheckService;
 use App\Services\VmtProfilePagesService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -435,14 +435,16 @@ public function addExperienceInfo(Request $request)
     }
 
 
-    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
+    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayCheckService $employeePaySlipService)
     {
         return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     }
 
-    public function showPaySlip_PDFView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
+    public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePaySlipService)
     {
-        return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        //return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        return $employeePaySlipService->getEmployeePayslipDetailsAsPDF(Crypt::decryptString($request->user_code), $request->year, $request->month);
+
     }
 
 
