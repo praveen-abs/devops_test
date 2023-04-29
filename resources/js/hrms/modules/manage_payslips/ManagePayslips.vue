@@ -3,13 +3,20 @@
         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
         <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="emp.selectDate"
             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
-        <Button class="mb-2 h-10 btn btn-orange" label="Generate" @click="managePayslipStore.getAllEmployeesPayslipDetails( emp.selectDate.getMonth() + 1 , emp.selectDate.getFullYear())" />
+        <Button class="mb-2 h-10 btn btn-orange" label="Generate"
+            @click="managePayslipStore.getAllEmployeesPayslipDetails(emp.selectDate.getMonth() + 1, emp.selectDate.getFullYear())" />
+            <Button @click="viewemployee()" label="testing" />
+            <!-- {{ managePayslipStore.array_employees_list }} -->
     </div>
     <div class="my-4">
+        <!-- :value="managePayslipStore.array_employees_list" -->
+        <!-- {{ managePayslipStore.array_employees_list }} -->
+        {{ employeeDetails }}
+        {{managePayslipStore.array_employees_list}}
 
         <DataTable :value="managePayslipStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]" v-model:selection="emp.selectedProduct"
+            :rowsPerPageOptions="[5, 10, 25]"  v-model:selection="emp.selectedProduct"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
@@ -40,6 +47,7 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
+import {useManagePayslipStore} from  './ManagePayslipService';
 
 import { useManagePayslipStore } from './ManagePayslipService'
 
@@ -73,11 +81,9 @@ const emp = reactive({
 
 onMounted(async () => {
 
-  canShowLoadingScreen.value = false;
 
-});
 
-async function getAllEmployeesPayslipDetails(month, year){
+async function getAllEmployeesPayslipDetails(month, year) {
     await managePayslipStore.getAllEmployeesPayslipDetails();
 }
 

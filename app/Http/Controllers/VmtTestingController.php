@@ -22,6 +22,10 @@ use App\Models\VmtInvestmentForm_SectionParticulars;
 use App\Models\VmtInvestmentDeclarationsFields;
 use App\Models\User;
 use App\Models\VmtEmployee;
+use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtEmployeeStatutoryDetails;
+use App\Models\VmtClientMaster;
+use Mail;
 
 
 use Illuminate\Support\Facades\DB;
@@ -244,6 +248,91 @@ class VmtTestingController extends Controller
         catch(\Exception $e){
             dd("Error : ".$e);
         }
+
+    }
+
+    public function showPaySlip_HTMLView()
+    {
+        //dd($request->all());
+
+        $user_id = "139";
+        $selectedPaySlipMonth = "2023-01-01";
+
+        $user = null;
+
+        //If empty, then show current user profile page
+        if (empty($user_id)) {
+            $user = auth()->user();
+        } else {
+            $user = User::find($user_id);
+        }
+
+        $data['employee_payslip'] = VmtEmployeePaySlip::where([
+            ['user_id', '=', $user_id],
+            ['PAYROLL_MONTH', '=', $selectedPaySlipMonth],
+        ])->first();
+        // dd($data['employee_payslip']);
+
+        $data['employee_name'] = $user->name;
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
+        $data['employee_details'] = VmtEmployee::where('userid', $user->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->first();
+
+        $query_client = VmtClientMaster::find($user->client_id);
+
+        $data['client_logo'] = $query_client->client_logo;
+        $client_name = $query_client->client_name;
+
+        $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+        //dd($client_name);
+        //$html =  view('vmt_payslipTemplate', $data);
+        //dd($data['employee_statutory_details']->uan_number)
+
+
+        // $pdf = PDF::loadView('vmt_payslip_templates.template_payslip_brandavatar', $data);
+
+        $html = view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $data);
+
+        // return $html;
+
+        $pdf = new Dompdf();
+        $pdf->loadhtml($html, 'UTF-8');
+        //  dd($pdf);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+
+        // $pdf->stream($client_name.'.pdf');
+
+        Mail::send('vmt_payslip_templates.template_payslip_brandavatar', $data, function ($message) use ($data, $pdf) {
+
+            $message->to('sathishrain2001@gmail', 'sathishrain2001@gmail.com')
+
+                ->subject($data['employee_name'])
+
+                ->attachData($pdf->output(), "text.pdf");
+
+        });
+
+
+
+         dd('Mail sent successfully');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
