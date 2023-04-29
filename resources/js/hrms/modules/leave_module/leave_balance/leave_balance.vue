@@ -6,17 +6,16 @@
                     <h3 class="my-2 font-semibold ">Leave Type</h3>
                 </div>
                 <div class="row">
-                    <div id="box" v-for="availedleaves in availedLeaves" :key="availedleaves.id"
+                    <div id="box"  v-for="leave_balance in AccuredLeaves['Leave Balance']" :key="leave_balance"
                         class="p-1 mx-3 my-4 border-2 rounded-lg shadow-md col-lg-3 left-line col-md-3 col-xl-2 hover:bg-slate-100 focus:bg-green-100 active:bg-green-200">
-                        <p class="text-lg font-semibold text-center "></p>
+                        <p class="text-lg font-semibold text-center ">{{ leave_balance }}</p>
                         <p class="my-3 text-xl font-bold text-center"><span>days</span></p>
-                        <p class="text-center">Lorem ipsum dolor sit amet consectetur, .</p>
-                        {{ availedleaves }}
+                        <p class="text-center">Lorem ipsum dolor sit amet consectetu .</p>
                     </div>
                 </div>
             </div>
         </div>
-
+{{ AccuredLeaves['Leave Balance'] }}
 
 
     </div>
@@ -48,12 +47,12 @@ const getAccuredLeaves = async() =>{
         console.log(res.data);
     })
 }
-const getAvailedLeaves = async() =>{
-    await axios.get('/get-employee-leave-balance').then((res)=>{
-        AccuredLeaves.value = res.data
-        console.log(res.data);
-    })
-}
+// const getAvailedLeaves = async() =>{
+//     await axios.get('/get-employee-leave-balance').then((res)=>{
+//         AccuredLeaves.value = res.data
+//         console.log(res.data);
+//     })
+// }
 
 const getBalanceLeaves = async() =>{
     await axios.get('/process-employee-leave-balance').then((res)=>{
