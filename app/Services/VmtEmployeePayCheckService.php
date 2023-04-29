@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Imports\VmtPaySlip;
 use App\Models\Bank;
+use App\Models\VmtGeneralInfo;
+use Mail;
+use App\Mail\PayslipMail;
 
 class VmtEmployeePayCheckService {
 
@@ -520,7 +523,7 @@ class VmtEmployeePayCheckService {
     }
 
 
-    public function getEmployeePayslipDetailsAsPDF($user_code, $year, $month){
+    public function getEmployeePayslipDetailsAsPDF($user_code, $month, $year){
         $validator = Validator::make(
             $data = [
                 "user_code" => $user_code,
@@ -606,7 +609,7 @@ class VmtEmployeePayCheckService {
     }
 
 
-    public function getEmployeePayslipDetails($user_code, $year, $month){
+    public function getEmployeePayslipDetails($user_code, $month ,$year){
 
 
         //Validate
@@ -717,7 +720,7 @@ class VmtEmployeePayCheckService {
         }
     }
 
-    public function getAllEmployeesPayslipDetails($year, $month){
+    public function getAllEmployeesPayslipDetails( $month, $year){
 
         //Validate
         $validator = Validator::make(
@@ -822,18 +825,114 @@ class VmtEmployeePayCheckService {
             }
     }
 
-    public function sendPayslipMail($user_code){
+    public function sendMail_employeePayslip($user_code, $month, $year){
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "year" => $year,
+                "month" => $month,
+
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
 
 
-        Mail::send('vmt_payslip_templates.template_payslip_brandavatar', $data, function ($message) use ($data, $pdf) {
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
 
-            $message->to('sathishrain2001@gmail')
 
-                ->subject($data['employee_name'])
+        try{
 
-                ->attachData($pdf->output(), "text.pdf");
 
-        });
+            $query_user = User::where('user_code', $user_code)->first();
+            $user_id = $query_user->id;
+
+            //Check if email exists for this user
+            if(empty($query_user->email))
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'E-mail not found for the selected use',
+                    'data' => ''
+                ]);
+            }
+
+            //Check whether the payslip data exists or not
+            $query_payslip = VmtEmployeePaySlip::where('user_id',$user_id)
+                            ->whereYear('PAYROLL_MONTH', $year)
+                            ->whereMonth('PAYROLL_MONTH', $month);
+
+            if(!$query_payslip->exists())
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Payslip not found for the given MONTH and YEAR'
+                ]);
+
+            }
+
+
+            ////Generate the Payslip PDF
+
+            $data['employee_payslip'] = $query_payslip->first();
+
+            $data['employee_name'] = $query_user->name;
+            $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
+            $data['employee_details'] = VmtEmployee::where('userid',$user_id)->first();
+            $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user_id)->first();
+
+            $query_client = VmtClientMaster::find($query_user->client_id);
+
+            $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
+            $client_name = $query_client->client_name;
+
+            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+            $html = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+
+            //Generate PDF
+            $pdf = new Dompdf();
+            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+
+
+            $VmtGeneralInfo = VmtGeneralInfo::first();
+            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+            // $pdf->stream($client_name.'.pdf');
+            $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Mail sent successfully !",
+                "data" =>$isSent
+            ]);
+
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching payslip mail",
+                "data" =>$e
+            ]);
+        }
+
     }
 
 }
