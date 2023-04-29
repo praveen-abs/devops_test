@@ -14,7 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vmt_employee_details', function (Blueprint $table) {
-            $table->renameColumn('marital_status', 'marital_status_id');
+
+            if (Schema::hasColumn('vmt_employee_details', 'marital_status')){ //check the column
+                $table->renameColumn('marital_status', 'marital_status_id');
+            }
         });
     }
 

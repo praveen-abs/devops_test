@@ -28,11 +28,8 @@
                     <Button class="btn-primary" label="view" @click="viewemployee(slotProps.data)" /></template>
             </Column>
             <Column header="Action">
-
                 <template #body="slotProps">
-                    <!-- <Button class="btn-success" label="Send" @click="viewemployee(slotProps.data)" /> -->
-                    <Button class="btn-success" label="Send" @click="sendEmail(slotProps.data)" />
-                </template>
+                    <Button class="btn-success" label="Send" @click="viewemployee(slotProps.data)" /></template>
             </Column>
         </DataTable>
     </div>
@@ -48,16 +45,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, inject } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
 import {useManagePayslipStore} from  './ManagePayslipService';
 
-const managePayslipStore = useManagePayslipStore();
+import { useManagePayslipStore } from './ManagePayslipService'
+
+const managePayslipStore = useManagePayslipStore()
 // import { FilterMatchMode, FilterOperator } from "primevue/api";
 // import { useConfirm } from "primevue/useconfirm";
 // import { useToast } from "primevue/usetoast";
-
-const swal = inject("$swal");
 
 const dailog_employeeDetails = ref(false);
 let canShowLoadingScreen = ref(true);
@@ -67,7 +64,7 @@ const employeeDetails = ref()
 
 const viewemployee = (emp) => {
     employeeDetails.value = { emp }
-    console.log(emp.user_code);
+    console.log(emp);
     dailog_employeeDetails.value = true
 }
 
@@ -82,33 +79,7 @@ const emp = reactive({
     selectyear: '',
 });
 
-const sendEmail = (data) => {
-    employeeDetails.value = data
-    axios.post('http://localhost:3000/sendEmail', {
-        user_code: data.user_code,
-    }).then((res) => {
-        if (response.data.status == "Success") {
-            // Swal.fire(response.data.status, response.data.message, "success");
-            // window.location.reload()
-            Swal.fire({
-                title: response.data.status = "Success",
-                text: response.data.message,
-                icon: "success",
-                showCancelButton: false,
-            }).then((result) => {
-                window.location.reload();
-            })
-            console.log(res.data);
-        }
-    }).catch((res) => {
-        console.log(res.data);
-
-    }).finally((res) => {
-
-        console.log(res.data);
-    })
-    canShowLoadingScreen.value = true;
-}
+onMounted(async () => {
 
 
 

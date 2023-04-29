@@ -15,12 +15,11 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month : month,
             year : year
         }).then((response) => {
-            console.log("Response [payroll/getAllEmployeesPayslipDetails] : " + response);
+            console.log("Response [payroll/getAllEmployeesPayslipDetails] : " + JSON.stringify(response.data.data));
 
-            array_employees_list.value = response.data;
+            array_employees_list.value = response.data.data;
         });
     }
-
 
     // async function getAllEmployeesMonthlyPayslipsDetails(month, year){
 
@@ -38,21 +37,21 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     // }
 
 
-    function monthYear() {
-        let year = emp.selectDate.getFullYear();
-        let month = emp.selectDate.getMonth() + 1;
+    // function monthYear() {
+    //     let year = emp.selectDate.getFullYear();
+    //     let month = emp.selectDate.getMonth() + 1;
 
-        axios.post('/payroll/fetchEmployeePayslipDetails', {
-            month: month,
-            year: year,
-            //selected:emp.selectedProduct,
-        }).then((res) => {
-            array_employees_list.value = res.data;
-            console.log(res.data);
-        })
-            .catch((error) => console.log(error));
+    //     axios.post('/payroll/fetchEmployeePayslipDetails', {
+    //         month: month,
+    //         year: year,
+    //         //selected:emp.selectedProduct,
+    //     }).then((res) => {
+    //         ajaxData_employees_list.value = res.data;
+    //         console.log(res.data);
+    //     })
+    //         .catch((error) => console.log(error));
 
-    }
+    // }
 
     return {
 
