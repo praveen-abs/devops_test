@@ -89,12 +89,12 @@ class VmtPayCheckController extends Controller
     }
 
 
-    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-        return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+    public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($request->user_code, $request->month, $request->year);
     }
 
-    public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-        return $employeePaySlipService->getEmployeePayslipDetailsAsPDF(Crypt::decryptString($request->user_code), $request->year, $request->month);
+    public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($request->user_code, $request->year, $request->month);
     }
 
         /*
