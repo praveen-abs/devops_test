@@ -42,8 +42,9 @@
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                <option selected>FY 2023-24</option>
-
+                                @foreach ($available_time_frames as $key=>$value )
+                                <option value={{ $key }} > {{ $value }} </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -85,19 +86,18 @@
                         </div>
                         <div class="row">
 
-                            @foreach ($leaveTypes as $singleLeaveType)
-                                @if ($singleLeaveType->is_finite == '1')
+                            @foreach (    $leave_balance_details['Leave Balance'] as $key=>$value)
                                     <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                         <div class="card border-rtb left-line w-100">
                                             <div class="text-center card-body">
-                                                <p class="mb-2 text-ash-medium f-13 ">{{ $singleLeaveType->leave_type }}</p>
+                                                <p class="mb-2 text-ash-medium f-13 ">{{ $key }}</p>
                                                 <h5 class="mb-0">
-                                                    {{ $singleLeaveType->days_annual - ($leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? 0) }}
+                                                    {{ $value }}
                                                 </h5>
                                             </div>
                                         </div>
                                     </div>
-                                @endif
+
                             @endforeach
                         </div>
                         <div class="row">
@@ -105,15 +105,13 @@
                                 <h6 class="text-left fw-bold">Leave Availed</h6>
                             </div>
 
-                            @foreach ($leaveTypes as $singleLeaveType)
+                            @foreach ( $leave_balance_details['Avalied Leaves'] as $Leave_type=>$balance)
                                 <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
                                     <div class="card border-rtb left-line w-100">
                                         <div class="text-center card-body">
-                                            <p class="mb-2 text-ash-medium f-13 ">{{ $singleLeaveType->leave_type }}</p>
+                                            <p class="mb-2 text-ash-medium f-13 ">{{  $Leave_type }}</p>
                                             <h5 class="mb-0">
-                                                <?php
-                                                echo $leaveData_currentUser[$singleLeaveType->leave_type]->leave_availed_count ?? '0';
-                                                ?>
+                                               {{ $balance }}
                                             </h5>
 
                                         </div>
@@ -264,7 +262,7 @@
                                 <label class="input-group-text " for="inputGroupSelect01"><i
                                         class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                                 <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                    <option selected>FY 2022-23</option>
+                                    <option selected>{{ $time_frame }}</option>
 
                                 </select>
                             </div>
@@ -1736,5 +1734,28 @@
 
 
         }
+        $('#inputGroupSelect01').on('change',function(){
+            var time_fram =  $('#inputGroupSelect01').val();
+            var time_frame_array = time_fram.split('/');
+            var start_date = time_frame_array[0];
+            var end_date = time_frame_array[1];
+            $.ajax({
+                url: "{{ route('fetchEmployeeLeaveBalance') }}",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    'start_date':start_date,
+                    'end_date':end_date,
+                    "_token": "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                   console.log(data);
+                },
+                error: function(data) {
+
+
+                }
+            });
+        });
     </script>
 @endsection
