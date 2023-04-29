@@ -8,8 +8,10 @@
     use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
+    use App\Models\VmtUserMailStatus;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
+    use App\Mail\WelcomeMail;
 
 
 ?>
@@ -77,31 +79,79 @@
 //                   echo  $mail_send->exists();
 
 // dd(auth()->user()->id);
-// $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
-//             ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-//             ->select(
-//                 'users.name as emp_name',
-//                 'users.user_code as emp_code',
-//                 'users.active as emp_status',
-//                 'users.is_onboarded as is_onboarded',
-//                 'users.email as email_id',
-//                 'users.id as user_id',
-//                 'users.avatar as avatar',
-//                 'vmt_employee_details.doj as doj',
-//                 'vmt_employee_details.blood_group_id as blood_group_id',
-//                 'vmt_employee_office_details.department_id',
-//                 'vmt_employee_office_details.designation as emp_designation',
-//                 'vmt_employee_office_details.l1_manager_code as l1_manager_code',
-//                 'vmt_employee_office_details.l1_manager_name',
-//                 'vmt_employee_office_details.l1_manager_designation'
-//             )
-//             ->orderBy('users.name', 'ASC')
-//             ->where('users.active', '0')
-//             ->where('users.is_ssa', '0')
-//           ->get('is_onboarded');
-$query= array();
-$query=User::where("is_onboarded", '0')->get('email');
-dd($query);
+// $user_official_mail = User::leftjoin('vmt_user_mail_status','vmt_user_mail_status.user_id','users.id')
+//         ->where('users.active','<>','-1')
+//         ->where('users.email','!=','')
+//         ->select(
+//                 'users.User_code as empcode',
+//                 'users.name as empname'  ,
+//                 'users.email as email',
+//                 'vmt_user_mail_status.welcome_mail_status as welcomemailstatus'
+//               )
+//         ->get();
+//         // dd($user_official_mail);
+
+
+            try{
+                $user_code='DMC072';
+                
+
+             $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+            ->where('users.user_code',$user_code)
+            ->first()->email;
+
+            $emp_name = User::where('user_code',$user_code)->first()->name;
+            $VmtGeneralInfo = VmtGeneralInfo::first();
+            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+            $response  = array();
+
+            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+
+            //Store the sent status in ' vmt_user_mail_status'
+            if($isSent){
+                $mail_status='1';
+            }
+            else{
+              $mail_status='0';
+            }
+            //to store mailstatus
+            $user_id=User::where('user_code',$user_code)->first()->id;
+         if( $user_id->exists()){
+            $Welcome_mail_status=VmtUserMailStatus::find($user_id);
+            $Welcome_mail_status->user_id=$user_id;
+            $Welcome_mail_status->Welcome_mail_status=$mail_status;
+            $Welcome_mail_status->save();
+            }else{
+            $Welcome_mail_status= new VmtUserMailStatus;
+            $Welcome_mail_status->user_id=$user_id;
+            $Welcome_mail_status->Welcome_mail_status=$mail_status;
+            $Welcome_mail_status->save();
+            }
+
+
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "Welcome Mail Notification sent successfully!",
+                'data' => ""
+
+            ]);
+            dd('hiii');
+        } catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "",
+                'data' => $e
+
+            ]);
+            dd('bye');
+        }
+
+
+
 
 ?>
 

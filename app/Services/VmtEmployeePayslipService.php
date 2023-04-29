@@ -727,18 +727,63 @@ class VmtEmployeePayslipService {
         }
     }
 
-    public function fetchEmployeePayslipDetails($year, $month){
+    public function getAllEmployeesPayslipDetails($year, $month){
+
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                "year" => $year,
+                "month" => $month,
+            ],
+            $rules = [
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
 
 
-        $emp_name= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
-                        ->whereYear('PAYROLL_MONTH', $year)
-                        ->whereMonth('PAYROLL_MONTH',$month)
-                        ->get();
+        try{
+            if($validator->fails()){
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+                ]);
+            }
 
-                   // dd($emp_name);
-                        return $emp_name;
+            $array_emp_payslip_details= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
+                            ->whereYear('PAYROLL_MONTH', $year)
+                            ->whereMonth('PAYROLL_MONTH',$month)
+                            ->where('users.is_ssa','0')
+                            ->where('users.active','1')
+                            ->get();
+
+                        // dd($emp_name);
+            return response()->json([
+                'status' => 'success',
+                'message' => $validator->errors()->all(),
+                'data' => $array_emp_payslip_details
+            ]);
         }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => '',
+                'data' => $e
+            ]);
+        }
+    }
 
+        /*
+                Fetches for a single employee
+
+
+        */
     public function getEmployeeAllPayslipList($user_code){
 
             //Validate
@@ -787,4 +832,41 @@ class VmtEmployeePayslipService {
             }
     }
 
+    // public function getAllEmployeesMonthlyPayslipsDetails($year, $month){
+    //     //Validate
+    //     $validator = Validator::make(
+    //         $data = [
+    //             "year" => $year,
+    //             "month" => $month,
+    //         ],
+    //         $rules = [
+    //             "year" => 'required',
+    //             "month" => 'required',
+    //         ],
+    //         $messages = [
+    //             'required' => 'Field :attribute is missing',
+    //             'exists' => 'Field :attribute is invalid',
+    //         ]
+
+    //     );
+
+    //     if($validator->fails()){
+    //         return response()->json([
+    //             'status' => 'failure',
+    //             'message' => $validator->errors()->all()
+    //         ]);
+    //     }
+
+    //     $array_emplist= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
+    //                 ->whereYear('PAYROLL_MONTH', $year)
+    //                 ->whereMonth('PAYROLL_MONTH',$month)
+    //                 ->where('users.is_ssa','0')
+    //                 ->where('users.active','1')
+    //                 ->get();
+
+
+    //     return $array_emplist;
+
+
+    // }
 }
