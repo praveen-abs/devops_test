@@ -148,7 +148,7 @@ import {useEmpSalaryAdvanceStore} from '../../stores/employeeSalaryAdvanceLoanMa
 const useEmpStore = useEmpSalaryAdvanceStore()
 
 onMounted(() => {
-   useEmpStore.fetchSalaryAdvance()
+   useEmpStore.fetchSalaryAdvance();
 })
 
 
