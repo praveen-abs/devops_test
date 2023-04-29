@@ -94,7 +94,7 @@
 
             try{
                 $user_code='DMC072';
-                
+
 
              $user_mail = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
             ->where('users.user_code',$user_code)
@@ -117,7 +117,7 @@
             }
             //to store mailstatus
             $user_id=User::where('user_code',$user_code)->first()->id;
-         if( $user_id->exists()){
+        if( $user_id->exists()){
             $Welcome_mail_status=VmtUserMailStatus::find($user_id);
             $Welcome_mail_status->user_id=$user_id;
             $Welcome_mail_status->Welcome_mail_status=$mail_status;
