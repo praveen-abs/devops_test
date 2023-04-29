@@ -41,12 +41,15 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
-    async function sendPayslipMail(user_code){
+    async function sendMail_employeePayslip(user_code, month, year){
+        console.log("sendMail_employeePayslip() : Sending mail to user : "+user_code);
 
-        axios.post('http://localhost:3000/sendEmail',{
+        axios.post('/payroll/paycheck/sendMail_employeePayslip',{
             user_code: user_code,
-        }).then((data)=>{
-            console.log(data);
+            month: month,
+            year: year,
+        }).then((response)=>{
+            console.log(" Response [sendMail_employeePayslip] : "+response.data);
         })
         .catch((data)=>{
             console.log(data);
@@ -104,9 +107,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         // Functions
 
-        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML,
-
-        sendPayslipMail
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip
 
     };
 });

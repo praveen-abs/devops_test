@@ -93,9 +93,14 @@ class VmtPayCheckController extends Controller
         return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($request->user_code, $request->month, $request->year);
     }
 
-    public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
-        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($request->user_code, $request->year, $request->month);
+    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($request->user_code, $request->month, $request->year);
     }
+
+    public function sendMail_employeePayslip(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        return $employeePayCheckService->sendMail_employeePayslip($request->user_code, $request->month, $request->year);
+    }
+
 
         /*
         Get all payslip details of all employees for the given month, year.
@@ -104,7 +109,7 @@ class VmtPayCheckController extends Controller
     */
     public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
 
-        return $employeePaySlipService->getAllEmployeesPayslipDetails($request->year, $request->month);
+        return $employeePaySlipService->getAllEmployeesPayslipDetails($request->month , $request->year);
 
    }
 

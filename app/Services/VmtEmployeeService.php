@@ -831,7 +831,6 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     public function attachAppointmentLetterPDF($employeeData)
     {
        // dd($employeeData);
-        $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
@@ -856,6 +855,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
+        $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
 

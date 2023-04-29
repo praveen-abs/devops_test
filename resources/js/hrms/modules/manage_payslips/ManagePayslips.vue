@@ -15,9 +15,11 @@
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="user_code" header="Employee Code"></Column>
+            <Column field="user_code" header="Employee Code" headerStyle="width: 3rem" ></Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
+            <Column field="is_released" header="Released Payslip?"></Column>
+            <Column field="is_" header="Payslip mail sent?"></Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
                     <Button class="btn-primary" label="View " @click="managePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
@@ -25,7 +27,7 @@
             </Column>
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendPayslipMail(slotProps.data)" />
+                    <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
                 </template>
             </Column>
         </DataTable>
