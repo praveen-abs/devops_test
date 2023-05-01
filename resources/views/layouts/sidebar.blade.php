@@ -510,10 +510,12 @@
                                         role="button"><span>Pay
                                             Run</span></a>
                                 </li>
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
                                 <li class="nav-item">
                                     <a href="{{ route('showManagePayslipsPage') }}" class="nav-link sidebar py-1"
                                         role="button"><span>Manage Payslip</span></a>
                                 </li>
+                                @endcan
                                 <li class="nav-item">
                                     <a href="{{ route('showPayrollClaimsPage') }}" class="nav-link sidebar py-1"
                                         role="button"><span>

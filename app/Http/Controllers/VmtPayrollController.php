@@ -57,8 +57,10 @@ class VmtPayrollController extends Controller
     }
 
     public function showManagePayslipsPage(Request $request){
-        return view('payroll.manage_payslips');
-
+        if(auth()->user()->can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view')))
+            return view('payroll.manage_payslips');
+        else
+            return view('page_unauthorized__access');
     }
 
 
