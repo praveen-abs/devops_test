@@ -10,6 +10,7 @@ use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\VmtConfigAppService;
+use App\Services\VmtEmployeeService;
 
 class HRMSBaseAPIController extends Controller
 {
@@ -144,6 +145,10 @@ class HRMSBaseAPIController extends Controller
     public function getAllLeaveTypes(Request $request)
     {
         return VmtLeaves::all()->pluck('leave_type');
+    }
+
+    public function getEmployeeRole(Request $request, VmtEmployeeService $serviceVmtEmployeeService){
+        return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
     }
 
 
