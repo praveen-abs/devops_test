@@ -10,117 +10,115 @@
 @endsection
 @section('content')
     <div class="Leave_dashboard mt-30">
-        <div class="mb-3 card left-line">
-            <div class="pt-2 pb-0 card-body">
-                <div class="row">
-                    <div class="p-0 col-6 ">
-                        <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                            <li class="nav-item text-muted" role="presentation">
-                                <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance"
-                                    aria-selected="true" role="tab">
-                                    Leave Balance</a>
+        <div class="mb-3 tw-card left-line pt-1 pb-0">
+            <div class="row">
+                <div class="p-0 col-6 ">
+                    <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                        <li class="nav-item text-muted" role="presentation">
+                            <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
+                                role="tab">
+                                Leave Balance</a>
+                        </li>
+                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                            <li class="nav-item text-muted " role="presentation">
+                                <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance"
+                                    aria-selected="false" tabindex="-1" role="tab">
+                                    Team Leave Balance</a>
                             </li>
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
-                                <li class="nav-item text-muted " role="presentation">
-                                    <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance"
-                                        aria-selected="false" tabindex="-1" role="tab">
-                                        Team Leave Balance</a>
-                                </li>
-                            @endif
+                        @endif
 
-                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                                <li class="nav-item text-muted " role="presentation">
-                                    <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
-                                        tabindex="-1" role="tab">
-                                        Org Leave Balance</a>
-                                </li>
-                            @endif
-                        </ul>
+                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                            <li class="nav-item text-muted " role="presentation">
+                                <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
+                                    tabindex="-1" role="tab">
+                                    Org Leave Balance</a>
+                            </li>
+                        @endif
+                    </ul>
+                </div>
+                <div class="p-0 col-3 text-end">
+                    <div class="input-group me-2">
+                        <label class="input-group-text " for="inputGroupSelect01"><i class="fa fa-calendar text-primary "
+                                aria-hidden="true"></i></label>
+                        <select class="form-select btn-line-primary" id="inputGroupSelect01">
+                            @foreach ($available_time_frames as $key => $value)
+                                <option value={{ $key }}> {{ $value }} </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="p-0 col-3 text-end">
-                        <div class="input-group me-2">
-                            <label class="input-group-text " for="inputGroupSelect01"><i
-                                    class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
-                            <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                @foreach ($available_time_frames as $key=>$value )
-                                <option value={{ $key }} > {{ $value }} </option>
-                                @endforeach
-                            </select>
-                        </div>
 
-                    </div>
-                    <div class="p-0 col-3 text-end">
-                        <div>
+                </div>
+                <div class="p-0 col-3 text-end">
+                    <div>
 
-                            <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
-                                role="button" aria-expanded="false"> Leave
-                                Policy Explanation
-                            </a>
-                        </div>
+                        <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
+                            role="button" aria-expanded="false"> Leave
+                            Policy Explanation
+                        </a>
                     </div>
                 </div>
-
             </div>
+
         </div>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="card top-line">
-                    <div class="card-body">
-                        <div class="mb-2 row">
-                            <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6">
-                                <h6 class="text-left fw-bold">Leave Balance</h6>
-                            </div>
-                            <div class="col-6 justify-content-end d-flex">
-                                {{-- <div class="pendingLeave_notify me-3">
+                <div class="tw-card ">
+                    <div class="mb-2 row">
+                        <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6">
+                            <h6 class="text-gray-900 font-semibold text-lg">Leave Balance</h6>
+                        </div>
+                        <div class="col-6 justify-content-end d-flex">
+                            {{-- <div class="pendingLeave_notify me-3">
                                         <button class="btn btn-border-primary " data-bs-target="#leavepending_modal" data-bs-toggle="modal">
                                             Pending
                                         </button>
                                         <span class="badge badge-soft-light rounded-circle fs-13 bg-danger">
                                             0</span>
                                     </div> --}}
-                                @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
-                                <div id="vjs_leaveapply"> </div>
+                            @vite('resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js')
+                            <div id="vjs_leaveapply"> </div>
 
 
-                            </div>
                         </div>
-                        <div class="row">
+                    </div>
+                    {{-- <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-3 xl:grid-cols-3 gap-4"> --}}
 
-                            @foreach (    $leave_balance_details['Leave Balance'] as $key=>$value)
-                                    <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                        <div class="card border-rtb left-line w-100">
-                                            <div class="text-center card-body">
-                                                <p class="mb-2 text-ash-medium f-13 ">{{ $key }}</p>
-                                                <h5 class="mb-0">
-                                                    {{ $value }}
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                            @endforeach
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
-                                <h6 class="text-left fw-bold">Leave Availed</h6>
-                            </div>
-
-                            @foreach ( $leave_balance_details['Avalied Leaves'] as $Leave_type=>$balance)
-                                <div class="col-sm-3 col-sm-12 col-xl-4 col-md-4 col-lg-4 d-flex">
-                                    <div class="card border-rtb left-line w-100">
-                                        <div class="text-center card-body">
-                                            <p class="mb-2 text-ash-medium f-13 ">{{  $Leave_type }}</p>
-                                            <h5 class="mb-0">
-                                               {{ $balance }}
-                                            </h5>
-
-                                        </div>
+                    <div class="row mb-4 ">
+                        @foreach ($leave_balance_details['Leave Balance'] as $key => $value)
+                            <div class="col-sm-12 mb-sm-4 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
+                                \
+                                <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                        <h6 class="mb-0 text-sm font-semibold">
+                                            {{ $value }}
+                                        </h6>
                                     </div>
                                 </div>
-                            @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+                    {{-- </div> --}}
+                    <div class="row">
+
+                        <h6 class="text-gray-900 mb-4 font-semibold text-lg">Leave Availed</h6>
 
 
-                        </div>
+                        @foreach ($leave_balance_details['Avalied Leaves'] as $Leave_type => $balance)
+                            <div class="col-sm-3 mb-sm-4 col-sm-12 col-xl-4 col-md-4 col-lg-4 ">
+                                <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                        <h6 class="mb-0 text-base font-semibold">
+                                            {{ $balance }}
+                                        </h6>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+
+
                     </div>
                 </div>
 
@@ -489,7 +487,8 @@
                                         id="textarea_leavecomments" cols="30" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3 col-12 mb-md-0 text-end">
-                                    <button class="mx-4 btn btn-orange" data-leave-id="" id="btn_withdraw">Withdraw</button>
+                                    <button class="mx-4 btn btn-orange" data-leave-id=""
+                                        id="btn_withdraw">Withdraw</button>
                                 </div>
 
                                 <div class="mb-3 col-12 mb-md-0 text-end">
@@ -513,11 +512,11 @@
 
 
     <!-- <div class="modal fade bd-example-modal-xl" tabindex="-10" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true " id="leaveApply_modal" >
-                          <div class="modal-dialog modal-xl modal-dialog-centered" style="z-index:-20 !important">
-                             <div class="modal-content">
+                                                                                                  <div class="modal-dialog modal-xl modal-dialog-centered" style="z-index:-20 !important">
+                                                                                                     <div class="modal-content">
 
-                          </div>
-                        </div> -->
+                                                                                                  </div>
+                                                                                                </div> -->
 
 
 
@@ -525,16 +524,16 @@
     <!-- <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
 
 
-                                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                    <div id="vjs_leaveapply">
+                                                                                                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                                                                            <div id="vjs_leaveapply">
 
-                        </div>
-
-
+                                                                                                </div>
 
 
-                                    </div>
-                            </div> -->
+
+
+                                                                                                            </div>
+                                                                                                    </div> -->
 
     {{-- error message details --}}
 @endsection
@@ -1734,8 +1733,8 @@
 
 
         }
-        $('#inputGroupSelect01').on('change',function(){
-            var time_fram =  $('#inputGroupSelect01').val();
+        $('#inputGroupSelect01').on('change', function() {
+            var time_fram = $('#inputGroupSelect01').val();
             var time_frame_array = time_fram.split('/');
             var start_date = time_frame_array[0];
             var end_date = time_frame_array[1];
@@ -1744,12 +1743,12 @@
                 type: "GET",
                 dataType: "json",
                 data: {
-                    'start_date':start_date,
-                    'end_date':end_date,
+                    'start_date': start_date,
+                    'end_date': end_date,
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                   console.log(data);
+                    console.log(data);
                 },
                 error: function(data) {
 
