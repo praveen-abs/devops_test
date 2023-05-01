@@ -173,36 +173,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
-    public function fetchEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-
-        //Use TRY CATCH
-
-        //Validate the request
-            //If vaildation fails, send error json
-
-            // $validated = $request->validate([
-        //     'title' => 'required|unique:posts|max:255',
-        //     'body' => 'required',
-        // ]);
-
-
-        //If validation success, fetch data
-
-        //Send proper JSON
-        /*
-            {
-                "status":"success",
-                "message":"success/error message",
-                "data":{
-
-                }
-
-            }
-
-        */
-
-        return $serviceVmtAttendanceService->fetchEmployeeLeaveBalance($request->user_id);
+        return $serviceVmtAttendanceService->getEmployeeLeaveBalance($request->user_code);
     }
 
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService){
