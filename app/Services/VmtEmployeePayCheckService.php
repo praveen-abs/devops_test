@@ -337,6 +337,7 @@ class VmtEmployeePayCheckService {
             $empPaySlip = new VmtEmployeePaySlip;
 
             $empPaySlip->EMP_NO = $row['emp_no'];
+            $empPaySlip->is_released = 0;
             $empPaySlip->user_id = $user_id;
             // $empPaySlip->Gender = $row['gender'];
             // $empPaySlip->DESIGNATION = $row['designation'];
