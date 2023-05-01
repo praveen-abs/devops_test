@@ -328,20 +328,20 @@
                                     </li>
                                     {{-- @endif --}}
 
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{ route('showPMSApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false">
-                                            {{-- <span>
+                                            <span>
                                                 OKR /PMS<span
                                                     class="badge bg-danger rounded-circle text-white">4</span>
-                                            </span> --}}
+                                            </span>
                                             <span>
                                                 OKR /PMS
                                             </span>
                                         </a>
-                                        {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
-                                    </li>
+                                        PMS forms are approved here. Redirect to PMS dashboard
+                                    </li> --}}
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
