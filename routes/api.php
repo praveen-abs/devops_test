@@ -42,6 +42,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
 
+    Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
+    Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
+
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
     //HOLIDAYS
