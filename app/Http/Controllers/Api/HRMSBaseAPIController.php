@@ -9,6 +9,7 @@ use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Services\VmtConfigAppService;
 
 class HRMSBaseAPIController extends Controller
 {
@@ -19,6 +20,11 @@ class HRMSBaseAPIController extends Controller
             ->where('is_ssa', 0)
             ->where('is_onboarded', 1)
             ->first();
+    }
+
+
+    public function getAppConfig(Request $request, VmtConfigAppService $serviceVmtConfigAppService){
+        return $serviceVmtConfigAppService->getAppConfig();
     }
 
     public function getFCMToken(Request $request){

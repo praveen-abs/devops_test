@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
+    Route::get('/getAppConfig', [HRMSBaseAPIController::class, 'getAppConfig']);
 
     Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
     Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
