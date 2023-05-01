@@ -17,7 +17,7 @@ use App\Services\VmtNotificationsService;
 
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
-
+use App\Models\VmtEmployeeWorkShifts;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
@@ -1455,6 +1455,61 @@ class VmtAttendanceService{
                     'data'   => ""
                 ]);
             }
+
+    }
+
+
+    public function getEmployeeWorkShiftTimings($user_code)
+    {
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //fetch the data
+            $response = VmtEmployeeWorkShifts::join('users','users.id','=','vmt_employee_workshifts.user_id')
+                            ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_workshifts.work_shift_id')
+                            ->where('users.id', $user_id)
+                            ->get(['vmt_work_shifts.shift_type' , 'vmt_work_shifts.shift_start_time' , 'vmt_work_shifts.shift_end_time'])
+                            ->first();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => '',
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeWorkShiftTimings() ] ",
+                'data' => $e
+            ]);
+        }
 
     }
 }

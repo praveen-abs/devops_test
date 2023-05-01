@@ -440,4 +440,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
 
     }
+
+    public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
+
+    }
+
 }
