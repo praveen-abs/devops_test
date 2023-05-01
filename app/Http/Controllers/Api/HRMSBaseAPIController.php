@@ -7,7 +7,8 @@ use App\Models\User;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class HRMSBaseAPIController extends Controller
 {
@@ -18,6 +19,99 @@ class HRMSBaseAPIController extends Controller
             ->where('is_ssa', 0)
             ->where('is_onboarded', 1)
             ->first();
+    }
+
+    public function getFCMToken(Request $request){
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $request->user_code,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $response = User::where('user_code', $request->user_code)->first()->fcm_token;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getFCMToken() ] ",
+                'data' => $e
+            ]);
+        }
+    }
+
+    public function updateFCMToken(Request $request){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $request->user_code,
+                'fcm_token' => $request->fcm_token,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $query_user = User::where('user_code',$request->user_code)->first();
+            $query_user->fcm_token = $request->fcm_token;
+            $query_user->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "FCM Token updated successfully",
+                'data' => ""
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ updateFCMToken() ] ",
+                'data' => $e
+            ]);
+        }
     }
 
     public function getAllUsers(Request $request)
@@ -45,4 +139,6 @@ class HRMSBaseAPIController extends Controller
     {
         return VmtLeaves::all()->pluck('leave_type');
     }
+
+
 }

@@ -29,7 +29,7 @@
                                     <p class="f-14 mt-2  text-primary">
                                         {{ $assignedUserDetails->getEmployeeOfficeDetails->designation }}</p>
                                     <p class="f-12 text-muted mt-2">
-                                        {{ $assignedUserDetails->getEmployeeDetails->emp_no }}</p>
+                                        {{ $assignedUserDetails->user_code }}</p>
                                 </div>
 
                             </div>
@@ -180,7 +180,6 @@
                                     @if (isset($assignedUserDetails->getEmployeeDetails))
                                         <li>
                                             <p class="title h5"> Employee ID</p>
-                                            <p class="text">{{ $assignedUserDetails->getEmployeeDetails->emp_no }}</p>
                                         </li>
                                     @endif
                                     @if (isset($assignedUserDetails->getEmployeeOfficeDetails))

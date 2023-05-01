@@ -296,14 +296,15 @@ function getEmployeeManager($selectedEmployeeId){
                         ->select('l1_manager_code')
                         ->groupBy('l1_manager_code')
                         ->pluck('l1_manager_code');
+
     $users = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
                 ->select(
                     'users.name',
                     'users.id as id',
-                    'vmt_employee_details.emp_no as code',
+                    'users.user_code as code',
                 )
                 ->orderBy('users.name', 'ASC')
-                ->whereIn('emp_no', $currentEmpCode);
+                ->whereIn('users.user_code', $currentEmpCode);
     return $users;
 }
 

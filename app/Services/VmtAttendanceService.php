@@ -24,6 +24,7 @@ use DatePeriod;
 use DateInterval;
 use \Datetime;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Date;
@@ -213,21 +214,63 @@ class VmtAttendanceService{
     }
 
 
-    public function fetchEmployeeLeaveBalance($user_id)
+    public function getEmployeeLeaveBalance($user_code)
     {
-        $response = array();
+            $validator = Validator::make(
+                $data = [
+                    "user_code" => $user_code
+                ],
+                $rules = [
+                    "user_code" => 'required|exists:users,user_code',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                    "exists" => "Field :attribute is invalid"
+                ]
+            );
 
-        $leaveTypes = VmtLeaves::all();
 
-        $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','vmt_employee_leaves.leave_type_id')
-                                            ->where('user_id', '=' , '174');
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
 
-        foreach($leaveTypes as $singleLeaveType)
-        {
-            $response[$singleLeaveType->leave_type] = $query_emp_leaves->where('leave_type_id',$singleLeaveType->id)->get()->count();
-        }
 
-        return $response;
+            try{
+
+                $response = array();
+
+                $leaveTypes = VmtLeaves::all();
+
+                $user_id = User::where('user_code', $user_code)->first()->id;
+
+                $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves','vmt_leaves.id','vmt_employee_leaves.leave_type_id')
+                                                    ->where('user_id', $user_id);
+
+                foreach($leaveTypes as $singleLeaveType)
+                {
+                    $response[$singleLeaveType->leave_type] = $query_emp_leaves->where('leave_type_id',$singleLeaveType->id)->get()->count();
+                }
+
+
+                return response()->json([
+                    "status" => "success",
+                    "message" => "",
+                    "data" => $response,
+                ]);
+
+            }
+            catch(\Exception $e){
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Error while fetching investments form data",
+                    "data" => $e,
+                ]);
+            }
+
+
 
     }
 

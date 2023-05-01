@@ -49,7 +49,7 @@
                                                 <h6 class="departmnet fw-bold text-muted">{{$details->department}}</h6>
                                                 <h5 class="role text-muted fw-bold">{{$details->designation}}</h5>
                                                 <div class="staff-id fw-bold text-dark">Employee ID :
-                                                    {{$details->emp_no}}</div>
+                                                    </div>
                                                 <div class="small fw-bold text-muted">Date of Join :
                                                     {{date('d-m-Y', strtotime($details->doj))}}</div>
                                                 <div class="staff-msg mt-4 "><a class="btn btn-custom" href="chat.html">
