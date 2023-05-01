@@ -169,7 +169,7 @@ class VmtPMSModuleController extends Controller
             ->get();
 
         // Get logged in user Employee deatils
-        $loggedUserManagerNumber = User::where('userid',$loggedUserId)->first()->user_code;
+        $loggedUserManagerNumber = User::where('id',$loggedUserId)->first()->user_code;
 
         // Get logged in Manager Employees List
         $loggedManagerEmployees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
