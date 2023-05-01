@@ -27,7 +27,6 @@ use App\Mail\VmtPMSMail_Assignee;
 use App\Mail\VmtPMSMail_Reviewer;
 use App\Mail\VmtPMSMail_PublishForm;
 use App\Models\VmtPMSRating;
-use App\Models\User;
 use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
