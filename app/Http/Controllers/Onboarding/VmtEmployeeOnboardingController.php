@@ -248,7 +248,7 @@ class VmtEmployeeOnboardingController extends Controller
              $clientData  = VmtEmployee::where('userid', $employee->id)->first();
              $empNo = '';
              if ($clientData) {
-                 $empNo = $clientData->emp_no;
+                 $empNo = $employee->user_code;
              }
              $countries = Countries::all();
              $compensatory = Compensatory::where('user_id', $employee->id)->first();
@@ -529,7 +529,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $newEmployee = new VmtEmployee;
 
                 $newEmployee->userid = $user->id;
-                $newEmployee->emp_no   =    $row["employee_code"] ?? '';
+                //$newEmployee->emp_no   =    $row["employee_code"] ?? '';
                 //$newEmployee->emp_name   =    $row["employee_name"];
                 $newEmployee->gender   =    $row["gender"] ?? '';
                 //$newEmployee->designation   =    $row["designation"];

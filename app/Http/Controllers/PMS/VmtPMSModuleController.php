@@ -27,6 +27,7 @@ use App\Mail\VmtPMSMail_Assignee;
 use App\Mail\VmtPMSMail_Reviewer;
 use App\Mail\VmtPMSMail_PublishForm;
 use App\Models\VmtPMSRating;
+use App\Models\User;
 use App\Notifications\ViewNotification;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -110,13 +111,13 @@ class VmtPMSModuleController extends Controller
 
         $allEmployeesList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
             ->get();
 
         $allEmployeesWithoutLoggedUserList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('users.id','!=',Auth::id())
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
             ->get();
 
         $loggedInUser = Auth::user();
@@ -169,12 +170,13 @@ class VmtPMSModuleController extends Controller
             ->get();
 
         // Get logged in user Employee deatils
-        $loggedUserManagerNumber = VmtEmployee::where('userid',$loggedUserId)->value('emp_no');
+        $loggedUserManagerNumber = User::where('userid',$loggedUserId)->first()->user_code;
+
         // Get logged in Manager Employees List
         $loggedManagerEmployees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('l1_manager_code',$loggedUserManagerNumber)
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation','users.avatar as avatar')
+            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation','users.avatar as avatar')
             ->get();
 
         $loggedManagerEmployeesIDs = [];
@@ -684,7 +686,7 @@ class VmtPMSModuleController extends Controller
                                                        $request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),
                                                        $receiverName,
                                                        $comments_employee,
-                                                       $login_Link));    
+                                                       $login_Link));
                     }
                 }
             }
@@ -877,7 +879,7 @@ class VmtPMSModuleController extends Controller
                                     ->cc($hr_details->officical_mail)
                                     ->send(new VmtPMSMail_NotifyManager($assigneeUser->name,
                                                                         $currentUser_empDetails->designation,
-                                                                        $userEmployeeDetails->name, 
+                                                                        $userEmployeeDetails->name,
                                                                         $assignment_period, request()->getSchemeAndHttpHost() ));
 
                             $message = "Employee has submitted KPI Assessment.  ";
@@ -991,7 +993,8 @@ class VmtPMSModuleController extends Controller
     public function getEmployeesOfManager(Request $request)
     {
         // dd($request->all());
-         $currentEmpCode = VmtEmployee::whereIn('userid',explode(',', $request->emp_id))->pluck('emp_no');
+         $currentEmpCode = User::whereIn('id',explode(',', $request->emp_id))->pluck('user_code');
+
         $employeesList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                          ->whereIn('vmt_employee_office_details.l1_manager_code', $currentEmpCode)
                          ->where('users.active','1')
@@ -1245,7 +1248,7 @@ class VmtPMSModuleController extends Controller
                     \Mail::to($mailingList)
                             ->cc($hr_details->officical_mail)
                             ->send(new VmtPMSMail_Reviewer("approved",
-                                                            
+
                                                              $receiverDetails->name,
                                                              $request->hidden_calendar_year,
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
@@ -1593,7 +1596,8 @@ class VmtPMSModuleController extends Controller
         try{
 // dd($request->selectedReviewer);
             if(isset($request->selectedReviewer)){
-                $reviewerEmpNo = VmtEmployee::where('userid',$request->selectedReviewer)->pluck('emp_no')->first();
+                $reviewerEmpNo = User::where('id',$request->selectedReviewer)->first()->user_code;
+
                 if(!empty($reviewerEmpNo)){
                     $employees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
                                 ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
