@@ -108,11 +108,8 @@
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">
                                     Reporting To
-                                    <a href="#" class="edit-icon" @click="editReportingManager(
-                                                _instance_profilePagesStore.employeeDetails
-                                                    .get_employee_office_details.l1_manager_name
-                                            )
-                                            "><i class="ri-pencil-fill"></i>
+                                    <a href="#" class="edit-icon" @click="dailogReporting
+                                    = true"><i class="ri-pencil-fill"></i>
                                     </a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
@@ -142,7 +139,13 @@
             </div>
         </div>
     </div>
-
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+      <div class="confirmation-content">
+        <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
+        <span>{{ status_text_CompletionDialog }}</span>
+      </div>
+    </Dialog>
     <Dialog v-model:visible="dailogDepartment" modal header="Edit Department"
         :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
         <!-- {{ employee_card.department  }} -->
@@ -150,7 +153,7 @@
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                <button type="button" class="submit_btn warning success"
                     @click="editDepartment">
                     Save
                 </button>
@@ -160,11 +163,11 @@
     <Dialog v-model:visible="dailogReporting" modal header="Edit Reporting Manager"
         :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
         <Dropdown optionLabel="name" :options="reportManagerOption" v-model="employee_card.reporting_manager"
-            optionValue="id" placeholder="Select Reporting Manager" class="w-full form-selects" />
+            optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" id="submit_button_family_details"
-                    @click="EditFamilyDetails">
+                <button type="button" class="submit_btn warning success"
+                    @click="editReportingManager">
                     Save
                 </button>
             </div>
@@ -287,6 +290,9 @@ const dailogDepartment = ref(false);
 
 const dailogReporting = ref(false);
 
+const canShowCompletionScreen = ref(false);
+const status_text_CompletionDialog = ref("None");
+
 const editDepartment = (dep) => {
     console.log(dep);
 
@@ -296,23 +302,62 @@ const editDepartment = (dep) => {
             department_id: employee_card.department,
         })
         .then((res) => {
-            console.log("Department Options : " + JSON.stringify(departmentOption.value));
+            //console.log("Department Options : " + JSON.stringify(departmentOption.value));
 
             //Set the department name from dropdown value itself.
             //find(departmentOption);
             //      console.log("Selected Dept id : " + employee_card.department);
-            let selected_deptName = JSON.stringify(_.find(departmentOption.value, ["id", employee_card.department]).name);
-            selected_deptName = selected_deptName.slice(1, -1);
+            let selected_deptName = _.find(departmentOption.value, ["id", employee_card.department]).name;
             console.log("Lodash [Selected Dept]: " + selected_deptName);
 
             _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name = selected_deptName;
+
+            status_text_CompletionDialog.value = "Department updated successfully !";
+
             console.log(res.data);
+        })
+        .catch((err) => {
+            status_text_CompletionDialog.value = "Error while updating department. Kindly contact the Admin.";
+            console.log("Error while updating Department : "+ err);
+        })
+        .finally(() => {
+
+            canShowCompletionScreen.value = true;
+            dailogDepartment.value = false;
+            //console.log('Experiment completed');
         });
 };
+
 const editReportingManager = (rm) => {
-    console.log(rm);
-    dailogReporting.value = true;
-    employee_card.reporting_manager = rm;
+    console.log("editReportingManager : "+rm);
+
+    axios.post("/profile-pages/updateReportingManager", {
+        user_code : _instance_profilePagesStore.employeeDetails.user_code,
+        manager_user_code : employee_card.reporting_manager,
+    }).
+    then((res) => {
+        //console.log("Reporting Manager Options : "+ JSON.stringify(reportManagerOption.value));
+
+       let selected_reportedManager = _.find(reportManagerOption.value, ["user_code" , employee_card.reporting_manager]);
+
+       _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name = selected_reportedManager.name;
+       _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code = selected_reportedManager.user_code;
+
+        status_text_CompletionDialog.value = "Reporting Manager updated successfully !";
+
+        console.log(res.data);
+
+
+
+    }).catch((err) => {
+        status_text_CompletionDialog.value = "Error while updating Reporting Manager. Kindly contact the Admin.";
+            console.log("Error while updating Reporting Manager : "+ err);
+    }).finally(() =>{
+        canShowCompletionScreen.value = true;
+        dailogReporting.value = false;
+    });
+
+
 };
 
 const setvalue = () => {
