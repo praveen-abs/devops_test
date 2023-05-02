@@ -41,9 +41,10 @@
                         <label class="input-group-text " for="inputGroupSelect01"><i class="fa fa-calendar text-primary "
                                 aria-hidden="true"></i></label>
                         <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                            @foreach ($available_time_frames as $key => $value)
+                            {{-- @foreach ($available_time_frames as $key => $value)
                                 <option value={{ $key }}> {{ $value }} </option>
-                            @endforeach
+                            @endforeach --}}
+                            <option>FY 2023-2024</option>
                         </select>
                     </div>
 
@@ -86,7 +87,6 @@
                     <div class="row mb-4 ">
                         @foreach ($leave_balance_details['Leave Balance'] as $key => $value)
                             <div class="col-sm-12 mb-sm-4 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
-                                \
                                 <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
                                     <div class="text-center">
                                         <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
