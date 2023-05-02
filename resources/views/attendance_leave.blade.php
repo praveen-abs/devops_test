@@ -42,9 +42,10 @@
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                @foreach ($available_time_frames as $key => $value)
+                                {{-- @foreach ($available_time_frames as $key => $value)
                                     <option value={{ $key }}> {{ $value }} </option>
-                                @endforeach
+                                @endforeach --}}
+                                <option>FY 2023-2024</option>
                             </select>
                         </div>
 
