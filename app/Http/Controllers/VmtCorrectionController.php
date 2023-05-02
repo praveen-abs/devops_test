@@ -9,16 +9,16 @@ use Carbon\Carbon;
 class VmtCorrectionController extends Controller
 {
     public function processsExpense(Request $request){
-        $reimbursement_details=VmtEmployeeReimbursements::select('id','vehicle_type','distance_travelled','total_expenses')
+        $reimbursement_details=VmtEmployeeReimbursements::select('id','vehicle_type_id','distance_travelled','total_expenses')
                                                          ->get();
         foreach( $reimbursement_details as $single_details){
-                 if($single_details->vehicle_type=='2-Wheeler'){
+                 if($single_details->vehicle_type_id==1){
                     $totalExpense=3.5*$single_details->distance_travelled;
                     $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
                     $UpdateDetails->total_expenses= $totalExpense;
                     $UpdateDetails->save();
 
-                 }else if( $single_details->vehicle_type=='4-Wheeler'){
+                 }else if( $single_details->vehicle_type_id==2){
                     $totalExpense=6*$single_details->distance_travelled;
                     $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
                     $UpdateDetails->total_expenses= $totalExpense;
