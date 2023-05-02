@@ -8,6 +8,10 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     // Variable Declarations
     const array_employees_list = ref()
 
+    const paySlipHTMLView = ref()
+
+    const canShowPayslipView  = ref (false);
+
     // Events
     async function getAllEmployeesPayslipDetails(month, year){
 
@@ -15,20 +19,37 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month : month,
             year : year
         }).then((response) => {
-            console.log("Response [payroll/getAllEmployeesPayslipDetails] : " + JSON.stringify(response.data.data));
+           // console.log("Response [getAllEmployeesPayslipDetails] : " + JSON.stringify(response.data.data));
 
             array_employees_list.value = response.data.data;
         });
     }
 
-    //
+    async function getEmployeePayslipDetailsAsHTML(user_code, month, year){
 
-    const sendPayslipMail = (data)=>{
-        console.log(data.user_code);
-        axios.post('http://localhost:3000/sendEmail',{
-            user_code:data.user_code,
-        }).then((data)=>{
-            console.log(data);
+        axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',{
+            user_code : user_code,
+            month : month,
+            year : year
+        }).then((response) => {
+            console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
+
+            paySlipHTMLView.value = response.data;
+
+            canShowPayslipView.value = true;
+        });
+
+    }
+
+    async function sendMail_employeePayslip(user_code, month, year){
+        console.log("sendMail_employeePayslip() : Sending mail to user : "+user_code);
+
+        axios.post('/payroll/paycheck/sendMail_employeePayslip',{
+            user_code: user_code,
+            month: month,
+            year: year,
+        }).then((response)=>{
+            console.log(" Response [sendMail_employeePayslip] : "+response.data);
         })
         .catch((data)=>{
             console.log(data);
@@ -82,13 +103,11 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         // Varaible Declartion
 
-        array_employees_list,
+        array_employees_list, paySlipHTMLView, canShowPayslipView,
 
         // Functions
 
-        getAllEmployeesPayslipDetails,
-
-        sendPayslipMail
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip
 
     };
 });

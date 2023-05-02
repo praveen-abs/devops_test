@@ -173,36 +173,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
-    public function fetchEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-
-        //Use TRY CATCH
-
-        //Validate the request
-            //If vaildation fails, send error json
-
-            // $validated = $request->validate([
-        //     'title' => 'required|unique:posts|max:255',
-        //     'body' => 'required',
-        // ]);
-
-
-        //If validation success, fetch data
-
-        //Send proper JSON
-        /*
-            {
-                "status":"success",
-                "message":"success/error message",
-                "data":{
-
-                }
-
-            }
-
-        */
-
-        return $serviceVmtAttendanceService->fetchEmployeeLeaveBalance($request->user_id);
+        return $serviceVmtAttendanceService->getEmployeeLeaveBalance($request->user_code);
     }
 
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService){
@@ -328,6 +301,19 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message' => '',
             'data' => $response
         ]);
+
+    }
+
+    public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->applyRequestAbsentRegularization(user_code : $request->user_code,
+                                                                                attendance_date: $request->attendance_date,
+                                                                                regularization_type : $request->regularization_type,
+                                                                                checkin_time : $request->checkin_time,
+                                                                                checkout_time : $request->checkout_time,
+                                                                                reason : $request->reason,
+                                                                                custom_reason : $request->custom_reason
+                                                                            );
 
     }
 
@@ -467,4 +453,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
 
     }
+
+    public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
+
+    }
+
 }

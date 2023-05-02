@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-
-// @layer components {
-//     .card,.tw-card {
-//         background-color: theme(colors.white);
-//         border-radius: theme(borderRadius.lg);
-//         padding: theme(spacing.6);
-//         box-shadow: theme(boxShadow.xl);
-//     }
-// }
+@layer components {
+    .tw-card {
+        background-color: theme("colors.white");
+        border-radius: theme("borderRadius.lg");
+        padding: theme("spacing.6") theme("spacing.6");
+        width: 100%;
+        box-shadow: theme("boxShadow.xl");
+    }
+}

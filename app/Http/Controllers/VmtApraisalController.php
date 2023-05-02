@@ -13,6 +13,7 @@ use App\Models\VmtKPITable;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\ConfigPms;
+use App\Models\Users;
 use App\Models\Department;
 use App\Mail\VmtAssignGoals;
 use App\Mail\NotifyPMSManager;
@@ -190,165 +191,6 @@ class VmtApraisalController extends Controller
         return 'Question Created Successfully';
     }
 
-    // assign goals forms
-    public function vmtAssignGoals(Request $request){
-        $empGoalQuery = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-                            ->leftJoin('vmt_employee_office_details', 'vmt_employee_details.id','=', 'vmt_employee_office_details.emp_id' )
-                            ->join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'vmt_employee_details.id')
-                            ->select(
-                                'vmt_employee_details.*',
-                                'users.name as emp_name',
-                                'users.email as email_id',
-                                'users.avatar as avatar',
-                                'vmt_employee_office_details.department_id',
-                                'vmt_employee_office_details.designation',
-                                'vmt_employee_office_details.l1_manager_code',
-                                'vmt_employee_office_details.l1_manager_name',
-                                'vmt_employee_office_details.l1_manager_designation',
-                                'vmt_employee_pms_goals_table.assignment_period',
-                                'vmt_employee_pms_goals_table.kpi_table_id',
-                                'vmt_employee_pms_goals_table.is_manager_approved',
-                                'vmt_employee_pms_goals_table.is_manager_submitted',
-                                'vmt_employee_pms_goals_table.is_employee_submitted',
-                                'vmt_employee_pms_goals_table.is_employee_accepted',
-                                'vmt_employee_pms_goals_table.author_id',
-                                'vmt_employee_pms_goals_table.hr_kpi_percentage',
-                            )
-                            ->orderBy('created_at', 'DESC')
-                            ->whereNotNull('emp_no');
-                            //->get();
-
-
-        $userCount = User::count();
-        $config = ConfigPms::where('user_id', auth()->user()->id)->first();
-        $show['dimension'] = 'true';
-        $show['kpi'] = 'true';
-        $show['operational'] = 'true';
-        $show['measure'] = 'true';
-        $show['frequency'] = 'true';
-        $show['target'] = 'true';
-        $show['stretchTarget'] = 'true';
-        $show['source'] = 'true';
-        $show['kpiWeightage'] = 'true';
-        if ($config) {
-            $config->header = json_decode($config->column_header, true);
-            $show['dimension'] = $config->selected_columns && in_array('dimension', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['kpi'] = $config->selected_columns && in_array('kpi', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['operational'] = $config->selected_columns && in_array('operational', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['measure'] = $config->selected_columns && in_array('measure', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['frequency'] = $config->selected_columns && in_array('frequency', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
-        }
-        //dd($userCount);
-        $empCount = VmtEmployeePMSGoals::groupBy('employee_id')->count();
-        $subCount = VmtEmployeePMSGoals::groupBy('employee_id')->where('is_hr_submitted', true)->count();
-        $departments = Department::where('is_active', 1)->get();
-        if(Str::contains( currentLoggedInUserRole(), ["Employee"]) ){
-            $emp = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->where('userid', auth()->user()->id)->first();
-            $rev = VmtEmployee::where('emp_no', $emp->l1_manager_code)->first();
-            $users = User::where('id', $rev->userid)->get();
-            $empGoals = $empGoalQuery->where('users.id', auth::user()->id)->get();
-            foreach ($empGoals as $emp) {
-                if ($config && $config->selected_head == 'manager') {
-                    $per = json_decode($emp->manager_kpi_percentage, true) ? json_decode($emp->manager_kpi_percentage, true) : [];
-                } else {
-                    $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
-                }
-                if (count($per) > 0) {
-                    $emp['ranking'] = 0;
-                    $emp['rating'] = array_sum($per)/count($per);
-                    if ($emp['rating'] < 60) {
-                        $emp['ranking'] = 1;
-                    } elseif ($emp['rating'] >= 60 && $emp['rating'] < 70) {
-                        $emp['ranking'] = 2;
-                    } elseif ($emp['rating'] >= 70 && $emp['rating'] < 80) {
-                        $emp['ranking'] = 3;
-                    } elseif ($emp['rating'] >= 80 && $emp['rating'] < 90) {
-                        $emp['ranking'] = 4;
-                    } elseif ($emp['rating'] >= 90) {
-                        $emp['ranking'] = 5;
-                    } else{
-                        $emp['ranking'] = 0;
-                    }
-                }
-            }
-            return view('vmt_pms_assigngoals', compact('users','empGoals','userCount','empCount','subCount', 'config', 'show', 'department'));
-        } elseif (Str::contains( currentLoggedInUserRole(), ["Manager"]) ) {
-            $empGoals = $empGoalQuery->get();
-
-            $getId = VmtEmployee::where('userid', auth()->user()->id)->first();
-            $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->select(
-                'vmt_employee_details.*',
-                'users.name as emp_name',
-                'users.avatar as avatar',
-            )
-            ->orderBy('created_at', 'ASC')
-            ->whereNotNull('emp_no')
-            ->get();
-             $users = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.reviewer_id', '=', 'users.id')->get();
-        } else {
-            $empGoals = $empGoalQuery->get();
-
-            $employees = VmtEmployee::leftJoin('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->select(
-                'vmt_employee_details.*',
-                'users.name as emp_name',
-                'users.avatar as avatar',
-            )
-            ->orderBy('created_at', 'ASC')
-            ->whereNotNull('emp_no')
-            ->get();
-
-            $currentEmpCode = VmtEmployee::where('userid', auth::user()->id)->first()->value('emp_no');
-            //$mgr_assignee = User::join('vmt_employee_pms_goals_table',  'vmt_employee_pms_goals_table.employee_id', '=', 'users.id')->pluck('name');
-
-            $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
-            ->select(
-                'users.name',
-                'users.id as id',
-                'vmt_employee_office_details.officical_mail as email',
-            )
-            ->orderBy('users.name', 'ASC')
-            ->where('l1_manager_code', strval($currentEmpCode))
-            ->get();
-
-            //dd($users);
-            // ->select('users.id' ,'users.name')
-            // ->
-            // ->get();
-        }
-        foreach ($empGoals as $emp) {
-            $emp['ranking'] = 0;
-            if ($config && $config->selected_head == 'manager') {
-                $per = json_decode($emp->manager_kpi_percentage, true) ? json_decode($emp->manager_kpi_percentage, true) : [];
-            } else {
-                $per = json_decode($emp->hr_kpi_percentage, true) ? json_decode($emp->hr_kpi_percentage, true) : [];
-            }
-            if (count($per) > 0) {
-                $emp['rating'] = array_sum($per)/count($per);
-                if ($emp['rating'] < 60) {
-                    $emp['ranking'] = 1;
-                } elseif ($emp['rating'] >= 60 && $emp['rating'] < 70) {
-                    $emp['ranking'] = 2;
-                } elseif ($emp['rating'] >= 70 && $emp['rating'] < 80) {
-                    $emp['ranking'] = 3;
-                } elseif ($emp['rating'] >= 80 && $emp['rating'] < 90) {
-                    $emp['ranking'] = 4;
-                } elseif ($emp['rating'] >= 90) {
-                    $emp['ranking'] = 5;
-                } else{
-                    $emp['ranking'] = 0;
-                }
-            }
-        }
-
-        return view('vmt_pms_assigngoals', compact('users', 'employees','empGoals','userCount','empCount','subCount', 'config', 'show', 'department'));
-    }
-
     public function getL1_ManagerName()
     {
 
@@ -358,7 +200,8 @@ class VmtApraisalController extends Controller
     {
         if($request->has("emp_id")){
 
-            $currentEmpCode = VmtEmployee::where('userid',$request->emp_id)->pluck('emp_no');
+            $currentEmpCode = Users::find($request->emp_id)->user_code;
+
             $users = VmtEmployeeOfficeDetails::leftJoin('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
             ->select(
                 'users.name',
@@ -803,7 +646,7 @@ class VmtApraisalController extends Controller
                 $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $assignedGoals->employee_id)->first();
 
                 //Get assigned employee manager name
-                $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('vmt_employee_details.emp_no', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
+                $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('users.user_code', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
 
                 $employeeData = VmtEmployee::where('userid', $assignedGoals->employee_id)->first();
                 $kpiData      = VmtKPITable::find($assignedGoals->kpi_table_id);
@@ -911,7 +754,7 @@ class VmtApraisalController extends Controller
             $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $assignedGoals->employee_id)->first();
 
             //Get assigned employee manager name
-            $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('vmt_employee_details.emp_no', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
+            $assignedEmp_manager_name = User::join('vmt_employee_details',  'vmt_employee_details.userid', '=', 'users.id')->where('users.user_code', $assignedEmployeeOfficeDetails->l1_manager_code)->pluck('name');
 
             //dd($t_assignedEmp_manager_name);
 

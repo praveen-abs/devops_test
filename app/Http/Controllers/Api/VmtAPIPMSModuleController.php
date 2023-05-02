@@ -393,7 +393,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
             $result[$key]['form_name'] = $Kpi_form_name->form_name;
 
             $result[$key]['employee_name'] = $assigneeDetails->name;
-            $result[$key]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
+            $result[$key]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->user_code : '';
             $isAssigneeAccepted = '';
             $isAssigneeSubmitted = '';
             $rating = '';
@@ -427,7 +427,7 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                 $reviewerDetails = User::where('id',$reviewer)->with('getEmployeeDetails')->first();
                 $result[$key]['manager'][$reviewerKey]['manager_id'] = $reviewer;
                 $result[$key]['manager'][$reviewerKey]['manager_name'] = $reviewerDetails->name;
-                $result[$key]['manager'][$reviewerKey]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
+                $result[$key]['manager'][$reviewerKey]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->user_code : '';
             }
 
 
@@ -492,10 +492,10 @@ class VmtAPIPMSModuleController extends HRMSBaseAPIController
                 $result[$i]['vmt_pms_kpiform_assigned_id'] = $kpiAssignee->id;
                 $result[$i]['employee_id'] = $assignee;
                 $result[$i]['employee_name'] = $assigneeDetails->name;
-                $result[$i]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->getEmployeeDetails->emp_no : '';
+                $result[$i]['employee_emp_id'] = isset($assigneeDetails->getEmployeeDetails) ? (String)$assigneeDetails->user_code : '';
 
                 $result[$i]['manager_name'] = $reviewerDetails->name;
-                $result[$i]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->getEmployeeDetails->emp_no : '';
+                $result[$i]['manager_emp_id'] = isset($reviewerDetails->getEmployeeDetails) ? (String)$reviewerDetails->user_code : '';
                 $result[$i]['assignment_period'] = $kpiAssignee->assignment_period;
                 $rating = '';
 

@@ -1,46 +1,48 @@
 <template>
     <div class="d-flex justify-content-end">
         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
-        <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="emp.selectDate"
+        <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedPayRollDate.selectDate"
             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
         <Button class="mb-2 h-10 btn btn-orange" label="Generate"
-            @click="managePayslipStore.getAllEmployeesPayslipDetails(emp.selectDate.getMonth() + 1, emp.selectDate.getFullYear())" />
+            @click="managePayslipStore.getAllEmployeesPayslipDetails(selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
         <!-- {{ managePayslipStore.array_employees_list }} -->
     </div>
     <div class="my-4">
 
         <DataTable :value="managePayslipStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]" v-model:selection="emp.selectedProduct"
+            :rowsPerPageOptions="[5, 10, 25]" v-model:selection="selectedPayRollDate.selectedProduct"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="user_code" header="Employee Code"></Column>
+            <Column field="user_code" header="Employee Code" headerStyle="width: 3rem" ></Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
-            <Column header="View Payslips">
+            <Column field="is_released" header="Released Payslip?"></Column>
+            <Column field="is_" header="Payslip mail sent?"></Column>
+            <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View " @click="viewemployee(slotProps.data)" /></template>
+                    <Button class="btn-primary" label="View " @click="managePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
+                </template>
             </Column>
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendPayslipMail(slotProps.data)" /></template>
+                    <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
+                </template>
             </Column>
         </DataTable>
     </div>
     <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
     </div>
-
     <!-- dialog for show details -->
-
     <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="dailog_employeeDetails" modal header="Header" :style="{ width: '50vw' }">
-            {{ employeeDetails }}
+        <Dialog v-model:visible="managePayslipStore.canShowPayslipView" modal header="Header" :style="{ width: '50vw' }">
+        <div v-html="managePayslipStore.paySlipHTMLView">
+
+        </div>
         </Dialog>
     </div>
-
-
 </template>
 
 <script setup>
@@ -52,28 +54,17 @@ import { useManagePayslipStore } from './ManagePayslipService';
 
 const managePayslipStore = useManagePayslipStore()
 
-const dailog_employeeDetails = ref(false);
-let canShowLoadingScreen = ref(true);
 
-
-const employeeDetails = ref()
-
-const viewemployee = (emp) => {
-    employeeDetails.value = { emp }
-    console.log(emp);
-    dailog_employeeDetails.value = true
-}
-
-const ajaxData_employees_list = ref();
-
-
-const emp = reactive({
+const selectedPayRollDate = reactive({
     selectmonth: '',
     selectDate: '',
     selectyear: '',
 });
 
+onMounted(async () => {
 
+
+});
 
 
 // function showConfirmDialog(selectedRowData, status) {
@@ -139,25 +130,6 @@ const emp = reactive({
 //     console.log(error.toJSON());
 //     });
 // }
-function monthYear() {
-    let year = emp.selectDate.getFullYear();
-    let month = emp.selectDate.getMonth() + 1;
-
-    axios.post('/payroll/fetchEmployeePayslipDetails', {
-        month: month,
-        year: year,
-        //selected:emp.selectedProduct,
-    }).then((res) => {
-        ajaxData_employees_list.value = res.data;
-        console.log(res.data);
-    })
-        .catch((error) => console.log(error));
-
-}
-
-
-
-
 
 </script>
 

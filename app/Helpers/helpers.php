@@ -43,7 +43,7 @@ function getEmployeeClientDetails($emp_id)
     $query_client_details = VmtClientMaster::where('id', '=', $emp_client_id);
 
     if ($query_client_details->exists())
-        return $query_client_details->first();
+        return $query_client_details->first()->id;
     else
         return null;
 }

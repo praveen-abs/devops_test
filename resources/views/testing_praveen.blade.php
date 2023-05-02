@@ -60,8 +60,8 @@
 
     // $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
 
-
-    dd(getUserShortName(313));
+    $test = config('vmt_roles_permissions.permissions');
+    dd($test['MANAGE_PAYSLIPS_can_view']);
 ?>
 
 </body>

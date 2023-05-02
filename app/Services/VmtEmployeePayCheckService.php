@@ -31,8 +31,11 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Imports\VmtPaySlip;
 use App\Models\Bank;
+use App\Models\VmtGeneralInfo;
+use Mail;
+use App\Mail\PayslipMail;
 
-class VmtEmployeePayslipService {
+class VmtEmployeePayCheckService {
 
     /*
         NOTE:
@@ -334,6 +337,7 @@ class VmtEmployeePayslipService {
             $empPaySlip = new VmtEmployeePaySlip;
 
             $empPaySlip->EMP_NO = $row['emp_no'];
+            $empPaySlip->is_released = 0;
             $empPaySlip->user_id = $user_id;
             // $empPaySlip->Gender = $row['gender'];
             // $empPaySlip->DESIGNATION = $row['designation'];
@@ -446,91 +450,81 @@ class VmtEmployeePayslipService {
     /*
         Show Employee payslip as HTML
     */
-    public function showPaySlip_HTMLView($user_id, $selectedPaySlipMonth){
-        //dd($request->all());
-        $user = null;
+    public function getEmployeePayslipDetailsAsHTML($user_code, $month, $year){
 
-        //If empty, then show current user profile page
-        if(empty($user_id))
-        {
-            $user = auth()->user();
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "year" => $year,
+                "month" => $month,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
         }
-        else
-        {
-            $user = User::find($user_id);
+
+
+        try{
+
+            //If empty, then show current user profile page
+            $user = User::where('user_code',$user_code)->first();
+
+            $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id',$user->id)
+                            ->whereYear('PAYROLL_MONTH', $year)
+                            ->whereMonth('PAYROLL_MONTH', $month)
+                            ->first();
+
+            $data['employee_name'] = $user->name;
+            $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
+            $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
+            $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
+
+            $query_client = VmtClientMaster::find($user->client_id);
+
+            $data['client_logo'] = $query_client->client_logo;
+            $client_name = $query_client->client_name;
+
+            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+            //dd($client_name);
+            //$html =  view('vmt_payslipTemplate', $data);
+            //dd($data['employee_statutory_details']->uan_number);
+            $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+            return $html;
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $html
+            ]);
+
         }
-
-        $data['employee_payslip'] = VmtEmployeePaySlip::where([
-                         ['user_id','=', $user_id],
-                         ['PAYROLL_MONTH','=', $selectedPaySlipMonth],
-                         ])->first();
-
-         $data['employee_name'] = $user->name;
-         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
-         $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
-         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
-
-         $query_client = VmtClientMaster::find($user->client_id);
-
-         $data['client_logo'] = $query_client->client_logo;
-         $client_name = $query_client->client_name;
-
-         $processed_clientName = strtolower(str_replace(' ', '', $client_name));
-
-         //dd($client_name);
-         //$html =  view('vmt_payslipTemplate', $data);
-         //dd($data['employee_statutory_details']->uan_number);
-         $html =  view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-
-         return $html;
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching payslip data as HTML",
+                "data" =>$e
+            ]);
+        }
     }
 
-    public function showPaySlip_PDFView($user_id, $selectedPaySlipMonth)
-    {
-        //dd($request->all());
-        $user = null;
 
-        //If empty, then show current user profile page
-        if(empty($user_id))
-        {
-            $user = auth()->user();
-        }
-        else
-        {
-            $user = User::find($user_id);
-        }
-
-        $data['employee_payslip'] = VmtEmployeePaySlip::where([
-                                        ['user_id','=', $user_id],
-                                        ['PAYROLL_MONTH','=', $selectedPaySlipMonth],
-                                        ])->first();
-
-        $data['employee_name'] = $user->name;
-        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user->id)->first();
-        $data['employee_details'] = VmtEmployee::where('userid',$user->id)->first();
-        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
-
-        $query_client = VmtClientMaster::find($user->client_id);
-
-        $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
-        $client_name = $query_client->client_name;
-
-        $processed_clientName = strtolower(str_replace(' ', '', $client_name));
-
-        $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-
-
-        $html = $view->render();
-        $html = preg_replace('/>\s+</', "><", $html);
-        $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
-
-        //dd( request()->getSchemeAndHttpHost().$data['client_logo']);
-        return $pdf->download($user->id."_".$selectedPaySlipMonth."_Payslip.pdf");
-        //   return  PDF::loadView('vmt_payslipTemplate', $data)->download($month.'Payslip.pdf');
-
-    }
-
-    public function getEmployeePayslipDetailsAsPDF($user_code, $year, $month){
+    public function getEmployeePayslipDetailsAsPDF($user_code, $month, $year){
         $validator = Validator::make(
             $data = [
                 "user_code" => $user_code,
@@ -609,14 +603,14 @@ class VmtEmployeePayslipService {
         catch(\Exception $e){
             return response()->json([
                 "status" => "failure",
-                "message" => "Error while fetching payslip data",
+                "message" => "Error while fetching payslip data as PDF",
                 "data" =>$e
             ]);
         }
     }
 
 
-    public function getEmployeePayslipDetails($user_code, $year, $month){
+    public function getEmployeePayslipDetails($user_code, $month ,$year){
 
 
         //Validate
@@ -727,7 +721,7 @@ class VmtEmployeePayslipService {
         }
     }
 
-    public function getAllEmployeesPayslipDetails($year, $month){
+    public function getAllEmployeesPayslipDetails( $month, $year){
 
         //Validate
         $validator = Validator::make(
@@ -832,41 +826,114 @@ class VmtEmployeePayslipService {
             }
     }
 
-    // public function getAllEmployeesMonthlyPayslipsDetails($year, $month){
-    //     //Validate
-    //     $validator = Validator::make(
-    //         $data = [
-    //             "year" => $year,
-    //             "month" => $month,
-    //         ],
-    //         $rules = [
-    //             "year" => 'required',
-    //             "month" => 'required',
-    //         ],
-    //         $messages = [
-    //             'required' => 'Field :attribute is missing',
-    //             'exists' => 'Field :attribute is invalid',
-    //         ]
+    public function sendMail_employeePayslip($user_code, $month, $year){
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "year" => $year,
+                "month" => $month,
 
-    //     );
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
 
-    //     if($validator->fails()){
-    //         return response()->json([
-    //             'status' => 'failure',
-    //             'message' => $validator->errors()->all()
-    //         ]);
-    //     }
-
-    //     $array_emplist= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
-    //                 ->whereYear('PAYROLL_MONTH', $year)
-    //                 ->whereMonth('PAYROLL_MONTH',$month)
-    //                 ->where('users.is_ssa','0')
-    //                 ->where('users.active','1')
-    //                 ->get();
+        );
 
 
-    //     return $array_emplist;
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
 
 
-    // }
+        try{
+
+
+            $query_user = User::where('user_code', $user_code)->first();
+            $user_id = $query_user->id;
+
+            //Check if email exists for this user
+            if(empty($query_user->email))
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'E-mail not found for the selected use',
+                    'data' => ''
+                ]);
+            }
+
+            //Check whether the payslip data exists or not
+            $query_payslip = VmtEmployeePaySlip::where('user_id',$user_id)
+                            ->whereYear('PAYROLL_MONTH', $year)
+                            ->whereMonth('PAYROLL_MONTH', $month);
+
+            if(!$query_payslip->exists())
+            {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Payslip not found for the given MONTH and YEAR'
+                ]);
+
+            }
+
+
+            ////Generate the Payslip PDF
+
+            $data['employee_payslip'] = $query_payslip->first();
+
+            $data['employee_name'] = $query_user->name;
+            $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
+            $data['employee_details'] = VmtEmployee::where('userid',$user_id)->first();
+            $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user_id)->first();
+
+            $query_client = VmtClientMaster::find($query_user->client_id);
+
+            $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
+            $client_name = $query_client->client_name;
+
+            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+            $html = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+
+            //Generate PDF
+            $pdf = new Dompdf();
+            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->setPaper('A4', 'portrait');
+            $pdf->render();
+
+
+            $VmtGeneralInfo = VmtGeneralInfo::first();
+            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+            // $pdf->stream($client_name.'.pdf');
+            $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Mail sent successfully !",
+                "data" =>$isSent
+            ]);
+
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching payslip mail",
+                "data" =>$e
+            ]);
+        }
+
+    }
+
 }

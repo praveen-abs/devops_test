@@ -19,7 +19,6 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
-use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
