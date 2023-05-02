@@ -388,8 +388,7 @@
                             <div class="flex formgrid">
                                 <div class="field col">
                                     <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
-                                    <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled
-                                        " @input="employee_service.amount_calculation" />
+                                    <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled" @input="employee_service.amount_calculation()" />
                                 </div>
                                 <div class="field col"
                                     v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
@@ -462,6 +461,11 @@ const toggle = (event) => {
 const employee_service = employee_reimbursment_service();
 
 const selected_date = ref()
+
+function test(){
+    console.log("Hello");
+}
+
 const generate_ajax = () => {
 
     employee_service.loading_spinner = true
