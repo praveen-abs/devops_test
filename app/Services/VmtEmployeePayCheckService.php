@@ -936,4 +936,76 @@ class VmtEmployeePayCheckService {
 
     }
 
+    public function getEmployeeCompensatoryDetails($user_code){
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $response = User::join('vmt_employee_compensatory_details','vmt_employee_compensatory_details.user_id','=','users.id')
+                        ->where('users.user_code', $user_code)
+                        ->get([
+                            "basic",
+                            "hra",
+                            "Statutory_bonus",
+                            "child_education_allowance",
+                            "food_coupon",
+                            "lta",
+                            "transport_allowance",
+                            "medical_allowance",
+                            "education_allowance",
+                            "special_allowance",
+                            "other_allowance",
+                            "gross",
+                            "epf_employer_contribution",
+                            "esic_employer_contribution",
+                            "insurance",
+                            "graduity",
+                            "cic",
+                            "epf_employee",
+                            "esic_employee",
+                            "professional_tax",
+                            "labour_welfare_fund",
+                            "net_income",
+                            "dearness_allowance"
+                        ])->first();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeCompensatoryDetails() ] ",
+                'data' => $e
+            ]);
+        }
+
+
+    }
 }
