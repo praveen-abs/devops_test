@@ -304,6 +304,19 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
+    public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->applyRequestAbsentRegularization(user_code : $request->user_code,
+                                                                                attendance_date: $request->attendance_date,
+                                                                                regularization_type : $request->regularization_type,
+                                                                                checkin_time : $request->checkin_time,
+                                                                                checkout_time : $request->checkout_time,
+                                                                                reason : $request->reason,
+                                                                                custom_reason : $request->custom_reason
+                                                                            );
+
+    }
+
     public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
         //Validate the request
@@ -440,4 +453,11 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
 
     }
+
+    public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
+
+    }
+
 }

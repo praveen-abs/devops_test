@@ -17,7 +17,8 @@ use App\Services\VmtNotificationsService;
 
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
-
+use App\Models\VmtEmployeeAbsentRegularization;
+use App\Models\VmtEmployeeWorkShifts;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
@@ -25,7 +26,7 @@ use DateInterval;
 use \Datetime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -1137,6 +1138,135 @@ class VmtAttendanceService{
         }
     }
 
+    public function applyRequestAbsentRegularization($user_code, $attendance_date, $regularization_type,
+                $checkin_time, $checkout_time, $reason, $custom_reason)
+                {
+
+                $validator = Validator::make(
+                    $data = [
+                        "user_code" => $user_code,
+                        "attendance_date" => $attendance_date,
+                        "regularization_type" => $regularization_type,
+                        "checkin_time" => $checkin_time,
+                        "checkout_time" => $checkout_time,
+                        "reason" => $reason,
+                        "custom_reason" => $custom_reason,
+                       // "reviewer_id" => $reviewer_id,
+                       // "reviewer_comments" => $reviewer_comments,
+                       // "reviewer_reviewed_date" => $reviewer_reviewed_date,
+                       // "status" => $status,
+                    ],
+                    $rules = [
+                        'user_code' => 'required|exists:users,user_code',
+                        'regularization_type' => ['required', Rule::in('Absent Regularization')],
+                        'attendance_date' => 'required',
+                        'checkin_time' => 'required',
+                        'checkout_time' => 'required',
+                        'reason' => 'required',
+                        'custom_reason' => 'required',
+                    ],
+                    $messages = [
+                        'required' => 'Field :attribute is missing',
+                        'exists' => 'Field :attribute is invalid',
+                    ]
+
+                );
+
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                    ]);
+                }
+
+
+                try{
+
+                    $query_user = User::where('user_code', $user_code)->first();
+
+                    $user_id = $query_user->id;
+
+                    //Check if already applied
+                    $query_att = VmtEmployeeAbsentRegularization::where('attendance_date', $attendance_date)
+                                ->where('user_id',  $user_id);
+
+                    if($query_att->exists())
+                    {
+                        return response()->json([
+                            'status' => 'failure',
+                            'message' => 'Absent Regularization already applied for the given date',
+                            'data' => ''
+                        ]);
+                    }
+
+                    //fetch the data
+                    $absent_regularization = new VmtEmployeeAbsentRegularization;
+                    $absent_regularization->user_id = $user_id;
+                    $absent_regularization->attendance_date = $attendance_date;
+                    $absent_regularization->regularization_type = $regularization_type;
+                    $absent_regularization->checkin_time = $checkin_time;
+                    $absent_regularization->checkout_time = $checkout_time;
+                    $absent_regularization->reason = $reason;
+                    $absent_regularization->custom_reason = $custom_reason ?? '';
+                    $absent_regularization->status = "Pending";
+                    $absent_regularization->save();
+
+
+                    //Send mail to manager
+
+                    $mail_status = "";
+
+                    //Get manager details
+                    $manager_usercode = VmtEmployeeOfficeDetails::where('user_id', $user_id)->value('l1_manager_code');
+                    $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                        ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+                    //dd($manager_details);
+
+
+                    $VmtGeneralInfo = VmtGeneralInfo::first();
+                    $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+
+                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+
+
+                    $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                        $query_user->name,
+                        $query_user->user_code,
+                        $emp_avatar,
+                        $attendance_date,
+                        $manager_details->name,
+                        $manager_details->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        $image_view,
+                        $custom_reason,
+                        "Pending"
+                    ));
+
+                    if ($isSent) {
+                        $mail_status = "Mail sent successfully";
+                    } else {
+                        $mail_status = "There was one or more failures.";
+                    }
+
+                    return response()->json([
+                        'status' => 'success',
+                        'message' => 'Absent Regularization applied successfully',
+                        'mail_status' => $mail_status,
+                        'data' => ''
+                    ]);
+
+                }
+                catch(\Exception $e)
+                {
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => "Error[ applyRequestAbsentRegularization() ] ",
+                        'data' => $e
+                    ]);
+                }
+    }
 
     public function applyRequestAttendanceRegularization($user_code, $attendance_date, $regularization_type, $user_time, $regularize_time, $reason, $custom_reason){
 
@@ -1455,6 +1585,61 @@ class VmtAttendanceService{
                     'data'   => ""
                 ]);
             }
+
+    }
+
+
+    public function getEmployeeWorkShiftTimings($user_code)
+    {
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //fetch the data
+            $response = VmtEmployeeWorkShifts::join('users','users.id','=','vmt_employee_workshifts.user_id')
+                            ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_workshifts.work_shift_id')
+                            ->where('users.id', $user_id)
+                            ->get(['vmt_work_shifts.shift_type' , 'vmt_work_shifts.shift_start_time' , 'vmt_work_shifts.shift_end_time'])
+                            ->first();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => '',
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeWorkShiftTimings() ] ",
+                'data' => $e
+            ]);
+        }
 
     }
 }

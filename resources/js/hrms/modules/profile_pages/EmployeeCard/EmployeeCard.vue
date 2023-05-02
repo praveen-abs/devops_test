@@ -53,43 +53,43 @@
                         <div class="mb-4 text-center profile-mid-right-content">
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="f-15 fw-bold">
+                                <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="f-12 fw-bold">
                                     Active
                                 </p>
-                                <p v-else class="text-danger f-15 fw-bold">Not Active</p>
+                                <p v-else class="text-danger f-12 fw-bold">Not Active</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                <p v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-15 fw-bold">
+                                <p v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold">
                                     {{ _instance_profilePagesStore.employeeDetails.user_code }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Designation</p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                     .get_employee_office_details.designation
-                                    " class="f-15 fw-bold">
+                                    " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.designation
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Location</p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.work_location
-                                        " class="f-15 fw-bold">
+                                        " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.work_location
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
-                            <div class="py-2 border-bottom-liteAsh">
+                            <div class="py-2 border-bottom-liteAsh ml-3">
                                 <p class="text-muted f-12 fw-bold">
                                     Department
                                     <a href="#" class="edit-icon" @click="dailogDepartment = true"><i
@@ -97,13 +97,13 @@
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.department_id
-                                        " class="f-15 fw-bold">
+                                        " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.department_name
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">
@@ -114,7 +114,7 @@
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_code
-                                        " class="f-15 fw-bold">
+                                        " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_name
@@ -125,7 +125,7 @@
                                             .get_employee_office_details.l1_manager_code
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                         </div>
                         <div class="text-center profile-bottom-right-content">
@@ -175,7 +175,7 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
+    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '40vw', borderTop: '5px solid #002f56' }">
 
         <template #header>
             <div>
@@ -186,8 +186,8 @@
             </div>
 
         </template>
-        <div class="card p-3 d-flex justify-items-center align-items-center  "
-            style="width: 18rem; margin-left: 90px;flex-direction: column !important;">
+        <div class="card p-3 d-flex justify-items-center align-items-center"
+            style="width: 18rem;margin-left: 140px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
             <img src="" alt="" class=""
                 style="height: 40px;width:140px; ">
@@ -195,25 +195,24 @@
             <div class="card-body d-flex justify-items-center align-items-center " style="flex-direction: column ">
 
                 <img v-if="profile" class="rounded-circle   profile-img"
-                    :src="`data:image/png;base64,${profile}`" srcset="" style="border: 1px solid grey; width: 120px; height: 120px;" />
+                    :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
 
-                <h5 class="card-title my-3 fw-bold"> {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
+                <h5 class="card-title mt-3 mb-2 f-12"> {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
 
-                <p class="card-text"></p>
                 <h5 v-if="_instance_profilePagesStore.employeeDetails
                     .get_employee_office_details.department_id
-                    " class="f-15 fw-bold card-text mb-2 text-gray-400" >
+                    " class="f-12  card-text mb-2 text-gray-400" >
                     {{
                         _instance_profilePagesStore.employeeDetails
                             .get_employee_office_details.department_name
                     }}
                 </h5>
-                <h1 v-else class="f-15 fw-bold mb-2">-</h1>
+                <h1 v-else class="f-12 fw-bold">-</h1>
 
-                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-15 fw-bold mb-2" style="color:grey">
+                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold mb-2" style="color:grey">
                     {{ _instance_profilePagesStore.employeeDetails.user_code }}
                 </h5>
-                <p v-else class="f-15 fw-bold mb-2 text-secondary-emphasis">-</p>
+                <p v-else class="f-12   mb-2 text-secondary-emphasis">-</p>
             </div>
         </div>
     </Dialog>
@@ -388,5 +387,8 @@ onMounted(() => {
 <style>
 .p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
+}
+*{
+    /* font-family: sans-serif; */
 }
 </style>

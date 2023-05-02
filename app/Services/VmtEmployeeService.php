@@ -1056,4 +1056,51 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             ]);
         }
     }
+
+    public function getEmployeeRole($user_code){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $response = User::join('vmt_org_roles','vmt_org_roles.id','=','users.org_role')
+                        ->where('users.user_code', $user_code)
+                        ->get(['vmt_org_roles.name as role'])
+                        ->first();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeRole() ] ",
+                'data' => $e
+            ]);
+        }
+    }
 }

@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
+    Route::get('/getAppConfig', [HRMSBaseAPIController::class, 'getAppConfig']);
+    Route::post('/getEmployeeRole', [HRMSBaseAPIController::class, 'getEmployeeRole']);
 
     Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
     Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
@@ -71,6 +73,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'performAttendanceCheckIn']);
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'performAttendanceCheckOut']);
     Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
+    Route::post('/attendance/getEmployeeWorkShiftTimings', [VmtAPIAttendanceController::class, 'getEmployeeWorkShiftTimings']);
 
     //Leave
     Route::post('/attendance/apply_leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
@@ -86,6 +89,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/apply-att-regularization', [VmtAPIAttendanceController::class, 'applyRequestAttendanceRegularization']);
     Route::post('/attendance/approveReject-att-regularization', [VmtAPIAttendanceController::class, 'approveRejectAttendanceRegularization']);
     Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
+    Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
 
 
     //Payslip API

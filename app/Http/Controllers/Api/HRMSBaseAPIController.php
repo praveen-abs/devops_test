@@ -9,6 +9,8 @@ use App\Models\VmtLeaves;
 use App\Models\VmtMaritalStatus;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Services\VmtConfigAppService;
+use App\Services\VmtEmployeeService;
 
 class HRMSBaseAPIController extends Controller
 {
@@ -19,6 +21,11 @@ class HRMSBaseAPIController extends Controller
             ->where('is_ssa', 0)
             ->where('is_onboarded', 1)
             ->first();
+    }
+
+
+    public function getAppConfig(Request $request, VmtConfigAppService $serviceVmtConfigAppService){
+        return $serviceVmtConfigAppService->getAppConfig();
     }
 
     public function getFCMToken(Request $request){
@@ -138,6 +145,10 @@ class HRMSBaseAPIController extends Controller
     public function getAllLeaveTypes(Request $request)
     {
         return VmtLeaves::all()->pluck('leave_type');
+    }
+
+    public function getEmployeeRole(Request $request, VmtEmployeeService $serviceVmtEmployeeService){
+        return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
     }
 
 
