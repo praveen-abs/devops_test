@@ -304,39 +304,39 @@
                                 </Column>
                                 <Column header="Mode Of Transport" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.vehicle_type }}
+                                        {{ slotProps.data.mode_of_transport }}
                                     </template>
                                 </Column>
 
                                 <Column field="from" header="From " style="min-width: 8rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.from }}
+                                        {{ slotProps.data.travel_from }}
                                     </template>
                                 </Column>
                                 <Column field="to" header="To" style="min-width: 8rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.to }}
+                                        {{ slotProps.data.travel_to }}
                                     </template>
                                 </Column>
                                 <Column field="distance_travelled" header="Total Distance" style="min-width: 4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.distance_travelled }}
+                                        {{ slotProps.data.total_distance_travelled }}
                                     </template>
                                 </Column>
                                 <Column field="Amt_km" header="Amt/Km" style="min-width:4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.amt_per_km }}
+                                        {{ slotProps.data.Amt_km }}
                                     </template>
                                 </Column>
 
                                 <Column field="total_expenses" header="Amount" style="min-width: 6rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.total_expenses }}
+                                        {{ slotProps.data.local_convenyance_total_amount }}
                                     </template>
                                 </Column>
                                 <Column field="user_comments" header="Remarks" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.user_comments }}
+                                        {{ slotProps.data.local_conveyance_remarks }}
                                     </template>
                                 </Column>
                                 <!-- <template #footer>
@@ -388,8 +388,7 @@
                             <div class="flex formgrid">
                                 <div class="field col">
                                     <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
-                                    <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled
-                                        " @input="employee_service.amount_calculation" />
+                                    <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled" @input="employee_service.amount_calculation()" />
                                 </div>
                                 <div class="field col"
                                     v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
@@ -462,6 +461,11 @@ const toggle = (event) => {
 const employee_service = employee_reimbursment_service();
 
 const selected_date = ref()
+
+function test(){
+    console.log("Hello");
+}
+
 const generate_ajax = () => {
 
     employee_service.loading_spinner = true
