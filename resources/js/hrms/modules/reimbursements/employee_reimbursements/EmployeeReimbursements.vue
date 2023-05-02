@@ -278,7 +278,7 @@
                                     <h5 style="text-align: center" class="font-bold">Please wait...</h5>
                                 </template>
                             </Dialog>
-                            <!-- {{ employee_service.data_local_convergance }} -->
+                            {{ employee_service.data_local_convergance }}
                             <DataTable ref="dt" :value="employee_service.data_local_convergance" dataKey="id"
                                 :paginator="true" :rows="10"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -304,28 +304,28 @@
                                 </Column>
                                 <Column header="Mode Of Transport" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.vehicle_type }}
+                                        {{ slotProps.data.mode_of_transport }}
                                     </template>
                                 </Column>
 
                                 <Column field="from" header="From " style="min-width: 8rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.from }}
+                                        {{ slotProps.data.travel_from }}
                                     </template>
                                 </Column>
                                 <Column field="to" header="To" style="min-width: 8rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.to }}
+                                        {{ slotProps.data.travel_to }}
                                     </template>
                                 </Column>
                                 <Column field="distance_travelled" header="Total Distance" style="min-width: 4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.distance_travelled }}
+                                        {{ slotProps.data.total_distance_travelled }}
                                     </template>
                                 </Column>
                                 <Column field="Amt_km" header="Amt/Km" style="min-width:4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.amt_per_km }}
+                                        {{ slotProps.data.Amt_km }}
                                     </template>
                                 </Column>
 
@@ -336,7 +336,7 @@
                                 </Column>
                                 <Column field="user_comments" header="Remarks" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.user_comments }}
+                                        {{ slotProps.data.local_conveyance_remarks }}
                                     </template>
                                 </Column>
                                 <!-- <template #footer>

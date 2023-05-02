@@ -158,9 +158,9 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
             formData.append('from', employee_local_conveyance.travel_from)
             formData.append('to', employee_local_conveyance.travel_to)
-            // formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
+            formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
             formData.append('vehicle_type', employee_local_conveyance.mode_of_transport)
-            formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled)
+            formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled);
 
 
             let url_all_local_convergance = '/reimbursements/saveReimbursementsData';
