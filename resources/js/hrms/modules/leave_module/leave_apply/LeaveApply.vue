@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <Button label="Apply Leave"  class=" text-white px-4 py-2 rounded-md bg-indigo-600" @click="visible = true" />
+    <Button label="Apply Leave"  class=" btn btn-orange outline-none border-0 py-2 px-2 font-base" @click="visible = true" />
     <!-- <Transition name="modal" >
         <ABS_loading_spinner v-if="service.data_checking" />
     </Transition> -->

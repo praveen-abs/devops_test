@@ -13,28 +13,28 @@
         <div class="mb-3 tw-card left-line pt-1 pb-0">
             <div class="flex justify-between">
 
-                    <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                        <li class="nav-item text-muted" role="presentation">
-                            <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
-                                role="tab">
-                                Leave Balance</a>
+                <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+                    <li class="nav-item text-muted" role="presentation">
+                        <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
+                            role="tab">
+                            Leave Balance</a>
+                    </li>
+                    @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                        <li class="nav-item text-muted " role="presentation">
+                            <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance"
+                                aria-selected="false" tabindex="-1" role="tab">
+                                Team Leave Balance</a>
                         </li>
-                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
-                            <li class="nav-item text-muted " role="presentation">
-                                <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance"
-                                    aria-selected="false" tabindex="-1" role="tab">
-                                    Team Leave Balance</a>
-                            </li>
-                        @endif
+                    @endif
 
-                        @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
-                            <li class="nav-item text-muted " role="presentation">
-                                <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
-                                    tabindex="-1" role="tab">
-                                    Org Leave Balance</a>
-                            </li>
-                        @endif
-                    </ul>
+                    @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                        <li class="nav-item text-muted " role="presentation">
+                            <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false"
+                                tabindex="-1" role="tab">
+                                Org Leave Balance</a>
+                        </li>
+                    @endif
+                </ul>
 
                 <div class="flex items-center">
                     <div class=" mr-3">
@@ -51,7 +51,7 @@
                     </div>
                     <div class="">
                         <a href="{{ route('attendance-leave-policydocument') }}" id=""
-                            class=" text-white px-4 py-2 rounded-md bg-indigo-600" role="button" aria-expanded="false">
+                            class=" btn btn-orange" role="button" aria-expanded="false">
                             Leave
                             Policy Explanation
                         </a>
@@ -62,7 +62,7 @@
         </div>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="tw-card ">
+                <div class="tw-card mb-3">
                     <div class="mb-2 row">
                         <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6">
                             <h6 class="text-gray-900 font-semibold text-lg modal-title">Leave Balance</h6>
@@ -83,7 +83,8 @@
                     </div>
                     {{-- <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-3 xl:grid-cols-3 gap-4"> --}}
 
-                    <div class="row mb-4 ">
+                    <div class="grid md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 gap-4"
+                        style="display: grid;">
                         @foreach ($leave_balance_details['Leave Balance'] as $key => $value)
                             {{-- <div class="col-sm-12 mb-sm-4 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
 
@@ -96,66 +97,66 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class=" mb-sm-4 col-sm-12 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
-                                @if ($key === 'Casual/Sick Leave')
-                                    <div class="tw-card bg-Stone-50 border-Stone-400  border-l-4 ">
-                                        <div class="text-center">
-                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
-                                            <h6 class="mb-0 text-base font-semibold">
-                                                {{ $value }}
-                                            </h6>
-                                        </div>
-                                    </div>
-                                @elseif ($key === 'Earned Leave')
-                                    <div class="tw-card bg-green-50 border-green-400  border-l-4 ">
-                                        <div class="text-center">
-                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
-                                            <h6 class="mb-0 text-base font-semibold">
-                                                {{ $value }}
-                                            </h6>
-                                        </div>
 
+                            @if ($key === 'Casual/Sick Leave')
+                                <div class="tw-card bg-stone-100 border-stone-400  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                        <h6 class="mb-0 text-base font-semibold">
+                                            {{ $value }}
+                                        </h6>
                                     </div>
-                                @elseif ($key === 'LOP Leave')
-                                    <div class="tw-card bg-Slate-50 border-Slate-400  border-l-4 ">
-                                        <div class="text-center">
-                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
-                                            <h6 class="mb-0 text-base font-semibold">
-                                                {{ $value }}
-                                            </h6>
-                                        </div>
+                                </div>
+                            @elseif ($key === 'Earned Leave')
+                                <div class="tw-card bg-green-50 border-green-400  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                        <h6 class="mb-0 text-base font-semibold">
+                                            {{ $value }}
+                                        </h6>
+                                    </div>
 
+                                </div>
+                            @elseif ($key === 'LOP Leave')
+                                <div class="tw-card bg-Slate-50 border-Slate-400  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                        <h6 class="mb-0 text-base font-semibold">
+                                            {{ $value }}
+                                        </h6>
                                     </div>
-                                @elseif ($key === 'Compensatory Off')
-                                    <div class="tw-card bg-lime-50 border-lime-400  border-l-4 ">
-                                        <div class="text-center">
-                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
-                                            <h6 class="mb-0 text-base font-semibold">
-                                                {{ $value }}
-                                            </h6>
-                                        </div>
 
+                                </div>
+                            @elseif ($key === 'Compensatory Off')
+                                <div class="tw-card bg-lime-50 border-lime-400  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                        <h6 class="mb-0 text-base font-semibold">
+                                            {{ $value }}
+                                        </h6>
                                     </div>
-                                @elseif ($key === 'Permissions')
-                                    <div class="tw-card bg-Orange-50 border-Orange-400  border-l-4 ">
-                                        <div class="text-center">
-                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
-                                            <h6 class="mb-0 text-base font-semibold">
-                                                {{ $value }}
-                                            </h6>
-                                        </div>
 
+                                </div>
+                            @elseif ($key === 'Permissions')
+                                <div class="tw-card bg-Orange-50 border-Orange-400  border-l-4 ">
+                                    <div class="text-center">
+                                        <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                        <h6 class="mb-0 text-base font-semibold">
+                                            {{ $value }}
+                                        </h6>
                                     </div>
-                                @endif
-                            </div>
+
+                                </div>
+                            @endif
                         @endforeach
                     </div>
+                </div>
+                <div class="tw-card ">
                     {{-- </div> --}}
-                    <div class="row">
 
-                        <h6 class="text-gray-900 mb-4 font-semibold text-lg modal-title">Leave Availed</h6>
-
-
+                    <h6 class="text-gray-900 mb-4 font-semibold text-lg modal-title">Leave Availed</h6>
+                    <div class="grid md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 gap-4"
+                        style="display: grid;">
                         @foreach ($leave_balance_details['Avalied Leaves'] as $Leave_type => $balance)
                             {{-- <div class="col-sm-3 mb-sm-4 col-sm-12 col-xl-4 col-md-4 col-lg-4 ">
                                 <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
@@ -167,7 +168,7 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            <div class=" mb-sm-4 col-sm-12 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
+
                                 @if ($Leave_type === 'Casual/Sick Leave')
                                     <div class="tw-card bg-indigo-50 border-indigo-400  border-l-4 ">
                                         <div class="text-center">
@@ -218,10 +219,11 @@
 
                                     </div>
                                 @endif
-                            </div>
+
                         @endforeach
                     </div>
                 </div>
+
 
                 <div class="mt-3 row">
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
@@ -613,11 +615,11 @@
 
 
     <!-- <div class="modal fade bd-example-modal-xl" tabindex="-10" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true " id="leaveApply_modal" >
-                                                                                                                                                                      <div class="modal-dialog modal-xl modal-dialog-centered" style="z-index:-20 !important">
-                                                                                                                                                                         <div class="modal-content">
+                                                                                                                                                                                              <div class="modal-dialog modal-xl modal-dialog-centered" style="z-index:-20 !important">
+                                                                                                                                                                                                 <div class="modal-content">
 
-                                                                                                                                                                      </div>
-                                                                                                                                                                    </div> -->
+                                                                                                                                                                                              </div>
+                                                                                                                                                                                            </div> -->
 
 
 
@@ -625,16 +627,16 @@
     <!-- <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
 
 
-                                                                                                                                                                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                                                                                                                                                                <div id="vjs_leaveapply">
+                                                                                                                                                                                                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                                                                                                                                                                        <div id="vjs_leaveapply">
 
-                                                                                                                                                                    </div>
-
-
+                                                                                                                                                                                            </div>
 
 
-                                                                                                                                                                                </div>
-                                                                                                                                                                        </div> -->
+
+
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                </div> -->
 
     {{-- error message details --}}
 @endsection
