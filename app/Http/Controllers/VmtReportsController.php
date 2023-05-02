@@ -310,7 +310,7 @@ class VmtReportsController extends Controller
 
         //dd($query_years);
         //dd($query_years->value('year'));
-        return view('reports.vmt_showPmsReviewsReports', compact('query_configPms', 'query_years', 'username'));
+        return view('reports.pms_reports.vmt_showPmsReviewsReports', compact('query_configPms', 'query_years', 'username'));
     }
 
     public function filterPmsReport(Request $request)
@@ -734,9 +734,9 @@ class VmtReportsController extends Controller
 
             /*
                     Here $key is the date. i.e : 2022-10-01
-    
+
                     $value is ::
-    
+
                         [
                             date=>2022-11-05
                             checkin_time=18:06:00
@@ -746,9 +746,9 @@ class VmtReportsController extends Controller
                         [
                             ....
                             attendance_mode="biometric"
-    
+
                         ]
-    
+
                 */
             //Compare the checkin,checkout time between all attendance modes and get the min(checkin) and max(checkout)
 
