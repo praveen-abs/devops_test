@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <Button label="Apply Leave" class="bg-orange-500 border-none h-3rem" @click="visible = true" />
+    <Button label="Apply Leave"  class=" text-white px-4 py-2 rounded-md bg-indigo-600" @click="visible = true" />
     <!-- <Transition name="modal" >
         <ABS_loading_spinner v-if="service.data_checking" />
     </Transition> -->
@@ -268,7 +268,7 @@
                 </div>
 
                 <!--compensatory off  -->
-                
+
                 <div v-if="service.compensatory_format" class="mb-2 row">
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5 mb-md-0">
                         <label for="">Worked Date <span class="text-danger">*</span> </label>

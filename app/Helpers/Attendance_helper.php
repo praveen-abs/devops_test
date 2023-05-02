@@ -115,15 +115,20 @@ function calculateLeaveDetails($user_id,$start_date,$end_date){
                 $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
 
              }else if($single_leave_types->is_carry_forward==1){
-                $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                $total_avalied_leaves_for_find_balance = VmtEmployeeLeaves::where('user_id',$user_id)
                                                          ->where('leave_type_id',$single_leave_types->id)
                                                          ->whereIn('status',array('Approved','Pending'))
                                                          ->sum('total_leave_datetime');
                 $total_accrued = VmtEmployeesLeavesAccrued::where('user_id',$user_id)
                                                          ->where('leave_type_id',$single_leave_types->id)
                                                          ->sum('accrued_leave_count');
+                 $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                                         ->whereBetween('start_date',[$start_date,$end_date])
+                                                         ->where('leave_type_id',$single_leave_types->id)
+                                                         ->whereIn('status',array('Approved','Pending'))
+                                                         ->sum('total_leave_datetime');
 
-                $leave_balance =  $total_accrued -  $total_avalied_leaves;
+                $leave_balance =  $total_accrued -    $total_avalied_leaves_for_find_balance;
                 $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
                 $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
 
