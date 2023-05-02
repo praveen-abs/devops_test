@@ -331,7 +331,7 @@
 
                                 <Column field="total_expenses" header="Amount" style="min-width: 6rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.total_expenses }}
+                                        {{ slotProps.data.local_convenyance_total_amount }}
                                     </template>
                                 </Column>
                                 <Column field="user_comments" header="Remarks" style="min-width: 12rem">
