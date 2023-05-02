@@ -31,12 +31,16 @@
     <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
     </div>
+
     <!-- dialog for show details -->
+
     <div class="card flex justify-content-center inline-flex">
         <Dialog v-model:visible="dailog_employeeDetails" modal header="Header" :style="{ width: '50vw' }">
             {{ employeeDetails }}
         </Dialog>
     </div>
+
+
 </template>
 
 <script setup>
@@ -69,12 +73,6 @@ const emp = reactive({
     selectyear: '',
 });
 
-onMounted(async () => {
-
-    async function getAllEmployeesPayslipDetails(month, year) {
-        await managePayslipStore.getAllEmployeesPayslipDetails();
-    }
-})
 
 
 
