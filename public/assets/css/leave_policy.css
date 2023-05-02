@@ -79,7 +79,8 @@ table.policy-version-table td {
 }
 table.policy-version-table td,
 table.policy-version-table td p,
-table.policy_table td p ,table.policy_table td span,
+table.policy_table td p,
+table.policy_table td span,
 table.policy_table td p {
     color: #006bb1;
 }
@@ -113,7 +114,7 @@ table.policy-version-table td:nth-child(odd) p {
     border-right: 0px;
 }
 
-.pad-left-15{
+.pad-left-15 {
     padding-left: 15px;
 }
 
@@ -135,4 +136,64 @@ table.policy-version-table td:nth-child(odd) p {
 }
 .pad-top-10 {
     padding-top: 10px;
+}
+
+table.dunamis_leavePolicy {
+    width: 100%;
+}
+table.dunamis_leavePolicy tr td {
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-align: justify;
+}
+table.dunamis_leavePolicy tr td h6 {
+    white-space: nowrap;
+    color: #c9ab27;
+}
+table.dunamis_leavePolicy ul li {
+    padding: 0 0.5em;
+}
+table.dunamis_leavePolicy ul li::marker {
+    content: "•";
+    font-size: 1.6em;
+    line-height: 0.8em;
+    padding-right: 0.5em;
+}
+
+.border-yellow-t-b {
+    border-top: 0.1em solid #c9ab27;
+    border-bottom: 0.1em solid #c9ab27;
+}
+.text-yellow {
+    color: #c9ab27;
+}
+
+.padding-t-b {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+.text-bolder {
+    font-weight: 700;
+}
+
+ol li::marker {
+    font-weight: 700;
+}
+
+.controls_table td {
+    padding: 0.3em 0.5em;
+    border: 0.1em solid #b9b9b9;
+}
+.controls_table th {
+    padding: 0.2em 0.5em;
+    background-color: #a5a5a5;
+    border: 0.1em solid #b9b9b9;
+    white-space: nowrap;
+}
+.controls_table tr:first-child th:first-child,
+.controls_table tr:first-child th:last-child {
+    border-radius: 0 !important;
 }
