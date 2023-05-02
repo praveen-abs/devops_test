@@ -11,8 +11,8 @@
 @section('content')
     <div class="Leave_dashboard mt-30">
         <div class="mb-3 tw-card left-line pt-1 pb-0">
-            <div class="row">
-                <div class="p-0 col-6 ">
+            <div class="flex justify-between">
+
                     <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
                         <li class="nav-item text-muted" role="presentation">
                             <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
@@ -35,25 +35,24 @@
                             </li>
                         @endif
                     </ul>
-                </div>
-                <div class="p-0 col-3 text-end">
-                    <div class="input-group me-2">
-                        <label class="input-group-text " for="inputGroupSelect01"><i class="fa fa-calendar text-primary "
-                                aria-hidden="true"></i></label>
-                        <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                            {{-- @foreach ($available_time_frames as $key => $value)
-                                <option value={{ $key }}> {{ $value }} </option>
-                            @endforeach --}}
-                            <option>FY 2023-2024</option>
-                        </select>
+
+                <div class="flex items-center">
+                    <div class=" mr-3">
+                        <div class="input-group me-2">
+                            <label class="input-group-text " for="inputGroupSelect01"><i
+                                    class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
+                            <select class="form-select btn-line-primary" id="inputGroupSelect01">
+                                @foreach ($available_time_frames as $key => $value)
+                                    <option value={{ $key }}> {{ $value }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                     </div>
-
-                </div>
-                <div class="p-0 col-3 text-end">
-                    <div>
-
-                        <a href="{{ route('attendance-leave-policydocument') }}" id="" class=" btn btn-orange"
-                            role="button" aria-expanded="false"> Leave
+                    <div class="">
+                        <a href="{{ route('attendance-leave-policydocument') }}" id=""
+                            class=" text-white px-4 py-2 rounded-md bg-indigo-600" role="button" aria-expanded="false">
+                            Leave
                             Policy Explanation
                         </a>
                     </div>
@@ -66,7 +65,7 @@
                 <div class="tw-card ">
                     <div class="mb-2 row">
                         <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6">
-                            <h6 class="text-gray-900 font-semibold text-lg">Leave Balance</h6>
+                            <h6 class="text-gray-900 font-semibold text-lg modal-title">Leave Balance</h6>
                         </div>
                         <div class="col-6 justify-content-end d-flex">
                             {{-- <div class="pendingLeave_notify me-3">
@@ -86,7 +85,8 @@
 
                     <div class="row mb-4 ">
                         @foreach ($leave_balance_details['Leave Balance'] as $key => $value)
-                            <div class="col-sm-12 mb-sm-4 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
+                            {{-- <div class="col-sm-12 mb-sm-4 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
+
                                 <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
                                     <div class="text-center">
                                         <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
@@ -95,30 +95,131 @@
                                         </h6>
                                     </div>
                                 </div>
+                            </div> --}}
+                            <div class=" mb-sm-4 col-sm-12 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
+                                @if ($key === 'Casual/Sick Leave')
+                                    <div class="tw-card bg-Stone-50 border-Stone-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $value }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                @elseif ($key === 'Earned Leave')
+                                    <div class="tw-card bg-green-50 border-green-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $value }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @elseif ($key === 'LOP Leave')
+                                    <div class="tw-card bg-Slate-50 border-Slate-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $value }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @elseif ($key === 'Compensatory Off')
+                                    <div class="tw-card bg-lime-50 border-lime-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $value }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @elseif ($key === 'Permissions')
+                                    <div class="tw-card bg-Orange-50 border-Orange-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $value }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
                     </div>
                     {{-- </div> --}}
                     <div class="row">
 
-                        <h6 class="text-gray-900 mb-4 font-semibold text-lg">Leave Availed</h6>
+                        <h6 class="text-gray-900 mb-4 font-semibold text-lg modal-title">Leave Availed</h6>
 
 
                         @foreach ($leave_balance_details['Avalied Leaves'] as $Leave_type => $balance)
-                            <div class="col-sm-3 mb-sm-4 col-sm-12 col-xl-4 col-md-4 col-lg-4 ">
+                            {{-- <div class="col-sm-3 mb-sm-4 col-sm-12 col-xl-4 col-md-4 col-lg-4 ">
                                 <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
                                     <div class="text-center">
                                         <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
                                         <h6 class="mb-0 text-base font-semibold">
                                             {{ $balance }}
                                         </h6>
-
                                     </div>
                                 </div>
+                            </div> --}}
+                            <div class=" mb-sm-4 col-sm-12 col-xl-3 col-xxl-3 col-md-3 col-lg-3">
+                                @if ($Leave_type === 'Casual/Sick Leave')
+                                    <div class="tw-card bg-indigo-50 border-indigo-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $balance }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                @elseif ($Leave_type === 'Earned Leave')
+                                    <div class="tw-card bg-green-50 border-green-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $balance }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @elseif ($Leave_type === 'LOP Leave')
+                                    <div class="tw-card bg-fuchsia-50 border-fuchsia-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $balance }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @elseif ($Leave_type === 'Compensatory Off')
+                                    <div class="tw-card bg-lime-50 border-lime-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $balance }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @elseif ($Leave_type === 'Permissions')
+                                    <div class="tw-card bg-red-50 border-red-400  border-l-4 ">
+                                        <div class="text-center">
+                                            <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                            <h6 class="mb-0 text-base font-semibold">
+                                                {{ $balance }}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
-
-
                     </div>
                 </div>
 
@@ -126,7 +227,7 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
                             <div class="card-body">
-                                <h6 class="mb-2">Leave history</h6>
+                                <h6 class="text-gray-900 mb-4 font-semibold text-lg modal-title">Leave history</h6>
 
                                 <div class="table-responsive">
                                     <div id="emp_leaveHistory" class="custom_gridJs"></div>
@@ -512,11 +613,11 @@
 
 
     <!-- <div class="modal fade bd-example-modal-xl" tabindex="-10" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true " id="leaveApply_modal" >
-                                                                                                  <div class="modal-dialog modal-xl modal-dialog-centered" style="z-index:-20 !important">
-                                                                                                     <div class="modal-content">
+                                                                                                                                                                      <div class="modal-dialog modal-xl modal-dialog-centered" style="z-index:-20 !important">
+                                                                                                                                                                         <div class="modal-content">
 
-                                                                                                  </div>
-                                                                                                </div> -->
+                                                                                                                                                                      </div>
+                                                                                                                                                                    </div> -->
 
 
 
@@ -524,16 +625,16 @@
     <!-- <div id="leaveApply_modal" class="modal custom-modal fade" role="dialog">
 
 
-                                                                                                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                                                                                            <div id="vjs_leaveapply">
+                                                                                                                                                                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                                                                                                                                                                <div id="vjs_leaveapply">
 
-                                                                                                </div>
-
-
+                                                                                                                                                                    </div>
 
 
-                                                                                                            </div>
-                                                                                                    </div> -->
+
+
+                                                                                                                                                                                </div>
+                                                                                                                                                                        </div> -->
 
     {{-- error message details --}}
 @endsection
