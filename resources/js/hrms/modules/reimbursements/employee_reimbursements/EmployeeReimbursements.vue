@@ -278,7 +278,7 @@
                                     <h5 style="text-align: center" class="font-bold">Please wait...</h5>
                                 </template>
                             </Dialog>
-                            {{ employee_service.data_local_convergance }}
+                            <!-- {{ employee_service.data_local_convergance }} -->
                             <DataTable ref="dt" :value="employee_service.data_local_convergance" dataKey="id"
                                 :paginator="true" :rows="10"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
