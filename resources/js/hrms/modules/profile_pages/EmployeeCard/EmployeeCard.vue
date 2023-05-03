@@ -9,13 +9,13 @@
                     </button>
                 </div>
                 <div class="text-center col-12">
-                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img " style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
                         <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img"
-                            :src="`data:image/png;base64,${profile}`" srcset="" style="border: 6px solid #c2c2c2c2" />
+                            :src="`data:image/png;base64,${profile}`" srcset=""  />
 
-                        <label class="cursor-pointer edit-icon" style="position: relative; top: -30px"
+                        <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
                             <i class="fa fa-camera"></i></label>
                         <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
