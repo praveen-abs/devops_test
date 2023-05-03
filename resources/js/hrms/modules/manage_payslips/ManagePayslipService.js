@@ -49,7 +49,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month: month,
             year: year,
         }).then((response)=>{
-            console.log(" Response [sendMail_employeePayslip] : "+response.data);
+            console.log(" Response [sendMail_employeePayslip] : "+response.data.data);
         })
         .catch((data)=>{
             console.log(data);
@@ -57,6 +57,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         })
 
     }
+
+    const dialog_ManagePayslipssendMail =ref(false);
 
 
 
@@ -107,7 +109,9 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         // Functions
 
-        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip ,
+
+        dialog_ManagePayslipssendMail
 
     };
 });

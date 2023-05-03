@@ -1,0 +1,75 @@
+import { defineStore } from "pinia";
+import { ref, reactive } from "vue";
+import axios from "axios";
+import dayjs from 'dayjs';
+
+export const useEmployeePayslipStore = defineStore("employeePayslipStore", () => {
+
+
+    // Variable Declarations
+    const array_employeePayslips_list = ref()
+
+    const paySlipHTMLView = ref()
+
+    const canShowPayslipView  = ref (false);
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    function getURLParams_UID(){
+        if(urlParams.has('uid'))
+            return urlParams.get('uid');
+        else
+            return '';
+    }
+
+    // Events
+    async function getEmployeeAllPayslipList(){
+
+        axios.post('/payroll/paycheck/getEmployeeAllPayslipList',{
+            uid : getURLParams_UID()
+        }).then((response) => {
+           //console.log("Response [getEmployeeAllPayslipList] : " + JSON.stringify(response.data.data));
+
+           array_employeePayslips_list.value = response.data.data;
+        });
+    }
+
+    async function getEmployeePayslipDetailsAsHTML(payroll_month){
+
+        //split the payroll_month into month and year
+        let month = parseInt (dayjs(payroll_month).month())+1;
+        let year = dayjs(payroll_month).year();
+
+        axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',{
+            uid : getURLParams_UID(),
+            month : month,
+            year : year
+        }).then((response) => {
+            //console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
+
+            paySlipHTMLView.value = response.data;
+
+            canShowPayslipView.value = true;
+        });
+
+    }
+
+
+
+
+
+
+
+
+    return {
+
+        // Varaible Declartion
+
+        array_employeePayslips_list, paySlipHTMLView, canShowPayslipView,
+
+        // Functions
+
+        getEmployeeAllPayslipList, getEmployeePayslipDetailsAsHTML
+
+    };
+});
