@@ -131,84 +131,11 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejetRevokeLeaveRequest(Request $request)
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        // $approval_status = $request->status;
-        $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
-        //dd($leave_record);
-        //dd( $leave_record);
-        //dd( $request->status);
-        if ($request->status == "Revoked"){
-            $leave_record->is_revoked = "true";
-            $leave_record->status = "Pending";
-        }
-        else
-        {
-            //For Approved or rejected status
-            $leave_record->status = $request->status;
-
-        }
-
-
-        $leave_record->reviewer_comments = $request->leave_rejection_text;
-        $leave_record->reviewed_date = Carbon::now();
-        $leave_record->save();
-
-        //Send mail to the employee
-        $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
-        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
-        $obj_employee = User::where('id', $employee_user_id);
-        $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
-
-        $message = "";
-        $mail_status = "";
-
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
-
-
-        $isSent    = \Mail::to($employee_mail)->send(
-            new ApproveRejectLeaveMail(
-                $obj_employee->value('name'),
-                $obj_employee->value('user_code'),
-                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                User::find($manager_user_id)->name,
-                User::find($manager_user_id)->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $emp_avatar,
-                $request->status
-            )
-        );
-
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
-        }
-
-        if($request->status == "Approved")
-            $text_status = "approved";
-        else
-        if($request->status == "Rejected")
-            $text_status = "rejected";
-        else
-        if($request->status == "Revoked")
-            $text_status = "revoked";
-
-
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Request '.$text_status.' successfully',
-            'mail_status' => $mail_status,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
+       return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code,
+                                                                    $request->status, $request->review_comment );
     }
 
     /*

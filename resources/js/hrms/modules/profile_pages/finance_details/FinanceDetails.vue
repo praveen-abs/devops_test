@@ -146,7 +146,7 @@
                                     <div class="ml-4 text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
-                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
+                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name  }}
 
                                     </div>
                                 </li>
