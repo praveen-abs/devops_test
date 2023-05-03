@@ -34,7 +34,7 @@
     </div>
     <!-- dialog for show details -->
     <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Header" :style="{ width: '50vw' }">
+        <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip" :style="{ width: '50vw' }">
         <div v-html="employeePayslipStore.paySlipHTMLView">
 
         </div>
