@@ -34,6 +34,16 @@
         <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
       </template>
     </Dialog>
+    <Dialog header="Error" v-model:visible="canShowErrorResponseScreen"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+      <div class="confirmation-content">
+        <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+        <span>Error while processing the request : {{  responseErrorMessage }}</span>
+      </div>
+      <template #footer>
+        <Button label="Ok" icon="pi pi-check" autofocus />
+      </template>
+    </Dialog>
     <div>
       <DataTable :value="att_leaves" :paginator="true" :rows="10" dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -137,6 +147,8 @@ import { useToast } from "primevue/usetoast";
 
 let att_leaves = ref();
 let canShowConfirmation = ref(false);
+let canShowErrorResponseScreen = ref(false);
+let responseErrorMessage = ref();
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
@@ -171,24 +183,26 @@ onMounted(() => {
 function ajax_GetLeaveData() {
   let url = window.location.origin + "/fetch-leaverequests/org/Approved,Rejected,Pending";
 
-  console.log("AJAX URL : " + url);
+  //console.log("AJAX URL : " + url);
 
   axios.get(url).then((response) => {
-    console.log("Axios : " + response.data);
+   // console.log("Axios : " + response.data);
     att_leaves.value = response.data;
     loading.value = false;
   });
 }
 
 function showConfirmDialog(selectedRowData, status) {
+  canShowErrorResponseScreen.value =false;
   canShowConfirmation.value = true;
   currentlySelectedStatus = status;
   currentlySelectedRowData = selectedRowData;
 
-  console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+ // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog(canClearData) {
+
   canShowConfirmation.value = false;
 
   if (canClearData) resetVars();
@@ -234,26 +248,37 @@ function processApproveReject() {
 
   canShowLoadingScreen.value = true;
 
-  console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+  //console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
   axios
     .post(window.location.origin + "/attendance-approve-rejectleave", {
-      leave_id: currentlySelectedRowData.id,
+      record_id: currentlySelectedRowData.id,
       status:
         currentlySelectedStatus == "Approve"
           ? "Approved"
           : currentlySelectedStatus == "Reject"
             ? "Rejected"
             : currentlySelectedStatus,
-      leave_rejection_text: "",
+            review_comment: "",
     })
     .then((response) => {
       console.log(response);
-      ajax_GetLeaveData();
-
+      resetVars();
       canShowLoadingScreen.value = false;
 
-      resetVars();
+      if(response.data.status == "success")
+      {
+            ajax_GetLeaveData();
+      }
+      else
+      if(response.data.status == "failure")
+      {
+        canShowErrorResponseScreen.value = true;
+        responseErrorMessage.value = response.data.message;
+        return;
+      }
+
+
     })
     .catch((error) => {
       canShowLoadingScreen.value = false;

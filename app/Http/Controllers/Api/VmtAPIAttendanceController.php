@@ -239,32 +239,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'record_id' => 'required|exists:users,user_code',
-                'approver_user_code' => 'required',
-                'status' => 'required',
-                'leave_rejection_text' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
-            ]);
-        }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, $request->approver_user_code, $request->status , $request->leave_rejection_text);
+        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment);
 
-        return $response;
     }
 
 
