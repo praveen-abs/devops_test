@@ -25,7 +25,7 @@
                         <form action="" method="POST" enctype="multipart/form-data">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="">
+                                <h6 class="mb-2 fw-bold fs-15">
                                     Payroll Summary
 
                                 </h6>
@@ -61,7 +61,7 @@
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                            <h6 class="">Bank Information
+                            <h6 class="mb-2 fw-bold fs-15">Bank Information
                                 <span class="personal-edit">
                                     <a href="#" class="edit-icon" @click="onClick_EditButton_BankInfo"><i class="ri-pencil-fill"></i>
                                     </a>
@@ -73,7 +73,7 @@
                                 <template #header>
                                     <div>
                                         <h5
-                                            :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                            :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' } " class="fw-bold fs-5">
                                             Bank Information</h5>
                                     </div>
                                 </template>
@@ -140,10 +140,10 @@
 
 
                     <div  >
-                        <ul class="personal-info"   >
+                        <ul class="personal-info">
                                 <li  >
                                     <div class="title">Bank Name</div>
-                                    <div class="ml-4 text">
+                                    <div class="text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
                                         {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name  }}
@@ -178,7 +178,7 @@
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <h6 class="">Statutory Information
+                        <h6 class="mb-2 fw-bold fs-15">Statutory Information
                             <span class="personal-edit">
                                 <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info() ">
                                     <i class="ri-pencil-fill"></i>
@@ -191,13 +191,13 @@
                             <template #header>
                                 <div>
                                     <h5
-                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }" class="fw-bold fs-5">
                                         Statutory information</h5>
                                 </div>
                             </template>
 
                             <div class="modal-body">
-                                <div class="row ">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="floating">
                                             <label for="" class="float-label">PF
@@ -284,8 +284,8 @@
                         <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info" >
                             <li>
                                 <div class="title">PF Applicable</div>
-                                <div class="text">
-                                    <!-- {{ pf_applicable }} -->
+                                <div class="text ">
+                                    {{ pf_applicable }}
 
                                 </div>
                             </li>
@@ -309,6 +309,7 @@
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
                                     {{ esic_applicable }}
+                                    <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  }} -->
 
                                 </div>
                             </li>
@@ -382,8 +383,8 @@ const bank_information = reactive({
 })
 
 
-const  esic_applicable =computed(()=>{
-   if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
+const  esic_applicable = computed(()=>{
+   if( _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  == "no") return "No";
    else
    if(_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
 })
@@ -458,12 +459,11 @@ function onClick_EditButton_Statutory_Info(){
 
     // Assign json values into dialog elements also
 
-     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
-     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number ;
-     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number ;
-     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable ;
-     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number ;
-
+     statutory_information.pf_applicable =_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable ;
+     statutory_information.epf_no   = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number ;
+     statutory_information.uan_no   =   _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number ;
+     statutory_information.esic_applicable   =   _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable ;
+     statutory_information.esic_no    =   _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number ;
 
      dialog_statutory_visible.value = true;
 

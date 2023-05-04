@@ -2,7 +2,7 @@
     <div>
         <div class="mb-2 card">
             <div class="card-body">
-                <h6 class="">Experience Information
+                <h6 class="fw-bold fs-15">Experience Information
                     <!-- <span class="personal-edit">
                                         <a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
@@ -24,7 +24,7 @@
                         <template #header>
                             <div>
                                 <h5
-                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }" class="fs-5 fw-bold">
                                     Experience Information</h5>
                             </div>
                         </template>
