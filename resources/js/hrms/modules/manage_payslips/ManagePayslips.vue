@@ -61,10 +61,6 @@
 
         </DataTable>
 
-
-
-        {{ managePayslipStore.array_employees_list }}
-
     </div>
 
 

@@ -1193,7 +1193,7 @@ class VmtAttendanceService{
                         'checkin_time' => 'required',
                         'checkout_time' => 'required',
                         'reason' => 'required',
-                        'custom_reason' => 'required',
+                        'custom_reason' => 'nullable',
                     ],
                     $messages = [
                         'required' => 'Field :attribute is missing',
