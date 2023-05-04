@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\vmtInvEmp_Fsp_Popups;
 use Illuminate\Http\Request;
 
 use App\Models\VmtEmployeePaySlip;
@@ -26,6 +27,9 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtClientMaster;
 use Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AttenanceWorkShifttime;
+use App\Imports\sectionImport;
 
 
 use Illuminate\Support\Facades\DB;
@@ -201,6 +205,13 @@ class VmtTestingController extends Controller
                             ->join('vmt_investment_section_particulars','vmt_investment_section_particulars.id','=','vmt_investment_form_secpat.sec_pat_id') //Get sections_particulars id
                             ->join('vmt_investment_sections','vmt_investment_sections.id','=','vmt_investment_section_particulars.section_id')// Get Sections
                             ->join('vmt_investment_particulars','vmt_investment_particulars.id','=','vmt_investment_section_particulars.particular_id')// Get Particular id
+                            ->join('vmt_inv_fsp_popups','vmt_inv_fsp_popups.fsp_id','=','vmt_investment_form_secpat.id')
+                            ->join('vmt_inv_emp_fsp_popups','vmt_inv_emp_fsp_popups.fsp_popups_id','=','vmt_inv_fsp_popups.id')
+                            ->join('vmt_inv_popup_fields','vmt_inv_popup_fields.id','=','vmt_inv_fsp_popups.popupfield_id')
+                            ->join('vmt_inv_popup_list','vmt_inv_popup_list.id','=','vmt_inv_popup_fields.popups_list_id')
+                            ->join('vmt_emp_investments_dec_amt','vmt_emp_investments_dec_amt.form_sectionparticular_id','=','vmt_investment_form_secpat.id')
+
+
 
                            // ->where('vmt_investment_forms.form_name',$investment_formname)
                             ->get([
@@ -208,10 +219,16 @@ class VmtTestingController extends Controller
                                 'vmt_investment_particulars.particular_name as particular_name',
                                 'vmt_investment_particulars.references as references',
                                 'vmt_investment_particulars.amount_max_limit as amount_max_limit',
+                                'vmt_inv_popup_list.popups_list as popup_name',
+                                'vmt_inv_popup_fields.field_name as field_name',
+                                'vmt_inv_emp_fsp_popups.popup_value as popup_value',
+                                'vmt_inv_emp_fsp_popups.user_id as User_id',
+                                'vmt_emp_investments_dec_amt.declaration_amount as Declaration_amount',
+
                             ]);
                                // dd($inv_form_details);
 
-                                return $inv_form_details;
+                                return ($inv_form_details->toArray());
      //   dd($inv_form_details->toArray());
 
 
@@ -249,6 +266,17 @@ class VmtTestingController extends Controller
             dd("Error : ".$e);
         }
 
+    }
+
+    public function exportattenance(Request $request)
+    {
+       $users = User::all()->toArray();
+
+     //  return $users;
+      // dd($users);
+       // dd(gettype($users));
+
+        return Excel::download(new AttenanceWorkShifttime($users), 'testings.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
     public function showPaySlip_HTMLView()
@@ -317,23 +345,62 @@ class VmtTestingController extends Controller
 
 
          dd('Mail sent successfully');
+}
+
+   public function testinginvest(Request $request){
+
+      // dd($request->all());
+
+        //   $simma = new vmtInvEmp_Fsp_Popups;
+        //   $simma->user_id = ('141');
+        //   $simma->fsp_popups_id = ('2');
+        //   $simma->popup_value = $request->input('from_month');
+        //   $simma->popup_value = $request->input('to_month');
+        //   $simma->save();
+
+        $createMultipleUsers = [
+            ['user_id'=>'141','fsp_popups_id'=>'1', 'popup_value' =>$request->input('from_month')],
+            ['user_id'=>'141','fsp_popups_id'=>'2', 'popup_value' =>$request->input('to_month')],
+            ['user_id'=>'141','fsp_popups_id'=>'5', 'popup_value' =>$request->input('city')],
+            ['user_id'=>'141','fsp_popups_id'=>'6', 'popup_value' =>$request->input('totalRent')],
+            ['user_id'=>'141','fsp_popups_id'=>'7', 'popup_value' =>$request->input('land_lard')],
+            ['user_id'=>'141','fsp_popups_id'=>'8', 'popup_value' =>$request->input('landpan')],
+            ['user_id'=>'141','fsp_popups_id'=>'9', 'popup_value' =>$request->input('address')],
+
+        ];
+
+        vmtInvEmp_Fsp_Popups::insert($createMultipleUsers);
 
 
 
 
 
+          return 'save successfully';
+   }
 
 
+public function importexcell(Request $request){
+        // dd($request->all());
+        Excel::import(new sectionImport , $request->file);
 
+         return "save successfully";
+}
 
+public function testinginestmentsection(){
 
+   $investmentsection = VmtEmployeeInvestmentsDeclarationAmount::join('vmt_investment_form_secpat','vmt_investment_form_secpat.id','=','vmt_emp_investments_dec_amt.form_sectionparticular_id')
+                                                             ->join('vmt_investment_section_particulars','vmt_investment_section_particulars.id','=','vmt_investment_form_secpat.sec_pat_id')
+                                                             ->join('vmt_investment_particulars','vmt_investment_particulars.id','=','vmt_investment_section_particulars.particular_id')
+                                                             ->join('vmt_investment_sections','vmt_investment_sections.id','=','vmt_investment_section_particulars.section_id')
+                                                             ->get(
+                                                                [ 'vmt_investment_sections.section_name as section_name',
+                                                                'vmt_investment_particulars.particular_name as particular_name',
+                                                                'vmt_investment_particulars.references as references',
+                                                                'vmt_investment_particulars.amount_max_limit as amount_max_limit',
+                                                                'vmt_emp_investments_dec_amt.declaration_amount as Declaration Amount']
+                                                             );
 
-
-
-
-
-
-
-    }
+                                                return($investmentsection->toArray());
+}
 
 }
