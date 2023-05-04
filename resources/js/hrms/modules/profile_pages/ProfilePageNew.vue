@@ -16,7 +16,7 @@
         </template>
     </Dialog>
 
-   
+
 
     <div class="profile_page-wrapper mt-30 container-fluid">
         <div class="row">
@@ -24,7 +24,7 @@
             <div v-if="!_instance_profilePagesStore.loading_screen" class="col-3 col-sm-12 col-md-3 col-lg-3 col-xxl-3 col-xl-3">
                 <EmployeeCard />
                 </div>
-           
+
             <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xxl-9 col-xl-9">
                 <div class="mb-2 card top-line">
                     <div class="pt-1 pb-0 card-body">
@@ -49,7 +49,7 @@
                             <li class="mx-4 nav-item " role="presentation">
                                 <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_det"
                                     role="tab" aria-controls="pills-home" aria-selected="true">
-                                    Finance</a>
+                                    Paycheck</a>
                             </li>
                             <li class="nav-item " role="presentation">
                                 <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#document_det"

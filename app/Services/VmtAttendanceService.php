@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Mail\ApproveRejectLeaveMail;
 use App\Models\User;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtEmployeeLeaves;
@@ -582,6 +583,35 @@ class VmtAttendanceService{
 
     public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment){
 
+        $validator = Validator::make(
+            $data =[
+                'record_id' => $record_id,
+                'approver_user_code' => $approver_user_code,
+                'status' => $status,
+                'review_comment' => $review_comment,
+            ],
+            $rules = [
+                'record_id' => 'required|exists:vmt_employee_leaves,id',
+                'approver_user_code' => 'required|exists:users,user_code',
+                'status' => 'required',
+                'review_comment' => 'nullable',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+
         //Get the user_code
         $query_user = User::where('user_code',$approver_user_code)->first();
         $approver_user_id = $query_user->id;
@@ -603,7 +633,7 @@ class VmtAttendanceService{
         }
 
         $leave_record->reviewer_user_id = $approver_user_id;
-        $leave_record->reviewer_comments = $review_comment;
+        $leave_record->reviewer_comments = $review_comment ?? "";
         $leave_record->reviewed_date = Carbon::now();
         $leave_record->save();
 

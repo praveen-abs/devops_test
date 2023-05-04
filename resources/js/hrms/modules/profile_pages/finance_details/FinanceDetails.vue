@@ -11,7 +11,7 @@
                     <li class="mx-4 nav-item " role="presentation">
                         <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_pay" role="tab"
                             aria-controls="pills-home" aria-selected="true">
-                            Paycheck
+                            Payslips
                         </a>
                     </li>
                 </ul>
@@ -146,7 +146,7 @@
                                     <div class="ml-4 text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
-                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id  }}
+                                        {{  _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name  }}
 
                                     </div>
                                 </li>
@@ -330,43 +330,7 @@
             <div class="tab-pane fade" id="finance_pay" role="tabpanel" aria-labelledby="">
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <ul class="mb-4 nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
-
-                            <li class="nav-item " role="presentation">
-                                <a class="nav-link active" id="" data-bs-toggle="pill" href="" data-bs-target="#pay_slips"
-                                    role="tab" aria-controls="" aria-selected="true">
-                                    Pay Slips
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content " id="pills-tabContent">
-                            <div class="tab-pane fade active show" id="pay_slips" role="tabpanel" aria-labelledby="">
-
-                                <div id="" class="ember-view">
-                                    <div class="table-responsive ">
-                                        <table class="table table-hover">
-
-                                            <thead class="fw-bold text-muted h5">
-                                                <tr>
-                                                    <th width="">Month</th>
-                                                    <th width="">Gross Pay</th>
-                                                    <th width="">Reimbursements</th>
-                                                    <th width="">Deductions</th>
-                                                    <th data-url="{{ route('vmt_employee_payslip_pdf') }}"
-                                                        style="cursor: pointer" class="ember-view paySlipPDF text-info">
-                                                        Download PDF
-                                                    </th>
-                                                </tr>
-                                            </thead>
-
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
+                        <EmployeePayslips />
                     </div>
                 </div>
             </div>
@@ -383,6 +347,7 @@ import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
 import { profilePagesStore } from '../stores/ProfilePagesStore'
+import EmployeePayslips from './EmployeePayslips.vue'
 
 const _instance_profilePagesStore = profilePagesStore()
 

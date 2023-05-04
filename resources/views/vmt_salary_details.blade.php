@@ -242,12 +242,12 @@
                                                             @php
                                                                 $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                                             @endphp
-                                                            <div data="{{ $d->PAYROLL_MONTH }}"
+                                                            {{-- <div data="{{ $d->PAYROLL_MONTH }}"
                                                                 data-url="{{ route('vmt_paycheck_employee_payslip_pdf') }}"
                                                                 style="cursor: pointer"
                                                                 class="ember-view  paySlipPDF text-info">
                                                                 Download PDF
-                                                            </div>
+                                                            </div> --}}
                                                         </td>
                                                     </tr>
                                                 @endforeach
