@@ -5,7 +5,7 @@
             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
         <Button class="mb-2 h-10 btn btn-orange" label="Generate"
             @click="managePayslipStore.getAllEmployeesPayslipDetails(selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
-        <!-- {{ managePayslipStore.array_employees_list }} -->
+        <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
     </div>
     <div class="my-4">
 
@@ -15,69 +15,67 @@
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="user_code" header="Employee Code" headerStyle="width: 3rem"></Column>
+            <Column field="user_code" header="Employee Code" headerStyle="width: 3rem">
+            </Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
             <Column field="is_released" header="Released Payslip?"></Column>
             <Column field="is_" header="Payslip mail sent?"></Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View "
+                    <Button class="btn-primary" label="View"
                         @click="managePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
                 </template>
             </Column>
+
             <Column header="Action">
+                <!-- <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" /> -->
                 <template #body="slotProps">
-                    <!-- <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" /> -->
-
-                    <!-- <div class="card flex justify-content-center">
-
-                        <Button class="btn-success" label="Send Mail"
-                            @click="managePayslipStore.dialog_ManagePayslipssendMail = true" />
-
-                        <Dialog v-model:visible="managePayslipStore.dialog_ManagePayslipssendMail" modal header="Header"
-                            :style="{ width: '50vw' }">
-
-
-                            <Button class="btn-success" label="Send Mail"
-                                @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
-                            <Button label="Yes" icon="pi pi-check"
-                                @click="managePayslipStore.dialog_ManagePayslipssendMail = false" autofocus />
-
-                        </Dialog>
-
-                    </div> -->
-
-                    <div class="card flex justify-content-center">
-                        <Button class="btn-success" label="Send Mail"
-                            @click="managePayslipStore.dialog_ManagePayslipssendMail = true" />
-                            <Dialog v-model:visible="managePayslipStore.dialog_ManagePayslipssendMail" modal header="Header"
-                            :style="{ width: '25vw' }">
-                            <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis, odio?</h1>
-                            <div>
-                                <Button class="btn-success" label="Send Mail"
-                                    @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
-                                <Button label="Yes" icon="pi pi-check" class=""
-                                    @click="managePayslipStore.dialog_ManagePayslipssendMail = false" autofocus />
-
-                            </div>
-                </Dialog>
-                    </div>
-
-
+                    <button class="btn-success rounded" @click="managePayslipStore.canShowConfirmation(slotProps.data)">Send
+                        Mail</button>
                 </template>
 
-
-
-
             </Column>
+
+            <Dialog header="Confirmation" v-model:visible="managePayslipStore.show_dialogconfirmation"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+            <div class="confirmation-content">
+
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Are you sure you want to send Mail ?</span>
+            </div>
+
+            <div class="d-flex   mt-11 " style="position: relative; right: -180px; width: 140px;">
+
+                <Button class="btn-success mr-3" label="Yes" icon="pi pi-check"
+                    @click="managePayslipStore.sendMail_employeePayslip(JSON.stringify(managePayslipStore.array_employees_list.user_code), selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())"
+                    autofocus />
+
+                <Button label="No" icon="pi pi-times" @click="managePayslipStore.HideShowConfirmation"
+                    class="p-button-text " autofocus />
+
+            </div>
+
+        </Dialog>
+
+
         </DataTable>
+
+
+
+        {{ managePayslipStore.array_employees_list }}
+
     </div>
-    <div class="d-flex justify-content-end">
+
+
+
+
+
+    <!-- <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
     </div>
-    <!-- dialog for show details -->
-    <!-- <div class="card flex justify-content-center inline-flex">
+    dialog for show details
+     <div class="card flex justify-content-center inline-flex">
         <Dialog v-model:visible="managePayslipStore.canShowPayslipView" modal header="Header" :style="{ width: '50vw' }">
             <div v-html="managePayslipStore.paySlipHTMLView">
 
@@ -91,9 +89,7 @@ import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
 import { useManagePayslipStore } from './ManagePayslipService';
 
-
-
-const managePayslipStore = useManagePayslipStore()
+const managePayslipStore = useManagePayslipStore();
 
 
 const selectedPayRollDate = reactive({
@@ -102,32 +98,12 @@ const selectedPayRollDate = reactive({
     selectyear: '',
 });
 
-const Dialog_EmployeePayslips_sendMail = () => {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, send Mail'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire(
-                'Success!',
-                '.',
-                'success'
-            ),
-                console.log(managePayslipStore.array_employees_list.user_code);
-            console.log(managePayslipStore.sendMail_employeePayslip(managePayslipStore.array_employees_list.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear()));
-        }
-    })
 
-}
+
+
 
 onMounted(async () => {
-
-
+    console.log(managePayslipStore.array_employees_list);
 });
 
 
@@ -199,6 +175,10 @@ onMounted(async () => {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
+
+.p-dialog-mask .p-component-overlay .p-component-overlay-enter {
+    z-index: 0 !important;
+}
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
@@ -382,6 +362,7 @@ onMounted(async () => {
 <!--
 
 
+
 <template>
     <div class="card flex justify-content-center">
         <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
@@ -390,6 +371,10 @@ onMounted(async () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+            <template #footer>
+                <Button label="No" icon="pi pi-times" @click="visible = false" text />
+                <Button label="Yes" icon="pi pi-check" @click="visible = false" autofocus />
+            </template>
         </Dialog>
     </div>
 </template>

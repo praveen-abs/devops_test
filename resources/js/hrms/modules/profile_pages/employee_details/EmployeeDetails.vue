@@ -9,8 +9,8 @@
                 </a>
 
                 <Dialog v-model:visible="is_dialog_generalInfo_visible" modal header="General Information"
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                    <template #header>
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                    <template #header >
                         <div>
                             <h5
                                 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">

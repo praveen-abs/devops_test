@@ -11,6 +11,9 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     const paySlipHTMLView = ref()
 
     const canShowPayslipView  = ref (false);
+    const show_dialogconfirmation = ref(false);
+
+    // const  canShowConfirmation = ref(false);
 
     // Events
     async function getAllEmployeesPayslipDetails(month, year){
@@ -42,7 +45,9 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     }
 
     async function sendMail_employeePayslip(user_code, month, year){
-        console.log("sendMail_employeePayslip() : Sending mail to user : "+user_code);
+        console.log("sendMail_employeePayslip() : Sending mail to user : "+ user_code);
+
+        show_dialogconfirmation.value= false;
 
         axios.post('/payroll/paycheck/sendMail_employeePayslip',{
             user_code: user_code,
@@ -58,7 +63,18 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
-    const dialog_ManagePayslipssendMail =ref(false);
+
+
+
+    function canShowConfirmation() {
+        show_dialogconfirmation.value = true;
+    }
+    function HideShowConfirmation() {
+        show_dialogconfirmation.value = false;
+
+    }
+
+
 
 
 
@@ -111,7 +127,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
         getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip ,
 
-        dialog_ManagePayslipssendMail
+        show_dialogconfirmation,canShowConfirmation,HideShowConfirmation
+
 
     };
 });
