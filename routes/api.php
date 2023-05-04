@@ -114,6 +114,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Investments
     Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
     Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
+    Route::post('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
 
     //Notifications
     Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);

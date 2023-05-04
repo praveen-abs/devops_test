@@ -198,7 +198,7 @@ function showConfirmDialog(selectedRowData, status) {
   currentlySelectedStatus = status;
   currentlySelectedRowData = selectedRowData;
 
- // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+  console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog(canClearData) {
