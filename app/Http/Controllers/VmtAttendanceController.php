@@ -95,7 +95,7 @@ class VmtAttendanceController extends Controller
 
         // dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames','time_frame'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -151,7 +151,7 @@ class VmtAttendanceController extends Controller
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
         $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
 
-        $time_periods_of_year_query = VmtOrgTimePeriod::where('abbrevation','FY')->where('status',1)->first();
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
          $start_date =  $time_periods_of_year_query->start_date;
 
         $end_date   = $time_periods_of_year_query->end_date;
