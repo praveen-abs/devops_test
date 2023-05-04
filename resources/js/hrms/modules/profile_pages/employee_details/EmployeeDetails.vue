@@ -2,7 +2,7 @@
      <Toast />
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">General Information
+            <h6 class="fw-bold mb-3 fs-15">General Information
                 <!-- Button trigger modal -->
                 <a type="button" class="edit-icon" @click="onClick_EditButton_GeneralInfo">
                     <i class="ri-pencil-fill"></i>
@@ -92,7 +92,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
-                        <div class="ml-4 text">
+                        <div class="text">
                             {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY') }}
                         </div>
                     </li>
@@ -151,7 +151,7 @@
 
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Contact Information
+            <h6 class="mb-3 fw-bold fs-15">Contact Information
                 <span class="personal-edit">
                     <a href="#" class="edit-icon"
                         @click="onClick_EditButtonContacttInfo" ><i class="ri-pencil-fill"></i></a>
@@ -216,7 +216,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Personal Email</div>
-                        <div class="ml-4 text">
+                        <div class="text">
                             {{ _instance_profilePagesStore.employeeDetails.email }}
 
                         </div>
@@ -248,11 +248,10 @@
             </div>
 
         </div>
-
     </div>
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Address
+            <h6 class="ml-2 fw-bold fs-15">Address
                 <span class="personal-edit"><a href="#" class="edit-icon"
                         @click="onClick_EditButtonAddressInfo"><i class="ri-pencil-fill"></i></a></span>
 

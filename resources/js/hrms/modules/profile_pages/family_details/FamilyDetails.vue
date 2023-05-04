@@ -1,7 +1,7 @@
 <template>
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Family Information
+            <h6 class="fw-bold fs-15">Family Information
                 <button type="button" class="float-right btn btn-orange"
                 style="margin-left: 79%"
                     @click="DialogFamilyinfovisible = true" >
@@ -13,7 +13,7 @@
                     <template #header>
                         <div>
                             <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }" class="fw-bold fs-15">
                                 Family Information</h5>
                         </div>
                     </template>
