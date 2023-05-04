@@ -27,14 +27,20 @@
                     <Button class="btn-primary" label="View " @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.PAYROLL_MONTH)" />
                 </template>
             </Column>
+            <column header="Download">
+                <template  #body="slotProps">
+                    <Button label="Download" />
+                </template>
+
+            </column>
         </DataTable>
     </div>
-    <div class="d-flex justify-content-end">
+    <!-- <div class="d-flex justify-content-end">
         <Button class="mb-2 btn btn-primary" label="Submit" />
-    </div>
+    </div> -->
     <!-- dialog for show details -->
     <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Header" :style="{ width: '50vw' }">
+        <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip" :style="{ width: '50vw' }">
         <div v-html="employeePayslipStore.paySlipHTMLView">
 
         </div>

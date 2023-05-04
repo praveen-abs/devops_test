@@ -590,8 +590,7 @@ class VmtEmployeePayCheckService {
             $processed_clientName = strtolower(str_replace(' ', '', $client_name));
 
             $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-
-
+            
             $html = $view->render();
             $html = preg_replace('/>\s+</', "><", $html);
             $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
@@ -938,6 +937,7 @@ class VmtEmployeePayCheckService {
 
     public function getEmployeeCompensatoryDetails($user_code){
 
+
         $validator = Validator::make(
             $data = [
                 'user_code' => $user_code,
@@ -990,6 +990,7 @@ class VmtEmployeePayCheckService {
                             "dearness_allowance"
                         ])->first();
 
+            $response['yearly_ctc'] = $response->cic*12;
             return response()->json([
                 'status' => 'success',
                 'message' => "",

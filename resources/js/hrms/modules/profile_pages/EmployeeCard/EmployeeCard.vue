@@ -25,7 +25,7 @@
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
                             <div class="mb-1 text-center px-auto">
-                                <h6 class="text-center">
+                                <h6 class="text-center fw-bold">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
                             </div>
