@@ -108,7 +108,11 @@ export default defineConfig({
 
                 // Leave_Policy_Setting_Master
 
-                'resources/js/hrms/modules/leave_policy_Settings/Leave_Policy_Setting_Master/Leave_Policy_Setting_Master.js'
+                'resources/js/hrms/modules/leave_policy_Settings/Leave_Policy_Setting_Master/Leave_Policy_Setting_Master.js',
+
+                // testing_pradeesh
+
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
 
 
 
