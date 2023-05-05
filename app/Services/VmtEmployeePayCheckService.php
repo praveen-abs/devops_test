@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
 
@@ -590,12 +591,22 @@ class VmtEmployeePayCheckService {
             $processed_clientName = strtolower(str_replace(' ', '', $client_name));
 
             $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-            
-            $html = $view->render();
-            $html = preg_replace('/>\s+</', "><", $html);
-            $pdf = PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false);
 
-            return $pdf->download($user_code."_".$year.'_'.$month."_payslip.pdf");
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+
+            $pdf = new Dompdf($options);
+
+            //$html = $view->render();
+           // $html = preg_replace('/>\s+</', "><", $html);
+           // $pdf = PDF::loadHTML($html,'UTF-8')->setPaper('a4', 'portrait')->setWarnings(false);
+
+           $pdf->loadHtml($view, 'UTF-8');
+           $pdf->setPaper('A4', 'portrait');
+           $pdf->render();
+
+            return $pdf->stream($user_code."_".$year.'_'.$month."_payslip.pdf");
 
 
         }
@@ -905,7 +916,11 @@ class VmtEmployeePayCheckService {
 
 
             //Generate PDF
-            $pdf = new Dompdf();
+            $options = new Options();
+            $options->set('isHtml5ParserEnabled', true);
+            $options->set('isRemoteEnabled', true);
+
+            $pdf = new Dompdf( $options);
             $pdf->loadhtml($html, 'UTF-8');
             $pdf->setPaper('A4', 'portrait');
             $pdf->render();
