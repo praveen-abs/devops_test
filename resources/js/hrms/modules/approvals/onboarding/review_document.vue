@@ -1,5 +1,12 @@
 <template>
     <Toast />
+    <div class="flex justify-between my-2">
+        <h6 class="mb-3 text-lg font-semibold">Documents Approvals</h6>
+<!--
+        <Button type="button" icon="pi pi-times-circle" severity="success" v-if="!selectedAllEmployee == ''"
+            class="mx-4 p-button-success Button" label="Approve all" style=" height: 2.5em"
+            @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')" /> -->
+    </div>
     <div>
         <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -38,11 +45,25 @@
             </template>
         </Dialog>
 
+        <Dialog header="Confirmation" v-model:visible="canShowBulkConfirmationAll"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '580px' }" :modal="true">
+            <div class="confirmation-content">
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of selected employees?</span>
+            </div>
+            <template #footer>
+                <Button label="Yes" icon="pi pi-check" @click="processBulkDocumentsApproveReject()" class="p-button-text"
+                    autofocus />
+                <Button label="No" icon="pi pi-times" @click="hideBulkConfirmDialog(true)" class="p-button-text" />
+            </template>
+        </Dialog>
+
         <div>
+            <!-- {{ data_review_documents }} -->
             <DataTable :value="data_review_documents" :paginator="true" :rows="10" class="" dataKey="user_code"
                 @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
                 v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
-                @row-select="onRowSelect" @row-unselect="onRowUnselect"  :rowsPerPageOptions="[5, 10, 25]"
+                @row-select="onRowSelect" @row-unselect="onRowUnselect" :rowsPerPageOptions="[5, 10, 25]"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
                 <template #empty> No Onboarding documents for the selected status filter </template>
@@ -68,10 +89,11 @@
                 </Column>
 
 
-                <Column class="fontSize13px" field="total_expenses" header="Approval Status" :sortable="false">
-                    <!-- <template #body="slotProps">
-                        {{ "&#8377; " + slotProps.data.total_expenses }}
-                    </template> -->
+                <Column class="fontSize13px" field="doc_status" header="Approval Status" :sortable="false">
+                    <template #body="{ data }">
+                        <!-- <Tag :value="data.doc_status" :severity="getSeverity(data.doc_status)" /> -->
+                        {{ data.doc_status }}
+                    </template>
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
@@ -161,6 +183,7 @@ const dialog_visible = ref(false)
 let data_review_documents = ref();
 let canShowConfirmation = ref(false);
 let canShowBulkConfirmation = ref(false);
+let canShowBulkConfirmationAll = ref(false);
 let canShowLoadingScreen = ref(false);
 const toast = useToast();
 const expandedRows = ref([]);
@@ -229,6 +252,22 @@ function ajax_GetReviewDocumentData() {
 */
 function ajax_getDocumentImage() {
 
+}
+
+function showConfirmDialogForBulkApproval(selectedRowData, status) {
+    console.log(selectedAllEmployee.value);
+    const ob = Object.values(selectedAllEmployee.value)
+
+
+    ob.forEach(ent => {
+        console.log(ent.employee_name);
+    })
+
+    canShowBulkConfirmationAll.value = true;
+    currentlySelectedStatus = status;
+    currentlySelectedRowData = selectedRowData;
+
+    console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function showConfirmDialog(selectedRowData, status) {
@@ -315,7 +354,7 @@ function processSingleDocumentApproveReject() {
             console.log(response.data);
             ajax_GetReviewDocumentData();
             canShowLoadingScreen = false;
-            toast.add({ severity: "success", summary: "", detail: " Successfully !", life: 3000 });
+            toast.add({ severity: "success", summary: "Status", detail: "Processed Successfully !", life: 3000 });
 
             resetVars();
         })

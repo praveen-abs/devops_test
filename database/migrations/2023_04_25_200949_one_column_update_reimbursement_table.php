@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
+
         Schema::table('vmt_employee_reimbursements', function (Blueprint $table) {
-            $table->renameColumn('vehicle_type', 'vehicle_type_id');
+
+            if (Schema::hasColumn('vmt_employee_reimbursements', 'vehicle_type')){ //check the column
+                $table->renameColumn('vehicle_type', 'vehicle_type_id');
+            }
         });
     }
 

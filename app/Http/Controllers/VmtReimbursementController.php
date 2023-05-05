@@ -12,6 +12,7 @@ class VmtReimbursementController extends Controller
     }
 
     public function saveReimbursementsData(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+        dd($request->all());
 
         return $serviceVmtReimbursementsService->saveReimbursementData_LocalConveyance( user_code: $request->user_code,
                                                                                         date : $request->date,
@@ -25,7 +26,7 @@ class VmtReimbursementController extends Controller
     }
 
     public function fetchEmployeeReimbursement(Request $request,VmtReimbursementsService $reimbursementService){
-    // dd($request->all());
+
     $user_id = auth()->user()->id;
     $year = $request->selected_year;
     $month = $request->selected_month;

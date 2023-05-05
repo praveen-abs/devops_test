@@ -8,10 +8,16 @@ use Illuminate\Support\Facades\Crypt;
 
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
+use App\Models\User;
 use App\Imports\VmtPaySlip;
-use App\Services\VmtEmployeePayslipService;
+use App\Services\VmtEmployeePayCheckService;
+
+/*
 
 
+
+
+*/
 class VmtPayCheckController extends Controller
 {
      public function showPaycheckDashboard(Request $request){
@@ -29,13 +35,13 @@ class VmtPayCheckController extends Controller
                 // code...
         // dd($value->epfemployer);
             $dataVmtHome = [];
-            $dataVmtHome['NET_TAKE_HOME'] = $value->NET_TAKE_HOME;
-            $dataVmtHome['TOTAL_DEDUCTIONS'] = $value->TOTAL_DEDUCTIONS;
-            $dataVmtHome['TOTAL_CON'] = $value->TOTAL_DEDUCTIONS+$value->NET_TAKE_HOME;
-            $dataVmtHome['epfemployer'] = $value->epfemployer;
-            $dataVmtHome['your_employee'] = $value->epfemployee;
-            $dataVmtHome['TOTAL_FIXED_GROSS'] = $value->TOTAL_FIXED_GROSS;
-            $dataVmtHome['dob'] = $value->dob;
+            $dataVmtHome['NET_TAKE_HOME'] = $value->NET_TAKE_HOME ?? "" ;
+            $dataVmtHome['TOTAL_DEDUCTIONS'] = $value->TOTAL_DEDUCTIONS ?? "" ;
+            $dataVmtHome['TOTAL_CON'] = $value->TOTAL_DEDUCTIONS+$value->NET_TAKE_HOME ?? "" ;
+            $dataVmtHome['epfemployer'] = $value->epfemployer ?? "" ;
+            $dataVmtHome['your_employee'] = $value->epfemployee ?? "" ;
+            $dataVmtHome['TOTAL_FIXED_GROSS'] = $value->TOTAL_FIXED_GROSS ?? "" ;
+            $dataVmtHome['dob'] = $value->dob ?? "" ;
             $json_PayCheck = json_encode($dataVmtHome);
             }
 
@@ -65,7 +71,8 @@ class VmtPayCheckController extends Controller
                 $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
             }
             foreach($data as $d) {
-                $result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+                //$result['TOTAL_PF_WAGES'] += $d->PF_WAGES;
+                $result['TOTAL_PF_WAGES'] += 0;
             }
 
             return view('paycheckDashboard' , compact('data', 'result', 'compensatory','json_PayCheck'));
@@ -83,15 +90,57 @@ class VmtPayCheckController extends Controller
     }
 
 
-    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService){
-        return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+    public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        $user_code = null;
+
+        //If empty, then show current user profile page
+        if (empty($request->uid)) {
+            $user_code = auth()->user()->user_code;
+        } else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+
+        return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($user_code, $request->month, $request->year);
     }
 
-    public function showPaySlip_PDFView(Request $request, VmtEmployeePayslipService $employeePaySlipService){
-        return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($request->user_code, $request->month, $request->year);
     }
 
-/*
+    public function sendMail_employeePayslip(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+        return $employeePayCheckService->sendMail_employeePayslip($request->user_code, $request->month, $request->year);
+    }
+
+
+        /*
+        Get all payslip details of all employees for the given month, year.
+        Contains entire payslip detail for the given month
+
+    */
+    public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+
+        return $employeePaySlipService->getAllEmployeesPayslipDetails($request->month , $request->year);
+
+   }
+
+   public function getEmployeeAllPayslipList(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+        $user_code = null;
+
+        //If empty, then show current user profile page
+        if (empty($request->uid)) {
+            $user_code = auth()->user()->user_code;
+        } else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+
+        return $employeePaySlipService->getEmployeeAllPayslipList($user_code);
+
+   }
+
+
+    /*
         Fetch payslips for currently logged in user
 
     */

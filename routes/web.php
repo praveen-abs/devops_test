@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PMS\VmtPMSModuleController;
 use App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController;
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -117,7 +116,7 @@ Route::middleware(['auth'])->group(function () {
 
     })->name('isEmailExists');
 
-    // Profile Page 
+    // Profile Page
 
     Route::post('/profile-pages/getProfilePicture', [App\Http\Controllers\VmtProfilePagesController::class, 'getProfilePicture']);
     Route::post('/profile-pages/updateProfilePicture', [App\Http\Controllers\VmtProfilePagesController::class, 'updateProfilePicture']);
@@ -166,7 +165,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');
     Route::get('/fetch-assigned-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAllAssignedPMSForms'])->name('fetch-assigned-pmsforms');
     Route::get('/fetchAssignmentPeriodForGivenYear', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'fetchAssignmentPeriodForGivenYear'])->name('fetchAssignmentPeriodForGivenYear');
-    Route::get('/report-download-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'downloadPMSForm'])->name('downloadPMSForm');
+    Route::get('/report-download-pmsforms', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'downloadPMSForm'])->name('downloadPMSForm');    //Leave Balance Calculation
+    Route::get('/process-employee-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'processEmployeeLeaveBalance'])->name('processEmployeeLeaveBalance');
 
     //Attendance - AJAX
     Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
@@ -174,6 +174,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
     Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgEmployeesPendingLeaves'])->name('fetch-org-leaves');
     Route::post('/fetch-team-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamEmployeesPendingLeaves'])->name('fetch-team-leaves');
+
+    //Leave Balance fetchEmployeeLeaveBalance
+    Route::get('/get-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeLeaveBalance'])->name('getEmployeeLeaveBalance');
+    Route::get('/fetch-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeLeaveBalance'])->name('fetchEmployeeLeaveBalance');
 
     //Leave history pages
 
@@ -229,7 +233,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     //new profile page
-    Route::get('pages-profile-new/{user_id?}',[App\Http\Controllers\VmtProfilePagesController::class,'showProfilePage'])->name('pages-profile-new');
+    Route::get('/pages-profile-new',[App\Http\Controllers\VmtProfilePagesController::class,'showProfilePage'])->name('pages-profile-new');
     Route::post('/profile-pages-update-generalinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateGeneralInfo'])->name('updateGeneralInfo');
     Route::post('/profile-pages-update-contactinfo/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateContactInfo'])->name('updateContactInfo');
     Route::post('/profile-pages-update-address_info/{id}',[App\Http\Controllers\VmtProfilePagesController::class,'updateAddressInfo'])->name('addressInfo');
@@ -254,6 +258,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fileUploadingTest', [App\Http\Controllers\VmtTestingController::class, 'fileUploadingTest'])->name('fileUploadingTest');
 
     Route::get('/retrive-files', [App\Http\Controllers\VmtTestingController::class, 'retriveFiles'])->name('retriveFiles');
+    Route::get('/testSendBulkMail', [App\Http\Controllers\VmtTestingController::class, 'testSendBulkMail'])->name('testSendBulkMail');
+
+
+        Route::get('email-test', function(){
+
+            $details['email'] = 'sheltonfdo23@gmail.com';
+
+            dispatch(new App\Jobs\SendEmailJob($details));
+
+            dd('done');
+        });
     // notifications
     Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -275,9 +290,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
 
 
-
-
-    Route::get('pages-impersonate-profile/{id}', [App\Http\Controllers\HomeController::class, 'showImpersonateProfile'])->name('pages_impersonate_profile');
 
 
 
@@ -396,6 +408,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
+    Route::get('showManageEmployeePage_v2', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage_v2')->name('showManageEmployeePage_v2');
     Route::get('vmt-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllActiveEmployees')->name('vmt-activeemployees-fetchall');
     Route::get('vmt-exitemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllExitEmployees')->name('vmt-exitemployees-fetchall');
     Route::get('vmt-yet-to-activeemployees-fetchall', 'App\Http\Controllers\VmtEmployeeController@fetchAllYetToActiveEmployees')->name('vmt-yet-to-activeemployees-fetchall');
@@ -440,7 +453,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('payroll/claims',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
     Route::get('payroll/analytics',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
     Route::get('payroll/run',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollRunPage'])->name('showPayrollRunPage');
-    Route::get('payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
+
+    Route::get('/payroll/showManagePayslipsPage',  [App\Http\Controllers\VmtPayrollController::class, 'showManagePayslipsPage'])->name('showManagePayslipsPage');
+    Route::post('/payroll/paycheck/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
+    Route::post('/payroll/paycheck/getEmployeeAllPayslipList',  [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeeAllPayslipList'])->name('getEmployeeAllPayslipList');
+    Route::post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',  [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsHTML'])->name('vmt_paycheck_employee_payslip_htmlview');
+    Route::post('/payroll/paycheck/sendMail_employeePayslip',  [App\Http\Controllers\VmtPayCheckController::class, 'sendMail_employeePayslip'])->name('sendMail_employeePayslip');
+
     Route::get('payroll/setup',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
     Route::get('payroll/work_location',  [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
 
@@ -449,8 +468,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/salary_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showSalaryDetailsPage'])->name('vmt_salary_details');
     Route::get('/investments_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showInvestmentsPage'])->name('vmt_investments_details');
     Route::get('/form16_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showForm16Page'])->name('vmt_form16_details');
-    Route::get('/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_HTMLView'])->name('vmt_paycheck_employee_payslip_htmlview');
-    Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'showPaySlip_PDFView'])->name('vmt_paycheck_employee_payslip_pdf');
+    Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');
 
     // testing template
     Route::get('/testingController',[App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
@@ -478,6 +496,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/employee-documents',  [App\Http\Controllers\VmtEmployeeController::class, 'fetchDocsForUser'])->name('vmt-documents-routes');
 
     Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
+    Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
+    Route::post('/onboarding/updateEmployeeActive',  [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'updateEmployeeActiveStatus'])->name('updateEmployeeActiveStatus');
+
 
     //Documents Approvals
     Route::get('approvals-documents', 'App\Http\Controllers\VmtApprovalsController@showDocumentsApprovalPage')->name('vmt-approvals-emp-documents');
@@ -556,11 +577,12 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::get('/employee_reimbursements',  [App\Http\Controllers\VmtReimbursementController::class, 'showReimbursementsPage'])->name('showReimbursementsPage');
     Route::get('/approval_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'showReimbursementApprovalPage'])->name('showReimbursementApprovalPage');
     Route::get('/fetch_all_reimbursements',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursements'])->name('fetchAllReimbursements');
-    Route::post('/fetch_all_reimbursements_as_groups',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetchAllReimbursements');
+    Route::post('/fetch_all_reimbursements_as_groups',  [App\Http\Controllers\VmtApprovalsController::class, 'fetchAllReimbursementsAsGroups'])->name('fetch_all_reimbursements_as_groups');
     Route::post('/reimbursements_bulk_approval',  [App\Http\Controllers\VmtApprovalsController::class, 'processReimbursementBulkApprovals'])->name('processReimbursementBulkApprovals');
     Route::post('/reimbursements-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'approveRejectReimbursements'])->name('approveRejectReimbursements');
     Route::post('/approvals/onboarding-docs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processSingleDocumentApproval'])->name('processSingleDocumentApproval');
     Route::post('/approvals/onboarding-bulkdocs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processBulkDocumentApprovals'])->name('processBulkDocumentApprovals');
+    Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
     Route::post('/reimbursements/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
 
     Route::post('/getLocalConveyanceCost',[App\Http\Controllers\VmtReimbursementController::class ,'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
@@ -647,6 +669,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     //Attendance Reports
     Route::get('/reports/attendance',  [App\Http\Controllers\VmtReportsController::class, 'showAttendanceReport'])->name('showAttendanceReport');
+    Route::get('/reports/fetchDetailedAttendanceReport/{user_id}/{month}/{year}',  [App\Http\Controllers\VmtReportsController::class, 'fetchDetailedAttendanceReport'])->name('fetchDetailedAttendanceReport'); //By Praveen April 27th
+
     Route::get('/reports/basic-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/generate-detailed-attendance-report',  [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
@@ -721,6 +745,14 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     Route::get('/get-investments-form-details', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetails'])->name('getInvestmentsFormDetails');
 
+    Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
+
+
+    //Emp Mail Notifications
+    Route::get('/configs/manage_emp_mail_notifications', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'fetchAllEmployees_WelcomeMail_Details'])->name('fetchAllEmployees_WelcomeMail_Details');
+    Route::post('/fetch_all_employees_welcome_mail_status', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'send_AccActivationMailNotification'])->name('/configs/all_employees_welcome_mail_status');
+
+
     //Testing controller
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
     Route::get('/view-base64-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewBASE64_PrivateFile'])->name('viewBASE64_PrivateFile');
@@ -731,10 +763,26 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
     Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
+    Route::get('/testing/employee_payslip/{user_id?}',  [App\Http\Controllers\VmtTestingController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
+    Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
+
+    //investment testing
+
+    Route::view('/investmenttest', 'testing.excellimport');
+    Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
+
+   // invest excell
+   Route::view('/sample', 'testing.testings');
+   Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'importexcell']);
+
+
+   Route::get('/testinginestmentsectionss', [App\Http\Controllers\VmtTestingController::class, 'testinginestmentsection']);
+
+
 
 });
 
-Route::post('/payroll/fetchEmployeePayslipDetails',  [App\Http\Controllers\VmtPayrollController::class, 'fetchEmployeePayslipDetails'])->name('fetchEmployeePayslipDetails');
+Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
 
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');

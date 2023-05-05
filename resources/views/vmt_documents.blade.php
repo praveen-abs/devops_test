@@ -44,9 +44,7 @@
     @endif
     <div class="documents-wrapper mt-30">
 
-        @include('ui-documents', [
-            'existing_doc_filenames' => $existing_doc_filenames,
-        ])
+        @include('ui-documents')
 
     </div>
 @endsection

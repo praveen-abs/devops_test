@@ -75,7 +75,7 @@ class VmtReimbursementsService {
             ]);
         }
 
-        $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();;
+        $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();
 
         //Save the reimbursement data
         $emp_reimbursement_data = new VmtEmployeeReimbursements;
@@ -173,7 +173,7 @@ class VmtReimbursementsService {
             //dd($reimbursement_data->toArray());
             $single_user_data["reimbursement_data"] = $reimbursement_data->toArray();
 
-            //dd($single_user_data);
+           // dd($single_user_data);
 
             array_push($json_response, $single_user_data);
 

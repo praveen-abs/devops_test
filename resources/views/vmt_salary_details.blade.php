@@ -242,12 +242,12 @@
                                                             @php
                                                                 $selectedPaySlipMonth = $d->PAYROLL_MONTH;
                                                             @endphp
-                                                            <div data="{{ $d->PAYROLL_MONTH }}"
+                                                            {{-- <div data="{{ $d->PAYROLL_MONTH }}"
                                                                 data-url="{{ route('vmt_paycheck_employee_payslip_pdf') }}"
                                                                 style="cursor: pointer"
                                                                 class="ember-view  paySlipPDF text-info">
                                                                 Download PDF
-                                                            </div>
+                                                            </div> --}}
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -950,12 +950,16 @@
             $('.paySlipView').on('click', function() {
                 var url = $(this).attr('data-url');
                 var t_paySlipMonth = $(this).attr('data');
+                var year = t_paySlipMonth.substring(0,4);
+                var month = t_paySlipMonth.substring(5,7);
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: url,
                     data: {
-                        selectedPaySlipMonth: t_paySlipMonth,
-                        enc_user_id: "{{ $enc_user_id }}"
+                        year: year,
+                        month:month,
+                        uid: "{{ $enc_user_id }}",
+                        _token: "{{ csrf_token() }}"
                     },
                     success: function(data) {
                         var content =

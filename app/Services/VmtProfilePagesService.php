@@ -19,7 +19,6 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
-use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -198,7 +197,15 @@ class VmtProfilePagesService
 
         //Add the documents details
         $response['avatar'] = $this->getProfilePicture($response->user_code);
-        $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name;
+
+        if(!empty($response['getEmployeeOfficeDetails']['department_id']))
+            $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name ?? 'NA';
+
+        if(!empty($response['getEmployeeOfficeDetails']['l1_manager_code']))
+            $response['getEmployeeOfficeDetails']['l1_manager_name'] = User::where('user_code',$response['getEmployeeOfficeDetails']['l1_manager_code'])->first()->name ?? 'NA';
+
+        if(!empty($response['getEmployeeDetails']['bank_id']))
+            $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->first()->bank_name;
 
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);

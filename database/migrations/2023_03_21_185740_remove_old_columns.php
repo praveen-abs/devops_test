@@ -15,44 +15,44 @@ return new class extends Migration
     {
         Schema::table('vmt_employee_details', function (Blueprint $table) {
 
-            $table->dropColumn("emp_no");
-            $table->dropColumn("status");
-            $table->dropColumn("uan");
-            $table->dropColumn("epf_number");
-            $table->dropColumn("esic_number");
+            dropColumnIfExists('vmt_employee_details',"emp_no");
+            dropColumnIfExists('vmt_employee_details',"status");
+            dropColumnIfExists('vmt_employee_details',"uan");
+            dropColumnIfExists('vmt_employee_details',"epf_number");
+            dropColumnIfExists('vmt_employee_details',"esic_number");
 
 
-            $table->dropColumn("basic");
-            $table->dropColumn("hra");
-            $table->dropColumn("child_edu_allowance");
-            $table->dropColumn("spl_alw");
-            $table->dropColumn("total_fixed_gross");
-            $table->dropColumn("epfemployer");
-            $table->dropColumn("esicemployer");
+            dropColumnIfExists('vmt_employee_details',"basic");
+            dropColumnIfExists('vmt_employee_details',"hra");
+            dropColumnIfExists('vmt_employee_details',"child_edu_allowance");
+            dropColumnIfExists('vmt_employee_details',"spl_alw");
+            dropColumnIfExists('vmt_employee_details',"total_fixed_gross");
+            dropColumnIfExists('vmt_employee_details',"epfemployer");
+            dropColumnIfExists('vmt_employee_details',"esicemployer");
 
-            $table->dropColumn("ctc");
-            $table->dropColumn("epfemployee");
-            $table->dropColumn("esicemployee");
-            $table->dropColumn("pt");
-            $table->dropColumn("net");
-            $table->dropColumn("esic_applicability");
+            dropColumnIfExists('vmt_employee_details',"ctc");
+            dropColumnIfExists('vmt_employee_details',"epfemployee");
+            dropColumnIfExists('vmt_employee_details',"esicemployee");
+            dropColumnIfExists('vmt_employee_details',"pt");
+            dropColumnIfExists('vmt_employee_details',"net");
+            dropColumnIfExists('vmt_employee_details',"esic_applicability");
 
 
-            $table->dropColumn("experience_json");
-            $table->dropColumn("family_info_json");
-            $table->dropColumn("contact_json");
-            $table->dropColumn("father_name");
-            $table->dropColumn("mother_dob");
-            $table->dropColumn("father_dob");
-            $table->dropColumn("father_gender");
-            $table->dropColumn("mother_gender");
-            $table->dropColumn("father_age");
-            $table->dropColumn("mother_name");
-            $table->dropColumn("mother_age");
-            $table->dropColumn("spouse_name");
-            $table->dropColumn("spouse_age");
-            $table->dropColumn("kid_name");
-            $table->dropColumn("kid_age");
+            dropColumnIfExists('vmt_employee_details',"experience_json");
+            dropColumnIfExists('vmt_employee_details',"family_info_json");
+            dropColumnIfExists('vmt_employee_details',"contact_json");
+            dropColumnIfExists('vmt_employee_details',"father_name");
+            dropColumnIfExists('vmt_employee_details',"mother_dob");
+            dropColumnIfExists('vmt_employee_details',"father_dob");
+            dropColumnIfExists('vmt_employee_details',"father_gender");
+            dropColumnIfExists('vmt_employee_details',"mother_gender");
+            dropColumnIfExists('vmt_employee_details',"father_age");
+            dropColumnIfExists('vmt_employee_details',"mother_name");
+            dropColumnIfExists('vmt_employee_details',"mother_age");
+            dropColumnIfExists('vmt_employee_details',"spouse_name");
+            dropColumnIfExists('vmt_employee_details',"spouse_age");
+            dropColumnIfExists('vmt_employee_details',"kid_name");
+            dropColumnIfExists('vmt_employee_details',"kid_age");
 
 
         });

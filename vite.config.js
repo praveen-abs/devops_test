@@ -17,8 +17,11 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // Leaves
-                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
+              
+                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js', 
+                'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
                 'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
+                'resources/js/hrms/modules/leave_module/leave_balance/leave_balance.js',
                 'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
 
                 'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
@@ -26,7 +29,6 @@ export default defineConfig({
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
                 //Organization Module
-
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
                 'resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js',
@@ -34,7 +36,6 @@ export default defineConfig({
                 // Approval Module
                 'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',
                 'resources/js/hrms/modules/approvals/reimbursements/ReimbursementsApproval.js',
-                'resources/js/hrms/modules/approvals/resignation/resignation_approval.js',
                 'resources/js/hrms/modules/approvals/onboarding/review_document.js',
                 'resources/js/hrms/modules/approvals/leaves/LeaveApproval.js',
                 'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
@@ -55,7 +56,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js',
 
                 // Assign Shift
-                'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
+                //'resources/js/hrms/modules/configurations/attendance_settings/Att_AssignWorkShifts.js',
 
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
@@ -64,7 +65,6 @@ export default defineConfig({
                 // Paycheck
 
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
-                'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
 
                 // Salary Advance and Loan Setting
 
@@ -100,20 +100,8 @@ export default defineConfig({
                 //Payroll
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
 
-                // Exit
-
-
-
-                'resources/js/hrms/modules/exit/exit.js',
-
-                // Leave_Policy_Setting_Master
-
-                'resources/js/hrms/modules/leave_policy_Settings/Leave_Policy_Setting_Master/Leave_Policy_Setting_Master.js',
 
                 // testing_pradeesh
-
-                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
-
 
 
             ],

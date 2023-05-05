@@ -11,7 +11,7 @@
                     <li class="mx-4 nav-item " role="presentation">
                         <a class="nav-link " id="" data-bs-toggle="pill" href="" data-bs-target="#finance_pay" role="tab"
                             aria-controls="pills-home" aria-selected="true">
-                            Paycheck
+                            Payslips
                         </a>
                     </li>
                 </ul>
@@ -25,7 +25,7 @@
                         <form action="" method="POST" enctype="multipart/form-data">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="">
+                                <h6 class="mb-2 fw-bold fs-15">
                                     Payroll Summary
 
                                 </h6>
@@ -61,7 +61,7 @@
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <h6 class="">Bank Information
+                        <h6 class="mb-2 fw-bold fs-15">Bank Information
                             <span class="personal-edit">
                                 <a href="#" class="edit-icon" @click="onClick_EditButton_BankInfo"><i
                                         class="ri-pencil-fill"></i>
@@ -73,8 +73,8 @@
                             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                             <template #header>
                                 <div>
-                                    <h5
-                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                        class="fw-bold fs-5">
                                         Bank Information</h5>
                                 </div>
                             </template>
@@ -127,6 +127,26 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6 ">
+                                            <div class="floating">
+                                                <label for="" class="float-label mb-2">Check book</label>
+                                                <!-- <template> -->
+                                                <div class=" flex justify-content-start">
+                                                    <Toast />
+                                                    <label class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary " style="width:135px ; "
+                                                        data-bs-toggle="modal" data-bs-target="#edit_profileImg" id=""
+                                                        for="upload" >
+                                                        <i class="pi pi-arrow-circle-up fs-5 mr-3"></i> <h1 class="text-light">Upload file</h1></label>
+                                                    <input type="file" name="" id="upload" hidden
+                                                        @change="updateCheckBookPhoto($event)" />
+
+                                                </div>
+                                                <!-- </template> -->
+
+
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="col-12">
                                         <div class="text-right">
@@ -144,10 +164,10 @@
                             <ul class="personal-info">
                                 <li>
                                     <div class="title">Bank Name</div>
-                                    <div class="ml-4 text">
+                                    <div class="text">
                                         <!-- {{ bank_information.bank_id }} -->
                                         <!-- {{ bank_info.bank_id }} -->
-                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id }}
+                                        {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name }}
 
                                     </div>
                                 </li>
@@ -182,7 +202,7 @@
 
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <h6 class="">Statutory Information
+                        <h6 class="mb-2 fw-bold fs-15">Statutory Information
                             <span class="personal-edit">
                                 <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info()">
                                     <i class="ri-pencil-fill"></i>
@@ -194,14 +214,14 @@
                             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                             <template #header>
                                 <div>
-                                    <h5
-                                        :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                    <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                        class="fw-bold fs-5">
                                         Statutory information</h5>
                                 </div>
                             </template>
 
                             <div class="modal-body">
-                                <div class="row ">
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="floating">
                                             <label for="" class="float-label">PF
@@ -266,6 +286,14 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-6 ">
+                                        <div class="floating">
+                                            <label for="" class="float-label">check book</label>
+
+                                            <span class="error" id="error_esic_number"></span>
+                                        </div>
+                                    </div>
+
 
 
 
@@ -288,8 +316,8 @@
                         <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info">
                             <li>
                                 <div class="title">PF Applicable</div>
-                                <div class="text">
-                                    <!-- {{ pf_applicable }} -->
+                                <div class="text ">
+                                    {{ pf_applicable }}
 
                                 </div>
                             </li>
@@ -313,6 +341,7 @@
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
                                     {{ esic_applicable }}
+                                    <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  }} -->
 
                                 </div>
                             </li>
@@ -334,84 +363,7 @@
             <div class="tab-pane fade" id="finance_pay" role="tabpanel" aria-labelledby="">
                 <div class="mb-2 card">
                     <div class="card-body">
-                        <ul class="mb-4 nav nav-pills nav-tabs-dashed" id="pills-tab" role="tablist">
-
-                            <li class="nav-item " role="presentation">
-                                <a class="nav-link active" id="" data-bs-toggle="pill" href="" data-bs-target="#pay_slips"
-                                    role="tab" aria-controls="" aria-selected="true">
-                                    Pay Slips
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="tab-content " id="pills-tabContent">
-                            <div class="tab-pane fade active show" id="pay_slips" role="tabpanel" aria-labelledby="">
-
-                                <div id="" class="ember-view">
-                                    <div class="table-responsive ">
-                                        <!-- <table class="table table-hover">
-
-                                            <thead class="fw-bold text-muted h5">
-                                                <tr>
-                                                    <th width="">Month</th>
-                                                    <th width="">Gross Pay</th>
-                                                    <th width="">Reimbursements</th>
-                                                    <th width="">Deductions</th>
-                                                    <th data-url="{{ route('vmt_employee_payslip_pdf') }}"
-                                                        style="cursor: pointer" class="ember-view paySlipPDF text-info">
-                                                        Download PDF
-                                                    </th>
-                                                </tr>
-                                            </thead>
-
-                                        </table> -->
-                                        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
-                                            :value="_instance_profilePagesStore.employeeDetails.get_family_details"
-                                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                            :rowsPerPageOptions="[5, 10, 25]"
-                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                                            responsiveLayout="scroll">
-
-                                            <Column header="Month" field="name" style="min-width: 8rem">
-                                            </Column>
-
-                                            <Column field="Gross" header="Gross Pay" style="min-width: 8rem">
-                                            </Column>
-
-                                            <Column field="Reimbursements" header="Reimbursements" style="min-width: 8rem">
-                                            </Column>
-
-                                            <Column field="Deductions" header="Deductions" style="min-width: 8rem">
-                                            </Column>
-                                            <Column field="Take" header="Take Home" style="min-width: 8rem">
-                                            </Column>
-                                            <Column field="Payslip" header="Payslip" style="min-width:8rem">
-                                                <template #body="slotProps">
-                                                    <button class="mr-3 btn btn-success"
-                                                        @click="diolog_EditFamilyDetails(slotProps.data)">View</button>
-                                                </template>
-                                            </Column>
-                                            <Column field="phone_number" header="Tax Worksheet" style="min-width: 8rem">
-                                                <template #body="slotProps">
-                                                    <button class="mr-3 btn btn-success"
-                                                        @click="diolog_EditFamilyDetails(slotProps.data)">View</button>
-                                                </template>
-                                            </Column>
-                                            <Column :exportable="false" header="Action" style="min-width:8rem">
-                                                <template #body="slotProps">
-
-                                                    <button class="mr-3 btn btn-success"
-                                                        @click="diolog_EditFamilyDetails(slotProps.data)">Download Pdf</button>
-                                                </template>
-                                            </Column>
-                                        </DataTable>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
+                        <EmployeePayslips />
                     </div>
                 </div>
             </div>
@@ -422,11 +374,45 @@
     <!-- {{ statutory }} -->
 </template>
 <script setup>
-import { ref, onMounted, reactive, onUpdated, computed } from 'vue';
+import { ref, onMounted, reactive, computed } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
 import { profilePagesStore } from '../stores/ProfilePagesStore'
+import EmployeePayslips from './EmployeePayslips.vue'
+
+
+const toast = useToast();
+const CheckBook = ref();
+const updateCheckBookPhoto = (e) => {
+    // Check if file is selected
+    if (e.target.files && e.target.files[0]) {
+        // Get uploaded file
+        CheckBook.value = e.target.files[0];
+        // Get file size
+        // Print to console
+        console.log(CheckBook.value);
+    }
+}
+
+
+let form = new FormData();
+    form.append("user_code", service.current_user_code);
+    form.append("file_object", profile.value);
+
+    let url = "/profile-pages/updateProfilePicture";
+    axios
+        .post(url, form)
+        .then((res) => {
+            // console.log(res.data);
+        })
+        .finally(() => {
+            console.log("Photo Sent");
+            getProfilePhoto();
+        });
+
+
+
 
 const _instance_profilePagesStore = profilePagesStore()
 
@@ -537,12 +523,11 @@ function onClick_EditButton_Statutory_Info() {
 
     // Assign json values into dialog elements also
 
-    statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable;
-    statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].epf_number;
-    statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].uan_number;
-    statutory_information.esic_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].pf_applicable;
-    statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details[0].esic_number;
-
+    statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable;
+    statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number;
+    statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number;
+    statutory_information.esic_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable;
+    statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number;
 
     dialog_statutory_visible.value = true;
 
@@ -612,4 +597,25 @@ Dropdown>placeholder {
 }
 </style>
 
+
+{
+
+
+    <!--
+<template>
+    <div class="card flex justify-content-center">
+        <Toast />
+        <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
+    </div>
+</template>
+
+<script setup>
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const onUpload = () => {
+    toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+};
+</script>-->
+}
 

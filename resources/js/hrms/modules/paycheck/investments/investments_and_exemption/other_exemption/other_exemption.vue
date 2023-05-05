@@ -340,7 +340,7 @@ const vechicle_model_options =ref()
 
 
 const vechicle_types =ref([
-    {id:1,vechicle_model:'Tata',value :'Tata'}, 
+    {id:1,vechicle_model:'Tata',value :'Tata'},
     {id:2,vechicle_model:'Mahindra',value :'Mahindra'},
     {id:3,vechicle_model:'Hyundai',value :'Hyundai'},
     {id:4,vechicle_model:'Kia',value :'Kia'},
@@ -368,7 +368,7 @@ const switchVechileModel = (vechicle_brand) =>{
     }else{
 
     if(vechicle_brand == 'Mahindra'){
-  
+
         vechicle_model_options.value =[
         {id:1,vechicle_model:'Mahindra eVerito',value :'Mahindra eVerito'},
         {id:2,vechicle_model:'Mahindra e2oPlus',value :'Mahindra e2oPlus'},
@@ -378,7 +378,7 @@ const switchVechileModel = (vechicle_brand) =>{
         {id:6,vechicle_model:'Mahindra eAlfa Mini',value :'Mahindra eAlfa Mini'},
         {id:7,vechicle_model:'Mahindra  XUV400 EV',value :'Mahindra  XUV400 EV'},
         {id:8,vechicle_model:'Mahindra  Mahindra E Verito',value :'Mahindra  Mahindra E Verito'},
-       
+
     ]
     }else
     if(vechicle_brand == 'Hyundai'){

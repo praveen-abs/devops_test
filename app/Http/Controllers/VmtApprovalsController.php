@@ -42,6 +42,7 @@ class VmtApprovalsController extends Controller
         )
         ->orderBy('users.created_at', 'DESC')
         ->where('users.active', '0')
+        ->where('users.is_onboarded','1')
         ->where('users.is_ssa', '0')
         ->where('vmt_employee_details.docs_reviewed','like', '%-1%')//only if documents not yet reviewed
         ->get();
@@ -465,5 +466,9 @@ class VmtApprovalsController extends Controller
 
     }
 
+
+    public function isAllOnboardingDocumentsApproved(Request $request, VmtApprovalsService $serviceApprovalService){
+            return $serviceApprovalService->isAllOnboardingDocumentsApproved($request->user_code);
+    }
 }
 

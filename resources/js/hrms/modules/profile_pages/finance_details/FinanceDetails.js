@@ -35,6 +35,7 @@ import DialogService from 'primevue/dialogservice';
 
 
 
+
 // Primevue Services
 
 
@@ -68,6 +69,7 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
+app.component('FileUpload',FileUpload);
 app.use(PrimeVue, { ripple: true });
 app.use(DialogService)
 app.use(ToastService)

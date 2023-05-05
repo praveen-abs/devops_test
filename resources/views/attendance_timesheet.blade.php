@@ -849,7 +849,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         if (empAvatarDetails.type == 'shortname') {
 
                             var userBgColor = empAvatarDetails.color;
-                            console.log("color", empAvatarDetails.color);
+                          //  console.log("color", empAvatarDetails.color);
                             avatar_data =
                                 ' <div class="' + userBgColor +
                                 '  user_pic d-flex  justify-content-center align-items-center  rounded-circle"> <span class="text-white fw-bold">' +
@@ -1702,27 +1702,27 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
-                                    const clientName = "  {{ sessionGetSelectedClientName() }} ";
+                                    const clientName = "{{ sessionGetSelectedClientName() }}";
 
-                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') ){
+                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines')){
 
-                                    if (ajax_data_currentdate.isLC) {
-                                        final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate
-                                            .lc_status);
+                                        if (ajax_data_currentdate.isLC) {
+                                            final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
+                                        }
+
                                     }
-
-                                    }  else
+                                    else
                                     if (ajax_data_currentdate.isMIP) {
-                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate
-                                            .mip_status);
+                                        final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
-                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') ){
+                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines'))
+                                     {
                                         if (ajax_data_currentdate.isEG) {
-                                        final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
-                                            .eg_status);
-                                    }
-                                     }else
+                                            final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
+                                        }
+                                     }
+                                     else
                                     if (ajax_data_currentdate.isMOP) {
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);

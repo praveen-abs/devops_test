@@ -2,15 +2,15 @@
      <Toast />
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">General Information
+            <h6 class="fw-bold mb-3 fs-15">General Information
                 <!-- Button trigger modal -->
                 <a type="button" class="edit-icon" @click="onClick_EditButton_GeneralInfo">
                     <i class="ri-pencil-fill"></i>
                 </a>
 
                 <Dialog v-model:visible="is_dialog_generalInfo_visible" modal header="General Information"
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                    <template #header>
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                    <template #header >
                         <div>
                             <h5
                                 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
@@ -92,8 +92,8 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
-                        <div class="ml-4 text">
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.dob}}
+                        <div class="text">
+                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY') }}
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
@@ -108,8 +108,7 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(8,10)+ "-" + _instance_profilePagesStore.employeeDetails.get_employee_details.doj .slice(5,7)+"-"+_instance_profilePagesStore.employeeDetails.get_employee_details.doj.slice(0,4) }} -->
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.doj }}
+                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY') }}
 
                         </div>
                     </li>
@@ -152,7 +151,7 @@
 
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Contact Information
+            <h6 class="mb-3 fw-bold fs-15">Contact Information
                 <span class="personal-edit">
                     <a href="#" class="edit-icon"
                         @click="onClick_EditButtonContacttInfo" ><i class="ri-pencil-fill"></i></a>
@@ -217,7 +216,7 @@
                 <ul class="personal-info">
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Personal Email</div>
-                        <div class="ml-4 text">
+                        <div class="text">
                             {{ _instance_profilePagesStore.employeeDetails.email }}
 
                         </div>
@@ -249,11 +248,10 @@
             </div>
 
         </div>
-
     </div>
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Address
+            <h6 class="ml-2 fw-bold fs-15">Address
                 <span class="personal-edit"><a href="#" class="edit-icon"
                         @click="onClick_EditButtonAddressInfo"><i class="ri-pencil-fill"></i></a></span>
 
@@ -328,6 +326,7 @@
 
 
 <script setup>
+import dayjs from 'dayjs';
 
 import { ref, onMounted, reactive, computed } from "vue";
 import moment from "moment";

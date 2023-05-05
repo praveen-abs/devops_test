@@ -32,6 +32,7 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 
 class VmtEmployeeService {
 
@@ -125,12 +126,11 @@ class VmtEmployeeService {
             }
         }
         else{
-            var_dump("ERROR : createOrUpdate_User() response is ");
+            dd("ERROR : createOrUpdate_User() response is empty");
             //dd($response);
             return "failure :: createOrUpdate_User() response obj is null ".__LINE__;
         }
 
-        return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
@@ -147,9 +147,8 @@ class VmtEmployeeService {
                 //Update existing user
                 $newUser->name = $data['employee_name'];
 
-                if(!empty($data["email"])){
-                    $newUser->email = $data["email"];
-                }
+                $newUser->email = empty($data["email"]) ? '' : $data["email"];
+
                 //$newUser->password = Hash::make('Abs@123123');
                 //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
 
@@ -184,32 +183,38 @@ class VmtEmployeeService {
 
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
+        try
+        {
 
-        $newUser = new User;
-        $newUser->name =$data['employee_name'];
-        if(!empty($data["email"])){
-            $newUser->email = $data["email"];
+            $newUser = new User;
+            $newUser->name =$data['employee_name'];
+
+            $newUser->email = empty($data["email"]) ? '' : $data["email"];
+
+
+            $newUser->password = Hash::make('Abs@123123');
+            //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
+            $newUser->user_code = strtoupper($data['employee_code']);
+
+            $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']) );
+            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+
+            $newUser->active = '0';
+            $newUser->is_default_password_updated = '0';
+
+            $newUser->is_onboarded = $can_onboard_employee;
+
+            $newUser->onboard_type = $onboard_type; //normal, quick, bulk
+
+            $newUser->org_role = '5';
+            $newUser->is_ssa = '0';
+            $newUser->save();
+
+            return $newUser;
         }
-
-        $newUser->password = Hash::make('Abs@123123');
-        //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
-        $newUser->user_code = strtoupper($data['employee_code']);
-
-        $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']) );
-        $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
-
-        $newUser->active = '0';
-        $newUser->is_default_password_updated = '0';
-
-        $newUser->is_onboarded = $can_onboard_employee;
-
-        $newUser->onboard_type = $onboard_type; //normal, quick, bulk
-
-        $newUser->org_role = '5';
-        $newUser->is_ssa = '0';
-        $newUser->save();
-
-        return $newUser;
+        catch(\Exception $e){
+            dd("Error in VmtEmployeeService::CreateNewUser() : ".$e);
+        }
     }
 
     //for bulck onboard
@@ -239,7 +244,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                 $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
                // $newEmployee->location   =    $row["work_location"] ?? '';
-                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "";
+                $newEmployee->pan_number   =  isset($row["pan_no"]) ? ($row["pan_no"]) : "PANNOTAVBL";
                 $newEmployee->aadhar_number = $row["aadhar"] ?? '';
 
                 if(!empty($row["marital_status"])){
@@ -249,7 +254,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
                 if(!empty($row['bank_name'])){
                 $bank_id=Bank::where('bank_name',$row['bank_name'])->first()->id;  // to get bank id
-                $newEmployee->bank_id   = $bank_id ?? '';
+                $newEmployee->bank_id  = $bank_id ?? '';
                 }
 
                 $newEmployee->bank_ifsc_code  = $row["bank_ifsc"] ?? '';
@@ -330,7 +335,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                         }
                     $familyMember->save();
                 }
-                    if(!empty($row['mother_name'])){
+
+                if(!empty($row['mother_name'])){
                     $familyMember =  new VmtEmployeeFamilyDetails;
                     $familyMember->user_id  = $user_id;
                     $familyMember->name =   $row['mother_name'];
@@ -349,31 +355,35 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     $familyMember->user_id  = $user_id;
                     $familyMember->name =   $row['spouse_name'];
                     $familyMember->relationship = 'Spouse';
+
                     if(!empty($row['gender']=='Male')){
-                    $familyMember->gender = 'Female';
+                        $familyMember->gender = 'Female';
                     }else{
                         $familyMember->gender = 'Male';
                     }
-        //for bulk onboarding
-                        if(!empty($row["spouse_dob"])){
+                     //for bulk onboarding
+                    if(!empty($row["spouse_dob"])){
                         $dob_spouse =  $row["spouse_dob"];
                         $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse);
-                        }
-                        }
-                        $familyMember->save();
-
-                    if (!empty($row['child_name'])) {
-                        $familyMember =  new VmtEmployeeFamilyDetails;
-                        $familyMember->user_id  = $user_id;
-                        $familyMember->name =  $row['child_name'];
-                        $familyMember->relationship = 'Children';
-                        $familyMember->gender = '---';
-
-                        if(!empty($row["child_dob"]))
-                        $familyMember->dob= $row["child_dob"];
-                        //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
                     }
+
                     $familyMember->save();
+
+                }
+
+                if (!empty($row['child_name'])) {
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =  $row['child_name'];
+                    $familyMember->relationship = 'Children';
+                    $familyMember->gender = '---';
+
+                    if(!empty($row["child_dob"]))
+                    $familyMember->dob= $row["child_dob"];
+                    //   $familyMember->dob = $this->getdateFormatForDb($child_dob) ;
+                    $familyMember->save();
+
+                }
 
 
 
@@ -455,7 +465,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
         $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
         $newEmployee->location   =    $row["work_location"] ?? '';
-        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "";
+        $newEmployee->pan_number   =  isset($row["pan_number"]) ? ($row["pan_number"]) : "PANNOTAVBL";
         $newEmployee->dl_no   =  $row["dl_no"] ?? '';
         $newEmployee->passport_number = $row["passport_no"] ?? '';
 
@@ -821,7 +831,6 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     public function attachAppointmentLetterPDF($employeeData)
     {
        // dd($employeeData);
-        $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
@@ -846,6 +855,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
+        $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
 
@@ -953,6 +963,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                                         ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
                                         ->where('vmt_employee_documents.status',"Pending")
                                         ->where('users.is_ssa',"0")
+                                        ->where('users.is_onboarded',"1")
                                         ->where('users.active','<>',"-1")
                                         ->get([
                                             'users.name as name',
@@ -1003,5 +1014,93 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     }
 
 
+    public function updateEmployeeActiveStatus($user_code, $active_status){
 
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'active_status' => $active_status
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                'active_status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $query_user = User::where('user_code',$user_code)->first();
+
+        if(!empty($query_user))
+        {
+            $query_user->active = $active_status;
+            $query_user->save();
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "User not found"
+            ]);
+        }
+    }
+
+    public function getEmployeeRole($user_code){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $response = User::join('vmt_org_roles','vmt_org_roles.id','=','users.org_role')
+                        ->where('users.user_code', $user_code)
+                        ->get(['vmt_org_roles.name as role'])
+                        ->first();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeRole() ] ",
+                'data' => $e
+            ]);
+        }
+    }
 }

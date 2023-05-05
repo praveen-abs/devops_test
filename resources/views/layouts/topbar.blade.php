@@ -10,8 +10,9 @@ if ($query_clientMaster) {
 
 
 
-<header id="page-topbar">
+<header id="page-topbar" class="border ">
     <div class="navbar-header d-flex justify-content-between align-items-center ">
+
         <div class="d-flex ">
             <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger border-0 outline-none"
                 id="topnav-hamburger-icon">
@@ -29,11 +30,18 @@ if ($query_clientMaster) {
 
         <div class="d-flex">
             <div class="notify-content d-flex justify-content-center align-items-center">
-                <button type="button" class="form-select outline-none border-0 fw-bold text-gray-900 fas fs-4 " id="page-header-user-dropdown"
+                <button type="button" class="form-select outline-none border-0 fw-bold fas fs-5" id="page-header-user-dropdown"
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
-                    aria-expanded="false" >
-                    {{ getClientName(auth()->user()->id) }}
-                    &#xf107;
+                    aria-expanded="false">
+                    <?php
+                        $client_name = sessionGetSelectedClientName();
+
+                        if(empty( $client_name  ) ){
+                            echo "Client not assigned";
+                        }
+                    ?>
+                        &#xf107;
+                    {{-- {{ empty(  ) ? "Client not assigned" :  }} --}}
 
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
@@ -42,10 +50,14 @@ if ($query_clientMaster) {
                     <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
 
                         <a role="button" href="{{ route('pages-profile-new') }}"
-                                    class="text-dark profile-icon d-flex align-items-center "  >
-                                    <i class="fa fa-user fs-4 text-primary " ></i>
-                                    <h1 class="ml-3 text-primary">View Profile</h1>
-                                </a>
+                            {{-- class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
+                            data-bs-placement="right" title="View Profile">
+                            <i class="fa fa-user text-muted fs-15"></i>
+                        </a> --}}
+                        class="text-dark profile-icon d-flex align-items-center "  >
+                        <i class="fa fa-user fs-4 text-primary" ></i>
+                        <h1 class="ml-3 text-primary">View Profile</h1>
+                    </a>
 
                         <button type="button" class="close outline-none  h3"
                             data-bs-dismiss="offcanvas" aria-label="Close" style="" >
@@ -70,17 +82,18 @@ if ($query_clientMaster) {
                                     src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                             @endif
 
-                            <p class="text-dark text-center  fs-4 m my-2">
+                            <p class="text-dark text-center  fs-5 my-2">
                                 {{ Auth::user()->name }}</p>
-                            <p class="text-muted text-center mb-1"><span class="">User Id :</span>
-                                {{ Auth::user()->user_code }}</p>
+                            <div class="text-muted fs-5 d-flex justify-items-center">
+                                <span class="fs-5 text-center">User Id :{{ Auth::user()->user_code }}</span>
+                            </div>
 
-                            <div class="mb-3 w-100 d-flex justify-content-center align-items-center ">
-
-                                <a class="text-light profile-icon py-1 px-3 mt-4 d-flex align-items-center bg-danger rounded-1 "  href="javascript:void();"
+                            <div class="mb-3 mt-3">
+                                <a class="bg-danger p-2 rounded-1 d-flex justify-items-center align-items-center" href="javascript:void();"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                                        class="bx bx-power-off   align-middle me-1 "></i> <span key="t-logout">Sign
-                                        Out</span></a>
+                                        class="bx bx-power-off fs-5 text-light "></i>
+                                        <span key="t-logout " class="text-light">Sign Out</span>
+                                </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
                                     @csrf
@@ -90,7 +103,7 @@ if ($query_clientMaster) {
 
                         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']) && hasSubClients())
                             <?php
-                            $clientsList = fetchClients();
+                            $clientsList = fetchClients() ;
                             $currentClientID = session('client_id');
 
                             ?>

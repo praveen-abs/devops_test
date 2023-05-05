@@ -34,11 +34,11 @@
 
                     <div class="tab-pane fade " id="not_active_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-                        <!-- <YetToActiveEmployees /> -->
+                        <YetToActiveEmployees />
                     </div>
                     <div class="tab-pane fade " id="exit_employees" role="tabpanel"
                         aria-labelledby="pills-profile-tab">
-                        <!-- <ExitEmployees /> -->
+                        <ExitEmployees />
                     </div>
                 </div>
             </div>
@@ -54,3 +54,11 @@ import ExitEmployees from './exit_employees/exit_employees.vue'
 
 
 </script>
+
+<style>
+
+.p-datatable .p-datatable-thead > tr > th >.p-column-header-content>.p-column-title:nth-child(1){
+  margin-left:30px;
+}
+
+</style>

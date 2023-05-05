@@ -41,6 +41,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllBloodgroups', [HRMSBaseAPIController::class, 'getAllBloodgroups']);
     Route::get('/getAllMaritalStatus', [HRMSBaseAPIController::class, 'getAllMaritalStatus']);
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
+    Route::get('/getAppConfig', [HRMSBaseAPIController::class, 'getAppConfig']);
+    Route::post('/getEmployeeRole', [HRMSBaseAPIController::class, 'getEmployeeRole']);
+
+    Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
+    Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
@@ -68,12 +73,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'performAttendanceCheckIn']);
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'performAttendanceCheckOut']);
     Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
+    Route::post('/attendance/getEmployeeWorkShiftTimings', [VmtAPIAttendanceController::class, 'getEmployeeWorkShiftTimings']);
 
     //Leave
     Route::post('/attendance/apply_leave', [VmtAPIAttendanceController::class, 'applyLeaveRequest']);
     Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
     Route::post('/attendance/getData-att-unused-compensatory-days', [VmtAPIAttendanceController::class, 'getUnusedCompensatoryDays']);
-    //Route::post('/attendance/getData-att-leaves', [VmtAPIAttendanceController::class, '']);
+    Route::post('/attendance/getEmployeeLeaveBalance', [VmtAPIAttendanceController::class, 'getEmployeeLeaveBalance']);
 
     //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
@@ -83,11 +89,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/apply-att-regularization', [VmtAPIAttendanceController::class, 'applyRequestAttendanceRegularization']);
     Route::post('/attendance/approveReject-att-regularization', [VmtAPIAttendanceController::class, 'approveRejectAttendanceRegularization']);
     Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
+    Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
 
 
     //Payslip API
     Route::post('/payroll/payslip/getEmployeePayslipDetails', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetails']);
     Route::post('/payroll/payslip/getEmployeePayslipDetailsAsPDF', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsPDF']);
+    Route::post('/payroll/payslip/getEmployeeAllPayslipList', [VmtAPIPaySlipController::class, 'getEmployeeAllPayslipList']);
+    Route::post('/payroll/getEmployeeCompensatoryDetails', [VmtAPIPaySlipController::class, 'getEmployeeCompensatoryDetails']);
 
 
 
@@ -105,11 +114,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Investments
     Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
     Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
+    Route::post('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
 
     //Notifications
     Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);
     Route::post('/notifications/saveNotification', [VmtApiNotificationsController::class,'saveNotification']);
     Route::post('/notifications/updateNotificationReadStatus', [VmtApiNotificationsController::class,'updateNotificationReadStatus']);
+
+
+    //Onboarding
+    Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
 
 
 });

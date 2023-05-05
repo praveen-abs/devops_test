@@ -11,11 +11,23 @@ use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 function required()
 {
     $required = "<span class='text-danger required_star'>*</span>";
     return $required;
+}
+
+function dropColumnIfExists($table_name, $column_name){
+    if (Schema::hasColumn($table_name, $column_name)) //check the column
+    {
+        Schema::table($table_name, function (Blueprint $table) use ($column_name)
+        {
+            $table->dropColumn($column_name); //drop it
+        });
+    }
 }
 
 function fetchMasterConfigValue($config_name)
@@ -31,7 +43,7 @@ function getEmployeeClientDetails($emp_id)
     $query_client_details = VmtClientMaster::where('id', '=', $emp_client_id);
 
     if ($query_client_details->exists())
-        return $query_client_details->first();
+        return $query_client_details->first()->id;
     else
         return null;
 }
@@ -234,12 +246,14 @@ function getAllBloodGroupNames()
 
 function getUserShortName($user_id)
 {
+    //  dd(User::find($user_id));
 
     $username = User::find($user_id)->name;
+    $username = trim($username);
+
     $dotPattern = preg_split('/\.+/', $username);
     $whiteSpacePattern = preg_split('/\s+/', $username);
     $singleWordPattern = str_split($username);
-
 
     if (count($dotPattern) > 1) {
         $toStore = trim($dotPattern[0])[0] . trim($dotPattern[1])[0];

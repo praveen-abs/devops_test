@@ -4,7 +4,11 @@
     <Toast />
     <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
       :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+    <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
       <template #header>
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+          animationDuration="2s" aria-label="Custom ProgressSpinner" />
         <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
           animationDuration="2s" aria-label="Custom ProgressSpinner" />
       </template>
@@ -14,7 +18,11 @@
     </Dialog>
     <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
       :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+    <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
       <template #header>
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+          animationDuration="2s" aria-label="Custom ProgressSpinner" />
         <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
           animationDuration="2s" aria-label="Custom ProgressSpinner" />
       </template>
@@ -32,6 +40,8 @@
       <template #footer>
         <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
         <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
+        <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
+        <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
       </template>
     </Dialog>
 
@@ -43,24 +53,29 @@
         <template #empty> No customers found. </template>
         <template #loading> Loading customers data. Please wait. </template>
 
-        <Column field="employee_name" header="Employee Name">
+        <Column class="font-bold"  field="emp_name" header="Employee Name">
           <template #body="slotProps">
-            {{ slotProps.data.employee_name }}
+            {{ slotProps.data.emp_name }}
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
               :showClear="true" />
           </template>
         </Column>
-        <Column field="employee_code" header="Employee Code" :sortable="true"></Column>
-        <Column field="designation" header="Designation"></Column>
-        <Column field="l1_manager" header="Reporting Manager"></Column>
-        <Column field="doj" header="DOJ"></Column>
-        <Column field="blood_group" header="Blood Group"></Column>
-        <Column field="com" header="Profile Completeness"></Column>
-        <Column field="onstatus" header="Onboarding Status"></Column>
-        <Column field="onstatus" header="Approval Status"></Column>
-        <Column style="width: 300px" field="" header="View Profile">
+        <Column field="emp_code" header="Employee Code" >
+          <template #body="slotProps">
+            {{ slotProps.data.emp_code }}
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
+              :showClear="true" />
+          </template>
+        </Column>
+        <Column field="enc_user_id" header="View Profile">
           <template #body="slotProps">
             <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
               @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" text raised />
@@ -76,11 +91,13 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { FilterMatchMode, FilterOperator } from "primevue/api";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
-import { Service } from '../manage_service'
+import { useManageEmployeesStore } from '../manage_service'
 
-const employee = Service()
-
+const manageEmployeesStore = useManageEmployeesStore()
 
 
 onMounted(() => {
@@ -93,7 +110,6 @@ let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
 // const loading = ref(true);
-
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   employee_name: {
@@ -104,44 +120,12 @@ const filters = ref({
   },
 
   status: { value: null, matchMode: FilterMatchMode.EQUALS },
+  status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
-const statuses = ref(["Pending", "Approved", "Rejected"]);
 
-let currentlySelectedStatus = null;
-let currentlySelectedRowData = null;
-
-
-
-function ajax_GetAttRegularizationData() {
-  let url = window.location.origin + "/fetch-att-regularization-data";
-
-  console.log("AJAX URL : " + url);
-
-  axios.get(url).then((response) => {
-    console.log("Axios : " + response.data);
-    att_regularization.value = response.data;
-    loading.value = false;
-  });
-}
-
-function showConfirmDialog(selectedRowData, status) {
-  canShowConfirmation.value = true;
-  currentlySelectedStatus = status;
-  currentlySelectedRowData = selectedRowData;
-
-  console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
-}
-
-function hideConfirmDialog(canClearData) {
-  canShowConfirmation.value = false;
-
-  if (canClearData) resetVars();
-}
-
-function resetVars() {
-  currentlySelectedStatus = "";
-  currentlySelectedRowData = null;
+function openProfilePage(uid){
+    window.location.href = "/pages-profile-new?uid="+uid;
 }
 
 ////PrimeVue ConfirmDialog code -- Keeping here for reference
@@ -206,13 +190,11 @@ function processApproveReject() {
       canShowLoadingScreen.value = false;
       resetVars();
 
-      console.log(error.toJSON());
-    });
-}
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
 
+.p-datatable .p-datatable-thead>tr>th {
 .p-datatable .p-datatable-thead>tr>th {
   text-align: center;
   padding: 1.3rem 1rem;
@@ -228,21 +210,26 @@ function processApproveReject() {
   transition: box-shadow 0.2s;
   font-size: 13px;
 
+
   .p-column-title {
     font-size: 13px;
   }
+
 
   .p-column-filter {
     width: 100%;
   }
 
+
   #pv_id_2 {
     height: 30px;
   }
 
+
   .p-fluid .p-dropdown .p-dropdown-label {
     margin-top: -10px;
   }
+
 
   .p-dropdown .p-dropdown-label.p-placeholder {
     margin-top: -12px;
@@ -253,12 +240,15 @@ function processApproveReject() {
     margin-left: 10px;
   }
 
+
   .p-column-filter-menu-button:hover {
     color: white;
     border-color: transparent;
     background: #023e70;
   }
 }
+
+.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
 
 .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
   margin-bottom: 0.5rem;
@@ -271,13 +261,17 @@ function processApproveReject() {
 }
 
 .p-datatable .p-datatable-tbody>tr {
+.p-datatable .p-datatable-tbody>tr {
   font-size: 13px;
+
 
   .employee_name {
     font-weight: bold;
     font-size: 13.5px;
   }
 }
+
+.p-datatable .p-datatable-tbody>tr>td {
 
 .p-datatable .p-datatable-tbody>tr>td {
   text-align: left;
@@ -291,8 +285,11 @@ function processApproveReject() {
 }
 
 .p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
+
+.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
   width: 20%;
 }
+
 
 // .main-content {
 //   width: 110%;
@@ -306,6 +303,7 @@ function processApproveReject() {
   font-weight: 700;
 }
 
+
 .p-button.p-component.p-button-success.Button {
   padding: 8px;
 }
@@ -315,6 +313,7 @@ function processApproveReject() {
   color: #ff2634;
 }
 
+
 .p-button.p-component.p-button-danger.Button {
   padding: 8px;
 }
@@ -323,13 +322,16 @@ function processApproveReject() {
   color: red;
 }
 
+
 .p-button.p-component.p-confirm-dialog-accept {
   background-color: #003056;
 }
 
+
 .p-button.p-component.p-confirm-dialog-reject.p-button-text {
   color: #003056;
 }
+
 
 .p-column-filter-overlay-menu .p-column-filter-buttonbar {
   padding: 1.25rem;
@@ -338,9 +340,12 @@ function processApproveReject() {
 }
 
 .p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
+
+.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
   color: white;
   border-color: transparent;
 }
+
 
 .p-column-filter-menu-button.p-column-filter-menu-button-open {
   background: none;
@@ -349,6 +354,8 @@ function processApproveReject() {
 .p-column-filter-menu-button.p-column-filter-menu-button-active {
   background: none;
 }
+
+.p-datatable .p-datatable-thead>tr>th .p-column-filter {
 
 .p-datatable .p-datatable-thead>tr>th .p-column-filter {
   width: 55%;
@@ -361,9 +368,11 @@ function processApproveReject() {
   color: white;
 }
 
+
 .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
   color: white;
 }
+
 
 .p-datatable .p-sortable-column.p-highlight {
   background: #003056;
@@ -375,20 +384,24 @@ function processApproveReject() {
   color: white;
 }
 
+
 .p-datatable .p-sortable-column:focus {
   box-shadow: none;
   outline: none;
   color: white;
 }
 
+
 .p-datatable .p-sortable-column .p-sortable-column-icon {
   color: white;
 }
+
 
 .pi-sort-amount-down::before {
   content: "\e9a0";
   color: white;
 }
+
 
 .pi-sort-amount-up-alt::before {
   content: "\e9a2";

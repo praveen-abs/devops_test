@@ -16,4 +16,14 @@ class VmtInvestmentsController extends Controller
         return $serviceVmtInvestmentsService->getInvestmentsFormDetails($request->form_name);
     }
 
+    public function saveEmpInvSecDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+        //dd($request->all());
+
+        return $serviceVmtInvestmentsService->saveEmpInvSecDetails($request->user_code, $request->section_name, $request->section_data);
+    }
+
+
+
+
+
 }

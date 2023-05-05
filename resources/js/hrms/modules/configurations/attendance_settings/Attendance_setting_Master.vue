@@ -1,127 +1,86 @@
 <template>
+  <div class="mb-1">
 
-
-    <div class="w-full">
-      <div class="w-full tabs ">
-        <a class="col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
-          ><div class="md:text-sm" :style="{width:'25px' }">1</div>Shift Details</a
-        >
-        <a class="col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
-          ><div>2</div>Shift Time Range</a
-        >
-        <a class="col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
-          ><div>3</div>Break Time Range</a
-        >
-        <a class="col-lg-2 col-xl-2 col-md-2 d-flex" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
-          ><div>4</div>Working Hours</a
-        >
-        <a class="col-lg-2 col-xl-2 col-md-3 d-flex" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
-          ><div>5</div>Late&Early Going
-        </a>
-    
+    <div class="mb-2 shadow card left-line ">
+      <div class="pt-1 pb-0 card-body">
+        <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed " role="tablist">
+          <li class="nav-item text-muted" role="presentation">
+            <button class="pb-2 nav-link active" id="pills-offer-pending-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-offer-pending" type="button" role="tab" aria-controls="pills-home"
+              aria-selected="true">Manage Shifts</button>
+          </li>
+          <li class="mx-4 nav-item text-muted " role="presentation">
+            <button class="pb-2 nav-link" id="pills-offer-completed-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-offer-completed" type="button" role="tab" aria-controls="pills-profile"
+              aria-selected="false">Flexible Shifts</button>
+          </li>
+          <li class="nav-item text-muted" role="presentation">
+            <button class="pb-2 nav-link" id="pills-offer-resent-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-offer-resent" type="button" role="tab" aria-controls="pills-contact"
+              aria-selected="false">Rotational Shifts</button>
+          </li>
+          <li class="mx-4 nav-item text-muted" role="presentation">
+            <button class="pb-2 nav-link" id="pills-offer-resen-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-offer-resen" type="button" role="tab" aria-controls="pills-contact"
+              aria-selected="false">Holidays</button>
+          </li>
+        </ul>
       </div>
-  
-      <div class="bg-white rounded-md">
-        <div v-if="activetab === 1" class="tabcontent">
-          <Att_AssignWorkShifts />
+    </div>
+
+
+
+
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-offer-pending" role="tabpanel"
+        aria-labelledby="pills-offer-pending-tab">
+
+        <div class="card-body">
+          <div class="offer-pending-content">
+            <ManageShift />
+          </div>
         </div>
-        <div v-if="activetab === 2" class="tabcontent">
-          <pf_esi />
+
+
+      </div>
+      <div class="tab-pane fade active" id="pills-offer-completed" role="tabpanel"
+        aria-labelledby="pills-offer-completed-tab">
+        <div class="card-body">
+          <div class="my-4 offer-pending-content">
+            <FlexibleShift />
+          </div>
+
         </div>
-        <div v-if="activetab === 3" class="tabcontent">
-          <salary_components />
+      </div>
+      <div class="tab-pane fade " id="pills-offer-resent" role="tabpanel" aria-labelledby="pills-offer-resent-tab">
+        <div class="card-body">
+          <div class="offer-pending-content">
+            <RotationalShift />
+          </div>
         </div>
-        <div v-if="activetab === 4" class="tabcontent">
-          <salart_structure />
-        </div>
-        <div v-if="activetab === 5" class="tabcontent">
-          <finance_setting />
+      </div>
+      <div class="tab-pane fade " id="pills-offer-resen" role="tabpanel" aria-labelledby="pills-offer-resen-tab">
+        <div class="card-body">
+          <div class="offer-pending-content">
+
+            <Holidays_Lists />
+          </div>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { onMounted, ref } from "vue";
-  import Att_AssignWorkShifts from "./Att_AssignWorkShifts.vue";
 
-  
+  </div>
+</template>
 
-  const activetab = ref(1);
-  
-  </script>
-  
-  <style>
-  .page-content {
-    padding: calc(45px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
-    background: #003056;
-  }
-  
-  .tabs {
-    overflow: hidden;
-    margin-bottom: -2px;
-  }
-  
-  .tabs ul {
-    list-style-type: none;
-  }
-  
-  .tabs a {
-    float: left;
-    cursor: pointer;
-    color: #fff;
-    padding: 12px 18px;
-    transition: background-color 0.2s;
-    border: 1px solid #003056;
-    border-right: none;
-    background-color: #003056;
-    font-weight: bold;
-  }
-  .tabs a > div {
-      color: #aaa;
-      background: #fff;
-      border-radius: 50%;
-      width: 20px !important;
-      height: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 8px;
-      font-weight: 700;
-      font-family: sans-serif;
-  }
-  
-  /* Change background color of tabs on hover */
-  .tabs a:hover  {
-    background-color: #aaa;
-    color: #fff;
-    border-radius: 4px 4px 0 0;
-  
-  }
-  .tabs a:hover >div {
-      background: #F36826;
-      color: #fff;
-      width: 20px;
-      height: 20px;
-      padding: 0;
-  }
-  
-  /* Styling for active tab */
-  .tabs a.active {
-    background-color: #fff;
-    color: #0f0101;
-    border-bottom: 2px solid #fff;
-    cursor: default;
-    border-top:3px solid #F36826 ;
-    border-radius:4px 4px 0  0 ;
-  }
-  .tabs a.active >div{
-      background: #F36826;
-      color: #fff;
-      width: 20px;
-      height: 20px;
-  }
-  
-  /* Style the tab content */
-  </style>
-  
+
+<script setup>
+import { onMounted } from 'vue'
+import ManageShift from './ManageShift/ManageShift.vue';
+import RotationalShift from './RotationalShift/RotationalShift.vue';
+import FlexibleShift from './FlexibleShift/FlexibleShift.vue'
+
+import Holidays_Lists from '../holidays/Holidays_Lists.vue';
+
+
+
+</script>

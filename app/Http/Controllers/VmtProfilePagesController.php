@@ -15,7 +15,7 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
-use App\Services\VmtEmployeePayslipService;
+use App\Services\VmtEmployeePayCheckService;
 use App\Services\VmtProfilePagesService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -26,85 +26,8 @@ class VmtProfilePagesController extends Controller
     // Show Profile info
     public function showProfilePage(Request $request)
     {
-        //dd($request->all());
-        $user = null;
-
-        //If empty, then show current user profile page
-        if (empty($request->uid)) {
-            $user = auth()->user();
-        } else {
-            $user = User::find(Crypt::decryptString($request->uid));
-            //dd("Enc User details from request : ".$user);
-        }
-
-        $enc_user_id = Crypt::encryptString($user->id);
-
-        //dd($enc_user_id);
-        $user_full_details = User::leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-            ->leftjoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.id', $user->id)->first();
-
-        $familydetails = VmtEmployeeFamilyDetails::where('user_id',$user->id)->get();
-        $statutory_info= VmtEmployeeStatutoryDetails::where('user_id',$user->id)->first();
-
-
-        $exp = Experience::where('user_id', $user->id)->get();
-
-        $maritalStatus = array(
-            'unmarried',
-            'married',
-            'divorced',
-            'widowed',
-            'seperated'
-        );
-
-        $genderArray = array("Male", "Female", "Other");
-        $bank = Bank::all();
-       // dd(Department::find($user_full_details->department_id)->name);
-       $department = Department::find($user_full_details->department_id);
-       if(!empty($department))
-           $department =  $department->name;
-       else
-           $department = "-";
-
-
-       $allDepartments = Department::all();
-
-
-        //dd($maritalStatus);
-        if (!empty($user_full_details->l1_manager_code))
-            $reportingManager = User::where('user_code', $user_full_details->l1_manager_code)->first();
-        else
-            $reportingManager = null;
-
-        $allEmployees = User::where('id', '<>', $user->id)->where('is_ssa', 0)->where('active', 1)->get(['id','user_code', 'name']);
-        $profileCompletenessValue  = calculateProfileCompleteness($user->id);
-
-        //Payslip Tab
-        $data =  DB::table('vmt_employee_payslip')
-            ->where('vmt_employee_payslip.user_id', $user->id)->orderBy('PAYROLL_MONTH', 'DESC')
-            ->get();
-
-        $employees = VmtEmployeePaySlip::select('EMP_NO', 'EMP_NAME')->get();
-        $array_bloodgroup = VmtBloodGroup::all(['name', 'id']);
-
-        //Fetch documents from DB
-        $documents_filenames = VmtEmployee::where('userid', $user->id)
-            ->get([
-                'aadhar_card_file',
-                'aadhar_card_backend_file',
-                'pan_card_file',
-                'passport_file',
-                'voters_id_file',
-                'dl_file',
-                'education_certificate_file',
-                'reliving_letter_file',
-                'docs_reviewed'
-            ])->toArray();
-
-
         //dd($documents_filenames);
-        return view('profilePage_new', compact('user','department','allDepartments', 'documents_filenames', 'array_bloodgroup', 'enc_user_id', 'allEmployees', 'maritalStatus', 'genderArray', 'user_full_details', 'familydetails', 'exp', 'reportingManager', 'profileCompletenessValue', 'bank', 'data', 'employees', 'statutory_info'));
+        return view('profilePage_new');
     }
 
     public function updateProfilePicture(Request $request, VmtProfilePagesService $serviceProfilePagesService){
@@ -118,36 +41,39 @@ class VmtProfilePagesController extends Controller
 
     public function updateReportingManager(Request $request){
 
-        $emp_id = $request->current_user_id;
-        $manager_code = $request->manager_user_code;
-        $manager_id = User::where('user_code', $manager_code)->get(['id','name'])->toArray();
-        $manager_name = $manager_id[0]['name'] ;
-        $manager_id =  $manager_id[0]['id'] ;
-        $manager_designation = VmtEmployeeOfficeDetails::where('user_id',  $manager_id)->pluck('designation')->first();
-        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
-        if(!empty($query_EmpOfficeDetails)){
-            $query_EmpOfficeDetails->l1_manager_code = $manager_code;
-            $query_EmpOfficeDetails->l1_manager_designation = $manager_designation;
-            $query_EmpOfficeDetails->l1_manager_name =  $manager_name;
+
+        $user_id  = User::where('user_code', $request->user_code)->first()->id;
+        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first();
+
+        if($query_EmpOfficeDetails){
+            $query_EmpOfficeDetails->l1_manager_code = $request->manager_user_code;
             $query_EmpOfficeDetails->save();
         }
 
-        return redirect()->back();
+        return [
+            'status' => 'success',
+            'message' => 'Reporting Manager updated successfully',
+            'data' => ''
+         ];
     }
 
     public function updateDepartment(Request $request){
 
-        $emp_id = $request->emp_id;
-        $department_id = $request->department_id;
+        $user_id = User::where('user_code',$request->user_code)->first()->id;
 
-        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $emp_id)->first();
+        $query_EmpOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first();
 
         if($query_EmpOfficeDetails){
-            $query_EmpOfficeDetails->department_id = $department_id;
+            $query_EmpOfficeDetails->department_id = $request->department_id;
             $query_EmpOfficeDetails->save();
         }
 
-        return redirect()->back();
+        return $response = [
+            'status' => 'success',
+            'message' => 'Department updated successfully',
+            'data' => ''
+         ];
+
     }
 
     public function updateGeneralInfo(Request $request) {
@@ -431,14 +357,16 @@ public function addExperienceInfo(Request $request)
     }
 
 
-    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
+    public function showPaySlip_HTMLView(Request $request, VmtEmployeePayCheckService $employeePaySlipService)
     {
         return $employeePaySlipService->showPaySlip_HTMLView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
     }
 
-    public function showPaySlip_PDFView(Request $request, VmtEmployeePayslipService $employeePaySlipService)
+    public function showPaySlip_PDFView(Request $request, VmtEmployeePayCheckService $employeePaySlipService)
     {
-        return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        //return $employeePaySlipService->showPaySlip_PDFView(Crypt::decryptString($request->enc_user_id), $request->selectedPaySlipMonth);
+        return $employeePaySlipService->getEmployeePayslipDetailsAsPDF(Crypt::decryptString($request->user_code), $request->year, $request->month);
+
     }
 
 
@@ -500,39 +428,7 @@ public function addExperienceInfo(Request $request)
 
 
 
-    //
-    public function storePersonalInfo(Request $request)
-    {
-        // dd($request->all());
-        $file = $request->file('profilePic');
-        $user = User::find($request->id);
-        $user->name = $request->input('name');
-        $number = mt_rand(1000000000, 9999999999);
-        $user->save();
-        $report = $request->input('report');
-        $code = VmtEmployee::select('emp_no', 'name', 'designation')->join('vmt_employee_office_details', 'user_id', '=', 'vmt_employee_details.userid')->join('users', 'users.id', '=', 'vmt_employee_details.userid')->where('emp_no', $report)->first();
-        $documents_filenames = VmtEmployee::where('userid',$user_id)
-            ->get([
-                'aadhar_card_file',
-                'aadhar_card_backend_file',
-                'pan_card_file',
-                'passport_file',
-                'voters_id_file',
-                'dl_file',
-                'education_certificate_file',
-                'reliving_letter_file',
-                'docs_reviewed'
-            ]);
 
-        // $reDetails = VmtEmployee::where('userid', $request->id)->first();
-        // $details = VmtEmployee::find($reDetails->id);
-        // $details->current_address_line_1 = $request->input('current_address_line_1');
-        // $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
-        // $details->save();
-
-
-        return redirect()->back();
-    }
 
     /*
         Req. params :
