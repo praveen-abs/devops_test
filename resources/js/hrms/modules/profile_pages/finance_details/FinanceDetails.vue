@@ -397,8 +397,8 @@ const updateCheckBookPhoto = (e) => {
 
 
 let form = new FormData();
-    form.append("user_code", service.current_user_code);
-    form.append("file_object", profile.value);
+    form.append("user_code", Service.current_user_code);
+    form.append("file_object", profilePagesStore.value);
 
     let url = "/profile-pages/updateProfilePicture";
     axios
