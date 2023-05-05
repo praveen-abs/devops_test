@@ -10,15 +10,13 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     const paySlipHTMLView = ref()
 
-    const canShowPayslipView  = ref (false);
-    const show_dialogconfirmation = ref(false);
-
-    // const  canShowConfirmation = ref(false);
-
     // Events
     async function getAllEmployeesPayslipDetails(month, year){
 
-        axios.post('getAllEmployeesPayslipDetails',{
+        //reset the var
+        array_employees_list.value = '';
+
+        await axios.post('getAllEmployeesPayslipDetails',{
             month : month,
             year : year
         }).then((response) => {
@@ -30,16 +28,15 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     async function getEmployeePayslipDetailsAsHTML(user_code, month, year){
 
-        axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',{
+       await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',{
             user_code : user_code,
             month : month,
             year : year
         }).then((response) => {
-            console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
+            // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
 
             paySlipHTMLView.value = response.data;
 
-            canShowPayslipView.value = true;
         });
 
     }
@@ -47,7 +44,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
     async function sendMail_employeePayslip(user_code, month, year){
         console.log("sendMail_employeePayslip() : Sending mail to user : "+ user_code);
 
-        show_dialogconfirmation.value= false;
+        // show_dialogconfirmation.value= false;
 
         axios.post('/payroll/paycheck/sendMail_employeePayslip',{
             user_code: user_code,
@@ -63,72 +60,14 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
-
-
-
-    function canShowConfirmation() {
-        show_dialogconfirmation.value = true;
-    }
-    function HideShowConfirmation() {
-        show_dialogconfirmation.value = false;
-
-    }
-
-
-
-
-
-
-
-
-
-
-    // async function getAllEmployeesMonthlyPayslipsDetails(month, year){
-
-    //     axios.post('payroll/getAllEmployeesMonthlyPayslipsDetails', {
-    //         month: month,
-    //         year: year,
-    //     })
-    //     .then((response) => {
-    //         console.log("Response : " + response);
-
-    //         ajaxData_employees_list.value = res.data;
-    //         console.log(ajaxData_employees_list.value);
-    //     });
-
-    // }
-
-
-    // function monthYear() {
-    //     let year = emp.selectDate.getFullYear();
-    //     let month = emp.selectDate.getMonth() + 1;
-
-    //     axios.post('/payroll/fetchEmployeePayslipDetails', {
-    //         month: month,
-    //         year: year,
-    //         //selected:emp.selectedProduct,
-    //     }).then((res) => {
-    //         ajaxData_employees_list.value = res.data;
-    //         console.log(res.data);
-    //     })
-    //         .catch((error) => console.log(error));
-
-    // }
-
-
-
     return {
 
         // Varaible Declartion
 
-        array_employees_list, paySlipHTMLView, canShowPayslipView,
+        array_employees_list, paySlipHTMLView,
 
         // Functions
-
         getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip ,
-
-        show_dialogconfirmation,canShowConfirmation,HideShowConfirmation
-
 
     };
 });
