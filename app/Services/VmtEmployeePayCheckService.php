@@ -592,21 +592,13 @@ class VmtEmployeePayCheckService {
 
             $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
 
-            $options = new Options();
-            $options->set('isHtml5ParserEnabled', true);
-            $options->set('isRemoteEnabled', true);
+           $html = $view->render();
+           $html = preg_replace('/>\s+</', "><", $html);
+           $pdf = PDF::loadHTML($html,'UTF-8')->setPaper('a4', 'portrait')->setWarnings(false);
 
-            $pdf = new Dompdf($options);
 
-            //$html = $view->render();
-           // $html = preg_replace('/>\s+</', "><", $html);
-           // $pdf = PDF::loadHTML($html,'UTF-8')->setPaper('a4', 'portrait')->setWarnings(false);
 
-           $pdf->loadHtml($view, 'UTF-8');
-           $pdf->setPaper('A4', 'portrait');
-           $pdf->render();
-
-            return $pdf->stream($user_code."_".$year.'_'.$month."_payslip.pdf");
+           return $pdf->download($user_code."_".$year.'_'.$month."_payslip.pdf");
 
 
         }
