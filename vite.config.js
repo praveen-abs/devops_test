@@ -17,8 +17,8 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // Leaves
-              
-                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js', 
+
+                'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
                 'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
                 'resources/js/hrms/modules/leave_module/leave_balance/leave_balance.js',
@@ -102,7 +102,7 @@ export default defineConfig({
 
 
                 // testing_pradeesh
-
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
 
             ],
             refresh: true,

@@ -13,6 +13,7 @@ import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
+import RadioButton from 'primevue/radiobutton';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
 import StyleClass from 'primevue/styleclass';
@@ -56,6 +57,7 @@ app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
 app.component('Button', Button);
+app.component('RadioButton', RadioButton);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)

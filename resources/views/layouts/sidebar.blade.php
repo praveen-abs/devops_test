@@ -564,10 +564,10 @@
                                     role="button"><span>Salary
                                         Details</span></a>
                             </li>
-                            {{-- <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="{{ route('vmt_investments_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>
-                            </li> --}}
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('vmt_form16_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>
