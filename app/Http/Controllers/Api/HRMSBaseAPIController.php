@@ -151,5 +151,8 @@ class HRMSBaseAPIController extends Controller
         return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
     }
 
+    public function getOrgTimePeriod(Request $request, VmtCoreService $serviceVmtCoreService){
+        return $serviceVmtCoreService->getOrgTimePeriod();
+    }
 
 }
