@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Imports\VmtPaySlip;
 use App\Services\VmtEmployeePayCheckService;
 
+
 /*
 
 
@@ -134,6 +135,12 @@ class VmtPayCheckController extends Controller
     public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
 
         return $employeePaySlipService->getAllEmployeesPayslipDetails($request->month , $request->year);
+    }
+
+
+    public function updatePayslipReleaseStatus(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+
+        return $employeePaySlipService->updatePayslipReleaseStatus($request->user_code , $request->month,$request->year, $request->status);
 
    }
 

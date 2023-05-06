@@ -60,6 +60,29 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
+
+    async function updatePayslipReleaseStatus(user_code, month, year, status){
+        console.log("updatePayslipReleaseStatus() : Updating releasepayslip status to user : "+ user_code);
+
+        // show_dialogconfirmation.value= false;
+
+        axios.post('/payroll/paycheck/updatePayslipReleaseStatus',{
+            user_code: user_code,
+            month: month,
+            year: year,
+            status: status
+        }).then((response)=>{
+            console.log(" Response [updatePayslipReleaseStatus] : "+response.data.data);
+        })
+        .catch((data)=>{
+            console.log(data);
+
+        })
+
+    }
+
+
+
     return {
 
         // Varaible Declartion
@@ -67,7 +90,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         array_employees_list, paySlipHTMLView,
 
         // Functions
-        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip ,
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip , updatePayslipReleaseStatus
 
     };
 });

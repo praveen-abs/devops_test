@@ -61,7 +61,6 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
                 "user_code" => 'required|exists:users,user_code',
                 "birthday" => 'required',
                 "gender"  => 'required',
-                "doj"  => 'required',
                 "marital_status"  => 'required|exists:vmt_marital_status,name',
                 "blood_group"  => 'required|exists:vmt_bloodgroup,name',
                 "physically_challenged" => 'required',
@@ -84,7 +83,6 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             user_code: $request->user_code,
             birthday: $request->birthday,
             gender: $request->gender,
-            doj: $request->doj,
             marital_status: $request->marital_status,
             blood_group: $request->blood_group,
             phy_challenged: $request->phy_challenged

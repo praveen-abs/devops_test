@@ -21,6 +21,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtEmployeePayslipStatus;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
@@ -758,11 +759,13 @@ class VmtEmployeePayCheckService {
             }
 
             $array_emp_payslip_details= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
-                            ->whereYear('PAYROLL_MONTH', $year)
-                            ->whereMonth('PAYROLL_MONTH',$month)
+                                        ->leftjoin('vmt_employee_payslip_status','vmt_employee_payslip_status.user_id','=','vmt_employee_payslip.user_id')
+                            ->whereYear('vmt_employee_payslip.PAYROLL_MONTH', $year)
+                            ->whereMonth('vmt_employee_payslip.PAYROLL_MONTH',$month)
                             ->where('users.is_ssa','0')
                             ->where('users.active','1')
                             ->get();
+
 
                         // dd($emp_name);
             return response()->json([
@@ -819,6 +822,7 @@ class VmtEmployeePayCheckService {
                                                     ->orderBy('PAYROLL_MONTH', 'ASC')
                                                     ->get(['id','PAYROLL_MONTH','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
 
+
                 return response()->json([
                     "status" => "success",
                     "message" => "",
@@ -833,6 +837,92 @@ class VmtEmployeePayCheckService {
                 ]);
             }
     }
+
+    public function updatePayslipReleaseStatus($user_code,$month,$year,$release_status){
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "month" => $month,
+                "year" => $year,
+                "status" => $release_status
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "month" => 'required',
+                "year" => 'required',
+                "status" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+        try{
+            // to get user id
+            $user_id = User::where('user_code',$user_code)->first()->id;
+
+
+            //check if already exists
+           $query_emp_payslipstatus = VmtEmployeePayslipStatus::where('user_id',$user_id)
+                                    ->whereMonth('payroll_month', $month)
+                                    ->whereYear('payroll_month', $year);
+
+            if($query_emp_payslipstatus->exists())
+            {
+                //update
+               $query_emp_payslipstatus = $query_emp_payslipstatus->first();
+               $query_emp_payslipstatus->is_released = $release_status;
+               $query_emp_payslipstatus->save();
+
+            }
+            else
+            {
+
+                //create new record
+               $employeepaysliprelease = new VmtEmployeePayslipStatus;
+               $employeepaysliprelease->user_id =$user_id;
+               $employeepaysliprelease->payroll_month = $year.'-'.$month.'-1';
+               $employeepaysliprelease->is_released = $release_status;
+               $employeepaysliprelease->save();
+            }
+
+            $payslipstatusdetais =VmtEmployeePayslipStatus::where('user_id',$user_id);
+
+            if($payslipstatusdetais->exists()){
+               $response = $payslipstatusdetais->first();
+                if($response->is_released == '1'){
+                    $response['is_released']='Released';
+                }else{
+                    $response['is_released']='Not Released';
+                }
+            }
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while fetching payslip release status data",
+                'data' => $e
+            ]);
+        }
+
+    }
+
+
 
     public function sendMail_employeePayslip($user_code, $month, $year){
         $validator = Validator::make(
