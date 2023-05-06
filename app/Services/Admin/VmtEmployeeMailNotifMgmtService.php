@@ -15,7 +15,7 @@ use Dompdf\Options;
 use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployeeDocuments;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;

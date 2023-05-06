@@ -33,6 +33,16 @@ class VmtAPIPaySlipController extends Controller
         return $response;
     }
 
+    public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService){
+
+        $response = $serviceEmployeePayslipService->getEmployeePayslipDetailsAsHTML( user_code : $request->user_code,
+                                                                     month : $request->month,
+                                                                     year : $request->year
+                                                                 );
+
+         return $response;
+     }
+
     public function getEmployeeAllPayslipList(Request $request, VmtEmployeePayCheckService $serviceEmployeePayslipService){
 
        $response = $serviceEmployeePayslipService->getEmployeeAllPayslipList( user_code : $request->user_code);

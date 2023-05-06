@@ -91,17 +91,8 @@ class VmtPayCheckController extends Controller
 
 
     public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
-        $user_code = null;
 
-        //If empty, then show current user profile page
-        if (empty($request->uid)) {
-            $user_code = auth()->user()->user_code;
-        } else {
-            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
-            //dd("Enc User details from request : ".$user);
-        }
-
-        return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($user_code, $request->month, $request->year);
+        return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($request->user_code, $request->month, $request->year);
     }
 
     public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
