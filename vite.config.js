@@ -100,6 +100,10 @@ export default defineConfig({
                 //Payroll
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
 
+                // Roles and permission
+
+                'resources/js/hrms/modules/roles_permission/RolesPermission.js',
+
 
                 // testing_pradeesh
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
