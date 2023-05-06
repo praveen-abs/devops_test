@@ -134,10 +134,11 @@
                                                 <div class=" flex justify-content-start">
                                                     <Toast />
                                                     <label class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary " style="width:135px ; "
-                                                        data-bs-toggle="modal" data-bs-target="#edit_profileImg" id=""
-                                                        for="upload" >
+                                                       id=""
+                                                        for="uploadPassBook" >
+                                                        <!--     data-bs-toggle="modal"  data-bs-target="#edit_profileImg" -->
                                                         <i class="pi pi-arrow-circle-up fs-5 mr-3"></i> <h1 class="text-light">Upload file</h1></label>
-                                                    <input type="file" name="" id="upload" hidden
+                                                    <input type="file" name="" id="uploadPassBook" hidden
                                                         @change="updateCheckBookPhoto($event)" />
 
                                                 </div>
@@ -383,15 +384,15 @@ import EmployeePayslips from './EmployeePayslips.vue'
 
 
 const toast = useToast();
-const CheckBook = ref();
+const PassBook = ref();
 const updateCheckBookPhoto = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
         // Get uploaded file
-        CheckBook.value = e.target.files[0];
+        PassBook.value = e.target.files[0];
         // Get file size
         // Print to console
-        console.log(CheckBook.value);
+        console.log(PassBook.value);
     }
 }
 
@@ -408,7 +409,7 @@ let form = new FormData();
         })
         .finally(() => {
             console.log("Photo Sent");
-            getProfilePhoto();
+            // updateCheckBookPhoto();
         });
 
 
