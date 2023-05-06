@@ -453,6 +453,12 @@ class VmtEmployeePayCheckService {
     */
     public function getEmployeePayslipDetailsAsHTML($user_code, $month, $year){
 
+        //Check permissions
+
+        //if(!auth()->user()->can(config('vmt_roles_permissions.permissions.can_view_employees_payslip')) )
+
+
+
         $validator = Validator::make(
             $data = [
                 "user_code" => $user_code,
