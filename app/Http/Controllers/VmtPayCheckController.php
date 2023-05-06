@@ -97,8 +97,12 @@ class VmtPayCheckController extends Controller
 
         //If empty, then show current user profile page
         if (empty($request->uid)) {
-            $user_code = $request->user_code;
-        } else {
+            if(empty($request->user_code))
+                $user_code = auth()->user()->user_code;
+            else
+                $user_code = $request->user_code ;
+        }
+        else {
             $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
             //dd("Enc User details from request : ".$user);
         }
@@ -112,12 +116,14 @@ class VmtPayCheckController extends Controller
 
         //If empty, then show current user profile page
         if (empty($request->uid)) {
-            $user_code = $request->user_code;
+            if(empty($request->user_code))
+                $user_code = auth()->user()->user_code;
+            else
+                $user_code = $request->user_code;
         } else {
             $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
             //dd("Enc User details from request : ".$user);
         }
-
 
         return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($user_code, $request->month, $request->year);
     }
