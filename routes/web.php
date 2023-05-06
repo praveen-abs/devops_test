@@ -458,6 +458,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payroll/paycheck/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
     Route::post('/payroll/paycheck/getEmployeeAllPayslipList',  [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeeAllPayslipList'])->name('getEmployeeAllPayslipList');
     Route::post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',  [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsHTML'])->name('vmt_paycheck_employee_payslip_htmlview');
+    Route::post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF',  [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');
     Route::post('/payroll/paycheck/sendMail_employeePayslip',  [App\Http\Controllers\VmtPayCheckController::class, 'sendMail_employeePayslip'])->name('sendMail_employeePayslip');
 
     Route::get('payroll/setup',  [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
