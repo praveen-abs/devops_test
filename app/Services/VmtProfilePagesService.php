@@ -188,8 +188,7 @@ class VmtProfilePagesService
         // dd($response->id);
 
 
-        $response_docs = DB::table('vmt_employee_documents')
-            ->join('vmt_documents', 'vmt_document .id', '=', 'vmt_employee_documents.doc_id')
+        $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
             ->where('vmt_employee_documents.user_id', $response->id)
             ->get();
         // dd($response_docs);
