@@ -34,27 +34,50 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
         });
     }
 
-    async function getEmployeePayslipDetailsAsHTML(payroll_month){
+
+    async function getEmployeePayslipDetailsAsHTML(user_code, payroll_month){
 
         //split the payroll_month into month and year
         let month = parseInt (dayjs(payroll_month).month())+1;
         let year = dayjs(payroll_month).year();
 
-        axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',{
-            uid : getURLParams_UID(),
-            month : month,
-            year : year
-        }).then((response) => {
-            //console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsHTML',{
+             uid : getURLParams_UID(),
+             user_code : user_code,
+             month : month,
+             year : year
+         }).then((response) => {
+             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
 
-            paySlipHTMLView.value = response.data;
+             paySlipHTMLView.value = response.data;
+             canShowPayslipView.value = true;
 
-            canShowPayslipView.value = true;
-        });
+         });
 
-    }
+     }
 
+     async function getEmployeePayslipDetailsAsPDF(user_code, payroll_month){
 
+        console.log("Downloading payslip PDF.....");
+
+        //split the payroll_month into month and year
+        let month = parseInt (dayjs(payroll_month).month())+1;
+        let year = dayjs(payroll_month).year();
+
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF',{
+             uid : getURLParams_UID(),
+             user_code : user_code,
+             month : month,
+             year : year
+         }).then((response) => {
+             console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
+
+             paySlipHTMLView.value = response.data;
+             canShowPayslipView.value = true;
+
+         });
+
+     }
 
 
 
@@ -69,7 +92,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
         // Functions
 
-        getEmployeeAllPayslipList, getEmployeePayslipDetailsAsHTML
+        getEmployeeAllPayslipList, getEmployeePayslipDetailsAsHTML, getEmployeePayslipDetailsAsPDF
 
     };
 });

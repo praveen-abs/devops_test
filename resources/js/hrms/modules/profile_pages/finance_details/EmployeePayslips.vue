@@ -24,12 +24,12 @@
 
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View " @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.PAYROLL_MONTH)" />
+                    <Button class="btn-primary" label="View " @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('',slotProps.data.PAYROLL_MONTH)" />
                 </template>
             </Column>
             <column header="Download">
                 <template  #body="slotProps">
-                    <Button label="Download" />
+                    <Button class="btn-primary" label="Download " @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('',slotProps.data.PAYROLL_MONTH)" />
                 </template>
 
             </column>
