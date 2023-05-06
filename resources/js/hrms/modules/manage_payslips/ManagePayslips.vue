@@ -19,21 +19,35 @@
             </Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
-            <Column field="is_released" header="Released Payslip?"></Column>
-            <Column field="is_" header="Payslip mail sent?"></Column>
+            <Column field="is_released" header="Payslip Status">
+            <template #body="slotProps" >
+            <div class="d-flex flex-column">
+
+                    <button class="btn-success rounded" @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                     {{slotProps.data.is_released}}
+            </div>
+
+                </template>
+
+            </Column>
+            <Column field="is_payslip_mail_sent" header="Mail Status">
+              <template #body="slotProps">
+                    <button class="btn-success rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+                </template>
+            </Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
                     <Button class="btn-primary" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
                 </template>
             </Column>
 
-            <Column header="Action">
-                <!-- <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" /> -->
+            <!-- <Column header="Action">
+                //<Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
                 <template #body="slotProps">
                     <button class="btn-success rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Mail</button>
                 </template>
 
-            </Column>
+            </Column> -->
         </DataTable>
 
     </div>
@@ -59,6 +73,26 @@
 
     </Dialog>
 
+        <Dialog header="Confirmation" v-model:visible="show_releasePayslip_dialogconfirmation"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+            <div class="confirmation-content">
+
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Are you sure you want to release payslip?</span>
+            </div>
+
+            <div class="d-flex   mt-11 " style="position: relative; right: -180px; width: 140px;">
+
+                <Button class="btn-success mr-3" label="Yes" icon="pi pi-check"
+                    @click="updatePayslipReleaseStatus(selectedUserCode)"
+                    autofocus />
+
+                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="p-button-text " autofocus />
+
+            </div>
+
+    </Dialog>
+
 
     <div class="card flex justify-content-center inline-flex">
         <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Header" :style="{ width: '50vw' }">
@@ -77,6 +111,7 @@ const managePayslipStore = useManagePayslipStore();
 
 const canShowPayslipHTMLView  = ref(false);
 const show_dialogconfirmation  = ref(false);
+const show_releasePayslip_dialogconfirmation  = ref(false);
 
 const selectedPayRollDate = ref();
 
@@ -102,12 +137,26 @@ function showConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
 
     show_dialogconfirmation.value = true;
+
+}
+
+
+function showReleasePayslipConfirmationDialog(selected_user_code) {
+    selectedUserCode.value = selected_user_code;
+
+    show_releasePayslip_dialogconfirmation.value = true;
 }
 
 async function sendMail(selectedUserCode){
 
     await managePayslipStore.sendMail_employeePayslip(selectedUserCode, selectedPayRollDate.value.getMonth() + 1, selectedPayRollDate.value.getFullYear());
     show_dialogconfirmation.value = false;
+
+}
+
+async function updatePayslipReleaseStatus(selectedUserCode){
+    await managePayslipStore.updatePayslipReleaseStatus(selectedUserCode, selectedPayRollDate.value.getMonth() + 1, selectedPayRollDate.value.getFullYear(),1);
+    show_releasePayslip_dialogconfirmation.value = false;
 
 }
 
