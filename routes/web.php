@@ -773,7 +773,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
    // invest excell
    Route::view('/sample', 'testing.testings');
-   Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'importexcell']);
+   Route::post('/sendhratestingsss', [App\Http\Controllers\VmtTestingController::class, 'importexcell']);
 
 
    Route::get('/testinginestmentsectionss', [App\Http\Controllers\VmtTestingController::class, 'testinginestmentsection']);
