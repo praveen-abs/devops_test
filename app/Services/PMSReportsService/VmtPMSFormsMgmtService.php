@@ -6,7 +6,6 @@ use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
 
 
 
@@ -97,16 +96,21 @@ class VmtPMSFormsMgmtService
         try{
 
             $pms_single_form = array();
+            $pms_form_details = array();
             $pms_form = VmtPMS_KPIFormModel::where('id',$pms_form_id)->first();
-            $form_name =  $pms_form['form_name'];
             $available_columns =  explode(",",$pms_form['available_columns']);
             $pms_from_details_query = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_form_id)->get();
             foreach($pms_from_details_query as $single_record){
                foreach($available_columns as $single_columns ){
                 $pms_single_form[$single_columns] = $single_record[$single_columns];
                }
-               dd($pms_single_form);
+               array_push($pms_form_details,$pms_single_form);
+               unset($pms_single_form);
             }
+            $response=array('form_name'=>$pms_form['form_name'],'columns'=>$available_columns,'pms_form_details'=>$pms_form_details);
+
+            return $response;
+
         }
         catch(\Exception $e){
 
