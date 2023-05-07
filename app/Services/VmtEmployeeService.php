@@ -24,7 +24,7 @@ use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtOrgRoles;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
@@ -763,7 +763,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             if(empty($fileObject))
                 return null;
 
-            $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type);
+            $onboard_doc_id = VmtDocuments::where('document_name',$onboard_document_type);
 
             if($onboard_doc_id->exists())
                 $onboard_doc_id = $onboard_doc_id->first()->id;
@@ -801,10 +801,23 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
             $path = $emp_code.'/onboarding_documents';
             $filePath = $fileObject->storeAs($path,$fileName, 'private');
-
-
             $employee_documents->doc_url = $fileName;
-            $employee_documents->status = 'Pending';
+
+            $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
+                                                               ->where('doc_id',$onboard_doc_id);
+
+            if($employee_documents_status->exists() ){
+                    $employee_documents_status = $employee_documents_status->first()->status;
+               if($employee_documents_status == 'Approved')
+                    $employee_documents->status = $employee_documents_status;
+               else{
+                $employee_documents->status ='Pending';
+               }
+            }else{
+
+                $employee_documents->status = 'Pending';
+             }
+
 
             $employee_documents->save();
         }
@@ -960,16 +973,17 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         //Get all the  doc for the given user_id
         $query_pending_onboard_docs = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                         ->join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
-                                        ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
+                                        ->join('vmt_documents','vmt_documents.id','=','vmt_employee_documents.doc_id')
                                         ->where('vmt_employee_documents.status',"Pending")
                                         ->where('users.is_ssa',"0")
                                         ->where('users.is_onboarded',"1")
                                         ->where('users.active','<>',"-1")
+                                        ->where('vmt_employee_documents.status','<>',"Approved")
                                         ->get([
                                             'users.name as name',
                                             'vmt_employee_details.doj as doj',
                                             'users.user_code as user_code',
-                                            'vmt_onboarding_documents.document_name as doc_name',
+                                            'vmt_documents.document_name as doc_name',
                                             'vmt_employee_documents.id as record_id',
                                             'vmt_employee_documents.status as doc_status',
                                             'vmt_employee_documents.doc_url as doc_url'

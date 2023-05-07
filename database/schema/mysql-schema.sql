@@ -919,10 +919,10 @@ CREATE TABLE `vmt_marital_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `vmt_onboarding_documents`;
+DROP TABLE IF EXISTS `vmt_documents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vmt_onboarding_documents` (
+CREATE TABLE `vmt_documents` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1312,7 +1312,7 @@ INSERT INTO `migrations` VALUES (114,'2023_02_07_203720_add_new_column_to_vmt_em
 INSERT INTO `migrations` VALUES (115,'2023_02_07_205857_update__t_d_s_column_to_vmt_employee_payslip_table',65);
 INSERT INTO `migrations` VALUES (116,'2023_01_21_150101_add_new_column',66);
 INSERT INTO `migrations` VALUES (117,'2023_02_04_150506_create_vmt_employee_documents_table',66);
-INSERT INTO `migrations` VALUES (118,'2023_02_04_160357_create_vmt_onboarding_documents_table',66);
+INSERT INTO `migrations` VALUES (118,'2023_02_04_160357_create_vmt_documents_table',66);
 INSERT INTO `migrations` VALUES (119,'2023_02_14_190441_add_new_columns',66);
 INSERT INTO `migrations` VALUES (120,'2023_02_21_134835_remove_columns',66);
 INSERT INTO `migrations` VALUES (121,'2023_03_04_194020_add_new_column_in_att_emp',66);

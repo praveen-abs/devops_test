@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Imports\VmtPaySlip;
 use App\Services\VmtEmployeePayCheckService;
 
+
 /*
 
 
@@ -91,12 +92,17 @@ class VmtPayCheckController extends Controller
 
 
     public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+
         $user_code = null;
 
         //If empty, then show current user profile page
         if (empty($request->uid)) {
-            $user_code = auth()->user()->user_code;
-        } else {
+            if(empty($request->user_code))
+                $user_code = auth()->user()->user_code;
+            else
+                $user_code = $request->user_code ;
+        }
+        else {
             $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
             //dd("Enc User details from request : ".$user);
         }
@@ -105,7 +111,21 @@ class VmtPayCheckController extends Controller
     }
 
     public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
-        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($request->user_code, $request->month, $request->year);
+
+        $user_code = null;
+
+        //If empty, then show current user profile page
+        if (empty($request->uid)) {
+            if(empty($request->user_code))
+                $user_code = auth()->user()->user_code;
+            else
+                $user_code = $request->user_code;
+        } else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+
+        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($user_code, $request->month, $request->year);
     }
 
     public function sendMail_employeePayslip(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
@@ -121,6 +141,12 @@ class VmtPayCheckController extends Controller
     public function getAllEmployeesPayslipDetails(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
 
         return $employeePaySlipService->getAllEmployeesPayslipDetails($request->month , $request->year);
+    }
+
+
+    public function updatePayslipReleaseStatus(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+
+        return $employeePaySlipService->updatePayslipReleaseStatus($request->user_code , $request->month,$request->year, $request->status);
 
    }
 

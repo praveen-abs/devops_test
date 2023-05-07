@@ -1,7 +1,7 @@
 <?php
 
     use Illuminate\Support\Facades\Storage;
-    use App\Models\VmtOnboardingDocuments;
+    use App\Models\VmtDocuments;
     use App\Models\VmtEmployeeDocuments;
     use App\Models\VmtEmployee;
     use App\Models\Department;

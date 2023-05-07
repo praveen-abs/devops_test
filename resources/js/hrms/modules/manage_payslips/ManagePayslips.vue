@@ -1,43 +1,59 @@
 <template>
     <div class="d-flex justify-content-end">
         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
-        <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedPayRollDate.selectDate"
+        <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedPayRollDate"
             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
         <Button class="mb-2 h-10 btn btn-orange" label="Generate"
-            @click="managePayslipStore.getAllEmployeesPayslipDetails(selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
+            @click="managePayslipStore.getAllEmployeesPayslipDetails(selectedPayRollDate.getMonth() + 1, selectedPayRollDate.getFullYear())" />
         <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
     </div>
     <div class="my-4">
 
         <DataTable :value="managePayslipStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]" v-model:selection="selectedPayRollDate.selectedProduct"
+            :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+            <Column  headerStyle="width: 3rem"></Column>
             <Column field="user_code" header="Employee Code" headerStyle="width: 3rem">
             </Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
-            <Column field="is_released" header="Released Payslip?"></Column>
-            <Column field="is_" header="Payslip mail sent?"></Column>
+            <Column field="is_released" header="Payslip Status">
+            <template #body="slotProps" >
+            <div class="d-flex flex-column">
+
+                    <button class="btn-success rounded" @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                     {{slotProps.data.is_released}}
+            </div>
+
+                </template>
+
+            </Column>
+            <Column field="is_payslip_mail_sent" header="Mail Status">
+              <template #body="slotProps">
+                    <button class="btn-success rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+                </template>
+            </Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View"
-                        @click="managePayslipStore.getEmployeePayslipDetailsAsHTML(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())" />
+                    <Button class="btn-primary" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
                 </template>
             </Column>
 
-            <Column header="Action">
-                <!-- <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" /> -->
+            <!-- <Column header="Action">
+                //<Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
                 <template #body="slotProps">
-                    <button class="btn-success rounded" @click="managePayslipStore.canShowConfirmation(slotProps.data)">Send
-                        Mail</button>
+                    <button class="btn-success rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Mail</button>
                 </template>
 
-            </Column>
+            </Column> -->
+        </DataTable>
 
-            <Dialog header="Confirmation" v-model:visible="managePayslipStore.show_dialogconfirmation"
+    </div>
+
+
+    <Dialog header="Confirmation" v-model:visible="show_dialogconfirmation"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
             <div class="confirmation-content">
 
@@ -48,124 +64,103 @@
             <div class="d-flex   mt-11 " style="position: relative; right: -180px; width: 140px;">
 
                 <Button class="btn-success mr-3" label="Yes" icon="pi pi-check"
-                    @click="managePayslipStore.sendMail_employeePayslip(JSON.stringify(managePayslipStore.array_employees_list.user_code), selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear())"
+                    @click="sendMail(selectedUserCode)"
                     autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="managePayslipStore.HideShowConfirmation"
-                    class="p-button-text " autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text " autofocus />
 
             </div>
 
-        </Dialog>
+    </Dialog>
+
+        <Dialog header="Confirmation" v-model:visible="show_releasePayslip_dialogconfirmation"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+            <div class="confirmation-content">
+
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Are you sure you want to release payslip?</span>
+            </div>
+
+            <div class="d-flex   mt-11 " style="position: relative; right: -180px; width: 140px;">
+
+                <Button class="btn-success mr-3" label="Yes" icon="pi pi-check"
+                    @click="updatePayslipReleaseStatus(selectedUserCode)"
+                    autofocus />
+
+                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="p-button-text " autofocus />
+
+            </div>
+
+    </Dialog>
 
 
-        </DataTable>
-
-    </div>
-
-
-
-
-
-    <!-- <div class="d-flex justify-content-end">
-        <Button class="mb-2 btn btn-primary" label="Submit" />
-    </div>
-    dialog for show details
-     <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="managePayslipStore.canShowPayslipView" modal header="Header" :style="{ width: '50vw' }">
+    <div class="card flex justify-content-center inline-flex">
+        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Header" :style="{ width: '50vw' }">
             <div v-html="managePayslipStore.paySlipHTMLView">
 
             </div>
         </Dialog>
-    </div> -->
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import axios from "axios";
 import { useManagePayslipStore } from './ManagePayslipService';
 
 const managePayslipStore = useManagePayslipStore();
 
+const canShowPayslipHTMLView  = ref(false);
+const show_dialogconfirmation  = ref(false);
+const show_releasePayslip_dialogconfirmation  = ref(false);
 
-const selectedPayRollDate = reactive({
-    selectmonth: '',
-    selectDate: '',
-    selectyear: '',
-});
+const selectedPayRollDate = ref();
 
+const selectedUserCode = ref();
 
 
 
 
 onMounted(async () => {
-    console.log(managePayslipStore.array_employees_list);
+
 });
 
+async function showPaySlipHTMLView(selected_user_code) {
+    console.log("Showing payslip html for (user_code, month): "+selected_user_code+" , "+parseInt(selectedPayRollDate.value.getMonth()+1) );
 
-// function showConfirmDialog(selectedRowData, status) {
-// canShowConfirmation.value = true;
-// currentlySelectedStatus = status;
-// currentlySelectedRowData = selectedRowData;
+    await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, selectedPayRollDate.value.getMonth()+1, selectedPayRollDate.value.getFullYear());
 
-// console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
-// }
+    canShowPayslipHTMLView.value =true;
 
-// function hideConfirmDialog(canClearData) {
-// canShowConfirmation.value = false;
+}
 
-// if (canClearData) resetVars();
-// }
+function showConfirmationDialog(selected_user_code) {
+    selectedUserCode.value = selected_user_code;
 
-// function resetVars() {
-// currentlySelectedStatus = "";
-// currentlySelectedRowData = null;
-// }
+    show_dialogconfirmation.value = true;
 
-// const css_statusColumn = (data) => {
-// return [
-//     {
-//     pending: data.status === "Pending",
-//     approved: data.status === "Approved",
-//     rejected: data.status === "Rejected",
-//     },
-// ];
-// };
+}
 
-// function processApproveReject() {
-// hideConfirmDialog(false);
 
-// canShowLoadingScreen.value = true;
+function showReleasePayslipConfirmationDialog(selected_user_code) {
+    selectedUserCode.value = selected_user_code;
 
-// console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+    show_releasePayslip_dialogconfirmation.value = true;
+}
 
-// axios
-//     .post(window.location.origin + "/approvals-pms", {
-//     kpiform_review_id: currentlySelectedRowData.pms_kpiform_review_id,
-//     status:
-//         currentlySelectedStatus == "Approve"
-//         ? "Approved"
-//         : currentlySelectedStatus == "Reject"
-//         ? "Rejected"
-//         : currentlySelectedStatus,
-//     })
-//     .then((response) => {
-//     console.log("Response : " + response);
+async function sendMail(selectedUserCode){
 
-//     canShowLoadingScreen.value = false;
+    await managePayslipStore.sendMail_employeePayslip(selectedUserCode, selectedPayRollDate.value.getMonth() + 1, selectedPayRollDate.value.getFullYear());
+    show_dialogconfirmation.value = false;
 
-//     toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
-//     ajax_GetPMSFormsApprovalsData();
+}
 
-//     resetVars();
-//     })
-//     .catch((error) => {
-//     canShowLoadingScreen.value = false;
-//     resetVars();
+async function updatePayslipReleaseStatus(selectedUserCode){
+    await managePayslipStore.updatePayslipReleaseStatus(selectedUserCode, selectedPayRollDate.value.getMonth() + 1, selectedPayRollDate.value.getFullYear(),1);
+    show_releasePayslip_dialogconfirmation.value = false;
 
-//     console.log(error.toJSON());
-//     });
-// }
+}
+
+
 
 </script>
 

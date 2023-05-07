@@ -380,9 +380,9 @@ class VmtAttendanceController extends Controller
 
 
         //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
-        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
-        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first('l1_manager_code');
+        $manager_name = User::where('user_code', $manager_emp_code)->first('name');
+        $manager_id = User::where('user_code', $manager_emp_code)->first('id');
 
         $emp_leave_details->reviewer_user_id = $manager_id;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
@@ -418,7 +418,7 @@ class VmtAttendanceController extends Controller
         ////
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
+        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->first('officical_mail');
 
         $message = "";
         $mail_status = "";

@@ -15,7 +15,7 @@ use Dompdf\Options;
 use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployeeDocuments;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
@@ -93,9 +93,9 @@ class VmtApprovalsService {
 
             $query_user = User::where('user_code',$user_code)->first();
 
-            // $mandatory_doc_ids = VmtOnboardingDocuments::where('is_mandatory','1')->pluck('id');
+            // $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
 
-            $query_user_docs_count = VmtEmployeeDocuments::join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
+            $query_user_docs_count = VmtEmployeeDocuments::join('vmt_documents','vmt_documents.id','=','vmt_employee_documents.doc_id')
                                         ->where('vmt_employee_documents.user_id', $query_user->id)
                                         ->where('vmt_employee_documents.status', '<>','Approved')
                                         ->get()->count();

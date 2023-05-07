@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\VmtEmployeeDetails;
 use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use Illuminate\Support\Facades\DB;
 use App\Models\Department;
@@ -186,8 +186,9 @@ class VmtProfilePagesService
             ->first();
 
         // dd($response->id);
-        $response_docs = DB::table('vmt_employee_documents')
-            ->join('vmt_onboarding_documents', 'vmt_onboarding_documents.id', '=', 'vmt_employee_documents.doc_id')
+
+
+        $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
             ->where('vmt_employee_documents.user_id', $response->id)
             ->get();
         // dd($response_docs);
@@ -227,7 +228,7 @@ class VmtProfilePagesService
             {
                 $user_id=User::where('user_code',$user_code)->first()->id;
 
-                $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
+                $doc_id = VmtDocuments::where('document_name', $doc_name)->first()->id;
 
                 $doc_filename = VmtEmployeeDocuments::where('user_id',$user_id)->where('doc_id', $doc_id)->first()->doc_url;
             }
@@ -277,7 +278,7 @@ class VmtProfilePagesService
         return response()->file(storage_path('employees/' . $private_file));
     }
 
-    public function updateEmployeeGeneralInformation($user_code, $birthday, $gender, $doj, $marital_status, $blood_group, $phy_challenged)
+    public function updateEmployeeGeneralInformation($user_code, $birthday, $gender, $marital_status, $blood_group, $phy_challenged)
     {
 
         try {
@@ -286,7 +287,6 @@ class VmtProfilePagesService
             $details->dob = $birthday;
             $details->gender = $gender;
             $details->marital_status_id = VmtMaritalStatus::where('name', $marital_status)->first()->id;
-            $details->doj = $doj;
             $details->blood_group_id = $blood_group;
             $details->physically_challenged = $phy_challenged;
 

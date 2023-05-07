@@ -43,9 +43,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getAllLeaveTypes', [HRMSBaseAPIController::class, 'getAllLeaveTypes']);
     Route::get('/getAppConfig', [HRMSBaseAPIController::class, 'getAppConfig']);
     Route::post('/getEmployeeRole', [HRMSBaseAPIController::class, 'getEmployeeRole']);
+    Route::post('/getOrgTimePeriod', [HRMSBaseAPIController::class, 'getOrgTimePeriod']);
 
     Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
     Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
+    Route::post('/getEmployeePermissions', [HRMSBaseAPIController::class, 'getEmployeePermissions']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 
@@ -95,6 +97,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Payslip API
     Route::post('/payroll/payslip/getEmployeePayslipDetails', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetails']);
     Route::post('/payroll/payslip/getEmployeePayslipDetailsAsPDF', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsPDF']);
+    Route::post('/payroll/payslip/getEmployeePayslipDetailsAsHTML', [VmtAPIPaySlipController::class, 'getEmployeePayslipDetailsAsHTML']);
     Route::post('/payroll/payslip/getEmployeeAllPayslipList', [VmtAPIPaySlipController::class, 'getEmployeeAllPayslipList']);
     Route::post('/payroll/getEmployeeCompensatoryDetails', [VmtAPIPaySlipController::class, 'getEmployeeCompensatoryDetails']);
 

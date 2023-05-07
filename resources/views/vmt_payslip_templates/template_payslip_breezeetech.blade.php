@@ -8,7 +8,7 @@
             background: #fff;
             display: block;
             margin: 0 auto;
-            padding: 3.5em;
+            padding: 1em;
         }
 
         .sub-page[size="A4"] {
