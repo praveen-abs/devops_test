@@ -26,9 +26,17 @@ class VmtPMSFormsMgmtController extends Controller
     public function getAssignedPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
 
-        $response = $PMSFormsMgmtService->getAssignedPMSFormTemplates($request->user_code);
-        return $response;
+        return $PMSFormsMgmtService->getAssignedPMSFormTemplates($request->user_code);
 
+    }
+
+    public function showPMSFormsMgmtPage_SelfView(Request $request){
+        return view('pms.vmt_pms_forms_mgmt_self_view');
+    }
+
+
+    public function showPMSFormsMgmtPage_TeamView(Request $request){
+        return view('pms.vmt_pms_forms_mgmt_team_view');
     }
 
 }
