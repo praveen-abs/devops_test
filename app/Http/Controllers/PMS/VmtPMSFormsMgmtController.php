@@ -4,7 +4,7 @@ namespace App\Http\Controllers\PMS;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\VmtPMSFormsMgmtService;
+use App\Services\PMSReportsService\VmtPMSFormsMgmtService;
 
 class VmtPMSFormsMgmtController extends Controller
 {
@@ -17,16 +17,18 @@ class VmtPMSFormsMgmtController extends Controller
 
     }
     public function getEmployeePMSFormTemplate_AsExcel(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
+        $pms_form_id=40;
 
-
-        $response = $PMSFormsMgmtService->getEmployeePMSFormTemplate_AsExcel($request->user_code, $request->pms_form_id);
+        $response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $request->pms_form_id);
+        $response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $pms_form_id);
         return $response;
 
     }
     public function getAssignedPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
-
-        return $PMSFormsMgmtService->getAssignedPMSFormTemplates($request->user_code);
+         $user_id=auth()->user()->id;
+        $response = $PMSFormsMgmtService->getAssignedPMSFormTemplates($user_id);
+        return $response;
 
     }
 

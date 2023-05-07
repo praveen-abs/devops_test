@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Services;
-
+namespace App\Services\PMSReportsService;
+use Illuminate\Support\Facades\Validator;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
@@ -20,14 +20,14 @@ class VmtPMSFormsMgmtService
     }
 
 
-    public function getAssignedPMSFormTemplates($user_code){
+    public function getAssignedPMSFormTemplates($user_id){
         //Get all forms for a given user_code
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
+                'user_code' => $user_id,
             ],
             $rules = [
-                'user_code' => 'required|exists:users,user_code',
+                'user_code' => 'required|exists:users,id',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -50,7 +50,7 @@ class VmtPMSFormsMgmtService
             ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
             ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
             ->where('vmt_pms_kpiform_assigned.assignee_id',$user_id)
-            ->get();
+            ->get()->unique();
 
             return response()->json([
                 "status" => "success",
@@ -72,20 +72,17 @@ class VmtPMSFormsMgmtService
 
         }
     }
-    public function getProfgetEmployeePMSFormTemplate_AsExcelilePicture($user_code,$pms_form_id){
-        //need to  write code for download the excel
+    public function getPMSFormforGivenPMSFormID($pms_form_id){
+
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_code,
                 'pms_form_id' => $pms_form_id
             ],
             $rules = [
-                'user_code' => 'required|exists:users,user_code',
                 'pms_form_id' =>'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
             ]
 
         );
@@ -99,8 +96,17 @@ class VmtPMSFormsMgmtService
 
         try{
 
-
-
+            $pms_single_form = array();
+            $pms_form = VmtPMS_KPIFormModel::where('id',$pms_form_id)->first();
+            $form_name =  $pms_form['form_name'];
+            $available_columns =  explode(",",$pms_form['available_columns']);
+            $pms_from_details_query = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_form_id)->get();
+            foreach($pms_from_details_query as $single_record){
+               foreach($available_columns as $single_columns ){
+                $pms_single_form[$single_columns] = $single_record[$single_columns];
+               }
+               dd($pms_single_form);
+            }
         }
         catch(\Exception $e){
 
@@ -108,7 +114,7 @@ class VmtPMSFormsMgmtService
 
             return response()->json([
                 "status" => "failure",
-                "message" => "Unable to fetch getProfgetEmployeePMSFormTemplate_AsExcelilePicture",
+                "message" => "getPMSFormforGivenPMSFormID",
                 "data" => $e,
             ]);
 
