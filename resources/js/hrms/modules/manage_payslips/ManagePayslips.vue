@@ -23,7 +23,7 @@
             <template #body="slotProps" >
             <div class="d-flex flex-column">
 
-                    <button class="btn-success rounded" style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                    <button class="btn-primary rounded" style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
                      <!-- {{slotProps.data.is_released}} -->
                      <h1 v-if="slotProps.data.is_released == 1"  class="text-success mt-2">
                         Released
@@ -39,12 +39,12 @@
             </Column>
             <Column field="is_payslip_mail_sent" header="Mail Status">
               <template #body="slotProps">
-                    <button class="btn-success rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+                    <button class="btn-primary  rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
                 </template>
             </Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
+                    <Button class="btn-primary" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
                 </template>
             </Column>
 
@@ -68,15 +68,13 @@
                 <span>Are you sure you want to send Mail ?</span>
             </div>
 
-            <div class="d-flex   mt-11 " style="position: relative; right: -180px; width: 140px;">
+            <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-success mr-3" label="Yes" icon="pi pi-check"
+                <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
                     @click="sendMail(selectedUserCode)"
                     autofocus />
 
-                    {{ managePayslipStore.is_released  == "Released"}}
-
-                <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text " autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text py-2" autofocus />
 
             </div>
 
@@ -87,16 +85,16 @@
             <div class="confirmation-content">
 
                 <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to release payslip?</span>
+                <span>Are you sure you want to release payslip? {{ managePayslipStore.name }} </span>
             </div>
 
             <div class="d-flex   mt-11 " style="position: relative; right: -180px; width: 140px;">
 
-                <Button class="btn-success mr-3" label="Yes" icon="pi pi-check"
+                <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
                     @click="updatePayslipReleaseStatus(selectedUserCode)"
                     autofocus />
 
-                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="p-button-text " autofocus />
+                <Button label="No" icon="pi pi-times" @click="show_releasePayslip_dialogconfirmation = false" class="p-button-text  py-2" autofocus />
 
             </div>
 
@@ -104,7 +102,7 @@
 
 
     <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Header" :style="{ width: '50vw' }">
+        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="payslip" :style="{ width: '50vw' }">
             <div v-html="managePayslipStore.paySlipHTMLView">
 
             </div>
