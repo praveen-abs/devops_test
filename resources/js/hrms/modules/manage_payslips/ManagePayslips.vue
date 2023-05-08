@@ -23,8 +23,14 @@
             <template #body="slotProps" >
             <div class="d-flex flex-column">
 
-                    <button class="btn-success rounded" @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
-                     {{slotProps.data.is_released}}
+                    <button class="btn-success rounded" style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                     <!-- {{slotProps.data.is_released}} -->
+                     <h1 v-if="slotProps.data.is_released == 1"  class="text-success mt-2">
+                        Released
+                     </h1>
+                     <h1 v-if="slotProps.data.is_released == 0 || slotProps.data.is_released == null"  class="text-danger mt-2">
+                       Not Released
+                     </h1>
                      <!-- {{is_released}} -->
             </div>
 
