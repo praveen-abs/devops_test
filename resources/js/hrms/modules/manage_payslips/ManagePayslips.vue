@@ -39,7 +39,15 @@
             </Column>
             <Column field="is_payslip_mail_sent" header="Mail Status">
               <template #body="slotProps">
+                <div v-if="slotProps.data.is_released == 0 || slotProps.data.is_released == null ">
                     <button class="btn-primary  rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+
+                </div>
+                <div v-else>
+                  Payslip Sent
+                </div>
+
+
                 </template>
             </Column>
             <Column header="View Payslip">
