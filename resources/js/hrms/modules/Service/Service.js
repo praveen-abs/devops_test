@@ -4,6 +4,7 @@ import {
 import axios from "axios";
 import { ref } from "vue";
 
+
 export const Service = defineStore("Service", () => {
 
     const current_user_id = ref()
@@ -78,6 +79,7 @@ export const Service = defineStore("Service", () => {
         getBloodGroups,
         DepartmentDetails,
         getMaritalStatus,
+        getAllEmployees
 
 
 

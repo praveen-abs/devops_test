@@ -50,7 +50,7 @@
                 <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Download Excel"  @click="onclickDownloadExcelSheet(1)" style="height: 2em;" />
             </div> -->
 
-            <DataTable :value="data_pmsforms" :paginator="true" :rows="10" dataKey="id"
+            <DataTable :value="usePmsFormsStore" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                     v-model:filters="filters" filterDisplay="menu" :loading="loading2"
@@ -64,6 +64,7 @@
                     <!-- form_name, reviewer_name, calendar_type, year, assignment_period, department_id, -->
                 <Column field="form_name" header="Form Name" >
                     <template #body="slotProps">
+                        {{ usePmsFormsStore }}
                         {{ slotProps.data.form_name }}
                     </template>
                     <!-- <template #filter="{filterModel,filterCallback}">
@@ -74,8 +75,8 @@
                 <!-- <Column field="department" header="Department"></Column> -->
                 <Column field="calendar_type" header="Calendar Type"></Column>
                 <Column field="year" header="Year"></Column>
-                <Column field="assignment_period" header="Date" :sortable="true"></Column>
-
+                <Column field="assignment_period" header="Date" :sortable="true" ></Column>
+                <Column field="department_id" header="department_id" ></Column>
                 <Column style="width: 300px;" field="" header="Action">
                     <template #body="slotProps">
                             <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Approval"  @click="showConfirmDialog(slotProps.data,'Approve')" style="height: 2em;" />
@@ -90,6 +91,10 @@
     import { ref, onMounted } from 'vue';
     import axios from 'axios'
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
+    import {usePMSFormsDownloadStore} from '../PMSFormsMgmtService'
+
+    const usePmsFormsStore = usePMSFormsDownloadStore()
+
 
     // const selected_options_calendar_type =  {   "name" : "Choose", "value":""} ;
     // const options_calendar_type = [
@@ -128,15 +133,7 @@
     const data_pmsforms = ref();
 
     onMounted(() => {
-        // let url = window.location.origin + '/fetch-regularization-approvals';
-
-        // console.log("AJAX URL : " + url);
-
-        // axios.get(url)
-        //     .then((response) => {
-        //         console.log("Axios : " + response.data);
-        //         data_pmsforms.value = response.data;
-        //     });
+     usePmsFormsStore.getAllEmployeesList()
     })
 
 
