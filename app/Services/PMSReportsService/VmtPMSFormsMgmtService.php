@@ -13,10 +13,24 @@ class VmtPMSFormsMgmtService
 {
 
     public function getAllPMSFormTemplates(){
-    // get all pms record
 
+        try{
+            $all_pms_forms = VmtPMS_KPIFormModel::get(['id As pms_form_id','form_name']);
 
-    }
+            return response()->json([
+                "status" => "success",
+                "message" => "PMS form templates fetched successfully",
+                "data" =>   $all_pms_forms
+            ]);
+        } catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to getAllPMSFormTemplates",
+                "data" => $e,
+            ]);
+            }
+}
 
 
     public function getAssignedPMSFormTemplates($user_id){
@@ -99,16 +113,18 @@ class VmtPMSFormsMgmtService
             $pms_form_details = array();
             $pms_form = VmtPMS_KPIFormModel::where('id',$pms_form_id)->first();
             $available_columns =  explode(",",$pms_form['available_columns']);
-            $pms_from_details_query = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_form_id)->get();
-            foreach($pms_from_details_query as $single_record){
-               foreach($available_columns as $single_columns ){
-                $pms_single_form[$single_columns] = $single_record[$single_columns];
-               }
-               array_push($pms_form_details,$pms_single_form);
-               unset($pms_single_form);
-            }
-            $response=array('form_name'=>$pms_form['form_name'],'columns'=>$available_columns,'pms_form_details'=>$pms_form_details);
-
+            $pms_from_details_query = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_form_id)->get(['kpi','frequency','target','kpi_weightage']);
+            // foreach($pms_from_details_query as $single_record){
+            //    foreach($available_columns as $single_columns ){
+            //     dd($single_record['kpi_weightage']);
+            //     $pms_single_form[$single_columns] = $single_record[$single_columns];
+            //    }
+            // //    dd($pms_single_form);
+            //    array_push($pms_form_details,$pms_single_form);
+            //    unset($pms_single_form);
+            // }
+            $response=array('form_name'=>$pms_form['form_name'],'columns'=>$available_columns,'pms_form_details'=>$pms_from_details_query);
+          //  dd(  $response);
             return $response;
 
         }
