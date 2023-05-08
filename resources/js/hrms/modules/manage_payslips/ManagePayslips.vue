@@ -50,6 +50,11 @@
 
                 </template>
             </Column>
+            <Column header="Download">
+                <template #body="slotProps">
+                    <button class="btn btn-orange"  @click="slotProps.data.user_code()" style=" border: 1px solid orange; border-radius: 7px; height: 30px;"> Download</button>
+                </template>
+            </Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
                     <Button class="btn-primary" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
@@ -144,7 +149,9 @@ const selectedUserCode = ref();
 
 
 
-onMounted(async () => {
+onMounted( () => {
+   managePayslipStore.selectedPayRollDate = new Date('03/03/2023')
+   managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())
 
 });
 
