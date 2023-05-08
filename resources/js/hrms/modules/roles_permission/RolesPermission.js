@@ -33,6 +33,10 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
 import OverlayPanel from 'primevue/overlaypanel';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+import Tree from 'primevue/tree';
+import Skeleton from 'primevue/skeleton';
 
 
 import RolesPermission from './RolesPermission.vue'
@@ -70,6 +74,10 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
+app.component('Accordion',Accordion)
+app.component('AccordionTab',AccordionTab)
+app.component('Tree',Tree)
+app.component('Skeleton',Skeleton)
 
 app.mount("#RolesPermission");
 
