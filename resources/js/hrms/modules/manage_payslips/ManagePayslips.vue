@@ -23,8 +23,15 @@
             <template #body="slotProps" >
             <div class="d-flex flex-column">
 
-                    <button class="btn-success rounded" @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
-                     {{slotProps.data.is_released}}
+                    <button class="btn-success rounded" style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                     <!-- {{slotProps.data.is_released}} -->
+                     <h1 v-if="slotProps.data.is_released == 1"  class="text-success mt-2">
+                        Released
+                     </h1>
+                     <h1 v-if="slotProps.data.is_released == 0 || slotProps.data.is_released == null"  class="text-danger mt-2">
+                       Not Released
+                     </h1>
+                     <!-- {{is_released}} -->
             </div>
 
                 </template>
@@ -67,6 +74,8 @@
                     @click="sendMail(selectedUserCode)"
                     autofocus />
 
+                    {{ managePayslipStore.is_released  == "Released"}}
+
                 <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text " autofocus />
 
             </div>
@@ -104,7 +113,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
 import { useManagePayslipStore } from './ManagePayslipService';
 
 const managePayslipStore = useManagePayslipStore();
@@ -123,6 +132,10 @@ const selectedUserCode = ref();
 onMounted(async () => {
 
 });
+
+const is_released = computed(()=>{
+    if(managePayslipStore.is_released == 1) return "Released";
+})
 
 async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): "+selected_user_code+" , "+parseInt(selectedPayRollDate.value.getMonth()+1) );

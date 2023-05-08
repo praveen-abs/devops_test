@@ -895,7 +895,8 @@ class VmtEmployeePayCheckService {
                $employeepaysliprelease->save();
             }
 
-            $payslipstatusdetais =VmtEmployeePayslipStatus::where('user_id',$user_id)->first();
+            $response =VmtEmployeePayslipStatus::where('user_id',$user_id)->first();
+
 
             return response()->json([
                 'status' => 'success',
