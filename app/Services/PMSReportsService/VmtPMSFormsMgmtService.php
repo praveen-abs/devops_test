@@ -40,7 +40,7 @@ class VmtPMSFormsMgmtService
                 'user_code' => $user_code,
             ],
             $rules = [
-                'user_code' => 'required|exists:users,id',
+                'user_code' => 'required|exists:users,user_code',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',

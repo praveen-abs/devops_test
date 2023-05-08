@@ -50,7 +50,7 @@
                 <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Download Excel"  @click="onclickDownloadExcelSheet(1)" style="height: 2em;" />
             </div> -->
 
-            <DataTable :value="usePmsFormsStore" :paginator="true" :rows="10" dataKey="id"
+            <DataTable :value="usePmsFormsStore.allEmployees" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                     v-model:filters="filters" filterDisplay="menu" :loading="loading2"
@@ -96,6 +96,7 @@
     const usePmsFormsStore = usePMSFormsDownloadStore()
 
 
+
     // const selected_options_calendar_type =  {   "name" : "Choose", "value":""} ;
     // const options_calendar_type = [
     //                                  {   "name" : "Choose", "value":""},
@@ -134,6 +135,7 @@
 
     onMounted(() => {
      usePmsFormsStore.getAllEmployeesList()
+     console.log(usePmsFormsStore.getAllEmployeesList());
     })
 
 
