@@ -103,6 +103,7 @@ export default defineConfig({
 
                 //PMS forms management
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
+                'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
                 // testing_pradeesh
 
