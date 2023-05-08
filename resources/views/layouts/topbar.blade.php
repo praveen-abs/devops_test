@@ -34,11 +34,8 @@ if ($query_clientMaster) {
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
                     <?php
-                        $client_name = sessionGetSelectedClientName();
+                         echo sessionGetSelectedClientName();
 
-                        if(empty( $client_name  ) ){
-                            echo "Client not assigned";
-                        }
                     ?>
                         &#xf107;
                     {{-- {{ empty(  ) ? "Client not assigned" :  }} --}}
