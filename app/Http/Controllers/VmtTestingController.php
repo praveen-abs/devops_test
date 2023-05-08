@@ -30,7 +30,7 @@ use App\Models\VmtClientMaster;
 use Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AttenanceWorkShifttime;
-use App\Imports\sectionImport;
+use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 
 
@@ -385,9 +385,15 @@ class VmtTestingController extends Controller
 
 public function importexcell(Request $request){
         // dd($request->all());
-        Excel::import(new sectionImport , $request->file);
+    $invform = new VmtInvForm;
+    $invform->form_name = $request->form_name;
+    $invform->save();
 
-         return "save successfully";
+    Excel::import(new VmtInvSectionImport($invform->id) , $request->file);
+
+
+
+   return "save successfully";
 }
 
 
