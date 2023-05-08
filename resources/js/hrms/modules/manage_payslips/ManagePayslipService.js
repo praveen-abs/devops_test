@@ -77,6 +77,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         .catch((data)=>{
             console.log(data);
 
+        }).finally(()=>{
+            getAllEmployeesPayslipDetails()
         })
 
     }
