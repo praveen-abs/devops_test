@@ -1013,10 +1013,44 @@ class VmtEmployeePayCheckService {
             // $pdf->stream($client_name.'.pdf');
             $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
 
+            if($isSent){
+                  $payslip_mail_sent = '1';
+            }else{
+                $payslip_mail_sent = '0';
+            }
+
+
+            $query_emp_payslipstatus = VmtEmployeePayslipStatus::where('user_id',$user_id)
+            ->whereMonth('payroll_month', $month)
+            ->whereYear('payroll_month', $year);
+
+
+                if($query_emp_payslipstatus->exists())
+                {
+                //update
+                $query_emp_payslipstatus = $query_emp_payslipstatus->first();
+                $query_emp_payslipstatus->is_payslip_mail_sent = $payslip_mail_sent;
+                $query_emp_payslipstatus->save();
+
+                }
+                else
+                {
+
+                //create new record
+                $employeepaysliprelease = new VmtEmployeePayslipStatus;
+                $employeepaysliprelease->user_id =$user_id;
+                $employeepaysliprelease->is_payslip_mail_sent =$payslip_mail_sent;
+                $employeepaysliprelease->save();
+                }
+
+                $response =VmtEmployeePayslipStatus::where('user_id',$user_id)->first();
+
+
+
             return response()->json([
                 "status" => "success",
                 "message" => "Mail sent successfully !",
-                "data" =>$isSent
+                "data" =>$response
             ]);
 
 

@@ -35,7 +35,6 @@ import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
 import ProgressBar from 'primevue/progressbar';
 
-
 import profilePage from './profilePageNew.vue'
 
 const app = createApp(profilePage);
