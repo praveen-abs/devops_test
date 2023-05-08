@@ -48,6 +48,13 @@ class VmtPMSFormsMgmtController extends Controller
 
     }
 
+    public function getPMSScoreAvergeForGivenAssingementPeriod(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
+       $year = 'April - 2022 to March - 2023';
+       $assignment_period ='q3';
+       $response = $PMSFormsMgmtService->getPMSScoreAvergeForGivenAssingementPeriod($year,$assignment_period);
+       dd( $response);
+    }
+
     public function showPMSFormsMgmtPage_SelfView(Request $request){
         return view('pms.vmt_pms_forms_mgmt_self_view');
     }
