@@ -63,7 +63,8 @@ class VmtPMSFormsMgmtService
             ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
             ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
             ->where('vmt_pms_kpiform_assigned.assignee_id',$user_id)
-            ->get()->unique();
+            ->get(['users.user_code','users.name','vmt_pms_kpiform.form_name','vmt_pms_kpiform.id','vmt_pms_kpiform_assigned.year','vmt_pms_kpiform_assigned.assignment_period'])
+            ->unique();
 
             return response()->json([
                 "status" => "success",
