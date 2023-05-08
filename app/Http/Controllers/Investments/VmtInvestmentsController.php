@@ -22,8 +22,17 @@ class VmtInvestmentsController extends Controller
         return $serviceVmtInvestmentsService->saveEmpInvSecDetails($request->user_code, $request->section_name, $request->section_data);
     }
 
+    public function ImportInvestmentForm_Excel(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+        //dd($request->all());
+
+        return $serviceVmtInvestmentsService->ImportInvestmentForm_Excel($request->form_name, $request->section_name, $request->excel_file);
+    }
 
 
+    public function showInvestmentsFormMgmtPage(Request $request){
+        //dd($request->all());
 
+        return view('investments_forms_mgmt');
+    }
 
 }

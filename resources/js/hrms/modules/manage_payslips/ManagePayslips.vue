@@ -39,19 +39,19 @@
             </Column>
             <Column field="is_payslip_mail_sent" header="Mail Status">
               <template #body="slotProps">
-
+                <div v-if="slotProps.data.is_payslip_mail_sent == 1">
+                   <h1> Payslip sent</h1>
+                </div>
+                <div v-else>
                     <button class="btn-primary  rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
 
-
-                <!-- <div >
-                  Payslip Sent
                 </div>
                 </template>
             </Column>
 
             <Column header="Download">
                 <template #body="slotProps">
-                    <Button class="btn-primary" style="" label="download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
+                    <Button class="btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
                 </template>
             </Column>
             <Column header="View Payslip">
@@ -61,7 +61,7 @@
             </Column>
 
             <!-- <Column header="Action">
-                //<Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
+                <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
                 <template #body="slotProps">
                     <button class="rounded btn-success" @click="showConfirmationDialog(slotProps.data.user_code)">Send Mail</button>
                 </template>
@@ -116,7 +116,7 @@
         <div class="confirmation-content">
 
                 <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to release payslip? {{ managePayslipStore.name }} </span>
+                <span>Are you sure you want to download payslip? {{ managePayslipStore.name }} </span>
             </div>
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
@@ -219,7 +219,7 @@ async function updatePayslipReleaseStatus(selectedUserCode) {
 
 }
 async function downloadPayslipReleaseStatus(selectedUserCode) {
-    await managePayslipStore.downloadPayslipReleaseStatu(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    await managePayslipStore.downloadPayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
 
 }

@@ -260,5 +260,63 @@ class VmtInvestmentsService
 
     }
 
+    //Investements excel import
 
+    public function ImportInvestmentForm_Excel($form_name, $excel_file)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                'form_name' => $form_name,
+                'excel_file' => $excel_file,
+            ],
+            $rules = [
+                "form_name" => 'required',
+                "excel_file" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+
+
+        try
+        {
+
+            //Create Form name
+            $invform = new VmtInvForm;
+            $invform->form_name = $form_name;
+            $invform->save();
+
+            //Import excel data
+            $response = Excel::import(new VmtInvSectionImport($invform->id) , $excel_file);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Investment Form uploaded successfully',
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e){
+
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Investment Form upload failed',
+                'data' => $e
+            ]);
+        }
+
+    }
 }

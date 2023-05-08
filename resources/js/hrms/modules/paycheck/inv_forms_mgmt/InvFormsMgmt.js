@@ -5,7 +5,6 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
-import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
@@ -28,17 +27,17 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 
-import PMSFormsMgmt_TeamView from './PMSFormsMgmt_TeamView.vue'
+import InvFormsMgmt from './InvFormsMgmt.vue'
+import { createPinia } from "pinia";
 
-const app = createApp(PMSFormsMgmt_TeamView);
-const pinia = createPinia()
+const app = createApp(InvFormsMgmt);
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia);
-
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
@@ -58,5 +57,5 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 
-app.mount("#VJS_PMSFormsMgmt_TeamView");
+app.mount("#vjs_invforms_mgmt");
 

@@ -586,6 +586,16 @@
                                     role="button"><span>Salary
                                         Details</span></a>
                             </li>
+
+                            @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+
+                            <li class="nav-item">
+                                <a href="{{ route('showInvestmentsFormMgmtPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Investment Form Mgmt
+                                       </span></a>
+                            </li>
+                            @endcan
+
                             {{-- <li class="nav-item">
                                 <a href="{{ route('vmt_investments_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>

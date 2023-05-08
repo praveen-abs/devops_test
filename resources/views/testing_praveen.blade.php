@@ -60,8 +60,22 @@
 
     // $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
 
-    $test = config('vmt_roles_permissions.permissions');
-    dd($test['MANAGE_PAYSLIPS_can_view']);
+
+    //PERMISSIONS
+    // $test = config('vmt_roles_permissions.permissions');
+    // dd($test['MANAGE_PAYSLIPS_can_view']);
+
+    $user_code =  "sa100";
+    $query = User::where('user_code', $user_code);
+    if($query->exists())
+    {
+        echo "User exists : ".$query->first()->user_code;
+    }
+    else
+    {
+        echo "User doesnt exist";
+    }
+
 ?>
 
 </body>

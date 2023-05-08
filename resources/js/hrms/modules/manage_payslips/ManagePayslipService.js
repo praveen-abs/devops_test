@@ -104,8 +104,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         }).then((response) => {
             console.log(" Response [updatePayslipReleaseStatus] : " + response.data.data);
         })
-            .catch((data) => {
-                console.log(data);
+            .catch((response) => {
+                console.log(response.data.data);
 
             }).finally(() => {
                 getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
@@ -118,20 +118,22 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         // show_dialogconfirmation.value= false;
 
         let selectedDate = new Date(selectedPayRollDate.value)
-        axios.post('/payroll/paycheck/downloadPayslipReleaseStatus', {
+        axios.post('/paycheck/employee_payslip/downloadPayslipReleaseStatus', {
             user_code: user_code,
             month: month,
             year: year,
             status: status
         }).then((response) => {
-            console.log(" Response [downloadPayslipReleaseStatus] : " + response.data.data);
+            console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
+            window.open(`data:application/pdf;base64,${response.data.data}`);
+
         })
             .catch((data) => {
                 console.log(data);
 
-            }).finally(() => {
-                getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
-            })
+             })//.finally(() => {
+            //     getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
+            // })
 
     }
 

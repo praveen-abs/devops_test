@@ -103,13 +103,23 @@
                                                     class="m-0 fw-bold h4 me-1">ABS</span><small
                                                     class="text-orange fw-bold f-10">hrms</small></p> -->
                                         <label class="text-muted f-15 fw-bold mb-2 ">Forget password</label>
-
-
+                                        <div class="mb-1 ">
+                                            <label for="" class="">Please enter your Email or Employee Code</label>
+                                        </div>
+                                        <br />
                                         @csrf
                                         <div class="mb-1 ">
                                             <label for="" class="">Email</label>
                                             <input type="email" class="form-control textbox" value="" id="email"
                                                 name="email" placeholder="Enter email address">
+                                        </div>
+                                        <div class="divider d-flex align-items-center my-4 px-2 mx-5">
+                                            <span class="text-center fw-bold mx-3 mb-0 text-muted">OR</span>
+                                        </div>
+                                        <div class="mb-1 ">
+                                            <label for="" class="">Employee Code<Code></Code></label>
+                                            <input type="text" class="form-control textbox" value="" id="employee_code"
+                                                name="employee_code" placeholder="Enter Employee code">
                                         </div>
 
                                         <span class="text-danger " id="error_message">
