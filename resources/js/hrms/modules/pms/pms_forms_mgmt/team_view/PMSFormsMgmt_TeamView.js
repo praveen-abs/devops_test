@@ -5,6 +5,7 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
@@ -30,11 +31,13 @@ import ColumnGroup from 'primevue/columngroup'
 import PMSFormsMgmt_TeamView from './PMSFormsMgmt_TeamView.vue'
 
 const app = createApp(PMSFormsMgmt_TeamView);
+const pinia = createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);

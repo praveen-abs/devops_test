@@ -42,7 +42,6 @@ class VmtPMSFormsMgmtController extends Controller
 
     }
     public function getAssignedPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
-
         $response = $PMSFormsMgmtService->getAssignedPMSFormTemplates($request->user_code);
         return $response;
 

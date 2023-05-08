@@ -43,16 +43,15 @@
                     <button class="btn-primary  rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
 
 
-                <!-- <div >
+                 <div >
                   Payslip Sent
-                </div> -->
-
-
+                </div>
                 </template>
             </Column>
+
             <Column header="Download">
                 <template #body="slotProps">
-                    <button class="btn btn-orange"  @click="slotProps.data.user_code()" style=" border: 1px solid orange; border-radius: 7px; height: 30px;"> Download</button>
+                    <Button class="btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
                 </template>
             </Column>
             <Column header="View Payslip">
@@ -62,7 +61,7 @@
             </Column>
 
             <!-- <Column header="Action">
-                //<Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
+                <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
                 <template #body="slotProps">
                     <button class="rounded btn-success" @click="showConfirmationDialog(slotProps.data.user_code)">Send Mail</button>
                 </template>
@@ -112,6 +111,25 @@
         </div>
 
     </Dialog>
+    <Dialog header="Confirmation" v-model:visible="show_downloadPayslip_dialogconfirmation"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+        <div class="confirmation-content">
+
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Are you sure you want to download payslip? {{ managePayslipStore.name }} </span>
+            </div>
+
+        <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
+
+                <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+                    @click="downloadPayslipReleaseStatus(selectedUserCode)"
+                    autofocus />
+
+                <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="p-button-text  py-2" autofocus />
+
+        </div>
+
+    </Dialog>
 
 
     <div class="card flex justify-content-center inline-flex">
@@ -142,6 +160,7 @@ const managePayslipStore = useManagePayslipStore();
 const canShowPayslipHTMLView = ref(false);
 const show_dialogconfirmation = ref(false);
 const show_releasePayslip_dialogconfirmation = ref(false);
+const show_downloadPayslip_dialogconfirmation = ref(false);
 
 const selectedPayRollDate = ref();
 
@@ -181,6 +200,11 @@ function showReleasePayslipConfirmationDialog(selected_user_code) {
 
     show_releasePayslip_dialogconfirmation.value = true;
 }
+function showdownloadPayslipConfirmationDialog(selected_user_code) {
+    selectedUserCode.value = selected_user_code;
+
+    show_downloadPayslip_dialogconfirmation.value = true;
+}
 
 async function sendMail(selectedUserCode) {
 
@@ -192,6 +216,11 @@ async function sendMail(selectedUserCode) {
 async function updatePayslipReleaseStatus(selectedUserCode) {
     await managePayslipStore.updatePayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(), 1);
     show_releasePayslip_dialogconfirmation.value = false;
+
+}
+async function downloadPayslipReleaseStatus(selectedUserCode) {
+    await managePayslipStore.downloadPayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+    show_downloadPayslip_dialogconfirmation.value = false;
 
 }
 

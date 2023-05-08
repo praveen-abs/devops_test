@@ -47,6 +47,24 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
+    async function getEmployeePayslipDetailsAsPDF(user_code, month, year) {
+        loading.value = true
+
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF', {
+            user_code: user_code,
+            month: month,
+            year: year
+        }).then((response) => {
+            // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
+
+           // paySlipHTMLView.value = response.data;
+
+        }).finally(() => {
+            loading.value = false
+        });
+
+    }
+
     async function sendMail_employeePayslip(user_code, month, year) {
         console.log("sendMail_employeePayslip() : Sending mail to user : " + user_code);
 
@@ -86,12 +104,36 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         }).then((response) => {
             console.log(" Response [updatePayslipReleaseStatus] : " + response.data.data);
         })
-            .catch((data) => {
-                console.log(data);
+            .catch((response) => {
+                console.log(response.data.data);
 
             }).finally(() => {
                 getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
             })
+
+    }
+    async function downloadPayslipReleaseStatus(user_code, month, year, status) {
+        console.log("downloadPayslipReleaseStatus() : Updating releasepayslip status to user : " + user_code);
+
+        // show_dialogconfirmation.value= false;
+
+        let selectedDate = new Date(selectedPayRollDate.value)
+        axios.post('/paycheck/employee_payslip/downloadPayslipReleaseStatus', {
+            user_code: user_code,
+            month: month,
+            year: year,
+            status: status
+        }).then((response) => {
+            console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
+            window.open(`data:application/pdf;base64,${response.data.data}`);
+
+        })
+            .catch((data) => {
+                console.log(data);
+
+             })//.finally(() => {
+            //     getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
+            // })
 
     }
 
@@ -104,7 +146,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         array_employees_list, paySlipHTMLView, selectedPayRollDate, loading,
 
         // Functions
-        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip, updatePayslipReleaseStatus
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip, updatePayslipReleaseStatus,downloadPayslipReleaseStatus
 
     };
 });
