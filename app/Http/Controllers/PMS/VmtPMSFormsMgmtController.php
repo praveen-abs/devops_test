@@ -32,6 +32,14 @@ class VmtPMSFormsMgmtController extends Controller
         return Excel::download(new PMSFormsExport( $form_name,$headings,$form,$end_column),$form_name, ExcelExcel::XLSX);
 
     }
+
+    public function fetchPMSFormDetails(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
+        $pms_form_id=40;
+
+        $response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $pms_form_id);
+        return $response;
+
+    }
     public function getAssignedPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
          $user_id=auth()->user()->id;
