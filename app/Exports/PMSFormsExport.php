@@ -16,91 +16,62 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithBackgroundColor;
 
-class PMSFormsExport implements FromArray,WithHeadings,WithColumnWidths,WithStyles
+class PMSFormsExport implements FromArray,WithHeadings,ShouldAutoSize,WithStyles,WithColumnWidths
 {
-    protected $formDetails;
-    protected $headings;
-    public function __construct($pms_assignedFormDetails)
-    {
-        $this->headings =$pms_assignedFormDetails[0];
-        $this->formDetails = $pms_assignedFormDetails[1];
-    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
-    use Exportable;
 
-    public function headings():array{
-        //dd( $this->headings);
-        return  $this->headings;
+    protected $form_name;
+    protected $headings;
+    protected $form;
+
+    protected $end_column;
+
+    function __construct( $form_name,$headings,$form,$end_column){
+      $this->form_name =  $form_name;
+      $this->headings = $headings;
+      $this->form  = $form;
+      $this->end_column = $end_column;
+      $this->total_row = count( $this->form )+1;
+    }
+
+    public function headings():array
+    {
+        return $this->headings;
+    }
+
+    public function array(): array
+    {
+        return [
+            $this->form
+        ];
     }
 
     public function columnWidths(): array{
         return[
-            'A' => 60 ,
-            'B' => 9.57,
-            'C' => 5.86,
-            'D' => 17.71,
+            'A' => 81 ,
         ];
     }
 
-
-
-
-    // public function registerEvents(): array {
-    //     return [
-    //         AfterSheet::class => function(AfterSheet $event) {
-    //             /** @var Sheet $sheet */
-    //             $sheet = $event->sheet;
-
-    //             $sheet->mergeCells('A1:I1');
-    //             $sheet->setCellValue('A1', "OKR / PMS - Review Report -");
-
-
-    //             $styleArray = [
-    //                 'alignment' => [
-    //                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-    //                 ],
-    //                 'borders' => [
-    //                     'outline' => [
-    //                         'borderStyle' => Border::BORDER_THICK,
-    //                         'color' => array('argb' => '00000000'),
-    //                     ],
-    //                 ],
-    //                 'fill' => [
-    //                     'fillType' => Fill::FILL_SOLID,
-    //                     'startColor' => array('argb' => 'ffff31')
-    //                     ]
-
-    //             ];
-    //             $cellRange = 'A1:I1'; // All headers
-    //             $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
-
-
-    //         },
-    //     ];
-    // }
-
-
-
-
-       //For styles
     public function styles(Worksheet $sheet){
-        return [
-               // Style the first row as bold text.
-               1    => ['font' => ['bold' => true]],
 
-        ];
+        // For First Row
+        $sheet->getStyle('A1:'.$this->end_column.'1')->getFill()
+        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+        ->getStartColor()->setRGB('002164');
+        $sheet->getStyle('A1:'.$this->end_column.'1')->getFont()->setBold(true)
+        ->getColor()->setRGB('ffffff');
+
+         //For Allignment Centre
+         $sheet->getStyle('A1:'.$this->end_column.$this->total_row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A1:D34')->getAlignment()->setWrapText(true);
     }
-
-
-    public function array(): array
-    {
-          return $this->formDetails;
-    }
-
 }

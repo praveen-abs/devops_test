@@ -281,12 +281,12 @@ class VmtTestingController extends Controller
         return Excel::download(new AttenanceWorkShifttime($users), 'testings.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function showPaySlip_HTMLView()
+    public function showPaySlip_HTMLView($user_id,$month)
     {
-        //dd($request->all());
+        //dd($user_id);
 
-        $user_id = "141";
-        $selectedPaySlipMonth = "2023-05-01";
+        // $user_id = "194";
+     //$selectedPaySlipMonth = "2023-01-01";
 
         $user = null;
 
@@ -299,7 +299,7 @@ class VmtTestingController extends Controller
 
         $data['employee_payslip'] = VmtEmployeePaySlip::where([
             ['user_id', '=', $user_id],
-            ['PAYROLL_MONTH', '=', $selectedPaySlipMonth],
+            ['PAYROLL_MONTH', '=', $month],
         ])->first();
         // dd($data['employee_payslip']);
 
@@ -331,10 +331,22 @@ class VmtTestingController extends Controller
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
-         $pdf->stream($client_name.'.pdf');
+
+        return $pdf->stream($client_name.'.pdf');
+
+        // Mail::send('vmt_payslip_templates.template_payslip_brandavatar', $data, function ($message) use ($data, $pdf) {
+
+        //     $message->to('sathishrain2001@gmail', 'sathishrain2001@gmail.com')
+
+        //         ->subject($data['employee_name'])
+
+        //         ->attachData($pdf->output(), "text.pdf");
+
+        // });
 
 
 
+        //  dd('Mail sent successfully');
 }
 
    public function testinginvest(Request $request){

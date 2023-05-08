@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import axios from "axios";
@@ -36,3 +37,39 @@ export const usePmsSelfDetailsStore = defineStore("PmsSelfDetailsStore", () => {
 
 });
 
+=======
+import {defineStore } from "pinia";
+import {ref, reactive} from "vue";
+import axios from "axios";
+import {Service} from  '../../Service/Service';
+
+const service = Service()
+
+const allEmployees = ref()
+
+
+export const usePMSFormsDownloadStore = defineStore("pmsFormsDownloadStore", () => {
+
+   //variable declaration
+   const array_pms_forms_list = ref();
+
+
+
+  async function getAllEmployeesList(){
+
+      //  array_all_employees_list
+
+     await service.getAllEmployees().then(result =>{
+        allEmployees.value = result
+        console.log(result);
+      })
+
+  }
+
+  return{
+    allEmployees,getAllEmployeesList
+  }
+
+
+});
+>>>>>>> 4e8c300ce9d3fb88243956f6448a3500cfafa49a
