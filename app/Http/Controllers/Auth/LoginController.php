@@ -8,13 +8,14 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth as auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
 
 use App\Models\VmtGeneralInfo;
 use App\Models\User;
 use App\Models\VmtClientMaster;
 use Illuminate\Support\Facades\Cache;
 use App\Mail\PasswordResetLinkMail;
+use Illuminate\Support\Facades\URL;
+use App\Services\VmtLoginService;
 
 use App\Http\Controllers\VmtStaffAttendanceController;
 use Illuminate\Support\Facades\Validator;
@@ -201,96 +202,8 @@ class LoginController extends Controller
         return view('auth.reset_password',compact('generalInfo'));
     }
 
-    public function sendPasswordResetLink(Request $request){
-
-        //based on whether the REQ data is email or user_code, we will fetch the email
-        $user = null;
-
-        if(empty($request->data))
-        {
-            return response()->json([
-                'status' => "failure",
-                'message'=> 'Please fill the required data',
-                'data'   => ''
-            ]);
-        }
-
-        //convert to lower cases
-        $data = strtolower($request->data);
-
-        //Check whether its email or user code
-        if($this->isEmail($data))
-        {
-            //Check whether it is in database
-            $query_user = User::where('email', $data);
-
-            if($query_user->exists())
-            {
-                $user = $query_user->first();
-            }
-            else
-            {
-                //Email is valid but doesnt exist. So its error.
-                return response()->json([
-                    "status" => "failure",
-                    "message" => "E-mail is invalid. Kindly enter your registered email",
-                    "data" => ''
-                ]);
-            }
-        }
-        else
-        {
-            //if not email, then it can be EMP CODE. Check whether it exists
-            $query_user = User::where('user_code', $data);
-
-            if($query_user->exist())
-            {
-                $user = $query_user->first();
-
-            }
-            else
-            {
-                //User-code is valid but doesnt exist. So its error.
-                return response()->json([
-                    "status" => "failure",
-                    "message" => "User-code is invalid. Kindly enter your valid user-code",
-                    "data" => ''
-                ]);
-            }
-        }
-
-
-        $message = "";
-        $mail_status = "";
-        $status = "";
-
-        //Generate temporary URL
-        $passwordResetLink =  URL::temporarySignedRoute( 'vmt-signed-passwordresetlink', now()->addMinutes(1), ['uid' => $user->id] );
-
-        //Then, send mail to that email
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-        $isSent    = \Mail::to($request->email)->send(new PasswordResetLinkMail($user->name, $user->user_code, $passwordResetLink, $image_view));
-
-        if( $isSent) {
-            $mail_status = "Mail sent successfully";
-
-        } else {
-            $mail_status= "Mail Error : There was one or more failures.";
-        }
-
-        $status = "success";
-        $message = "Instructions to reset password reset is sent to your mail.";
-
-
-        $response = [
-            'status' => $status,
-            'message' => $message,
-            'mail_status' => $mail_status,
-        ];
-
-        return $response;
+    public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){
+        return $serviceVmtLoginService->sendPasswordResetLink($request->user_code, $request->email);
     }
 
     public function processSignedPasswordResetLink(Request $request){

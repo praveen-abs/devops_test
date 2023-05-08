@@ -104,7 +104,7 @@
                                                     class="text-orange fw-bold f-10">hrms</small></p> -->
                                         <label class="text-muted f-15 fw-bold mb-2 ">Forget password</label>
                                         <div class="mb-1 ">
-                                            <label for="" class="">Please enter your Email or Employee Code</label>
+                                            <label for="" class="">Please enter your Email or Employee Code to reset your password</label>
                                         </div>
                                         <br />
                                         @csrf
@@ -118,10 +118,10 @@
                                         </div>
                                         <div class="mb-1 ">
                                             <label for="" class="">Employee Code<Code></Code></label>
-                                            <input type="text" class="form-control textbox" value="" id="employee_code"
-                                                name="employee_code" placeholder="Enter Employee code">
+                                            <input type="text" class="form-control textbox" value="" id="user_code"
+                                                name="user_code" placeholder="Enter Employee code">
                                         </div>
-
+                                        <br />
                                         <span class="text-danger " id="error_message">
                                             {{ session('error_message') }}
                                         </span>
@@ -130,10 +130,8 @@
                                             class="btn btn-orange w-100 sign-in-btn  mt-1  waves-effect waves-light "
                                             type="submit" value="Submit" onclick="submitForm()" />
 
-
-                                        <div class="divider d-flex align-items-center my-4 px-2 mx-5">
-                                            <span class="text-center fw-bold mx-3 mb-0 text-muted">OR</span>
-                                        </div>
+                                        <br />
+                                        <br />
                                         <div class="d-flex align-items-center justify-content-center social-icons-wrapper">
                                             <a href="https://accounts.google.com/signin" class="me-5">
 
@@ -227,6 +225,10 @@
 
 @section('script')
     <script type="text/javascript">
+    var error_message_both_empty = "Please enter your registered Email or Employee-code to reset your passsword.";
+    var error_message_email_invalid = "Email is invalid/ not found. Please enter your registered Email.";
+    var error_message_user_code_invalid = "Employee Code is invalid/ not found. Please enter your valid Employee code.";
+
         $(document).ready(function() {
             // $('#modal_resetPassword').modal('show');
 
@@ -252,16 +254,40 @@
 
         function submitForm() {
 
-            if (isValidEmailAddress($('#email').val())) {
-                $('#error_message').html("");
+            if($('#email').val().trim().length != 0)
+            {
+                if (isValidEmailAddress($('#email').val())) {
+                    $('#error_message').html("");
 
-                console.log("Email is valid");
+                    console.log("Email is valid");
+                    ajax_SendPasswordResetLink();
+                } else {
+                    console.log("Email is invalid !");
+
+                    Swal.fire({
+                        icon: 'error',
+                        text : error_message_email_invalid
+                    });
+
+                    $('#error_message').html(error_message_email_invalid);
+                    return;
+                }
+            }
+            else
+            if($('#user_code').val().trim().length != 0)
+            {
+                console.log("Checking employee code now");
                 ajax_SendPasswordResetLink();
-            } else {
-                console.log("Email is invalid !");
 
-                $('#error_message').html("Please enter a valid email address");
-                return;
+            }
+            else
+            {
+                Swal.fire({
+                    icon: 'error',
+                    text : error_message_both_empty
+                });
+
+               $('#error_message').html(error_message_both_empty);
             }
 
         }
@@ -272,23 +298,35 @@
                 url: "{{ route('vmt-send-passwordresetlink') }}",
                 data: {
                     'email': $('#email').val(),
+                    'user_code' : $('#user_code').val(),
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
 
                     if (data.status == "success") {
 
-                        $('#modalHeader').html("Mail sent Successfully");
-                        $('#modalNot').html(
-                            data.message
-                        );
-                        $('#notificationModal').show();
-                        $('#notificationModal').removeClass('fade');
+                        Swal.fire({
+                            icon: 'success',
+                            text : data.message
+                        });
+
+                        // $('#modalHeader').html("Mail sent Successfully");
+                        // $('#modalNot').html(
+                        //     data.message
+                        // );
+                        // $('#notificationModal').show();
+                        // $('#notificationModal').removeClass('fade');
 
 
 
-                    } else
+                    }
+                    else
                     if (data.status == "failure") {
+                        Swal.fire({
+                            icon: 'error',
+                            text : data.message
+                        });
+
                         $('#error_message').html(data.message);
                     }
 
