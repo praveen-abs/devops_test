@@ -752,6 +752,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     //Investments
 
+    Route::post('/investments/ImportInvestmentForm_Excel', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'ImportInvestmentForm_Excel'])->name('ImportInvestmentForm_Excel');
+    Route::get('/investments/showInvestmentsFormMgmtPage', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'showInvestmentsFormMgmtPage'])->name('showInvestmentsFormMgmtPage');
     Route::get('/get-investments-form-details', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetails'])->name('getInvestmentsFormDetails');
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
@@ -781,7 +783,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
 
    // invest excell
-   Route::view('/sample', 'testing.testings');
+   Route::view('/sample', 'testing.testings')->name('sample');
    Route::post('/sendhratestingsss', [App\Http\Controllers\VmtTestingController::class, 'importexcell']);
 
 
