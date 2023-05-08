@@ -50,7 +50,7 @@
                 <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Download Excel"  @click="onclickDownloadExcelSheet(1)" style="height: 2em;" />
             </div> -->
 
-            <DataTable :value="data_pmsforms" :paginator="true" :rows="10" dataKey="id"
+            <DataTable :value="PmsSelfDetailsStore.array_single_employees_list" :paginator="true" :rows="10" dataKey="id"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
                     v-model:filters="filters" filterDisplay="menu" :loading="loading2"
@@ -88,8 +88,10 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
-    import axios from 'axios'
-    import {FilterMatchMode,FilterOperator} from 'primevue/api';
+    import { usePmsSelfDetailsStore } from '../PMSFormsMgmtService';
+
+        const PmsSelfDetailsStore = usePmsSelfDetailsStore();
+
 
     // const selected_options_calendar_type =  {   "name" : "Choose", "value":""} ;
     // const options_calendar_type = [
