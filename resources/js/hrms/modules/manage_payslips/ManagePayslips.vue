@@ -25,6 +25,7 @@
 
                     <button class="btn-success rounded" @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
                      {{slotProps.data.is_released}}
+                     <!-- {{is_released}} -->
             </div>
 
                 </template>
@@ -67,6 +68,8 @@
                     @click="sendMail(selectedUserCode)"
                     autofocus />
 
+                    {{ managePayslipStore.is_released  == "Released"}}
+
                 <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text " autofocus />
 
             </div>
@@ -104,7 +107,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
 import { useManagePayslipStore } from './ManagePayslipService';
 
 const managePayslipStore = useManagePayslipStore();
@@ -123,6 +126,10 @@ const selectedUserCode = ref();
 onMounted(async () => {
 
 });
+
+const is_released = computed(()=>{
+    if(managePayslipStore.is_released == 1) return "Released";
+})
 
 async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): "+selected_user_code+" , "+parseInt(selectedPayRollDate.value.getMonth()+1) );
