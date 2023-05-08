@@ -895,16 +895,9 @@ class VmtEmployeePayCheckService {
                $employeepaysliprelease->save();
             }
 
-            $payslipstatusdetais =VmtEmployeePayslipStatus::where('user_id',$user_id);
+            $response =VmtEmployeePayslipStatus::where('user_id',$user_id)->first();
 
-            if($payslipstatusdetais->exists()){
-               $response = $payslipstatusdetais->first();
-                if($response->is_released == '1'){
-                    $response['is_released']='Released';
-                }else{
-                    $response['is_released']='Not Released';
-                }
-            }
+
             return response()->json([
                 'status' => 'success',
                 'message' => "",
