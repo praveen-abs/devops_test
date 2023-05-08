@@ -47,6 +47,24 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
+    async function getEmployeePayslipDetailsAsPDF(user_code, month, year) {
+        loading.value = true
+
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF', {
+            user_code: user_code,
+            month: month,
+            year: year
+        }).then((response) => {
+            // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
+
+           // paySlipHTMLView.value = response.data;
+
+        }).finally(() => {
+            loading.value = false
+        });
+
+    }
+
     async function sendMail_employeePayslip(user_code, month, year) {
         console.log("sendMail_employeePayslip() : Sending mail to user : " + user_code);
 
@@ -94,6 +112,28 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             })
 
     }
+    async function downloadPayslipReleaseStatus(user_code, month, year, status) {
+        console.log("downloadPayslipReleaseStatus() : Updating releasepayslip status to user : " + user_code);
+
+        // show_dialogconfirmation.value= false;
+
+        let selectedDate = new Date(selectedPayRollDate.value)
+        axios.post('/payroll/paycheck/downloadPayslipReleaseStatus', {
+            user_code: user_code,
+            month: month,
+            year: year,
+            status: status
+        }).then((response) => {
+            console.log(" Response [downloadPayslipReleaseStatus] : " + response.data.data);
+        })
+            .catch((data) => {
+                console.log(data);
+
+            }).finally(() => {
+                getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
+            })
+
+    }
 
 
 
@@ -104,7 +144,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         array_employees_list, paySlipHTMLView, selectedPayRollDate, loading,
 
         // Functions
-        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip, updatePayslipReleaseStatus
+        getAllEmployeesPayslipDetails, getEmployeePayslipDetailsAsHTML, sendMail_employeePayslip, updatePayslipReleaseStatus,downloadPayslipReleaseStatus
 
     };
 });
