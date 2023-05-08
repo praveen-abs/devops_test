@@ -18,5 +18,7 @@ return [
         'can_view_employees_payslip' => 'can_view_employees_payslip',
 
         'APPROVALS_can_view' => 'APPROVALS_can_view',
+
+        'LEAVE_APPROVALS_can_approve_leaves' => 'LEAVE_APPROVALS_can_approve_leaves',
     ]
 ];

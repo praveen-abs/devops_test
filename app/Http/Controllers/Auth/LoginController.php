@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Mail\PasswordResetLinkMail;
 
 use App\Http\Controllers\VmtStaffAttendanceController;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -91,7 +92,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-     
+
         $request->validate([
             'user_code' => 'required',
             'password' => 'required',
@@ -202,45 +203,85 @@ class LoginController extends Controller
 
     public function sendPasswordResetLink(Request $request){
 
+        //based on whether the REQ data is email or user_code, we will fetch the email
+        $user = null;
+
+        if(empty($request->data))
+        {
+            return response()->json([
+                'status' => "failure",
+                'message'=> 'Please fill the required data',
+                'data'   => ''
+            ]);
+        }
+
+        //convert to lower cases
+        $data = strtolower($request->data);
+
+        //Check whether its email or user code
+        if($this->isEmail($data))
+        {
+            //Check whether it is in database
+            $query_user = User::where('email', $data);
+
+            if($query_user->exists())
+            {
+                $user = $query_user->first();
+            }
+            else
+            {
+                //Email is valid but doesnt exist. So its error.
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "E-mail is invalid. Kindly enter your registered email",
+                    "data" => ''
+                ]);
+            }
+        }
+        else
+        {
+            //if not email, then it can be EMP CODE. Check whether it exists
+            $query_user = User::where('user_code', $data);
+
+            if($query_user->exist())
+            {
+                $user = $query_user->first();
+
+            }
+            else
+            {
+                //User-code is valid but doesnt exist. So its error.
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "User-code is invalid. Kindly enter your valid user-code",
+                    "data" => ''
+                ]);
+            }
+        }
+
+
         $message = "";
         $mail_status = "";
         $status = "";
 
-        $user = User::where('email',$request->email);
+        //Generate temporary URL
+        $passwordResetLink =  URL::temporarySignedRoute( 'vmt-signed-passwordresetlink', now()->addMinutes(1), ['uid' => $user->id] );
 
-        //Check whether the given email exists in system
-        if($user->exists())
-        {
+        //Then, send mail to that email
+        $VmtGeneralInfo = VmtGeneralInfo::first();
+        $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-            //Generate temporary URL
-            $passwordResetLink =  URL::temporarySignedRoute(
-                'vmt-signed-passwordresetlink', now()->addMinutes(1), ['uid' => $user->value('id')]
-            );
+        $isSent    = \Mail::to($request->email)->send(new PasswordResetLinkMail($user->name, $user->user_code, $passwordResetLink, $image_view));
 
-            //Then, send mail to that email
+        if( $isSent) {
+            $mail_status = "Mail sent successfully";
 
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-            $isSent    = \Mail::to($request->email)->send(new PasswordResetLinkMail($user->value('name'), $user->value('user_code'), $passwordResetLink, $image_view));
-
-            if( $isSent) {
-                $mail_status = "Mail sent successfully";
-
-            } else {
-                $mail_status= "Mail Error : There was one or more failures.";
-            }
-
-            $status = "success";
-            $message = "Instructions to reset password reset is sent to your mail.";
-
-
+        } else {
+            $mail_status= "Mail Error : There was one or more failures.";
         }
-        else
-        {
-            $status = "failure";
-            $message = "Email doesnt exist in our system. Kindly check and try again.";
-        }
+
+        $status = "success";
+        $message = "Instructions to reset password reset is sent to your mail.";
 
 
         $response = [
@@ -264,6 +305,15 @@ class LoginController extends Controller
         }
 
     }
+
+   function isEmail($email) {
+        if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
+             return true;
+        } else {
+             return false;
+        }
+   }
+
 
     protected function syncStaffAttendance(){
 
