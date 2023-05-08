@@ -4,6 +4,7 @@ import {
 import axios from "axios";
 import { ref } from "vue";
 
+
 export const Service = defineStore("Service", () => {
 
     const current_user_id = ref()
@@ -58,6 +59,10 @@ export const Service = defineStore("Service", () => {
         return axios.get(`/fetch-blood-groups`);
     }
 
+    const getAllEmployees = () => {
+        return axios.get(`/get-all-employees`);
+    }
+
     return {
 
         // varaible Declarations
@@ -74,6 +79,7 @@ export const Service = defineStore("Service", () => {
         getBloodGroups,
         DepartmentDetails,
         getMaritalStatus,
+        getAllEmployees
 
 
 

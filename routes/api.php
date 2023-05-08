@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
     Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
+    Route::post('/getEmployeePermissions', [HRMSBaseAPIController::class, 'getEmployeePermissions']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
 

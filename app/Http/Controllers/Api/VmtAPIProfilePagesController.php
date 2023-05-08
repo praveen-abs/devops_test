@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 
 use App\Services\VmtProfilePagesService;
+use App\Services\VmtEmployeeService;
 
 class VmtAPIProfilePagesController extends HRMSBaseAPIController
 {
@@ -52,7 +53,7 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
         ]);
     }
 
-    public function updateEmployeeGeneralInformation(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService)
+    public function updateEmployeeGeneralInformation(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService, VmtEmployeeService $employeeService)
     {
 
         $validator = Validator::make(
@@ -61,10 +62,10 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
                 "user_code" => 'required|exists:users,user_code',
                 "birthday" => 'required',
                 "gender"  => 'required',
-                "doj"  => 'required',
                 "marital_status"  => 'required|exists:vmt_marital_status,name',
                 "blood_group"  => 'required|exists:vmt_bloodgroup,name',
                 "physically_challenged" => 'required',
+                "doc_obj" => 'required'
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -79,16 +80,18 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             ]);
         }
 
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
 
         $response = $serviceVmtProfilePagesService->updateEmployeeGeneralInformation(
-            user_code: $request->user_code,
+            user_id: $user_id,
             birthday: $request->birthday,
             gender: $request->gender,
-            doj: $request->doj,
             marital_status: $request->marital_status,
             blood_group: $request->blood_group,
-            phy_challenged: $request->phy_challenged
+            phy_challenged: $request->phy_challenged,
         );
+
+        $emp_file =$employeeService->uploadDocument($user_id, $request->doc_obj,$onboard_document_type='Birth Certificate' );
 
         return $response;
     }

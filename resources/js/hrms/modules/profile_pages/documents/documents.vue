@@ -18,6 +18,12 @@
             <Column field="reason" header="Reason " style="min-width: 12rem">
 
             </Column>
+            <!-- <Column field="Browerupload" header="Upload Document" style="min-width:12rem;">
+                <template #body="slotProps" >
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                        @click="showDocument(slotProps.data)" style="height: 2em" />
+                </template>
+            </Column> -->
 
             <Column field="" header="View " style="min-width: 12rem">
                 <template #body="slotProps">

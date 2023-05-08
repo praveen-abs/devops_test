@@ -986,6 +986,13 @@ class VmtEmployeeController extends Controller
     //     }
     // }
 
+        public function getallemployee(){
+          $query_employee = User::where('is_ssa','<>','1')->get();
+          return ($query_employee);
+        }
+
+
+
     public function getState(Request $request)
     {
         $state = State::where('country_code', $request->code)->get();

@@ -53,6 +53,8 @@ class Seeder_RolesPermissions extends Seeder
          $sa_role->syncPermissions([
                     $permissions['MANAGE_PAYSLIPS_can_view'],
                     $permissions['MANAGE_PAYSLIPS_release_payslip'],
+                    $permissions['can_view_employees_payslip'],
+
                 ]);
 
          //assign this role to SA100

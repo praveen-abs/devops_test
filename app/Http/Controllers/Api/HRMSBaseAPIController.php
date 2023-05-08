@@ -151,6 +151,33 @@ class HRMSBaseAPIController extends Controller
         return $serviceVmtEmployeeService->getEmployeeRole($request->user_code);
     }
 
+    public function getEmployeePermissions(Request $request){
+
+        //$permissions_list = auth()->user()->getPermissionsViaRoles();
+
+        $permissions_list = array();
+
+        //Temporary solution
+        //If not employee role, give certain permissions
+        if(auth()->user()->org_role != "5"){
+
+            //For showing any approvals page
+            array_push($permissions_list,['APPROVALS_can_view'=>'1']);
+        }
+        else
+        {
+            array_push($permissions_list,['APPROVALS_can_view'=>'0']);
+
+        }
+
+        return response()->json([
+
+            "status" => "success",
+            "message" => "",
+            "data" => $permissions_list,
+        ]);
+    }
+
     public function getOrgTimePeriod(Request $request, VmtCoreService $serviceVmtCoreService){
         return $serviceVmtCoreService->getOrgTimePeriod();
     }
