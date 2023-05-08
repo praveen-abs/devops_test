@@ -33,11 +33,11 @@ class VmtPMSFormsMgmtService
 }
 
 
-    public function getAssignedPMSFormTemplates($user_id){
+    public function getAssignedPMSFormTemplates($user_code){
         //Get all forms for a given user_code
         $validator = Validator::make(
             $data = [
-                'user_code' => $user_id,
+                'user_code' => $user_code,
             ],
             $rules = [
                 'user_code' => 'required|exists:users,id',
@@ -63,7 +63,7 @@ class VmtPMSFormsMgmtService
             ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
             ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
             ->where('vmt_pms_kpiform_assigned.assignee_id',$user_id)
-            ->get(['users.user_code','users.name','vmt_pms_kpiform.form_name','vmt_pms_kpiform.id','vmt_pms_kpiform_assigned.year','vmt_pms_kpiform_assigned.assignment_period'])
+            ->get(['users.user_code','users.name','vmt_pms_kpiform.form_name','vmt_pms_kpiform.id as pms_kpiform_id','vmt_pms_kpiform_assigned.year','vmt_pms_kpiform_assigned.assignment_period'])
             ->unique();
 
             return response()->json([

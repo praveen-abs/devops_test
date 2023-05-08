@@ -173,6 +173,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-all-PMS-form-Templates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormTemplates'])->name('getAllPMSFormTemplates');
     Route::get('/pms-forms-management-self-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_SelfView'])->name('showPMSFormsMgmtPage_SelfView');
     Route::get('/pms-forms-management-team-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_TeamView'])->name('showPMSFormsMgmtPage_TeamView');
+    Route::get('/pms-forms-management-hr-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_HRView'])->name('showPMSFormsMgmtPage_HRView');
 
     //Attendance - AJAX
     Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');

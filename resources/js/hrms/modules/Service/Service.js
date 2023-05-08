@@ -58,6 +58,10 @@ export const Service = defineStore("Service", () => {
         return axios.get(`/fetch-blood-groups`);
     }
 
+    const getAllEmployees = () => {
+        return axios.get(`/get-all-employees`);
+    }
+
     return {
 
         // varaible Declarations

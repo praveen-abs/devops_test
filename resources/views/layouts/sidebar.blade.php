@@ -423,6 +423,14 @@
 
                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                                     <li class="nav-item">
+                                        <a href="{{ route('showPMSFormsMgmtPage_HRView') }}" class="nav-link">
+                                            <span>PMS Forms Management : HR</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                    <li class="nav-item">
                                         <a href="{{ route('showPMSFormsMgmtPage_TeamView') }}" class="nav-link">
                                             <span>PMS Forms Management : Team</span>
                                         </a>
@@ -433,7 +441,7 @@
                                     <a href="{{ route('showPMSFormsMgmtPage_SelfView') }}" class="nav-link">
                                         <span>PMS Forms Management : Self</span>
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </li>
