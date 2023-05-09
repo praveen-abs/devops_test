@@ -14,8 +14,8 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
     async function getManageWelcomeMailStatus(){
         await axios.get('/getAllEmployees_WelcomeMailStatus_Details')
         .then((res)=>{
-            array_employees_list.value = res.data.data ;
-            console.log(array_employees_list);
+            array_employees_list.value = res.data ;
+            console.log("testing",array_employees_list);
         })
         .finally(()=>{
 
