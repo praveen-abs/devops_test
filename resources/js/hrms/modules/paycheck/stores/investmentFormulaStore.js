@@ -129,12 +129,42 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
     }
 
 
+    // House property
+
+    // Let Out Property and Deemed let out Property
+
+    const  maintenance_cal = (lender_type,rent_rec,munic_tax) =>{
+
+        if(lender_type == 'Financial Institution' || lender_type == 'Others' ){
+
+            let main =( rent_rec - munic_tax ) * 30/100 
+
+            return main
+
+        }else{
+            console.log("Lender type is not exists");
+        }
+    }
+
+    const net_value_cal = (rent_rec,munic_tax,main) =>{
+
+        let net_value = rent_rec - munic_tax - main
+
+        return  net_value;
+    }
+
+    const income_loss_cal = (interest,net) =>{
+       let income_loss = net - interest 
+       return income_loss;
+    }
+
+
 
 
     return {
 
         // varaible Declarations
-        taxCalculation
+        taxCalculation,maintenance_cal,net_value_cal,income_loss_cal
 
     };
 });
