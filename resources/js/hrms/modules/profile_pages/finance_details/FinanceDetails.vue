@@ -138,7 +138,7 @@
                                                         for="uploadPassBook" >
                                                         <!--     data-bs-toggle="modal"  data-bs-target="#edit_profileImg" -->
                                                         <i class="pi pi-arrow-circle-up fs-5 mr-3"></i> <h1 class="text-light">Upload file</h1></label>
-                                                    <input type="file" name="" id="uploadPassBook" hidden
+                                                    <input type="file" name="" id="uploadPassBook"  hidden
                                                         @change="updateCheckBookPhoto($event)" />
 
                                                 </div>
@@ -384,17 +384,7 @@ import EmployeePayslips from './EmployeePayslips.vue'
 
 
 const toast = useToast();
-const PassBook = ref();
-const updateCheckBookPhoto = (e) => {
-    // Check if file is selected
-    if (e.target.files && e.target.files[0]) {
-        // Get uploaded file
-        PassBook.value = e.target.files[0];
-        // Get file size
-        // Print to console
-        console.log(PassBook.value);
-    }
-}
+
 
 
 let form = new FormData();
@@ -445,7 +435,20 @@ const bank_information = reactive({
     bank_ac_no: '',
     ifsc_code: '',
     pan_no: '',
+    PassBook:''
 })
+const updateCheckBookPhoto = (e) => {
+    // Check if file is selected
+    if (e.target.files && e.target.files[0]) {
+        // Get uploaded file
+        bank_information.PassBook = e.target.files[0];
+        // Get file size
+        // Print to console
+        console.log(bank_information.PassBook );
+
+
+    }
+}
 
 
 const esic_applicable = computed(() => {
@@ -473,12 +476,20 @@ const saveBankinfoDetails = () => {
 
     let url = `/update-bank-info/${id}`;
 
+
+    let form = new FormData()
+
+    form.append('PassBook',bank_information.PassBook)
+
+
+
     axios.post(url, {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
         bank_id: bank_information.bank_id.id,
         account_no: bank_information.bank_ac_no,
         bank_ifsc: bank_information.ifsc_code,
-        pan_no: bank_information.pan_no
+        pan_no: bank_information.pan_no,
+        form
     })
         .then((res) => {
 

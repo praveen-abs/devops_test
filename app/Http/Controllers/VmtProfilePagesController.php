@@ -17,6 +17,7 @@ use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Services\VmtEmployeePayCheckService;
 use App\Services\VmtProfilePagesService;
+use App\Services\VmtEmployeeService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
@@ -328,7 +329,7 @@ public function addExperienceInfo(Request $request)
     }
 
 
-    public function updateBankInfo(Request $request)
+    public function updateBankInfo(Request $request ,VmtEmployeeService $employeeService)
     {
        // dd($request->all());
         try{
@@ -339,7 +340,7 @@ public function addExperienceInfo(Request $request)
             $details->bank_account_number = $request->input('account_no');
             $details->pan_number = $request->input('pan_no');
             $details->save();
-
+            $emp_file =$employeeService->uploadDocument($user_id, $request->PassBook,$onboard_document_type='Check' );
             $response = [
                 'status' => 'success',
                 'message' =>"Bank details updated successfully"

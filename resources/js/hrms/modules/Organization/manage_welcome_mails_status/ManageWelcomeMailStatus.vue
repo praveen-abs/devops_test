@@ -1,6 +1,7 @@
 <template>
+    {{ ManageWelcomeMailStatusStore.array_employees_list }}
 
-    <DataTable :value="welcomemailstatus" :paginator="true" :rows="10" dataKey="id"
+    <DataTable :value="ManageWelcomeMailStatusStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     :rowsPerPageOptions="[5, 10, 25]"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
@@ -10,7 +11,17 @@
     </Column>
     <Column field="" header="Employee Name"></Column>
     <Column field="" header="Personal Mail"></Column>
-    <Column field="" header="Payslip Status">   </Column>
+    <Column field="" header="Payslip Status"></Column>
+    <Column field="welcome_mail_status" header="welcome_mail_status">
+    <template #body="slotProps">
+        <div>
+            <Button @click="welcome_mail_status_view_btn(slotProps.data)" />
+        </div>
+    </template>
+    </Column>
+    <Column field="" header="onboard_docs_approval_mail_status">
+        onboard_docs_approval_mail_status
+    </Column>
     <Column field="" header="Mail Status">  </Column>
 
 </DataTable>
@@ -38,6 +49,7 @@ const ManageWelcomeMailStatusStore = useManageWelcomeMailStatusStore();
 
 
 onMounted( () => {
+    ManageWelcomeMailStatusStore.getManageWelcomeMailStatus()
 
 });
 
