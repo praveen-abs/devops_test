@@ -15,7 +15,7 @@ use Dompdf\Options;
 use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployeeDocuments;
-use App\Models\VmtEmpolyeeMailStatus;
+use App\Models\VmtEmployeeMailStatus;
 use App\Models\VmtDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
