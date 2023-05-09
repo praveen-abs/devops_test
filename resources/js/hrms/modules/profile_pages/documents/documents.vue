@@ -36,15 +36,11 @@
 
         </DataTable>
 
-        <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
+        <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }" class="d-flex justify-items-center align-content-center">
 
                 <img v-if="view_document.doc_url" v-bind:src="`data:image/png;base64,${documentPath}`"
-                 />
+                class="px-5" />
                 <!-- <img :src="`data:image/png;base64,${}`" /> -->
-
-                <img src="" alt="">
-                <a href=""></a>
-
         </Dialog>
 
     </div>

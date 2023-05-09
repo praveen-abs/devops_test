@@ -26,16 +26,18 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+import { createPinia } from "pinia";
 
 import PMSFormsMgmt_HRView from './PMSFormsMgmt_HRView.vue'
 
 const app = createApp(PMSFormsMgmt_HRView);
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-
+app.use(pinia)
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
