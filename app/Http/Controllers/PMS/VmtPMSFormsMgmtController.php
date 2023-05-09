@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\PMSReportsService\VmtPMSFormsMgmtService;
 use App\Exports\PMSFormsExport;
+use App\Exports\PMSScoreExport;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Excel as ExcelExcel;
@@ -49,9 +50,11 @@ class VmtPMSFormsMgmtController extends Controller
 
     public function getPMSScoreAvergeForGivenAssingementPeriod(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
        $year = 'April - 2022 to March - 2023';
-       $assignment_period ='q3';
+       $assignment_period ='q4';
        $response = $PMSFormsMgmtService->getPMSScoreAvergeForGivenAssingementPeriod($year,$assignment_period);
-       dd( $response);
+       //dd(   $response);
+       return Excel::download(new PMSScoreExport($response),  $year.' '.$assignment_period, ExcelExcel::XLSX);
+
     }
 
     public function showPMSFormsMgmtPage_SelfView(Request $request){
