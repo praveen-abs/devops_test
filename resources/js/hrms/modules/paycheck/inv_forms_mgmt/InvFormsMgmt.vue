@@ -16,9 +16,8 @@
                 <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
                 <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
             </div>
-            <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
+            <template>
+
             </template>
         </Dialog>
 
@@ -26,13 +25,17 @@
         <div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Form Name</label>
-                <input class="form-control " type="text" id="formFile" name="form_name">
+                <input class="form-control " type="text" id="formFile" v-model="form_name">
 
                 <label for="formFile" class="form-label">Investment Form Management</label>
-                <input class="form-control " type="file" id="formFile" name="file">
+                <input class="form-control " type="file" id="formFile" @change="getExcelFile($event)">
               </div>
               <Button label="Upload" @click="uploadInvestmentForm()" class="p-button-text  py-2 btn-primary" autofocus />
         </div>
+            <div class="mt-1">
+          {{ fileupload }}
+            </div>
+
     </div>
 </template>
 <script setup>
@@ -45,6 +48,7 @@
 
     const form_name = ref();
     const excel_file = ref();
+    const fileupload = ref();
 
     onMounted(() => {
 
@@ -53,9 +57,39 @@
 
 
     async function uploadInvestmentForm(){
-        console.log("Uploading Investment forms....");
-       // await invFormsMgmt.uploadInvestmentForm(form_name, excel_file);
+
+        const formData  = new FormData()
+
+        formData.append("form_name",form_name.value)
+        formData.append("excel_file",excel_file.value)
+       // console.log("Uploading Investment forms....");
+       console.log(formData);
+
+       let url = "/investments/ImportInvestmentForm_Excel";
+    axios
+        .post(url, formData)
+        .then((res) => {
+            fileupload.value = res.data;
+        })
+        .finally(() => {
+            console.log("xlsx upload successfully");
+
+        });
+
+          // await invFormsMgmt.uploadInvestmentForm(formData);
     }
+
+    const getExcelFile = (e) => {
+    // Check if file is selected
+    if (e.target.files && e.target.files[0]) {
+        // Get uploaded file
+        excel_file.value = e.target.files[0];
+        // Get file size
+        // Print to console
+       // console.log(excel_file.value);
+    }
+}
+
 
 
 

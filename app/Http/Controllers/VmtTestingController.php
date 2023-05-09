@@ -333,9 +333,11 @@ class VmtTestingController extends Controller
 
         $html = view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $data);
 
-        // return $html;
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
 
-        $pdf = new Dompdf();
+        $pdf = new Dompdf( $options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();

@@ -44,7 +44,8 @@ if ($query_clientMaster) {
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
                     style="top: 50px;border-radius:10px 0px 0px 0px">
-                    <div class="offcanvas-header pb-0 bg-ash  align-items-center border-0 ">
+                    <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
+
                         <a role="button" href="{{ route('pages-profile-new') }}"
                             {{-- class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
                             data-bs-placement="right" title="View Profile">
@@ -55,14 +56,14 @@ if ($query_clientMaster) {
                         <h1 class="ml-3 text-primary">View Profile</h1>
                     </a>
 
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
-                            data-bs-dismiss="offcanvas" aria-label="Close">
+                        <button type="button" class="close outline-none  h3"
+                            data-bs-dismiss="offcanvas" aria-label="Close" style="" >
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="offcanvas-body overflow-hidden p-0">
+                    <div class="offcanvas-body overflow-hidden p-0 ">
                         <div
-                            class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column">
+                            class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column pt-3">
                             <?php
                             //dd($currentUser);
                             $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
@@ -226,3 +227,12 @@ if ($query_clientMaster) {
         updateGlobalClient(selectedClientID);
     });
 </script>
+
+
+{
+    {{-- <a role="button" href="{{ route('pages-profile-new') }}"
+                            class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
+                            data-bs-placement="right" title="View Profile">
+                            <i class="fa fa-user text-muted fs-15"></i>
+                        </a> --}}
+}

@@ -156,6 +156,14 @@
 
                 <img :src="`data:image/png;base64,${documentPath}`" :alt="doc_url" class="block pb-3 m-auto" />
 
+        </Dialog>
+
+            <Dialog v-model:visible="visible" modal header="Documents" :style="{ width: '40vw' }">
+
+
+                <img   :src="`http://127.0.0.1:8000/${doc_url}`"
+                :alt="doc_url" class="block pb-3 m-auto" />
+
             </Dialog>
 
         </div>
