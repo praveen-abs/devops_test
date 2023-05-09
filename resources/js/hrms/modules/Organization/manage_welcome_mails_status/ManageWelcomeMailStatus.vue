@@ -18,8 +18,12 @@
         </div>
     </template>
     </Column>
-    <Column field="" header="Onboard Document Approval Mail Status">
-        onboard_docs_approval_mail_status
+    <Column field="onboard_docs_approval_mail_status" header="Onboard Document Approval Mail Status">
+        <template #body="slotProps">
+            <div v-if="slotProps.data">
+          </div>
+        </template>
+        <!-- onboard_docs_approval_mail_status -->
     </Column>
     <!-- <Column field="" header="Mail Status">  </Column> -->
     <Column field="acc_activation_mail_status" header="Activation Mail Status"></Column>
