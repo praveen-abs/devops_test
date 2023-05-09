@@ -17,8 +17,8 @@ class VmtPMSFormsMgmtController extends Controller
     public function getAllPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
 
-        $response = $PMSFormsMgmtService->getAllPMSFormTemplates();
-        return $response;
+      return  $response = $PMSFormsMgmtService->getAllPMSFormTemplates();
+
 
     }
 

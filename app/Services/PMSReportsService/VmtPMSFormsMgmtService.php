@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Services\PMSReportsService;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormDetailsModel;
 use App\Models\VmtPMS_KPIFormModel;
 use App\Models\User;
+
 
 
 
@@ -58,7 +59,6 @@ class VmtPMSFormsMgmtService
         }
 
         try{
-            $user_id = User::where('user_code', $user_code)->first()->id;
 
             $emp_assignedpmsfrom=VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform.id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
             ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')

@@ -23,18 +23,21 @@ import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
-import InputText from 'primevue/inputtext'
-import Row from 'primevue/row'
-import ColumnGroup from 'primevue/columngroup'
+import InputText from 'primevue/inputtext';
+import Row from 'primevue/row';
+import ColumnGroup from 'primevue/columngroup';
+import { createPinia } from "pinia";
 
 import PMSFormsMgmt_EmployeeView from './PMSFormsMgmt_SelfView.vue'
 
 const app = createApp(PMSFormsMgmt_EmployeeView);
+const pinia=createPinia();
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);
