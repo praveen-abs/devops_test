@@ -106,7 +106,7 @@
             <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
                 <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
-                    @click="UpdatWithDrawStatus(selectedUserCode)"
+                    @click="UpdateWithDrawStatus(selectedUserCode)"
                     autofocus />
 
                 <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false" class="p-button-text py-2" autofocus />
@@ -199,9 +199,7 @@ onMounted( () => {
 
 });
 
-// const is_released = computed(() => {
-//     if (managePayslipStore.is_released == 1) return "Released";
-// })
+
 
 async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): " + selected_user_code + " , " + parseInt(managePayslipStore.selectedPayRollDate.getMonth() + 1));
@@ -247,14 +245,14 @@ async function showWithdraw_confimationDialog(selected_user_code){
     selectedUserCode.value = selected_user_code;
     show_withdraw_dialogConfirmation.value = true;
 }
-async function UpdatWithDrawStatus(selectedUserCode) {
-    await managePayslipStore.UpdatWithDrawStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(), 0);
+async function UpdateWithDrawStatus(selectedUserCode) {
+    await managePayslipStore.UpdateWithDrawStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(), 0);
     show_withdraw_dialogConfirmation.value = false ;
 
 }
 
-async function downloadPayslipReleaseStatus(selectedUserCode) {
-    await managePayslipStore.downloadPayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+async function downloadPayslip(selectedUserCode) {
+    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
 
 }
