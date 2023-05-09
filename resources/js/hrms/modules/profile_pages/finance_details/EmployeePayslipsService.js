@@ -60,31 +60,28 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
         console.log("Downloading payslip PDF.....");
 
-        //split the payroll_month into month and year
+
         let month = parseInt (dayjs(payroll_month).month())+1;
         let year = dayjs(payroll_month).year();
+
+        //split the payroll_month into month and year
 
         var config = {
             responseType: 'stream'
         };
 
-        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF',
+        await axios.post('/paycheck/employee_payslip/downloadPayslipReleaseStatus',
         {
             uid : getURLParams_UID(),
-            user_code : user_code,
-            month : month,
-            year : year,
-        },  {responseType: 'arraybuffer'}).then((response) => {
+             user_code : user_code,
+             month : month,
+             year : year
+        }).then((response) => {
              console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
+             console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
+             window.open(`data:application/pdf;base64,${response.data.data}`);
 
-             var file = new Blob([response.data.data], {type: 'application/pdf'});
-             var fileURL = URL.createObjectURL(file);
-             window.open(fileURL);
-
-            //  paySlipHTMLView.value = response.data;
-            //  canShowPayslipView.value = true;
-
-         });
+         })
 
      }
 

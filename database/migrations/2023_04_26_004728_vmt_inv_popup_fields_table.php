@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vmt_user_mail_status', function (Blueprint $table) {
-
-            $table->integer("welcome_mail_status")->change();
-            $table->integer("onboard_docs_approval_status")->change();
-            $table->integer("acc_activation_mail_status")->change();
-
-
+        Schema::create('vmt_inv_popup_fields', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('popups_list_id')->constrained('vmt_inv_popup_list');
+            $table->text("field_name");
+            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_user_mail_status');
+        Schema::dropIfExists('vmt_inv_popup_fields');
     }
 };

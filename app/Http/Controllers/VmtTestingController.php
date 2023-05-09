@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Imports\VmtPaySlip;
@@ -30,7 +30,7 @@ use App\Models\VmtClientMaster;
 use Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AttenanceWorkShifttime;
-use App\Imports\sectionImport;
+use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 
 
@@ -281,13 +281,22 @@ class VmtTestingController extends Controller
         return Excel::download(new AttenanceWorkShifttime($users), 'testings.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 
-    public function showPaySlip_HTMLView($user_id,$month)
+    public function downloadPaySlip_pdfView(Request $request)
     {
-        //dd($user_id);
 
-        // $user_id = "194";
-     //$selectedPaySlipMonth = "2023-01-01";
-
+        if (empty($request->uid)) {
+            if(empty($request->user_code)){
+                $user_code = auth()->user()->user_code;
+             } else
+                $user_code = $request->user_code ;
+        }
+        else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+        $user_id =User::where('user_code',$user_code)->first()->id;
+        $month =$request->month;
+        $year =$request->year;
         $user = null;
 
         //If empty, then show current user profile page
@@ -297,10 +306,9 @@ class VmtTestingController extends Controller
             $user = User::find($user_id);
         }
 
-        $data['employee_payslip'] = VmtEmployeePaySlip::where([
-            ['user_id', '=', $user_id],
-            ['PAYROLL_MONTH', '=', $month],
-        ])->first();
+        $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id',$user_id)
+            ->whereMonth('payroll_month', $month)
+            ->whereYear('payroll_month', $year)->first();
         // dd($data['employee_payslip']);
 
         $data['employee_name'] = $user->name;
@@ -332,7 +340,14 @@ class VmtTestingController extends Controller
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
 
-        return $pdf->stream($client_name.'.pdf');
+        //$response=base64_encode($pdf->stream([$client_name.'.pdf']));
+        $response=base64_encode($pdf->output([$client_name.'.pdf']));;
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "",
+            'data' =>$response
+        ]);
 
         // Mail::send('vmt_payslip_templates.template_payslip_brandavatar', $data, function ($message) use ($data, $pdf) {
 
@@ -343,8 +358,6 @@ class VmtTestingController extends Controller
         //         ->attachData($pdf->output(), "text.pdf");
 
         // });
-
-
 
         //  dd('Mail sent successfully');
 }
@@ -383,9 +396,15 @@ class VmtTestingController extends Controller
 
 public function importexcell(Request $request){
         // dd($request->all());
-        Excel::import(new sectionImport , $request->file);
+    $invform = new VmtInvForm;
+    $invform->form_name = $request->form_name;
+    $invform->save();
 
-         return "save successfully";
+    Excel::import(new VmtInvSectionImport($invform->id) , $request->file);
+
+
+
+   return "save successfully";
 }
 
 

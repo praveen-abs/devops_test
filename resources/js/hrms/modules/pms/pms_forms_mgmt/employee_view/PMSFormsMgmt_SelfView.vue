@@ -88,9 +88,9 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
-    import { usePmsSelfDetailsStore } from '../PMSFormsMgmtService';
+    import { usePMSFormsDownloadStore } from '../PMSFormsMgmtService';
 
-        const PmsSelfDetailsStore = usePmsSelfDetailsStore();
+    const PmsSelfDetailsStore = usePMSFormsDownloadStore();
 
 
     // const selected_options_calendar_type =  {   "name" : "Choose", "value":""} ;

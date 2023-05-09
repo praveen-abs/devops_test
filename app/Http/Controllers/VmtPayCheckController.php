@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Crypt;
 
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
+use App\Models\VmtEmployeePayslipStatus;
 use App\Models\User;
 use App\Imports\VmtPaySlip;
 use App\Services\VmtEmployeePayCheckService;
@@ -175,7 +176,15 @@ class VmtPayCheckController extends Controller
         try{
 
          $enc_user_id = Crypt::encryptString(auth()->user()->id);
+         //$show_employeepayslip = VmtEmployeePayslipStatus::where('user_id',auth()->user()->id);
 
+   //     if($show_employeepayslip->exists()){
+            //         $is_released =$show_employeepayslip->first()->is_released;
+
+            //     if($is_released == '1'){
+
+            //       }
+            //    }
          $data =  DB::table('vmt_employee_payslip')
              ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
              ->get();
@@ -208,13 +217,13 @@ class VmtPayCheckController extends Controller
                  $result['NET_TAKE_HOME'] = $data[0]->NET_TAKE_HOME;
                  $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
              }
+
              foreach($data as $d) {
                  $result['TOTAL_PF_WAGES'] += (int)$d->PF_WAGES;
              }
+                    return view('vmt_salary_details', compact('data', 'result', 'compensatory','enc_user_id'));
+            }
 
-             return view('vmt_salary_details', compact('data', 'result', 'compensatory','enc_user_id'));
-
-         }
          else
          {
              return view('vmt_nodata_salaryDetails');
@@ -225,7 +234,7 @@ class VmtPayCheckController extends Controller
             dd("showSalaryDetailsPage : ".$e);
         }
 
-     }
+}
 
 
      public function showInvestmentsPage(Request $request){

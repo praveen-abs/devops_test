@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/send-passwordresetlink', [AuthController::class, 'sendPasswordResetLink']);
 Route::post('/auth/updatePassword', [AuthController::class, 'updatePassword']);
 
 

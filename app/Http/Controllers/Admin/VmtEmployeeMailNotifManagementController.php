@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\VmtEmployeeMailNotifMgmtService;
-
+use App\Services\Admin\VmtEmployeeMailNotifMgmtService;
 use Illuminate\Http\Request;
 /*
     DB Table columns:
@@ -33,12 +32,12 @@ class VmtEmployeeMailNotifManagementController extends Controller
 
     }
 
-    public function send_AccActivationMailNotification(Request $request, VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
+    public function send_WelcomeMailNotification(Request $request, VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
     {
-        return $serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
+        return $serviceVmtEmployeeMailNotifMgmtService->send_WelcomeMailNotification($request->user_code);
     }
 
-    public function send_WelcomeMailNotification(Request $request)
+    public function send_AccActivationMailNotification(Request $request)
     {
 
     }

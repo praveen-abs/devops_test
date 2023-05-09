@@ -29,6 +29,7 @@
             </Column>
             <column header="Download">
                 <template  #body="slotProps">
+                <!-- {{slotProps.data}} -->
                     <Button class="btn-primary" label="Download " @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('',slotProps.data.PAYROLL_MONTH)" />
                 </template>
 
@@ -63,6 +64,7 @@ onMounted(async () => {
     await employeePayslipStore.getEmployeeAllPayslipList('174');
 
 });
+
 
 
 

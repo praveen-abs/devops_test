@@ -48,20 +48,31 @@ class Seeder_RolesPermissions extends Seeder
 
 
          ////assign permissions to roles
-         //SUPER ADMIN
-         $sa_role = Role::findByName('superadmin');
-         $sa_role->syncPermissions([
-                    $permissions['MANAGE_PAYSLIPS_can_view'],
-                    $permissions['MANAGE_PAYSLIPS_release_payslip'],
-                    $permissions['can_view_employees_payslip'],
+            //SUPER ADMIN
+            $sa_role = Role::findByName('superadmin');
+            $sa_role->syncPermissions([
+                        $permissions['MANAGE_PAYSLIPS_can_view'],
+                        $permissions['MANAGE_PAYSLIPS_release_payslip'],
+                        $permissions['can_view_employees_payslip'],
 
-                ]);
+                    ]);
 
-         //assign this role to SA100
-         User::where('is_ssa','1')->first()->assignRole('superadmin');
+            //assign this role to SA100
+            User::where('is_ssa','1')->first()->assignRole('superadmin');
 
-         echo "\n SA Role : (Total Perm count) :: ".$sa_role->permissions->count()." \n";
+            echo "\n SA Role : (Total Perm count) :: ".$sa_role->permissions->count()." \n";
 
+
+        ////Assign roles to users based on org_role
+
+            //assign manager role to user's whose org_role = 4 (In future,we will use UI to assign roles)
+            $users_managers = User::where('org_role','4')->get();
+
+            foreach($users_managers as $singleManager)
+            {
+                $singleManager->assignRole('manager');
+
+            }
 
 
 
