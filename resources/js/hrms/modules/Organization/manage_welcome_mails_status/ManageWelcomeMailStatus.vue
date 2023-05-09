@@ -7,22 +7,26 @@
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
     v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
     <Column headerStyle="width: 3rem"></Column>
-    <Column field="user_code" header="" headerStyle="width: 3rem">
+    <Column field="empcode" header="Employee code"  headerStyle="width: 3rem">
     </Column>
-    <Column field="" header="Employee Name"></Column>
-    <Column field="" header="Personal Mail"></Column>
-    <Column field="" header="Payslip Status"></Column>
-    <Column field="welcome_mail_status" header="welcome_mail_status">
+    <Column field="empname" header="Employee Name"></Column>
+    <Column field="personal mail" header="Personal Mail"></Column>
+    <Column field="welcome_mail_status" header="Welcome Mail Status">
     <template #body="slotProps">
         <div>
-            <Button @click="welcome_mail_status_view_btn(slotProps.data)" />
+            <Button @click="welcome_mail_status_view_btn(slotProps.data)" label="Send mail" class="btn btn-primary" />
         </div>
     </template>
     </Column>
-    <Column field="" header="onboard_docs_approval_mail_status">
-        onboard_docs_approval_mail_status
+    <Column field="onboard_docs_approval_mail_status" header="Onboard Document Approval Mail Status">
+        <template #body="slotProps">
+            <div v-if="slotProps.data">
+          </div>
+        </template>
+        <!-- onboard_docs_approval_mail_status -->
     </Column>
-    <Column field="" header="Mail Status">  </Column>
+    <!-- <Column field="" header="Mail Status">  </Column> -->
+    <Column field="acc_activation_mail_status" header="Activation Mail Status"></Column>
 
 </DataTable>
 

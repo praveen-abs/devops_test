@@ -1,22 +1,28 @@
 import {defineStore } from "pinia";
 import {ref, reactive} from "vue";
 import axios from "axios";
-import {Service} from  '../../Service/Service';
+
 
 
 
 export const useInvFormsMgmt = defineStore("InvFormsMgmt", () => {
 
-  const service = Service()
+  const fileuploaded = ref();
 
+  async function uploadInvestmentForm(formData){
 
-  async function uploadInvestmentForm(form_name, excel_file){
+    await axios.post('/investments/ImportInvestmentForm_Excel', {
 
+    }).then((response) => {
+        // console.log("Response [getAllEmployeesPayslipDetails] : " + JSON.stringify(response.data.data));
+
+        fileuploaded.value = response.data.data;
+    });
   }
 
 
   return{
-    uploadInvestmentForm
+    uploadInvestmentForm,
   }
 
 
