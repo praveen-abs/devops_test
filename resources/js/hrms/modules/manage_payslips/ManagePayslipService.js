@@ -112,7 +112,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             })
 
     }
-    async function downloadPayslipReleaseStatus(user_code, month, year, status) {
+    async function downloadPayslip(user_code, month, year, status) {
         console.log("downloadPayslipReleaseStatus() : Updating releasepayslip status to user : " + user_code);
 
         // show_dialogconfirmation.value= false;

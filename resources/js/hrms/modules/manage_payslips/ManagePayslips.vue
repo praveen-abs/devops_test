@@ -122,7 +122,7 @@
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
                 <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
-                    @click="downloadPayslipReleaseStatus(selectedUserCode)"
+                    @click="downloadPayslip(selectedUserCode)"
                     autofocus />
 
                 <Button label="No" icon="pi pi-times" @click="show_downloadPayslip_dialogconfirmation = false" class="p-button-text  py-2" autofocus />
@@ -218,8 +218,8 @@ async function updatePayslipReleaseStatus(selectedUserCode) {
     show_releasePayslip_dialogconfirmation.value = false;
 
 }
-async function downloadPayslipReleaseStatus(selectedUserCode) {
-    await managePayslipStore.downloadPayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+async function downloadPayslip(selectedUserCode) {
+    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
 
 }

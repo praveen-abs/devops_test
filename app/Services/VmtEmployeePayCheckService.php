@@ -619,6 +619,100 @@ class VmtEmployeePayCheckService {
     }
 
 
+    /*
+        This function will also download PDF in local server
+
+    */
+    public function getEmployeePayslipDetailsAsPDF_v2($user_code, $month, $year){
+
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "year" => $year,
+                "month" => $month,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "year" => 'required',
+                "month" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $user_id =User::where('user_code',$user_code)->first()->id;
+        $month =$request->month;
+        $year =$request->year;
+        $user = null;
+
+        //If empty, then show current user profile page
+        if (empty($user_id)) {
+            $user = auth()->user();
+        } else {
+            $user = User::find($user_id);
+        }
+
+        $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id',$user_id)
+            ->whereMonth('payroll_month', $month)
+            ->whereYear('payroll_month', $year)->first();
+        // dd($data['employee_payslip']);
+
+        $data['employee_name'] = $user->name;
+        // dd( $data['employee_name']);
+        $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
+        $data['employee_details'] = VmtEmployee::where('userid', $user->id)->first();
+        $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->first();
+
+        $query_client = VmtClientMaster::find($user->client_id);
+
+        $data['client_logo'] = $query_client->client_logo;
+        $client_name = $query_client->client_name;
+
+        $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+        //dd($client_name);
+        //$html =  view('vmt_payslipTemplate', $data);
+        //dd($data['employee_statutory_details']->uan_number)
+
+
+        // $pdf = PDF::loadView('vmt_payslip_templates.template_payslip_brandavatar', $data);
+
+        $html = view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $data);
+
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $pdf = new Dompdf( $options);
+        $pdf->loadhtml($html, 'UTF-8');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+
+        //$response=base64_encode($pdf->stream([$client_name.'.pdf']));
+        $response=base64_encode($pdf->output([$client_name.'.pdf']));;
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "",
+            'data' =>$response
+        ]);
+
+    }
+
+
+
+
     public function getEmployeePayslipDetails($user_code, $month ,$year){
 
 
