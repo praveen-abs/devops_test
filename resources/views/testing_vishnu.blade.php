@@ -43,14 +43,24 @@
         //     $response_docs = VmtDocuments::all();
         //     dd($response_docs);
         //  }
-        $emp_assignedpmsfrom=VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform.id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
-                                                ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
-                                                ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
-                                                ->where('vmt_pms_kpiform_assigned.assignee_id',$user_id)
-                                                ->get();
-         dd($emp_assignedpmsfrom->toarray());
+        // $emp_assignedpmsfrom=VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform.id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
+        //                                         ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
+        //                                         ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
+        //                                         ->where('vmt_pms_kpiform_assigned.assignee_id',$user_id)
+        //                                         ->get();
+        //  dd($emp_assignedpmsfrom->toarray());
 
 
+
+
+
+    //     $query_client = VmtClientMaster::find(session('client_id'));
+    //     if (!empty($query_client))
+    //     return $query_client->client_name;
+    // else
+    //     return "";
+
+        echo$client_name
     ?>
 
 

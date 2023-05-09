@@ -9,6 +9,7 @@ use App\Models\User;
 
 
 
+
 class VmtPMSFormsMgmtService
 {
 
@@ -165,16 +166,18 @@ class VmtPMSFormsMgmtService
                foreach($emp_kpi_json as $key=>$perchantage){
                 $emp_kpi_avg=  $emp_kpi_avg+$perchantage;
                }
-               $single_array['emp_kpi_avg'] =$emp_kpi_avg;
-              foreach( $manager_kpi_json as $key=>$kpi_perchantage){
+               $single_array['assignee_kpi_percentage'] =$emp_kpi_avg;
+              foreach( $manager_kpi_json as $manager_user_id=>$kpi_perchantage){
+                $approver_name = User::where('id',$manager_user_id)->first('name')->name;
                 foreach($kpi_perchantage as $key=>$perchantage){
                     $manager_kpi_avg =   $manager_kpi_avg+$perchantage;
                 }
               }
-              $single_array['manager_kpi_avg'] =$manager_kpi_avg;
+              $single_array['approver_name']=  $approver_name;
+              $single_array['reviewer_kpi_percentage'] =$manager_kpi_avg;
               array_push( $pms_avg_for_emp, $single_array);
              }
-             dd($pms_avg_for_emp);
+             return $pms_avg_for_emp;
 
         }catch(\Exception $e){
 

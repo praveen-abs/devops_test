@@ -822,6 +822,17 @@ class VmtEmployeePayCheckService {
                                                     ->orderBy('PAYROLL_MONTH', 'ASC')
                                                     ->get(['id','PAYROLL_MONTH','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
 
+            $show_employeepayslip = VmtEmployeePayslipStatus::where('user_id',auth()->user()->id);
+
+            //  if($show_employeepayslip->exists()){
+            //     $is_released =$show_employeepayslip->first()->is_released;
+
+            //     if($is_released == '1'){
+            //         $query_payslips=$query_payslips;
+            //     }else{
+            //         $query_payslips ='null';
+            //     }
+            // }
 
                 return response()->json([
                     "status" => "success",
