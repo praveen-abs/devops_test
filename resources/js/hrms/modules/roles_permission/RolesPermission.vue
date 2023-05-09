@@ -17,15 +17,28 @@
         </div>
     </div> -->
     <div class="w-full">
-        <!-- <div>
-            <h4>Employee Roles and Permissiom</h4>
-        </div>
         <div>
-            <table></table>
-        </div> -->
+            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissiom</h4>
+        </div>
+        <div class="p-4 my-4 card">
+            <div class="card-body">
+                <p class="text-lg font-semibold text-gray-700">Here You Can Manage The Employees Roles And Premission Given To Them.</p>
+                <div class="flex my-6">
+                    <InputText placeholder="Search...."  class="w-4 h-10"/>
+                    <!-- Creating New Job Roles dailog-->
+                    <button class="h-10 mx-6 btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
+                </div>
+                <div>
+                    <DataTable>
+                        <Column field="product" header="Role"></Column>
+                        <Column field="lastYearSale" header="Who Has Access"></Column>
+                        <Column field="thisYearSale" header="Actions"></Column>
+                    </DataTable>
+                </div>
+            </div>
+        </div>
 
-        <!-- Creating New Job Roles dailog-->
-      <button class="btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
+
 
     </div>
 
@@ -55,7 +68,8 @@
         </div>
         <template #footer>
             <div>
-                <button class="px-4 py-2 text-lg font-semibold text-gray-900 bg-gray-400 rounded-md" @click="addNewroleDailog = false">Cancel</button>
+                <button class="px-4 py-2 text-lg font-semibold text-gray-900 bg-gray-400 rounded-md"
+                    @click="addNewroleDailog = false">Cancel</button>
                 <button class="py-2 mx-4 btn btn-orange">Create Role</button>
             </div>
 
