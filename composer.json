@@ -52,7 +52,7 @@
             "app/Services/VmtLoginService.php",
             "app/Services/Admin/VmtEmployeeMailNotifMgmtService.php",
             "app/Services/VmtConfigAppService.php",
-            "app/Services/VmtPMSFormsMgmtService.php"
+            "app/Services/PMSReportsService/VmtPMSFormsMgmtService.php"
         ]
     },
     "autoload-dev": {
