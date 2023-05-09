@@ -197,7 +197,7 @@
                 <img v-if="profile" class="rounded-circle   profile-img"
                     :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
 
-                <h5 class="card-title mt-3 mb-2 f-12"> {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
+                <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;" > {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
 
                 <h5 v-if="_instance_profilePagesStore.employeeDetails
                     .get_employee_office_details.department_id
