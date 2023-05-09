@@ -1061,6 +1061,11 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         {
             $query_user->active = $active_status;
             $query_user->save();
+           return response()->json([
+                'status' => 'success',
+                'message' => "user activate successfully",
+                'mail_status'=>''
+            ]);
         }
         else
         {
