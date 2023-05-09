@@ -283,7 +283,18 @@ class VmtTestingController extends Controller
 
     public function downloadPaySlip_pdfView(Request $request)
     {
-        $user_id =User::where('user_code',$request->user_code)->first()->id;
+
+        if (empty($request->uid)) {
+            if(empty($request->user_code)){
+                $user_code = auth()->user()->user_code;
+             } else
+                $user_code = $request->user_code ;
+        }
+        else {
+            $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
+            //dd("Enc User details from request : ".$user);
+        }
+        $user_id =User::where('user_code',$user_code)->first()->id;
         $month =$request->month;
         $year =$request->year;
         $user = null;

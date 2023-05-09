@@ -780,7 +780,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
     Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
-    Route::get('/testing/employee_payslip/{user_id?}/{month?}',  [App\Http\Controllers\VmtTestingController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
+    Route::post('/paycheck/employee_payslip/downloadPayslipReleaseStatus', [App\Http\Controllers\VmtTestingController::class, 'downloadPaySlip_pdfView'])->name('downloadPaySlip_pdfView');
     Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
 
     //investment testing
