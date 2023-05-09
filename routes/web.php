@@ -762,8 +762,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
 
     //Emp Mail Notifications
-    Route::get('/configs/manage_emp_mail_notifications', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'fetchAllEmployees_WelcomeMail_Details'])->name('fetchAllEmployees_WelcomeMail_Details');
-    Route::post('/fetch_all_employees_welcome_mail_status', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'send_AccActivationMailNotification'])->name('/configs/all_employees_welcome_mail_status');
+    Route::get('/getAllEmployees_WelcomeMailStatus_Details', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'getAllEmployees_WelcomeMailStatus_Details'])->name('getAllEmployees_WelcomeMailStatus_Details');
+    Route::post('/send_WelcomeMailNotification', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'send_WelcomeMailNotification'])->name('send_WelcomeMailNotification');
 
     //welcomemailstatus
 

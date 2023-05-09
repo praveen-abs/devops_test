@@ -12,6 +12,7 @@
     use App\Models\VmtPMS_KPIFormModel;
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
+    use App\Models\VmtEmployeeMailStatus;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
     use App\Mail\WelcomeMail;
@@ -60,7 +61,30 @@
     // else
     //     return "";
 
-        echo$client_name
+         //to store mailstatus
+         $isSent=true;
+       $user_code= 'IMA0002';
+         $user_id=User::where('user_code',$user_code)->first()->id;
+
+            $query_emp_welcomemailstatus =VmtEmployeeMailStatus::where('user_id',$user_id);
+
+            if($query_emp_welcomemailstatus->exists())
+            {
+            //update
+            $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
+            $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
+            dd($query_emp_welcomemailstatus);
+
+            }
+            else
+            {
+                //create new record
+               $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
+               $query_emp_welcomemailstatus->user_id=$user_id;
+               $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
+               dd($query_emp_welcomemailstatus);
+
+            }
     ?>
 
 
