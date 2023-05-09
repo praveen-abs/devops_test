@@ -304,39 +304,39 @@
                                 </Column>
                                 <Column header="Mode Of Transport" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.mode_of_transport }}
+                                        {{ slotProps.data.vehicle_type }}
                                     </template>
                                 </Column>
 
                                 <Column field="from" header="From " style="min-width: 8rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.travel_from }}
+                                        {{ slotProps.data.from }}
                                     </template>
                                 </Column>
                                 <Column field="to" header="To" style="min-width: 8rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.travel_to }}
+                                        {{ slotProps.data.to }}
                                     </template>
                                 </Column>
                                 <Column field="distance_travelled" header="Total Distance" style="min-width: 4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.total_distance_travelled }}
+                                        {{ slotProps.data.distance_travelled }}
                                     </template>
                                 </Column>
                                 <Column field="Amt_km" header="Amt/Km" style="min-width:4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.Amt_km }}
+                                        {{ slotProps.data.cost_per_km }}
                                     </template>
                                 </Column>
 
                                 <Column field="total_expenses" header="Amount" style="min-width: 6rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.local_convenyance_total_amount }}
+                                        {{ slotProps.data.total_expenses }}
                                     </template>
                                 </Column>
                                 <Column field="user_comments" header="Remarks" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.local_conveyance_remarks }}
+                                        {{ slotProps.data.user_comments }}
                                     </template>
                                 </Column>
                                 <!-- <template #footer>
