@@ -197,12 +197,12 @@
                         </a>
                         <div class="collapse menu-dropdown" id="orgDrop-Down">
                             <ul class="nav nav-sm flex-column">
-
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
                                 <li class="nav-item ">
                                     <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Manage WelcomeMail Status</span></a>
                                 </li>
-
+                                @endcan
                                 <li class="nav-item ">
                                     <a href="{{ route('manageEmployees') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Manage Employees</span></a>
