@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Imports\VmtPaySlip;
