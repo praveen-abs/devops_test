@@ -31,6 +31,7 @@ use Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AttenanceWorkShifttime;
 use App\Imports\sectionImport;
+use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtInvFEmpAssigned;
 
 
