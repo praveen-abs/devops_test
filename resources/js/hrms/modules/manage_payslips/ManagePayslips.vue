@@ -23,7 +23,9 @@
                 <template #body="slotProps">
                     <div class="d-flex flex-column">
 
-                    <button class="btn-primary rounded" style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                        <button class="btn" style="border:1px solid navy ;" v-if="slotProps.data.is_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
+
+                    <button class="btn-primary rounded" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
                      <!-- {{slotProps.data.is_released}} -->
                      <h1 v-if="slotProps.data.is_released == 1"  class="text-success mt-2">
                         Released
@@ -39,12 +41,11 @@
             </Column>
             <Column field="is_payslip_mail_sent" header="Mail Status">
               <template #body="slotProps">
-                <div v-if="slotProps.data.is_payslip_mail_sent == 1">
+                <div v-if="slotProps.data.is_payslip_mail_sent == 1" >
                    <h1> Payslip sent</h1>
                 </div>
                 <div v-else>
-                    <button class="btn-primary  rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
-
+                    <button class="btn-primary rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
                 </div>
                 </template>
             </Column>
@@ -87,6 +88,28 @@
                     autofocus />
 
                 <Button label="No" icon="pi pi-times" @click="show_dialogconfirmation = false" class="p-button-text py-2" autofocus />
+
+            </div>
+
+    </Dialog>
+
+    <!-- show withdraw button -->
+
+    <Dialog header="Confirmation" v-model:visible="show_withdraw_dialogConfirmation"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+        <div class="confirmation-content">
+
+            <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+            <span>Are you sure you want to send Mail ?</span>
+        </div>
+
+            <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
+
+                <Button class="btn-primary mr-3 py-2" label="Yes" icon="pi pi-check"
+                    @click="UpdatWithDrawStatus(selectedUserCode)"
+                    autofocus />
+
+                <Button label="No" icon="pi pi-times" @click="show_withdraw_dialogConfirmation = false" class="p-button-text py-2" autofocus />
 
             </div>
 
@@ -162,6 +185,8 @@ const show_dialogconfirmation = ref(false);
 const show_releasePayslip_dialogconfirmation = ref(false);
 const show_downloadPayslip_dialogconfirmation = ref(false);
 
+const show_withdraw_dialogConfirmation = ref(false);
+
 const selectedPayRollDate = ref();
 
 const selectedUserCode = ref();
@@ -174,9 +199,9 @@ onMounted( () => {
 
 });
 
-const is_released = computed(() => {
-    if (managePayslipStore.is_released == 1) return "Released";
-})
+// const is_released = computed(() => {
+//     if (managePayslipStore.is_released == 1) return "Released";
+// })
 
 async function showPaySlipHTMLView(selected_user_code) {
     console.log("Showing payslip html for (user_code, month): " + selected_user_code + " , " + parseInt(managePayslipStore.selectedPayRollDate.getMonth() + 1));
@@ -218,8 +243,18 @@ async function updatePayslipReleaseStatus(selectedUserCode) {
     show_releasePayslip_dialogconfirmation.value = false;
 
 }
-async function downloadPayslip(selectedUserCode) {
-    await managePayslipStore.downloadPayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
+async function showWithdraw_confimationDialog(selected_user_code){
+    selectedUserCode.value = selected_user_code;
+    show_withdraw_dialogConfirmation.value = true;
+}
+async function UpdatWithDrawStatus(selectedUserCode) {
+    await managePayslipStore.UpdatWithDrawStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(), 0);
+    show_withdraw_dialogConfirmation.value = false ;
+
+}
+
+async function downloadPayslipReleaseStatus(selectedUserCode) {
+    await managePayslipStore.downloadPayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
     show_downloadPayslip_dialogconfirmation.value = false;
 
 }
