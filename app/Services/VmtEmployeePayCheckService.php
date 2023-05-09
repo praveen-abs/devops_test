@@ -550,7 +550,7 @@ class VmtEmployeePayCheckService {
             ]
 
         );
-
+              
 
         if($validator->fails()){
             return response()->json([
@@ -652,13 +652,12 @@ class VmtEmployeePayCheckService {
         }
 
         $user_id =User::where('user_code',$user_code)->first()->id;
-        $month =$request->month;
-        $year =$request->year;
+
         $user = null;
 
         //If empty, then show current user profile page
         if (empty($user_id)) {
-            $user = auth()->user();
+            $user = auth()->user()->id;
         } else {
             $user = User::find($user_id);
         }

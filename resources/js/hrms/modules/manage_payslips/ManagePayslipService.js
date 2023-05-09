@@ -137,7 +137,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         // show_dialogconfirmation.value= false;
 
         let selectedDate = new Date(selectedPayRollDate.value)
-        axios.post('/paycheck/employee_payslip/downloadPayslipReleaseStatus', {
+        axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF_v2', {
             user_code: user_code,
             month: month,
             year: year,
