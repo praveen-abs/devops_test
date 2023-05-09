@@ -238,7 +238,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         const selected_date = ref()
         async function generate_ajax() {
 
-            loading_spinner.value = true
+            // loading_spinner.value = true
 
             console.log(selected_date.value);
 
