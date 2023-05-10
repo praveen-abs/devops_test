@@ -27,7 +27,7 @@
                 </div>
             </a>
 
-            <a   href="/payroll/setup"
+            <a href="/payroll/setup"
                 class="bg-blue-900   payroll-settings-content border-orange-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt="">
@@ -42,7 +42,7 @@
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
                         <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    
+
                     <i class="ml-8 mr-6 text-xl font-bold fa fa-angle-double-right text-white-200 ">
                     </i>
                 </div>
@@ -84,7 +84,7 @@
             </a>
             <a
                 class="bg-blue-900   payroll-settings-content border-red-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
-                <div class="flex items-center w-1/3">
+                <div class="flex items-center ">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/money-bag.png" alt="">
                     <span class="ml-5 text-lg text-white">Full and Final Settlement</span>
                 </div>
