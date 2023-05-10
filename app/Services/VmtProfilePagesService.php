@@ -184,7 +184,7 @@ class VmtProfilePagesService
         )
             ->where('users.id', $user_id)
             ->first();
-
+           
         // dd($response->id);
 
 
@@ -211,7 +211,11 @@ class VmtProfilePagesService
             $response['getEmployeeOfficeDetails']['l1_manager_name'] = User::where('user_code',$response['getEmployeeOfficeDetails']['l1_manager_code'])->first()->name ?? 'NA';
 
         if(!empty($response['getEmployeeDetails']['bank_id']))
+        {
+
             $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->first()->bank_name;
+
+        }
 
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);
