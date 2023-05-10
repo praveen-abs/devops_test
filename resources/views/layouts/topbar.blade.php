@@ -30,7 +30,7 @@ if ($query_clientMaster) {
 
         <div class="d-flex">
             <div class="notify-content d-flex justify-content-center align-items-center">
-                <button type="button" class="form-select outline-none border-0 fw-bold fas fs-5" id="page-header-user-dropdown"
+                <button type="button" class="form-select outline-none border-0 fw-bold dropdown-toggle" id="page-header-user-dropdown"
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
                     <?php
@@ -42,7 +42,7 @@ if ($query_clientMaster) {
 
 
                     ?>
-                        &#xf107;
+
                     {{-- {{ empty(  ) ? "Client not assigned" :  }} --}}
 
                 </button>

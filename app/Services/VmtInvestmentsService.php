@@ -117,10 +117,13 @@ class VmtInvestmentsService
         //Validate
         $validator = Validator::make(
             $data = [
-                'form_name' => $form_name
+                'user_code' => $user_code,
+                'year' => $year,
+
             ],
             $rules = [
-                'form_name' => 'required|exists:vmt_inv_form,form_name',
+                'user_code' => 'required|exists:users,user_code',
+                'year' => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -144,7 +147,7 @@ class VmtInvestmentsService
             //Get the query structure
 
             $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-                            // ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
+                             ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
                             ->where('vmt_inv_formsection.id', $form_id)
                             ->get(
                         //     [

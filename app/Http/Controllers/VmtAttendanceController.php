@@ -296,6 +296,27 @@ class VmtAttendanceController extends Controller
 
         // dd($request ->all());
 
+        //get manager of this employee
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first()->l1_manager_code;
+        $query_manager = User::where('user_code', $manager_emp_code);
+        $reviewer_mail =  null;
+
+        if($query_manager->exists())
+        {
+            $query_manager = $query_manager->first();
+            $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $query_manager->id)->first()->officical_mail;
+
+        }
+        else
+        {
+            //throw error
+            return [
+                "status" => "failure",
+                "message" => "Manager not found for the given employee. Please contact the admin",
+                "data" => "",
+            ];
+        }
+
 
         $leave_month = date('m',strtotime($request->start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
@@ -379,12 +400,9 @@ class VmtAttendanceController extends Controller
         // $emp_leave_details->total_leave_datetime = $diff;
 
 
-        //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first('l1_manager_code');
-        $manager_name = User::where('user_code', $manager_emp_code)->first('name');
-        $manager_id = User::where('user_code', $manager_emp_code)->first('id');
 
-        $emp_leave_details->reviewer_user_id = $manager_id;
+
+        $emp_leave_details->reviewer_user_id = $query_manager->id;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         if (!empty($request->notifications_users_id))
@@ -418,7 +436,6 @@ class VmtAttendanceController extends Controller
         ////
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->first('officical_mail');
 
         $message = "";
         $mail_status = "";
@@ -432,12 +449,13 @@ class VmtAttendanceController extends Controller
         else
             $notification_mails = array();
 
+       // dd($reviewer_mail);
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : auth::user()->name,
                                                     uEmpCode : auth::user()->user_code,
                                                     uEmpAvatar : $emp_avatar,
-                                                    uManagerName : $manager_name,
+                                                    uManagerName : $query_manager->name,
                                                     uLeaveRequestDate : Carbon::parse($request->leave_request_date)->format('M jS Y'),
                                                     uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
                                                     uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
