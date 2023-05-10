@@ -85,32 +85,12 @@
     //            dd($query_emp_welcomemailstatus);
 
     //         }
-    $user_id = "266";
-    // $query_emp_documents =User::join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
-    //                       ->leftjoin('vmt_documents','vmt_documents.id','=','vmt_employee_documents.doc_id')
-    //                       ->where('users.id',$user_id)
-
-    //                       ->get();
-    //                       dd( $query_emp_documents->toarray());
-    $query_emp_documents =VmtDocuments::leftjoin('vmt_employee_documents','vmt_employee_documents.doc_id','vmt_documents.id')
-                            //->where('user_id',$user_id)
-                           ->get();
-                          dd( $query_emp_documents);
-
-
-
-    //                       $students = \DB::table('students')
-    // ->select(
-    //     'students.id',
-    //     'first_name'
-    // )
-    // ->whereNotExists( function ($query) use ($current_academic) {
-    //     $query->select(DB::raw(1))
-    //     ->from('enrollments')
-    //     ->whereRaw('students.id = enrollments.student_id')
-    //     ->where('enrollments.academic_id', '=', $current_academic->id);
-    // })
-    // ->get();
+    $user_id ="175";
+    $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
+                    ->where('vmt_employee_documents.user_id',$user_id)
+                    ->orWhereNull('vmt_employee_documents.id')
+                    ->get();
+                    dd($response->toarray());
 ?>
 
 
