@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtEmployeeDocumentsService;
 use App\Services\Admin\VmtEmployeeMailNotifMgmtService;
 
 class VmtEmployeeOnboardingController extends Controller
@@ -1507,9 +1508,13 @@ class VmtEmployeeOnboardingController extends Controller
 
        $response= $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
 
-       $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
+      // $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
 
        return $response;
 
+    }
+
+    public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
+            return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
 }

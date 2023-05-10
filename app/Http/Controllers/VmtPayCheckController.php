@@ -111,7 +111,7 @@ class VmtPayCheckController extends Controller
         return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($user_code, $request->month, $request->year);
     }
 
-    public function getEmployeePayslipDetailsAsPDF_v2(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
 
         $user_code = null;
 
@@ -126,7 +126,7 @@ class VmtPayCheckController extends Controller
             //dd("Enc User details from request : ".$user);
         }
 
-        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF_v2($user_code, $request->month, $request->year);
+        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($user_code, $request->month, $request->year);
     }
 
     public function sendMail_employeePayslip(Request $request, VmtEmployeePayCheckService $employeePayCheckService){

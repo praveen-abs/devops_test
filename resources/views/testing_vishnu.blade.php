@@ -29,7 +29,7 @@
 @endsection
 @section('content')
     <?php
-        $user_id = "187";
+
 
 
 
@@ -62,33 +62,36 @@
     //     return "";
 
          //to store mailstatus
-         $isSent=true;
-       $user_code= 'IMA0002';
-         $user_id=User::where('user_code',$user_code)->first()->id;
+         //$isSent=true;
+    //    $user_code= 'IMA0002';
+    //      $user_id=User::where('user_code',$user_code)->first()->id;
 
-            $query_emp_welcomemailstatus =VmtEmployeeMailStatus::where('user_id',$user_id);
+    //         $query_emp_welcomemailstatus =VmtEmployeeMailStatus::where('user_id',$user_id);
 
-            if($query_emp_welcomemailstatus->exists())
-            {
-            //update
-            $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
-            $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
-            dd($query_emp_welcomemailstatus);
+    //         if($query_emp_welcomemailstatus->exists())
+    //         {
+    //         //update
+    //         $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
+    //         $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
+    //         dd($query_emp_welcomemailstatus);
 
-            }
-            else
-            {
-                //create new record
-               $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
-               $query_emp_welcomemailstatus->user_id=$user_id;
-               $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
-               dd($query_emp_welcomemailstatus);
+    //         }
+    //         else
+    //         {
+    //             //create new record
+    //            $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
+    //            $query_emp_welcomemailstatus->user_id=$user_id;
+    //            $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
+    //            dd($query_emp_welcomemailstatus);
 
-            }
-    ?>
-
-
-
+    //         }
+    $user_id ="175";
+    $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
+                    ->where('vmt_employee_documents.user_id',$user_id)
+                    ->orWhereNull('vmt_employee_documents.id')
+                    ->get();
+                    dd($response->toarray());
+?>
 
 
 @endsection
