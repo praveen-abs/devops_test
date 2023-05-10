@@ -36,10 +36,9 @@ class VmtEmployeeMailNotifManagementController extends Controller
     {
         return $serviceVmtEmployeeMailNotifMgmtService->send_WelcomeMailNotification($request->user_code);
     }
-
-    public function send_AccActivationMailNotification(Request $request)
+    public function send_AccActivationMailNotification(Request $request, VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
     {
-
+        return $serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
     }
 
     public function send_OnboardDocsApprovedNotification(Request $request)

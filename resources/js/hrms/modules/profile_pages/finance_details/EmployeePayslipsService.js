@@ -70,7 +70,7 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
             responseType: 'stream'
         };
 
-        await axios.post('/paycheck/employee_payslip/downloadPayslipReleaseStatus',
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF_v2',
         {
             uid : getURLParams_UID(),
              user_code : user_code,

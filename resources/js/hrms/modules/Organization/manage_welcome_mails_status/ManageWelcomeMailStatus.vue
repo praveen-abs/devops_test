@@ -1,32 +1,62 @@
 <template>
-    {{ ManageWelcomeMailStatusStore.array_employees_list }}
+    <!-- {{ ManageWelcomeMailStatusStore.array_employees_list }} -->
 
     <DataTable :value="ManageWelcomeMailStatusStore.array_employees_list" :paginator="true" :rows="10" dataKey="id"
-    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-    :rowsPerPageOptions="[5, 10, 25]"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-    v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-    <Column headerStyle="width: 3rem"></Column>
-    <Column field="empcode" header="Employee code"  headerStyle="width: 3rem">
-    </Column>
-    <Column field="empname" header="Employee Name"></Column>
-    <Column field="personal mail" header="Personal Mail"></Column>
-    <Column field="welcome_mail_status" header="Welcome Mail Status">
-    <template #body="slotProps">
-        <div>
-            <Button @click="welcome_mail_status_view_btn(slotProps.data)" label="Send mail" class="btn btn-primary" />
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        :rowsPerPageOptions="[5, 10, 25]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+        responsiveLayout="scroll" v-model:filters="filters" filterDisplay="menu" :loading="loading2"
+        :globalFilterFields="['name', 'status']">
+        <Column headerStyle="width: 3rem"></Column>
+        <Column field="empcode" header="Employee code" headerStyle="width: 3rem">
+        </Column>
+        <Column field="empname" header="Employee Name"></Column>
+        <Column field="personal mail" header="Personal Mail"></Column>
+        <Column field="welcome_mail_status" header="Welcome Mail Status">
+            <template #body="slotProps">
+                <div>
+                    <Button @click="welcome_mail_status_view_btn(slotProps.data)" label="Send mail"
+                        class="btn btn-primary" />
+                </div>
+            </template>
+        </Column>
+        <Column field="onboard_docs_approval_mail_status" header="Onboard Document Approval Mail Status">
+            <template #body="slotProps">
+                <h1 v-if="slotProps.data.value == null || slotProps.data == 0">Mail Not Send</h1>
+                <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
+            </template>
+
+
+            <!-- onboard_docs_approval_mail_status -->
+        </Column>
+        <!-- <Column field="" header="Mail Status">  </Column> -->
+        <Column field="acc_activation_mail_status" header="Activation Mail Status">
+            <template #body="slotProps">
+                <h1 v-if="slotProps.data.value == null || slotProps.data == 0">Mail Not Send</h1>
+                <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
+            </template>
+        </Column>
+
+    </DataTable>
+
+    <Dialog header="Confirmation" v-model:visible="sendWelcomeMail_Status_diaconfirmation"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+        <div class="confirmation-content">
+
+            <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+            <span>Are you sure you want to download payslip? {{ managePayslipStore.name }} </span>
         </div>
-    </template>
-    </Column>
-    <Column field="" header="Onboard Document Approval Mail Status">
-        onboard_docs_approval_mail_status
-    </Column>
-    <!-- <Column field="" header="Mail Status">  </Column> -->
-    <Column field="acc_activation_mail_status" header="Activation Mail Status"></Column>
 
-</DataTable>
+        <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
+            <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
+                @click="showWecMailSendConfirmationDialog(selectedUserCode)" autofocus />
 
+            <Button label="No" icon="pi pi-times" @click="hideConfirmDialog = false"
+                class="p-button-text  py-2" autofocus />
+
+        </div>
+
+    </Dialog>
 </template>
 
 <script setup>
@@ -38,20 +68,31 @@ const ManageWelcomeMailStatusStore = useManageWelcomeMailStatusStore();
 
 
 // const canShowPayslipHTMLView = ref(false);
-// const show_dialogconfirmation = ref(false);
+ const sendWelcomeMail_Status_diaconfirmation = ref(false);
 // const show_releasePayslip_dialogconfirmation = ref(false);
 // const show_downloadPayslip_dialogconfirmation = ref(false);
 
 // const selectedPayRollDate = ref();
 
-// const selectedUserCode = ref();
+const selectedUserCode = ref();
 
 
 
-onMounted( () => {
+onMounted(() => {
     ManageWelcomeMailStatusStore.getManageWelcomeMailStatus()
 
 });
+
+function showWecMailSendConfirmationDialog(selected_user_code) {
+    selectedUserCode.value = selected_user_code;
+
+    sendWelcomeMail_Status_diaconfirmation.value = true;
+}
+
+function hideConfirmDialog(){
+    sendWelcomeMail_Status_diaconfirmation = false;
+
+};
 
 // const is_released = computed(() => {
 //     if (managePayslipStore.is_released == 1) return "Released";
@@ -79,11 +120,7 @@ onMounted( () => {
 
 //     show_releasePayslip_dialogconfirmation.value = true;
 // }
-// function showdownloadPayslipConfirmationDialog(selected_user_code) {
-//     selectedUserCode.value = selected_user_code;
 
-//     show_downloadPayslip_dialogconfirmation.value = true;
-// }
 
 // async function sendMail(selectedUserCode) {
 

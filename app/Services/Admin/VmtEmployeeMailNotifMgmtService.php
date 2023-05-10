@@ -31,6 +31,7 @@ class VmtEmployeeMailNotifMgmtService {
 
         $user_email= User::leftjoin('vmt_employee_mail_status','vmt_employee_mail_status.user_id','users.id')
         ->where('users.active','<>','-1')
+        ->where('users.is_ssa','<>','1')
         ->select(
                 'users.User_code as empcode',
                 'users.name as empname',
@@ -173,7 +174,7 @@ class VmtEmployeeMailNotifMgmtService {
             {
                 //update
                $query_emp_activationmailstatus = $query_emp_activationmailstatus->first();
-               $query_emp_activationmailstatus->onboard_docs_approval_mail_status= $isSent? '1':'0';
+               $query_emp_activationmailstatus->acc_activation_mail_status= $isSent? '1':'0';
                $query_emp_activationmailstatus->save();
 
             }
@@ -183,16 +184,12 @@ class VmtEmployeeMailNotifMgmtService {
                 //create new record
                $query_emp_activationmailstatus = new VmtEmployeeMailStatus;
                $query_emp_activationmailstatus->user_id=$user_id;
-               $query_emp_activationmailstatus->onboard_docs_approval_mail_status=$isSent? '1':'0';
+               $query_emp_activationmailstatus->acc_activation_mail_status=$isSent? '1':'0';
                $query_emp_activationmailstatus->save();
             }
 
 
-            return response()->json([
-                'status' => 'success',
-                'message' => "Welcome Mail Notification sent successfully!",
-                'data' => ""
-            ]);
+            return 'success';
 
         }
         catch(\Exception $e)
