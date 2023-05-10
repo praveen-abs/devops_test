@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VmtEmployeeDocuments;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ use App\Models\VmtGeneralInfo;
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
 use App\Mail\WelcomeMail;
-
+use App\Models\VmtDocuments;
 
 class VmtTestingController extends Controller
 {
@@ -80,10 +81,9 @@ class VmtTestingController extends Controller
         //$private_file = "B090/onboarding_documents/AadharCardBack_B090_13-04-2023_18-23-34.jpg";
         $private_file = "PLIPL068/profile_pics/mk.jpg";
         //dd(file(storage_path('employees/'.$private_file)));
-        $output =File::get(storage_path('employees/' . $private_file));
+        $output = File::get(storage_path('employees/' . $private_file));
 
         return base64_encode($output);
-
     }
 
     public function testingpdf()
@@ -193,45 +193,44 @@ class VmtTestingController extends Controller
         $response = $employeeService->attachAppointmentLetterPDF($employeeData);
 
         return $response;
-
     }
 
     public function investmenttesting()
     {
-        $investment_formname="invertment form 1";
+        $investment_formname = "invertment form 1";
 
         //Get investment form
         //$form_id = VmtInvestmentForm::where('form_name',$investment_formname)->first()->id;
 
-        $inv_form_details = VmtInvestmentForm::join('vmt_investment_form_secpat','vmt_investment_form_secpat.form_id','=','vmt_investment_forms.id')
-                            ->join('vmt_investment_section_particulars','vmt_investment_section_particulars.id','=','vmt_investment_form_secpat.sec_pat_id') //Get sections_particulars id
-                            ->join('vmt_investment_sections','vmt_investment_sections.id','=','vmt_investment_section_particulars.section_id')// Get Sections
-                            ->join('vmt_investment_particulars','vmt_investment_particulars.id','=','vmt_investment_section_particulars.particular_id')// Get Particular id
-                            ->join('vmt_inv_fsp_popups','vmt_inv_fsp_popups.fsp_id','=','vmt_investment_form_secpat.id')
-                            ->join('vmt_inv_emp_fsp_popups','vmt_inv_emp_fsp_popups.fsp_popups_id','=','vmt_inv_fsp_popups.id')
-                            ->join('vmt_inv_popup_fields','vmt_inv_popup_fields.id','=','vmt_inv_fsp_popups.popupfield_id')
-                            ->join('vmt_inv_popup_list','vmt_inv_popup_list.id','=','vmt_inv_popup_fields.popups_list_id')
-                            ->join('vmt_emp_investments_dec_amt','vmt_emp_investments_dec_amt.form_sectionparticular_id','=','vmt_investment_form_secpat.id')
+        $inv_form_details = VmtInvestmentForm::join('vmt_investment_form_secpat', 'vmt_investment_form_secpat.form_id', '=', 'vmt_investment_forms.id')
+            ->join('vmt_investment_section_particulars', 'vmt_investment_section_particulars.id', '=', 'vmt_investment_form_secpat.sec_pat_id') //Get sections_particulars id
+            ->join('vmt_investment_sections', 'vmt_investment_sections.id', '=', 'vmt_investment_section_particulars.section_id') // Get Sections
+            ->join('vmt_investment_particulars', 'vmt_investment_particulars.id', '=', 'vmt_investment_section_particulars.particular_id') // Get Particular id
+            ->join('vmt_inv_fsp_popups', 'vmt_inv_fsp_popups.fsp_id', '=', 'vmt_investment_form_secpat.id')
+            ->join('vmt_inv_emp_fsp_popups', 'vmt_inv_emp_fsp_popups.fsp_popups_id', '=', 'vmt_inv_fsp_popups.id')
+            ->join('vmt_inv_popup_fields', 'vmt_inv_popup_fields.id', '=', 'vmt_inv_fsp_popups.popupfield_id')
+            ->join('vmt_inv_popup_list', 'vmt_inv_popup_list.id', '=', 'vmt_inv_popup_fields.popups_list_id')
+            ->join('vmt_emp_investments_dec_amt', 'vmt_emp_investments_dec_amt.form_sectionparticular_id', '=', 'vmt_investment_form_secpat.id')
 
 
 
-                           // ->where('vmt_investment_forms.form_name',$investment_formname)
-                            ->get([
-                                'vmt_investment_sections.section_name as section_name',
-                                'vmt_investment_particulars.particular_name as particular_name',
-                                'vmt_investment_particulars.references as references',
-                                'vmt_investment_particulars.amount_max_limit as amount_max_limit',
-                                'vmt_inv_popup_list.popups_list as popup_name',
-                                'vmt_inv_popup_fields.field_name as field_name',
-                                'vmt_inv_emp_fsp_popups.popup_value as popup_value',
-                                'vmt_inv_emp_fsp_popups.user_id as User_id',
-                                'vmt_emp_investments_dec_amt.declaration_amount as Declaration_amount',
+            // ->where('vmt_investment_forms.form_name',$investment_formname)
+            ->get([
+                'vmt_investment_sections.section_name as section_name',
+                'vmt_investment_particulars.particular_name as particular_name',
+                'vmt_investment_particulars.references as references',
+                'vmt_investment_particulars.amount_max_limit as amount_max_limit',
+                'vmt_inv_popup_list.popups_list as popup_name',
+                'vmt_inv_popup_fields.field_name as field_name',
+                'vmt_inv_emp_fsp_popups.popup_value as popup_value',
+                'vmt_inv_emp_fsp_popups.user_id as User_id',
+                'vmt_emp_investments_dec_amt.declaration_amount as Declaration_amount',
 
-                            ]);
-                               // dd($inv_form_details);
+            ]);
+        // dd($inv_form_details);
 
-                                return ($inv_form_details->toArray());
-     //   dd($inv_form_details->toArray());
+        return ($inv_form_details->toArray());
+        //   dd($inv_form_details->toArray());
 
 
         // $siimm2 = VmtInvestmentForm_SectionParticulars::join('vmt_emp_investments_dec_fields', 'vmt_investment_form_secpat.id', '=', 'vmt_emp_investments_dec_fields.form_sectionparticular_id')
@@ -244,13 +243,13 @@ class VmtTestingController extends Controller
     public function testSendBulkMail()
     {
 
-        $array_mail = ["sheltonfdo23@gmail.com","praveenkumar.techdev@gmail.com"];
+        $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
 
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
         $response  = array();
-        try{
+        try {
 
             foreach ($array_mail as $recipient) {
                 $isSent = \Mail::to($recipient)->send(new WelcomeMail("emp_code 123", 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
@@ -263,20 +262,18 @@ class VmtTestingController extends Controller
             return response()->json([
                 "output" => $response
             ]);
+        } catch (\Exception $e) {
+            dd("Error : " . $e);
         }
-        catch(\Exception $e){
-            dd("Error : ".$e);
-        }
-
     }
 
     public function exportattenance(Request $request)
     {
-       $users = User::all()->toArray();
+        $users = User::all()->toArray();
 
-     //  return $users;
-      // dd($users);
-       // dd(gettype($users));
+        //  return $users;
+        // dd($users);
+        // dd(gettype($users));
 
         return Excel::download(new AttenanceWorkShifttime($users), 'testings.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
@@ -285,18 +282,17 @@ class VmtTestingController extends Controller
     {
 
         if (empty($request->uid)) {
-            if(empty($request->user_code)){
+            if (empty($request->user_code)) {
                 $user_code = auth()->user()->user_code;
-             } else
-                $user_code = $request->user_code ;
-        }
-        else {
+            } else
+                $user_code = $request->user_code;
+        } else {
             $user_code = User::find(Crypt::decryptString($request->uid))->user_code;
             //dd("Enc User details from request : ".$user);
         }
-        $user_id =User::where('user_code',$user_code)->first()->id;
-        $month =$request->month;
-        $year =$request->year;
+        $user_id = User::where('user_code', $user_code)->first()->id;
+        $month = $request->month;
+        $year = $request->year;
         $user = null;
 
         //If empty, then show current user profile page
@@ -306,13 +302,13 @@ class VmtTestingController extends Controller
             $user = User::find($user_id);
         }
 
-        $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id',$user_id)
+        $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id', $user_id)
             ->whereMonth('payroll_month', $month)
             ->whereYear('payroll_month', $year)->first();
         // dd($data['employee_payslip']);
 
         $data['employee_name'] = $user->name;
-       // dd( $data['employee_name']);
+        // dd( $data['employee_name']);
         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
         $data['employee_details'] = VmtEmployee::where('userid', $user->id)->first();
         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->first();
@@ -337,18 +333,18 @@ class VmtTestingController extends Controller
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
 
-        $pdf = new Dompdf( $options);
+        $pdf = new Dompdf($options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
 
         //$response=base64_encode($pdf->stream([$client_name.'.pdf']));
-        $response=base64_encode($pdf->output([$client_name.'.pdf']));;
+        $response = base64_encode($pdf->output([$client_name . '.pdf']));;
 
         return response()->json([
             'status' => 'success',
             'message' => "",
-            'data' =>$response
+            'data' => $response
         ]);
 
         // Mail::send('vmt_payslip_templates.template_payslip_brandavatar', $data, function ($message) use ($data, $pdf) {
@@ -362,11 +358,12 @@ class VmtTestingController extends Controller
         // });
 
         //  dd('Mail sent successfully');
-}
+    }
 
-   public function testinginvest(Request $request){
+    public function testinginvest(Request $request)
+    {
 
-      // dd($request->all());
+        // dd($request->all());
 
         //   $simma = new vmtInvEmp_Fsp_Popups;
         //   $simma->user_id = ('141');
@@ -376,13 +373,13 @@ class VmtTestingController extends Controller
         //   $simma->save();
 
         $createMultipleUsers = [
-            ['user_id'=>'141','fsp_popups_id'=>'1', 'popup_value' =>$request->input('from_month')],
-            ['user_id'=>'141','fsp_popups_id'=>'2', 'popup_value' =>$request->input('to_month')],
-            ['user_id'=>'141','fsp_popups_id'=>'5', 'popup_value' =>$request->input('city')],
-            ['user_id'=>'141','fsp_popups_id'=>'6', 'popup_value' =>$request->input('totalRent')],
-            ['user_id'=>'141','fsp_popups_id'=>'7', 'popup_value' =>$request->input('land_lard')],
-            ['user_id'=>'141','fsp_popups_id'=>'8', 'popup_value' =>$request->input('landpan')],
-            ['user_id'=>'141','fsp_popups_id'=>'9', 'popup_value' =>$request->input('address')],
+            ['user_id' => '141', 'fsp_popups_id' => '1', 'popup_value' => $request->input('from_month')],
+            ['user_id' => '141', 'fsp_popups_id' => '2', 'popup_value' => $request->input('to_month')],
+            ['user_id' => '141', 'fsp_popups_id' => '5', 'popup_value' => $request->input('city')],
+            ['user_id' => '141', 'fsp_popups_id' => '6', 'popup_value' => $request->input('totalRent')],
+            ['user_id' => '141', 'fsp_popups_id' => '7', 'popup_value' => $request->input('land_lard')],
+            ['user_id' => '141', 'fsp_popups_id' => '8', 'popup_value' => $request->input('landpan')],
+            ['user_id' => '141', 'fsp_popups_id' => '9', 'popup_value' => $request->input('address')],
 
         ];
 
@@ -392,48 +389,47 @@ class VmtTestingController extends Controller
 
 
 
-          return 'save successfully';
-   }
+        return 'save successfully';
+    }
 
 
-public function importexcell(Request $request){
+    public function importexcell(Request $request)
+    {
         // dd($request->all());
-    $invform = new VmtInvForm;
-    $invform->form_name = $request->form_name;
-    $invform->save();
+        $invform = new VmtInvForm;
+        $invform->form_name = $request->form_name;
+        $invform->save();
 
-    Excel::import(new VmtInvSectionImport($invform->id) , $request->file);
-
-
-
-   return "save successfully";
-}
-
-
-public function testinginestmentsection(){
-
-
-               $query_details = VmtInvFEmpAssigned::join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.f_emp_id','=','vmt_inv_f_emp_assigned.id')
-                                            ->join('vmt_inv_formsection','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
-                                            ->join('vmt_inv_section','vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-                                            ->join('vmt_inv_form','vmt_inv_form.id','=','vmt_inv_formsection.form_id')
-                                           ->where('form_name','inv form1')
-                                    ->get(['form_name',
-                                            'vmt_inv_f_emp_assigned.user_id',
-                                            'vmt_inv_section.section',
-                                            'vmt_inv_section.particular',
-                                            'vmt_inv_section.reference',
-                                            'vmt_inv_section.max_amount',
-                                            'vmt_inv_emp_formdata.dec_amount',
-                                            'vmt_inv_f_emp_assigned.year',
-
-                                        ])->toArray();
-
-                dd($query_details);
+        Excel::import(new VmtInvSectionImport($invform->id), $request->file);
 
 
 
+        return "save successfully";
+    }
 
+
+    public function testinginestmentsection()
+    {
+
+
+        $query_details = VmtInvFEmpAssigned::join('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+            ->join('vmt_inv_formsection', 'vmt_inv_formsection.id', '=', 'vmt_inv_emp_formdata.fs_id')
+            ->join('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+            ->join('vmt_inv_form', 'vmt_inv_form.id', '=', 'vmt_inv_formsection.form_id')
+            ->where('form_name', 'inv form1')
+            ->get([
+                'form_name',
+                'vmt_inv_f_emp_assigned.user_id',
+                'vmt_inv_section.section',
+                'vmt_inv_section.particular',
+                'vmt_inv_section.reference',
+                'vmt_inv_section.max_amount',
+                'vmt_inv_emp_formdata.dec_amount',
+                'vmt_inv_f_emp_assigned.year',
+
+            ])->toArray();
+
+        dd($query_details);
 
 
 
@@ -446,20 +442,33 @@ public function testinginestmentsection(){
 
 
 
-// $simma =VmtInvForm::join('vmt_inv_formsection','vmt_inv_formsection.form_id','=','vmt_inv_form.id')
-//                     ->join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.form_id','=','vmt_inv_form.id')
-//                     ->join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.f_emp_id','=','vmt_inv_f_emp_assigned.id')
-//                     ->join('vmt_inv_section','vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-      // ->join('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
-    // ->get();
 
 
-    //  dd($simma->toArray());
-
-  //  return $simma ;
 
 
-}
+        // $simma =VmtInvForm::join('vmt_inv_formsection','vmt_inv_formsection.form_id','=','vmt_inv_form.id')
+        //                     ->join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.form_id','=','vmt_inv_form.id')
+        //                     ->join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.f_emp_id','=','vmt_inv_f_emp_assigned.id')
+        //                     ->join('vmt_inv_section','vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+        // ->join('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
+        // ->get();
 
 
+        //  dd($simma->toArray());
+
+        //  return $simma ;
+
+
+    }
+
+    public function testEmployeeDocumentsJoin(Request $request){
+        //$response = VmtDocuments::all()->toArray();
+
+        $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
+                    ->where('vmt_employee_documents.user_id','266')
+                    ->get()
+                    ->toArray();
+
+        dd($response);
+    }
 }
