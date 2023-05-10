@@ -38,7 +38,10 @@
      <div id="testing_table"></div> --}}
 
      @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js')
-     <div id="RolesPermission"></div>
+     {{-- <div id="RolesPermission"></div> --}}
+
+     @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
+     <div id="vjs_employeeDocsManager"></div>
 
 </body>
 </html>
