@@ -185,9 +185,14 @@ class VmtPayCheckController extends Controller
 
             //       }
             //    }
-         $data =  DB::table('vmt_employee_payslip')
-             ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
-             ->get();
+        //  $data =  DB::table('vmt_employee_payslip')
+        //      ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
+        //      ->get();
+
+        $data =  VmtEmployeePaySlip::join('vmt_employee_payslip_status','vmt_employee_payslip_status.payroll_month','=','vmt_employee_payslip.PAYROLL_MONTH')
+            ->where('vmt_employee_payslip.user_id', auth()->user()->id)
+            ->orderBy('vmt_employee_payslip.PAYROLL_MONTH', 'DESC')
+            ->get();
 
 
          if($data->count()!=0)
