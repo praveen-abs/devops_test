@@ -1561,7 +1561,8 @@ class VmtAttendanceService{
             $user_id = User::where('user_code', $user_code)->first()->id;
 
             //Check if user already checked-in
-            $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
+            $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->
+                                   whereNull('checkout_time')->orderBy('updated_at','DESC')->first();
 
             if($attendanceCheckout)
             {
@@ -1604,7 +1605,7 @@ class VmtAttendanceService{
                 return response()->json([
                     'status' => 'success',
                     'message'=> 'Check-out success',
-                    'data'   => ''
+                    'data'   => $date
                 ]);
             }
             else

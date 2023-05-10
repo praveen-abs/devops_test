@@ -1508,7 +1508,7 @@ class VmtEmployeeOnboardingController extends Controller
 
        $response= $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
 
-       $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
+      // $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
 
        return $response;
 

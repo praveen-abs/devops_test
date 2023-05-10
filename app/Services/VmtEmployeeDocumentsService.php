@@ -50,8 +50,11 @@ class VmtEmployeeDocumentsService {
 
 
         try{
+
+           $query_user_id=User::where('user_code',$user_code)->first()->id;
+
             $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
-                    ->where('vmt_employee_documents.user_id','266')
+                    ->where('vmt_employee_documents.user_id',$query_user_id)
                     ->orWhereNull('vmt_employee_documents.id')
                     ->get();
 
