@@ -75,6 +75,7 @@
 
         </template>
     </Dialog>
+    {{ selectedKey }}
 </template>
 
 
@@ -93,7 +94,7 @@ const nodes = ref(
             data: 'Assets Privileges ',
             children: [
                 {
-                    key: '0-0',
+                    key: 'Apply for attendance adjustment / regularisation on behalf of employees',
                     label: 'Apply for attendance adjustment / regularisation on behalf of employees',
                     data: 'Apply for attendance adjustment / regularisation on behalf of employees',
                 },
