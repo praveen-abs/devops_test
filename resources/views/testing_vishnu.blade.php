@@ -29,7 +29,7 @@
 @endsection
 @section('content')
     <?php
-        $user_id = "187";
+
 
 
 
@@ -62,33 +62,56 @@
     //     return "";
 
          //to store mailstatus
-         $isSent=true;
-       $user_code= 'IMA0002';
-         $user_id=User::where('user_code',$user_code)->first()->id;
+         //$isSent=true;
+    //    $user_code= 'IMA0002';
+    //      $user_id=User::where('user_code',$user_code)->first()->id;
 
-            $query_emp_welcomemailstatus =VmtEmployeeMailStatus::where('user_id',$user_id);
+    //         $query_emp_welcomemailstatus =VmtEmployeeMailStatus::where('user_id',$user_id);
 
-            if($query_emp_welcomemailstatus->exists())
-            {
-            //update
-            $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
-            $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
-            dd($query_emp_welcomemailstatus);
+    //         if($query_emp_welcomemailstatus->exists())
+    //         {
+    //         //update
+    //         $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
+    //         $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
+    //         dd($query_emp_welcomemailstatus);
 
-            }
-            else
-            {
-                //create new record
-               $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
-               $query_emp_welcomemailstatus->user_id=$user_id;
-               $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
-               dd($query_emp_welcomemailstatus);
+    //         }
+    //         else
+    //         {
+    //             //create new record
+    //            $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
+    //            $query_emp_welcomemailstatus->user_id=$user_id;
+    //            $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
+    //            dd($query_emp_welcomemailstatus);
 
-            }
-    ?>
+    //         }
+    $user_id = "266";
+    // $query_emp_documents =User::join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
+    //                       ->leftjoin('vmt_documents','vmt_documents.id','=','vmt_employee_documents.doc_id')
+    //                       ->where('users.id',$user_id)
+
+    //                       ->get();
+    //                       dd( $query_emp_documents->toarray());
+    $query_emp_documents =VmtDocuments::leftjoin('vmt_employee_documents','vmt_employee_documents.doc_id','vmt_documents.id')
+                            //->where('user_id',$user_id)
+                           ->get();
+                          dd( $query_emp_documents);
 
 
 
+    //                       $students = \DB::table('students')
+    // ->select(
+    //     'students.id',
+    //     'first_name'
+    // )
+    // ->whereNotExists( function ($query) use ($current_academic) {
+    //     $query->select(DB::raw(1))
+    //     ->from('enrollments')
+    //     ->whereRaw('students.id = enrollments.student_id')
+    //     ->where('enrollments.academic_id', '=', $current_academic->id);
+    // })
+    // ->get();
+?>
 
 
 @endsection
