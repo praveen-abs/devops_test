@@ -26,6 +26,8 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+import Tag from 'primevue/tag'
+import OverlayPanel from 'primevue/overlaypanel'
 
 import LeaveApproval from './LeaveApproval.vue'
 
@@ -54,6 +56,8 @@ app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
+app.component('Tag', Tag)
+app.component('OverlayPanel', OverlayPanel)
 
 app.mount("#VJS_LeaveApproval");
 

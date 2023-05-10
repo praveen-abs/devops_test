@@ -17,7 +17,7 @@ use PDF;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
 
-use App\Services\VmtEmployeePayslipService;
+use App\Services\VmtEmployeePayCheckService;
 
 
 class VmtPayrollController extends Controller
@@ -30,7 +30,7 @@ class VmtPayrollController extends Controller
 
 
     //
-    public function uploadPayRunData(Request $request, VmtEmployeePayslipService $employeePaySlipService){
+    public function uploadPayRunData(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
 
         return $employeePaySlipService->importBulkEmployeesPayslipExcelData($request->all());
 
@@ -56,6 +56,16 @@ class VmtPayrollController extends Controller
 
     }
 
+    public function showManagePayslipsPage(Request $request){
+        if(auth()->user()->can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view')))
+            return view('payroll.manage_payslips');
+        else
+            return view('page_unauthorized__access');
+    }
+
+
+
+
     public function showPayrollSetup(Request $request){
         return view('payroll.vmt_payroll_setup');
     }
@@ -63,5 +73,5 @@ class VmtPayrollController extends Controller
     public function showWorkLocationSetup(Request $request){
         return view('payroll.vmt_work_location');
     }
-    
+
 }

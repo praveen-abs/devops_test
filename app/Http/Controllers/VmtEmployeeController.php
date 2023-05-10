@@ -23,6 +23,7 @@ use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
 use App\Models\VmtGeneralInfo;
 use App\Models\Compensatory;
+use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtMaritalStatus;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtApprovalsService;
 
 class VmtEmployeeController extends Controller
 {
@@ -984,6 +986,13 @@ class VmtEmployeeController extends Controller
     //     }
     // }
 
+        public function getallemployee(){
+          $query_employee = User::where('is_ssa','<>','1')->get();
+          return ($query_employee);
+        }
+
+
+
     public function getState(Request $request)
     {
         $state = State::where('country_code', $request->code)->get();
@@ -1014,6 +1023,11 @@ class VmtEmployeeController extends Controller
         return 'User Account Status : ' . $request->input('status');
     }
 
+    /*
+        TODO: Need to check query execution count and speed for this...
+
+
+    */
     public function fetchAllActiveEmployees(Request $request)
     {
         $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -1044,13 +1058,20 @@ class VmtEmployeeController extends Controller
         else
             $query_vmtEmployees = $query_vmtEmployees->where('client_id', session('client_id'))->get();
 
-        //Add reporting manager name
+        //Add reporting manager name, bloodgroup, profile completeness
         foreach($query_vmtEmployees as $singleEmp)
         {
             $singleEmp['enc_user_id'] = Crypt::encryptString($singleEmp['user_id']);
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name']= User::where('user_code',$singleEmp->l1_manager_code)->value('name');
             $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+
+            $singleEmp['profile_completeness'] = calculateProfileCompleteness($singleEmp['user_id']);
+
+            if(!empty($singleEmp['blood_group_id']))
+                $singleEmp['blood_group_name'] = VmtBloodGroup::find($singleEmp['blood_group_id'])->name;
+            else
+                $singleEmp['blood_group_name'] = '';
         }
 
         //dd($query_vmtEmployees);
@@ -1058,7 +1079,7 @@ class VmtEmployeeController extends Controller
         return json_encode($query_vmtEmployees);
     }
 
-    public function fetchAllYetToActiveEmployees(Request $request)
+    public function fetchAllYetToActiveEmployees(Request $request, VmtApprovalsService $serviceVmtApprovalsService)
     {
 
         $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
@@ -1096,6 +1117,8 @@ class VmtEmployeeController extends Controller
             //unset($singleEmp['user_id']);
             $singleEmp['reporting_manager_name'] = User::where('user_code',$singleEmp->l1_manager_code)->value('name');
             $singleEmp['emp_avatar'] = getEmployeeAvatarOrShortName($singleEmp['user_id']);
+            $singleEmp['blood_group_name'] = VmtBloodGroup::find($singleEmp['blood_group_id'])->name ?? "";
+            $singleEmp['doc_status'] = $serviceVmtApprovalsService->isAllOnboardingDocumentsApproved($singleEmp['emp_code'])->getData()->data;
 
         }
 
@@ -1106,7 +1129,7 @@ class VmtEmployeeController extends Controller
     {
 
         $query_vmtEmployees = VmtEmployee::join('users', 'users.id', '=', 'vmt_employee_details.userid')
-            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->select(
                 'users.name as emp_name',
                 'users.user_code as emp_code',
@@ -1153,6 +1176,14 @@ class VmtEmployeeController extends Controller
         $client_id = 0;
 
         return view('vmt_manageEmployee',compact('client_id'));
+    }
+
+    public function showManageEmployeePage_v2(Request $request)
+    {
+        //Read session value
+        $client_id = 0;
+
+        return view('vmt_manageEmployee_v2');
     }
 
     public function isUserExist($t_emp_code)
@@ -1500,31 +1531,30 @@ class VmtEmployeeController extends Controller
     */
     public function showEmployeeDocumentsPage(Request $request)
     {
+
         //Get the existing filenames
-        $existing_doc_filenames = VmtEmployee::where('userid', auth()->user()->id)->first([
-            'aadhar_card_file',
-            'aadhar_card_backend_file',
-            'pan_card_file',
-            'passport_file',
-            'voters_id_file',
-            'dl_file',
-            'education_certificate_file',
-            'reliving_letter_file',
-            ]);
+        $existing_doc_filenames = VmtEmployeeDocuments::where('user_id', auth()->user()->id)->pluck('doc_url');
+        //  dd($existing_doc_filenames);
+        //check employee is onboarded or not
 
-        //dd($existing_doc_filenames);
+        $is_emp_onboarded = User::where('id', auth()->user()->id)->first()->is_onboarded;
+         //Check if all necessary docs are Approved or not
 
 
-        if( $this->isAllDocumentsUploaded(auth()->user()->id) == 1)
-        {
-            // //set the onboard status to 1
-            $currentUser = User::where('id', auth()->user()->id)->first();
-            $currentUser->is_onboarded = '1';
-            $currentUser->save();
+        // check the login epolyee is active or not
 
-            return view('vmt_profile_under_review');
-        }else
-            return view('vmt_documents',compact('existing_doc_filenames'));
+
+
+        //($is_emp_onboarded);
+
+        if($is_emp_onboarded == '1'){
+
+            return redirect()->route('index');
+
+        }else{
+
+            return view('vmt_documents');
+        }
 
 
     }

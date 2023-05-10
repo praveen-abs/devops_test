@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
+use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
 use App\Models\VmtAnnouncement;
@@ -39,6 +40,7 @@ use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 class VmtMainDashboardController extends Controller
 {
@@ -50,17 +52,22 @@ class VmtMainDashboardController extends Controller
 
     public function index(Request $request)
     {
+
         if(auth()->user()->active == 0)
         {
+
+
             if(auth()->user()->is_onboarded == 0)
             {
+
                 if(auth()->user()->onboard_type == 'quick')
                 {
+
                     //User record already exists. So fetch it and show in normal onboard form
+                    $encr_user_id = Crypt::encrypt(auth()->user()->id);
 
-                    $vmtEmpController = new VmtEmployeeController;
+                    return redirect()->route('employee-onboarding-v2', ['uid' =>$encr_user_id]);
 
-                    return $vmtEmpController->showEmployeeOnboardingPage(auth()->user()->id);
                 }
                 else
                 if(auth()->user()->onboard_type == 'bulk')
@@ -78,8 +85,26 @@ class VmtMainDashboardController extends Controller
             else
             if(auth()->user()->is_onboarded == 1)
             {
-                //Profile is not activated . Show a message
-                return view('vmt_profile_under_review');
+             //Check all the docs are approved or not
+                     $all_document_approved =VmtEmployeeDocuments::where('user_id',auth()->user()->id);
+
+                if(!empty($all_document_approved)){
+
+                     $all_document_approved = $all_document_approved ->where('Status','Rejected')->count();
+                }else{
+
+                     $all_document_approved ='0';
+                }
+             //check the login epolyee is active or not
+                     $active_status = User::where('id', auth()->user()->id)->first()->active;
+
+                if($all_document_approved >= '1' && $active_status == '0' ){
+
+                    return view('vmt_documents');
+                }else{
+             // Profile is not activated . Show a message
+                    return view('vmt_profile_under_review');
+                }
 
             }
 
@@ -109,7 +134,7 @@ class VmtMainDashboardController extends Controller
         {
             if (!$request->session()->has('client_id')) {
                 //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
                 $this->updateSessionVariables($assigned_client_id);
             }
@@ -119,7 +144,7 @@ class VmtMainDashboardController extends Controller
         {
             if (!$request->session()->has('client_id')) {
                 //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
                 $this->updateSessionVariables($assigned_client_id);
             }

@@ -3,7 +3,7 @@
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
             <div class="page-title-right">
-                <ol class="breadcrumb m-0  fw-bold ">
+                <ol class="m-0 breadcrumb fw-bold ">
                     <li class="crumb-item">
                         <a href="#" class="text-muted">Payroll Analytics</a>
                     </li>

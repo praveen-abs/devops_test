@@ -20,14 +20,14 @@
                 <div class="filter-content">
                     <div class="row">
                         <div class="col-sm-12 col-xxl-4 col-md-6 col-xl-4 col-lg-4">
-                            <h6 class="mb-0 text-muted text-start">Attendance Regularization Approvals</h6>
+                            <h6 class="mb-0 text-lg font-semibold text-muted text-start">Attendance Regularization Approvals</h6>
                             <br />
                         </div>
                         {{-- <div class="col-sm-12 col-xxl-8 col-md-6 col-xl-8 col-lg-8">
                             <div class="row">
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <label class="form-label mb-1">Month</label>
-                                    <select name="" id="" class="form-select  border-orange disabled_focus">
+                                    <label class="mb-1 form-label">Month</label>
+                                    <select name="" id="" class="form-select border-orange disabled_focus">
                                         <option value="" selected hidden disabled>Choose</option>
                                         <option value="1" >Jan</option>
                                         <option value="2" >Feb</option>
@@ -44,7 +44,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <label class="form-label mb-1">Regularization Type</label>
+                                    <label class="mb-1 form-label">Regularization Type</label>
                                     <select name="dropdown_regularizationType" id="dropdown_regularizationType" class="form-select border-orange disabled_focus">
                                         <option value="" selected hidden disabled>Choose</option>
                                         <option value="lc">LC (Late Coming)</option>
@@ -55,13 +55,13 @@
                                 </div>
                                 <!-- Reason type based on LC,EG,MIP,MOP -->
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <label class="form-label mb-1">Reason Type</label>
+                                    <label class="mb-1 form-label">Reason Type</label>
                                     <select name="dropdown_reasonType" id="dropdown_reasonType" class="form-select border-orange disabled_focus">
                                         <option value="" selected hidden disabled>Choose</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-xxl-3 col-md-6 col-xl-3 col-lg-3">
-                                    <label class="form-label mb-1">Status</label>
+                                    <label class="mb-1 form-label">Status</label>
                                     <select name="" id="" class="form-select border-orange disabled_focus">
                                         <option value="pending" selected>Pending</option>
                                         <option value="approved">Approved</option>
@@ -84,21 +84,21 @@
             style="opacity:1; display:none;background:#00000073;">
             <div class="modal-dialog modal-md modal-dialog-centered" id="" aria-hidden="true" aria-labelledby="">
                 <div class="modal-content">
-                    <div class="modal-header border-0">
+                    <div class="border-0 modal-header">
                         <h6 class="modal-title" id="modalHeader">
                         </h6>
-                        {{-- <button type="button" class="btn-close close outline-none bg-transparent border-0 h3" data-bs-dismiss="modal" aria-label="Close">
+                        {{-- <button type="button" class="bg-transparent border-0 outline-none btn-close close h3" data-bs-dismiss="modal" aria-label="Close">
 
                             </button> --}}
-                        <button type="button" class="close close-modal outline-none bg-transparent border-0 h3"
+                        <button type="button" class="bg-transparent border-0 outline-none close close-modal h3"
                             aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="mt-4">
-                            <p class="mb-3 text-muted f-15 text-center" id="modalNot"></p>
-                            <textarea name="reject_content" id="status_text" class="form-control mb-3"></textarea>
+                            <p class="mb-3 text-center text-muted f-15" id="modalNot"></p>
+                            <textarea name="reject_content" id="status_text" class="mb-3 form-control"></textarea>
                             <div class="text-end">
                                 <input type="hidden" id="selected_LCId" />
                                 <input type="hidden" id="selected_userId" />
@@ -305,7 +305,7 @@
 
                                     output =
                                         '<div class="d-flex align-items-center page-header-user-dropdown">' +
-                                        '<span class="rounded-circle user-profile  ml-2  ' +
+                                        '<span class="ml-2 rounded-circle user-profile ' +
                                         json_emp_avatar.color + ' " id="">' +
                                         '<i class="topbar_username" class="align-middle ">' +
                                         json_emp_avatar.data + '</i>' +
@@ -416,26 +416,26 @@
                                     htmlcontent =
                                         // '<input type="button" value="Approve" data-user_id="' + req.user_id +
                                         // '" data-lc_id="' + req.id +
-                                        // '" data-lc_status="Approved" class="status btn btn-success py-1 approve-lc-btn">';
+                                        // '" data-lc_status="Approved" class="py-1 status btn btn-success approve-lc-btn">';
 
                                         '<button type="button" value="Approve" data-user_id="' + req
                                         .user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Approved" class="status me-2 btn btn-success py-1 approve-lc-btn"><i class="fa fa-check-circle me-1" aria-hidden="true"></i>Approve</button>';
+                                        '" data-lc_status="Approved" class="py-1 status me-2 btn btn-success approve-lc-btn"><i class="fa fa-check-circle me-1" aria-hidden="true"></i>Approve</button>';
 
                                     htmlcontent = htmlcontent +
                                         // '<input type="button" value="Reject" id="button_activate_"' +
                                         // req.user_id + '" data-user_id="' + req.user_id +
                                         // '" data-lc_id="' + req.id +
-                                        // '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "></input>&nbsp;&nbsp;';
+                                        // '" data-lc_status="Rejected" class="py-1 status btn btn-danger reject-lc-btn "></input>&nbsp;&nbsp;';
                                         '<button type="button" value="Reject" id="button_activate_"' +
                                         req.user_id + '" data-user_id="' + req.user_id +
                                         '" data-lc_id="' + req.id +
-                                        '" data-lc_status="Rejected" class="status btn btn-danger py-1 reject-lc-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
+                                        '" data-lc_status="Rejected" class="py-1 status btn btn-danger reject-lc-btn "><i class="fa fa-times-circle me-1"></i>Reject</button>';
                                 }
 
                                 // htmlcontent = htmlcontent +
-                                //     '<input type="button" value="View" class="status btn btn-orange py-1 onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
+                                //     '<input type="button" value="View" class="py-1 status btn btn-orange onboard-employee-btn " data-bs-target="#leaveDetails_modal" data-bs-toggle="modal"></input>';
 
 
                                 return gridjs.html(htmlcontent);

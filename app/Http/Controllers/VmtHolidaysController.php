@@ -18,7 +18,8 @@ class VmtHolidaysController extends Controller
 //show holidays
     public function showHolidaysMasterPage(Request $request){
         $master_holidays = vmtHolidays::all();
-        return view('holidays.test_ui.view_all_holidays',compact('master_holidays'));
+        // return ('holidays.test_ui.view_all_holidays',compact('master_holidays'));
+        return $master_holidays;
     }
 
 //create holidays

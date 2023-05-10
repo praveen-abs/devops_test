@@ -1,239 +1,495 @@
 <template>
-<div>
-    <div class="card mb-2">
-        <div class="card-body">
-            <h6 class="">Experience Information
-                <!-- <span class="personal-edit">
+    <div>
+        <div class="mb-2 card">
+            <div class="card-body">
+                <h6 class="fw-bold fs-15">Experience Information
+                    <!-- <span class="personal-edit">
                                         <a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
 
                                             </a>
                                     </span> -->
-                <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    @click="visible = true">
-                    <i class="ri-pencil-fill"></i>
-                </button>
-                <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
-                    <template #header>
-                        <div>
-                            <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                Experience Information</h5>
+                    <!-- <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        @click="visible = true">
+                        <i class="ri-pencil-fill"></i>
+
+                    </button> -->
+                    <button type="button" class="float-right btn btn-orange" style="margin-left: 76%"
+                        @click="dialog_ExperienceInfovisible = true">
+                        Add New
+                        <!-- <i class="ri-pencil-fill"></i> -->
+                    </button>
+                    <Dialog v-model:visible="dialog_ExperienceInfovisible" modal
+                        :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
+                        <template #header>
+                            <div>
+                                <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                    class="fs-5 fw-bold">
+                                    Experience Information</h5>
+                            </div>
+                        </template>
+
+                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
+
+                            <div class="space-between">
+                                <div class="flex-col input_text">
+                                    <span>Company Name <span class="text-danger">*</span></span>
+                                    <InputText type="text" v-model="ExperienceInfo.company_name"
+                                        name="ExperienceDetails_company_name[]" required />
+                                </div>
+                                <div class="flex-col input_text">
+                                    <span> Location<span class="text-danger">*</span></span>
+                                    <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
+                                        required />
+
+                                </div>
+                            </div>
+                            <div class="space-between M-T">
+                                <div class="flex-col input_text">
+                                    <span>Job Position <span class="text-danger">*</span></span>
+                                    <InputText type="text" v-model="ExperienceInfo.job_position"
+                                        name="experienceDet_job_position[]" required />
+                                </div>
+
+                                <div class="flex-col input_text" style="margin-right: 7px;">
+                                    <span :style="{ paddingLeft: '6px' }">Period From<span
+                                            class="text-danger">*</span></span>
+                                    <Calendar showIcon v-model="ExperienceInfo.period_from"
+                                        :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
+                                        name="experienceDet_period_from[]" />
+                                </div>
+                            </div>
+
+                            <div class="space-between M-T">
+                                <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
+                                    <span :style="{ paddingLeft: '6px' }">Period To <span
+                                            class="text-danger">*</span></span>
+                                    <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
+                                        :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
+                                        name="experienceDet_period_to[]" />
+                                </div>
+                            </div>
+
+
+
                         </div>
-                    </template>
-
-                    <div  style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
-
-                        <div class="space-between">
-                            <div class="input_text flex-col">
-                                <span>Company Name <span class="text-danger">*</span></span>
-                                <!-- <input type="text" name="ExperienceDetails_company_name[]" pattern-data="name" id=""
-                                    required v-model="ExperienceDetails.company_name"> -->
-                                    <InputText type="text"  v-model="ExperienceDet.company_name"  name="ExperienceDetails_company_name[]" required  />
-                            </div>
-                            <div class="input_text flex-col">
-                                <span> Location<span class="text-danger">*</span></span>
-                                <!-- <input type="text"  v-model="ExperienceDet.location"
-                                    id="familyDetails_Relationship" pattern-data="alpha" required> -->
-                                    <InputText type="text" v-model="ExperienceDet.location" name="experienceDet_location[]"  required />
-
-                            </div>
-                        </div>
-                        <div class="space-between M-T">
-                            <div class="input_text flex-col">
-                                <span>Job Position <span class="text-danger">*</span></span>
-                                <!-- <input type="text" id="datemin" name="familyDetails_dob[]"
-                                    v-model="ExperienceDet.job_position"> -->
-                                    <InputText type="text" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required />
 
 
-                                    <!-- <InputText type="" v-model="ExperienceDet.job_position" name="experienceDet_job_position[]"  required /> -->
 
+                        <template #footer>
+                            <div>
+                                <Toast />
+                                <button type="button" class="submit_btn success warning" severity="success" id=""
+                                    @click="saveExperienceDetails">submit</button>
                             </div>
 
-                            <div class="input_text flex-col" style="margin-right: 7px;">
-                                <span :style="{paddingLeft: '6px'}">Period From<span class="text-danger">*</span></span>
-                                <!-- <input type="date"  id="familyDetails_phoneNumber"
-                                    name="familyDetails_phoneNumber[]" min="2000-01-02" v-model="ExperienceDet.period_from"> -->
-                                    <Calendar  showIcon v-model="ExperienceDet.period_from" :style="{height:' 2.3rem', width:'100%',marginRight:'20px'}"   name="experienceDet_period_from[]"  />
-                            </div>
-                        </div>
-
-                        <div class="space-between M-T">
-                            <div class="input_text flex-col" :style="{ marginLeft:'-6px'}">
-                                <span :style="{paddingLeft: '6px'}">Period To <span class="text-danger">*</span></span>
-                                <!-- <input type="date" id="datemin" name="familyDetails_dob[]"
-                                    v-model="ExperienceDet.period_to"> -->
-
-                                    <Calendar  showIcon v-model="ExperienceDet.period_to" class="" :style="{height:' 2.3rem',width:'100%' ,borderRadius:'2px' }"   name="experienceDet_period_to[]" />
-                            </div>
-                        </div>
+                        </template>
 
 
+                    </Dialog>
 
-                </div>
+                </h6>
+                <div class="my-6 table-responsive">
+                    <DataTable ref="dt" :value="_instance_profilePagesStore.employeeDetails.get_experience_details"
+                        dataKey="id" :paginator="true" :rows="10"
+                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                        responsiveLayout="scroll">
 
-
-
-                    <template #footer>
-                      <div>
-                        <Toast />
-                        <button type="button" class="submit_btn success warning"  severity="success"  id=""
-                            @click="saveExperienceDetails">submit</button>
-                      </div>
-
-                    </template>
-
-
-                </Dialog>
-
-
-
-
-
-            </h6>
-            <div class="table-responsive">
-                <DataTable ref="dt" :value="PersonalDocument" dataKey="id" :paginator="true" :rows="10"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 25]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                    responsiveLayout="scroll">
-
-                    <Column header="Company Name" field="company_name" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
+                        <Column header="Company Name" field="company_name" style="min-width: 12rem">
+                            <!-- <template #body="slotProps">
                         {{  slotProps.data.claim_type }}
                       </template> -->
-                    </Column>
+                        </Column>
 
-                    <Column field="location" header="Loaction" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
+                        <Column field="location" header="Location" style="min-width: 8rem">
+                            <!-- <template #body="slotProps">
                         {{ "&#x20B9;" + slotProps.data.claim_amount }}
                       </template> -->
-                    </Column>
+                        </Column>
 
-                    <Column field="job_position" header="Job Position " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
+                        <Column field="job_position" header="Job Position " style="min-width: 10rem">
+                            <!-- <template #body="slotProps">
                           {{ "&#x20B9;" + slotProps.data.eligible_amount }}
                         </template> -->
-                    </Column>
+                        </Column>
 
-                    <Column field="period_from" header="Period from" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
+                        <Column field="period_from" header="Period from" style="min-width: 6rem">
+                            <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
-                    </Column>
+                        </Column>
 
-                    <Column field="period_to" header="Period To" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
+                        <Column field="period_to" header="Period To" style="min-width: 6rem">
+                            <!-- <template #body="slotProps">
                           {{  slotProps.data.reimbursment_remarks }}
                         </template> -->
-                    </Column>
+
+                        </Column>
+                        <Column :exportable="false" header="Action" style="min-width:12rem">
+                            <template #body="slotProps">
+
+                                <button class="mr-3 btn btn-success"
+                                    @click="editExperienceDetails(slotProps.data)">Edit</button>
+                                <button class="btn btn-danger"
+                                    @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
+
+                                <template>
+
+                                    <Dialog v-model:visible="dialog_EditInfovisible" modal
+                                        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                                        <template #header>
+                                            <div>
+                                                <h5
+                                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                                    Experience Information</h5>
+                                            </div>
+                                        </template>
+
+                                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
+
+                                            <div class="space-between">
+                                                <div class="flex-col input_text">
+                                                    <span>Company Name <span class="text-danger">*</span></span>
+                                                    <InputText type="text" v-model="ExperienceInfo.company_name"
+                                                        name="ExperienceDetails_company_name[]" required />
+                                                </div>
+                                                <div class="flex-col input_text">
+                                                    <span> Location<span class="text-danger">*</span></span>
+                                                    <InputText type="text" v-model="ExperienceInfo.location"
+                                                        name="experienceDet_location[]" required />
+
+                                                </div>
+                                            </div>
+                                            <div class="space-between M-T">
+                                                <div class="flex-col input_text">
+                                                    <span>Job Position <span class="text-danger">*</span></span>
+                                                    <InputText type="text" v-model="ExperienceInfo.job_position"
+                                                        name="experienceDet_job_position[]" required />
+                                                </div>
+
+                                                <div class="flex-col input_text" style="margin-right: 7px;">
+                                                    <span :style="{ paddingLeft: '6px' }">Period From<span
+                                                            class="text-danger">*</span></span>
+                                                    <Calendar showIcon v-model="ExperienceInfo.period_from"
+                                                        :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
+                                                        name="experienceDet_period_from[]" />
+                                                </div>
+                                            </div>
+
+                                            <div class="space-between M-T">
+                                                <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
+                                                    <span :style="{ paddingLeft: '6px' }">Period To <span
+                                                            class="text-danger">*</span></span>
+                                                    <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
+                                                        :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
+                                                        name="experienceDet_period_to[]" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <template #footer>
+                                            <div>
+                                                <Toast />
+                                                <button type="button" class="submit_btn success warning" severity="success"
+                                                    id="" @click="sumbit_Edit_Exp_details()">submit</button>
+                                            </div>
+                                        </template>
+
+                                    </Dialog>
+                                </template>
 
 
-                </DataTable>
 
+
+                                <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
+                            </template>
+                        </Column>
+
+
+                    </DataTable>
+
+                </div>
+<!--
+
+                <div  >
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-border-primary" data-bs-target="#edit_experienceInfo"
+                            data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Add More</button>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="container bg- left" id="experience_card">
+                            <div class="card   experience-card  " style="margin-right: 500px;">
+                                <div class="card-body py-1 " >
+                                    <ul class="personal-info ">
+                                        <li class="border-bottom-liteAsh border-0 pb-1">
+                                            <div class="title"></div>
+                                            <div class="text text-end">
+                                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target=""><i
+                                                        class="ri-pencil-fill"></i></a>
+
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1">
+                                            <div class="title">Organization</div>
+                                            <div class="text" data-toggle="tooltip" data-placement="bottom">
+                                                Organization Organization Organization
+
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1">
+                                            <div class="title">Designation</div>
+                                            <div class="text">
+                                                Designation
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1 ">
+                                            <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
+                                            <div class="text">
+                                                From
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1 border-0">
+                                            <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
+                                            <div class="text">
+                                                To
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container bg-white right">
+                            <div class="card   experience-card  ">
+                                <div class="card-body py-1">
+                                    <ul class="personal-info">
+                                        <li class="border-bottom-liteAsh border-0 pb-1">
+                                            <div class="title"></div>
+                                            <div class="text text-end">
+                                                <a class="edit-icon" data-bs-toggle="modal"
+                                                    data-bs-target="#edit_generalInfo"><i class="ri-pencil-fill"></i></a>
+
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1">
+                                            <div class="title">Organization</div>
+                                            <div class="text">
+                                                Organization
+
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1">
+                                            <div class="title">Designation</div>
+                                            <div class="text">
+                                                Designation
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1 ">
+                                            <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
+                                            <div class="text">
+                                                From
+                                            </div>
+                                        </li>
+                                        <li class="border-bottom-liteAsh pb-1 border-0">
+                                            <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
+                                            <div class="text">
+                                                To
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                <!-- </form> -->
             </div>
-
-
-            <!-- </form> -->
         </div>
+
     </div>
-
-</div>
-
-
 </template>
 <script setup>
 
-    import { ref, onMounted, reactive, onUpdated  } from 'vue';
-    import axios from 'axios'
-    import { useToast } from "primevue/usetoast";
-    // import { log } from 'console';
+import { ref, onMounted, reactive, onUpdated } from 'vue';
+import axios from 'axios'
+import { useToast } from "primevue/usetoast";
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
 
-    const toast = useToast();
-    const toasts = useToast();
+const fetch_data = Service()
+
+const _instance_profilePagesStore = profilePagesStore()
+
+const toast = useToast();
+const toasts = useToast();
 
 
 
-    const PersonalDocument =ref('');
-    const visible = ref(false);
+const PersonalDocument = ref('');
+const dialog_ExperienceInfovisible = ref(false);
+const dialog_EditInfovisible = ref(false);
 
-    const ExperienceDet = reactive({
+const Exp_current_table_id = ref();
+
+const ExperienceInfo = reactive({
     company_name: '',
     location: '',
     job_position: '',
     period_from: '',
-    period_to:''
+    period_to: ''
 
 })
-const saveExperienceDetails =()=>{
-    console.log(ExperienceDet);
+const saveExperienceDetails = () => {
 
-    if(ExperienceDet.company_name == ' '  || ExperienceDet.job_position === '' || ExperienceDet.location === '' || ExperienceDet.period_from === " " || ExperienceDet.period_to ===" " ){
+    console.log(ExperienceInfo);
 
-        toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+    _instance_profilePagesStore.loading_screen = true
 
-   }else{
-    let url = 'http://localhost:3000/Experience';
+    // if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
 
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+    //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+
+    // } else {
+    let id = fetch_data.current_user_id
+    let url = `/add-experience-info/${id}`
+
+    axios.post(url, {
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        company_name: ExperienceInfo.company_name,
+        experience_location: ExperienceInfo.location,
+        job_position: ExperienceInfo.job_position,
+        period_from: ExperienceInfo.period_from,
+        period_to: ExperienceInfo.period_to
+    })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Experiance information updated', life: 3000 });
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.company_name = ExperienceInfo.company_name
+
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.location = ExperienceInfo.location;
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.job_position = ExperienceInfo.job_position;
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.period_from = ExperienceInfo.period_from;
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.period_to = ExperienceInfo.period_to;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
+        })
+    // window.location.reload();
+
+    dialog_ExperienceInfovisible.value = false;
 
 
-        visible.value = false
 
-
-axios.post(url, ExperienceDet).then(res => {
-    console.log("sent sucessfully");
-    console.log(res.status);
-
-if(res.status == 201){
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
 }
-    // fetchData();
 
-}).catch(err => {
-    console.log(err);
-}).finally(() => {
-    console.log("completed");
-})
-   }
-}
 
 
 onMounted(() => {
-    fetchData();
+    // fetchData();
 })
 
 
-const fetchData= ()=>{
-    let url = 'http://localhost:3000/Experience'
-    axios.get(url)
-        .then((response) => {
-            console.log(response.data);
-            PersonalDocument.value = response.data;
+
+const editExperienceDetails = (get_experience_details) => {
+    dialog_EditInfovisible.value = true
+    Exp_current_table_id.value = get_experience_details.id;
+
+    console.log(Exp_current_table_id.value);
+
+
+    ExperienceInfo.company_name = get_experience_details.company_name
+    ExperienceInfo.location = get_experience_details.location
+    ExperienceInfo.job_position = get_experience_details.job_position
+    ExperienceInfo.period_from = get_experience_details.period_from
+    ExperienceInfo.period_to = get_experience_details.period_to
+
+};
+
+const sumbit_Edit_Exp_details = (get_experience_details) => {
+    dialog_EditInfovisible.value = false;
+
+    let id = fetch_data.current_user_id
+    let url = `/update-experience-info/${id}`;
+
+
+    axios.post(url, {
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        exp_current_table_id: Exp_current_table_id.value,
+        company_name: ExperienceInfo.company_name,
+        experience_location: ExperienceInfo.location,
+        job_position: ExperienceInfo.job_position,
+        period_from: ExperienceInfo.period_from,
+        period_to: ExperienceInfo.period_to
+    })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+
+                // ExperienceInfo.company_name = get_experience_details.company_name
+                // ExperienceInfo.location = get_experience_details.location
+                // ExperienceInfo.job_position = get_experience_details.job_position
+                // ExperienceInfo.period_from = get_experience_details.period_from
+                // ExperienceInfo.period_to = get_experience_details.period_to
+
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
         });
+
+}
+
+const diolog_Delete_Exp_Details = (family) => {
+
+    Exp_current_table_id.value = family.id
+
+    let id = fetch_data.current_user_id
+    let url = `/delete-experience-info/${id}`;
+
+    axios.post(url, {
+        exp_current_table_id: Exp_current_table_id.value,
+    })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                window.location.reload();
+                toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
+
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+
 }
 
 
 
-
-
-
-
-
-
-
-
-
-    // onMounted(() => {
-    //     // let url = window.location.origin + '/fetch-regularization-approvals';
-    //     // console.log("AJAX URL : " + url);
-    //     // axios.get(url)
-    //     //     .then((response) => {
-    //     //         console.log("Axios : " + response.data);
-    //     //         att_regularization.value = response.data;
-    //     //     });
-    // })
 
 
 
@@ -242,23 +498,27 @@ const fetchData= ()=>{
 
 <style  lang="scss">
 .p-button.p-component.p-button-icon-only.p-datepicker-trigger {
-height: 100%;}
+    height: 100%;
+}
+
 .p-inputtext.p-component {
     border: 0.1px solid rgb(187, 187, 187);
     width: 100%;
 }
+
 span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
     margin-right: 25px !important;
 }
 
 
-.p-button .p-component .p-button-icon-only .p-datepicker-trigger >button{
+.p-button .p-component .p-button-icon-only .p-datepicker-trigger>button {
     height: 100%;
 
 }
-.main-content {
-    width: 85%;
-}
+
+// .main-content {
+//     width: 85%;
+// }
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
@@ -495,30 +755,36 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 
 
 
-       .p-button {
-        height: 2.5em;
-       }
-      .p-button .p-fileupload-choose {
-           height: 2.1em;
-    }
-        i, span ,.tabview-custom{
-            vertical-align: middle;
-        }
+.p-button {
+    height: 2.5em;
+}
 
-        span {
-            margin: 0 .5rem;
-        }
-        .AadharCardFront{
-            margin-left: 20px;
-        }
-        .label{
-            width: 170px;
-        }
+.p-button .p-fileupload-choose {
+    height: 2.1em;
+}
 
-    .p-tabview p {
-        line-height: 1.5;
-        margin: 0;
-    }
+i,
+span,
+.tabview-custom {
+    vertical-align: middle;
+}
+
+span {
+    margin: 0 .5rem;
+}
+
+.AadharCardFront {
+    margin-left: 20px;
+}
+
+.label {
+    width: 170px;
+}
+
+.p-tabview p {
+    line-height: 1.5;
+    margin: 0;
+}
 </style>
 
 
@@ -535,7 +801,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 
 
 <template>
-    <div class="card flex justify-content-center">
+    <div class="flex card justify-content-center">
         <Toast />
         <div class="flex flex-wrap gap-2">
             <Button label="Success" severity="success" @click="showSuccess" />

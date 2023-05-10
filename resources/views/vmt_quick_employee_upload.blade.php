@@ -11,41 +11,51 @@
 @endcomponent --}}
 
     <div class="uploadEmployee-wrpper mt-30 ">
-        <div class="card shadow profile-box card-top-border border-0">
+        <div class="border-0 shadow card profile-box card-top-border">
             <div class="form-control">
                 <div class="row">
-                    <div class="col-md-12 col-xl-12 col-sm-12 col-xl-12">
-                        <h6>  Employee Quick Onboarding</h6>
+                    <div class="col-md-5 col-xl-5 col-sm-12">
+                        <h6 class="text-xl font-semibold"> Employee Quick Onboarding</h6>
                         <div class="col col-form-label">
-                            <ul class="list-style-numbered list-style-circle ">
-                                <li>Download the
+                            <ul class="list-style-numbered ">
+                                <li class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Download the
                                     {{-- <a class="choose-file ms-1" href="http://127.0.0.1:8000/assets/sample_employeeBulkOnboarding.xlsx" target="_blank">
                                         <i class="fa fa-file" aria-hidden="true"></i>
-                                        Sample file
+                                          <p class="mx-4">Sample file</p>
                                     </a> --}}
 
                                     <a class="choose-file ms-1" href="{{ url('/assets/ABSQuickOnboarding.xlsx') }}" target="_blank">
                                         <i class="fa fa-file" aria-hidden="true"></i>Sample File</span></a>
                                 </li>
-                                <li>Read the upload instructions on the right before uploading .</li>
-                                <li>Fill the information in excel template</li>
-                                <li>
+                                <li class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Read the upload instructions on the right before uploading .</li>
+                                <li class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Fill the information in excel template</li>
+                                <li class="my-4">
                                     <form method="POST" id='role-form'
                                         action="{{ url('vmt-employess/quick-onboarding/upload') }}"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div>
-                                            <span>Please Upload the employees details excel-sheet.</span>
-                                            <span class="choose-file ms-1">
+                                            <!-- <span class="">Please Upload the employees details excel-sheet.</span> -->
+                                            <div class="p-2 my-4 bg-gray-100 rounded-lg">
+                                                  <span class="choose-file ms-1">
                                                 <input name="file" type="file" required>
                                                 <i class="fa fa-file" aria-hidden="true"></i>
                                                 Choose file
                                             </span>
+                                            <span style="width: 500px;" class="mx-4 text-bold" id="uploaded_doc"></span>
+                                        </div>
+                                            <!-- <span class="choose-file ms-1">
+                                                <input name="file" type="file" required>
+                                                <i class="fa fa-file" aria-hidden="true"></i>
+                                                Choose file
+                                            </span> -->
                                         </div>
 
                                             {{-- <div class="col-md-10">
-                                                <input name="file" type="file" required>
+                                                <input id="upload_doc" name="file" type="file" required>
                                             </div> --}}
+
+                                            <span style="width: 500px;" class="font-bold" id="uploaded_doc"></span>
 
 
 
@@ -69,15 +79,34 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 ">
-                        <!--  <div class="col-form-label">
-                                    <h5> Upload Instructions</h4>
-                                    <div class="alert alert-warning">Read these instructions before uploading the file.</div>
-                                    <div>
-                                    <ul class="list-style-circle"><li> Employee Number, First name, Last name, Display name, Email, Date of joining and Location fields are required to add employees in . </li><li> Either email or mobile number is required while adding employee incase of login with OTP </li><li> Date of Birth is required to show Upcoming birthdays notification in Home page widget, Income tax and Professional Tax calculation. </li><li> Gender is required to validate Statutory leave(Maternity or Paternity Leave) and Professional Tax Calculation. </li><li> PAN number is required to generate Bank Transfer statements for Salary payments. </li><li> Email id should be valid to receive all  notifications such as leave request notifications, Attendance request notification and Timesheet reminder notifications etc. </li><li> Employee email is unique across . So, cannot add same employee in two Organizations with same email. </li><li> Job Title is optional but it will help to identify employees in People picker search results when 2 or more employees have same Name. </li><li> Department is useful to search or filter employees by Department in few reports. </li><li> PAN information(Name on PAN, DOB on Pan, Father name on Pan) and Bank Information(Bank Payment Mode, Bank Name, IFSC code, Account Number, Name on Bank account) are required to generate Bank Transfer statements for Salary payments. </li><li> Provident Fund Information(PF Number, PF Joining date, Name on PF account, UAN), Aadhar Information(Aadhar number, Name on Aadhar, Aadhar enrollment number) are required for PF Monthly Electronic Return(ECR) and Reports. </li><li> ESI Information(ESI number) is required for ESI Reports. </li><li> Please check  email notifications in Junk / Spam / Filtered folders if they are not visible in Inbox. </li></ul>
+                    <div class="col-md-7 ">
+                        <div class="col-form-label">
+                            <h6 > Upload Instructions</h4>
+                                <div class="py-2 my-4 alert f-12 alert-warning"><i class='fa fa-warning text-danger'></i> Read
+                                    these instructions before uploading the file.</div>
+                                <div>
+                                    <ul class="list-style" style="">
+                                        <li class="my-4"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Employee Number,Employee Name, Email, Date of joining
+                                            and Location fields are required to add employees in.</li>
+                                        <li class="my-4"><i class="text-green-500 fa fa-check"></i> Enter  mobile number is mandatory while adding employee </li>
 
-                                    </div>
-                                </div> -->
+
+                                        <li class="my-4"><i class="text-green-500 fa fa-check"></i> Email id should be valid to receive all notifications such as leave request
+                                            notifications, Attendance request notification and Timesheet reminder
+                                            notifications etc. </li>
+
+                                        <li class="my-4"> <i class="text-green-500 fa fa-check"></i> Employee email is unique across . So, cannot add same employee in two
+                                            Organizations with same email. </li>
+
+                                        <li class="my-4"><i class="text-green-500 fa fa-check"></i> Designation is mandatory since it will help to identify employees in People picker
+                                            search results when 2 or more employees have same Name. </li>
+                                        <li class="my-4"><i class="text-green-500 fa fa-check"></i> Please check email notifications in Junk / Spam / Filtered folders if they are
+                                            not visible in Inbox. </li>
+                                        <!---->
+                                    </ul>
+
+                                </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,12 +117,12 @@
         {{-- </div>end col --}}
         {{-- </div>end row --}}
         <div style="z-index: 11">
-            <div id="borderedToast2" class="toast toast-border-success overflow-hidden mt-3" role="alert"
+            <div id="borderedToast2" class="mt-3 overflow-hidden toast toast-border-success" role="alert"
                 aria-live="assertive" aria-atomic="true">
                 <div class="toast-body">
                     <div class="d-flex align-items-center">
                         <div class="flex-shrink-0 me-2">
-                            <i class="ri-checkbox-circle-fill align-middle"></i>
+                            <i class="align-middle ri-checkbox-circle-fill"></i>
                         </div>
                         <div class="flex-grow-1">
                             <h6 class="mb-0" id="alert-msg">Yey! Everything worked!</h6>
@@ -131,6 +160,14 @@
                         console.log("Got response....");
                         console.log("Status message : "+ajaxData.status);
                         console.log(ajaxData);
+                        if(ajaxData.status == 'success'){
+                            Swal.fire({
+                            title: ajaxData.message,
+                            text: ajaxData.status,
+                            type: "success"
+                        })
+                        }
+
 
                         $('#error-msg').html('');
                         $('#error-msg').append('<b>Upload Status : <br/></b>');
@@ -165,5 +202,13 @@
                 })
                 //console.log($('#role-form').serialize());
             });
+
+
+       $(document).ready(function(){
+        $('input[type="file"]').change(function(e){
+            var fileName = e.target.files[0].name;
+            $("#uploaded_doc").html(fileName)
+        });
+    });
         </script>
     @endsection

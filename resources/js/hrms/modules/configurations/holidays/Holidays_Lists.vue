@@ -1,369 +1,74 @@
 <template>
-    <div class="conainer-fluid main-body p-5">
+    <div class="p-5 conainer-fluid main-body">
         <div class="head-contant d_spc_bt">
             <h3>Holiday Summary</h3>
 
-            <div class="holiday-settings-btns mb-4">
+            <div class="mb-4 holiday-settings-btns">
                 <ul class="d-flex">
                     <li><button class="cancel_btn">Cancel</button></li>
                     <li><button class="view_Lists">View Lists</button></li>
-                    <li><button class="add_new_holiday_btn"  @click="visible = true"> Add New Holiday</button></li>
+                    <li><button class="add_new_holiday_btn" @click="visible = true"> Add New Holiday</button></li>
                 </ul>
             </div>
         </div>
 
         <!-- row-cols-1 row-cols-md-3 g-4 -->
-        <div class="container-fluid">
+      <div v-for="holiday in useStore.holidayData" :key="holiday.id" class="flex-wrap">
+        <div  >
             <div class="row">
-
-            <div class="col-lg ">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw'  }" class="popup_card">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
+                <div class="w-3">
+                    <div class="m-0 card-title d_spc_bt">
+                        <h3>{{ holiday.holiday_name }}</h3> 
+                        <span>Jan1 (sunday)</span> 
+                        <span></span> 
+                    </div>
+                    <div class="card clr-trans card-w">
+                        {{ holiday.image }}
+                        <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top"
+                            alt="...">
+                        <div class="overlay"></div>
+                        <div class="hover_btn_div d-ard">
+                            <button label="Edit" @click="visible = true" >
+                                Edit
+                            </button>
+                            <button class="mx-4" @click="remove">Remove</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
-            <div class="col-lg  ">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>May day</h3>
-                    <span>May1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/May_day.jpg" class="card-img-top" alt="..."> -->
-
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                    <div class="formgrid">
-                                    <input  type="file" id="upload"
-                                        hidden />
-                                    <label id="file_upload" for="upload"> Edit</label>
-                                    </div>
-                                </div>
-
-
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button>Remove</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg ">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg ">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
+      </div>
 
-        <div class="row">
-
-            <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
-                    </div>
-                </div>
+        <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }" class="popup_card">
+            <div class="img_container">
+                <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
             </div>
-            <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
+            <div class="card-title">
+                <div class="flex gap-2 mt-5 flex-column">
+                    <label for="username">Festival Title</label>
+                    <InputText id="username" v-model="value" aria-describedby="username-help" />
                 </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
+                <div class="flex gap-2 mt-5 flex-column">
+                    <label for="username">Description</label>
+                    <InputText id="username" v-model="value" aria-describedby="username-help" />
+                </div>
+                <div class="flex gap-2 mt-5 flex-column">
+                    <label for="username">Date</label>
+                    <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" :minDate="new Date()" />
+                </div>
 
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
-                    </div>
-                </div>
             </div>
-            <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg">
-                <div class="card-title m-0 d_spc_bt">
-                    <h3>New year</h3>
-                    <span>Jan1 (sunday)</span>
-                </div>
-                <div class="card  clr-trans card-w">
-                    <!-- <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top" alt="..."> -->
-                    <div class="overlay"></div>
-                    <div class="hover_btn_div d-ard">
-                        <Button label="Edit" @click="visible = true">
-                            Edit
-                            <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }">
-                                <div class="img_container">
-                                    <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
-                                </div>
-                                <div class="card-title">
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Festival Title</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Description</label>
-                                        <InputText id="username" v-model="value" aria-describedby="username-help" />
-                                    </div>
-                                    <div class="flex flex-column gap-2 mt-5">
-                                        <label for="username">Date</label>
-                                        <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                            :minDate="new Date()" />
-                                    </div>
-
-                                </div>
-                                <template #footer>
-                                    <Button label="Close" @click="visible = false" text />
-                                    <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
-                                </template>
-                            </Dialog>
-                        </button>
-                        <button @click="remove">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        </div>
+            <template #footer>
+                <Button label="Close" @click="visible = false" text />
+                <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
+            </template>
+        </Dialog>
 
         <!--  -->
     </div>
+
+    <!-- {{ useStore.holidayData }} -->
 </template>
 
 
@@ -379,29 +84,9 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import { useHolidayStore } from "../attendance_settings/stores/HolidayStore";
 
-
-
-onMounted(() => {
-    ajax_GetEmployeeDetails();
-});
-
-
-function ajax_GetEmployeeDetails() {
-    let url = window.location.origin + "/attendance_settings/fetch-emp-details";
-
-    console.log("AJAX URL : " + url);
-
-
-    axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
-        att_emp_details.value = response.data;
-        loading.value = false;
-    });
-
-    // axios.get("url").then(res =>)
-}
-
+const useStore = useHolidayStore()
 
 //
 const visible = ref(false);
@@ -416,6 +101,10 @@ const toast = useToast();
 const onAdvancedUpload = () => {
     toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
 };
+
+onMounted(async ()=>{
+    await useStore.getHolidays()
+})
 
 
 </script>
@@ -551,7 +240,7 @@ li {
     padding: 0;
 }
 
-.card-w:hover  .hover_btn_div>button {
+.card-w:hover .hover_btn_div>button {
     visibility: visible;
     cursor: pointer;
     transition: 0.6s ease-in-out !important;
@@ -563,7 +252,7 @@ li {
     height: 100%;
 }
 
-.card-w:hover .overlay{
+.card-w:hover .overlay {
     background: rgba(0, 0, 0, 0.349);
     transition: 0.3s ease-in-out;
 }
@@ -598,31 +287,32 @@ li {
     background: #002f56;
 }
 
-.card-img , .img_container{
+.card-img,
+.img_container {
     position: relative;
 }
 
 // #file_upload {
 // }
-.formgrid{
-position: absolute;
-bottom: 20px;
-right:20px;
+.formgrid {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 
-// border: 1px solid ;
+    // border: 1px solid ;
 
-color: #061328;
+    color: #061328;
 }
-.formgrid label{
-    font-size:20px !important;
+
+.formgrid label {
+    font-size: 20px !important;
     text-decoration: underline;
     color: var(--clr-blue);
     letter-spacing: 2px;
-    line-height:20px;
+    line-height: 20px;
 }
-@media screen {
 
-}
+@media screen {}
 </style>
 
 <!-- <style lang="scss">

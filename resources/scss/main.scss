@@ -1,9 +1,8 @@
 @import "./components/table";
 @import "./utilities/variable";
 @import "./components/card";
-@import "./utilities/helpers";
-
-
+@import "./components/calendar";
+// @import "./utilities/helpers";
 
 
 * {
@@ -12,10 +11,27 @@
     box-sizing: border-box;
 }
 
-label,p,span{
-    color: $gray-600;
-}
+// label,
+// p,
+// span {
+//     color: $gray-600;
+// }
 
 body {
-    background-color:$bg-body;
+    background-color: $bg-body;
 }
+
+.collapse {
+    visibility: visible !important;
+}
+
+.investment_dropDown .dropdown-toggle:after {
+    display: none;
+}
+
+.investment_dropDown .dropdown-menu {
+    min-width: 120px;
+}
+
+
+

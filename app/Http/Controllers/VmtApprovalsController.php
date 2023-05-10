@@ -10,8 +10,11 @@ use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtPMS_KPIFormReviewsModel;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Services\VmtReimbursementsService;
+use App\Services\VmtApprovalsService;
+use App\Models\VmtEmployeeDocuments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class VmtApprovalsController extends Controller
 {
@@ -39,9 +42,11 @@ class VmtApprovalsController extends Controller
         )
         ->orderBy('users.created_at', 'DESC')
         ->where('users.active', '0')
+        ->where('users.is_onboarded','1')
         ->where('users.is_ssa', '0')
         ->where('vmt_employee_details.docs_reviewed','like', '%-1%')//only if documents not yet reviewed
         ->get();
+        //dd($vmtEmployees_InActive);
         //\Log::error( \DB::getQueryLog());
 
         //'like', 'T%')
@@ -89,107 +94,107 @@ class VmtApprovalsController extends Controller
 
 
     //ajax for fetch uploaded docs
-    public function fetchDocsForUser(Request $request)
-    {
-        $documents_filenames =null ;
-        $user_code =null ;
-        $docs_reviewed =null ;
+    // public function fetchDocsForUser(Request $request)
+    // {
+    //     $documents_filenames =null ;
+    //     $user_code =null ;
+    //     $docs_reviewed =null ;
 
 
-        if(isset($request->user_code))
-        {
-            $user_code = $request->user_code;
+    //     if(isset($request->user_code))
+    //     {
+    //         $user_code = $request->user_code;
 
 
-            $user_id = User::where('user_code',$user_code)->value('id');
+    //         $user_id = User::where('user_code',$user_code)->value('id');
 
-            $documents_filenames = VmtEmployee::where('userid',$user_id)
-                                    ->get([
-                                        'aadhar_card_file',
-                                        'aadhar_card_backend_file',
-                                        'pan_card_file',
-                                        'passport_file',
-                                        'voters_id_file',
-                                        'dl_file',
-                                        'education_certificate_file',
-                                        'reliving_letter_file',
-                                        'docs_reviewed'
-                                    ]);
+    //         $documents_filenames = VmtEmployee::where('userid',$user_id)
+    //                                 ->get([
+    //                                     'aadhar_card_file',
+    //                                     'aadhar_card_backend_file',
+    //                                     'pan_card_file',
+    //                                     'passport_file',
+    //                                     'voters_id_file',
+    //                                     'dl_file',
+    //                                     'education_certificate_file',
+    //                                     'reliving_letter_file',
+    //                                     'docs_reviewed'
+    //                                 ]);
 
-            $docs_reviewed  =  json_decode($documents_filenames[0]-> docs_reviewed);
-            //dd($documents_filenames[0]->aadhar_card_file);
+    //         $docs_reviewed  =  json_decode($documents_filenames[0]-> docs_reviewed);
+    //         //dd($documents_filenames[0]->aadhar_card_file);
 
 
-        }
-        else
-        {
-            $docs_reviewed =  null;
-        }
+    //     }
+    //     else
+    //     {
+    //         $docs_reviewed =  null;
+    //     }
 
-        //Get all documents for the given user
-        //dd($docs_reviewed);
-         $response=array($documents_filenames,$user_code,$docs_reviewed);
+    //     //Get all documents for the given user
+    //     //dd($docs_reviewed);
+    //      $response=array($documents_filenames,$user_code,$docs_reviewed);
 
-        return  $response ;
-    }
+    //     return  $response ;
+    // }
 
     // Store Document Review in docs_reviewed column
-    public function storeDocumentsReviewByAdmin(Request $request){
+    // public function storeDocumentsReviewByAdmin(Request $request){
 
-        $docName  = $request->doc_name;
-        $user_id  = User::where('user_code',$request->user_code)->value('id');
-        $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
+    //     $docName  = $request->doc_name;
+    //     $user_id  = User::where('user_code',$request->user_code)->value('id');
+    //     $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
 
-        if($documents_filenames->docs_reviewed != null){
-            $docReviewArray = json_decode($documents_filenames->docs_reviewed);
-            $docReviewArray->$docName = (int)$request->approve_status;
-        }else{
-            $docReviewArray = array(
-                'aadhar_card_file' => -1,
-                'aadhar_card_backend_file' => -1,
-                'pan_card_file' => -1,
-                'passport_file' => -1,
-                'voters_id_file' => -1,
-                'dl_file' => -1,
-                'education_certificate_file' => -1,
-                'reliving_letter_file' => -1
-            );
-            $docReviewArray[$docName] = (int)$request->approve_status;
-        }
+    //     if($documents_filenames->docs_reviewed != null){
+    //         $docReviewArray = json_decode($documents_filenames->docs_reviewed);
+    //         $docReviewArray->$docName = (int)$request->approve_status;
+    //     }else{
+    //         $docReviewArray = array(
+    //             'aadhar_card_file' => -1,
+    //             'aadhar_card_backend_file' => -1,
+    //             'pan_card_file' => -1,
+    //             'passport_file' => -1,
+    //             'voters_id_file' => -1,
+    //             'dl_file' => -1,
+    //             'education_certificate_file' => -1,
+    //             'reliving_letter_file' => -1
+    //         );
+    //         $docReviewArray[$docName] = (int)$request->approve_status;
+    //     }
 
-        $documents_filenames->docs_reviewed = json_encode($docReviewArray);
-        $documents_filenames->save();
-        return "Saved";
-    }
+    //     $documents_filenames->docs_reviewed = json_encode($docReviewArray);
+    //     $documents_filenames->save();
+    //     return "Saved";
+    // }
 
     // Approve all document
-    public function approveAllDocumentByAdmin(Request $request){
-        //dd($request->all());
-        //$docName  = $request->doc_name;
-        $user_id  = User::where('user_code',$request->user_code)->value('id');
-        $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
+    // public function approveAllDocumentByAdmin(Request $request){
+    //     //dd($request->all());
+    //     //$docName  = $request->doc_name;
+    //     $user_id  = User::where('user_code',$request->user_code)->value('id');
+    //     $documents_filenames = VmtEmployee::where('userid', $user_id)->first();
 
-       /* if($documents_filenames->docs_reviewed != null){
-            $docReviewArray = json_decode($documents_filenames->docs_reviewed);
-            $docReviewArray->$docName = (int)$request->approve_status;
-        }else{
-            $docReviewArray = array(
-                'aadhar_card_file' => -1,
-                'aadhar_card_backend_file' => -1,
-                'pan_card_file' => -1,
-                'passport_file' => -1,
-                'voters_id_file' => -1,
-                'dl_file' => -1,
-                'education_certificate_file' => -1,
-                'reliving_letter_file' => -1
-            );
-            $docReviewArray[$docName] = (int)$request->approve_status;
-        }*/
+    //    /* if($documents_filenames->docs_reviewed != null){
+    //         $docReviewArray = json_decode($documents_filenames->docs_reviewed);
+    //         $docReviewArray->$docName = (int)$request->approve_status;
+    //     }else{
+    //         $docReviewArray = array(
+    //             'aadhar_card_file' => -1,
+    //             'aadhar_card_backend_file' => -1,
+    //             'pan_card_file' => -1,
+    //             'passport_file' => -1,
+    //             'voters_id_file' => -1,
+    //             'dl_file' => -1,
+    //             'education_certificate_file' => -1,
+    //             'reliving_letter_file' => -1
+    //         );
+    //         $docReviewArray[$docName] = (int)$request->approve_status;
+    //     }*/
 
-        $documents_filenames->docs_reviewed = json_encode($request->doc_array);
-        $documents_filenames->save();
-        return "Saved";
-    }
+    //     $documents_filenames->docs_reviewed = json_encode($request->doc_array);
+    //     $documents_filenames->save();
+    //     return "Saved";
+    // }
 
 
     public function showPMSApprovalPage(Request $request)
@@ -391,6 +396,79 @@ class VmtApprovalsController extends Controller
         $query_review_reimbursement->save();
 
         return "success";
+    }
+
+    /*
+        Used on onboarding docs approvals page
+
+    */
+    public function processSingleDocumentApproval(Request $request, VmtApprovalsService $serviceApprovalService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'record_id' => 'required|exists:vmt_employee_documents,id',
+                'status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                //'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response = $serviceApprovalService->processSingleDocumentApproval($request->record_id, $request->status);
+
+        return response()->json([
+            "status"=>$response,
+            "message"=>"Document status updated successfully",
+        ]);
+
+    }
+
+    public function processBulkDocumentApprovals(Request $request, VmtApprovalsService $serviceApprovalService){
+
+        //Validate the request
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                'record_ids' => 'required',// Need to check the given ids inside service class.
+                'status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                //'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response = $serviceApprovalService->processBulkDocumentApprovals($request->record_ids, $request->status);
+
+        return response()->json([
+            "status"=>$response,
+            "message"=>"All documents status updated successfully",
+        ]);
+
+    }
+
+
+    public function isAllOnboardingDocumentsApproved(Request $request, VmtApprovalsService $serviceApprovalService){
+            return $serviceApprovalService->isAllOnboardingDocumentsApproved($request->user_code);
     }
 }
 

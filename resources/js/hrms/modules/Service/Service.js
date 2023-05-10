@@ -1,23 +1,29 @@
-import {
-    defineStore
-} from "pinia";
+import {defineStore} from "pinia";
 import axios from "axios";
 import { ref } from "vue";
+
 
 export const Service = defineStore("Service", () => {
 
     const current_user_id = ref()
+    const current_user_code = ref()
     const current_user_name = ref()
 
 
-    axios.get('currentUser').then(res => {
+    axios.get('/currentUser').then(res => {
         current_user_id.value = res.data
-        console.log("service class" + res.data);
+        //  console.log("service class" + res.data);
     })
 
-    axios.get('currentUserName').then(res => {
+    axios.get('/currentUserName').then(res => {
         current_user_name.value = res.data
-        console.log("service class" + res.data);
+        //  console.log("service class" + res.data);
+
+    })
+
+    axios.get('/currentUserCode').then(res => {
+        current_user_code.value = res.data
+        //  console.log("service class" + res.data);
 
     })
 
@@ -36,7 +42,6 @@ export const Service = defineStore("Service", () => {
         return axios.get(`/fetch-managers-name`);
 
     }
-
     const DepartmentDetails = () => {
         return axios.get(`/fetch-departments`);
 
@@ -52,12 +57,17 @@ export const Service = defineStore("Service", () => {
         return axios.get(`/fetch-blood-groups`);
     }
 
+    const getAllEmployees = () => {
+        return axios.get(`/get-all-employees`);
+    }
+
     return {
 
         // varaible Declarations
 
         current_user_id,
         current_user_name,
+        current_user_code,
 
 
         getBankList,
@@ -67,6 +77,7 @@ export const Service = defineStore("Service", () => {
         getBloodGroups,
         DepartmentDetails,
         getMaritalStatus,
+        getAllEmployees,
 
 
 

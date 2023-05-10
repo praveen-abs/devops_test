@@ -20,10 +20,9 @@
                 :disabled="!selected_status == '' ? false : true" @click="generate_ajax"> <i class="fa fa-cog me-2"></i>
                 Generate</button>
         </div>
-        <!-- <Button label="Approve all" icon="pi pi-check" severity="success" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Approve')"
-            v-if="!selectedAllEmployee == ''" style="margin-left: 30rem; height: 2.5em;" />
+
         <Button type="button" icon="pi pi-times-circle" severity="danger" v-if="!selectedAllEmployee == ''"
-            label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" /> -->
+            label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" />
         <button class="btn btn-primary" :disabled="data_reimbursements == '' ? true : false" severity="success"
             @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
     </div>
@@ -418,9 +417,9 @@ const getSeverity = (status) => {
 </script>
 
 <style lang="scss">
-.main-content {
-    width: 85%;
-}
+// .main-content {
+//     width: 85%;
+// }
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;

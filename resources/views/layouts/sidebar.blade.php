@@ -1,12 +1,12 @@
 <?php //getCurrentClientName()
 
 //Notification counts
-$approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
-    ->where('status', 'Pending')
-    ->count();
-$approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
-    ->where('status', 'Pending')
-    ->count();
+// $approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
+//     ->where('status', 'Pending')
+//     ->count();
+// $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
+//     ->where('status', 'Pending')
+//     ->count();
 
 //dd($approvals_leave_notif_count);
 
@@ -240,6 +240,12 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             class="nav-link sidebar py-1"><span>Assets</span></a>
                                     </li>
                                 @endif
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+                                    <li class="nav-item ">
+                                        <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
+                                            class="nav-link sidebar py-1"><span>Manage WelcomeMail Status</span></a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
@@ -328,20 +334,20 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     </li>
                                     {{-- @endif --}}
 
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{ route('showPMSApprovalPage') }}" id=""
                                             class="nav-link sidebar py-1" data-bs-toggle="" role="button"
                                             aria-expanded="false">
-                                            {{-- <span>
+                                            <span>
                                                 OKR /PMS<span
                                                     class="badge bg-danger rounded-circle text-white">4</span>
-                                            </span> --}}
+                                            </span>
                                             <span>
                                                 OKR /PMS
                                             </span>
                                         </a>
-                                        {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
-                                    </li>
+                                        PMS forms are approved here. Redirect to PMS dashboard
+                                    </li> --}}
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
@@ -373,7 +379,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 @endif
 
                 <!-- PMS module -->
-                @if (!Str::contains(getCurrentClientName(), 'Protocol'))
+                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines']))
 
                     <li class="nav-item">
                         <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down"
@@ -420,6 +426,28 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                                 Config</span></a>
                                     </li>
                                 @endif
+
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('showPMSFormsMgmtPage_HRView') }}" class="nav-link">
+                                            <span>PMS Forms Management : HR</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('showPMSFormsMgmtPage_TeamView') }}" class="nav-link">
+                                            <span>PMS Forms Management : Team</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li class="nav-item">
+                                    <a href="{{ route('showPMSFormsMgmtPage_SelfView') }}" class="nav-link">
+                                        <span>PMS Forms Management : Self</span>
+                                    </a>
+                                </li> --}}
                             </ul>
                         </div>
                     </li>
@@ -504,10 +532,18 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             Analytics</span>
                                     </a>
                                 </li>
-                                <a href="{{ route('showPayRunPage') }}" class="nav-link sidebar py-1"
-                                    role="button"><span>Pay
-                                        Run</span></a>
 
+                                <li class="nav-item">
+                                    <a href="{{ route('showPayRunPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>Pay
+                                            Run</span></a>
+                                </li>
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+                                <li class="nav-item">
+                                    <a href="{{ route('showManagePayslipsPage') }}" class="nav-link sidebar py-1"
+                                        role="button"><span>Manage Payslip</span></a>
+                                </li>
+                                @endcan
                                 <li class="nav-item">
                                     <a href="{{ route('showPayrollClaimsPage') }}" class="nav-link sidebar py-1"
                                         role="button"><span>
@@ -547,28 +583,33 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     </a>
                     <div class="collapse menu-dropdown" id="paycheckDrop-Down">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('paycheckDashboard') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Dashboard</span></a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('vmt_salary_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Salary
                                         Details</span></a>
                             </li>
+
+                            @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+
                             <li class="nav-item">
+                                <a href="{{ route('showInvestmentsFormMgmtPage') }}" class="nav-link sidebar py-1"
+                                    role="button"><span>Investment Form Mgmt
+                                       </span></a>
+                            </li>
+                            @endcan
+
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('vmt_investments_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Investments</span></a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('vmt_form16_details') }}" class="nav-link sidebar py-1"
                                     role="button"><span>
                                         Form 16</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('integrations') }}" class="nav-link sidebar py-1"
-                                    role="button"><span>
-                                        Auth</span></a>
                             </li>
                         </ul>
                     </div>
@@ -639,7 +680,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{ route('page-not-found') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('showAttendanceReport') }}" class="nav-link sidebar py-1"
                                     role="button"><span>Attendance
                                         Report</span></a>
                             </li>
@@ -725,11 +766,10 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('create-offer') }}" class="nav-link"><span>
-
-                                            create offer</span></a>
+                                    {{-- <a href="{{ route('manage_emp_mail_notifications') }}" class="nav-link"><span>Document
+                                            Manage Employee Mail Notifications
+                                        </span></a> --}}
                                 </li>
-
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                 <li class="nav-item">

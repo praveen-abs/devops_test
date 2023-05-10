@@ -1,4 +1,9 @@
-@import url(../../assets/css/_button.scss);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 
 :root {
     --color-primary_blue: #002f54;
@@ -10,6 +15,15 @@
     --color-medium-ash: #c9c9c9;
     --color-dark-ash: #646464;
     --color-lite-ash: #e2e2e2;
+}
+@layer components {
+    .tw-card {
+        background-color: theme("colors.white");
+        border-radius: theme("borderRadius.lg");
+        padding: theme("spacing.6") theme("spacing.6");
+        width: 100%;
+        box-shadow: theme("boxShadow.xl");
+    }
 }
 
 button,label,p,span,*{
@@ -179,10 +193,14 @@ textarea {
 }
 .shadow-lite {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
 
+}
+img{
+display: revert !important;
+
+}
 th.gridjs-th-sort:hover{
-    background-color: #000358;
+    background-color: #003056 !important;
 }
 
 .img-sm {
@@ -468,7 +486,7 @@ table.no-padding tr td {
     font-size: 13px;
 }
 .btn-orange {
-    background-color: #ee6a04;
+    background-color: #ee6a04 !important;
     border-color: #ee6a04;
     color: #fff;
 }
@@ -523,7 +541,7 @@ table.no-padding tr td {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(45px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 /* sub header (bread-crumb) nav bar */
 .page-title-box {
@@ -793,10 +811,7 @@ th.gridjs-th {
     color: var(--vz-body-color);
     background-color: rgba(var(--vz-light-rgb), 0.75);
 }
-th.gridjs-th-sort:focus,
-th.gridjs-th-sort:hover {
-    background-color:transparent !important;
-}
+
 .gridjs-head {
     width: 100% !important;
     text-align: end;
@@ -1291,7 +1306,7 @@ button.gridjs-sort-desc {
     color: #fff;
 }
 .text-orange {
-    color: #E97951;
+    color: #ee6a04;
 }
 .bg-orange {
     background-color: var(--color-primary_orange);
@@ -1540,6 +1555,13 @@ a.editable-click:hover {
     border-left: 1px solid #cecece;
 }
 
+.switch-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
 .resize-none {
     resize: none;
 }
@@ -1569,7 +1591,7 @@ a.editable-click:hover {
     border-bottom: 1px solid #cecece;
 }
 .border-bottom-liteAsh {
-    border-bottom:1px solid #eae7e773;
+    border-bottom:1px solid #eae7e7;
 }
 .clearfix:after {
     clear: both;

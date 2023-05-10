@@ -1,49 +1,45 @@
 <template>
-    <div class="card mb-2">
+    <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Family Information
-                <!-- <span class="personal-edit">
-                                        <a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
-
-                                            </a>
-                                    </span> -->
-                <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    @click="visible = true">
-                    <i class="ri-pencil-fill"></i>
+            <h6 class="fw-bold fs-15">Family Information
+                <button type="button" class="float-right btn btn-orange"
+                style="margin-left: 79%"
+                    @click="DialogFamilyinfovisible = true" >
+                    Add New
+                    <!-- <i class="ri-pencil-fill"></i> -->
                 </button>
-                <Dialog v-model:visible="visible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
+
+                <Dialog v-model:visible="DialogFamilyinfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                     <template #header>
                         <div>
                             <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }" class="fw-bold fs-15">
                                 Family Information</h5>
                         </div>
                     </template>
 
                     <div class="space-between">
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>Name <span class="text-danger">*</span></span>
                             <input type="text" name="familyDetails_Name[]" pattern-data="name" id="familyDetails_Name"
-                                required v-model="familydetails.name">
+                                required  v-model="familydetails.name">
                         </div>
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>Relationship<span class="text-danger">*</span></span>
                             <input type="text" name="familyDetails_Relationship[]" v-model="familydetails.relationship"
                                 id="familyDetails_Relationship" pattern-data="alpha" required>
                         </div>
                     </div>
                     <div class="space-between M-T">
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02"
-                                v-model="familydetails.dob">
+                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" v-model="familydetails.dob">
                         </div>
 
-                        <div class="input_text flex-col">
+                        <div class="flex-col input_text">
                             <span>phone<span class="text-danger">*</span></span>
                             <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
-                                name="familyDetails_phoneNumber[]" v-model="familydetails.ph_no">
+                                name="familyDetails_phoneNumber[]" v-model="familydetails.phone_number">
                         </div>
                     </div>
 
@@ -66,142 +62,290 @@
 
 
             </h6>
-            <div class="table-responsive">
-                <DataTable ref="dt" :value="PersonalDocument" dataKey="id" :paginator="true" :rows="10"
+            <!-- {{ _instance_profilePagesStore.employeeDetails.get_family_details }} -->
+            <div class="my-6 table-responsive">
+                <DataTable ref="dt"  dataKey="id" :paginator="true" :rows="10" :value="_instance_profilePagesStore.employeeDetails.get_family_details"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
                     <Column header="Name" field="name" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
                     </Column>
 
                     <Column field="relationship" header="Relationship" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
                     </Column>
 
                     <Column field="dob" header="Date of Birth " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+                            <template #body="slotProps">
+                            <div v-if="slotProps.data.dob == 'Invalid Date'">
+                            -
+                            </div>
+                            <div v-else>
+                            {{ dayjs(slotProps.data.dob).format('DD-MMM-YYYY') }}
+                            </div>
+                            </template>
                     </Column>
+                    <Column field="phone_number" header="Phone" style="min-width: 12rem">
+                    </Column>
+                    <Column :exportable="false" header="Action" style="min-width:8rem">
+                        <template #body="slotProps">
 
-                    <Column field="ph_no" header="Phone" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                    </Column>
+                            <button class="mr-3 btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
+                            <button class="btn btn-danger"  @click="diolog_DeleteFamilyDetails(slotProps.data)">Delete</button>
+
+
+                        <template>
+
+
+                            <Dialog v-model:visible="DialogEditInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
+                                    <template #header>
+                                        <div>
+                                            <h5
+                                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                                Family Information</h5>
+                                        </div>
+                                    </template>
+
+                                    <div class="space-between">
+                                        <div class="flex-col input_text">
+                                            <span>Name <span class="text-danger">*</span></span>
+                                            <input type="text" name="familyDetails_Name[]" pattern-data="name" v-model="Editfamilydetails.name"
+                                                required >
+                                        </div>
+                                        <div class="flex-col input_text">
+                                            <span>Relationship<span class="text-danger">*</span></span>
+                                            <input type="text" name="familyDetails_Relationship[]"
+                                                 pattern-data="alpha" v-model="Editfamilydetails.relationship" required>
+                                        </div>
+                                    </div>
+                                    <div class="space-between M-T">
+                                        <div class="flex-col input_text">
+                                            <span>Date of birth <span class="text-danger">*</span></span>
+                                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02"
+                                             v-model="Editfamilydetails.dob" >
+                                        </div>
+
+                                        <div class="flex-col input_text">
+                                            <span>phone<span class="text-danger">*</span></span>
+                                            <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
+                                                name="familyDetails_phoneNumber[]"  v-model="Editfamilydetails.phone_number" >
+                                        </div>
+                                    </div>
+
+                                    <template #footer>
+                                        <Toast/>
+                                    <div>
+                                        <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                                            @click="EditFamilyDetails">submit</button>
+                                    </div>
+
+                                    </template>
+
+
+                           </Dialog>
+                        </template>
+                        <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
+                    </template>
+                </Column>
 
 
                 </DataTable>
-                <!--<table class="table">
-                                        <thead class="bg-primary">
-                                            <th>
-                                                Name
-                                            </th>
-                                            <th>
-                                                Relationship
-                                            </th>
-                                            <th>
-                                                Date Of Birth
-                                            </th>
-                                            <th>
-                                                Phone
-                                            </th>
-                                        </thead>
-                                        <tbody>
-                                                    <tr>
-                                                        <td>
-                                                        {{ $singledetail->name }}
-                                                        </td>
-                                                        <td>
-                                                         {{ $singledetail->relationship }}
-                                                        </td>
-                                                        <td>
-                                                         {{ date('d-M-Y', strtotime($singledetail->dob)) }}
-                                                        </td>
-                                                        <td>
-                                                         {{ $singledetail->phone_number
-                                                        </td>
-                                                    </tr>
 
-                                        </tbody>
-                                    </table> -->
             </div>
 
 
             <!-- </form> -->
         </div>
     </div>
+
 </template>
 <script setup>
+import dayjs from 'dayjs';
 
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
+import { Service } from "../../Service/Service";
+import { profilePagesStore } from '../stores/ProfilePagesStore'
 
+const fetch_data = Service()
+
+const _instance_profilePagesStore = profilePagesStore()
 
 const toast = useToast();
 
 const PersonalDocument = ref('');
-const visible = ref(false);
+const DialogFamilyinfovisible = ref(false);
+
+const DialogEditInfovisible = ref(false);
 
 const familydetails = reactive({
     name: '',
     relationship: '',
     dob: '',
-    ph_no: ''
+    phone_number: ''
 })
+const Editfamilydetails = reactive({
+    name: '',
+    relationship: '',
+    dob: '',
+    phone_number: ''
+});
+
+const current_table_id = ref()
+
 
 const saveFamilyDetails = () => {
+    _instance_profilePagesStore.loading_screen = true
 
-   if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.ph_no == " " || familydetails.ph_no.length >=10 ){
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-   }else{
-    let url = 'http://localhost:3000/posts';
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+//    if(familydetails.name == ''  || familydetails.dob == '' || familydetails.relationship == '' || familydetails.phone_number == " " ){
+//     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+//    }else{
+    let id = fetch_data.current_user_id
+    let url = `/add-family-info/${id}`;
 
-visible.value = false
+    axios.post(url, {
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
+            name: familydetails.name,
+            relationship: familydetails.relationship,
+            dob: familydetails.dob,
+            phone_number: familydetails.phone_number
+        })
+        .then((res) => {
 
-console.log(familydetails);
+            if (res.data.status == "success") {
+                //  window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Family information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
-axios.post(url, familydetails).then(res => {
-    console.log("sent sucessfully");
-}).catch(err => {
-    console.log(err);
-}).finally(() => {
-    console.log("completed");
-})
-   }
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+
+                _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
+                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
+
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        }).finally(()=>{
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
+            });
+        // window.location.reload();
+        DialogFamilyinfovisible.value = false;
+    }
+
+
+// }
+
+const diolog_EditFamilyDetails = (family) => {
+
+    DialogEditInfovisible.value = true;
+
+    current_table_id.value= family.id;
+
+   Editfamilydetails.name = family.name
+   Editfamilydetails.relationship = family.relationship
+   Editfamilydetails.dob = family.dob
+   Editfamilydetails.phone_number = family.phone_number
+
+
+};
+
+const diolog_DeleteFamilyDetails = (family) => {
+
+
+    current_table_id.value = family.id
+
+    let id = fetch_data.current_user_id
+    let url = ` /delete-family-info/${id}`;
+
+    axios.post(url, {
+        current_table_id: current_table_id.value,
+        })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
+
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+
+                _instance_profilePagesStore.employeeDetails.get_family_details.name = familydetails.gender;
+                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
+
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+
 }
+
+ const EditFamilyDetails = (user)=>{
+            // console.log(id);
+            let id = fetch_data.current_user_id
+    let url =`/update-family-info/${id}`;
+    axios.post(url, {
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
+            current_table_id: current_table_id.value,
+            name: Editfamilydetails.name,
+            relationship: Editfamilydetails.relationship,
+            dob: Editfamilydetails.dob,
+            phone_number: Editfamilydetails.phone_number
+        })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                 window.location.reload();
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(Editfamilydetails.dob,'YYYY-MM-DD' );
+
+                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
+
+                _instance_profilePagesStore.employeeDetails.get_family_details.name = Editfamilydetails.gender;
+                _instance_profilePagesStore.employeeDetails.get_family_details.relationship = familydetails.relationship;
+
+                // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
+                _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = Editfamilydetails.phone_number;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+        // window.location.reload();
+        DialogEditInfovisible.value = false;
+    }
+
+
 
 
 onMounted(() => {
-    fetchData();
+
 })
 
-
-const fetchData= ()=>{
-    let url = 'http://localhost:3000/posts'
-    axios.get(url)
-        .then((response) => {
-            console.log(response.data);
-            PersonalDocument.value = response.data;
-        });
-}
 
 </script>
 
 
 <style lang="scss">
-.main-content {
-    width: 85%;
-}
+// .main-content {
+//     width: 85%;
+// }
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
@@ -478,10 +622,28 @@ span {
 </style>
 
 {
-<!--
+
+    <!-- <template>
+        <div class="flex card justify-content-center">
+            <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
+            <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </Dialog>
+        </div>
+    </template>
+
+    <script setup>
+    import { ref } from "vue";
+
+    const visible = ref(false);
+    </script>
+
 <template>
-    <div class="card flex justify-content-center">
-        <Button label="Show" icon="pi pi-external-link" />
+    <div class="flex card justify-content-center">
+        <Button label="Show" icon="pi pi-external-link" @click="visible = true" />
         <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }">
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -492,6 +654,14 @@ span {
 </template>
 
 <script setup>
+import { ref } from "vue";
 
-</script> -->
+const visible = ref(false);
+</script>
+
+
+
+-->
+
+
 }

@@ -8,6 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtEmployeeEmergencyContactDetails;
+use App\Models\Experience;
+use App\Models\VmtEmployeeStatutoryDetails;
+use App\Models\VmtEmployeePaySlip;
+
 
 class User extends Authenticatable
 {
@@ -66,5 +72,34 @@ class User extends Authenticatable
 
     function getKpiAssignedFormReview(){
         return $this->hasMany(VmtPMS_KPIFormReviewsModel::class,'assignee_id');
+    }
+
+    public function getFamilyDetails() {
+        return $this->hasMany(VmtEmployeeFamilyDetails::class,'user_id');
+    }
+
+    function getEmergencyContactsDetails() {
+        return $this->hasMany(VmtEmployeeEmergencyContactDetails::class,'user_id');
+    }
+    function getExperienceDetails() {
+        return $this->hasMany(Experience::class,'user_id');
+    }
+    function getStatutoryDetails() {
+        return $this->hasOne(VmtEmployeeStatutoryDetails::class,'user_id');
+    }
+    function getEmployeeDocuments() {
+        return $this->hasMany(VmtEmployeeDocuments::class,'user_id');
+    }
+
+    function array_payslip_detail(){
+        return $this->hasMany(VmtEmployeePaySlip::class,'user_id');
+    }
+
+    function single_payslip_detail(){
+        return $this->hasOne(VmtEmployeePaySlip::class,'user_id');
+    }
+
+    function array_notifications(){
+        return $this->hasMany(VmtNotifications::class,'user_id');
     }
 }

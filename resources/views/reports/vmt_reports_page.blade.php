@@ -7,6 +7,7 @@
 @endsection
 @section('content')
     <div class="cotainer-fluid mt-30 payroll_wrapper">
+
         <div class="card left-line  mb-2">
             <div class="pt-1 pb-0 card-body">
                 <ul class="nav  nav-pills nav-tabs-dashed" role="tablist">
@@ -34,8 +35,8 @@
                     </li>
 
                     <li class="nav-item text-muted " role="presentation">
-                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab"
-                            aria-selected="false" tabindex="-1" role="tab">
+                        <a class="nav-link pb-2" data-bs-toggle="tab" href="#pms_tab" aria-selected="false" tabindex="-1"
+                            role="tab">
                             PMS/OKR</a>
                     </li>
 
@@ -111,7 +112,8 @@
                                 <div class="col-12">
                                     <h6>Payroll Journal</h6>
                                     <ul class=' list-style-circle px-4'>
-                                        <li class=""><a href="#" class="">Payroll Journal Summary</a>
+                                        <li class=""><a href="#" class="">Payroll Journal
+                                                Summary</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -119,9 +121,27 @@
                                 <div class="col-12 mt-5">
                                     <h6>Activity</h6>
                                     <ul class=' list-style-circle px-4'>
-                                        <li class=""><a href="#" class="">Activity Logs</a></li>
+                                        <li class=""><a href="#" class="">Activity Logs</a>
+                                        </li>
                                     </ul>
                                 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="attendance_tab" class="tab-pane fade ">
+                <div class="card top-line mb-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-3">
+                                <ul class=' list-style-circle px-4'>
+                                    <li class=""><a href="#" class="">Detailed Report</a></li>
+                                    <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic
+                                            Report</a></li>
+                                </ul>
                             </div>
                         </div>
 
@@ -137,12 +157,14 @@
 
                             <div class="col-3">
                                 <ul class='list-style-numbered list-style-circle px-4'>
-                                    <li><a href="{{ route('showPmsReviewsReportPage') }}" class="">PMS Report</a>
+                                    <li><a href="{{ route('showPmsReviewsReportPage') }}" class="">PMS
+                                            Report</a>
                                     </li>
 
                                 </ul>
                                 <ul class='list-style-numbered list-style-circle px-4'>
-                                    <li><a href="{{ route('reports-pmsforms-page') }}" class="">Assigned PMS Forms</a>
+                                    <li><a href="{{ route('reports-pmsforms-page') }}" class="">Assigned PMS
+                                            Forms</a>
                                     </li>
 
                                 </ul>
@@ -195,7 +217,8 @@
                                 <div class="col-12">
                                     <h6 class="">Taxes and Forms</h6>
                                     <ul class=' list-style-circle px-4'>
-                                        <li class=""><a href="#" class="">Tax Deduction Summary</a>
+                                        <li class=""><a href="#" class="">Tax Deduction
+                                                Summary</a>
                                         </li>
 
                                         <li class=""><a href="#" class="">Form 24Q</a>
@@ -206,7 +229,8 @@
                                 <div class="col-12 mt-5">
                                     <h6 class="">Declarations & Investments</h6>
                                     <ul class=' list-style-circle px-4'>
-                                        <li class=""><a href="#" class="">Tax Deduction Summary</a>
+                                        <li class=""><a href="#" class="">Tax Deduction
+                                                Summary</a>
                                         </li>
 
                                         <li class=""><a href="#" class="">Form 24Q</a>
@@ -223,20 +247,24 @@
                                             Workmen
                                             Employed by Contractor</a>
                                     </li>
-                                    <li class=""><a href="#" class="">Form XIV - Employment Card
+                                    <li class=""><a href="#" class="">Form XIV - Employment
+                                            Card
                                             for
                                             Employee</a>
                                     </li>
-                                    <li class=""><a href="#" class="">Form XV - Service Certificate
+                                    <li class=""><a href="#" class="">Form XV - Service
+                                            Certificate
                                             to
                                             Employee</a>
                                     </li>
-                                    <li class=""><a href="#" class="">Form XVI - Muster Roll</a>
+                                    <li class=""><a href="#" class="">Form XVI - Muster
+                                            Roll</a>
                                     </li>
                                     <li class=""><a href="#" class="">Form XVII - Register of
                                             Wages</a>
                                     </li>
-                                    <li class=""><a href="#" class="">Form XVIII - Muster roll cum
+                                    <li class=""><a href="#" class="">Form XVIII - Muster roll
+                                            cum
                                             wage
                                             register</a>
                                     </li>
@@ -269,4 +297,5 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
