@@ -800,6 +800,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
 
 });
+Route::get('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingController::class, 'testEmployeeDocumentsJoin']);
 
 Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
 

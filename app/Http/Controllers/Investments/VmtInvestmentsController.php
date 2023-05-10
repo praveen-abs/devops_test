@@ -10,10 +10,10 @@ use Illuminate\Http\Request;
 
 class VmtInvestmentsController extends Controller
 {
-    public function getInvestmentsFormDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
+    public function getInvestmentsFormDetailsTemplate(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
       //  dd($request->all());
 
-        return $serviceVmtInvestmentsService->getInvestmentsFormDetails($request->form_name);
+        return $serviceVmtInvestmentsService->getInvestmentsFormDetailsTemplate($request->form_name);
     }
 
     public function saveEmpInvSecDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
