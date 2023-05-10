@@ -88,18 +88,18 @@ class VmtMainDashboardController extends Controller
              //Check all the docs are approved or not
                      $all_document_approved =VmtEmployeeDocuments::where('user_id',auth()->user()->id);
 
-                if(!empty($all_document_approved)){
+                if($all_document_approved->exists()){
 
-                     $all_document_approved = $all_document_approved ->where('Status','Rejected')->count();
+                     $all_document_approval_count = $all_document_approved ->where('Status','Rejected')->count();
                 }else{
 
-                     $all_document_approved ='0';
+                     $all_document_approval_count ='0';
                 }
              //check the login epolyee is active or not
                      $active_status = User::where('id', auth()->user()->id)->first()->active;
 
-                if($all_document_approved >= '1' && $active_status == '0' ){
-
+                if($all_document_approval_count > '0' && $active_status == '0' ){
+                   // dd("dfgsdfg");
                     return view('vmt_documents');
                 }else{
              // Profile is not activated . Show a message

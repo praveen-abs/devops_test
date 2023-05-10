@@ -188,15 +188,11 @@ class VmtProfilePagesService
         // dd($response->id);
 
 
-        $is_response_docs = VmtEmployeeDocuments::where('user_id', $user_id);
-        if($is_response_docs->exists())
-        {
+
            $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
            ->where('vmt_employee_documents.user_id', $response->id)
            ->get();
-        }else{
-           $response_docs = VmtDocuments::all();
-        }
+
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
