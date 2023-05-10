@@ -34,7 +34,12 @@ if ($query_clientMaster) {
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
                     <?php
-                         echo sessionGetSelectedClientName();
+                    if(sessionGetSelectedClientName()){
+                        echo sessionGetSelectedClientName();
+                    }else{
+                        echo getClientName(auth()->user()->id);
+                    }
+
 
                     ?>
                         &#xf107;

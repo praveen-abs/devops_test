@@ -532,91 +532,91 @@ class VmtEmployeePayCheckService {
     }
 
 
-    public function getEmployeePayslipDetailsAsPDF($user_code, $month, $year){
-        $validator = Validator::make(
-            $data = [
-                "user_code" => $user_code,
-                "year" => $year,
-                "month" => $month,
-            ],
-            $rules = [
-                "user_code" => 'required|exists:users,user_code',
-                "year" => 'required',
-                "month" => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-            ]
+    // public function getEmployeePayslipDetailsAsPDF($user_code, $month, $year){
+    //     $validator = Validator::make(
+    //         $data = [
+    //             "user_code" => $user_code,
+    //             "year" => $year,
+    //             "month" => $month,
+    //         ],
+    //         $rules = [
+    //             "user_code" => 'required|exists:users,user_code',
+    //             "year" => 'required',
+    //             "month" => 'required',
+    //         ],
+    //         $messages = [
+    //             'required' => 'Field :attribute is missing',
+    //             'exists' => 'Field :attribute is invalid',
+    //         ]
 
-        );
-              
-
-        if($validator->fails()){
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
+    //     );
 
 
-        try{
+    //     if($validator->fails()){
+    //         return response()->json([
+    //             'status' => 'failure',
+    //             'message' => $validator->errors()->all()
+    //         ]);
+    //     }
 
 
-            $query_user = User::where('user_code', $user_code)->first();
-            $user_id = $query_user->id;
-
-            //Check whether the payslip data exists or not
-            $query_payslip = VmtEmployeePaySlip::where('user_id',$user_id)
-                            ->whereYear('PAYROLL_MONTH', $year)
-                            ->whereMonth('PAYROLL_MONTH', $month);
-
-            if(!$query_payslip->exists())
-            {
-                return response()->json([
-                    'status' => 'failure',
-                    'message' => 'Payslip not found for the given MONTH and YEAR'
-                ]);
-
-            }
+    //     try{
 
 
-            ////Generate the Payslip PDF
+    //         $query_user = User::where('user_code', $user_code)->first();
+    //         $user_id = $query_user->id;
 
-            $data['employee_payslip'] = $query_payslip->first();
+    //         //Check whether the payslip data exists or not
+    //         $query_payslip = VmtEmployeePaySlip::where('user_id',$user_id)
+    //                         ->whereYear('PAYROLL_MONTH', $year)
+    //                         ->whereMonth('PAYROLL_MONTH', $month);
 
-            $data['employee_name'] = $query_user->name;
-            $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
-            $data['employee_details'] = VmtEmployee::where('userid',$user_id)->first();
-            $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user_id)->first();
+    //         if(!$query_payslip->exists())
+    //         {
+    //             return response()->json([
+    //                 'status' => 'failure',
+    //                 'message' => 'Payslip not found for the given MONTH and YEAR'
+    //             ]);
 
-            $query_client = VmtClientMaster::find($query_user->client_id);
-
-            $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
-            $client_name = $query_client->client_name;
-
-            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
-
-            $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
-
-           $html = $view->render();
-           $html = preg_replace('/>\s+</', "><", $html);
-           $pdf = PDF::loadHTML($html,'UTF-8')->setPaper('a4', 'portrait')->setWarnings(false);
+    //         }
 
 
+    //         ////Generate the Payslip PDF
 
-           return $pdf->download($user_code."_".$year.'_'.$month."_payslip.pdf");
+    //         $data['employee_payslip'] = $query_payslip->first();
+
+    //         $data['employee_name'] = $query_user->name;
+    //         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
+    //         $data['employee_details'] = VmtEmployee::where('userid',$user_id)->first();
+    //         $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id',$user_id)->first();
+
+    //         $query_client = VmtClientMaster::find($query_user->client_id);
+
+    //         $data['client_logo'] = request()->getSchemeAndHttpHost().$query_client->client_logo;
+    //         $client_name = $query_client->client_name;
+
+    //         $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+    //         $view = view('vmt_payslip_templates.template_payslip_'.$processed_clientName, $data);
+
+    //        $html = $view->render();
+    //        $html = preg_replace('/>\s+</', "><", $html);
+    //        $pdf = PDF::loadHTML($html,'UTF-8')->setPaper('a4', 'portrait')->setWarnings(false);
 
 
-        }
-        catch(\Exception $e){
-            return response()->json([
-                "status" => "failure",
-                "message" => "Error while fetching payslip data as PDF",
-                "data" =>$e
-            ]);
-        }
-    }
+
+    //        return $pdf->download($user_code."_".$year.'_'.$month."_payslip.pdf");
+
+
+    //     }
+    //     catch(\Exception $e){
+    //         return response()->json([
+    //             "status" => "failure",
+    //             "message" => "Error while fetching payslip data as PDF",
+    //             "data" =>$e
+    //         ]);
+    //     }
+    // }
 
 
     /*
@@ -691,9 +691,9 @@ class VmtEmployeePayCheckService {
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true);
+        $options->set('isRemoteEnabled', true );
 
-        $pdf = new Dompdf( $options);
+        $pdf = new Dompdf($options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();

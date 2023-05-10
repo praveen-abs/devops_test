@@ -186,6 +186,53 @@
       </div>
     </div>
   </div>
+
+  <div>
+
+
+    <div>
+        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
+
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[5, 10, 25]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+
+            <Column header="File Name" field="document_name" style="min-width: 8rem">
+                <!-- {{ _instance_profilePagesStore.employeeDetails.employee_documents.document_name }} -->
+            </Column>
+
+            <Column field="status" header="Status" style="min-width: 12rem">
+                <!-- {{ _instance_profilePagesStore.employeeDetails.employee_documents.status }} -->
+
+            </Column>
+
+            <Column field="UploadDoc" header="Upload Documents" style="min-width: 12rem">
+                <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="Download"
+                        @click="showDocument(slotProps.data)" style="height: 2em" />
+            </Column>
+            <!-- <Column field="Browerupload" header="Upload Document" style="min-width:12rem;">
+                <template #body="slotProps" >
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                        @click="showDocument(slotProps.data)" style="height: 2em" />
+                </template>
+            </Column> -->
+
+            <Column field="" header="View " style="min-width: 12rem">
+                <template #body="slotProps">
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                        @click="showDocument(slotProps.data)" style="height: 2em" />
+
+                </template>
+
+            </Column>
+
+        </DataTable>
+    </div>
+
+
+
+
+  </div>
 </template>
 
 <script setup>
@@ -511,66 +558,40 @@ const ReleivingLetter = (e) => {
     //console.log(EmployeeDocs_upload.ReleivingLetterDoc);
   }
 };
+
+
+const view_document = ref({})
+
+const visible = ref(false);
+
+const documentPath = ref();
+
+
+const showDocument = (document) => {
+
+view_document.value = { ...document }
+console.log(view_document.value);
+console.log(view_document.value.doc_url);
+visible.value = true
+loading.value = true
+
+
+axios.post('/view-profile-private-file', {
+    user_code: _instance_profilePagesStore.employeeDetails.user_code,
+    document_name: view_document.value.document_name
+}).then(res => {
+    console.log(res.data.data);
+    documentPath.value = res.data.data
+    console.log("data sent", documentPath.value);
+
+}).finally(()=>{
+
+    loading.value = false;
+
+})
+}
 </script>
 
 <!-- {
 
-<template>
-    <div class="card">
-        <Message severity="success">Success Message Content</Message>
-        <Message severity="info">Info Message Content</Message>
-        <Message severity="warn">Warning Message Content</Message>
-        <Message severity="error">Error Message Content</Message>
-    </div>
-</template>
-
-<script setup>
-</script>
-
-
-<template>
-    <div class="card">
-        <Message severity="success">Success Message Content</Message>
-        <Message severity="info">Info Message Content</Message>
-        <Message severity="warn">Warning Message Content</Message>
-        <Message severity="error">Error Message Content</Message>
-    </div>
-</template>
-
-<script setup>
-</script>
-
-
-<template>
-    <div class="card flex justify-content-center">
-        <Toast position="top-left" group="tl" />
-        <Toast position="bottom-left" group="bl" />
-        <Toast position="bottom-right" group="br" />
-
-        <div class="flex flex-wrap gap-2">
-            <Button label="Top Left" class="mr-2" @click="showTopLeft" />
-            <Button label="Bottom Left" severity="warning" @click="showBottomLeft" />
-            <Button label="Bottom Right" severity="success" @click="showBottomRight" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showTopLeft = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', group: 'tl', life: 3000 });
-};
-
-const showBottomLeft = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', group: 'bl', life: 3000 });
-};
-
-const showBottomRight = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', group: 'br', life: 3000 });
-};
-</script>
-
-
-} -->
+ -->

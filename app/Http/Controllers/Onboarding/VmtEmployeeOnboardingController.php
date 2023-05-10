@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtEmployeeDocumentsService;
 use App\Services\Admin\VmtEmployeeMailNotifMgmtService;
 
 class VmtEmployeeOnboardingController extends Controller
@@ -1511,5 +1512,9 @@ class VmtEmployeeOnboardingController extends Controller
 
        return $response;
 
+    }
+
+    public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
+            return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
 }
