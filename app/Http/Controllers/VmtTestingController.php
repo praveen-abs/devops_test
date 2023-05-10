@@ -411,25 +411,47 @@ class VmtTestingController extends Controller
     public function testinginestmentsection()
     {
 
+    $query_inv  =  VmtInvForm::join('vmt_inv_formsection', 'vmt_inv_formsection.form_id','=','vmt_inv_form.id')
+                             ->join('vmt_inv_section','vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+                             ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
+                             ->where('vmt_inv_form.form_name','investment 1')
+                             ->get(
+                            //     [
+                            //         'vmt_inv_section.section',
+                            //         'vmt_inv_section.particular',
+                            //         'vmt_inv_section.reference',
+                            //         'vmt_inv_section.max_amount',
 
-        $query_details = VmtInvFEmpAssigned::join('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
-            ->join('vmt_inv_formsection', 'vmt_inv_formsection.id', '=', 'vmt_inv_emp_formdata.fs_id')
-            ->join('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
-            ->join('vmt_inv_form', 'vmt_inv_form.id', '=', 'vmt_inv_formsection.form_id')
-            ->where('form_name', 'inv form1')
-            ->get([
-                'form_name',
-                'vmt_inv_f_emp_assigned.user_id',
-                'vmt_inv_section.section',
-                'vmt_inv_section.particular',
-                'vmt_inv_section.reference',
-                'vmt_inv_section.max_amount',
-                'vmt_inv_emp_formdata.dec_amount',
-                'vmt_inv_f_emp_assigned.year',
+                            //  ]
+                            );
 
-            ])->toArray();
 
-        dd($query_details);
+                             dd($query_inv->toArray());
+
+
+
+
+              //  dd($simma);
+
+
+
+            //    $query_details = VmtInvFEmpAssigned::join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.f_emp_id','=','vmt_inv_f_emp_assigned.id')
+            //                                 ->join('vmt_inv_formsection','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
+            //                                 ->join('vmt_inv_section','vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+            //                                 ->join('vmt_inv_form','vmt_inv_form.id','=','vmt_inv_formsection.form_id')
+            //                                ->where('form_name','inv form1')
+            //                         ->get(['form_name',
+            //                                 'vmt_inv_f_emp_assigned.user_id',
+            //                                 'vmt_inv_section.section',
+            //                                 'vmt_inv_section.particular',
+            //                                 'vmt_inv_section.reference',
+            //                                 'vmt_inv_section.max_amount',
+            //                                 'vmt_inv_emp_formdata.dec_amount',
+            //                                 'vmt_inv_f_emp_assigned.year',
+
+            //                             ])->toArray();
+
+            //     dd($query_details);
 
 
 
