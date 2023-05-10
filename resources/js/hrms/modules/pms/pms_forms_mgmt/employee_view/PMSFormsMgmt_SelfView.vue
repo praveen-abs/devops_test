@@ -92,6 +92,7 @@
 
     const PmsSelfDetailsStore = usePMSFormsDownloadStore();
 
+        console.log(PmsSelfDetailsStore.array_single_employees_list);
 
     // const selected_options_calendar_type =  {   "name" : "Choose", "value":""} ;
     // const options_calendar_type = [
@@ -116,18 +117,18 @@
     //                                  {   "name" : "Q4", "value":"q4"},
     //                             ];
 
-    const filters = ref({
-            global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            employee_name: {
-             value: null,
-                     matchMode: FilterMatchMode.STARTS_WITH,
-                     matchMode:FilterMatchMode.EQUALS,
-                     matchMode:FilterMatchMode.CONTAINS,
+    // const filters = ref({
+    //         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    //         employee_name: {
+    //          value: null,
+    //                  matchMode: FilterMatchMode.STARTS_WITH,
+    //                  matchMode:FilterMatchMode.EQUALS,
+    //                  matchMode:FilterMatchMode.CONTAINS,
 
-            },
-    });
+    //         },
+    // });
 
-    const data_pmsforms = ref();
+   // const data_pmsforms = ref();
 
     onMounted(() => {
         // let url = window.location.origin + '/fetch-regularization-approvals';

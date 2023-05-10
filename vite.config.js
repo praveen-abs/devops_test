@@ -96,16 +96,20 @@ export default defineConfig({
                 //Payroll
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
 
+                // Roles and permission
+
+                'resources/js/hrms/modules/roles_permission/RolesPermission.js',
+
 
                 //PMS forms management
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
                 //managewelcomemailstatus
-                'resources\js\hrms\modules\Organization\manage_welcome_mails_status\ManageWelcomeMailStatus.js'
+                'resources\js\hrms\modules\Organization\manage_welcome_mails_status\ManageWelcomeMailStatus.js',
 
                 // testing_pradeesh
-
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
 
             ],
             refresh: true,

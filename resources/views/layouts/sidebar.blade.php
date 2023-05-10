@@ -199,11 +199,6 @@
                             <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item ">
-                                    <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>Manage WelcomeMail Status</span></a>
-                                </li>
-
-                                <li class="nav-item ">
                                     <a href="{{ route('manageEmployees') }}" id="tds"
                                         class="nav-link sidebar py-1"><span>Manage Employees</span></a>
                                 </li>
@@ -245,6 +240,12 @@
                                             class="nav-link sidebar py-1"><span>Assets</span></a>
                                     </li>
                                 @endif
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+                                    <li class="nav-item ">
+                                        <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
+                                            class="nav-link sidebar py-1"><span>Manage WelcomeMail Status</span></a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>

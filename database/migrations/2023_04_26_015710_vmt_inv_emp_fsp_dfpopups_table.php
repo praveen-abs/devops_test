@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_user_mail_status', function (Blueprint $table) {
+        Schema::create('vmt_inv_emp_fsp_popups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->text("welcome_mail_status");
-            $table->text("onboard_docs_approval_status");
-            $table->text("acc_activation_mail_status");
+            $table->foreignId('fsp_popups_id')->constrained('vmt_inv_fsp_popups');
+            $table->text("popup_value");
+
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_user_mail_status');
+        Schema::dropIfExists('vmt_inv_emp_fsp_popups');
     }
 };

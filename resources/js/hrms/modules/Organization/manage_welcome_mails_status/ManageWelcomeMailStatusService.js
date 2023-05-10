@@ -7,10 +7,21 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
 
     // Variable Declarations
 
+    const loading = ref(false);
 
+    const array_employees_list = ref();
 
+    async function getManageWelcomeMailStatus(){
+        await axios.get('/getAllEmployees_WelcomeMailStatus_Details')
+        .then((res)=>{
+            array_employees_list.value = res.data ;
+            console.log("testing",array_employees_list);
+        })
+        .finally(()=>{
 
-
+        })
+    }
+    // async function
 
 
     // async function downloadPayslipReleaseStatus(user_code, month, year, status) {
@@ -39,9 +50,11 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
     return {
 
         // Varaible Declartion
+        array_employees_list,loading,
 
 
         // Functions
+        getManageWelcomeMailStatus
 
     };
 

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class VmtInvestmentsController extends Controller
 {
     public function getInvestmentsFormDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
-        //dd($request->all());
+      //  dd($request->all());
 
         return $serviceVmtInvestmentsService->getInvestmentsFormDetails($request->form_name);
     }
@@ -23,9 +23,9 @@ class VmtInvestmentsController extends Controller
     }
 
     public function ImportInvestmentForm_Excel(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
-        //dd($request->all());
+       // dd($request->all());
 
-        return $serviceVmtInvestmentsService->ImportInvestmentForm_Excel($request->form_name, $request->section_name, $request->excel_file);
+        return $serviceVmtInvestmentsService->ImportInvestmentForm_Excel($request->form_name , $request->excel_file);
     }
 
 
@@ -33,6 +33,7 @@ class VmtInvestmentsController extends Controller
         //dd($request->all());
 
         return view('investments_forms_mgmt');
+
     }
 
 }

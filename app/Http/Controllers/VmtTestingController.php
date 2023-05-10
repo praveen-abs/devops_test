@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Crypt;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Imports\VmtPaySlip;
@@ -333,9 +333,11 @@ class VmtTestingController extends Controller
 
         $html = view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $data);
 
-        // return $html;
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
 
-        $pdf = new Dompdf();
+        $pdf = new Dompdf( $options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();

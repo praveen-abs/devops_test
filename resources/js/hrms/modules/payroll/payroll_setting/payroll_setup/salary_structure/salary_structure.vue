@@ -4,7 +4,7 @@
             <div class="w-10 my-6 ">Salary Structure(Paygroup)</div>
             <div><button class="my-6 btn btn-orange">Add Structure</button></div>
         </section>
-    
+
         <div id="table mx-4 my-2">
             <DataTable :value="products" >
                 <Column field="product" header="Code"></Column>
@@ -12,7 +12,7 @@
                 <Column field="thisYearSale" header="Category"></Column>
                 <Column field="thisYearProfit" header="Quantity"></Column>
             </DataTable>
-            
+
         </div>
         <!-- <new_salary_structure /> -->
     </div>
