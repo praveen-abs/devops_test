@@ -144,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
         //Fetch quick onboarded emp details
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
+        Route::post('/employee-documents-details', 'getEmployeeAllDocumentDetails')->name('employee-documents-details');
+
     });
 
 
