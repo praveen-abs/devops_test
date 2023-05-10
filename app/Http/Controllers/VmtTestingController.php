@@ -466,6 +466,7 @@ class VmtTestingController extends Controller
 
         $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
                     ->where('vmt_employee_documents.user_id','266')
+                    ->orWhereNull('vmt_employee_documents.id')
                     ->get()
                     ->toArray();
 
