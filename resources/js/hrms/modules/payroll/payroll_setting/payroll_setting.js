@@ -4,6 +4,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import '../../../.././../../public/assets/css/tailwind.css';
 import '../../../assests/tailwind.css'
+// import router from "./router";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -45,6 +46,7 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia)
+// app.use(router)
 
 
 app.directive('tooltip', Tooltip);

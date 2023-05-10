@@ -2,29 +2,29 @@
 
 
   <div class="w-full m-auto">
-    <h1 class="text-white">Payroll Setting</h1>
-    <div class="mt-4 tabs">
-      <a class="w-2 d-flex " @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
-        ><div class="md:text-sm" :style="{width:'25px' }">1</div> General Payroll Setting</a
+    <h1 class="mx-4 text-2xl font-semibold text-white">Payroll Setup</h1>
+    <div class="pt-4 mx-1 tabs row">
+      <a class=" d-flex col-md-2 col-lg- col-xl-2" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
+        ><div class="text-xl md:text-sm lg:text-sm xl:text-sm" >1</div> General Payroll Setting</a
       >
-      <a class="w-2 d-flex" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
+      <a class="col-md-2 col-lg-2 col-xl- d-flex " @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
         ><div>2</div>PF_ESI Setting</a
       >
-      <a class="w-2 d-flex" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
+      <a class="col-md-2 col-lg-2 col-xl-2 d-flex " @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
         ><div>3</div>Salary Components</a
       >
-      <a class="w-2 d-flex" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
+      <a class="col-md-2 col-lg-2 col-xl-2 d-flex" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
         ><div>4</div>Salary Structure</a
       >
-      <a class="w-2 d-flex" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
+      <a class="col-md-2 col-lg-2 col-xl-2 d-flex" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
         ><div>5</div>Finance Setting
       </a>
-      <a class="w-2 d-flex" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
+      <a class="col-md-2 col-lg-2 col-xl-2 d-flex" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
         Statutory Filling</a
       >
     </div>
 
-    <div class="bg-white rounded-md">
+    <div class="mx-1 bg-white rounded-md">
       <div v-if="activetab === 1" class="tabcontent">
         <general_payroll_setting />
       </div>
@@ -84,7 +84,7 @@ const activetab = ref(1);
   border: 1px solid #003056;
   border-right: none;
   background-color: #003056;
-  font-weight: bold;
+  font-weight: 600;
 }
 .tabs a > div {
     color: #aaa;
