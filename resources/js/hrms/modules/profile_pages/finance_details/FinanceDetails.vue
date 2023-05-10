@@ -479,18 +479,24 @@ const saveBankinfoDetails = () => {
 
     let form = new FormData()
 
+    form.append('user_code',_instance_profilePagesStore.employeeDetails.user_code)
+    form.append('bank_id',bank_information.bank_id.id)
+    form.append('account_no',bank_information.bank_ac_no)
+    form.append('bank_ifsc',bank_information.ifsc_code)
+    form.append('pan_no', bank_information.pan_no)
     form.append('PassBook',bank_information.PassBook)
 
+    // {
+    //     // user_code: _instance_profilePagesStore.employeeDetails.user_code,
+    //     // bank_id: bank_information.bank_id.id,
+    //     // account_no: bank_information.bank_ac_no,
+    //     // bank_ifsc: bank_information.ifsc_code,
+    //     // pan_no: bank_information.pan_no,
 
+    // }
 
-    axios.post(url, {
-        user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        bank_id: bank_information.bank_id.id,
-        account_no: bank_information.bank_ac_no,
-        bank_ifsc: bank_information.ifsc_code,
-        pan_no: bank_information.pan_no,
-        form
-    })
+    axios.post(url,form
+    )
         .then((res) => {
 
             if (res.data.status == "success") {
