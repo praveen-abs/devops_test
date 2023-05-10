@@ -9,6 +9,7 @@ use App\Models\VmtInvestmentForm;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 use App\Models\VmtInvForm;
+use App\Models\VmtInvFormSection;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\VmtInvSectionImport;
 
@@ -39,7 +40,12 @@ class VmtInvestmentsService
             "Other Source Of Income"
         ];
 
-    public function getInvestmentsFormDetails($form_name)
+
+    /*
+        Get the investments form detail template
+
+    */
+    public function getInvestmentsFormDetailsTemplate($form_name)
     {
         //Validate
         $validator = Validator::make(
@@ -47,7 +53,7 @@ class VmtInvestmentsService
                 'form_name' => $form_name
             ],
             $rules = [
-                'form_name' => 'required|exists:vmt_investment_forms,form_name',
+                'form_name' => 'required|exists:vmt_inv_form,form_name',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -66,20 +72,24 @@ class VmtInvestmentsService
 
         try{
             //get the current active form id
-            $form_id = VmtInvestmentForm::where('form_name',$form_name)->first()->id;
+            $query_form_details = VmtInvForm::where('form_name', $form_name)->first();
 
             //Get the query structure
-            $inv_form_details_query = $this->getInvestmentsFormDetails_Query();
 
-            $response = $inv_form_details_query
-                        ->where('vmt_investment_forms.id', $form_id)
-                        ->get([
-                            'vmt_investment_sections.section_name as section_name',
-                            'vmt_investment_particulars.particular_name as particular_name',
-                            'vmt_investment_particulars.references as references',
-                            'vmt_investment_particulars.amount_max_limit as amount_max_limit',
-                        ]);
+            $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+                                        ->where('vmt_inv_formsection.form_id', $query_form_details->id)
+                                        ->get(
+                                            [
+                                                'vmt_inv_formsection.section_id',
+                                                'vmt_inv_section.section',
+                                                'vmt_inv_section.particular',
+                                                'vmt_inv_section.reference',
+                                                'vmt_inv_section.max_amount',
+                                            ]
+                                        );
 
+            $response["form_name"] = $query_form_details->form_name;
+            $response["form_details"] = $query_inv_form_template;
 
             return response()->json([
                 "status" => "success",
@@ -91,10 +101,76 @@ class VmtInvestmentsService
         catch(\Exception $e){
             return response()->json([
                 "status" => "failure",
-                "message" => "Error while fetching investments form data",
+                "message" => "Error while fetching investments form template",
                 "data" => $e,
             ]);
         }
+
+    }
+
+    /*
+        Get the emp investment form details
+
+    */
+    public function getEmployeeInvFormDetails($user_code, $year){
+
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'form_name' => $form_name
+            ],
+            $rules = [
+                'form_name' => 'required|exists:vmt_inv_form,form_name',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+            //get the current active form id
+            $form_id = VmtInvForm::where('form_name', $form_name)->first()->id;
+
+            //Get the query structure
+
+            $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+                            // ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
+                            ->where('vmt_inv_formsection.id', $form_id)
+                            ->get(
+                        //     [
+                        //         'vmt_inv_section.section',
+                        //         'vmt_inv_section.particular',
+                        //         'vmt_inv_section.reference',
+                        //         'vmt_inv_section.max_amount',
+
+                        //  ]
+                        );
+
+            return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" => $query_inv_form_template,
+            ]);
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching investments form template",
+                "data" => $e,
+            ]);
+        }
+
 
     }
 
@@ -103,56 +179,29 @@ class VmtInvestmentsService
 
 
     */
-    public function getCurrentInvestmentsFormDetails()
-    {
-        try{
-            //get the current active form id
-            $form_id = VmtInvestmentForm::where('active','1')->first()->id;
-
-            //Get the query structure
-            $inv_form_details_query = $this->getInvestmentsFormDetails_Query();
-
-            $response = $inv_form_details_query
-                        ->where('vmt_investment_forms.id', $form_id)
-                        ->get([
-                            'vmt_investment_sections.section_name as section_name',
-                            'vmt_investment_particulars.particular_name as particular_name',
-                            'vmt_investment_particulars.references as references',
-                            'vmt_investment_particulars.amount_max_limit as amount_max_limit',
-                        ]);
+    // public function getCurrentInvestmentsFormDetailsTemplate()
+    // {
+    //     try{
 
 
-            return response()->json([
-                "status" => "success",
-                "message" => "",
-                "data" => $response,
-            ]);
 
-        }
-        catch(\Exception $e){
-            return response()->json([
-                "status" => "failure",
-                "message" => "Error while fetching investments form data",
-                "data" => $e,
-            ]);
-        }
+    //         return response()->json([
+    //             "status" => "success",
+    //             "message" => "",
+    //             "data" =>"",
+    //         ]);
 
-    }
+    //     }
+    //     catch(\Exception $e){
+    //         return response()->json([
+    //             "status" => "failure",
+    //             "message" => "Error while fetching investments form data",
+    //             "data" => $e,
+    //         ]);
+    //     }
 
+    // }
 
-    /*
-        Common query to get the investments details
-
-    */
-    public function getInvestmentsFormDetails_Query(){
-        $inv_form_details = VmtInvestmentForm::join('vmt_investment_form_secpat', 'vmt_investment_form_secpat.form_id', '=', 'vmt_investment_forms.id')
-        ->join('vmt_investment_section_particulars', 'vmt_investment_section_particulars.id', '=', 'vmt_investment_form_secpat.sec_pat_id') //Get sections_particulars id
-        ->join('vmt_investment_sections', 'vmt_investment_sections.id', '=', 'vmt_investment_section_particulars.section_id') // Get Sections
-        ->join('vmt_investment_particulars', 'vmt_investment_particulars.id', '=', 'vmt_investment_section_particulars.particular_id'); // Get Particular id
-
-        return $inv_form_details;
-
-    }
 
     /*
         This function calls the resp. function
