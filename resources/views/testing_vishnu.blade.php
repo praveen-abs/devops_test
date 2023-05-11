@@ -85,12 +85,38 @@
     //            dd($query_emp_welcomemailstatus);
 
     //         }
-    $user_id ="175";
-    $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
-                    ->where('vmt_employee_documents.user_id',$user_id)
-                    ->orWhereNull('vmt_employee_documents.id')
-                    ->get();
-                    dd($response->toarray());
+    // $user_id ="175";
+    // $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
+    //                 ->where('vmt_employee_documents.user_id',$user_id)
+    //                 ->orWhereNull('vmt_employee_documents.id')
+    //                 ->where('vmt_documents.document_name','<>','Birth Certificate')
+    //                 ->where('vmt_documents.document_name','<>','Check')
+    //                 ->get();
+    //                 dd($response->toarray());
+
+         $query_all_users_details=User::get();
+
+          foreach($query_all_users_details as $single_user_data){
+    //get the mandatory document id
+                $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
+
+    //get the employees uploaded documents mandatory id
+                $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
+                                                                ->where('vmt_employee_documents.user_id',$single_user_data->id)
+                                                                ->pluck('doc_id');
+
+            if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
+              {
+     //set the onboard status to 1
+                  $currentUser =User::where('id',$single_user_data->id)->first();
+                  $currentUser->is_onboarded = '1';
+                  $currentUser->save();
+
+             }
+          }
+
+
+
 ?>
 
 

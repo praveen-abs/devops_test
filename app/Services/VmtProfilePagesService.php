@@ -161,7 +161,6 @@ class VmtProfilePagesService
 
         }
     }
-
     /*
 
         Get employee details related to profile pages.
@@ -184,7 +183,7 @@ class VmtProfilePagesService
         )
             ->where('users.id', $user_id)
             ->first();
-           
+
         // dd($response->id);
 
 
@@ -420,4 +419,29 @@ class VmtProfilePagesService
             ];
         }
     }
+    public function updateEmployeeBankDetails($user_id,$bank_id,$bank_ifsc_code,$bank_account_number,$pan_number)
+    {
+
+        try{
+
+            $details = VmtEmployee::where('userid', $user_id)->first();
+            $details->bank_id =$bank_id;
+            $details->bank_ifsc_code =$bank_ifsc_code;
+            $details->bank_account_number =$bank_account_number;
+            $details->pan_number =$pan_number;
+            $details->save();
+
+
+        return $response=[
+            'status' => 'success',
+            'message' => 'Bank details updated successfully',
+        ];
+    } catch(\Exception $e){
+        $response = [
+        'status' => 'failure',
+        'message' => 'Error while updateing Bank Information ',
+        'error_message' => $e->getMessage()
+        ];
+    }
+}
 }
