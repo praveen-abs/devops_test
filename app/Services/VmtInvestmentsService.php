@@ -77,16 +77,41 @@ class VmtInvestmentsService
             //Get the query structure
 
             $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+                                        ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
                                         ->where('vmt_inv_formsection.form_id', $query_form_details->id)
                                         ->get(
-                                            [
-                                                'vmt_inv_formsection.section_id',
-                                                'vmt_inv_section.section',
-                                                'vmt_inv_section.particular',
-                                                'vmt_inv_section.reference',
-                                                'vmt_inv_section.max_amount',
-                                            ]
+                                            // [
+                                            //     'vmt_inv_formsection.section_id',
+                                            //     'vmt_inv_section.section',
+                                            //     'vmt_inv_section.particular',
+                                            //     'vmt_inv_section.reference',
+                                            //     'vmt_inv_section.max_amount',
+                                            // ]
                                         );
+                                        $query_inv_form_template = $query_inv_form_template->toArray();
+
+                                        // dd($query_inv_form_template[0]);
+                                           $count = 0;
+                                           foreach($query_inv_form_template as $single_inv_form_template){
+
+                                               if(! array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template))
+                                               {
+                                                   $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
+                                                   array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+                                               }
+                                               else
+                                               {
+                                                   array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+
+                                               }
+
+                                               //remove from outer json
+                                               unset($query_inv_form_template[$count]);
+
+                                               $count++;
+
+                                           }
+
 
             $response["form_name"] = $query_form_details->form_name;
             $response["form_details"] = $query_inv_form_template;
