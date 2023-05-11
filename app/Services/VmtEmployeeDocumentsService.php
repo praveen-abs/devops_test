@@ -60,7 +60,6 @@ class VmtEmployeeDocumentsService {
                     ->where('vmt_documents.document_name','<>','Check')
                     ->get();
 
-                    
             return response()->json([
                 'status' => 'success',
                 'message' => '',

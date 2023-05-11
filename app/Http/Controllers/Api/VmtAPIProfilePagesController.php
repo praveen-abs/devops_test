@@ -91,7 +91,7 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             phy_challenged: $request->phy_challenged,
         );
 
-        $emp_file =$employeeService->uploadDocument($user_id, $request->doc_obj,$onboard_document_type='Birth Certificate' );
+       $emp_file =$employeeService->uploadDocument($user_id, $request->doc_obj,$onboard_document_type='Birth Certificate' );
 
         return $response;
     }
@@ -249,10 +249,6 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             $rules = [
                 "user_code" => 'required|exists:users,user_code', //not used now
                 "record_id" => 'required',
-
-
-
-
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -283,4 +279,54 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
             'data'   => $response
         ]);
     }
+    public function updateEmployeeBankDetails(Request $request, VmtProfilePagesService $serviceVmtProfilePagesService, VmtEmployeeService $employeeService)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code', //not used now
+                "bank_id" => 'required',
+                "bank_ifsc_code" => 'required',
+                "bank_account_number" =>'required',
+                "pan_number"=>'required'
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "email" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
+
+        $response = $serviceVmtProfilePagesService->updateEmployeeBankDetails(
+            user_id:$user_id,
+            bank_id:$request->bank_id,
+            bank_ifsc_code: $request->bank_ifsc_code,
+            bank_account_number: $request->bank_account_number,
+            pan_number: $request->pan_number,
+
+        );
+
+        $emp_file =$employeeService->uploadDocument($user_id, $request->doc_obj,$onboard_document_type='Bank Passbook');
+
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Bank details updated successfully',
+
+        ]);
+
+
+}
 }

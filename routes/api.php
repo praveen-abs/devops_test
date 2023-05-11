@@ -111,6 +111,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/updateProfilePicture', [VmtAPIProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
     Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
+    Route::post('/profile-pages/updateEmployeeBankDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeBankDetails']);
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
     Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
