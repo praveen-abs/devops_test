@@ -1704,21 +1704,45 @@ class VmtAttendanceService{
             $user_id = User::where('user_code', $user_code)->first()->id;
 
             //fetch the data
-            $response = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
+            $query_employees_leaves = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
                             ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
                             ->where('users.id', $user_id)
-                            ->get();
+                            ->get([
+                                "vmt_employee_leaves.leaverequest_date",
+                                "vmt_employee_leaves.start_date",
+                                "vmt_employee_leaves.end_date",
+                                "vmt_employee_leaves.total_leave_datetime",
+                                "vmt_employee_leaves.leave_reason",
+                                "vmt_employee_leaves.reviewer_user_id",
+                                "vmt_employee_leaves.reviewed_date",
+                                "vmt_employee_leaves.reviewer_comments",
+                                "vmt_employee_leaves.status",
+                                "vmt_employee_leaves.is_revoked",
+                                "name",
+                                "user_code",
+                                "leave_type",
+                            ]);
+                          //  dd($query_employees_leaves->toArray());
+            $query_employees_leaves = $query_employees_leaves->toArray();
+
+            for($i=0;$i< count($query_employees_leaves);$i++){
+
+                $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $query_employees_leaves[$i]["manager_name"] = $manager_name;
+
+            }
 
 
             return response()->json([
                 'status' => 'success',
                 'message' => '',
-                'data' => $response
+                'data' => $query_employees_leaves
             ]);
 
         }
         catch(\Exception $e)
         {
+           // dd($e);
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ getEmployeeLeaveHistory() ] ",
