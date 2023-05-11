@@ -425,8 +425,10 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpi_weightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+           // dd( $config->selected_columns);
         }
+        //dd($show);
         return view('pms.vmt_pms_kpiform_create',compact('config','show','selectedYear'));
     }
 
