@@ -1673,6 +1673,63 @@ class VmtAttendanceService{
         }
 
     }
+
+
+    public function getEmployeeLeaveHistory($user_code){
+
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            //fetch the data
+            $response = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
+                            ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                            ->where('users.id', $user_id)
+                            ->get();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => '',
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeLeaveHistory() ] ",
+                'data' => $e
+            ]);
+        }
+
+
+
+
+    }
 }
 
 
