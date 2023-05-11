@@ -1,4 +1,5 @@
 <template>
+  <Toast />
     <div class=" mt-30 investments-wrapper">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
@@ -61,11 +62,17 @@
 
 
 <script setup>
-
-
+import { onMounted } from 'vue'
 import Declaration from  './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 
+import { investmentMainStore } from '../stores/investmentMainStore'
+
+const investmentStore = investmentMainStore()
+
+onMounted(async () => {
+    await investmentStore.getInvestmentSource()
+})
 </script>
 
 

@@ -1,34 +1,27 @@
 <template>
     <div class="mb-4 tw-card bg-gray-50">
-
+        <!-- {{ investmentStore.hraSource }} -->
         <div class="table-responsive">
-            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.hraSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
                 <Column header="Sections" field="section" style="min-width: 8rem">
-                    <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
                 </Column>
 
-                <Column field="ref" header="References " style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+                <Column field="reference" header="References " style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <button type="button" class="border-0 outline-none btn btn-transprarent"
+                            v-tooltip="slotProps.data.reference">
+                            <i class="fa fa-exclamation-circle text-warning" aria-hidden="true"></i>
+                        </button>
+                    </template>
                 </Column>
 
-                <Column field="max_limit" header="Max Limit" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                 </Column>
 
                 <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
@@ -39,34 +32,18 @@
                             Add Rented</button>
                     </template>
                 </Column>
-                <Column field="Status" header="Status" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                <Column field="status" header="Status" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.status">
+                            <Tag value="Completed" severity="success" />
+                        </div>
+                        <div v-else>
+                            <Tag value="Pending" severity="warning" />
+                        </div>
+                    </template>
                 </Column>
                 <Column field="" header="Action" style="min-width: 12rem">
-
                     <template #body="slotProps">
-                        <!-- <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
-                            @click="toggle" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </button>
-
-                        <Button icon="pi pi-check" aria-label="Filter" />
-                        <Button icon="pi pi-pencil" outlined rounded severity="danger" class="p-2"
-                            @click="investmentStore.editHraNewRental(slotProps.data)" />
-
-
-
-                        <OverlayPanel ref="op" class="p-4">
-                            <div class="p-3 mx-4">
-                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental">
-                                    <i class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
-                                    Edit</button>
-                                <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</button>
-                            </div>
-                        </OverlayPanel> -->
                         <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-10 h-8">
@@ -83,9 +60,6 @@
                                     d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                             </svg>
                         </button>
-                      
-
-
                     </template>
                 </Column>
             </DataTable>
@@ -105,7 +79,6 @@
         <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
             <div class="mb-3 table-responsive">
 
-                <!-- {{ investmentStore.hra_data }} -->
 
                 <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.hra_data"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -180,7 +153,7 @@
                                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
                             </button>
-                           
+
 
 
                         </template>
@@ -314,13 +287,11 @@ const toggle = (event) => {
 
 const investmentStore = investmentMainStore()
 
-onMounted(() => {
-    investmentStore.fetchHraNewRental()
+onMounted(async () => {
+    console.log(await investmentStore.hraSource);
 })
 
-const sample = ref([
-    { id: 1, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' }
-])
+
 
 
 </script>
@@ -618,3 +589,25 @@ span {
 </style>
 
 
+
+
+         <!-- <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
+                            @click="toggle" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </button>
+
+                        <Button icon="pi pi-check" aria-label="Filter" />
+                        <Button icon="pi pi-pencil" outlined rounded severity="danger" class="p-2"
+                            @click="investmentStore.editHraNewRental(slotProps.data)" />
+
+
+
+                        <OverlayPanel ref="op" class="p-4">
+                            <div class="p-3 mx-4">
+                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental">
+                                    <i class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
+                                    Edit</button>
+                                <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
+                                        aria-hidden="true"></i> Clear</button>
+                            </div>
+                        </OverlayPanel> -->

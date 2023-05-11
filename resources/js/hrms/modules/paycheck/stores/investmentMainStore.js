@@ -23,11 +23,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     // Steps for Investment and exemption tab's  Next and Previous Button
 
-    const investment_exemption_steps = ref(2)
+    const investment_exemption_steps = ref(5)
 
     // loading Spinner
 
-    const canShowLoading = ref(true)
+    const canShowLoading = ref(false)
 
     // Tax Saving Investments  
 
@@ -59,6 +59,73 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     */
 
 
+    // Getting Investment and Exemption Whole Data Source
+
+
+    const investmentMainSource = ref()
+    const hraSource = ref()
+    const section80ccSource = ref()
+    const otherExemptionSource = ref()
+    const housePropertySource = ref()
+    const reimbursmentSource = ref()
+    const otherIncomeSource = ref()
+    const previousEmployeerIncomeSource = ref()
+    const getInvestmentSource = async () => {
+
+        let url = `/investments/investments-form-details-template?form_name=investment%201`
+
+        await axios.get(url)
+            .then(res => {
+                console.log(res.data.data.form_details);
+                investmentMainSource.value = res.data.data.form_details
+                hraSource.value = res.data.data.form_details.HRA
+                section80ccSource.value = res.data.data.form_details["Section 80C & 80CC "]
+                otherExemptionSource.value = res.data.data.form_details["Other Excemptions "]
+                housePropertySource.value = res.data.data.form_details["House Properties "]
+                reimbursmentSource.value = res.data.data.form_details["Reimbersument "]
+                otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
+                previousEmployeerIncomeSource.value = res.data.data.form_details["Reimbersument "]
+
+                console.log(res.data.data.form_details["Reimbersument "]);
+            }).catch(e => console.log(e))
+            .finally(() => {
+                console.log("completed");
+            })
+
+    }
+
+    const getDeclarationAmount = (amount) => {
+        console.log(amount);
+
+        var data = {
+            fs_id:amount.fs_id ,
+            form_id : amount.form_id,
+            declaration_amount : amount.dec_amt,
+         }
+
+        var form_data = new FormData()
+
+        for ( var key in data ) {
+            form_data.append(key, data[key]);
+        }
+
+        if ( amount.dec_amt > amount.max_amount ) {
+            toast.add({
+                severity: "error",
+                summary: "Waring",
+                detail: "Declaration amount is greater than Maximum Limit",
+                life: 3000,
+            });
+        }else{
+            console.log("working");
+        }
+
+        console.log(form_data);
+
+
+    }
+
+
 
     // HRA Begins
 
@@ -84,15 +151,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const fetchHraNewRental = () => {
 
         console.log("getting hra new rental  data.......");
-
-
-        axios.get(' http://localhost:3000/rental').then(res => {
-            console.log(res.data);
-            hra_data.value = res.data
-        }).catch(e => console.log(e)).finally(()=>{
-            canShowLoading.value = false
-        })
-
+        // axios.get(' http://localhost:3000/rental').then(res => {
+        //     console.log(res.data);
+        //     hra_data.value = res.data
+        // }).catch(e => console.log(e)).finally(() => {
+        //     canShowLoading.value = false
+        // })
     }
 
     const editHraNewRental = (currentRowData) => {
@@ -152,24 +216,23 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const sec80c80cc_data = ref()
 
-    const  sec80c80cc = reactive({
-        EPF:"",
-        VPF:"",
-        PPF:"",
-        LIP:"",
-        SD_RCD:"",
-        MD:"",
-        NSC:"",
-        ULIP:"",
-        YTSFDR:"",
-        DAP:"",
-        SAP:"",
-        SSY:"",
-        STBIBNAR:"",
-        SPF:"",
+    const sec80c80cc = reactive({
+        EPF: "",
+        VPF: "",
+        PPF: "",
+        LIP: "",
+        SD_RCD: "",
+        MD: "",
+        NSC: "",
+        ULIP: "",
+        YTSFDR: "",
+        DAP: "",
+        SAP: "",
+        SSY: "",
+        STBIBNAR: "",
+        SPF: "",
     })
 
-    
 
 
 
@@ -255,7 +318,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         lender_type: '',
         loss_from_housing_property: '',
         address: '',
-        property_type:'Self Occupied Property'
+        property_type: 'Self Occupied Property'
     })
 
     // Let Out Property
@@ -272,7 +335,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         net_value: '',
         interest: '',
         income_loss: '',
-        property_type:'Let Out Property'
+        property_type: 'Let Out Property'
     })
 
     // Deemed Let Out Property
@@ -289,64 +352,64 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         net_value: '',
         interest: '',
         income_loss: '',
-        property_type:'Deemed Let Out Property'
+        property_type: 'Deemed Let Out Property'
     })
 
 
- 
-    const income_loss_calculation = () =>{
-      const lop_maintenance =  formula.maintenance_cal(lop.lender_type,lop.rent_received,lop.municipal_tax)
-      const dlop_maintenance =  formula.maintenance_cal(dlop.lender_type,dlop.rent_received,dlop.municipal_tax)
-      lop.maintenance = lop_maintenance
-      dlop.maintenance = dlop_maintenance
-      console.log("lop:"+lop_maintenance);
-      console.log("dlop:"+dlop_maintenance);
-     setTimeout(() => {
-        const lop_net =  formula.net_value_cal(lop.rent_received,lop.municipal_tax,lop.maintenance)
-        console.log(lop_net);
-        lop.net_value = lop_net;
-        const dlop_net =  formula.net_value_cal(dlop.rent_received,dlop.municipal_tax,dlop.maintenance)
-        console.log(dlop_net);
-        dlop.net_value = dlop_net;
-     }, 1000);
-     lop.income_loss = formula.income_loss_cal(lop.interest,lop.net_value)
-     dlop.income_loss = formula.income_loss_cal(dlop.interest,dlop.net_value)
-      
+
+    const income_loss_calculation = () => {
+        const lop_maintenance = formula.maintenance_cal(lop.lender_type, lop.rent_received, lop.municipal_tax)
+        const dlop_maintenance = formula.maintenance_cal(dlop.lender_type, dlop.rent_received, dlop.municipal_tax)
+        lop.maintenance = lop_maintenance
+        dlop.maintenance = dlop_maintenance
+        console.log("lop:" + lop_maintenance);
+        console.log("dlop:" + dlop_maintenance);
+        setTimeout(() => {
+            const lop_net = formula.net_value_cal(lop.rent_received, lop.municipal_tax, lop.maintenance)
+            console.log(lop_net);
+            lop.net_value = lop_net;
+            const dlop_net = formula.net_value_cal(dlop.rent_received, dlop.municipal_tax, dlop.maintenance)
+            console.log(dlop_net);
+            dlop.net_value = dlop_net;
+        }, 1000);
+        lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value)
+        dlop.income_loss = formula.income_loss_cal(dlop.interest, dlop.net_value)
+
 
     }
 
     const fetchSelfOccupiedProperty = () => {
-      
-        axios.get('http://localhost:3000/investment').then(res=>{
-            console.log(res.data);
-            house_props_data.value = res.data
-        })
+
+        // axios.get('http://localhost:3000/investment').then(res => {
+        //     console.log(res.data);
+        //     house_props_data.value = res.data
+        // })
     }
 
     const saveSelfOccupiedProperty = () => {
         dailog_SelfOccupiedProperty.value = false
         console.log(sop);
-        axios.post('http://localhost:3000/investment',sop).then(res=>{
-            console.log(res.data);
-            fetchSelfOccupiedProperty()
-        })
+        // axios.post('http://localhost:3000/investment', sop).then(res => {
+        //     console.log(res.data);
+        //     fetchSelfOccupiedProperty()
+        // })
     }
     const saveLetOutProperty = () => {
         console.log(lop);
         dailog_LetOutProperty.value = false
-        axios.post('http://localhost:3000/investment',
-            lop).then(res=>{
-            console.log(res.data);
-            fetchSelfOccupiedProperty()
-        })
+        // axios.post('http://localhost:3000/investment',
+        //     lop).then(res => {
+        //         console.log(res.data);
+        //         fetchSelfOccupiedProperty()
+        //     })
     }
     const saveDeemedLetOutProperty = () => {
         console.log(dlop);
         dailog_DeemedLetOutProperty.value = false
-        axios.post('http://localhost:3000/investment',dlop).then(res=>{
-            console.log(res.data);
-            fetchSelfOccupiedProperty()
-        })
+        // axios.post('http://localhost:3000/investment', dlop).then(res => {
+        //     console.log(res.data);
+        //     fetchSelfOccupiedProperty()
+        // })
 
     }
 
@@ -359,7 +422,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     return {
 
         // varaible Declarations
-        investment_exemption_steps, canShowLoading,
+        investment_exemption_steps, canShowLoading, getInvestmentSource,
+
+        // Data Source 
+
+        investmentMainSource, hraSource, section80ccSource,otherExemptionSource,housePropertySource,reimbursmentSource,otherIncomeSource,
 
         // Tax Saving Investments 
 
@@ -372,20 +439,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // hra ends
 
         // Sectiom 80cc Begins
-
+        getDeclarationAmount,
 
         // Sectiom 80cc Ends
 
         // Other exemptiom Begins
 
-        other_Exe,dailog_80EE,dailog_80EEA,dailog_80EEB,other_exe_80EE,other_exe_80EEA,other_exe_80EEB, save80EE, save80EEA, save80EEB,
+        other_Exe, dailog_80EE, dailog_80EEA, dailog_80EEB, other_exe_80EE, other_exe_80EEA, other_exe_80EEB, save80EE, save80EEA, save80EEB,
 
         // Other exemptiom Ends
 
         // House Property Begins
 
-        house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty,income_loss_calculation,
-        fetchSelfOccupiedProperty,saveSelfOccupiedProperty,saveLetOutProperty,saveDeemedLetOutProperty,lop,sop,dlop,
+        house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty, income_loss_calculation,
+        fetchSelfOccupiedProperty, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,
 
 
         // House Property End

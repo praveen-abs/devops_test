@@ -41,11 +41,11 @@
                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                     New</button>
             </div>
-
+<!-- {{ investmentStore.housePropertySource }} -->
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
                     :sortOrder="+1" sortField="property_type" :paginator="true" :rows="10" scrollable 
-                    :value="investmentStore.house_props_data"
+                    :value="investmentStore.housePropertySource"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"

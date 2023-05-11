@@ -1,65 +1,56 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable  resizableColumns columnResizeMode="expand"  ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
+                :value="investmentStore.section80ccSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
                 <Column header="Sections" field="section" style="min-width: 8rem">
-                    <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
                 </Column>
 
-                <Column field="ref" header="References " style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+                <Column field="reference" header="References " style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <button type="button" class="border-0 outline-none btn btn-transprarent"
+                            v-tooltip="slotProps.data.reference">
+                            <i class="fa fa-exclamation-circle text-warning" aria-hidden="true"></i>
+                        </button>
+                    </template>
                 </Column>
 
-                <Column field="max_limit" header="Max Limit" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                 </Column>
 
                 <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <InputText type="text" v-model="slotProps.data.test" @focusout="te(slotProps.data)" />
-                 
+                        <InputText class="text-lg font-semibold w-7" type="text" v-model="slotProps.data.dec_amt" @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
                     </template>
                 </Column>
-                <Column field="Status" header="Status" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
+                <Column field="status" header="Status" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.status">
+                            <Tag value="Completed" severity="success" />
+                        </div>
+                        <div v-else>
+                            <Tag value="Pending" severity="warning" />
+                        </div>
+                    </template>
                 </Column>
+
                 <Column field="" header="Action" style="min-width: 12rem">
-
-                    <template #body>
-                        <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
-                            @click="toggle" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    <template #body="slotProps">
+                        <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl" @click="investmentStore.editHraNewRental(slotProps.data)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
                         </button>
-
-                        <OverlayPanel ref="op" class="p-4">
-                            <div class="p-3 mx-4">
-                                <a class="py-4 my-4 dropdown-item" href="#"><i
-                                        class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
-                                    Edit</a>
-                                <a class="dropdown-item" href="#"><i class="my-4 fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</a>
-                            </div>
-                        </OverlayPanel>
-
-
                     </template>
                 </Column>
             </DataTable>
@@ -89,18 +80,48 @@ const toggle = (event) => {
 
 const investmentStore = investmentMainStore()
 
-const sample = ref([
-    { id: 1, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 2, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 3, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' }
-])
+
+const getSeverity = (status) => {
+    switch (status) {
+        case 'Rejected':
+            return 'danger';
+
+        case 'Approved':
+            return 'success';
+
+
+        case 'Pending':
+            return 'warning';
+
+    }
+};
+
 
 const text = ref()
 
-const te = (data) =>{
+const te = (data) => {
     console.log(text.value);
     console.log(data.test);
 }
 
 
 </script>
+
+
+
+
+
+<!--<button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
+@click="toggle" aria-expanded="false">
+<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+</button>
+
+<OverlayPanel ref="op" class="p-4">
+<div class="p-3 mx-4">
+    <a class="py-4 my-4 dropdown-item" href="#"><i
+            class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
+        Edit</a>
+    <a class="dropdown-item" href="#"><i class="my-4 fa fa-times-circle-o text-danger me-2"
+            aria-hidden="true"></i> Clear</a>
+</div>
+</OverlayPanel>-->
