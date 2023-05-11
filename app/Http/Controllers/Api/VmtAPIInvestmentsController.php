@@ -9,6 +9,13 @@ use App\Services\VmtInvestmentsService;
 
 class VmtAPIInvestmentsController extends Controller
 {
+
+
+    public function getInvestmentsFormDetailsTemplate(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
+        //  dd($request->all());
+          return $serviceVmtInvestmentsService->getInvestmentsFormDetailsTemplate($request->form_name);
+    }
+
     public function getInvestmentsFormDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService){
         //dd($request->all());
 

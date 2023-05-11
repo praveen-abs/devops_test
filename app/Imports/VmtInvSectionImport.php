@@ -53,9 +53,15 @@ class VmtInvSectionImport implements OnEachRow,WithHeadingRow
         }
 
         //Create sections
+          $query_vmtinvsectiongroup  = new vmtInvsectionGroup;
+          $query_vmtinvsectiongroup->section_group = $row['section_group'];
+          $query_vmtinvsectiongroup->save();
+
+
         $query_vmtInvSection = new VmtInvSection;
         $query_vmtInvSection->sectiongroup_id = $query_sectiongroup->id;
         $query_vmtInvSection->section = $row['section'];
+      //  $query_vmtInvSection->section_group_id =  $query_vmtinvsectiongroup->id ;
         $query_vmtInvSection->particular = $row['particular'];
         $query_vmtInvSection->reference = $row['references'];
         $query_vmtInvSection->max_amount = $row['max_amount'];

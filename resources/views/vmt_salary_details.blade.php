@@ -207,16 +207,15 @@
                                             </thead>
                                             <tbody>
                                                 @foreach ($data as $d)
+                                                    <?php //dd($data->toArray()); ?>
+
+
                                                     <tr data-ember-action="" data-ember-action-131="131">
                                                         <td>
-                                                            <a href="#/salary-details/payslips/335214000001040001/details"
-                                                                id="ember132" class="ember-view text-secondary">
+                                                            <span>
                                                                 {{ Carbon::parse($d->PAYROLL_MONTH)->format('M-y') }}
-                                                            </a>
-
-                                                            <span class="status-label">
-                                                                <!---->
                                                             </span>
+
                                                         </td>
                                                         <td>₹{{ $d->TOTAL_EARNED_GROSS }}
                                                         </td>

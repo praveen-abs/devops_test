@@ -350,12 +350,11 @@ class VmtEmployeeOnboardingController extends Controller
 
             }
             else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
-            if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
+            if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code &&  $currentLoggedinInUser->onboard_type  == "quick")
             {
 
-                //check whether if emp_code is tampered
-                if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
-                {
+                //if($currentLoggedinInUser->is_onboarded == 0)
+                //{
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
                     $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick","onboard_form");
@@ -364,20 +363,20 @@ class VmtEmployeeOnboardingController extends Controller
 
                     if($result == "success")
                     {
-                        // if($request->input('can_onboard_employee') == "1")
-                        // {
-                        //     $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
-                        //     $message="Employee onboarded successfully";
-                        // }
-                        // else
-                        // {
-                            $message="Your Onboard information Saved in draft";
-                      //  }
+                        if($request->input('can_onboard_employee') == "1")
+                        {
+                            $message="Employee onboarded successfully";
+                        }
+                        else
+                        {
+                           $message="Your Onboard information Saved in draft";
+                        }
 
                         $response = [
                             'status' => 'success',
                             'message' => $message,
                             'mail_status' => $isEmailSent ? "success" : "failure",
+                            'can_redirect' => $request->input('can_onboard_employee'), //if its "1", then redirect from onboarding form to under review page
                             'error' => '',
                             'error_verbose' =>''
                         ];
@@ -393,25 +392,23 @@ class VmtEmployeeOnboardingController extends Controller
                         ];
 
                     }
-                }
-                else
-                {
-                    //dd("Emp code mismatch. Please contact HR immediately");
+                //}
+                // else
+                // {
+                //     //dd("Emp code mismatch. Please contact HR immediately");
 
-                    $response = [
-                        'status' => 'failure',
-                        'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
-                        'mail_status' => '',
-                        'error' => '',
-                        'error_verbose' =>''
-                    ];
+                //     $response = [
+                //         'status' => 'failure',
+                //         'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                //         'mail_status' => '',
+                //         'error' => '',
+                //         'error_verbose' =>''
+                //     ];
 
-                }
+                // }
             }
             else
             {
-                //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
-
                 $response = [
                     'status' => 'failure',
                     'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,

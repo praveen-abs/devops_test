@@ -19,9 +19,8 @@
 </head>
 <body>
 
-
-  @vite('resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js')
-   <div id="EmployeeDocsUpload"></div>
+   @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
+   <div id="EmployeeDocumentManager"></div>
 
 </body>
 </html>

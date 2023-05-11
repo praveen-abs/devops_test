@@ -764,16 +764,23 @@ class VmtEmployeePayCheckService {
                 ]);
             }
 
-            $array_emp_payslip_details= User::join('vmt_employee_payslip','users.id','=','vmt_employee_payslip.user_id')
-                                        ->leftjoin('vmt_employee_payslip_status','vmt_employee_payslip_status.user_id','=','vmt_employee_payslip.user_id')
-                            ->whereYear('vmt_employee_payslip.PAYROLL_MONTH', $year)
-                            ->whereMonth('vmt_employee_payslip.PAYROLL_MONTH',$month)
-                            ->where('users.is_ssa','0')
-                            ->where('users.active','1')
-                            ->get();
+            //Check whether "vmt_employee_payslip_status" has record for all the payslips for all the employees
+            //If not, then generate for each payroll month. In future, this table record is inserted after payroll processing.
+
+                //For each employees payslip data, get all the missing payrollstatus data in "vmt_employee_payslip_status"
+
+                //Then, create new record for all payslips for all the employees
 
 
-                        // dd($emp_name);
+            $array_emp_payslip_details= User::leftJoin('vmt_employee_payslip_status','vmt_employee_payslip_status.user_id','=','users.id')
+                                        ->whereYear('vmt_employee_payslip_status.PAYROLL_MONTH', $year)
+                                        ->whereMonth('vmt_employee_payslip_status.PAYROLL_MONTH',$month)
+                                        ->where('users.is_ssa','0')
+                                        ->where('users.active','1')
+                                        ->get();
+
+
+                       //  dd($array_emp_payslip_details);
             return response()->json([
                 'status' => 'success',
                 'message' => $validator->errors()->all(),

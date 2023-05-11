@@ -77,16 +77,41 @@ class VmtInvestmentsService
             //Get the query structure
 
             $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
+                                        ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
                                         ->where('vmt_inv_formsection.form_id', $query_form_details->id)
                                         ->get(
-                                            [
-                                                'vmt_inv_formsection.section_id',
-                                                'vmt_inv_section.section',
-                                                'vmt_inv_section.particular',
-                                                'vmt_inv_section.reference',
-                                                'vmt_inv_section.max_amount',
-                                            ]
+                                            // [
+                                            //     'vmt_inv_formsection.section_id',
+                                            //     'vmt_inv_section.section',
+                                            //     'vmt_inv_section.particular',
+                                            //     'vmt_inv_section.reference',
+                                            //     'vmt_inv_section.max_amount',
+                                            // ]
                                         );
+                                        $query_inv_form_template = $query_inv_form_template->toArray();
+
+                                        // dd($query_inv_form_template[0]);
+                                           $count = 0;
+                                           foreach($query_inv_form_template as $single_inv_form_template){
+
+                                               if(! array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template))
+                                               {
+                                                   $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
+                                                   array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+                                               }
+                                               else
+                                               {
+                                                   array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+
+                                               }
+
+                                               //remove from outer json
+                                               unset($query_inv_form_template[$count]);
+
+                                               $count++;
+
+                                           }
+
 
             $response["form_name"] = $query_form_details->form_name;
             $response["form_details"] = $query_inv_form_template;
@@ -117,10 +142,13 @@ class VmtInvestmentsService
         //Validate
         $validator = Validator::make(
             $data = [
-                'form_name' => $form_name
+                'user_code' => $user_code,
+                'year' => $year,
+
             ],
             $rules = [
-                'form_name' => 'required|exists:vmt_inv_form,form_name',
+                'user_code' => 'required|exists:users,user_code',
+                'year' => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -144,7 +172,7 @@ class VmtInvestmentsService
             //Get the query structure
 
             $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-                            // ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
+                             ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
                             ->where('vmt_inv_formsection.id', $form_id)
                             ->get(
                         //     [

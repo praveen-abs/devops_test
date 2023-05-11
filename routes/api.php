@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
     Route::post('/attendance/getData-att-unused-compensatory-days', [VmtAPIAttendanceController::class, 'getUnusedCompensatoryDays']);
     Route::post('/attendance/getEmployeeLeaveBalance', [VmtAPIAttendanceController::class, 'getEmployeeLeaveBalance']);
+    Route::post('/attendance/getEmployeeLeaveHistory', [VmtAPIAttendanceController::class, 'getEmployeeLeaveHistory']);
 
     //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
@@ -102,7 +103,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/payroll/payslip/getEmployeeAllPayslipList', [VmtAPIPaySlipController::class, 'getEmployeeAllPayslipList']);
     Route::post('/payroll/getEmployeeCompensatoryDetails', [VmtAPIPaySlipController::class, 'getEmployeeCompensatoryDetails']);
 
-    
+
 
     //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
@@ -118,6 +119,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Investments
     Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
     Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
+    Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetailsTemplate']);
     Route::post('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
 
     //Notifications

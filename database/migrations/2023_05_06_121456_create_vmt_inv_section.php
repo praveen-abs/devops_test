@@ -13,8 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
+
+        Schema::create('vmt_inv_section_group', function (Blueprint $table) {
+            $table->id();
+            $table->text('section_group');
+            $table->timestamps();
+        });
+
+
         Schema::create('vmt_inv_section', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sectiongroup_id')->constrained('vmt_inv_section_group');
             $table->text('section');
             $table->text('particular');
             $table->text('reference');
@@ -26,6 +35,7 @@ return new class extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *
@@ -34,5 +44,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('vmt_inv_section');
+        Schema::dropIfExists('vmt_inv_section_group');
     }
 };
