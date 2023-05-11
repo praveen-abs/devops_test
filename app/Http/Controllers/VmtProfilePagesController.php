@@ -331,7 +331,7 @@ public function addExperienceInfo(Request $request)
 
     public function updateBankInfo(Request $request ,VmtEmployeeService $employeeService)
     {
-       dd($request->all());
+      
         try{
             $user_id = user::where('user_code', $request->user_code)->first()->id;
             $details = VmtEmployee::where('userid', $user_id)->first();

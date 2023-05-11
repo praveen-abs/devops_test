@@ -27,7 +27,7 @@ class Seeder_VmtDocuments extends Seeder
             ['id'=>'7','document_name'=>'Education Certificate','is_mandatory'=>'0'],
             ['id'=>'8','document_name'=>'Relieving Letter','is_mandatory'=>'0'],
             ['id'=>'9','document_name'=>'Birth Certificate','is_mandatory'=>'0'],
-            ['id'=>'10','document_name'=>'Check','is_mandatory'=>'0'],
+            ['id'=>'10','document_name'=>'Bank Passbook','is_mandatory'=>'0'],
 
         ]);
     }

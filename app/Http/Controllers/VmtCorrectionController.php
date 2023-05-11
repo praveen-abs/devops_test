@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeReimbursements;
+use App\Models\User;
+use App\Models\VmtDocuments;
+use App\Models\VmtEmployeeDocuments;
 use Carbon\Carbon;
 
 class VmtCorrectionController extends Controller
