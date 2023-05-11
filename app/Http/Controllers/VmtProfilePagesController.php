@@ -287,7 +287,7 @@ public function addExperienceInfo(Request $request)
     {// dd($request->all());
         try{
             $user_id = user::where('user_code', $request->user_code)->first()->id;
-                $exp = Experience::where('id',$request->exp_current_table_id)->first();;
+                $exp = Experience::where('id',$request->exp_current_table_id)->first();
                 $exp->user_id = $user_id;
                 $exp->company_name = $request->input('company_name');
                 $exp->location = $request->input('experience_location');
@@ -312,7 +312,7 @@ public function addExperienceInfo(Request $request)
     public function deleteExperienceInfo(Request $request)
     {
     try{
-        $familyDetails = Experience::where('id',$request->exp_current_table_id)->delete();
+        $ExperianceDetails = Experience::where('id',$request->exp_current_table_id)->delete();
         $response = [
             'status' => 'success',
             'message' =>"Experiance details deleted successfully"
@@ -320,7 +320,7 @@ public function addExperienceInfo(Request $request)
     }catch(\Exception $e){
          $response = [
             'status' => 'failure',
-            'message' => 'Error while updateing Experience Information ',
+            'message' => 'Error while deleting Experience Information ',
             'error_message' => $e->getMessage()
          ];
     }
@@ -331,7 +331,7 @@ public function addExperienceInfo(Request $request)
 
     public function updateBankInfo(Request $request ,VmtEmployeeService $employeeService)
     {
-      
+
         try{
             $user_id = user::where('user_code', $request->user_code)->first()->id;
             $details = VmtEmployee::where('userid', $user_id)->first();
