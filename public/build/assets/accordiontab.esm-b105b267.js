@@ -1,1 +1,0 @@
-import{r as l}from"./toastservice.esm-2710e797.js";var n={name:"AccordionTab",props:{header:null,headerStyle:null,headerClass:null,headerProps:null,headerActionProps:null,contentStyle:null,contentClass:null,contentProps:null,disabled:Boolean}};function r(e,o,t,a,s,d){return l(e.$slots,"default")}n.render=r;export{n as s};
