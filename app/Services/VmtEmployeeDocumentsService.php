@@ -56,8 +56,11 @@ class VmtEmployeeDocumentsService {
             $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
                     ->where('vmt_employee_documents.user_id',$query_user_id)
                     ->orWhereNull('vmt_employee_documents.id')
+                    ->where('vmt_documents.document_name','<>','Birth Certificate')
+                    ->where('vmt_documents.document_name','<>','Check')
                     ->get();
 
+                    
             return response()->json([
                 'status' => 'success',
                 'message' => '',

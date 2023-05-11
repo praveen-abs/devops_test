@@ -217,7 +217,6 @@ function showConfirmationDialog(selected_user_code) {
 
 }
 
-
 function showReleasePayslipConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
 
@@ -247,7 +246,7 @@ async function showWithdraw_confimationDialog(selected_user_code){
 }
 async function UpdateWithDrawStatus(selectedUserCode) {
     await managePayslipStore.UpdateWithDrawStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(), 0);
-    show_withdraw_dialogConfirmation.value = false ;
+    show_withdraw_dialogConfirmation.value = false;
 
 }
 
