@@ -759,7 +759,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     Route::post('/investments/ImportInvestmentForm_Excel', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'ImportInvestmentForm_Excel'])->name('ImportInvestmentForm_Excel');
     Route::get('/investments/showInvestmentsFormMgmtPage', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'showInvestmentsFormMgmtPage'])->name('showInvestmentsFormMgmtPage');
-    Route::get('/investments/investments-form-details-template', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetailsTemplate'])->name('getInvestmentsFormDetailsTemplate');
+    Route::post('/investments/investments-form-details-template', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetailsTemplate'])->name('getInvestmentsFormDetailsTemplate');
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
 

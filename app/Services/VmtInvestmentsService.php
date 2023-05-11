@@ -80,13 +80,14 @@ class VmtInvestmentsService
                                         ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
                                         ->where('vmt_inv_formsection.form_id', $query_form_details->id)
                                         ->get(
-                                            // [
-                                            //     'vmt_inv_formsection.section_id',
-                                            //     'vmt_inv_section.section',
-                                            //     'vmt_inv_section.particular',
-                                            //     'vmt_inv_section.reference',
-                                            //     'vmt_inv_section.max_amount',
-                                            // ]
+                                            [
+                                                'vmt_inv_formsection.section_id',
+                                                'vmt_inv_section.section',
+                                                'vmt_inv_section.particular',
+                                                'vmt_inv_section.reference',
+                                                'vmt_inv_section.max_amount',
+                                                'vmt_inv_section_group.section_group'
+                                            ]
                                         );
                                         $query_inv_form_template = $query_inv_form_template->toArray();
 
