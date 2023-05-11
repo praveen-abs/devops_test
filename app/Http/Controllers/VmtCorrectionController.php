@@ -61,5 +61,31 @@ class VmtCorrectionController extends Controller
 
          return $response;
     }
+    public function  checkallemployeeonboardingstatus(){
+
+        $query_all_users_details=User::get();
+    try{
+        foreach($query_all_users_details as $single_user_data){
+              //get the mandatory document id
+              $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
+
+             //get the employees uploaded documents mandatory id
+              $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
+                                                              ->where('vmt_employee_documents.user_id',$single_user_data->id)
+                                                              ->pluck('doc_id');
+
+          if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
+            {
+             //set the onboard status to 1
+                $currentUser =User::where('id',$single_user_data->id)->first();
+                $currentUser->is_onboarded = '1';
+                $currentUser->save();
+
+           }
+        }
+    }catch(\Exception $e){
+        dd($e);
+     }
+    }
 
 }
