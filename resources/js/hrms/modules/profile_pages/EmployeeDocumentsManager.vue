@@ -1,11 +1,7 @@
 <template>
-    <h2 class="font-semibold text-2xl ">Upload Documents</h2>
-    <button severity="warn" type="submit" data="row-6" next="row-6" name="submit_form" id="msform"
-        class="text-center btn btn-orange processOnboardForm  text-light" value="Submit" :disabled="fileUploadValidation"
-        @click="submitEmployeeDocsUpload">
-        Submit
-    </button>
-    <div class="w-full my-4">
+    <div class="card p-3"  style="margin-top: -25px;">
+        <h2 class="font-semibold text-2xl my-4 mx-3">Upload Documents</h2>
+        <div class="w-full">
         <DataTable ref="dt" :value="EmployeeDocumentManagerSerive.getEmployeeDoc" dataKey="id" :paginator="true" :rows="10"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
@@ -49,6 +45,11 @@
                 </template>
             </Column>
         </DataTable>
+        <button severity="warn" type="submit" data="row-6" next="row-6" name="submit_form" id="msform"
+        class="text-center btn btn-orange processOnboardForm float-end text-light mr-5 mt-5" value="Submit" :disabled="fileUploadValidation"
+        @click="submitEmployeeDocsUpload">
+        Submit
+    </button>
 
         <!-- <div class="row">
 
@@ -83,6 +84,10 @@
         </Dialog>
 
     </div>
+    </div>
+
+
+
 </template>
 
 <script setup>
