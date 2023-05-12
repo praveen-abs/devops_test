@@ -1675,18 +1675,25 @@ class VmtAttendanceService{
     }
 
 
-    public function getEmployeeLeaveHistory($user_code){
+    public function getEmployeeLeaveDetails($user_code, $filter_month, $filter_year, $filter_leave_status){
 
         $validator = Validator::make(
             $data = [
-                "user_code" => $user_code
+                "user_code" => $user_code,
+                "filter_month"=>$filter_month,
+                "filter_year"=>$filter_year,
+                "filter_leave_status"=>$filter_leave_status,
             ],
             $rules = [
                 'user_code' => 'required|exists:users,user_code',
+                'filter_month' =>'required',
+                'filter_year' =>'required',
+                'filter_leave_status' =>'required|in:Approved,Pending,Rejected',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
                 'exists' => 'Field :attribute is invalid',
+                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
             ]
 
         );
@@ -1707,6 +1714,9 @@ class VmtAttendanceService{
             $query_employees_leaves = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
                             ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
                             ->where('users.id', $user_id)
+                            ->whereYear('leaverequest_date', $filter_year)
+                            ->whereMonth('leaverequest_date', $filter_month)
+                            ->where('status',$filter_leave_status)
                             ->get([
                                 "vmt_employee_leaves.leaverequest_date",
                                 "vmt_employee_leaves.start_date",

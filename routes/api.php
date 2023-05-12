@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
     Route::post('/attendance/getData-att-unused-compensatory-days', [VmtAPIAttendanceController::class, 'getUnusedCompensatoryDays']);
     Route::post('/attendance/getEmployeeLeaveBalance', [VmtAPIAttendanceController::class, 'getEmployeeLeaveBalance']);
-    Route::post('/attendance/getEmployeeLeaveHistory', [VmtAPIAttendanceController::class, 'getEmployeeLeaveHistory']);
+    Route::post('/attendance/getEmployeeLeaveDetails', [VmtAPIAttendanceController::class, 'getEmployeeLeaveDetails']);
 
     //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
