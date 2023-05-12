@@ -9,11 +9,10 @@
                         <div class="floating">
                             <label for="" class=" float-label">Client Code</label>
                             <input type="text" placeholder="Client Code" name="client_code"
-                                class="onboard-form form-control textbox" required 
+                                class="onboard-form form-control textbox" required
                                 v-model="client_onboarding.client_code" />
                             <!-- <label for="" class="float-label">Client Code</label> -->
                             <!-- id="client_code" placeholder="Autogenerate from Company Legal Name" -->
-
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 dashBoard">
@@ -174,7 +173,7 @@
                             <label for="" class="float-label">Authorized Person
                                 Designation</label>
                             <input type="text" placeholder="Authorized Person Designation" name="auth_person_desig"
-                                class="onboard-form form-control textbox" pattern="alpha" required
+                                class="onboard-form form-control " pattern="alpha" required
                                 v-model="client_onboarding.authorised_person_designation" />
                             <label class="error auth_person_desig_label" for="auth_person_desig"
                                 style="display: none;"></label>
@@ -200,7 +199,7 @@
                                 Email</label>
                             <input type="email" placeholder="Authorized Person Contact Email" name="auth_person_email"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.authorised_person_contact_email" />
+                                v-model="client_onboarding.authorised_person_contact_mail" />
                             <!-- <label for="" class="float-label">Authorized Person Contact Email</label> -->
                         </div>
                     </div>
@@ -270,10 +269,15 @@
                         <!-- <label class="" for="doc_uploads">Documents Upload{!! required() !!}</label> -->
                         <!-- <div class="floating"> -->
                       <label for="" class="float-label">Document </label>
-                        <input @change="client_onboarding_document($event)" type="file" placeholder="Documents Upload" 
+                        <!-- <input @change="client_onboarding_document($event)" type="file" placeholder="Documents Upload"
                             class="onboard-form form-control textbox " required
-                            accept=".doc,.docx,.pdf,image/*" />
-                     
+                           /> -->
+
+
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Default file input example</label>
+                                <input class="form-control" @change="client_onboarding_document($event)" type="file"  id="formFile"   accept=".doc,.docx,.pdf,image/*">
+                              </div>
                     </div>
                     <div class="text-right col-12">
 
@@ -342,6 +346,7 @@ const submit = () => {
     formData.append('authorised_person_name', client_onboarding.authorised_person_name)
     formData.append('authorised_person_designation', client_onboarding.authorised_person_designation)
     formData.append('authorised_person_contact_number', client_onboarding.authorised_person_contact_number)
+    formData.append('authorised_person_contact_email', client_onboarding.authorised_person_contact_mail)
     formData.append('billing_address', client_onboarding.billing_address)
     formData.append('shipping_address', client_onboarding.shipping_address)
     formData.append('doc_uploads', client_onboarding.doc_uploads)

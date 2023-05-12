@@ -99,7 +99,6 @@ import { UseEmployeeDocumentManagerSerive } from './EmployeeDocumentsManagerServ
 onMounted(() => {
     EmployeeDocumentManagerSerive.fetch_EmployeeDocument();
     console.log(" ", view_document.value);
-
 })
 
 // Stores
@@ -189,9 +188,6 @@ async function submitEmployeeDocsUpload() {
 
 
                 if (res.data.status == "Success") {
-
-                // Swal.fire(response.data.status, response.data.message, "success");
-                // window.location.reload()
                 Swal.fire({
                     title: res.data.status = "Success",
                     text: res.data.message,
@@ -213,6 +209,7 @@ async function submitEmployeeDocsUpload() {
                 }
             })
             .finally(() => {
+                EmployeeDocumentManagerSerive.fetch_EmployeeDocument();
                 EmployeeDocumentManagerSerive.loading = false
             });
     }
