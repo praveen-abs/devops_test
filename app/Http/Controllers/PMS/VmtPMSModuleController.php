@@ -425,8 +425,10 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpi_weightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+           // dd( $config->selected_columns);
         }
+        //dd($show);
         return view('pms.vmt_pms_kpiform_create',compact('config','show','selectedYear'));
     }
 
@@ -724,7 +726,7 @@ class VmtPMSModuleController extends Controller
         $show['kpiWeightage'] = 'true';
         $show['appraiser'] = false;
         $show['manager'] = false;
-
+       //  dd($config);
         if ($config) {
             $config->header = json_decode($config->column_header, true);
             $show['dimension'] = $config->available_columns && in_array('dimension', explode(',', $config->available_columns)) ? 'true': 'false';
@@ -735,9 +737,9 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->available_columns && in_array('target', explode(',', $config->available_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->available_columns && in_array('stretchTarget', explode(',', $config->available_columns)) ? 'true': 'false';
             $show['source'] = $config->available_columns && in_array('source', explode(',', $config->available_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->available_columns && in_array('kpiWeightage', explode(',', $config->available_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->available_columns && in_array('kpi_weightage', explode(',', $config->available_columns)) ? 'true': 'false';
         }
-
+      // dd($show);
         $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id')
         ->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')
         ->where('vmt_pms_kpiform_reviews.assignee_id','=',$request->assigneeId)
@@ -755,7 +757,7 @@ class VmtPMSModuleController extends Controller
                 $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
             }
         }
-
+          //dd($show);
         $kpiRows      =  VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->get();
         $reviewCompleted = false;
         $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->pluck('id')->toArray();

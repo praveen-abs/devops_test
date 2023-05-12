@@ -646,8 +646,8 @@ class VmtAttendanceController extends Controller
                 //Need to process the checkin and checkout time based on the client.
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
 
-                //If direction is only "in"
-                if(sessionGetSelectedClientCode() == "DM")
+                //If direction is only "in" or empty or "-"
+                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA")
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -678,6 +678,7 @@ class VmtAttendanceController extends Controller
                         ->where('user_Id', $userCode)
                         ->first(['check_in_time']);
                 }
+
 
                 $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                 $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];

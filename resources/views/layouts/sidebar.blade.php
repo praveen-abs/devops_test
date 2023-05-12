@@ -427,7 +427,7 @@
                                     </li>
                                 @endif
 
-                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                                     <li class="nav-item">
                                         <a href="{{ route('showPMSFormsMgmtPage_HRView') }}" class="nav-link">
                                             <span>PMS Forms Management : HR</span>
