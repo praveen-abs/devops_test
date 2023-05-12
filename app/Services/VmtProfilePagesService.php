@@ -381,7 +381,7 @@ class VmtProfilePagesService
         try {
             //dd($request->all());
             //$user_id = user::where('user_code', $user_code)->first()->id;
-            $emp_familydetails = VmtEmployeeFamilyDetails::find('id', $record_id);
+            $emp_familydetails = VmtEmployeeFamilyDetails::where('id', $record_id)->first();
             $emp_familydetails->name = $name;
             $emp_familydetails->relationship = $relationship;
             $emp_familydetails->dob = $dob;
@@ -399,6 +399,7 @@ class VmtProfilePagesService
                 'error_message' => $e->getMessage()
             ];
         }
+        return $response;
     }
     public function deleteFamilyDetails($record_id, $user_code)
     {

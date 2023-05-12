@@ -194,7 +194,6 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
         $validator = Validator::make(
             $request->all(),
             $rules = [
-                "user_code" => 'required|exists:users,user_code', //not used now
                 "record_id" => 'required',
                 "name" => 'required',
                 "relationship"  => 'required',
@@ -218,7 +217,7 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
 
 
         $response = $serviceVmtProfilePagesService->updateFamilyDetails(
-            record_id: $request->record_id,
+            record_id:$request->record_id,
             name: $request->name,
             relationship: $request->relationship,
             dob: $request->dob,
