@@ -118,7 +118,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="new Date()" />
+                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" />
                     </div>
                 </div>
 
@@ -133,7 +133,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="new Date()" />
+                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" />
                     </div>
                 </div>
 
@@ -179,7 +179,7 @@
                                 <label for="" class="float-label">Start Date</label><br>
                                 <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                     v-model="service.leave_data.custom_start_date"
-                                    :minDate="new Date()"  :manualInput="true" />
+                                    :minDate="first_day_of_the_month"  :manualInput="true" />
 
                             </div>
 
@@ -205,7 +205,7 @@
 
                                 <label for="" class="float-label">End Day</label><br>
                                 <Calendar inputId="icon" @date-select="service.dayCalculation" dateFormat="dd-mm-yy"
-                                    :showIcon="true" v-model="service.leave_data.custom_end_date" :minDate="new Date()" />
+                                    :showIcon="true" v-model="service.leave_data.custom_end_date" :minDate="first_day_of_the_month" />
 
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                              v-model="service.leave_data.compensatory_start_date" :minDate="new Date()" />
+                              v-model="service.leave_data.compensatory_start_date" :minDate="first_day_of_the_month" />
                         </div>
                     </div>
 
@@ -313,7 +313,7 @@
                             <label for="" class="float-label">End Day</label>
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <Calendar @date-select="service.dayCalculation" inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" v-model="service.leave_data.compensatory_end_date" :minDate="new Date()"   />
+                            <Calendar @date-select="service.dayCalculation" inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" v-model="service.leave_data.compensatory_end_date" :minDate="first_day_of_the_month"   />
                         </div>
                     </div>
                 </div>
@@ -385,6 +385,14 @@ import { Service } from './leave_apply_service'
 const visible = ref(false)
 
 const leave_types = ref()
+
+//get first day of current month
+
+var date = new Date();
+var first_day_of_the_month = new Date(date.getFullYear(), date.getMonth(), 1);
+var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+
 
 // Check All Varaibles and Events Here
 const service = Service()
