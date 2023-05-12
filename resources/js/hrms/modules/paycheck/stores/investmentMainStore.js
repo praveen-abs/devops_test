@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 import { investmentFormulaStore } from './investmentFormulaStore'
 import { useToast } from "primevue/usetoast";
 import { reactive, ref } from "vue";
+import {Service} from '../../Service/Service'
+
 
 /*
     This Pinia code will store the ajax values of the
@@ -16,6 +18,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     // Formula Store 
     const formula = investmentFormulaStore()
+    
+    // Employee Service
+
+    const service = Service()
 
     // Notification Service
 
@@ -72,12 +78,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const otherIncomeSource = ref()
     const previousEmployeerIncomeSource = ref()
 
-
     const getInvestmentSource = async () => {
 
-        let url = `/investments/investments-form-details-template?form_name=investment%201`
+        let url = `/investments/investments-form-details-template`
 
-        await axios.get(url)
+        await axios.post(url, {
+            form_name: "investment 1"
+        })
             .then(res => {
                 // console.log(res.data.data.form_details);
                 investmentMainSource.value = res.data.data.form_details
@@ -99,8 +106,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
     const getDeclarationAmount = (amount) => {
-        // console.log(amount);
+        console.log(amount);
         var data = {
+            user_code:service.current_user_code,
             fs_id: amount.fs_id,
             form_id: amount.form_id,
             declaration_amount: amount.dec_amt,
@@ -115,6 +123,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         for (var key in data) {
             form_data.append(key, data[key]);
         }
+        console.log(form_data);
 
         if (amount.dec_amt > amount.max_amount) {
             toast.add({
@@ -129,8 +138,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     }
 
-    const saveFormData = () =>{
+    const saveFormData = () => {
         console.log(formDataSource);
+        let url = `/investments/saveEmpdetails`
+        axios.post(url,formDataSource)
     }
 
 
@@ -432,11 +443,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     return {
 
         // varaible Declarations
-        investment_exemption_steps, canShowLoading, getInvestmentSource,saveFormData,
+        investment_exemption_steps, canShowLoading, getInvestmentSource, saveFormData,
 
         // Data Source 
 
-        investmentMainSource, formDataSource,hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource, otherIncomeSource,
+        investmentMainSource, formDataSource, hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource, otherIncomeSource,
 
         // Tax Saving Investments 
 

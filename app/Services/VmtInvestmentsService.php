@@ -86,7 +86,10 @@ class VmtInvestmentsService
                                                 'vmt_inv_section.particular',
                                                 'vmt_inv_section.reference',
                                                 'vmt_inv_section.max_amount',
-                                                'vmt_inv_section_group.section_group'
+                                                'vmt_inv_section_group.section_group',
+                                                'vmt_inv_formsection.id as fs_id',
+                                                'vmt_inv_formsection.form_id',
+                                                
                                             ]
                                         );
                                         $query_inv_form_template = $query_inv_form_template->toArray();
