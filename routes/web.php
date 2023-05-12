@@ -711,7 +711,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     //Vmt Correction Controller
     Route::get('/processsExpense',  [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
     Route::get('/adding-reimbursement-data',  [App\Http\Controllers\VmtCorrectionController::class, 'addingReimbursementsDataForSpecificMonth'])->name('addingReimbursementsDataForSpecificMonth');
-    Route::get('/check-allemployee-onboardingstatus',  [App\Http\Controllers\VmtCorrectionController::class, 'checkallemployeeonboardingstatus'])->name('checkallemployeeonboardingstatus');
+    Route::get('/check-allemployee-onboardingstatus',  [App\Http\Controllers\VmtCorrectionController::class, '
+    '])->name('checkallemployeeonboardingstatus');
 
 
 
@@ -762,6 +763,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/investments/investments-form-details-template', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetailsTemplate'])->name('getInvestmentsFormDetailsTemplate');
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
+
+    Route::post('/investments/saveEmpdetails',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'SaveInvDetails']);
 
 
     //Emp Mail Notifications
