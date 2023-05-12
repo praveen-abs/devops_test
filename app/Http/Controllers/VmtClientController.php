@@ -37,7 +37,7 @@ class VmtClientController extends Controller
      */
     public function store(Request $request)
     {
-
+           // dd($request->all());
        $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
        try
        {
@@ -72,9 +72,9 @@ class VmtClientController extends Controller
             $vmtClient->save();
 
             $image_view = url('/').$VmtGeneralInfo->logo_img;
-            if (\Mail::to($request->auth_person_email)->send(new WelcomeClientMail(
+            if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
-                                                            $request->auth_person_email,
+                                                            $request->authorised_person_contact_email,
                                                             'Abs@123123',
                                                              request()->getSchemeAndHttpHost() ,
                                                              "",
