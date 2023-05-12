@@ -111,10 +111,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/updateProfilePicture', [VmtAPIProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
     Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
+    Route::post('/profile-pages/updateEmployeeBankDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeBankDetails']);
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
     Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
-    Route::post('/profile-pages/uploadDocument', [VmtAPIProfilePagesController::class,'uploadDocument']);
+    Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'addEmployeeExperianceDetails']);
+    Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'updateEmployeeExperianceDetails']);
+    Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeExperianceDetails']);
 
 
     //Investments
