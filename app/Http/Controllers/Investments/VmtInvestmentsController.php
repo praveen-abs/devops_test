@@ -28,6 +28,10 @@ class VmtInvestmentsController extends Controller
         return $serviceVmtInvestmentsService->ImportInvestmentForm_Excel($request->form_name , $request->excel_file);
     }
 
+    public function SaveInvDetails(Request $request){
+        dd($request->all());
+    }
+
 
     public function showInvestmentsFormMgmtPage(Request $request){
         //dd($request->all());
