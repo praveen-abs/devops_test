@@ -1546,7 +1546,7 @@ class VmtEmployeeController extends Controller
 
 
         //($is_emp_onboarded);
-
+        // dd('asd');
         if($is_emp_onboarded == '1'){
 
             return redirect()->route('index');
