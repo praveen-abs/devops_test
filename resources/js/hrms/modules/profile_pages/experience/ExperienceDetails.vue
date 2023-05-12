@@ -474,7 +474,7 @@ const diolog_Delete_Exp_Details = (family) => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                window.location.reload();
+                // window.location.reload();
                 toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
 
             } else if (res.data.status == "failure") {
@@ -483,6 +483,9 @@ const diolog_Delete_Exp_Details = (family) => {
         })
         .catch((err) => {
             console.log(err);
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
         });
 
 

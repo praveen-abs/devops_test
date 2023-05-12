@@ -439,9 +439,88 @@ class VmtProfilePagesService
     } catch(\Exception $e){
         $response = [
         'status' => 'failure',
-        'message' => 'Error while updateing Bank Information ',
+        'message' => 'Error while updateing Bank Details ',
         'error_message' => $e->getMessage()
         ];
     }
+}
+    public function addEmployeeExperianceDetails($user_code,$company_name,$location,$job_position,$period_from,$period_to)
+    {
+
+
+    try{
+        //  dd($request->all());
+        $user_id = user::where('user_code', $user_code)->first()->id;
+            $exp = new Experience;
+            $exp->user_id = $user_id;
+            $exp->company_name = $company_name;
+            $exp->location = $location;
+            $exp->job_position = $job_position ;
+            $exp->period_from = $period_from ;
+            $exp->period_to = $period_to;
+            $exp->save();
+        $response = [
+            'status' => 'success',
+            'message' =>"Experiance details Added successfully"
+        ];
+    } catch(\Exception $e){
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Experiance Details ',
+            'error_message' => $e->getMessage()
+        ];
+    }
+
+         return $response;
+}
+    public function updateEmployeeExperianceDetails($user_code,$company_name,$location,$job_position,$period_from,$period_to,$exp_current_table_id)
+    {
+
+
+    try{
+        //  dd($request->all());
+        $user_id = user::where('user_code', $user_code)->first()->id;
+        $exp = Experience::where('id',$exp_current_table_id)->first();
+            $exp->user_id = $user_id;
+            $exp->company_name = $company_name;
+            $exp->location = $location;
+            $exp->job_position = $job_position ;
+            $exp->period_from = $period_from ;
+            $exp->period_to = $period_to;
+            $exp->save();
+        $response = [
+            'status' => 'success',
+            'message' =>"Experiance details updated successfully"
+        ];
+    } catch(\Exception $e){
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Experience Information',
+            'error_message' => $e->getMessage()
+        ];
+    }
+
+         return $response;
+}
+    public function deleteEmployeeExperianceDetails($exp_current_table_id)
+    {
+
+
+        try{
+            $ExperianceDetails = Experience::where('id',$exp_current_table_id)->delete();
+            $response = [
+                'status' => 'success',
+                'message' =>"Experiance details deleted successfully"
+              ];
+        }catch(\Exception $e){
+             $response = [
+                'status' => 'failure',
+                'message' => 'Error while deleting Experience Information ',
+                'error_message' => $e->getMessage()
+             ];
+        }
+
+
+         return $response;
 }
 }
