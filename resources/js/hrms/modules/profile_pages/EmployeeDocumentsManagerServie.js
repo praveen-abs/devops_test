@@ -6,6 +6,8 @@ import {Service} from '../Service/Service'
 export const UseEmployeeDocumentManagerSerive = defineStore("EmployeeDocumentManagerSerive", () => {
 
 
+
+
     // variable
     const getEmployeeDetails = Service();
     const loading = ref(true);
@@ -28,15 +30,21 @@ export const UseEmployeeDocumentManagerSerive = defineStore("EmployeeDocumentMan
     });
 
 
-const fetch_EmployeeDocument = () => {
-    axios.post('/employee-documents-details', {
-        user_code: 'PSC0057'
+const fetch_EmployeeDocument = async() => {
+    let user_code = ''
+    await getEmployeeDetails.getCurrentUserCode().then(code=>{
+      user_code = code.data
+    })
+    loading.value = true ;
+    await axios.post('/employee-documents-details', {
+        user_code:  user_code
+
     }).then((res) => {
         // console.log(res.data);
         getEmployeeDoc.value = res.data.data
         console.log("employee document : " , getEmployeeDoc.value);
     }).finally(() => {
-        loading.value = false
+        loading.value = false;
         console.log("completed");
     })
 }
