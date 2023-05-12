@@ -16,9 +16,9 @@ import {Service} from '../../Service/Service'
 
 export const investmentMainStore = defineStore("investmentMainStore", () => {
 
-    // Formula Store 
+    // Formula Store
     const formula = investmentFormulaStore()
-    
+
     // Employee Service
 
     const service = Service()
@@ -35,7 +35,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const canShowLoading = ref(false)
 
-    // Tax Saving Investments  
+    // Tax Saving Investments
 
     const taxSavingInvestments = reactive({
         max_limit: '',
@@ -52,7 +52,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     3)Other Exemptions        - other_Exe
 
     4)House Property          - house_props
-    
+
           1)sop - self occupied property
           1)lop - let out property
           1)dlop -Demmed let out property
@@ -70,6 +70,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const investmentMainSource = ref()
     const formDataSource = reactive([])
+    const getFormId= ref()
     const hraSource = ref()
     const section80ccSource = ref()
     const otherExemptionSource = ref()
@@ -107,10 +108,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const getDeclarationAmount = (amount) => {
         console.log(amount);
+        getFormId.value = amount.form_id
         var data = {
-            user_code:service.current_user_code,
             fs_id: amount.fs_id,
-            form_id: amount.form_id,
             declaration_amount: amount.dec_amt,
         }
 
@@ -141,7 +141,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const saveFormData = () => {
         console.log(formDataSource);
         let url = `/investments/saveEmpdetails`
-        axios.post(url,formDataSource)
+        axios.post(url,{
+            user_code:service.current_user_code,
+            form_id:getFormId.value,
+            formDataSource
+        })
     }
 
 
@@ -323,7 +327,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
 
-    // House Property Begins 
+    // House Property Begins
 
     const house_props_data = ref()
 
@@ -445,11 +449,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // varaible Declarations
         investment_exemption_steps, canShowLoading, getInvestmentSource, saveFormData,
 
-        // Data Source 
+        // Data Source
 
         investmentMainSource, formDataSource, hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource, otherIncomeSource,
 
-        // Tax Saving Investments 
+        // Tax Saving Investments
 
         taxSavingInvestments,
 
