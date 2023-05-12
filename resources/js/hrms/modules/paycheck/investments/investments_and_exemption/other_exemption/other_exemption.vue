@@ -5,7 +5,7 @@
             <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
                 :value="investmentStore.otherExemptionSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
+                :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="editingRows"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
                 <Column header="Sections" field="section" style="min-width: 8rem">
@@ -15,9 +15,7 @@
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -30,9 +28,6 @@
                 </Column>
 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
                 </Column>
 
                 <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
@@ -53,7 +48,8 @@
                                 80EEB</button>
                         </div>
                         <div v-else>
-                            <InputText type="text" class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt" @focusout="investmentStore.getDeclarationAmount(slotProps.data)"  />
+                            <InputText type="text" class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
                         </div>
                     </template>
                 </Column>
@@ -67,6 +63,8 @@
                         </div>
                     </template>
                 </Column>
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
+
                 <Column field="" header="Action" style="min-width: 12rem">
 
                     <template #body>
@@ -351,7 +349,7 @@ import { ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 const investmentStore = investmentMainStore()
-
+const editingRows = ref([]);
 
 const vechicle_model_options = ref()
 

@@ -2,9 +2,9 @@
     <div>
         <div class="table-responsive">
             <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
-                :value="investmentStore.section80ccSource"
+                :value="investmentStore.section80ccSource" editMode="row" v-model:editingRows="editingRows"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
+                :rowsPerPageOptions="[5, 10, 25]"  @row-edit-save="onRowEditSave" tableClass="editable-cells-table"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
                 <Column header="Sections" field="section" style="min-width: 8rem">
@@ -26,9 +26,15 @@
                 </Column>
 
                 <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
+
                     <template #body="slotProps">
-                        <InputText class="text-lg font-semibold w-7" type="text" v-model="slotProps.data.dec_amt" @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
+                        <InputText class="text-lg font-semibold w-7" type="text" v-model="slotProps.data.dec_amt"
+                            @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
                     </template>
+                    <template #editor="{ data, field }">
+                        <InputNumber class="text-lg font-semibold w-7"  v-model="data[field]" />
+                    </template>
+
                 </Column>
 
                 <Column field="status" header="Status" style="min-width: 12rem">
@@ -41,10 +47,12 @@
                         </div>
                     </template>
                 </Column>
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action" ></Column>
 
-                <Column field="" header="Action" style="min-width: 12rem">
+                <!-- <Column field="" header="Action" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl" @click="investmentStore.editHraNewRental(slotProps.data)">
+                        <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
+                            @click="investmentStore.editHraNewRental(slotProps.data)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-10 h-8">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -52,12 +60,13 @@
                             </svg>
                         </button>
                     </template>
-                </Column>
+                </Column> -->
             </DataTable>
 
         </div>
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
@@ -77,6 +86,7 @@ const op = ref();
 const toggle = (event) => {
     op.value.toggle(event);
 }
+const editingRows = ref([]);
 
 const investmentStore = investmentMainStore()
 
@@ -94,6 +104,16 @@ const getSeverity = (status) => {
             return 'warning';
 
     }
+};
+
+const 
+
+onRowEditSave = (event) => {
+
+    let { newData, index } = event;
+
+    investmentStore.section80ccSource[index] = newData;
+    console.log(newData);
 };
 
 

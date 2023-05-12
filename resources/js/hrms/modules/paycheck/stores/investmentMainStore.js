@@ -23,7 +23,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     // Steps for Investment and exemption tab's  Next and Previous Button
 
-    const investment_exemption_steps = ref(5)
+    const investment_exemption_steps = ref(2)
 
     // loading Spinner
 
@@ -63,6 +63,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
     const investmentMainSource = ref()
+    const formDataSource = reactive([])
     const hraSource = ref()
     const section80ccSource = ref()
     const otherExemptionSource = ref()
@@ -70,13 +71,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const reimbursmentSource = ref()
     const otherIncomeSource = ref()
     const previousEmployeerIncomeSource = ref()
+
+
     const getInvestmentSource = async () => {
 
         let url = `/investments/investments-form-details-template?form_name=investment%201`
 
         await axios.get(url)
             .then(res => {
-                console.log(res.data.data.form_details);
+                // console.log(res.data.data.form_details);
                 investmentMainSource.value = res.data.data.form_details
                 hraSource.value = res.data.data.form_details.HRA
                 section80ccSource.value = res.data.data.form_details["Section 80C & 80CC "]
@@ -86,7 +89,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
                 previousEmployeerIncomeSource.value = res.data.data.form_details["Reimbersument "]
 
-                console.log(res.data.data.form_details["Reimbersument "]);
+                // console.log(res.data.data.form_details["Reimbersument "]);
             }).catch(e => console.log(e))
             .finally(() => {
                 console.log("completed");
@@ -94,36 +97,43 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     }
 
-    const getDeclarationAmount = (amount) => {
-        console.log(amount);
 
+    const getDeclarationAmount = (amount) => {
+        // console.log(amount);
         var data = {
-            fs_id:amount.fs_id ,
-            form_id : amount.form_id,
-            declaration_amount : amount.dec_amt,
-         }
+            fs_id: amount.fs_id,
+            form_id: amount.form_id,
+            declaration_amount: amount.dec_amt,
+        }
+
+        formDataSource.push(data)
+
+        // console.log(formDataSource);
 
         var form_data = new FormData()
 
-        for ( var key in data ) {
+        for (var key in data) {
             form_data.append(key, data[key]);
         }
 
-        if ( amount.dec_amt > amount.max_amount ) {
+        if (amount.dec_amt > amount.max_amount) {
             toast.add({
                 severity: "error",
                 summary: "Waring",
                 detail: "Declaration amount is greater than Maximum Limit",
                 life: 3000,
             });
-        }else{
+        } else {
             console.log("working");
         }
 
-        console.log(form_data);
-
-
     }
+
+    const saveFormData = () =>{
+        console.log(formDataSource);
+    }
+
+
 
 
 
@@ -422,11 +432,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     return {
 
         // varaible Declarations
-        investment_exemption_steps, canShowLoading, getInvestmentSource,
+        investment_exemption_steps, canShowLoading, getInvestmentSource,saveFormData,
 
         // Data Source 
 
-        investmentMainSource, hraSource, section80ccSource,otherExemptionSource,housePropertySource,reimbursmentSource,otherIncomeSource,
+        investmentMainSource, formDataSource,hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource, otherIncomeSource,
 
         // Tax Saving Investments 
 
