@@ -763,6 +763,8 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
 
+    Route::post('/investments/saveEmpdetails',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'SaveInvDetails']);
+
 
     //Emp Mail Notifications
     Route::get('/getAllEmployees_WelcomeMailStatus_Details', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'getAllEmployees_WelcomeMailStatus_Details'])->name('getAllEmployees_WelcomeMailStatus_Details');
