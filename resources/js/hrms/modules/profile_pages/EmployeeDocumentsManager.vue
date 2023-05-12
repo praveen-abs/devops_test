@@ -108,7 +108,6 @@ const EmployeeDocumentManagerSerive = UseEmployeeDocumentManagerSerive();
 // Loading
 const toast = useToast();
 const visible = ref(false)
-const loading = ref(true);
 
 // View Documents
 const view_document = ref({});
@@ -127,7 +126,7 @@ const errorstatus  =ref();
 
 const showDocument = (document) => {
     visible.value = true
-    EmployeeDocumentManagerSerive.loading.value = true
+    EmployeeDocumentManagerSerive.loading = true;
     axios.post('/view-profile-private-file', {
         user_code: EmployeeDocumentManagerSerive.getEmployeeDetails.current_user_code,
         document_name: document.document_name
@@ -135,7 +134,7 @@ const showDocument = (document) => {
         documentPath.value = res.data.data
         console.log("data sent", documentPath.value);
     }).finally(() => {
-        EmployeeDocumentManagerSerive.loading.value = false;
+        EmployeeDocumentManagerSerive.loading = false;
     })
 }
 
@@ -160,32 +159,27 @@ const uploadDocument = (e) => {
         let val = Object.keys(formdata)[0]
 
         // console.log();
-
     }
 };
 
 async function submitEmployeeDocsUpload() {
 
-
-    if (errorstatus.value == "Failure") {
-
+    if ( errorstatus.value == "Failure" ) {
         Swal.fire({
                     title: errorstatus.value = "Failure",
                     text:  'Please upload all mandatory documents',
-
                     icon: "error",
                     showCancelButton: false,
                 }).then((result) => {
                     //   window.location.reload();
                 });
-        console.log("toast");
+
     }
     else {
         EmployeeDocumentManagerSerive.loading = true;
 
         let url = "/vmt-documents-route/";
-        axios
-            .post(url, formdata)
+        axios.post(url, formdata)
             .then((res) => {
 
                 errorstatus.value = res.data.status
@@ -207,28 +201,21 @@ async function submitEmployeeDocsUpload() {
                     window.location.reload();
                 });
             }
-            else if (res.data.status == "Failure") {
-                Swal.fire({
-                    title: res.data.status = "Failure",
-                    text: res.data.message,
-                    icon: "error",
-                    showCancelButton: false,
-                }).then((result) => {
-                    //   window.location.reload();
-                });
-            }
-
+                else if (res.data.status == "Failure") {
+                    Swal.fire({
+                        title: res.data.status = "Failure",
+                        text: res.data.message,
+                        icon: "error",
+                        showCancelButton: false,
+                    }).then((result) => {
+                        window.location.reload();
+                    });
+                }
             })
             .finally(() => {
-                console.log("Photo Sent");
-
-                EmployeeDocumentManagerSerive.fetch_EmployeeDocument()
                 EmployeeDocumentManagerSerive.loading = false
             });
     }
-
-
-
 }
 
 
@@ -236,41 +223,3 @@ async function submitEmployeeDocsUpload() {
 </script>
 
 
-{
-
-<!-- <template>
-    <div class="card flex justify-content-center">
-        <Toast />
-        <div class="flex flex-wrap gap-2">
-            <Button label="Success" severity="success" @click="showSuccess" />
-            <Button label="Info" severity="info" @click="showInfo" />
-            <Button label="Warn" severity="warning" @click="showWarn" />
-            <Button label="Error" severity="danger" @click="showError" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showSuccess = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-};
-
-const showInfo = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
-};
-
-const showWarn = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-};
-
-const showError = () => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
-};
-</script> -->
-
-
-
-}
