@@ -416,11 +416,15 @@ class VmtTestingController extends Controller
         $query_form_details = VmtInvForm::where('form_name', 'investment 1')->first();
        // dd( $query_form_details);
         //Get the query structure
+      $user_id =  User::where('user_code', 'PSC0060')->first()->id;
 
         $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
                                     ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
-                                    ->join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
+                                    ->leftjoin('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
+                                    ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
                                     ->where('vmt_inv_formsection.form_id', $query_form_details->id)
+                                    ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
+                                    ->orWhereNull('vmt_inv_emp_formdata.id')
                                     ->get(
                                         [
                                             'vmt_inv_formsection.section_id',
@@ -434,7 +438,7 @@ class VmtTestingController extends Controller
                                         ]
                                     );
 
-                                //   dd($query_inv_form_template->toArray());
+                                 //  dd($query_inv_form_template->toArray());
 
                                   $query_inv_form_template = $query_inv_form_template->toArray();
 
@@ -464,7 +468,7 @@ class VmtTestingController extends Controller
                                     //     array_push(($query_inv_form_template[$single_inv_form_template->section_group]), $single_inv_form_template);
                                     //             dd($query_inv_form_template[$single_inv_form_template->section_group]);
                                     // }
-
+                                        dd( $query_inv_form_template);
 
         $response["form_name"] = $query_form_details->form_name;
         $response["form_details"] = $query_inv_form_template;
