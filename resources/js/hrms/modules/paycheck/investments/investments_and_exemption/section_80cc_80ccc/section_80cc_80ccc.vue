@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="10"
                 :value="investmentStore.section80ccSource" editMode="row"
                 v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -63,19 +63,6 @@
                 </Column>
                 <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action">
                 </Column>
-
-                <!-- <Column field="" header="Action" style="min-width: 12rem">
-                    <template #body="slotProps">
-                        <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
-                            @click="investmentStore.editHraNewRental(slotProps.data)">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-10 h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>
-                    </template>
-                </Column> -->
             </DataTable>
 
         </div>
@@ -121,28 +108,20 @@ const getSeverity = (status) => {
     }
 };
 
-const
-
-    onRowEditSave = (event) => {
-        let { newData, index } = event;
-        investmentStore.section80ccSource[index] = newData;
-        investmentStore.updatedRowSource = newData;
-        // investmentStore.getFormId = newData.form_id
-        // var data = {
-        //     fs_id: newData.fs_id,
-        //     declaration_amount: newData.dec_amount,
-        // }
-        // investmentStore.formDataSource.push(data)
-        console.log(newData);
-    };
+const onRowEditSave = (event) => {
+    let { newData, index } = event;
+    investmentStore.section80ccSource[index] = newData;
+    investmentStore.updatedRowSource = newData;
+    // investmentStore.getFormId = newData.form_id
+    // var data = {
+    //     fs_id: newData.fs_id,
+    //     declaration_amount: newData.dec_amount,
+    // }
+    // investmentStore.formDataSource.push(data)
+    console.log(newData);
+};
 
 
-const text = ref()
-
-const te = (data) => {
-    console.log(text.value);
-    console.log(data.test);
-}
 
 
 </script>
