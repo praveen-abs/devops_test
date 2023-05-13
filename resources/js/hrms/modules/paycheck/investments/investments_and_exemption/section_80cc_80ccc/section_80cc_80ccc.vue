@@ -2,9 +2,10 @@
     <div>
         <div class="table-responsive">
             <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
-                :value="investmentStore.section80ccSource" editMode="row" v-model:editingRows="editingRows"
+                :value="investmentStore.section80ccSource" editMode="row"
+                v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"  @row-edit-save="onRowEditSave" tableClass="editable-cells-table"
+                :rowsPerPageOptions="[5, 10, 25]" @row-edit-save="onRowEditSave" tableClass="editable-cells-table"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
                 <Column header="Sections" field="section" style="min-width: 8rem">
@@ -23,16 +24,26 @@
                 </Column>
 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
+                    </template>
                 </Column>
 
-                <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
-
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <InputText class="text-lg font-semibold w-7" type="text" v-model="slotProps.data.dec_amt"
-                            @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
+                        <div v-if="slotProps.data.dec_amount">
+                            {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
+                        </div>
+                        <div v-else>
+                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
+                        </div>
+
                     </template>
                     <template #editor="{ data, field }">
-                        <InputNumber class="text-lg font-semibold w-7"  v-model="data[field]" />
+                        <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
+                            class="w-5 text-lg font-semibold" />
                     </template>
 
                 </Column>
@@ -43,11 +54,15 @@
                             <Tag value="Completed" severity="success" />
                         </div>
                         <div v-else>
-                            <Tag value="Pending" severity="warning" />
+                            <!-- <Tag value="Pending" severity="warning" /> -->
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action" ></Column>
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action">
+                </Column>
 
                 <!-- <Column field="" header="Action" style="min-width: 12rem">
                     <template #body="slotProps">
@@ -86,7 +101,7 @@ const op = ref();
 const toggle = (event) => {
     op.value.toggle(event);
 }
-const editingRows = ref([]);
+
 
 const investmentStore = investmentMainStore()
 
@@ -106,15 +121,20 @@ const getSeverity = (status) => {
     }
 };
 
-const 
+const
 
-onRowEditSave = (event) => {
-
-    let { newData, index } = event;
-
-    investmentStore.section80ccSource[index] = newData;
-    console.log(newData);
-};
+    onRowEditSave = (event) => {
+        let { newData, index } = event;
+        investmentStore.section80ccSource[index] = newData;
+        investmentStore.updatedRowSource = newData;
+        // investmentStore.getFormId = newData.form_id
+        // var data = {
+        //     fs_id: newData.fs_id,
+        //     declaration_amount: newData.dec_amount,
+        // }
+        // investmentStore.formDataSource.push(data)
+        console.log(newData);
+    };
 
 
 const text = ref()

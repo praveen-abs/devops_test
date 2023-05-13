@@ -419,6 +419,7 @@ class VmtTestingController extends Controller
 
         $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
                                     ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
+                                    ->join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
                                     ->where('vmt_inv_formsection.form_id', $query_form_details->id)
                                     ->get(
                                         [
@@ -428,11 +429,12 @@ class VmtTestingController extends Controller
                                             'vmt_inv_section.reference',
                                             'vmt_inv_section.max_amount',
                                             'vmt_inv_section_group.section_group',
-                                            'vmt_inv_formsection.id as fs_id'
+                                            'vmt_inv_formsection.id as fs_id',
+                                             'vmt_inv_emp_formdata.dec_amount'
                                         ]
                                     );
 
-                                  //dd($query_inv_form_template->toArray());
+                                //   dd($query_inv_form_template->toArray());
 
                                   $query_inv_form_template = $query_inv_form_template->toArray();
 

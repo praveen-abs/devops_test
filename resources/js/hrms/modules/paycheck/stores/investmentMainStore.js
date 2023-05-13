@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { investmentFormulaStore } from './investmentFormulaStore'
 import { useToast } from "primevue/usetoast";
 import { reactive, ref } from "vue";
-import {Service} from '../../Service/Service'
+import { Service } from '../../Service/Service'
 
 
 /*
@@ -29,7 +29,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     // Steps for Investment and exemption tab's  Next and Previous Button
 
-    const investment_exemption_steps = ref(2)
+    const investment_exemption_steps = ref(1)
 
     // loading Spinner
 
@@ -70,7 +70,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const investmentMainSource = ref()
     const formDataSource = reactive([])
-    const getFormId= ref()
+    const getFormId = ref()
+    const editingRowSource = ref()
+    const updatedRowSource = ref()
     const hraSource = ref()
     const section80ccSource = ref()
     const otherExemptionSource = ref()
@@ -113,7 +115,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
         }
-
         formDataSource.push(data)
 
         // console.log(formDataSource);
@@ -138,14 +139,34 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     }
 
+    const editDeclarationAmount = () => {
+        console.log();
+    }
+
+
     const saveFormData = () => {
         console.log(formDataSource);
+        canShowLoading.value = true
         let url = `/investments/saveEmpdetails`
-        axios.post(url,{
-            user_code:service.current_user_code,
-            form_id:getFormId.value,
+        axios.post(url, {
+            user_code: service.current_user_code,
+            form_id: getFormId.value,
             formDataSource
+        }).finally(() => {
+            canShowLoading.value = false
+            toast.add({
+                severity: "success",
+                summary: "Saved",
+                detail: "Data Saved Successfull",
+                life: 3000,
+            });
+            getInvestmentSource()
+            formDataSource.splice(0, formDataSource.length);
         })
+    }
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(value);
     }
 
 
@@ -441,13 +462,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
 
-
-
-
     return {
 
         // varaible Declarations
-        investment_exemption_steps, canShowLoading, getInvestmentSource, saveFormData,
+        investment_exemption_steps, canShowLoading, getInvestmentSource, saveFormData, getFormId, formatCurrency, editingRowSource, updatedRowSource,
 
         // Data Source
 

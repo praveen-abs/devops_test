@@ -78,6 +78,7 @@ class VmtInvestmentsService
 
             $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
                                         ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
+                                        ->leftjoin('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
                                         ->where('vmt_inv_formsection.form_id', $query_form_details->id)
                                         ->get(
                                             [
@@ -89,9 +90,11 @@ class VmtInvestmentsService
                                                 'vmt_inv_section_group.section_group',
                                                 'vmt_inv_formsection.id as fs_id',
                                                 'vmt_inv_formsection.form_id',
+                                                'vmt_inv_emp_formdata.dec_amount'
                                                 
                                             ]
                                         );
+                                        // dd($query_inv_form_template);
                                         $query_inv_form_template = $query_inv_form_template->toArray();
 
                                         // dd($query_inv_form_template[0]);
@@ -227,7 +230,7 @@ class VmtInvestmentsService
     //     catch(\Exception $e){
     //         return response()->json([
     //             "status" => "failure",
-    //             "message" => "Error while fetching investments form data",
+    //             "message" => "Erro  r while fetching investments form data",
     //             "data" => $e,
     //         ]);
     //     }

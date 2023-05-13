@@ -48,7 +48,7 @@
                                 80EEB</button>
                         </div>
                         <div v-else>
-                            <InputText type="text" class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
+                            <InputText type="text" class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
                         </div>
                     </template>
@@ -65,7 +65,7 @@
                 </Column>
                 <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
 
-                <Column field="" header="Action" style="min-width: 12rem">
+                <!-- <Column field="" header="Action" style="min-width: 12rem">
 
                     <template #body>
                         <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
@@ -85,12 +85,13 @@
 
 
                     </template>
-                </Column>
+                </Column> -->
             </DataTable>
 
         </div>
 
         <div class="my-3 text-end">
+            <button @click="investmentStore.clear">clear</button>
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4" @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 "
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
