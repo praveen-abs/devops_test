@@ -437,9 +437,19 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
        return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
 
     }
-    public function getEmployeeLeaveHistory(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-       return $serviceVmtAttendanceService->getEmployeeLeaveHistory($request->user_code);
+       return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+    public function getAllEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails($request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+    public function getTeamEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
 
     }
 

@@ -1,6 +1,6 @@
 <template>
     <div class="card p-3"  style="margin-top: -25px;">
-        <h2 class="font-semibold text-2xl my-4 mx-3">Upload Documents</h2>
+        <h2 class="font-semibold text-2xl my-4 mx-3">Employee Documents</h2>
         <div class="w-full">
         <DataTable ref="dt" :value="EmployeeDocumentManagerService.getEmployeeDoc" dataKey="id" :paginator="true" :rows="10"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -21,6 +21,9 @@
                     <div v-if="slotProps.data.status === 'Approved'">
                         <p class="text-red-600 font-semibold fs-5">Approved</p>
                     </div>
+                    <div v-if="slotProps.data.status === 'Rejected'">
+                        <p class="text-red-600 font-semibold fs-5">Rejected</p>
+                    </div>
                     <div v-if="slotProps.data.status === null">
                         <p class="text-green-600 font-semibold">-</p>
                     </div>
@@ -31,8 +34,18 @@
             <Column field="" header="View " style="min-width: 12rem">
                 <template #body="slotProps">
                     <div v-if="slotProps.data.doc_id">
-                        <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                    <div v-if="slotProps.data.status =='Rejected'">
+                     <input type="file" name="" id="file" hidden @change="uploadDocument($event)">
+                        <button class="btn btn-success" @click="getFileName(slotProps.data.document_name)"><label for="file"
+                                class="cursor-pointer"><i class="pi pi-upload"></i> Upload
+                                file</label></button>
+
+                    </div>
+                    <div v-else>
+                           <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
                             @click="showDocument(slotProps.data)" style="height: 2em" />
+                    </div>
+
                     </div>
 
                     <div v-else>
