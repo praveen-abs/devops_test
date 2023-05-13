@@ -91,7 +91,7 @@
         </div>
 
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4" @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 "
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
@@ -99,11 +99,6 @@
         </div>
 
         <!-- Declaration Amount Dailog -->
-
-
-
-
-
 
         <Dialog v-model:visible="investmentStore.dailog_80EE" modal
             :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
@@ -132,13 +127,6 @@
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         v-model="investmentStore.other_exe_80EE.lender_type" :options="lender_types" optionLabel="name"
                         optionValue="code" placeholder="Select a Property" />
-                    <!-- <select id="lender_type"  v-model="investmentStore.other_exe_80EE.lender_type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        <option selected>Choose Type</option>
-                        <option>Others</option>
-                        <option>Financial Institution</option>
-
-                    </select> -->
                 </div>
 
                 <div class="">
@@ -201,13 +189,7 @@
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         v-model="investmentStore.other_exe_80EEA.lender_type" :options="lender_types" optionLabel="name"
                         optionValue="code" placeholder="Select a Property" />
-                    <!-- <select id="lender_type"  v-model="investmentStore.other_exe_80EEA.lender_type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        <option selected>Choose Type</option>
-                        <option>Others</option>
-                        <option>Financial Institution</option>
 
-                    </select> -->
                 </div>
 
                 <div class="">
