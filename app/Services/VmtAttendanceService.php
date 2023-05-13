@@ -1755,7 +1755,180 @@ class VmtAttendanceService{
            // dd($e);
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ getEmployeeLeaveHistory() ] ",
+                'message' => "Error[ getEmployeeLeaveDetails() ] ",
+                'data' => $e
+            ]);
+        }
+
+
+
+
+    }
+    public function getAllEmployeesLeaveDetails($filter_month, $filter_year, $filter_leave_status){
+
+        $validator = Validator::make(
+            $data = [
+                "filter_month"=>$filter_month,
+                "filter_year"=>$filter_year,
+                "filter_leave_status"=>$filter_leave_status,
+            ],
+            $rules = [
+                'filter_month' =>'required',
+                'filter_year' =>'required',
+                'filter_leave_status' =>'required|in:Approved,Pending,Rejected',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+
+            $query_employees_leaves = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
+                            ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                            ->whereYear('leaverequest_date', $filter_year)
+                            ->whereMonth('leaverequest_date', $filter_month)
+                            ->where('status',$filter_leave_status)
+                            ->get([
+                                "vmt_employee_leaves.leaverequest_date",
+                                "vmt_employee_leaves.start_date",
+                                "vmt_employee_leaves.end_date",
+                                "vmt_employee_leaves.total_leave_datetime",
+                                "vmt_employee_leaves.leave_reason",
+                                "vmt_employee_leaves.reviewer_user_id",
+                                "vmt_employee_leaves.reviewed_date",
+                                "vmt_employee_leaves.reviewer_comments",
+                                "vmt_employee_leaves.status",
+                                "vmt_employee_leaves.is_revoked",
+                                "name",
+                                "user_code",
+                                "leave_type",
+                            ]);
+                          // dd($query_employees_leaves->toArray());
+            $query_employees_leaves = $query_employees_leaves->toArray();
+
+            for($i=0;$i< count($query_employees_leaves);$i++){
+
+                $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $query_employees_leaves[$i]["manager_name"] = $manager_name;
+
+            }
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => '',
+                'data' => $query_employees_leaves
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+           // dd($e);
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
+                'data' => $e
+            ]);
+        }
+
+
+
+
+    }
+    public function getTeamEmployeesLeaveDetails($manager_code,$filter_month, $filter_year, $filter_leave_status){
+
+        $validator = Validator::make(
+            $data = [
+                "manager_code"=>$manager_code,
+                "filter_month"=>$filter_month,
+                "filter_year"=>$filter_year,
+                "filter_leave_status"=>$filter_leave_status,
+            ],
+            $rules = [
+
+                'manager_code' =>'required',
+                'filter_month' =>'required',
+                'filter_year' =>'required',
+                'filter_leave_status' =>'required|in:Approved,Pending,Rejected',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $query_manager_id=User::where('user_code',$manager_code)->first()->id;
+
+            $query_employees_leaves = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
+                            ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                            ->where('reviewer_user_id',$query_manager_id)
+                            ->whereYear('leaverequest_date', $filter_year)
+                            ->whereMonth('leaverequest_date', $filter_month)
+                            ->where('status',$filter_leave_status)
+                            ->get([
+                                "vmt_employee_leaves.leaverequest_date",
+                                "vmt_employee_leaves.start_date",
+                                "vmt_employee_leaves.end_date",
+                                "vmt_employee_leaves.total_leave_datetime",
+                                "vmt_employee_leaves.leave_reason",
+                                "vmt_employee_leaves.reviewer_user_id",
+                                "vmt_employee_leaves.reviewed_date",
+                                "vmt_employee_leaves.reviewer_comments",
+                                "vmt_employee_leaves.status",
+                                "vmt_employee_leaves.is_revoked",
+                                "name",
+                                "user_code",
+                                "leave_type",
+                            ]);
+                          // dd($query_employees_leaves->toArray());
+            $query_employees_leaves = $query_employees_leaves->toArray();
+
+            for($i=0;$i< count($query_employees_leaves);$i++){
+
+                $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $query_employees_leaves[$i]["manager_name"] = $manager_name;
+
+            }
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => '',
+                'data' => $query_employees_leaves
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+           // dd($e);
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getTeamEmployeesLeaveDetails() ] ",
                 'data' => $e
             ]);
         }
