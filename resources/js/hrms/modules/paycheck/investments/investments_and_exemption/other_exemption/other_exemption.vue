@@ -2,20 +2,17 @@
     <div>
         <div class="table-responsive">
 
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
-                :value="investmentStore.otherExemptionSource"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="10"
+                :value="investmentStore.otherExemptionSource" @row-edit-save="onRowEditSave"
+                tableClass="editable-cells-table" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="editingRows"
+                :rowsPerPageOptions="[5, 10, 25]" 
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
                 <Column header="Sections" field="section" style="min-width: 8rem">
-                    <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem">
-
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -30,7 +27,7 @@
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                 </Column>
 
-                <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <button @click="investmentStore.dailog_80EE = true"
@@ -47,10 +44,18 @@
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EEB</button>
                         </div>
-                        <div v-else>
-                            <InputText type="text" class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
-                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" />
+                        <div v-else-if="slotProps.data.dec_amount">
+                            {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
+                        <div v-else>
+                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
+                        </div>
+                    </template>
+                    <template #editor="{ data, field }">
+                        <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
+                            class="w-5 text-lg font-semibold" />
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
@@ -63,36 +68,14 @@
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"></Column>
-
-                <!-- <Column field="" header="Action" style="min-width: 12rem">
-
-                    <template #body>
-                        <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
-                            @click="toggle" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </button>
-
-                        <OverlayPanel ref="op" class="p-4">
-                            <div class="p-3 mx-4">
-                                <a class="py-4 my-4 dropdown-item" href="#"><i
-                                        class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
-                                    Edit</a>
-                                <a class="dropdown-item" href="#"><i class="my-4 fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</a>
-                            </div>
-                        </OverlayPanel>
-
-
-                    </template>
-                </Column> -->
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action"></Column>
             </DataTable>
 
         </div>
 
         <div class="my-3 text-end">
-            <button @click="investmentStore.clear">clear</button>
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4" @click="investmentStore.saveFormData">Save</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 "
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
