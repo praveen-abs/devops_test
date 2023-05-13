@@ -333,15 +333,27 @@ class VmtAttendanceController extends Controller
             //$endDate = new Carbon($singleLeaveRange->end_date);
             //$endDate->addDay();
 
-            //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+            if($singleLeaveRange->start_date == $singleLeaveRange->end_date)
+            {
+                //Since start and end range are same , add one day
+                $end_date = date('Y-m-d', strtotime($singleLeaveRange->end_date . ' +1 day'));
 
-            //dd($leave_range);
+                    //dd($stop_date);
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $end_date );
+               // dd($leave_range);
+            }
+            else
+            {
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+            }
 
             //check with the user given leave range
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
                 // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
+
                 if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
                 {
                     return $response = [
