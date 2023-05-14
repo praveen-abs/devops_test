@@ -465,12 +465,9 @@
                                                                             readonly placeholder="Calculate based on Target and Self Review"
                                                                         @else
                                                                             placeholder="type number here"
+                                                                            style="background-color:#edebeb;"
                                                                         @endif
-                                                                        >
-                                                                        @if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]))
-                                                                        {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}
-                                                                        @endif
-                                                                    </textarea>
+                                                                        >@if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id])){{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}@endif</textarea>
 
                                                                 {{-- </div> --}}
                                                             @else

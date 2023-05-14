@@ -822,6 +822,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         currentlySelectedUser = $(this).attr('data-userid');
                         console.log("currentlySelectedUser : " + currentlySelectedUser +
                             ", Month - Year : " + currentMonth + " , " + currentYear);
+
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -900,6 +901,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         currentlySelectedUser = $(this).attr('data-userid');
                         console.log("currentlySelectedUser : " + currentlySelectedUser +
                             ", Month - Year : " + currentMonth + " , " + currentYear);
+
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -1459,7 +1461,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             let todayDate = new Date().toISOString().slice(0, 10)
                             //console.log("today" + todayDate);
 
-
                             if(!ajax_data_currentdate.isAbsent){
 
                                 let final_checkin_button_code = "";
@@ -1470,6 +1471,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                     if (ajax_data_currentdate.lc_status == "Approved" || ajax_data_currentdate.mip_status ==
                                         "Approved")
+
                                         final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"])
                                         .format('h:mm a');
 
@@ -1516,6 +1518,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
                                             .eg_status);
                                     } else
+
                                     if (ajax_data_currentdate.isMOP) {
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);
@@ -1661,6 +1664,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                 }
                                 else {
+
                                     let final_checkin_button_code = "";
                                     let final_checkout_button_code = "";
                                     let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
@@ -1707,12 +1711,14 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines')){
 
                                         if (ajax_data_currentdate.isLC) {
+
                                             final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
                                         }
 
                                     }
-                                    else
+
                                     if (ajax_data_currentdate.isMIP) {
+
                                         final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
@@ -1720,10 +1726,12 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                      {
                                         if (ajax_data_currentdate.isEG) {
                                             final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
+
                                         }
                                      }
-                                     else
-                                    if (ajax_data_currentdate.isMOP) {
+
+                                     if (ajax_data_currentdate.isMOP) {
+
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);
                                     }

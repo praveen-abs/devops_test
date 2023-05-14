@@ -401,14 +401,14 @@ class VmtProfilePagesService
         }
         return $response;
     }
-    public function deleteFamilyDetails($record_id, $user_code)
+    public function deleteEmployeeFamilyDetails($record_id, $user_code)
     {
         try {
-            $user_id = user::where('user_code', $user_code)->first()->id;
 
-            $familyDetails = VmtEmployeeFamilyDetails::where('id', $record_id)->first();
-            $familyDetails->where('user_id', $user_id)->delete();
-            return $response = [
+
+
+            $familyDetails = VmtEmployeeFamilyDetails::where('id', $record_id)->delete();
+             return $response = [
                 'status' => 'success',
                 'message' => "Family details deleted successfully"
             ];

@@ -252,7 +252,7 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
         }
 
 
-        $response = $serviceVmtProfilePagesService->deleteFamilyDetails(
+        $response = $serviceVmtProfilePagesService->deleteEmployeeFamilyDetails(
             user_code:$request->user_code,
             record_id: $request->record_id,
 
