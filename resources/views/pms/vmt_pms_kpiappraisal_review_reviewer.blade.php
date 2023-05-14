@@ -664,11 +664,9 @@
                                                                             @if(is_numeric($kpiRow->target))
                                                                                 readonly placeholder="Calculate based on Target and Manager Review"
                                                                             @else
-                                                                                placeholder="type number here" @endif>
-                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
-{{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
-@endif
-                                                                    </textarea>
+                                                                                placeholder="type number here"
+                                                                                style="background-color:#edebeb;"
+                                                                            @endif> @if (isset($decodedKpiReviewPerc[$reviewersReview])){{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}@endif</textarea>
                                                                     @else
                                                                         <div>
                                                                             @if (isset($decodedKpiReviewPerc[$reviewersReview]))
