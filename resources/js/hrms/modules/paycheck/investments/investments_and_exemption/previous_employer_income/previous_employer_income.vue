@@ -2,8 +2,9 @@
     <div>
         <div class="table-responsive">
             <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
+            :value="investmentStore.previousEmployeerIncomeSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
+                :rowsPerPageOptions="[5, 10, 25]" 
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>

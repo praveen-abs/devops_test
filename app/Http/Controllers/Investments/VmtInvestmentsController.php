@@ -90,11 +90,13 @@ class VmtInvestmentsController extends Controller
 
     public function saveSectionPopups(Request $request){
 
-        // dd($request->all());
         $json_decodeHra = json_encode($request->all());
 
         $form_id = "1";
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        $fs_id = $request->fs_id;
+
+        $user_id = User::where('user_code', $request->user_code)->first()->id;
 
        // $form_data = $request->formDataSource;
 
@@ -115,7 +117,7 @@ class VmtInvestmentsController extends Controller
 
              $Hra_save = new VmtInvEmpFormdata;
              $Hra_save->f_emp_id = $query_assign->id;
-             $Hra_save->fs_id = '48';
+             $Hra_save->fs_id = $fs_id;
              $Hra_save->dec_amount ='none';
              $Hra_save->json_popups_value = $json_decodeHra;
              $Hra_save->save();

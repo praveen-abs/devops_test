@@ -255,8 +255,9 @@ const toggle = (event) => {
 const investmentStore = investmentMainStore()
 
 onMounted(async () => {
-    console.log(await investmentStore.hraSource);
-    investmentStore.fetchHraNewRental()
+   setTimeout(async () => {
+    await investmentStore.fetchHraNewRental()
+   }, 1000);
 })
 
 

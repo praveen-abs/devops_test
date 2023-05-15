@@ -6,7 +6,7 @@
                 :value="investmentStore.otherExemptionSource" @row-edit-save="onRowEditSave"
                 tableClass="editable-cells-table" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]" 
+                :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
                 <Column header="Sections" field="section" style="min-width: 8rem">
@@ -30,17 +30,17 @@
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
-                            <button @click="investmentStore.dailog_80EE = true"
+                            <button @click="investmentStore.get80EESlotData(slotProps.data)"
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EE</button>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
-                            <button @click="investmentStore.dailog_80EEA = true"
+                            <button @click="investmentStore.get80EEASlotData(slotProps.data)"
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EEA</button>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
-                            <button @click="investmentStore.dailog_80EEB = true"
+                            <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EEB</button>
                         </div>
@@ -65,11 +65,13 @@
                         </div>
                         <div v-else>
                             <!-- <Tag value="Pending" severity="warning" /> -->
-                            <span class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action"></Column>
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action">
+                </Column>
             </DataTable>
 
         </div>
@@ -301,7 +303,7 @@
             </div>
             <div class="text-end">
                 <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                    @click="investmentStore.other_exe_80EEB">Save</button>
+                    @click="investmentStore.save80EEB">Save</button>
             </div>
 
 

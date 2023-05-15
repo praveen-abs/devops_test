@@ -233,7 +233,7 @@ select,button,.accordion-button {
     top: 0;
     right: 0;
     left: 0;
-    z-index: 10;
+    z-index: 1;
     background-color: var(--vz-header-bg);
     transition: all 0.1s ease-out;
 }
