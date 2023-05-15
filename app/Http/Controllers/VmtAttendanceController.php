@@ -1556,4 +1556,13 @@ class VmtAttendanceController extends Controller
         return $leave_balance_details;
     }
 
+    public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $start_date = '2023-04-01';
+        $end_date = '2023-04-31';
+        $month = 04;
+        $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
+        return $response;
+
+    }
+
 }

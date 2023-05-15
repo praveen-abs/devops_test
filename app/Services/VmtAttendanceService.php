@@ -13,6 +13,7 @@ use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtGeneralInfo;
+use App\Models\VmtEmployeesLeavesAccrued;
 
 use App\Services\VmtNotificationsService;
 
@@ -1937,6 +1938,71 @@ class VmtAttendanceService{
 
 
     }
+
+    public function fetchOrgLeaveBalance( $start_date, $end_date, $month){
+       $response = array();
+       $all_active_user = User::where('active',1)
+                          ->where('is_ssa',0)->get();
+        foreach( $all_active_user as $single_user){
+                $total_leave_balance= 0;
+                $overall_leave_balance = calculateLeaveDetails( $single_user->id,$start_date,$end_date);
+               // dd(  $overall_leave_balance );
+                $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails( $single_user->id,$start_date,$end_date, $month);
+                $each_user['user_code']= $single_user->user_code;
+                $each_user['name'] = $single_user->name;
+                foreach( $overall_leave_balance['Leave Balance'] as $single_leave_balance){
+                 //   dd($single_leave_balance);
+                    $total_leave_balance =  $total_leave_balance + $single_leave_balance;
+                }
+                $each_user['total_leave_balance'] =  $total_leave_balance;
+                $each_user['leave_balance_details'] =   $leavetypeAndBalanceDetails;
+                array_push($response,$each_user);
+        }
+       return $response;
+    }
+
+    public function leavetypeAndBalanceDetails($user_id,$start_date,$end_date, $month){
+        $leave_details=array();
+        $single_user_leave_details=array();
+      $accrued_leave_types = VmtLeaves::get();
+
+      foreach($accrued_leave_types as $single_leave_types){
+          if($single_leave_types->is_finite==1){
+           $current_month_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                          ->whereMonth('start_date', $month)
+                                          ->where('leave_type_id',$single_leave_types->id)
+                                          ->whereIn('status',array('Approved','Pending'))
+                                          ->sum('total_leave_datetime');
+              if($single_leave_types->is_carry_forward!=1){
+
+                $total_accrued = VmtEmployeesLeavesAccrued::where('user_id',$user_id)
+                                                            ->whereBetween('date',[$start_date,$end_date])
+                                                            ->where('leave_type_id',$single_leave_types->id)
+                                                            ->sum('accrued_leave_count');
+
+               }else if($single_leave_types->is_carry_forward==1){
+                  $total_accrued = VmtEmployeesLeavesAccrued::where('user_id',$user_id)
+                                                           ->where('leave_type_id',$single_leave_types->id)
+                                                           ->sum('accrued_leave_count');
+               }
+               $single_user_leave_details['leave_type']=$single_leave_types->leave_type;
+               $single_user_leave_details['opening_balance']=  $total_accrued;
+               $single_user_leave_details['avalied'] =  $current_month_avalied_leaves;
+               $single_user_leave_details['closing_balance'] =  $total_accrued - $current_month_avalied_leaves;
+          }else{
+              $current_month_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                                           ->whereMonth('start_date',$month)
+                                                           ->where('leave_type_id',$single_leave_types->id)
+                                                           ->whereIn('status',array('Approved','Pending'))
+                                                           ->sum('total_leave_datetime');
+                 $single_user_leave_details['leave_type']=$single_leave_types->leave_type;
+                 $single_user_leave_details['opening_balance']=0;
+                 $single_user_leave_details['avalied'] =  $current_month_avalied_leaves;
+                 $single_user_leave_details['closing_balance'] = 0;
+    }
+    array_push($leave_details, $single_user_leave_details);
+    unset($single_user_leave_details);
+   }
+   return $leave_details;
 }
-
-
+}
