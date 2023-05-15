@@ -109,7 +109,7 @@
 
                     <Column field="city" header="City" style="min-width: 12rem">
                         <template #body="slotProps">
-                            {{ slotProps.data.reimbursment_remarks }}
+                            {{ slotProps.data.city }}
                         </template>
                     </Column>
                     <Column field="total_rent_paid" header="Total Rent" style="min-width: 12rem">
@@ -119,7 +119,7 @@
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl">
+                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl" @click="investmentStore.editHraNewRental(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-10 h-8">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -256,6 +256,7 @@ const investmentStore = investmentMainStore()
 
 onMounted(async () => {
     console.log(await investmentStore.hraSource);
+    investmentStore.fetchHraNewRental()
 })
 
 

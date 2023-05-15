@@ -99,7 +99,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
                 previousEmployeerIncomeSource.value = res.data.data.form_details["Reimbersument "]
 
-                // console.log(res.data.data.form_details["Reimbersument "]);
+                // console.log(res.data.data.form_details.HRA);
             }).catch(e => console.log(e))
             .finally(() => {
                 console.log("completed");
@@ -109,13 +109,21 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
     const getDeclarationAmount = (amount) => {
+        // Selected Row Data 
         console.log(amount);
+        // Getting Form ID
         getFormId.value = amount.form_id
         var data = {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
         }
-        formDataSource.push(data)
+
+        if(amount.dec_amt){
+            // Append Data
+            formDataSource.push(data)
+        }else{
+            console.log("Declaration Amount Null");
+        }
 
         // console.log(formDataSource);
 
@@ -165,17 +173,17 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         })
     }
 
+    // COnvert Declaration Amount Into INR Currency
+
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'INR' }).format(value);
     }
 
 
 
-
-
     // HRA Begins
 
-    const hra_data = ref()
+    const hra_data = reactive([])
 
     const current_data = ref()
 
@@ -195,20 +203,31 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailogEditNewRental = ref(false)
 
     const fetchHraNewRental = () => {
-
         console.log("getting hra new rental  data.......");
-        // axios.get(' http://localhost:3000/rental').then(res => {
-        //     console.log(res.data);
-        //     hra_data.value = res.data
-        // }).catch(e => console.log(e)).finally(() => {
-        //     canShowLoading.value = false
-        // })
+        console.log(hraSource.fs_id);
+        axios.post('/investments/fetchEmpRentalDetails',{
+            user_code:"SA100",
+            fs_id:"48"
+        }).then(res => {
+            console.log(res.data);
+            res.data.forEach((rental,index) => {
+                let decodedSource =JSON.parse(rental['json_popups_value']);
+                hra_data.push(decodedSource);
+            });
+            
+        }).catch(e => console.log(e)).finally(() => {
+            canShowLoading.value = false
+           
+        })
     }
 
     const editHraNewRental = (currentRowData) => {
 
+        
+
         console.log("editing Hra");
         console.log(currentRowData);
+        
         dailogAddNewRental.value = true
 
         hra.from_month = currentRowData.from_month
@@ -222,14 +241,14 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     }
 
     const saveHraNewRental = () => {
-
+       hra_data.splice(0,hra_data.length)
         canShowLoading.value = true
         dailogAddNewRental.value = false
 
         console.log("saving hra new rental  data.......");
         console.log(hra);
 
-        axios.post(' http://localhost:3000/rental', hra).then(res => {
+        axios.post('/investments/saveEmpdetailsHra', hra).then(res => {
             console.log(res.data);
             canShowLoading.value = false
             fetchHraNewRental()
