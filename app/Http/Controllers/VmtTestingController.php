@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VmtEmployeeDocuments;
+use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
 use Illuminate\Http\Request;
@@ -416,11 +417,15 @@ class VmtTestingController extends Controller
         $query_form_details = VmtInvForm::where('form_name', 'investment 1')->first();
        // dd( $query_form_details);
         //Get the query structure
+      $user_id =  User::where('user_code', 'SA100')->first()->id;
 
         $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
                                     ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
-                                    ->join('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
+                                    ->leftjoin('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
+                                    ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
                                     ->where('vmt_inv_formsection.form_id', $query_form_details->id)
+                                    ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
+                                    ->orWhereNull('vmt_inv_emp_formdata.id')
                                     ->get(
                                         [
                                             'vmt_inv_formsection.section_id',
@@ -430,13 +435,31 @@ class VmtTestingController extends Controller
                                             'vmt_inv_section.max_amount',
                                             'vmt_inv_section_group.section_group',
                                             'vmt_inv_formsection.id as fs_id',
-                                             'vmt_inv_emp_formdata.dec_amount'
+                                             'vmt_inv_emp_formdata.dec_amount',
+                                             'vmt_inv_emp_formdata.json_popups_value'
                                         ]
                                     );
 
-                                //   dd($query_inv_form_template->toArray());
+                                 $popupjson  = $query_inv_form_template->map(function ($item, $key) {
 
-                                  $query_inv_form_template = $query_inv_form_template->toArray();
+                                       $inv_details['section'] = $item->section;
+                                       $inv_details['particular'] = $item->particular;
+                                       $inv_details['reference'] = $item->reference;
+                                       $inv_details['max_amount'] = $item->max_amount;
+                                       $inv_details['section_group'] = $item->section_group;
+                                       $inv_details['fs_id'] = $item->fs_id;
+                                       $inv_details['dec_amount'] = $item->dec_amount;
+                                       $inv_details['dec_amount'] = $item->dec_amount;
+                                       $inv_details['json_popups_value']= (json_decode($item->json_popups_value, true));
+
+                                       return  $inv_details;
+
+                                });
+
+                             //  dd($sima->toArray());
+
+                                  $query_inv_form_template = $popupjson->toArray();
+                                //  $query_inv_form_template = $query_inv_form_template->toArray();
 
                                  // dd($query_inv_form_template[0]);
                                     $count = 0;
@@ -460,11 +483,12 @@ class VmtTestingController extends Controller
 
                                     }
 
+
                                     //     add to individual section group array
                                     //     array_push(($query_inv_form_template[$single_inv_form_template->section_group]), $single_inv_form_template);
                                     //             dd($query_inv_form_template[$single_inv_form_template->section_group]);
                                     // }
-
+                                        dd( $query_inv_form_template);
 
         $response["form_name"] = $query_form_details->form_name;
         $response["form_details"] = $query_inv_form_template;
@@ -484,14 +508,43 @@ class VmtTestingController extends Controller
 
 
     public function testEmployeeDocumentsJoin(Request $request){
-        //$response = VmtDocuments::all()->toArray();
 
-        $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
-                    ->where('vmt_employee_documents.user_id','266')
-                    ->orWhereNull('vmt_employee_documents.id')
-                    ->get()
-                    ->toArray();
+       // dd($request->all());
+       $simma = json_encode($request->all());
 
-        dd($response);
-    }
+       $form_id = "1";
+       $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+      // $form_data = $request->formDataSource;
+
+       $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+
+       if ($query_femp->exists()) {
+           $query_assign = $query_femp->first();
+
+       } else {
+
+           $emp_assign_form = new VmtInvFEmpAssigned;
+           $emp_assign_form->user_id = $user_id;
+           $emp_assign_form->form_id = $form_id;
+           $emp_assign_form->save();
+           $query_assign = $emp_assign_form;
+       }
+
+            $Hra_save = new VmtInvEmpFormdata;
+            $Hra_save->f_emp_id = $query_assign->id;
+            $Hra_save->fs_id = '1';
+            $Hra_save->dec_amount ='none';
+            $Hra_save->json_popups_value = $simma;
+            $Hra_save->save();
+
+
+
+
+    return 'saved';
+
+
+}
+
 }
