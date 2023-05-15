@@ -95,7 +95,7 @@ class VmtAttendanceController extends Controller
 
         // dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames','time_frame'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -131,84 +131,11 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejetRevokeLeaveRequest(Request $request)
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        // $approval_status = $request->status;
-        $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
-        //dd($leave_record);
-        //dd( $leave_record);
-        //dd( $request->status);
-        if ($request->status == "Revoked"){
-            $leave_record->is_revoked = "true";
-            $leave_record->status = "Pending";
-        }
-        else
-        {
-            //For Approved or rejected status
-            $leave_record->status = $request->status;
-
-        }
-
-
-        $leave_record->reviewer_comments = $request->leave_rejection_text;
-        $leave_record->reviewed_date = Carbon::now();
-        $leave_record->save();
-
-        //Send mail to the employee
-        $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
-        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
-        $obj_employee = User::where('id', $employee_user_id);
-        $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
-
-        $message = "";
-        $mail_status = "";
-
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
-
-
-        $isSent    = \Mail::to($employee_mail)->send(
-            new ApproveRejectLeaveMail(
-                $obj_employee->value('name'),
-                $obj_employee->value('user_code'),
-                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                User::find($manager_user_id)->name,
-                User::find($manager_user_id)->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $emp_avatar,
-                $request->status
-            )
-        );
-
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
-        }
-
-        if($request->status == "Approved")
-            $text_status = "approved";
-        else
-        if($request->status == "Rejected")
-            $text_status = "rejected";
-        else
-        if($request->status == "Revoked")
-            $text_status = "revoked";
-
-
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Request '.$text_status.' successfully',
-            'mail_status' => $mail_status,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
+       return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code,
+                                                                    $request->status, $request->review_comment );
     }
 
     /*
@@ -224,7 +151,7 @@ class VmtAttendanceController extends Controller
         $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
         $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
 
-        $time_periods_of_year_query = VmtOrgTimePeriod::where('abbrevation','FY')->where('status',1)->first();
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
          $start_date =  $time_periods_of_year_query->start_date;
 
         $end_date   = $time_periods_of_year_query->end_date;
@@ -369,6 +296,27 @@ class VmtAttendanceController extends Controller
 
         // dd($request ->all());
 
+        //get manager of this employee
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first()->l1_manager_code;
+        $query_manager = User::where('user_code', $manager_emp_code);
+        $reviewer_mail =  null;
+
+        if($query_manager->exists())
+        {
+            $query_manager = $query_manager->first();
+            $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $query_manager->id)->first()->officical_mail;
+
+        }
+        else
+        {
+            //throw error
+            return [
+                "status" => "failure",
+                "message" => "Manager not found for the given employee. Please contact the admin",
+                "data" => "",
+            ];
+        }
+
 
         $leave_month = date('m',strtotime($request->start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
@@ -385,15 +333,27 @@ class VmtAttendanceController extends Controller
             //$endDate = new Carbon($singleLeaveRange->end_date);
             //$endDate->addDay();
 
-            //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+            if($singleLeaveRange->start_date == $singleLeaveRange->end_date)
+            {
+                //Since start and end range are same , add one day
+                $end_date = date('Y-m-d', strtotime($singleLeaveRange->end_date . ' +1 day'));
 
-            //dd($leave_range);
+                    //dd($stop_date);
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $end_date );
+               // dd($leave_range);
+            }
+            else
+            {
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+            }
 
             //check with the user given leave range
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
                 // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
+
                 if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
                 {
                     return $response = [
@@ -452,12 +412,9 @@ class VmtAttendanceController extends Controller
         // $emp_leave_details->total_leave_datetime = $diff;
 
 
-        //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
-        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
-        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
 
-        $emp_leave_details->reviewer_user_id = $manager_id;
+
+        $emp_leave_details->reviewer_user_id = $query_manager->id;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         if (!empty($request->notifications_users_id))
@@ -491,7 +448,6 @@ class VmtAttendanceController extends Controller
         ////
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
 
         $message = "";
         $mail_status = "";
@@ -505,12 +461,13 @@ class VmtAttendanceController extends Controller
         else
             $notification_mails = array();
 
+       // dd($reviewer_mail);
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : auth::user()->name,
                                                     uEmpCode : auth::user()->user_code,
                                                     uEmpAvatar : $emp_avatar,
-                                                    uManagerName : $manager_name,
+                                                    uManagerName : $query_manager->name,
                                                     uLeaveRequestDate : Carbon::parse($request->leave_request_date)->format('M jS Y'),
                                                     uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
                                                     uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
@@ -701,8 +658,8 @@ class VmtAttendanceController extends Controller
                 //Need to process the checkin and checkout time based on the client.
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
 
-                //If direction is only "in"
-                if(sessionGetSelectedClientCode() == "DM")
+                //If direction is only "in" or empty or "-"
+                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA")
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -733,6 +690,7 @@ class VmtAttendanceController extends Controller
                         ->where('user_Id', $userCode)
                         ->first(['check_in_time']);
                 }
+
 
                 $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                 $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];

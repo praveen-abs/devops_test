@@ -18,8 +18,8 @@ class Seeder_VmtReimbursementVehicleType extends Seeder
         DB::table('vmt_reimbursement_vehicle_types')->truncate();
 
         DB::table('vmt_reimbursement_vehicle_types')->insert([
-            ['id'=>'1','vehicle_type'=>'2 - Wheeler type','cost_per_km'=>'3.5'],
-            ['id'=>'2','vehicle_type'=>'4 - Wheeler type','cost_per_km'=>'6'],
+            ['id'=>'1','vehicle_type'=>'2-Wheeler','cost_per_km'=>'3.5'],
+            ['id'=>'2','vehicle_type'=>'4-Wheeler','cost_per_km'=>'6'],
         ]);
     }
 }

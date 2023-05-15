@@ -18,7 +18,7 @@ use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Imports\VmtEmployeeImport;
 use App\Models\VmtEmployeeStatutoryDetails;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
@@ -41,6 +41,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtEmployeeDocumentsService;
+use App\Services\Admin\VmtEmployeeMailNotifMgmtService;
 
 class VmtEmployeeOnboardingController extends Controller
 {
@@ -248,7 +250,7 @@ class VmtEmployeeOnboardingController extends Controller
              $clientData  = VmtEmployee::where('userid', $employee->id)->first();
              $empNo = '';
              if ($clientData) {
-                 $empNo = $clientData->emp_no;
+                 $empNo = $employee->user_code;
              }
              $countries = Countries::all();
              $compensatory = Compensatory::where('user_id', $employee->id)->first();
@@ -348,12 +350,11 @@ class VmtEmployeeOnboardingController extends Controller
 
             }
             else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
-            if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
+            if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code &&  $currentLoggedinInUser->onboard_type  == "quick")
             {
 
-                //check whether if emp_code is tampered
-                if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
-                {
+                //if($currentLoggedinInUser->is_onboarded == 0)
+                //{
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
                     $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick","onboard_form");
@@ -362,20 +363,20 @@ class VmtEmployeeOnboardingController extends Controller
 
                     if($result == "success")
                     {
-                        // if($request->input('can_onboard_employee') == "1")
-                        // {
-                        //     $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
-                        //     $message="Employee onboarded successfully";
-                        // }
-                        // else
-                        // {
-                            $message="Your Onboard information Saved in draft";
-                      //  }
+                        if($request->input('can_onboard_employee') == "1")
+                        {
+                            $message="Employee onboarded successfully";
+                        }
+                        else
+                        {
+                           $message="Your Onboard information Saved in draft";
+                        }
 
                         $response = [
                             'status' => 'success',
                             'message' => $message,
                             'mail_status' => $isEmailSent ? "success" : "failure",
+                            'can_redirect' => $request->input('can_onboard_employee'), //if its "1", then redirect from onboarding form to under review page
                             'error' => '',
                             'error_verbose' =>''
                         ];
@@ -391,25 +392,23 @@ class VmtEmployeeOnboardingController extends Controller
                         ];
 
                     }
-                }
-                else
-                {
-                    //dd("Emp code mismatch. Please contact HR immediately");
+                //}
+                // else
+                // {
+                //     //dd("Emp code mismatch. Please contact HR immediately");
 
-                    $response = [
-                        'status' => 'failure',
-                        'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
-                        'mail_status' => '',
-                        'error' => '',
-                        'error_verbose' =>''
-                    ];
+                //     $response = [
+                //         'status' => 'failure',
+                //         'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                //         'mail_status' => '',
+                //         'error' => '',
+                //         'error_verbose' =>''
+                //     ];
 
-                }
+                // }
             }
             else
             {
-                //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
-
                 $response = [
                     'status' => 'failure',
                     'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
@@ -529,7 +528,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $newEmployee = new VmtEmployee;
 
                 $newEmployee->userid = $user->id;
-                $newEmployee->emp_no   =    $row["employee_code"] ?? '';
+                //$newEmployee->emp_no   =    $row["employee_code"] ?? '';
                 //$newEmployee->emp_name   =    $row["employee_name"];
                 $newEmployee->gender   =    $row["gender"] ?? '';
                 //$newEmployee->designation   =    $row["designation"];
@@ -808,7 +807,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict',
+                'email' => 'nullable|email:strict'|'unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -1445,7 +1444,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
             //Check if all mandatory docs are uploaded by user
-            $mandatory_doc_ids = VmtOnboardingDocuments::where('is_mandatory','1')->pluck('id');
+            $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
             $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
                                                            ->where('vmt_employee_documents.user_id',auth()->user()->id)
                                                            ->pluck('doc_id');
@@ -1455,7 +1454,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             // foreach($missing_mandatory_doc_ids as $single_mandatory_id){
 
-            //     $missing_mandatory_doc_name[] = VmtOnboardingDocuments::where('id',$single_mandatory_id)->first()->document_name;
+            //     $missing_mandatory_doc_name[] = VmtDocuments::where('id',$single_mandatory_id)->first()->document_name;
             // }
             //dd("DOc upload status : ".$pending_docs);
   //dd(count($mandatory_doc_ids) == count($user_uploaded_docs_ids));
@@ -1502,9 +1501,17 @@ class VmtEmployeeOnboardingController extends Controller
 
     }
 
-    public function updateEmployeeActiveStatus(Request $request, VmtEmployeeService $employeeService){
+    public function updateEmployeeActiveStatus(Request $request, VmtEmployeeService $employeeService ,VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService){
 
-       return $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
+       $response= $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
 
+      // $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
+
+       return $response;
+
+    }
+
+    public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
+            return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
 }

@@ -72,7 +72,7 @@
         <Column field="doc_status" header="Docs Approval Status">
           <template #body="slotProps">
             {{
-              slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Approved" : "Not Done")
+              slotProps.data.is_onboarded ? (slotProps.data.doc_status ? "Approved" : "Pending")
               : "Pending"
 
             }}

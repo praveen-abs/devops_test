@@ -9,13 +9,13 @@
                     </button>
                 </div>
                 <div class="text-center col-12">
-                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img " style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
                         <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img"
-                            :src="`data:image/png;base64,${profile}`" srcset="" style="border: 6px solid #c2c2c2c2" />
+                            :src="`data:image/png;base64,${profile}`" srcset=""  />
 
-                        <label class="cursor-pointer edit-icon" style="position: relative; top: -30px"
+                        <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
                             <i class="fa fa-camera"></i></label>
                         <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
@@ -25,7 +25,7 @@
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
                             <div class="mb-1 text-center px-auto">
-                                <h6 class="text-center">
+                                <h6 class="text-center fw-bold">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
                             </div>
@@ -53,43 +53,43 @@
                         <div class="mb-4 text-center profile-mid-right-content">
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Employee Status</p>
-                                <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="f-15 fw-bold">
+                                <p v-if="_instance_profilePagesStore.employeeDetails.active == 1" class="f-12 fw-bold">
                                     Active
                                 </p>
-                                <p v-else class="text-danger f-15 fw-bold">Not Active</p>
+                                <p v-else class="text-danger f-12 fw-bold">Not Active</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Employee Code</p>
-                                <p v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-15 fw-bold">
+                                <p v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold">
                                     {{ _instance_profilePagesStore.employeeDetails.user_code }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Designation</p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                     .get_employee_office_details.designation
-                                    " class="f-15 fw-bold">
+                                    " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.designation
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">Location</p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.work_location
-                                        " class="f-15 fw-bold">
+                                        " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.work_location
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
-                            <div class="py-2 border-bottom-liteAsh">
+                            <div class="py-2 border-bottom-liteAsh ml-3">
                                 <p class="text-muted f-12 fw-bold">
                                     Department
                                     <a href="#" class="edit-icon" @click="dailogDepartment = true"><i
@@ -97,27 +97,24 @@
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.department_id
-                                        " class="f-15 fw-bold">
+                                        " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.department_name
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">
                                     Reporting To
-                                    <a href="#" class="edit-icon" @click="editReportingManager(
-                                                _instance_profilePagesStore.employeeDetails
-                                                    .get_employee_office_details.l1_manager_name
-                                            )
-                                            "><i class="ri-pencil-fill"></i>
+                                    <a href="#" class="edit-icon" @click="dailogReporting
+                                    = true"><i class="ri-pencil-fill"></i>
                                     </a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_code
-                                        " class="f-15 fw-bold">
+                                        " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_name
@@ -128,7 +125,7 @@
                                             .get_employee_office_details.l1_manager_code
                                     }}
                                 </p>
-                                <p v-else class="f-15 fw-bold">-</p>
+                                <p v-else class="f-12 fw-bold">-</p>
                             </div>
                         </div>
                         <div class="text-center profile-bottom-right-content">
@@ -142,7 +139,13 @@
             </div>
         </div>
     </div>
-
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+      <div class="confirmation-content">
+        <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
+        <span>{{ status_text_CompletionDialog }}</span>
+      </div>
+    </Dialog>
     <Dialog v-model:visible="dailogDepartment" modal header="Edit Department"
         :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
         <!-- {{ employee_card.department  }} -->
@@ -150,7 +153,7 @@
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" id="submit_button_family_details"
+                <button type="button" class="submit_btn warning success"
                     @click="editDepartment">
                     Save
                 </button>
@@ -160,11 +163,11 @@
     <Dialog v-model:visible="dailogReporting" modal header="Edit Reporting Manager"
         :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
         <Dropdown optionLabel="name" :options="reportManagerOption" v-model="employee_card.reporting_manager"
-            optionValue="id" placeholder="Select Reporting Manager" class="w-full form-selects" />
+            optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success" id="submit_button_family_details"
-                    @click="EditFamilyDetails">
+                <button type="button" class="submit_btn warning success"
+                    @click="editReportingManager">
                     Save
                 </button>
             </div>
@@ -172,7 +175,7 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
+    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '40vw', borderTop: '5px solid #002f56' }">
 
         <template #header>
             <div>
@@ -183,34 +186,33 @@
             </div>
 
         </template>
-        <div class="card p-3 d-flex justify-items-center align-items-center  "
-            style="width: 18rem; margin-left: 90px;flex-direction: column !important;">
+        <div class="card p-3 d-flex justify-items-center align-items-center"
+            style="width: 18rem;margin-left: 140px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
-            <img src=" {{ URL::asset(session()->get('client_logo_url')) }}" alt="" class=""
+            <img src="" alt="" class=""
                 style="height: 40px;width:140px; ">
 
             <div class="card-body d-flex justify-items-center align-items-center " style="flex-direction: column ">
 
                 <img v-if="profile" class="rounded-circle   profile-img"
-                    :src="`data:image/png;base64,${profile}`" srcset="" style="border: 1px solid grey; width: 120px; height: 120px;" />
+                    :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
 
-                <h5 class="card-title my-3 fw-bold"> {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
+                <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;" > {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
 
-                <p class="card-text"></p>
                 <h5 v-if="_instance_profilePagesStore.employeeDetails
                     .get_employee_office_details.department_id
-                    " class="f-15 fw-bold card-text mb-2 text-gray-400" >
+                    " class="f-12  card-text mb-2 text-gray-400" >
                     {{
                         _instance_profilePagesStore.employeeDetails
                             .get_employee_office_details.department_name
                     }}
                 </h5>
-                <h1 v-else class="f-15 fw-bold mb-2">-</h1>
+                <h1 v-else class="f-12 fw-bold">-</h1>
 
-                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-15 fw-bold mb-2" style="color:grey">
+                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold mb-2" style="color:grey">
                     {{ _instance_profilePagesStore.employeeDetails.user_code }}
                 </h5>
-                <p v-else class="f-15 fw-bold mb-2 text-secondary-emphasis">-</p>
+                <p v-else class="f-12   mb-2 text-secondary-emphasis">-</p>
             </div>
         </div>
     </Dialog>
@@ -287,6 +289,9 @@ const dailogDepartment = ref(false);
 
 const dailogReporting = ref(false);
 
+const canShowCompletionScreen = ref(false);
+const status_text_CompletionDialog = ref("None");
+
 const editDepartment = (dep) => {
     console.log(dep);
 
@@ -296,23 +301,62 @@ const editDepartment = (dep) => {
             department_id: employee_card.department,
         })
         .then((res) => {
-            console.log("Department Options : " + JSON.stringify(departmentOption.value));
+            //console.log("Department Options : " + JSON.stringify(departmentOption.value));
 
             //Set the department name from dropdown value itself.
             //find(departmentOption);
             //      console.log("Selected Dept id : " + employee_card.department);
-            let selected_deptName = JSON.stringify(_.find(departmentOption.value, ["id", employee_card.department]).name);
-            selected_deptName = selected_deptName.slice(1, -1);
+            let selected_deptName = _.find(departmentOption.value, ["id", employee_card.department]).name;
             console.log("Lodash [Selected Dept]: " + selected_deptName);
 
             _instance_profilePagesStore.employeeDetails.get_employee_office_details.department_name = selected_deptName;
+
+            status_text_CompletionDialog.value = "Department updated successfully !";
+
             console.log(res.data);
+        })
+        .catch((err) => {
+            status_text_CompletionDialog.value = "Error while updating department. Kindly contact the Admin.";
+            console.log("Error while updating Department : "+ err);
+        })
+        .finally(() => {
+
+            canShowCompletionScreen.value = true;
+            dailogDepartment.value = false;
+            //console.log('Experiment completed');
         });
 };
+
 const editReportingManager = (rm) => {
-    console.log(rm);
-    dailogReporting.value = true;
-    employee_card.reporting_manager = rm;
+    console.log("editReportingManager : "+rm);
+
+    axios.post("/profile-pages/updateReportingManager", {
+        user_code : _instance_profilePagesStore.employeeDetails.user_code,
+        manager_user_code : employee_card.reporting_manager,
+    }).
+    then((res) => {
+        //console.log("Reporting Manager Options : "+ JSON.stringify(reportManagerOption.value));
+
+       let selected_reportedManager = _.find(reportManagerOption.value, ["user_code" , employee_card.reporting_manager]);
+
+       _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name = selected_reportedManager.name;
+       _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code = selected_reportedManager.user_code;
+
+        status_text_CompletionDialog.value = "Reporting Manager updated successfully !";
+
+        console.log(res.data);
+
+
+
+    }).catch((err) => {
+        status_text_CompletionDialog.value = "Error while updating Reporting Manager. Kindly contact the Admin.";
+            console.log("Error while updating Reporting Manager : "+ err);
+    }).finally(() =>{
+        canShowCompletionScreen.value = true;
+        dailogReporting.value = false;
+    });
+
+
 };
 
 const setvalue = () => {
@@ -343,5 +387,8 @@ onMounted(() => {
 <style>
 .p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
+}
+*{
+    /* font-family: sans-serif; */
 }
 </style>

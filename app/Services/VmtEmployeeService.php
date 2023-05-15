@@ -24,7 +24,7 @@ use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtOrgRoles;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
@@ -131,7 +131,6 @@ class VmtEmployeeService {
             return "failure :: createOrUpdate_User() response obj is null ".__LINE__;
         }
 
-        return "Normal Onboarding : Failure in TRY or CATCH method";
     }
 
     private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
@@ -764,7 +763,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             if(empty($fileObject))
                 return null;
 
-            $onboard_doc_id = VmtOnboardingDocuments::where('document_name',$onboard_document_type);
+            $onboard_doc_id = VmtDocuments::where('document_name',$onboard_document_type);
 
             if($onboard_doc_id->exists())
                 $onboard_doc_id = $onboard_doc_id->first()->id;
@@ -802,10 +801,23 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
             $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
             $path = $emp_code.'/onboarding_documents';
             $filePath = $fileObject->storeAs($path,$fileName, 'private');
-
-
             $employee_documents->doc_url = $fileName;
-            $employee_documents->status = 'Pending';
+
+            $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
+                                                               ->where('doc_id',$onboard_doc_id);
+
+            if($employee_documents_status->exists() ){
+                    $employee_documents_status = $employee_documents_status->first()->status;
+               if($employee_documents_status == 'Approved')
+                    $employee_documents->status = $employee_documents_status;
+               else{
+                $employee_documents->status ='Pending';
+               }
+            }else{
+
+                $employee_documents->status = 'Pending';
+             }
+
 
             $employee_documents->save();
         }
@@ -832,7 +844,6 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     public function attachAppointmentLetterPDF($employeeData)
     {
        // dd($employeeData);
-        $VmtGeneralInfo = VmtGeneralInfo::first();
         $empNameString  = $employeeData['employee_name'];
         $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
         $data = $employeeData;
@@ -857,6 +868,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
+        $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
         $appoinmentPath = "";
 
@@ -961,15 +973,17 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         //Get all the  doc for the given user_id
         $query_pending_onboard_docs = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
                                         ->join('vmt_employee_documents','vmt_employee_documents.user_id','=','users.id')
-                                        ->join('vmt_onboarding_documents','vmt_onboarding_documents.id','=','vmt_employee_documents.doc_id')
+                                        ->join('vmt_documents','vmt_documents.id','=','vmt_employee_documents.doc_id')
                                         ->where('vmt_employee_documents.status',"Pending")
                                         ->where('users.is_ssa',"0")
+                                        ->where('users.is_onboarded',"1")
                                         ->where('users.active','<>',"-1")
+                                        ->where('vmt_employee_documents.status','<>',"Approved")
                                         ->get([
                                             'users.name as name',
                                             'vmt_employee_details.doj as doj',
                                             'users.user_code as user_code',
-                                            'vmt_onboarding_documents.document_name as doc_name',
+                                            'vmt_documents.document_name as doc_name',
                                             'vmt_employee_documents.id as record_id',
                                             'vmt_employee_documents.status as doc_status',
                                             'vmt_employee_documents.doc_url as doc_url'
@@ -1047,12 +1061,64 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         {
             $query_user->active = $active_status;
             $query_user->save();
+           return response()->json([
+                'status' => 'success',
+                'message' => "user activate successfully",
+                'mail_status'=>''
+            ]);
         }
         else
         {
             return response()->json([
                 'status' => 'failure',
                 'message' => "User not found"
+            ]);
+        }
+    }
+
+    public function getEmployeeRole($user_code){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            $response = User::join('vmt_org_roles','vmt_org_roles.id','=','users.org_role')
+                        ->where('users.user_code', $user_code)
+                        ->get(['vmt_org_roles.name as role'])
+                        ->first();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getEmployeeRole() ] ",
+                'data' => $e
             ]);
         }
     }

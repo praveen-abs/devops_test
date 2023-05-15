@@ -32,7 +32,7 @@
                 v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
                 <template #empty> No Employee data..... </template>
                 <template #loading> Loading customers data. Please wait. </template>
-                <Column field="name" header="Employee Name">
+                <Column field="employee_name" header="Employee Name">
                     <template #body="slotProps">
                         <div></div>
                         {{ slotProps.data.employee_name }}
@@ -52,13 +52,13 @@
                 </Column>
                 <Column field="end_date" header="End Date" dataType="date">
                     <template #body="slotProps">
-                        
+
                         {{ moment(slotProps.data.end_date).format('DD-MM-YYYY') }}
                     </template>
                 </Column>
                 <Column field="leave_reason" header="Leave Reason" style="min-width: 12rem;">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.leave_reason.length > 70">
+                        <div v-if="slotProps.data.leave_reason && slotProps.data.leave_reason.length > 70">
                             <p @click="toggle" class="font-medium text-orange-400 underline cursor-pointer">explore more...
                             </p>
                             <OverlayPanel ref="overlayPanel" style="height: 80px;">
@@ -66,7 +66,7 @@
                             </OverlayPanel>
                         </div>
                         <div v-else>
-                            {{ slotProps.data.leave_reason }}
+                            {{ slotProps.data.leave_reason ?? ''}}
                         </div>
                     </template>
                 </Column>
@@ -136,7 +136,7 @@ const toggle = (event) => {
 }
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: {
+    employee_name: {
         value: null,
         matchMode: FilterMatchMode.STARTS_WITH,
         matchMode: FilterMatchMode.EQUALS,
@@ -145,6 +145,8 @@ const filters = ref({
 
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
+
+
 const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 let currentlySelectedStatus = null;
@@ -154,20 +156,18 @@ onMounted(() => {
     let url_org_leave =
         window.location.origin + "/fetch-leaverequests/org/Approved,Rejected,Pending";
 
-    console.log("Fetching ORG LEAVE from url : " + url_org_leave);
+    //console.log("Fetching ORG LEAVE from url : " + url_org_leave);
 
     axios.get(url_org_leave).then((response) => {
         //  Leave_data.value =Object.values(response.data['employee_avatar'])
 
         //  Employee_Avatar.value=Object.values(Leave_data.employee_avatar)
         Leave_data.value = response.data;
-        console.log("org_Leave_history" + Leave_data.value);
+        //console.log("org_Leave_history" + Leave_data.value);
 
         loading.value = false;
 
-        console.log(
-            "Response Data ORG Leave History : " + Leave_data.value["reviewer_avatar"]
-        );
+        //console.log("Response Data ORG Leave History : " + Leave_data.value["reviewer_avatar"]);
     });
 });
 
@@ -184,7 +184,7 @@ function showConfirmDialog(selectedRowData, status) {
     currentlySelectedStatus = status;
     currentlySelectedRowData = selectedRowData;
 
-    console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+    //console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog(canClearData) {
@@ -213,8 +213,8 @@ function processApproveReject() {
 
     canShowLoadingScreen.value = true;
 
-    console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
-    console.log("currentlySelectedStatus : " + currentlySelectedStatus);
+    //console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+   // console.log("currentlySelectedStatus : " + currentlySelectedStatus);
 
     // axios.post(window.location.origin + '/reimbursements-approve-reject', {
     //     reimbursement_id: currentlySelectedRowData.id,

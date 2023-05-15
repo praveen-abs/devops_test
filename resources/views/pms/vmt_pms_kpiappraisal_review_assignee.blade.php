@@ -33,7 +33,7 @@
                                     <p class="f-14 mt-2  text-primary">
                                         {{ $assignedUserDetails->getEmployeeOfficeDetails->designation }}</p>
                                     <p class="f-12 text-muted mt-2">
-                                        {{ $assignedUserDetails->getEmployeeDetails->emp_no }}</p>
+                                        {{ $currentUserDetails->user_code }}</p>
                                 </div>
 
                             </div>
@@ -465,12 +465,9 @@
                                                                             readonly placeholder="Calculate based on Target and Self Review"
                                                                         @else
                                                                             placeholder="type number here"
+                                                                            style="background-color:#edebeb;"
                                                                         @endif
-                                                                        >
-                                                                        @if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]))
-                                                                        {{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}
-                                                                        @endif
-                                                                    </textarea>
+                                                                        >@if (isset(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id])){{ round(json_decode($assignedGoals->assignee_kpi_percentage, true)[$kpiRow->id]) }}@endif</textarea>
 
                                                                 {{-- </div> --}}
                                                             @else

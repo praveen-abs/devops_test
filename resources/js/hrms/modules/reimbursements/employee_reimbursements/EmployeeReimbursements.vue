@@ -7,8 +7,9 @@
     <div class="reimbursement-wrapper mt-30">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-1 card-body">
-                <div class="row">
-                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                <div class="row ">
+                    <!-- <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 col-lg"> -->
+                    <div class="col-3 col-md">
                         <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
                             <!-- <li class="nav-item text-muted" role="presentation">
                 <a
@@ -32,18 +33,36 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex justify-content-end">
-                        <label for="" class="my-auto text-lg font-semibold">Select Month</label>
-                        <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy" class="mx-4 "
-                            style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
+                    <!-- <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex justify-content-end col-xl"> -->
+                    <div class="col d-flex   justify-content-end col-md">
+                        <div class="row">
+                            <div class="col-6 d-flex justify-content-center">
+                                <label for="" class="my-auto  font-semibold " style="width: 120px;">Select Month</label>
+                                <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy"
+                                    class="mx-4" style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
+                            </div>
+                            <div class="col-2 d-flex justify-content-start ">
+                                <button label="Submit" class=" my-auto btn btn-primary" severity="danger"
+                                    style="height: 33px;" :disabled="!employee_service.selected_date == '' ? false : true"
+                                    @click="employee_service.generate_ajax"> <i class="fa fa-cog me-2"></i>
+                                    Generate</button>
+                            </div>
+                            <div class="col-2 d-flex justify-content-end ">
+                                <button class="my-auto btn btn-primary"
+                                    :disabled="employee_service.data_local_convergance == '' ? true : false"
+                                    severity="success" style="height: 33px;" @click="toggle"><i
+                                        class="fas fa-file-download me-2"></i>Download</button>
+                            </div>
+                            <div class="col-2 d-flex justify-content-center align-content-center  ">
+                                <button @click="employee_service.onclickOpenLocalConverganceDailog"
+                                    class=" my-auto btn btn-orange" style="height: 33px; width: 100px;">
+                                    <i class="fa fa-plus-circle me-1"></i>Add Claim
+                                </button>
 
-                        <button label="Submit" class="mx-4 my-auto btn btn-primary" severity="danger" style="height: 33px;"
-                            :disabled="!employee_service.selected_date == '' ? false : true"
-                            @click="employee_service.generate_ajax"> <i class="fa fa-cog me-2"></i>
-                            Generate</button>
-                        <button class="my-auto btn btn-primary"
-                            :disabled="employee_service.data_local_convergance == '' ? true : false" severity="success"
-                            style="height: 33px;" @click="toggle"><i class="fas fa-file-download me-2"></i>Download</button>
+                            </div>
+                        </div>
+
+
                         <OverlayPanel ref="op">
                             <div class="py-1">
                                 <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
@@ -62,10 +81,7 @@
               <i class="fa fa-plus-circle me-1"></i>Add Claim
             </button> -->
 
-                        <button @click="employee_service.onclickOpenLocalConverganceDailog"
-                            class="mx-4 my-auto btn btn-orange" style="height: 33px;">
-                            <i class="fa fa-plus-circle me-1"></i>Add Claim
-                        </button>
+
                     </div>
                 </div>
             </div>
@@ -309,7 +325,7 @@
                                 </Column>
                                 <Column field="Amt_km" header="Amt/Km" style="min-width:4rem">
                                     <template #body="slotProps">
-                                        {{ slotProps.data.amt_per_km }}
+                                        {{ slotProps.data.cost_per_km }}
                                     </template>
                                 </Column>
 
@@ -372,8 +388,7 @@
                             <div class="flex formgrid">
                                 <div class="field col">
                                     <label for="Eligible Amount">Total Distance <span class="text-danger">*</span> </label>
-                                    <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled
-                                        " @input="employee_service.amount_calculation" />
+                                    <InputText v-model="employee_service.employee_local_conveyance.total_distance_travelled" @input="employee_service.amount_calculation()" />
                                 </div>
                                 <div class="field col"
                                     v-if="employee_service.employee_local_conveyance.mode_of_transport == 'Public Transport'">
@@ -446,6 +461,11 @@ const toggle = (event) => {
 const employee_service = employee_reimbursment_service();
 
 const selected_date = ref()
+
+function test(){
+    console.log("Hello");
+}
+
 const generate_ajax = () => {
 
     employee_service.loading_spinner = true

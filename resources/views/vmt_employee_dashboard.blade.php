@@ -30,13 +30,13 @@
 <div class="hr-dashboar-wrpper mt-30 ">
     <!-- Content top -->
     <div class="row">
-        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4 mb-3">
             @include('ui-dashboard-welcome-card')
         </div>
-        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4 mb-3">
             @include('ui-dashboard-action-card')
         </div>
-        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl4">
+        <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl4 mb-3">
             @include('ui-dashboard-holiday-card')
         </div>
     </div>

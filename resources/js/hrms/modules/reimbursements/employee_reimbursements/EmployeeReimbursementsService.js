@@ -5,9 +5,7 @@ import axios from "axios";
 import moment from "moment/moment";
 import { Service } from '../../Service/Service'
 
-export const employee_reimbursment_service = defineStore(
-    "employee_reimbursment_service",
-    () => {
+export const employee_reimbursment_service = defineStore("employee_reimbursment_service", () => {
         const toast = useToast();
         const service = Service()
 
@@ -93,8 +91,8 @@ export const employee_reimbursment_service = defineStore(
 
         const local_Conveyance_Mode_of_transport = ref([
             { label: "Public Transport", value: "Public Transport" },
-            { label: "Car", value: "4 - Wheeler" },
-            { label: "Bike", value: "2 - Wheeler" },
+            { label: "Car", value: "4-Wheeler" },
+            { label: "Bike", value: "2-Wheeler" },
         ]);
 
 
@@ -125,56 +123,6 @@ export const employee_reimbursment_service = defineStore(
                 data_reimbursements.value = response.data;
                 console.log(response.data);
                 loading_spinner.value = false;
-            });
-        };
-
-        const reimbursement_data = reactive(employee_reimbursement.value);
-        const post_reimbursment_data = (e) => {
-            submitted.value = true;
-            reimbursement_datas.value.push(employee_reimbursement);
-            reimbursements_dailog.value = false;
-            console.log(employee_reimbursement);
-            console.log("post reiburmentt");
-            console.log(employee_reimbursement.employee_reimbursement_attachment);
-            const data = JSON.stringify({
-                reimbursement_data,
-            });
-            console.log(data);
-
-            e.preventDefault();
-            let currentObj = this;
-
-            const config = {
-                headers: { 'content-type': 'multipart/form-data' }
-            }
-
-            let formData = new FormData();
-            formData.append('reimbursement_type_id', employee_reimbursement.type_id)
-            formData.append('file', employee_reimbursement.employee_reimbursement_attachment);
-            formData.append('claim_type', employee_reimbursement.claim_type);
-            formData.append('claim_amount', employee_reimbursement.claim_amount);
-            formData.append('eligible_amount', employee_reimbursement.eligible_amount);
-            formData.append('remarks', employee_reimbursement.reimbursment_remarks);
-            formData.append('date_of_dispatch', employee_reimbursement.date_of_dispatch);
-            formData.append('proof_of_delivery', employee_reimbursement.proof_of_delivery);
-
-            let url_all_reimbursements =
-                window.location.origin + "/saveReimbursementsData";
-            axios
-                .post(url_all_reimbursements, formData)
-                .then((response) => {
-                    currentObj.success = response.data.success;
-                })
-                .catch((response) => {
-                    currentObj.output = error;
-                    console.log(response);
-                });
-
-            toast.add({
-                severity: "success",
-                summary: "Saved",
-                detail: "Reimbursement drafted",
-                life: 3000,
             });
         };
 
@@ -210,9 +158,9 @@ export const employee_reimbursment_service = defineStore(
             formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
             formData.append('from', employee_local_conveyance.travel_from)
             formData.append('to', employee_local_conveyance.travel_to)
-            // formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
+            formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
             formData.append('vehicle_type', employee_local_conveyance.mode_of_transport)
-            formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled)
+            formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled);
 
 
             let url_all_local_convergance = '/reimbursements/saveReimbursementsData';
@@ -246,7 +194,9 @@ export const employee_reimbursment_service = defineStore(
 
         };
 
-        const amount_calculation = () => {
+        function amount_calculation(){
+            console.log("Calculating amount_calculation()");
+
             console.log(employee_local_conveyance.mode_of_transport);
             if (employee_local_conveyance.mode_of_transport == "4-Wheeler") {
                 console.log("Car");
@@ -261,9 +211,10 @@ export const employee_reimbursment_service = defineStore(
                     employee_local_conveyance.total_distance_travelled * 3.5;
                 console.log("Bike");
             } else {
+                console.log("No mode of transport found. Assigning NULL to local_convenyance_total_amount");
                 employee_local_conveyance.local_convenyance_total_amount = null;
             }
-        };
+        }
 
 
         const amountperKm = (data) => {
@@ -287,7 +238,7 @@ export const employee_reimbursment_service = defineStore(
         const selected_date = ref()
         async function generate_ajax() {
 
-            loading_spinner.value = true
+            // loading_spinner.value = true
 
             console.log(selected_date.value);
 
@@ -356,8 +307,7 @@ export const employee_reimbursment_service = defineStore(
 
             employee_reimbursement_attachment_upload,
             onclickSwitchToReimbursmentTab,
-            reimbursement_data,
-            post_reimbursment_data,
+
             reimbursement_datas,
             reimbursment_claim_types,
             onclickOpenReimbursmentDailog,

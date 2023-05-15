@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use App\Services\VmtLoginService;
+
 
 class AuthController extends Controller
 {
@@ -127,6 +129,11 @@ class AuthController extends Controller
         //         'message' => 'Password should not be empty.',
         //     ]);
         // }
+    }
+
+
+    public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){
+        return $serviceVmtLoginService->sendPasswordResetLink($request->user_code, $request->email);
     }
 
 }
