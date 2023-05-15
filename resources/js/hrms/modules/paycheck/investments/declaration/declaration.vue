@@ -9,7 +9,7 @@
                     deduction (if applicable) </div>
             </div>
             <div class="my-4 bg-gray-100 rounded-lg border-1">
-                <p style="font-weight: 400;" class="p-3 text-black fs-5">You have the option of either using a new regime(with no tax deducations), or
+                <p style="font-weight: 400;" class="p-3 text-black fs-6">You have the option of either using a new regime(with no tax deducations), or
                     using the same regime as FY 2019-20.To help you make an informed decision., we are displaying your tax
                     liability in both these regimes,and you can choose the option that you prefer.For us to accurately
                     calculated your tax liabilities , please ensure you full in all the information requested
@@ -31,7 +31,7 @@
                     <button @click="switch_regime_dailo = true" type="button"
                         class="btn btn-primary px-4 px-2">
                         Old Tax Regime</button>
-                    <span class="text-sm">Maximum benefit</span>
+                    <span class="text-sm text-green-500">Maximum benefit</span>
 
                 </div>
                 <div>
@@ -47,7 +47,7 @@
 
             </div>
             <div class="h-full p-3 my-4 bg-blue-50">
-                <p class="text-blue-700">
+                <p class="text-blue-700 fs-6">
                     Choosing old regime will give you an additional benefits of &#x20B9; 41,222.00 as compared to New
                     Regime.Calculations are based on the latest released payroll - Jul 2022
                 </p>
@@ -61,7 +61,8 @@
         v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
         <template #empty> No Data Found. </template>
         <template #loading> Loading customers data. Please wait. </template>
-        <Column field="particulars" header="Particulars"></Column>
+        <Column field="particulars" header="Particulars">
+        </Column>
         <Column field="new_regime" header="New Tax Regime"></Column>
         <Column field="old_regime" header="Old Tax Regime"></Column>
     </DataTable>
