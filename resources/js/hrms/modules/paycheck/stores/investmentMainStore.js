@@ -248,7 +248,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log("saving hra new rental  data.......");
         console.log(hra);
 
-        axios.post('/investments/saveEmpdetailsHra', hra).then(res => {
+        axios.post('/investments/saveSectionPopups', hra).then(res => {
             console.log(res.data);
             canShowLoading.value = false
             fetchHraNewRental()
@@ -351,6 +351,16 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const save80EE = () => {
         console.log("Saving Other exemption 80EE");
         console.log(other_exe_80EE);
+        axios.post('/investments/saveSectionPopups', hra).then(res => {
+            console.log(res.data);
+            canShowLoading.value = false
+            toast.add({
+                severity: "success",
+                summary: "Drafted",
+                detail: "New Rental Added",
+                life: 3000,
+            });
+        }).catch(e => console.log(e))
     }
 
     const save80EEA = () => {

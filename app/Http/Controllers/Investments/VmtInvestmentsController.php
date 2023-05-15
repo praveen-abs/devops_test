@@ -88,7 +88,7 @@ class VmtInvestmentsController extends Controller
 
     }
 
-    public function HRAsaveInvDetails(Request $request){
+    public function saveSectionPopups(Request $request){
 
         // dd($request->all());
         $json_decodeHra = json_encode($request->all());
