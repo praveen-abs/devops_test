@@ -44,7 +44,7 @@
                                 class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
                                 80EEB</button>
                         </div>
-                        <div v-else-if="slotProps.data.dec_amount">
+                        <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>
@@ -64,7 +64,8 @@
                             <Tag value="Completed" severity="success" />
                         </div>
                         <div v-else>
-                            <Tag value="Pending" severity="warning" />
+                            <!-- <Tag value="Pending" severity="warning" /> -->
+                            <span class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
                     </template>
                 </Column>

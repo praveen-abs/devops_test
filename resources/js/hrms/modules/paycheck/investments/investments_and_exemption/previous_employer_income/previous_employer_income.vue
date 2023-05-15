@@ -52,7 +52,8 @@
                             <Tag value="Completed" severity="success" />
                         </div>
                         <div v-else>
-                            <Tag value="Pending" severity="warning" />
+                            <!-- <Tag value="Pending" severity="warning" /> -->
+                            <span class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
                     </template>
                 </Column>
