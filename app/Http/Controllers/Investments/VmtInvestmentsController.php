@@ -8,6 +8,7 @@ use App\Models\VmtInvFEmpAssigned;
 use App\Services\VmtInvestmentsService;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\VmtEmpInvRentalDetails;
 
 
 
@@ -63,13 +64,62 @@ class VmtInvestmentsController extends Controller
             $fs_id = $singleFormData['fs_id'];
             $dec_amount = $singleFormData['declaration_amount'];
 
+
+
             $emp_formdata = new VmtInvEmpFormdata;
             $emp_formdata->f_emp_id = $query_assign->id;
             $emp_formdata->fs_id = $fs_id;
             $emp_formdata->dec_amount = $dec_amount;
+        //   $emp_formdata->json_popups_value = $sima ?? "none";
             $emp_formdata->save();
+
+
         }
+
+
+
     }
+
+    public function HRAsaveInvDetails(Request $request){
+
+        // dd($request->all());
+        $json_decodeHra = json_encode($request->all());
+
+        $form_id = "1";
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+       // $form_data = $request->formDataSource;
+
+        $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+
+        if ($query_femp->exists()) {
+            $query_assign = $query_femp->first();
+
+        } else {
+
+            $emp_assign_form = new VmtInvFEmpAssigned;
+            $emp_assign_form->user_id = $user_id;
+            $emp_assign_form->form_id = $form_id;
+            $emp_assign_form->save();
+            $query_assign = $emp_assign_form;
+        }
+
+             $Hra_save = new VmtInvEmpFormdata;
+             $Hra_save->f_emp_id = $query_assign->id;
+             $Hra_save->fs_id = '48';
+             $Hra_save->dec_amount ='none';
+             $Hra_save->json_popups_value = $json_decodeHra;
+             $Hra_save->save();
+
+
+
+
+     return 'saved';
+
+
+ }
+
 
 
     public function showInvestmentsFormMgmtPage(Request $request)
@@ -79,5 +129,7 @@ class VmtInvestmentsController extends Controller
         return view('investments_forms_mgmt');
 
     }
+
+
 
 }

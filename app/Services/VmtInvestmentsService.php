@@ -74,12 +74,17 @@ class VmtInvestmentsService
             //get the current active form id
             $query_form_details = VmtInvForm::where('form_name', $form_name)->first();
 
+            $user_id =  User::where('user_code', auth()->user()->user_code)->first()->id;
+
             //Get the query structure
 
             $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
                                         ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
                                         ->leftjoin('vmt_inv_emp_formdata','vmt_inv_emp_formdata.fs_id','=','vmt_inv_formsection.id')
+                                        ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
                                         ->where('vmt_inv_formsection.form_id', $query_form_details->id)
+                                       // ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
+                                      //  ->orWherNull('vmt_inv_emp_formdata.id')
                                         ->get(
                                             [
                                                 'vmt_inv_formsection.section_id',
@@ -91,11 +96,30 @@ class VmtInvestmentsService
                                                 'vmt_inv_formsection.id as fs_id',
                                                 'vmt_inv_formsection.form_id',
                                                 'vmt_inv_emp_formdata.dec_amount'
-                                                
+
                                             ]
                                         );
-                                        // dd($query_inv_form_template);
-                                        $query_inv_form_template = $query_inv_form_template->toArray();
+
+                                        $popupjson  = $query_inv_form_template->map(function ($item, $key) {
+
+                                            $inv_details['section'] = $item->section;
+                                            $inv_details['particular'] = $item->particular;
+                                            $inv_details['reference'] = $item->reference;
+                                            $inv_details['max_amount'] = $item->max_amount;
+                                            $inv_details['section_group'] = $item->section_group;
+                                            $inv_details['fs_id'] = $item->fs_id;
+                                            $inv_details['dec_amount'] = $item->dec_amount;
+                                            $inv_details['dec_amount'] = $item->dec_amount;
+                                            $inv_details['json_popups_value']= (json_decode($item->json_popups_value, true));
+
+                                            return  $inv_details;
+
+                                     });
+
+                                  //  dd($sima->toArray());
+
+                                       $query_inv_form_template = $popupjson->toArray();
+                                      //  $query_inv_form_template = $query_inv_form_template->toArray();
 
                                         // dd($query_inv_form_template[0]);
                                            $count = 0;
