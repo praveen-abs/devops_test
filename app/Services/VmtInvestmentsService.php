@@ -310,9 +310,9 @@ class VmtInvestmentsService
 
     public function fetchEmpRentalDetails($user_code,$fs_id){
 
-        $user_id =  User::where('user_code',$user_code)->first()->id;
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-        $rentalDetails =  VmtInvEmpFormdata::leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+        $rentalDetails =  VmtInvEmpFormdata::join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
                                              ->where('fs_id',$fs_id)
                                              ->where('vmt_inv_f_emp_assigned.user_id',$user_id)
                                              ->get();

@@ -79,8 +79,10 @@ import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 
 import { investmentMainStore } from '../stores/investmentMainStore'
+import { Service } from '../../Service/Service';
 
 const investmentStore = investmentMainStore()
+const service = Service()
 
 onMounted(async () => {
     await investmentStore.getInvestmentSource()

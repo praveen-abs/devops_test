@@ -4,6 +4,7 @@ import { investmentFormulaStore } from './investmentFormulaStore'
 import { useToast } from "primevue/usetoast";
 import { reactive, ref } from "vue";
 import { Service } from '../../Service/Service'
+import { data } from "autoprefixer";
 
 
 /*
@@ -22,6 +23,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Employee Service
 
     const service = Service()
+
+    const currentUSerCode = ref()
 
     // Notification Service
 
@@ -97,9 +100,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 housePropertySource.value = res.data.data.form_details["House Properties "]
                 reimbursmentSource.value = res.data.data.form_details["Reimbersument "]
                 otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
-                previousEmployeerIncomeSource.value = res.data.data.form_details["Reimbersument "]
+                previousEmployeerIncomeSource.value = res.data.data.form_details["Previous Employer Income"]
 
-                // console.log(res.data.data.form_details.HRA);
+                console.log(res.data.data.form_details["Previous Employer Income"]);
             }).catch(e => console.log(e))
             .finally(() => {
                 console.log("completed");
@@ -188,6 +191,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const current_data = ref()
 
     const hra = reactive({
+        user_code:'',
+        fs_id:'48',
         from_month: '',
         to_month: '',
         city: '',
@@ -202,11 +207,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailogAddNewRental = ref(false)
     const dailogEditNewRental = ref(false)
 
-    const fetchHraNewRental = () => {
+    const fetchHraNewRental = async() => {
         console.log("getting hra new rental  data.......");
         console.log(hraSource.fs_id);
-        axios.post('/investments/fetchEmpRentalDetails',{
-            user_code:"SA100",
+        await axios.post('/investments/fetchEmpRentalDetails',{
+            user_code:service.current_user_code,
             fs_id:"48"
         }).then(res => {
             console.log(res.data);
@@ -241,6 +246,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     }
 
     const saveHraNewRental = () => {
+       hra.user_code = service.current_user_code
        hra_data.splice(0,hra_data.length)
         canShowLoading.value = true
         dailogAddNewRental.value = false
@@ -248,7 +254,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log("saving hra new rental  data.......");
         console.log(hra);
 
-        axios.post('/investments/saveEmpdetailsHra', hra).then(res => {
+        axios.post('/investments/saveSectionPopups', hra).then(res => {
             console.log(res.data);
             canShowLoading.value = false
             fetchHraNewRental()
@@ -260,7 +266,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
         }).catch(e => console.log(e))
 
-    }
+  }
 
     const saveHRA = () => {
 
@@ -320,6 +326,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     })
 
     const other_exe_80EE = reactive({
+        user_code:'',
+        fs_id:'',
         loan_sanction_date: '',
         lender_type: '',
         property_value: '',
@@ -327,6 +335,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         interest_amount_paid: '',
     })
     const other_exe_80EEA = reactive({
+        user_code:'',
+        fs_id:'',
         loan_sanction_date: '',
         lender_type: '',
         property_value: '',
@@ -334,6 +344,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         interest_amount_paid: '',
     })
     const other_exe_80EEB = reactive({
+        user_code:'',
+        fs_id:'',
         loan_sanction_date: '',
         lender_type: '',
         property_value: '',
@@ -348,19 +360,82 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailog_80EEA = ref(false)
     const dailog_80EEB = ref(false)
 
+    const get80EESlotData = (data) =>{
+        dailog_80EE.value = true
+        console.log(data);
+        other_exe_80EE.user_code = service.current_user_code
+        other_exe_80EE.fs_id = data.fs_id
+
+    }
+    const get80EEASlotData = (data) =>{
+        dailog_80EEA.value = true
+        console.log(data);
+        other_exe_80EEA.user_code = service.current_user_code
+        other_exe_80EEA.fs_id = data.fs_id
+    }
+    const get80EEBSlotData = (data) =>{
+        dailog_80EEB.value = true
+        console.log(data);
+        other_exe_80EEB.user_code = service.current_user_code
+        other_exe_80EEB.fs_id = data.fs_id
+    }
+
+
     const save80EE = () => {
+        dailog_80EE.value = false
+        canShowLoading.value = true
         console.log("Saving Other exemption 80EE");
-        console.log(other_exe_80EE);
+        console.log(data);
+        axios.post('/investments/saveSectionPopups', other_exe_80EE).then(res => {
+            console.log(res.data);
+            toast.add({
+                severity: "success",
+                summary: "Drafted",
+                detail: "80EE Added",
+                life: 3000,
+            });
+        }).catch(e => console.log(e)).finally(()=>{
+            canShowLoading.value = false
+        })
     }
 
     const save80EEA = () => {
+        dailog_80EEA.value = false
+        canShowLoading.value = true
         console.log("Saving Other exemption 80EEA");
         console.log(other_exe_80EEA);
+        axios.post('/investments/saveSectionPopups', other_exe_80EEA).then(res => {
+            console.log(res.data);
+            canShowLoading.value = false
+            fetchHraNewRental()
+            toast.add({
+                severity: "success",
+                summary: "Drafted",
+                detail: "New Rental Added",
+                life: 3000,
+            });
+        }).catch(e => console.log(e)).finally(()=>{
+            canShowLoading.value = false
+        })
     }
 
     const save80EEB = () => {
+        dailog_80EEB.value = false
+        canShowLoading.value = true
         console.log("Saving Other exemption 80EEB");
         console.log(other_exe_80EEB);
+        axios.post('/investments/saveSectionPopups', other_exe_80EEB).then(res => {
+            console.log(res.data);
+            fetchHraNewRental()
+            toast.add({
+                severity: "success",
+                summary: "Drafted",
+                detail: "New Rental Added",
+                life: 3000,
+            });
+        }).catch(e => console.log(e)).finally(()=>{
+            canShowLoading.value = false
+        })
     }
 
     // Other Exemptions  Ends
@@ -484,11 +559,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     return {
 
         // varaible Declarations
-        investment_exemption_steps, canShowLoading, getInvestmentSource, saveFormData, getFormId, formatCurrency, editingRowSource, updatedRowSource,
+        investment_exemption_steps, currentUSerCode,canShowLoading, getInvestmentSource, saveFormData, getFormId, formatCurrency, editingRowSource, updatedRowSource,
 
         // Data Source
 
-        investmentMainSource, formDataSource, hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource, otherIncomeSource,
+        investmentMainSource, formDataSource, hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource,previousEmployeerIncomeSource, otherIncomeSource,
 
         // Tax Saving Investments
 
@@ -508,6 +583,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // Other exemptiom Begins
 
         other_Exe, dailog_80EE, dailog_80EEA, dailog_80EEB, other_exe_80EE, other_exe_80EEA, other_exe_80EEB, save80EE, save80EEA, save80EEB,
+        get80EESlotData,get80EEASlotData,get80EEBSlotData,
 
         // Other exemptiom Ends
 

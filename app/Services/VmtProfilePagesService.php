@@ -184,8 +184,6 @@ class VmtProfilePagesService
             ->where('users.id', $user_id)
             ->first();
 
-        // dd($response->id);
-
 
 
            $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
@@ -207,8 +205,7 @@ class VmtProfilePagesService
 
         if(!empty($response['getEmployeeDetails']['bank_id']))
         {
-
-            $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->first()->bank_name;
+            $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->bank_name;
 
         }
 
@@ -219,6 +216,7 @@ class VmtProfilePagesService
         //Remove ID from user table
         unset($response['id']);
 
+        //dd($response->toArray());
 
         return $response;
     }

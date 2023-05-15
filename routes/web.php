@@ -771,7 +771,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
     Route::post('/investments/saveEmpdetails',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'SaveInvDetails']);
 
-    Route::post('/investments/saveEmpdetailsHra',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'HRAsaveInvDetails']);
+    Route::post('/investments/saveSectionPopups',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
 
 
     //Emp Mail Notifications
