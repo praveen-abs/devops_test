@@ -1,32 +1,38 @@
 <template>
   <div>
-    <DataTable :value="leave_data" :rows="5" :rowsPerPageOptions="[5, 10, 25]" :paginator="true" responsiveLayout="scroll"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+    <DataTable :value="leaves" :rows="5" :rowsPerPageOptions="[5, 10, 25]" :paginator="true" responsiveLayout="scroll"
+      v-model:expandedRows="expandedRows" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+      @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
       paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
       v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
-      <Column field="employee_name" header="Employee Name">
-        <template #body="slotProps">
-          {{ slotProps.data.employee_name }}
-        </template>
-        <template #filter="{ filterModel, filterCallback }">
-          <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-            :showClear="true" />
-        </template>
-      </Column>
-      <Column v-for="leave_type of leave_types" :key="leave_type.id" :header="leave_type" field="array_leave_details">
-        <template #body="{ data }">
-          {{ data.array_leave_details[leave_type] }}
-        </template>
-      </Column>
+      <Column expander />
+      <Column field="user_code" header="Employee Code"></Column>
+      <Column field="name" header="Employee Name"></Column>
+      <Column field="location" header="Location"></Column>
+      <Column field="department" header="Department"></Column>
+      <Column field="total_leave_balance" header="Total Leave Balance"></Column>
+
+      <template #expansion="slotProps">
+        <div class="p-3">
+          <DataTable :value="slotProps.data.leave_balance_details">
+            <Column field="leave_type" header="Leave Type"></Column>
+            <Column field="opening_balance" header="Opening Balance "></Column>
+            <Column field="avalied" header="Availed Leave"></Column>
+          </DataTable>
+        </div>
+      </template>
     </DataTable>
-    <!-- <Dialog header="Header" v-model:visible="loading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+
+    <Dialog header="Header" v-model:visible="loading" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
           <template #header>
               <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
           </template>
           <template #footer>
               <h5 style="text-align: center;">Please wait...</h5>
           </template>
-      </Dialog> -->
+      </Dialog>
+
+
   </div>
 </template>
 <script setup>
@@ -37,21 +43,14 @@ import axios from "axios";
 const leaves = ref();
 const leave_types = ref();
 const leave_data = ref();
+
+
 const columns = ref();
 const url = ref();
 const loading = ref(true);
+const expandedRows = ref([]);
+const selectedAllEmployee = ref();
 
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  employee_name: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
-
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
-});
 
 onMounted(() => {
   let url_org_leave = window.location.origin + "/fetch-org-leaves-balance";
@@ -62,12 +61,10 @@ onMounted(() => {
   //console.log("Ref data : "+JSON.stringify(values().data));
 
   axios.get(url_org_leave).then((response) => {
-    leaves.value = Object.values(response.data);
-    leave_types.value = Object.values(response.data.leave_types);
-    leave_data.value = Object.values(response.data.employees);
-    loading.value = false;
-
-    // console.log("Response Data ORG Leave: "+JSON.stringify(Object.values(leave_data.value)));
+    console.log(response.data);
+    leaves.value = response.data;
+  }).finally(()=>{
+    loading.value = false
   });
 });
 </script>
@@ -254,7 +251,9 @@ onMounted(() => {
   content: "\e9a2";
   color: white;
 }
+
 .p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
   margin-left: 30px;
 }
 </style>
+-

@@ -138,7 +138,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
-                                <h6 class="my-2 text-left fw-bold">Team Leave Balance</h6>
+                            <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6 mb-4">
+                            <h6 class="text-gray-900 font-semibold text-lg modal-title">Team Leave Balance</h6>
+                        </div>
+                                <!-- <h6 class="my-2 text-left fw-bold">Team Leave Balance</h6> -->
                             </div>
                             @vite('resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js')
                             <div id="vjs_TeamLeaveTable_RemainingLeave"></div>
@@ -151,7 +154,11 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
                             <div class="card-body">
-                                <h6 class="mb-2">Team Leave history</h6>
+                                <!-- <h6 class="mb-2">Team Leave history</h6> -->
+                                <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6 mb-4" >
+                            <h6 class="text-gray-900 font-semibold text-lg modal-title">Team Leave history</h6>
+                        </div>
+                                
 
                                 <div class="table-responsive">
                                     <div id="team_leaveHistory" class="custom_gridJs"></div>
@@ -171,7 +178,10 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
                             <div class="card-body">
-                                <h6 class="mb-2">Org Leave Balance</h6>
+                                <!-- <h6 class="mb-">Org Leave Balance</h6> -->
+                                <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6 mb-4">
+                            <h6 class="text-gray-900 font-semibold text-lg modal-title">Org Leave Balance</h6>
+                        </div>
                                 @vite('resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js')
                                 <div id="vjs_orgLeaveTable_RemainingLeave"></div>
                             </div>
@@ -182,7 +192,10 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
                             <div class="card-body">
-                                <h6 class="mb-2">Org Leave history</h6>
+                                <!-- <h6 class="mb-2">Org Leave history</h6> -->
+                                <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6 mb-4">
+                            <h6 class="text-gray-900 font-semibold text-lg modal-title">Org Leave history</h6>
+                        </div>
                                 @vite('resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js')
                                 <div id="vjs_orgLeaveHistoryTable"></div>
                             </div>
