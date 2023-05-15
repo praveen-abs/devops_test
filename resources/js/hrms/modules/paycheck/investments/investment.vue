@@ -1,5 +1,5 @@
 <template>
-  <Toast />
+    <Toast />
     <div class=" mt-30 investments-wrapper">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
@@ -20,8 +20,8 @@
                             Form 12 BB</a>
                     </li>
                     <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href="" data-bs-target="#tax_filling"
-                            role="tab" aria-controls="pills-home" aria-selected="true">
+                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href=""
+                            data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
                             Tax Filling</a>
                     </li>
 
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade " id="exemptions" role="tabpanel">
-                  <InvestmentAndExemption />
+                    <InvestmentAndExemption />
 
                 </div>
                 <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -75,7 +75,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import Declaration from  './declaration/declaration.vue'
+import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 
 import { investmentMainStore } from '../stores/investmentMainStore'
@@ -167,4 +167,6 @@ dialog>header {
 Dialog {
     color: #002f56;
 }
+
+
 </style>

@@ -20,7 +20,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
         console.log("total income :" + total_income);
 
-        let regime = "old"
+        let regime = "new"
 
         let age = 65
 
@@ -133,29 +133,29 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
     // Let Out Property and Deemed let out Property
 
-    const  maintenance_cal = (lender_type,rent_rec,munic_tax) =>{
+    const maintenance_cal = (lender_type, rent_rec, munic_tax) => {
 
-        if(lender_type == 'Financial Institution' || lender_type == 'Others' ){
+        if (lender_type == 'Financial Institution' || lender_type == 'Others') {
 
-            let main =( rent_rec - munic_tax ) * 30/100 
+            let main = (rent_rec - munic_tax) * 30 / 100
 
             return main
 
-        }else{
+        } else {
             console.log("Lender type is not exists");
         }
     }
 
-    const net_value_cal = (rent_rec,munic_tax,main) =>{
+    const net_value_cal = (rent_rec, munic_tax, main) => {
 
         let net_value = rent_rec - munic_tax - main
 
-        return  net_value;
+        return net_value;
     }
 
-    const income_loss_cal = (interest,net) =>{
-       let income_loss = net - interest 
-       return income_loss;
+    const income_loss_cal = (interest, net) => {
+        let income_loss = net - interest
+        return income_loss;
     }
 
 
@@ -164,7 +164,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
     return {
 
         // varaible Declarations
-        taxCalculation,maintenance_cal,net_value_cal,income_loss_cal
+        taxCalculation, maintenance_cal, net_value_cal, income_loss_cal
 
     };
 });

@@ -117,3 +117,10 @@ const activetab = ref(investmentStore.investment_exemption_steps);
 // })
 
 </script>
+
+<style>
+
+.dec_amt {
+    font-weight: 501;
+}
+</style>
