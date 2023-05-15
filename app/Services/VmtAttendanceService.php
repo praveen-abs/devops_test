@@ -1946,7 +1946,6 @@ class VmtAttendanceService{
         foreach( $all_active_user as $single_user){
                 $total_leave_balance= 0;
                 $overall_leave_balance = calculateLeaveDetails( $single_user->id,$start_date,$end_date);
-               // dd(  $overall_leave_balance );
                 $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails( $single_user->id,$start_date,$end_date, $month);
                 $each_user['user_code']= $single_user->user_code;
                 $each_user['name'] = $single_user->name;
