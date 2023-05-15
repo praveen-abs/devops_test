@@ -80,6 +80,14 @@ class VmtInvestmentsController extends Controller
 
     }
 
+    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+       
+        $user_code = $request->user_code;
+        $fs_id = $request->fs_id;
+        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
+
+    }
+
     public function HRAsaveInvDetails(Request $request){
 
         // dd($request->all());
@@ -129,6 +137,8 @@ class VmtInvestmentsController extends Controller
         return view('investments_forms_mgmt');
 
     }
+
+   
 
 
 
