@@ -3,14 +3,10 @@ import {ref,reactive} from  'vue';
 import {defineStore} from "pinia";
 import {Service} from '../Service/Service'
 
-export const UseEmployeeDocumentManagerSerive = defineStore("EmployeeDocumentManagerSerive", () => {
-
-
-
-
+export const UseEmployeeDocumentManagerService = defineStore("EmployeeDocumentManagerService", () => {
     // variable
     const getEmployeeDetails = Service();
-    const loading = ref(true);
+    const loading = ref(false);
 
     const getEmployeeDoc = ref([]);
     const uploadDocs = ref();
@@ -35,7 +31,7 @@ const fetch_EmployeeDocument = async() => {
     await getEmployeeDetails.getCurrentUserCode().then(code=>{
       user_code = code.data
     })
-    // loading.value = true ;
+    loading.value = true ;
     await axios.post('/employee-documents-details', {
         user_code:  user_code
 
@@ -44,7 +40,7 @@ const fetch_EmployeeDocument = async() => {
         getEmployeeDoc.value = res.data.data
         console.log("employee document : " , getEmployeeDoc.value);
     }).finally(() => {
-        // loading.value = false;
+        loading.value = false;
         console.log("completed");
     })
 }

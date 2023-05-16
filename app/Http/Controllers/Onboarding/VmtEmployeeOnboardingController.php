@@ -807,7 +807,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict',
+                'email' => 'nullable|email:strict'|'unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',

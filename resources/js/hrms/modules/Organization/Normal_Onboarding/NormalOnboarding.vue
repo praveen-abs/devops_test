@@ -3588,13 +3588,14 @@ const ValidateAccountNo =()=> {
     }
 
 
-
+const actual_gross = ref()
 
 // compensatory Logic
 
 const compensatory_calculation = () => {
   let basic = (employee_onboarding.cic * 50) / 100;
-  console.log("Basic :" + basic);
+  
+  console.log("Basic :" + Math.floor(basic));
 
   employee_onboarding.basic = Math.floor(basic);
 
@@ -3607,8 +3608,15 @@ const compensatory_calculation = () => {
 
   console.log(employee_onboarding.special_allowance);
 
+  actual_gross.value = basic + hra +  employee_onboarding.special_allowance;
+
+  console.log("Actual gross" +  actual_gross.value);
+
   let gross = basic + hra + employee_onboarding.special_allowance;
+  
   employee_onboarding.gross = Math.floor(gross);
+
+  console.log("Gross",Math.floor(gross));
 
   epf_esic_calculation();
 
@@ -3838,6 +3846,7 @@ const graduity = () => {
 const epf_esic_calculation = () => {
 
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra;
+  let gross = actual_gross.value
 
   console.log("EpfCalculation:" + EpfCalculation);
 
@@ -3850,12 +3859,13 @@ const epf_esic_calculation = () => {
     employee_onboarding.epf_employer_contribution = epfConstant;
   }
 
-  if (employee_onboarding.gross <= 21000) {
+  if (gross <= 21000) {
     employee_onboarding.esic_employer_contribution = Math.floor( (employee_onboarding.gross * 3.25) / 100
     );
     employee_onboarding.esic_employee = Math.floor( (employee_onboarding.gross * 0.75) / 100
     );
-  } else if (employee_onboarding.gross > 21000) {
+  } else if (gross > 21000) {
+    console.log(gross);
     let EsicConstant = 0;
     employee_onboarding.esic_employee = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
@@ -4178,7 +4188,7 @@ function populateQuickOnboardData(emp_data){
       console.log( emp_data.onboard_type + "Onboarding");
 
         family_details_disable.value = true
-        compen_disable.value = false
+        // compen_disable.value = false
         is_emp_code_quick.value = true
         is_doj_quick.value = true
         is_emp_name_quick.value = true
