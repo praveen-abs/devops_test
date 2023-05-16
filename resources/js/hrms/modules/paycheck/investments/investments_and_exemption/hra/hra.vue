@@ -51,11 +51,12 @@
                         </div>
                         <div v-else>
                             <!-- <Tag value="Pending" severity="warning" /> -->
-                            <span class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" header="Action" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" >
+                <Column :rowEditor="true" header="Action" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
                 </Column>
 
 
@@ -76,7 +77,7 @@
         <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
             <div class="mb-3 table-responsive">
 
-
+                <!-- {{ investmentStore.hra_data }} -->
                 <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.hra_data"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -84,15 +85,15 @@
                     responsiveLayout="scroll">
 
                     <Column header="Landlord Name" field="landlord_name" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+                        <template #body="slotProps">
+                            {{ slotProps.data.landlord_name }}
+                        </template>
                     </Column>
 
                     <Column field="landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+                        <template #body="slotProps">
+                            {{ "&#x20B9;" + slotProps.data.landlord_PAN }}
+                        </template>
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
@@ -113,13 +114,14 @@
                         </template>
                     </Column>
                     <Column field="total_rent_paid" header="Total Rent" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                        <template #body="slotProps">
+                            {{ slotProps.data.total_rent_paid }}
+                        </template>
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl" @click="investmentStore.editHraNewRental(slotProps.data)">
+                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
+                                @click="investmentStore.editHraNewRental(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-10 h-8">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -128,7 +130,7 @@
 
                             </button>
                             <button class="p-2 bg-red-200 border-red-500 rounded-xl"
-                                @click="investmentStore.editHraNewRental(slotProps.data)">
+                                @click="investmentStore.deleteRentalDetails(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-10 h-8 font-bold">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -233,6 +235,7 @@
                 @click="investmentStore.saveHraNewRental">Save</button>
         </div>
     </Dialog>
+    <Button @click="investmentStore.deleteRentalDetails()" icon="pi pi-times" label="Delete"></Button>
 </template>
 
 
@@ -247,6 +250,7 @@ const test = () => {
     alert("test")
 }
 
+
 const op = ref();
 const toggle = (event) => {
     op.value.toggle(event);
@@ -255,9 +259,9 @@ const toggle = (event) => {
 const investmentStore = investmentMainStore()
 
 onMounted(async () => {
-   setTimeout(async () => {
-    await investmentStore.fetchHraNewRental()
-   }, 1000);
+    setTimeout(async () => {
+        await investmentStore.fetchHraNewRental()
+    }, 1000);
 })
 
 

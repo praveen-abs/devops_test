@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { investmentFormulaStore } from './investmentFormulaStore'
 import { useToast } from "primevue/usetoast";
+import { useConfirm } from "primevue/useconfirm";
 import { reactive, ref } from "vue";
 import { Service } from '../../Service/Service'
 import { data } from "autoprefixer";
@@ -29,6 +30,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Notification Service
 
     const toast = useToast();
+
+    // Confirmation Service
+
+    const confirm = useConfirm();
 
     // Steps for Investment and exemption tab's  Next and Previous Button
 
@@ -102,7 +107,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
                 previousEmployeerIncomeSource.value = res.data.data.form_details["Previous Employer Income"]
 
-                console.log(res.data.data.form_details["Previous Employer Income"]);
+                // console.log(res.data.data.form_details["Previous Employer Income"]);
             }).catch(e => console.log(e))
             .finally(() => {
                 console.log("completed");
@@ -115,7 +120,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // Selected Row Data 
         console.log(amount);
         // Getting Form ID
-        getFormId.value = amount.form_id
+        // getFormId.value = amount.form_id
+        getFormId.value = 1
         var data = {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
@@ -158,6 +164,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const saveFormData = () => {
         console.log(formDataSource);
         canShowLoading.value = true
+        console.log("code:"+service.current_user_code);
+        console.log("Form Id:"+getFormId.value);
         let url = `/investments/saveEmpdetails`
         axios.post(url, {
             user_code: service.current_user_code,
@@ -214,10 +222,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             user_code:service.current_user_code,
             fs_id:"48"
         }).then(res => {
-            console.log(res.data);
-            res.data.forEach((rental,index) => {
+           Object.values(res.data).forEach((rental,index) => {
+                // console.log(rental);
                 let decodedSource =JSON.parse(rental['json_popups_value']);
                 hra_data.push(decodedSource);
+                hra_data.push(rental.id);
+                
             });
             
         }).catch(e => console.log(e)).finally(() => {
@@ -278,6 +288,24 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             life: 3000,
         });
     }
+
+    const deleteRentalDetails = (currentRowData) => {
+        console.log(currentRowData);
+        confirm.require({
+            message: 'Do you want to delete this record?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+            acceptClass: 'p-button-danger',
+            accept: () => {
+                axios.post('/investments/deleteEmpRentalDetails',{
+                    current_table_id
+                })
+            },
+            reject: () => {
+            }
+        });
+    };
+    
 
     // HRA End
 
@@ -571,7 +599,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         // hra begins
 
-        hra_data, hra, current_data, dailogAddNewRental, dailogEditNewRental, editHraNewRental, fetchHraNewRental, saveHraNewRental, saveHRA,
+        hra_data, hra, current_data, dailogAddNewRental, dailogEditNewRental, editHraNewRental, fetchHraNewRental, saveHraNewRental, saveHRA,deleteRentalDetails,
 
         // hra ends
 

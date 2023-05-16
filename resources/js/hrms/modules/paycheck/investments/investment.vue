@@ -1,5 +1,6 @@
 <template>
     <Toast />
+    <ConfirmDialog></ConfirmDialog>
     <div class=" mt-30 investments-wrapper">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
@@ -25,7 +26,6 @@
                             Tax Filling</a>
                     </li>
 
-
                 </ul>
             </div>
         </div>
@@ -36,18 +36,17 @@
                         aria-labelledby="pills-home-tab">
                         <Declaration />
                     </div>
-                </div>
-                <div class="tab-pane fade " id="exemptions" role="tabpanel">
-                    <InvestmentAndExemption />
 
-                </div>
-                <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="tab-pane fade " id="exemptions" role="tabpanel">
+                        <InvestmentAndExemption />
 
+                    </div>
+                    <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
 
+                    </div>
+                    <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                </div>
-                <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,6 +168,4 @@ dialog>header {
 Dialog {
     color: #002f56;
 }
-
-
 </style>

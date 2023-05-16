@@ -110,12 +110,12 @@ const onRowEditSave = (event) => {
     let { newData, index } = event;
     investmentStore.section80ccSource[index] = newData;
     investmentStore.updatedRowSource = newData;
-    // investmentStore.getFormId = newData.form_id
-    // var data = {
-    //     fs_id: newData.fs_id,
-    //     declaration_amount: newData.dec_amount,
-    // }
-    // investmentStore.formDataSource.push(data)
+    investmentStore.getFormId = 1
+    var data = {
+        fs_id: newData.fs_id,
+        declaration_amount: newData.dec_amount,
+    }
+    investmentStore.formDataSource.push(data)
     console.log(newData);
 };
 
