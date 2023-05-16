@@ -78,4 +78,32 @@ class VmtEmployeeDocumentsService {
         }
 
     }
+
+    /*
+        Get employee document settings from vmt_documents
+        We will set whether a doc is MANDATORY or not, etc
+
+
+    */
+    public function getEmployeeDocumentsSettings(){
+
+        try{
+            $response = VmtDocuments::all();
+
+            return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" => $response,
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching from vmt_documents",
+                "data" => $e,
+            ]);
+        }
+
+    }
 }
