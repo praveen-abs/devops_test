@@ -29,10 +29,7 @@
                                     Payroll Summary
 
                                 </h6>
-                                <!-- {{-- <button class="btn btn-border-orange">View Payslip </button> --}} -->
                             </div>
-
-
                             <ul class="personal-info">
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Last Processed</div>
@@ -108,9 +105,6 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>IFSC Code</label>
-                                                <!-- <input name="bank_ifsc" class="form-control onboard-form"
-                                                                                value="" type="text"
-                                                                                pattern-data="ifsc" required> -->
                                                 <InputText type="text" name="bank_ifsc_" class="form-controls"
                                                     v-model="bank_information.ifsc_code" />
                                             </div>
@@ -118,9 +112,6 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>PAN No</label>
-                                                <!-- <input name="pan_no" class="form-control onboard-form"
-                                                                                value="" type="text"
-                                                                                pattern-data="pan" required> -->
                                                 <InputText type="text" name="pan_nos" class="form-controls"
                                                     v-model="bank_information.pan_no" />
 
@@ -130,21 +121,17 @@
                                         <div class="col-md-6 ">
                                             <div class="floating">
                                                 <label for="" class="float-label mb-2">Bank Passbook or Cheque Leaf</label>
-                                                <!-- <template> -->
                                                 <div class=" flex justify-content-start">
                                                     <Toast />
-                                                    <label class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary " style="width:135px ; "
-                                                       id=""
-                                                        for="uploadPassBook" >
-                                                        <!--     data-bs-toggle="modal"  data-bs-target="#edit_profileImg" -->
-                                                        <i class="pi pi-arrow-circle-up fs-5 mr-3"></i> <h1 class="text-light">Upload file</h1></label>
-                                                    <input type="file" name="" id="uploadPassBook"  hidden
+                                                    <label
+                                                        class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                                        style="width:135px ; " id="" for="uploadPassBook">
+                                                        <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
+                                                        <h1 class="text-light">Upload file</h1>
+                                                    </label>
+                                                    <input type="file" name="" id="uploadPassBook" hidden
                                                         @change="updateCheckBookPhoto($event)" />
-
                                                 </div>
-                                                <!-- </template> -->
-
-
                                             </div>
                                         </div>
 
@@ -158,29 +145,21 @@
                                 </div>
                             </div>
                         </Dialog>
-
-
-
                         <div>
                             <ul class="personal-info">
                                 <li>
                                     <div class="title">Bank Name</div>
                                     <div class="text">
-                                        <!-- {{ bank_information.bank_id }} -->
-                                        <!-- {{ bank_info.bank_id }} -->
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_details.bank_name }}
-
                                     </div>
                                 </li>
                                 <li>
                                     <div class="title">Bank Account No.</div>
                                     <div class="text">
-                                        <!-- {{ bank_info.pan_no }} -->
 
                                         {{
                                             _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number
                                         }}
-
                                     </div>
                                 </li>
                                 <li>
@@ -289,7 +268,7 @@
 
                                     <div class="col-md-6 ">
                                         <div class="floating">
-                                            <label for="" class="float-label">check book</label>
+                                            <!-- <label for="" class="float-label">check book</label> -->
 
                                             <span class="error" id="error_esic_number"></span>
                                         </div>
@@ -311,9 +290,6 @@
 
 
                         </Dialog>
-
-                        <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details[0] }} -->
-
                         <ul v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details" class="personal-info">
                             <li>
                                 <div class="title">PF Applicable</div>
@@ -342,8 +318,6 @@
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
                                     {{ esic_applicable }}
-                                    <!-- {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable  }} -->
-
                                 </div>
                             </li>
                             <li>
@@ -355,9 +329,6 @@
                                 </div>
                             </li>
                         </ul>
-
-
-
                     </div>
                 </div>
             </div>
@@ -371,8 +342,6 @@
         </div>
 
     </div>
-
-    <!-- {{ statutory }} -->
 </template>
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue';
@@ -388,19 +357,19 @@ const toast = useToast();
 
 
 let form = new FormData();
-    form.append("user_code", Service.current_user_code);
-    form.append("file_object", profilePagesStore.value);
+form.append("user_code", Service.current_user_code);
+form.append("file_object", profilePagesStore.value);
 
-    let url = "/profile-pages/updateProfilePicture";
-    axios
-        .post(url, form)
-        .then((res) => {
-            // console.log(res.data);
-        })
-        .finally(() => {
-            console.log("Photo Sent");
-            // updateCheckBookPhoto();
-        });
+let url = "/profile-pages/updateProfilePicture";
+axios
+    .post(url, form)
+    .then((res) => {
+        // console.log(res.data);
+    })
+    .finally(() => {
+        console.log("Photo Sent");
+        // updateCheckBookPhoto();
+    });
 
 
 
@@ -435,7 +404,7 @@ const bank_information = reactive({
     bank_ac_no: '',
     ifsc_code: '',
     pan_no: '',
-    PassBook:''
+    PassBook: ''
 })
 const updateCheckBookPhoto = (e) => {
     // Check if file is selected
@@ -444,7 +413,7 @@ const updateCheckBookPhoto = (e) => {
         bank_information.PassBook = e.target.files[0];
         // Get file size
         // Print to console
-        console.log(bank_information.PassBook );
+        console.log(bank_information.PassBook);
 
 
     }
@@ -479,12 +448,12 @@ const saveBankinfoDetails = () => {
 
     let form = new FormData()
 
-    form.append('user_code',_instance_profilePagesStore.employeeDetails.user_code)
-    form.append('bank_id',bank_information.bank_id.id)
-    form.append('account_no',bank_information.bank_ac_no)
-    form.append('bank_ifsc',bank_information.ifsc_code)
+    form.append('user_code', _instance_profilePagesStore.employeeDetails.user_code)
+    form.append('bank_id', bank_information.bank_id.id)
+    form.append('account_no', bank_information.bank_ac_no)
+    form.append('bank_ifsc', bank_information.ifsc_code)
     form.append('pan_no', bank_information.pan_no)
-    form.append('PassBook',bank_information.PassBook)
+    form.append('PassBook', bank_information.PassBook)
 
     // {
     //     // user_code: _instance_profilePagesStore.employeeDetails.user_code,
@@ -495,7 +464,7 @@ const saveBankinfoDetails = () => {
 
     // }
 
-    axios.post(url,form
+    axios.post(url, form
     )
         .then((res) => {
 
