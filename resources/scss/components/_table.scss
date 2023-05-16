@@ -134,3 +134,9 @@ background-color: $primary-blue !important;
     display: inline-flex;
     font-size: 9px;
   }
+
+  .p-datatable-scrollable .p-datatable-thead {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+  }

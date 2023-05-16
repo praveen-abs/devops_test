@@ -109,6 +109,8 @@ class VmtInvestmentsController extends Controller
         //  dd($request->all());
         $json_decodeHra = json_encode($request->all());
 
+        // dd($json_decodeHra);
+
         $form_id = "1";
 
         $fs_id = $request->fs_id;

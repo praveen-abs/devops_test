@@ -116,13 +116,9 @@ const onRowEditSave = (event) => {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
     }
-    if (event.dec_amt) {
-        // Append Data
+
         investmentStore.formDataSource.push(data)
-    } else {
-        console.log("Declaration Amount Null");
-    }
-    console.log(newData);
+     console.log(newData);
 };
 
 

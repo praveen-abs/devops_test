@@ -222,15 +222,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             user_code: service.current_user_code,
             fs_id: "48"
         }).then(res => {
-            console.log(res.data);
-            hra_data.value = res.data
-            //    Object.values(res.data).forEach((rental,index) => {
-            //         console.log(rental);
-            //         // let decodedSource =JSON.parse(rental['json_popups_value']);
-            //         hra_data.value = rental
-            //         // hra_data.push(rental.id);
-
-            //     });
+            console.log(Object.values(res.data));
+            hra_data.value = Object.values(res.data)
 
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
@@ -239,8 +232,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     }
 
     const editHraNewRental = (currentRowData) => {
-
-
 
         console.log("editing Hra");
         console.log(currentRowData);
@@ -280,16 +271,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     }
 
-    const saveHRA = () => {
-
-
-        toast.add({
-            severity: "success",
-            summary: "Saved",
-            detail: "House Rented Allowance Added",
-            life: 3000,
-        });
-    }
 
     const deleteRentalDetails = (currentRowData) => {
         console.log(currentRowData);
@@ -305,9 +286,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 }).finally(() => {
                     canShowLoading.value = false
                     toast.add({
-                        severity: "success",
-                        summary: "Saved",
-                        detail: "House Rented Allowance Added",
+                        severity: "error",
+                        summary: "Deleted",
+                        detail: "House Rented Allowance Deleted",
                         life: 3000,
                     });
                     fetchHraNewRental()
@@ -447,7 +428,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         axios.post('/investments/saveSectionPopups', other_exe_80EEA).then(res => {
             console.log(res.data);
             canShowLoading.value = false
-            fetchHraNewRental()
             toast.add({
                 severity: "success",
                 summary: "Drafted",
@@ -466,7 +446,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(other_exe_80EEB);
         axios.post('/investments/saveSectionPopups', other_exe_80EEB).then(res => {
             console.log(res.data);
-            fetchHraNewRental()
             toast.add({
                 severity: "success",
                 summary: "Drafted",
@@ -611,7 +590,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         // hra begins
 
-        hra_data, hra, current_data, dailogAddNewRental, dailogEditNewRental, editHraNewRental, fetchHraNewRental, saveHraNewRental, saveHRA, deleteRentalDetails,
+        hra_data, hra, current_data, dailogAddNewRental, dailogEditNewRental, editHraNewRental, fetchHraNewRental, saveHraNewRental, deleteRentalDetails,
 
         // hra ends
 

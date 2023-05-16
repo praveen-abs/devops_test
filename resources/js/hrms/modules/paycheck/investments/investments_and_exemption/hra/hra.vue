@@ -86,13 +86,13 @@
 
                     <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem">
                         <!-- <template #body="slotProps">
-                            {{ slotProps.data.landlord_name }}
+                            {{ slotProps.data.json_popups_value.landlord_name }}
                         </template> -->
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
-                            {{ slotProps.data.landlord_PAN }}
+                            {{ slotProps.data.json_popups_value.landlord_PAN }}
                         </template> -->
                     </Column>
 
@@ -110,12 +110,12 @@
 
                     <Column field="json_popups_value.city" header="City" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
-                            {{ slotProps.data.city }}
+                            {{ slotProps.data.json_popups_value.city }}
                         </template> -->
                     </Column>
                     <Column field="json_popups_value.total_rent_paid" header="Total Rent" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
-                            {{ slotProps.data.total_rent_paid }}
+                            {{ slotProps.data.json_popups_value.total_rent_paid }}
                         </template> -->
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">

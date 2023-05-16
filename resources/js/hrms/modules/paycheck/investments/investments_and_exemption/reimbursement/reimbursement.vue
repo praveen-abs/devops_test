@@ -45,14 +45,14 @@
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>
-                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                            <InputNumber class="w-6 text-lg font-semibold" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
                         </div>
                     </template>
                     <template #editor="{ data, field }">
                         <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />
+                            class="w-6 text-lg font-semibold" />
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
@@ -89,6 +89,22 @@ import { ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 const investmentStore = investmentMainStore()
+
+const editingRows = ref([]);
+
+const onRowEditSave = (event) => {
+    let { newData, index } = event;
+    investmentStore.reimbursmentSource[index] = newData;
+    investmentStore.updatedRowSource = newData;
+    investmentStore.getFormId = 1
+    var data = {
+        fs_id: newData.fs_id,
+        declaration_amount: newData.dec_amount,
+    }
+
+        investmentStore.formDataSource.push(data)
+     console.log(newData);
+};
 
 
 </script>
