@@ -31,6 +31,9 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use App\Models\VmtOrgTimePeriod;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class VmtAttendanceService{
 
@@ -1936,6 +1939,88 @@ class VmtAttendanceService{
 
 
 
+    }
+
+
+    public function getLeaveRequestDetails()
+    {
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+        $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
+
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+        $start_date =  $time_periods_of_year_query->start_date;
+
+        $end_date   = $time_periods_of_year_query->end_date;
+
+
+        if(Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+        {
+            $employeeLeaves_Org = '';
+
+            $employeeLeaves_Org = VmtEmployeeLeaves::all();
+
+            foreach ($employeeLeaves_Org as $singleItem) {
+
+               //Map emp names
+               if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+
+               }
+
+               //Map reviewer names
+               if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+               }
+
+               //Map leave types
+                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+            }
+
+            return $employeeLeaves_Org;
+        }
+        else
+        if(Str::contains(currentLoggedInUserRole(), ['Manager']))
+        {
+            //Get the list of employees for the given Manager
+            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', auth::user()->user_code)->get('user_id');
+
+            //use wherein and fetch the relevant records
+            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)->get();
+
+
+            //dd($map_allEmployees[1]["name"]);
+            foreach ($employeeLeaves_team as $singleItem) {
+
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+                }
+
+                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+                }
+
+                //Map leave types
+                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+
+            }
+
+
+            //dd($employeeLeaves_team);
+            return $employeeLeaves_team;
+        }
+        else
+        if(Str::contains(currentLoggedInUserRole(), ['Employee']))
+         {
+
+            return VmtEmployeeLeaves::where('user_id', auth::user()->id)
+                                    ->whereBetween('start_date',[$start_date,$end_date])->get();
+        }
     }
 }
 

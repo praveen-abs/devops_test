@@ -26,9 +26,9 @@ import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
 import { createPinia } from "pinia";
 
-import EmployeePayslips from './EmployeePayslips.vue';
+import DocumentsSettings from './DocumentsSettings.vue';
 
-const app = createApp(EmployeePayslips);
+const app = createApp(DocumentsSettings);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -53,5 +53,5 @@ app.component('ProgressSpinner',ProgressSpinner);
 app.component('InputText', InputText)
 app.component('Calendar', Calendar)
 
-app.mount("#vjs_manage_payslips");
+app.mount("#DocumentsSettings");
 

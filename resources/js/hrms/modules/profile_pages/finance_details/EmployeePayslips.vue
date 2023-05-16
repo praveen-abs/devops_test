@@ -61,7 +61,8 @@ import { useEmployeePayslipStore } from './EmployeePayslipsService';
 const employeePayslipStore = useEmployeePayslipStore()
 
 onMounted(async () => {
-    await employeePayslipStore.getEmployeeAllPayslipList('174');
+    console.log("EmployeePayslips,vue loaded");
+    await employeePayslipStore.getEmployeeAllPayslipList();
 
 });
 
