@@ -15,7 +15,7 @@
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class="mx-4 nav-item ember-view" role="presentation">
+                    <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                             Form 12 BB</a>
@@ -24,7 +24,7 @@
                         <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href=""
                             data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
                             Tax Filling</a>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div>
@@ -41,21 +41,21 @@
                         <InvestmentAndExemption />
 
                     </div>
-                    <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <!-- <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
 
                     </div>
                     <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade " id="form_12bb" role="tabpanel">
+        <!-- <div class="tab-pane fade " id="form_12bb" role="tabpanel">
 
         </div>
         <div class="tab-pane fade " id="tax_filling" role="tabpanel">
 
-        </div>
+        </div> -->
     </div>
 
     <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"

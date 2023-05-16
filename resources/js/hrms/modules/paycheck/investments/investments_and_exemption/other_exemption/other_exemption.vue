@@ -60,8 +60,9 @@
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.status">
-                            <Tag value="Completed" severity="success" />
+                        <div v-if="slotProps.data.dec_amount">
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                         </div>
                         <div v-else>
                             <!-- <Tag value="Pending" severity="warning" /> -->
@@ -330,8 +331,8 @@ const onRowEditSave = (event) => {
         declaration_amount: newData.dec_amount,
     }
 
-        investmentStore.formDataSource.push(data)
-     console.log(newData);
+    investmentStore.formDataSource.push(data)
+    console.log(newData);
 };
 
 const vechicle_model_options = ref()
