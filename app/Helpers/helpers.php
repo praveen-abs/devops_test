@@ -102,6 +102,16 @@ function sessionGetSelectedClientName()
     else
         return "";
 }
+function sessionGetSelected_abs_clinetcode()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->abs_client_code;
+    else
+        return "";
+}
 
 function getClientName($user_id)
 {
