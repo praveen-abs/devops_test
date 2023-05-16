@@ -129,7 +129,7 @@
 
                                         <div class="col-md-6 ">
                                             <div class="floating">
-                                                <label for="" class="float-label mb-2">Check book</label>
+                                                <label for="" class="float-label mb-2">Bank Passbook or Cheque Leaf</label>
                                                 <!-- <template> -->
                                                 <div class=" flex justify-content-start">
                                                     <Toast />
