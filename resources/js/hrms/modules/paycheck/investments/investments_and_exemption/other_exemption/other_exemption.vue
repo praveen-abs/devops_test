@@ -2,7 +2,7 @@
     <div>
         <div class="table-responsive">
 
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="10"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
                 :value="investmentStore.otherExemptionSource" @row-edit-save="onRowEditSave"
                 tableClass="editable-cells-table" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"

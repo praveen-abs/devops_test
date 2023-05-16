@@ -21,8 +21,8 @@
                     </template>
                 </Column>
 
-                <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                </Column>
+                <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
+                </Column> -->
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">

@@ -48,10 +48,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const taxSavingInvestments = reactive({
         max_limit: '',
         declared_amt: '',
-        status: '',
+        status: 'Not Submited',
         Date_of_submission: '',
 
     })
+
+
 
     /* Investment and Exemptiom
 
@@ -107,10 +109,23 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
                 previousEmployeerIncomeSource.value = res.data.data.form_details["Previous Employer Income"]
 
+
                 // console.log(res.data.data.form_details["Previous Employer Income"]);
             }).catch(e => console.log(e))
             .finally(() => {
+                var declared_amt = 0;
+                var max_limit = 0;
                 console.log("completed");
+                otherExemptionSource.value.forEach(item => {
+                    // console.log(item);
+                    declared_amt += item.dec_amount
+                     taxSavingInvestments.declared_amt = declared_amt
+
+                     max_limit += item.max_amount
+                     taxSavingInvestments.max_limit = max_limit
+
+
+                });
             })
 
     }
@@ -181,6 +196,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
             getInvestmentSource()
             formDataSource.splice(0, formDataSource.length);
+            taxSavingInvestments.status = "Drafed"
         })
     }
 
@@ -267,6 +283,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
             fetchHraNewRental()
+            taxSavingInvestments.status = "Drafed"
+        
         })
 
     }

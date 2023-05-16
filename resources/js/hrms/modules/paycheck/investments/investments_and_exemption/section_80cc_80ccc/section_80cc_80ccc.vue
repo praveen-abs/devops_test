@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="10"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
                 :value="investmentStore.section80ccSource" editMode="row"
                 v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
