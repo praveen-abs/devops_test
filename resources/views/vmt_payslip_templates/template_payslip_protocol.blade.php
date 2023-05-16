@@ -461,7 +461,8 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="txt-right"><img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
                         style="padding-right:0px;">
-                        {{ number_format(round($employee_payslip->Overtime), 2) }}</p>
+                        {{ number_format(round($employee_payslip->other_earnings ), 2) }}
+                    </p>
                 </td>
                 <td colspan="4" class="">
                     <p class="txt-left text-strong">SALARY ADVANCE</p>
@@ -470,7 +471,8 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p class="txt-right"><img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
                         style="padding-right:0px;">
-                        {{ number_format(round($employee_payslip->income_tax), 2) }}</p>
+                        {{ number_format(round($employee_payslip->SAL_ADV), 2) }}
+                    </p>
                 </td>
             </tr>
 
@@ -507,7 +509,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
                         style="padding-right:0px;">
-                        {{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}</p>
+                        {{ number_format(round($employee_payslip->TOTAL_FIXED_GROSS ), 2) }}</p>
                 </td>
                 <td colspan="4" class="bg-ash">
                     <p class="txt-right"></p>
