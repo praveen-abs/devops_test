@@ -208,7 +208,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p>ESIC NUMBER</p>
                 </td>
                 <td colspan="6">
-                    <p>{{ $employee_statutory_details->esic_number }}</p>
+                    <p>{{ $employee_statutory_details->esic_number ?? '0' }}</p>
                 </td>
 
             </tr>
@@ -217,7 +217,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <p>UAN</p>
                 </td>
                 <td colspan="6">
-                    <p>{{$employee_statutory_details->uan_number }}</p>
+                    <p>{{$employee_statutory_details->uan_number ?? '0' }}</p>
                 </td>
                 <td colspan="6" class=" bg-ash text-strong">
                     <p>PAN</p>
