@@ -55,7 +55,8 @@
                         </div>
                         <div v-else>
                             <!-- <Tag value="Pending" severity="warning" /> -->
-                            <span class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
                     </template>
                 </Column>
@@ -115,7 +116,12 @@ const onRowEditSave = (event) => {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
     }
-    investmentStore.formDataSource.push(data)
+    if (event.dec_amt) {
+        // Append Data
+        investmentStore.formDataSource.push(data)
+    } else {
+        console.log("Declaration Amount Null");
+    }
     console.log(newData);
 };
 

@@ -127,10 +127,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             declaration_amount: amount.dec_amt,
         }
 
-        if(amount.dec_amt){
+        if (amount.dec_amt) {
             // Append Data
             formDataSource.push(data)
-        }else{
+        } else {
             console.log("Declaration Amount Null");
         }
 
@@ -164,8 +164,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const saveFormData = () => {
         console.log(formDataSource);
         canShowLoading.value = true
-        console.log("code:"+service.current_user_code);
-        console.log("Form Id:"+getFormId.value);
+        console.log("code:" + service.current_user_code);
+        console.log("Form Id:" + getFormId.value);
         let url = `/investments/saveEmpdetails`
         axios.post(url, {
             user_code: service.current_user_code,
@@ -194,13 +194,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     // HRA Begins
 
-    const hra_data = reactive([])
+    const hra_data = ref()
 
     const current_data = ref()
 
     const hra = reactive({
-        user_code:'',
-        fs_id:'48',
+        user_code: '',
+        fs_id: '48',
         from_month: '',
         to_month: '',
         city: '',
@@ -215,49 +215,50 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailogAddNewRental = ref(false)
     const dailogEditNewRental = ref(false)
 
-    const fetchHraNewRental = async() => {
+    const fetchHraNewRental = async () => {
         console.log("getting hra new rental  data.......");
         console.log(hraSource.fs_id);
-        await axios.post('/investments/fetchEmpRentalDetails',{
-            user_code:service.current_user_code,
-            fs_id:"48"
+        await axios.post('/investments/fetchEmpRentalDetails', {
+            user_code: service.current_user_code,
+            fs_id: "48"
         }).then(res => {
-           Object.values(res.data).forEach((rental,index) => {
-                // console.log(rental);
-                let decodedSource =JSON.parse(rental['json_popups_value']);
-                hra_data.push(decodedSource);
-                hra_data.push(rental.id);
-                
-            });
-            
+            console.log(res.data);
+            hra_data.value = res.data
+            //    Object.values(res.data).forEach((rental,index) => {
+            //         console.log(rental);
+            //         // let decodedSource =JSON.parse(rental['json_popups_value']);
+            //         hra_data.value = rental
+            //         // hra_data.push(rental.id);
+
+            //     });
+
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
-           
+
         })
     }
 
     const editHraNewRental = (currentRowData) => {
 
-        
+
 
         console.log("editing Hra");
         console.log(currentRowData);
-        
+
         dailogAddNewRental.value = true
 
-        hra.from_month = currentRowData.from_month
-        hra.to_month = currentRowData.to_month
-        hra.address = currentRowData.address
-        hra.city = currentRowData.city
-        hra.landlord_PAN = currentRowData.landlord_PAN
-        hra.landlord_name = currentRowData.landlord_name
-        hra.total_rent_paid = currentRowData.total_rent_paid
+        hra.from_month = currentRowData.json_popups_value.from_month
+        hra.to_month = currentRowData.json_popups_value.to_month
+        hra.address = currentRowData.json_popups_value.address
+        hra.city = currentRowData.json_popups_value.city
+        hra.landlord_PAN = currentRowData.json_popups_value.landlord_PAN
+        hra.landlord_name = currentRowData.json_popups_value.landlord_name
+        hra.total_rent_paid = currentRowData.json_popups_value.total_rent_paid
 
     }
 
     const saveHraNewRental = () => {
-       hra.user_code = service.current_user_code
-       hra_data.splice(0,hra_data.length)
+        hra.user_code = service.current_user_code
         canShowLoading.value = true
         dailogAddNewRental.value = false
 
@@ -266,17 +267,18 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         axios.post('/investments/saveSectionPopups', hra).then(res => {
             console.log(res.data);
-            canShowLoading.value = false
-            fetchHraNewRental()
             toast.add({
                 severity: "success",
                 summary: "Drafted",
                 detail: "New Rental Added",
                 life: 3000,
             });
-        }).catch(e => console.log(e))
+        }).catch(e => console.log(e)).finally(() => {
+            canShowLoading.value = false
+            fetchHraNewRental()
+        })
 
-  }
+    }
 
     const saveHRA = () => {
 
@@ -297,15 +299,25 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             icon: 'pi pi-info-circle',
             acceptClass: 'p-button-danger',
             accept: () => {
-                axios.post('/investments/deleteEmpRentalDetails',{
-                    current_table_id
+                canShowLoading.value = true
+                axios.post('/investments/deleteEmpRentalDetails', {
+                    current_table_id: currentRowData.id
+                }).finally(() => {
+                    canShowLoading.value = false
+                    toast.add({
+                        severity: "success",
+                        summary: "Saved",
+                        detail: "House Rented Allowance Added",
+                        life: 3000,
+                    });
+                    fetchHraNewRental()
                 })
             },
             reject: () => {
             }
         });
     };
-    
+
 
     // HRA End
 
@@ -354,8 +366,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     })
 
     const other_exe_80EE = reactive({
-        user_code:'',
-        fs_id:'',
+        user_code: '',
+        fs_id: '',
         loan_sanction_date: '',
         lender_type: '',
         property_value: '',
@@ -363,8 +375,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         interest_amount_paid: '',
     })
     const other_exe_80EEA = reactive({
-        user_code:'',
-        fs_id:'',
+        user_code: '',
+        fs_id: '',
         loan_sanction_date: '',
         lender_type: '',
         property_value: '',
@@ -372,8 +384,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         interest_amount_paid: '',
     })
     const other_exe_80EEB = reactive({
-        user_code:'',
-        fs_id:'',
+        user_code: '',
+        fs_id: '',
         loan_sanction_date: '',
         lender_type: '',
         property_value: '',
@@ -388,20 +400,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailog_80EEA = ref(false)
     const dailog_80EEB = ref(false)
 
-    const get80EESlotData = (data) =>{
+    const get80EESlotData = (data) => {
         dailog_80EE.value = true
         console.log(data);
         other_exe_80EE.user_code = service.current_user_code
         other_exe_80EE.fs_id = data.fs_id
 
     }
-    const get80EEASlotData = (data) =>{
+    const get80EEASlotData = (data) => {
         dailog_80EEA.value = true
         console.log(data);
         other_exe_80EEA.user_code = service.current_user_code
         other_exe_80EEA.fs_id = data.fs_id
     }
-    const get80EEBSlotData = (data) =>{
+    const get80EEBSlotData = (data) => {
         dailog_80EEB.value = true
         console.log(data);
         other_exe_80EEB.user_code = service.current_user_code
@@ -422,7 +434,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 detail: "80EE Added",
                 life: 3000,
             });
-        }).catch(e => console.log(e)).finally(()=>{
+        }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
         })
     }
@@ -442,7 +454,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 detail: "New Rental Added",
                 life: 3000,
             });
-        }).catch(e => console.log(e)).finally(()=>{
+        }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
         })
     }
@@ -461,7 +473,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 detail: "New Rental Added",
                 life: 3000,
             });
-        }).catch(e => console.log(e)).finally(()=>{
+        }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
         })
     }
@@ -587,11 +599,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     return {
 
         // varaible Declarations
-        investment_exemption_steps, currentUSerCode,canShowLoading, getInvestmentSource, saveFormData, getFormId, formatCurrency, editingRowSource, updatedRowSource,
+        investment_exemption_steps, currentUSerCode, canShowLoading, getInvestmentSource, saveFormData, getFormId, formatCurrency, editingRowSource, updatedRowSource,
 
         // Data Source
 
-        investmentMainSource, formDataSource, hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource,previousEmployeerIncomeSource, otherIncomeSource,
+        investmentMainSource, formDataSource, hraSource, section80ccSource, otherExemptionSource, housePropertySource, reimbursmentSource, previousEmployeerIncomeSource, otherIncomeSource,
 
         // Tax Saving Investments
 
@@ -599,7 +611,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         // hra begins
 
-        hra_data, hra, current_data, dailogAddNewRental, dailogEditNewRental, editHraNewRental, fetchHraNewRental, saveHraNewRental, saveHRA,deleteRentalDetails,
+        hra_data, hra, current_data, dailogAddNewRental, dailogEditNewRental, editHraNewRental, fetchHraNewRental, saveHraNewRental, saveHRA, deleteRentalDetails,
 
         // hra ends
 
@@ -611,7 +623,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // Other exemptiom Begins
 
         other_Exe, dailog_80EE, dailog_80EEA, dailog_80EEB, other_exe_80EE, other_exe_80EEA, other_exe_80EEB, save80EE, save80EEA, save80EEB,
-        get80EESlotData,get80EEASlotData,get80EEBSlotData,
+        get80EESlotData, get80EEASlotData, get80EEBSlotData,
 
         // Other exemptiom Ends
 

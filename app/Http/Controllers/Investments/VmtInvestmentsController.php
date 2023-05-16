@@ -38,7 +38,7 @@ class VmtInvestmentsController extends Controller
 
     public function SaveInvDetails(Request $request)
     {
-        // dd($request->formDataSource);
+        dd($request->all());
 
 
         $form_id = $request->form_id;
@@ -80,12 +80,16 @@ class VmtInvestmentsController extends Controller
 
     }
 
-    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
-       
+    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){  
         $user_code = $request->user_code;
         $fs_id = $request->fs_id;
-        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
 
+        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
+    }
+
+    public function deleteRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+
+        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
     }
 
     public function saveSectionPopups(Request $request){

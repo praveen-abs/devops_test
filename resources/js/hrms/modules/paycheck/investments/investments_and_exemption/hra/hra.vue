@@ -84,16 +84,16 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Landlord Name" field="landlord_name" style="min-width: 8rem">
-                        <template #body="slotProps">
+                    <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem">
+                        <!-- <template #body="slotProps">
                             {{ slotProps.data.landlord_name }}
-                        </template>
+                        </template> -->
                     </Column>
 
-                    <Column field="landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            {{ "&#x20B9;" + slotProps.data.landlord_PAN }}
-                        </template>
+                    <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
+                        <!-- <template #body="slotProps">
+                            {{ slotProps.data.landlord_PAN }}
+                        </template> -->
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
@@ -108,15 +108,15 @@
                         </template>
                     </Column>
 
-                    <Column field="city" header="City" style="min-width: 12rem">
-                        <template #body="slotProps">
+                    <Column field="json_popups_value.city" header="City" style="min-width: 12rem">
+                        <!-- <template #body="slotProps">
                             {{ slotProps.data.city }}
-                        </template>
+                        </template> -->
                     </Column>
-                    <Column field="total_rent_paid" header="Total Rent" style="min-width: 12rem">
-                        <template #body="slotProps">
+                    <Column field="json_popups_value.total_rent_paid" header="Total Rent" style="min-width: 12rem">
+                        <!-- <template #body="slotProps">
                             {{ slotProps.data.total_rent_paid }}
-                        </template>
+                        </template> -->
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">
                         <template #body="slotProps">
@@ -235,7 +235,6 @@
                 @click="investmentStore.saveHraNewRental">Save</button>
         </div>
     </Dialog>
-    <Button @click="investmentStore.deleteRentalDetails()" icon="pi pi-times" label="Delete"></Button>
 </template>
 
 
