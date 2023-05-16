@@ -38,7 +38,7 @@ class VmtInvestmentsController extends Controller
 
     public function SaveInvDetails(Request $request)
     {
-        // dd($request->formDataSource);
+        // dd($request->all());
 
 
         $form_id = $request->form_id;
@@ -60,18 +60,31 @@ class VmtInvestmentsController extends Controller
         }
 
         // dd($form_data);
+         $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first()->id;
+
+
         foreach ($form_data as $singleFormData) {
-            $fs_id = $singleFormData['fs_id'];
-            $dec_amount = $singleFormData['declaration_amount'];
 
+            $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$singleFormData['fs_id'])->first();
 
+            if(empty($emp_formdata)){
 
-            $emp_formdata = new VmtInvEmpFormdata;
-            $emp_formdata->f_emp_id = $query_assign->id;
-            $emp_formdata->fs_id = $fs_id;
-            $emp_formdata->dec_amount = $dec_amount;
-        //   $emp_formdata->json_popups_value = $sima ?? "none";
-            $emp_formdata->save();
+                $emp_formdata = new VmtInvEmpFormdata;
+                $emp_formdata->f_emp_id = $query_assign->id;
+                $emp_formdata->fs_id = $singleFormData['fs_id'];
+                $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+            //   $emp_formdata->json_popups_value = $sima ?? "none";
+                $emp_formdata->save();
+
+            }else{
+
+                $emp_formdata->f_emp_id = $query_assign->id;
+                $emp_formdata->fs_id = $singleFormData['fs_id'];
+                $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+            //   $emp_formdata->json_popups_value = $sima ?? "none";
+                $emp_formdata->save();
+
+            }
 
 
         }
@@ -81,7 +94,7 @@ class VmtInvestmentsController extends Controller
     }
 
     public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
-       
+       // dd($request->all());
         $user_code = $request->user_code;
         $fs_id = $request->fs_id;
         return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
@@ -89,7 +102,7 @@ class VmtInvestmentsController extends Controller
     }
 
     public function saveSectionPopups(Request $request){
-
+        //  dd($request->all());
         $json_decodeHra = json_encode($request->all());
 
         $form_id = "1";
@@ -115,14 +128,27 @@ class VmtInvestmentsController extends Controller
             $query_assign = $emp_assign_form;
         }
 
-             $Hra_save = new VmtInvEmpFormdata;
-             $Hra_save->f_emp_id = $query_assign->id;
-             $Hra_save->fs_id = $fs_id;
-             $Hra_save->dec_amount ='none';
-             $Hra_save->json_popups_value = $json_decodeHra;
-             $Hra_save->save();
+        $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first()->id;
 
+        $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$fs_id)->first();
 
+        if(empty($emp_formdata)){
+
+           $Hra_save = new VmtInvEmpFormdata;
+           $Hra_save->f_emp_id = $query_assign->id;
+           $Hra_save->fs_id = $fs_id;
+           $Hra_save->dec_amount ='none';
+           $Hra_save->json_popups_value = $json_decodeHra;
+           $Hra_save->save();
+
+        }else{
+            $emp_formdata->f_emp_id = $query_assign->id;
+            $emp_formdata->fs_id =  $fs_id ;
+            $emp_formdata->dec_amount = 'none';
+           $emp_formdata->json_popups_value = $json_decodeHra;
+            $emp_formdata->save();
+
+        }
 
 
      return 'saved';
@@ -140,7 +166,7 @@ class VmtInvestmentsController extends Controller
 
     }
 
-   
+
 
 
 
