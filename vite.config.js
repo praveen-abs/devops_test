@@ -41,13 +41,13 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
                 'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
 
-
                 ////Reimbursements Module
 
                 //Employee Reimbursements
                 'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
                 //Configurations
+                //Attendance settings
 
                 'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
 
@@ -105,7 +105,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
-                //managewelcomemailstatus
+                //manage welcome mail status
                 'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
 
                 // testing_pradeesh

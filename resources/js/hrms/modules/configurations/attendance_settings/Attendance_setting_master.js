@@ -63,5 +63,5 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Checkbox', Checkbox)
 
-app.mount("#vjs_Attendance_master");
+app.mount("#vjs_attendance_master");
 
