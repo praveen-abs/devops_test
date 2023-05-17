@@ -36,12 +36,12 @@ if ($query_clientMaster) {
                     <?php
                     if(sessionGetSelectedClientName()){
                         if(sessionGetSelectedClientName() == 'All'){
-                            echo sessionGetSelectedClientName();
+                            echo sessionGetSelectedClientFullName();
                         }else{
-                        echo sessionGetSelectedClientName().'  ( '.(sessionGetSelected_abs_clinetcode()).' )';
+                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
                         }
                     }else{
-                        echo getClientName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clinetcode()).' )';
+                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
                     }
 
 
