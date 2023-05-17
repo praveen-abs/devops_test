@@ -35,9 +35,13 @@ if ($query_clientMaster) {
                     aria-expanded="false">
                     <?php
                     if(sessionGetSelectedClientName()){
-                        echo sessionGetSelectedClientName();
+                        if(sessionGetSelectedClientName() == 'All'){
+                            echo sessionGetSelectedClientFullName();
+                        }else{
+                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                        }
                     }else{
-                        echo getClientName(auth()->user()->id);
+                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
                     }
 
 

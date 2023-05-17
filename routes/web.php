@@ -478,7 +478,7 @@ Route::middleware(['auth'])->group(function () {
 
 //Pay Check module
     Route::get('/paycheckDashboard',  [App\Http\Controllers\VmtPayCheckController::class, 'showPaycheckDashboard'])->name('paycheckDashboard');
-    Route::get('/salary_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showSalaryDetailsPage'])->name('vmt_salary_details');
+    Route::get('/salary_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showSalaryDetailsPage_v2'])->name('vmt_salary_details');
     Route::get('/investments_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showInvestmentsPage'])->name('vmt_investments_details');
     Route::get('/form16_details',  [App\Http\Controllers\VmtPayCheckController::class, 'showForm16Page'])->name('vmt_form16_details');
     Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}',[App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');

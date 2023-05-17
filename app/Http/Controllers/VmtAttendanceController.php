@@ -590,7 +590,7 @@ class VmtAttendanceController extends Controller
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
 
                 //If direction is only "in" or empty or "-"
-                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA")
+                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PA")
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))

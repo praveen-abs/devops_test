@@ -26,9 +26,9 @@ import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
 import { createPinia } from "pinia";
 
-import ManagePayslips from './ManagePayslips.vue';
+import EmployeePayslips from './EmployeePayslips.vue';
 
-const app = createApp(ManagePayslips);
+const app = createApp(EmployeePayslips);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
