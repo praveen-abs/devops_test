@@ -1,8 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="10"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
                 :value="investmentStore.otherExemptionSource" @row-edit-save="onRowEditSave"
                 tableClass="editable-cells-table" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -30,24 +29,40 @@
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
-                            <button @click="investmentStore.get80EESlotData(slotProps.data)"
-                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                80EE</button>
+                            <div v-if="slotProps.data.json_popups_value">
+                                <!-- {{ slotProps.data.json_popups_value.interest_amount_paid }} -->
+                            </div>
+                            <div v-else>
+                                <button @click="investmentStore.get80EESlotData(slotProps.data)"
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
+                                    80EE</button>
+                            </div>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
-                            <button @click="investmentStore.get80EEASlotData(slotProps.data)"
-                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                80EEA</button>
+                            <div v-if="slotProps.data.json_popups_value">
+                                <!-- {{ slotProps.data.json_popups_value.interest_amount_paid }} -->
+
+                            </div>
+                            <div v-else>
+                                <button @click="investmentStore.get80EEASlotData(slotProps.data)"
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
+                                    80EE</button>
+                            </div>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
-                            <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
-                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                80EEB</button>
+                            <div v-if="slotProps.data.json_popups_value">
+                                <!-- {{ slotProps.data.json_popups_value.interest_amount_paid }} -->
+                            </div>
+                            <div v-else>
+                                <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
+                                    80EE</button>
+                            </div>
                         </div>
                         <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
-                        <div v-else>
+                        <div v-else-if="slotProps.data.json">
                             <InputNumber class="w-6 text-lg font-semibold" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
@@ -60,8 +75,9 @@
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.status">
-                            <Tag value="Completed" severity="success" />
+                        <div v-if="slotProps.data.dec_amount">
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                         </div>
                         <div v-else>
                             <!-- <Tag value="Pending" severity="warning" /> -->
@@ -314,11 +330,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 const investmentStore = investmentMainStore()
 const editingRows = ref([]);
+
+onMounted(() => {
+    setTimeout(() => {
+        investmentStore.fetchOtherExe()
+    }, 2000);
+})
 
 const onRowEditSave = (event) => {
     let { newData, index } = event;
@@ -330,8 +352,8 @@ const onRowEditSave = (event) => {
         declaration_amount: newData.dec_amount,
     }
 
-        investmentStore.formDataSource.push(data)
-     console.log(newData);
+    investmentStore.formDataSource.push(data)
+    console.log(newData);
 };
 
 const vechicle_model_options = ref()

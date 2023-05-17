@@ -123,4 +123,21 @@ const activetab = ref(investmentStore.investment_exemption_steps);
 .dec_amt {
     font-weight: 501;
 }
+.p-inputtext.p-component.p-inputnumber-input{
+height: 32px;
+background: #f6f4f46e;
+border: 0.1px solid rgba(187, 187, 187, 0.65);
+}
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #3b82f6fc ;
+  border-color: #3B82F6;
+}
+.p-inputtext {
+  margin: 0;
+  height: 32px;
+  background: #f6f4f46e;
+  border: 0.1px solid rgba(187, 187, 187, 0.65);
+}
 </style>

@@ -33,6 +33,7 @@ import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber'
+import InputMask from 'primevue/inputmask'
 import OverlayPanel from 'primevue/overlaypanel';
 import Tag from 'primevue/tag'
 
@@ -74,6 +75,7 @@ app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
+app.component('InputMask', InputMask)
 app.component('OverlayPanel',OverlayPanel)
 app.component('Tag',Tag)
 

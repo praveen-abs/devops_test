@@ -48,10 +48,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const taxSavingInvestments = reactive({
         max_limit: '',
         declared_amt: '',
-        status: '',
+        status: 'Not Submited',
         Date_of_submission: '',
 
     })
+
+
 
     /* Investment and Exemptiom
 
@@ -107,10 +109,23 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherIncomeSource.value = res.data.data.form_details["Other Source Of  Income"]
                 previousEmployeerIncomeSource.value = res.data.data.form_details["Previous Employer Income"]
 
+
                 // console.log(res.data.data.form_details["Previous Employer Income"]);
             }).catch(e => console.log(e))
             .finally(() => {
+                var declared_amt = 0;
+                var max_limit = 0;
                 console.log("completed");
+                otherExemptionSource.value.forEach(item => {
+                    // console.log(item);
+                    declared_amt += item.dec_amount
+                     taxSavingInvestments.declared_amt = declared_amt
+
+                     max_limit += item.max_amount
+                     taxSavingInvestments.max_limit = max_limit
+
+
+                });
             })
 
     }
@@ -181,6 +196,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
             getInvestmentSource()
             formDataSource.splice(0, formDataSource.length);
+            taxSavingInvestments.status = "Drafed"
         })
     }
 
@@ -267,6 +283,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
             fetchHraNewRental()
+            taxSavingInvestments.status = "Drafed"
+        
         })
 
     }
@@ -377,6 +395,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         interest_amount_paid: ''
     })
 
+    
+
+
     const dailog_80EE = ref(false)
     const dailog_80EEA = ref(false)
     const dailog_80EEB = ref(false)
@@ -401,6 +422,60 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         other_exe_80EEB.fs_id = data.fs_id
     }
 
+    const Dec80EE = ref()
+    const Dec80EEA = ref()
+    const Dec80EEB = ref()
+
+    const fetchOtherExe = () =>{
+        //   otherExemptionSource.value.map(x => { 
+        //     if(x.section == '80EE'){
+        //       console.log("section 80EE");
+        //        axios.post('/investments/fetchEmpRentalDetails', {
+        //         user_code: service.current_user_code,
+        //         fs_id: x.fs_id
+        //     }).then(res => {
+        //         console.log(Object.values(res.data));
+        //         Dec80EE.value = Object.values(res.data)
+    
+        //     }).catch(e => console.log(e)).finally(() => {
+        //         canShowLoading.value = false
+    
+        //     })
+        //     }else
+        //     if(x.section == '80EEA'){
+        //         console.log("section 80EEA");
+        //         axios.post('/investments/fetchEmpRentalDetails', {
+        //             user_code: service.current_user_code,
+        //             fs_id: x.fs_id
+        //         }).then(res => {
+        //             console.log(Object.values(res.data));
+        //             Dec80EEA.value = Object.values(res.data)
+        
+        //         }).catch(e => console.log(e)).finally(() => {
+        //             canShowLoading.value = false
+        
+        //         })
+        //     }else
+        //     if(x.section == '80EEB'){
+        //         console.log("section 80EEB");
+        //         axios.post('/investments/fetchEmpRentalDetails', {
+        //             user_code: service.current_user_code,
+        //             fs_id: x.fs_id
+        //         }).then(res => {
+        //             console.log(Object.values(res.data));
+        //             Dec80EEB.value = Object.values(res.data)
+        
+        //         }).catch(e => console.log(e)).finally(() => {
+        //             canShowLoading.value = false
+        
+        //         })
+        //     }else{
+        //         console.log("no values");
+        //  }
+            
+
+        //  })
+    }
 
     const save80EE = () => {
         dailog_80EE.value = false
@@ -575,7 +650,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
 
-    return {
+    return {fetchOtherExe,Dec80EE,Dec80EEA,Dec80EEB,
 
         // varaible Declarations
         investment_exemption_steps, currentUSerCode, canShowLoading, getInvestmentSource, saveFormData, getFormId, formatCurrency, editingRowSource, updatedRowSource,

@@ -140,3 +140,7 @@ background-color: $primary-blue !important;
     top: 0;
     z-index: 0;
   }
+
+  .p-toast.p-component.p-toast-top-right {
+    z-index: 100000;
+  }
