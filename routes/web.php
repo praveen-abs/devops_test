@@ -800,6 +800,15 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
     Route::post('/paycheck/employee_payslip/downloadPayslip', [App\Http\Controllers\VmtTestingController::class, 'downloadPaySlip_pdfView'])->name('downloadPaySlip_pdfView');
     Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
 
+
+    //testing jodsmail
+
+    Route::get('send-email',[App\Http\Controllers\VmtTestingController::class, 'jobsmail']);
+
+
+
+
+
     //investment testing
 
     Route::view('/investmenttest', 'testing.excellimport');
@@ -815,7 +824,7 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
 
 });
-Route::post('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingController::class, 'testEmployeeDocumentsJoin']);
+Route::get('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingController::class, 'testEmployeeDocumentsJoin']);
 
 Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
 
