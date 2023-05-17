@@ -808,12 +808,13 @@ Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalControl
 
    Route::get('/testinginestmentsectionss', [App\Http\Controllers\VmtTestingController::class, 'testinginestmentsection']);
 
-
+   Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
 
 });
+
 Route::get('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingController::class, 'testEmployeeDocumentsJoin']);
 
-Route::post('/payroll/getAllEmployeesPayslipDetails',  [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
+
 
 
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');

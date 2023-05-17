@@ -785,7 +785,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('showAttendanceSettingsPage') }}" class="nav-link sidebar py-1">
-                                        <span> Attendance </span></a>
+                                        <span> Attendance Settings</span></a>
                                 </li>
                                 {{-- @endif --}}
                             </ul>
