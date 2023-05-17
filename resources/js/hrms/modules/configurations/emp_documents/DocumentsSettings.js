@@ -24,6 +24,7 @@ import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
+import Checkbox from 'primevue/checkbox';
 import { createPinia } from "pinia";
 
 import DocumentsSettings from './DocumentsSettings.vue';
@@ -42,6 +43,7 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
+app.component('Checkbox', Checkbox);
 app.component('Button', Button);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
