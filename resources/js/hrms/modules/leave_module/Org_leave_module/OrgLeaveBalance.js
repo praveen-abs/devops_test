@@ -22,6 +22,9 @@ import ColumnGroup from 'primevue/columngroup';     //optional for column groupi
 import Row from 'primevue/row';
 import Dialog from 'primevue/dialog';
 import InputText from 'primevue/inputtext'
+import ProgressSpinner from 'primevue/progressspinner'
+
+
 
 import OrgLeaveRemainingTable from './OrgLeaveBalanceTable.vue';
 
@@ -45,6 +48,7 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Dialog', Dialog)
 app.component('InputText', InputText)
+app.component('ProgressSpinner', ProgressSpinner)
 
 app.mount("#vjs_orgLeaveTable_RemainingLeave");
 

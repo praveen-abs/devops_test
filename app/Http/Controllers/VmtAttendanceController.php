@@ -1558,8 +1558,8 @@ class VmtAttendanceController extends Controller
 
     public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         $start_date = '2023-04-01';
-        $end_date = '2023-04-31';
-        $month = 04;
+        $end_date = '2023-05-31';
+        $month = 05;
         $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
         return $response;
 

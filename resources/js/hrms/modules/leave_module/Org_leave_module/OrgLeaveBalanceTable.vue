@@ -5,7 +5,7 @@
       @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
       paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
       v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
-      <Column expander />
+      <Column expander style="width: 2rem;"/>
       <Column field="user_code" header="Employee Code"></Column>
       <Column field="name" header="Employee Name"></Column>
       <Column field="location" header="Location"></Column>
@@ -18,6 +18,7 @@
             <Column field="leave_type" header="Leave Type"></Column>
             <Column field="opening_balance" header="Opening Balance "></Column>
             <Column field="avalied" header="Availed Leave"></Column>
+            <Column field="closing_balance" header="Closing Balance "></Column>
           </DataTable>
         </div>
       </template>
@@ -254,6 +255,7 @@ onMounted(() => {
 
 .p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
   margin-left: 30px;
+
 }
 </style>
 -
