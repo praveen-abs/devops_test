@@ -46,7 +46,7 @@ export const useDocumentSettingsStore = defineStore("DocumentSettings", () => {
                     icon: "success",
                     showCancelButton: false,
                 }).then((result) => {
-                    window.location.reload();
+                    // window.location.reload();
                 });
 
             }
