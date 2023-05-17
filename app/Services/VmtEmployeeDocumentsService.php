@@ -106,4 +106,31 @@ class VmtEmployeeDocumentsService {
         }
 
     }
+
+    public function updateEmployeeDocumentsSettings($data){
+        try{
+            foreach($data as $singleRecord){
+                $document = VmtDocuments::where('id',$singleRecord['id'] )->first();
+                $document->is_onboarding_doc = $singleRecord['is_onboarding_doc'];
+                $document->is_mandatory = $singleRecord['is_mandatory'];
+                $document->save();
+            }
+
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Documents settings updated successfully",
+                "data" => "",
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while updating vmt_documents",
+                "data" => $e,
+            ]);
+        }
+
+    }
 }

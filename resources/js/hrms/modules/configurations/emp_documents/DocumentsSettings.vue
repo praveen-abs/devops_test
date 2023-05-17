@@ -2,7 +2,6 @@
     <div class="card p-3" style="margin-top: -35px;">
 
         <h1 class="mt-2  fs-4 fw-bold">Documents Settings</h1>
-        {{ selected }}
 
         <div class="my-5">
             <DataTable :value="DocumentSettingsStore.array_emp_documents_details" :paginator="true" :rows="10" dataKey="id"
@@ -16,30 +15,21 @@
                 </Column>
                 <Column field="is_onboarding_doc" header="Is Onboarding Document ?">
                     <template #body="slotProps">
-                        <!-- <input type="checkbox" v-model="Is_onboarding_doc" /> -->
-                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_onboarding_doc" :binary="true" :trueValue="1" :falseValue="0"/>
+                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_onboarding_doc" :binary="true" :trueValue="1" :falseValue="0" />
                     </template>
                 </Column>
                 <Column field="is_mandatory" header="Is Mandatory Document ?">
                     <template #body="slotProps">
-                        <!-- <input type="checkbox" v-model="is_mandatory" /> -->
-                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_mandatory" :binary="true" :trueValue="1" :falseValue="0"/>
+                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_mandatory"  :binary="true" :trueValue="1" :falseValue="0"  />
                     </template>
                 </Column>
-
-
-                <!-- <Column header="Action">
-                <Button class="btn-success" label="Send Mail" @click="managePayslipStore.sendMail_employeePayslip(slotProps.data.user_code, selectedPayRollDate.selectDate.getMonth() + 1, selectedPayRollDate.selectDate.getFullYear() )" />
-                <template #body="slotProps">
-                    <button class="rounded btn-success" @click="showConfirmationDialog(slotProps.data.user_code)">Send Mail</button>
-                </template>
-
-            </Column> -->
             </DataTable>
 
         </div>
 
-
+        <div class="mx-5 mt-4">
+            <button class="btn-orange p-2 rounded float-right" @click="DocumentSettingsStore.submitDocumentSettings">Submit</button>
+        </div>
 
 
         <!-- show loading -->
@@ -56,9 +46,7 @@
             </template>
         </Dialog>
 
-        <div class="mx-5 mt-4">
-            <button class="btn-orange p-2 rounded float-right" @click="DocumentSettingsStore.submitDocumentSettings">Submit</button>
-        </div>
+
 
     </div>
 </template>
@@ -77,7 +65,7 @@ const selected = ref();
 
 onMounted(async () => {
    await DocumentSettingsStore.getEmployeesDocumentsDetails();
-    console.log(DocumentSettingsStore.array_emp_documents_details)
+    // console.log(DocumentSettingsStore.array_emp_documents_details)
 
 });
 
