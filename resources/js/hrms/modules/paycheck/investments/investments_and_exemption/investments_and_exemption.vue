@@ -140,4 +140,9 @@ border: 0.1px solid rgba(187, 187, 187, 0.65);
   background: #f6f4f46e;
   border: 0.1px solid rgba(187, 187, 187, 0.65);
 }
+.p-datatable-scrollable .p-datatable-thead {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+}
 </style>

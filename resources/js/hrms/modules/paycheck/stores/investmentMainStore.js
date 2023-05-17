@@ -547,6 +547,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Self Occupied Property
 
     const sop = reactive({
+        user_code: '',
+        fs_id: '',
         lender_name: '',
         lender_pan: '',
         lender_type: '',
@@ -558,6 +560,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Let Out Property
 
     const lop = reactive({
+        user_code: '',
+        fs_id: '',
         lender_name: '',
         lender_pan: '',
         lender_type: '',
@@ -575,6 +579,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Deemed Let Out Property
 
     const dlop = reactive({
+        user_code: '',
+        fs_id: '',
         lender_name: '',
         lender_pan: '',
         lender_type: '',
@@ -620,13 +626,34 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // })
     }
 
+    
+    const getSopSlotData = (data) => {
+        dailog_SelfOccupiedProperty.value = true
+        console.log(data);
+        sop.user_code = service.current_user_code
+        sop.fs_id = data.fs_id
+
+    }
+    const getLopSlotData = (data) => {
+        dailog_LetOutProperty.value = true
+        console.log(data);
+        lop.user_code = service.current_user_code
+        lop.fs_id = data.fs_id
+    }
+    const getDlopSlotData = (data) => {
+        dailog_DeemedLetOutProperty.value = true
+        console.log(data);
+        dlop.user_code = service.current_user_code
+        dlop.fs_id = data.fs_id
+    }
+
     const saveSelfOccupiedProperty = () => {
         dailog_SelfOccupiedProperty.value = false
         console.log(sop);
-        // axios.post('http://localhost:3000/investment', sop).then(res => {
-        //     console.log(res.data);
-        //     fetchSelfOccupiedProperty()
-        // })
+        axios.post('/investments/saveSectionPopups', sop).then(res => {
+            console.log(res.data);
+            fetchSelfOccupiedProperty()
+        })
     }
     const saveLetOutProperty = () => {
         console.log(lop);
@@ -684,7 +711,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // House Property Begins
 
         house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty, income_loss_calculation,
-        fetchSelfOccupiedProperty, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,
+        fetchSelfOccupiedProperty, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,
 
 
         // House Property End

@@ -62,10 +62,21 @@
                                 {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                             </div>
                             <div v-else-if="slotProps.data.particular == 'Self Occupied Property'">
-                                <button @click="investmentStore.dailog_SelfOccupiedProperty = true"
+                                <button @click="investmentStore.getSopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                     New</button>
                             </div>
+                            <div v-else-if="slotProps.data.particular == 'Let Out Property'">
+                                <button @click="investmentStore.getLopSlotData(slotProps.data)"
+                                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                                    New</button>
+                            </div>
+                            <div v-else-if="slotProps.data.particular == 'Deemed Let Out Property'">
+                                <button @click="investmentStore.getDlopSlotData(slotProps.data)"
+                                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                                    New</button>
+                            </div>
+
 
                         </template>
                         <template #editor="{ data, field }">
@@ -572,7 +583,7 @@
         </template>
 
 
-        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 my-4">
+        <div class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                     Name</label>
@@ -643,11 +654,12 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
-            <div class="text-end">
+            
+        </div>
+        <div class="text-end">
                 <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
                     @click="investmentStore.saveLetOutProperty">Save</button>
             </div>
-        </div>
 
 
 
@@ -660,7 +672,7 @@
             <h6 class="mb-1 modal-title text-primary">Deemed Let Out Property</h6>
         </template>
 
-        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 my-4">
+        <div class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                     Name</label>
