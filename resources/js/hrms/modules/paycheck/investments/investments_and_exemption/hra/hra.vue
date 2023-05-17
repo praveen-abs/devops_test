@@ -26,8 +26,8 @@
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.dec_amount" class="dec_amt">
-                            {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
+                        <div v-if="slotProps.data.json_popups_value" class="dec_amt">
+                            {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.total_rent_paid) }}
                         </div>
                         <div v-else>
                             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
@@ -70,9 +70,9 @@
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
             <span class="mx-4 my-2 mt-2 text-lg font-semibold text-indigo-950">Rental Property</span>
-            <button class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
+            <!-- <button v-if="investmentStore.hraSource" class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
                     class="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                Add Rented</button>
+                Add Rented</button> -->
         </div>
 
         <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
@@ -92,9 +92,9 @@
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                            {{ slotProps.data.json_popups_value.landlord_PAN }}
-                        </template> -->
+                        <template #body="slotProps">
+                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
+                        </template>
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
@@ -200,9 +200,8 @@
             <div class="">
                 <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
                     Rent Paid</label>
-                <input type="text" id="rendPaid_inp"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.total_rent_paid" required>
+                <InputNumber type="text" id="rendPaid_inp" class=" w-full  " v-model="investmentStore.hra.total_rent_paid"
+                    required />
             </div>
 
         </div>
@@ -218,9 +217,12 @@
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Landlord
                     PAN <span class="text-red-600">*</span> </label>
-                <input type="text" id="lender_name"
+                <!-- <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.landlord_PAN" required>
+                    v-model="investmentStore.hra.landlord_PAN" required> -->
+                <InputMask  id="serial" mask="aaaPa9999a"   class=" w-full  "
+                    placeholder="AHFCS1234F" style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN"  />
+
             </div>
 
         </div>

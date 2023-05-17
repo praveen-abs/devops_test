@@ -168,4 +168,9 @@ dialog>header {
 Dialog {
     color: #002f56;
 }
+
+.p-inputtext.p-component.p-inputnumber-input{
+height: 32px;
+background: #f6f4f46e;
+}
 </style>

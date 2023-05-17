@@ -26,21 +26,87 @@
     <div class="tab-content " id="">
         <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel" aria-labelledby="">
 
-            <!-- Table Header -->
+            <div class="table-responsive">
+                <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
+                    :value="investmentStore.housePropertySource" editMode="row"
+                    v-model:editingRows="investmentStore.editingRowSource"
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    :rowsPerPageOptions="[5, 10, 25]" @row-edit-save="onRowEditSave" tableClass="editable-cells-table"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                    responsiveLayout="scroll">
 
-            <!-- <th scope="col">Lender Name</th>
-            <th scope="col">Lender PAN</th>
-            <th scope="col">Lender Type</th>
-            <th scope="col">Loss From Housing Property</th>
-            <th scope="col">Action</th> -->
+                    <Column header="Sections" field="section" style="min-width: 8rem">
+                    </Column>
+
+                    <Column field="particular" header="Particulars" style="min-width: 12rem">
+                    </Column>
+
+                    <Column field="reference" header="References " style="min-width: 12rem">
+                        <template #body="slotProps">
+                            <button type="button" class="border-0 outline-none btn btn-transprarent"
+                                v-tooltip="slotProps.data.reference">
+                                <i class="fa fa-exclamation-circle text-warning" aria-hidden="true"></i>
+                            </button>
+                        </template>
+                    </Column>
+
+                    <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
+                        <template #body="slotProps">
+                            {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
+                        </template>
+                    </Column> -->
+
+                    <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
+                        <template #body="slotProps">
+                            <div v-if="slotProps.data.dec_amount" class="dec_amt">
+                                {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
+                            </div>
+                            <div v-else-if="slotProps.data.particular == 'Self Occupied Property'">
+                                <button @click="investmentStore.dailog_SelfOccupiedProperty = true"
+                                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                                    New</button>
+                            </div>
+
+                        </template>
+                        <template #editor="{ data, field }">
+                            <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
+                                class="w-5 text-lg font-semibold" />
+                        </template>
+
+                    </Column>
+
+                    <Column field="status" header="Status" style="min-width: 12rem">
+                        <template #body="slotProps">
+                            <div v-if="slotProps.data.dec_amount">
+                                <span
+                                    class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
+                            </div>
+                            <div v-else>
+                                <span
+                                    class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                            </div>
+                        </template>
+                    </Column>
+                    <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"
+                        header="Action">
+                    </Column>
+                </DataTable>
+
+            </div>
 
 
-
+<!-- 
             <div class="text-end">
                 <button @click="investmentStore.dailog_SelfOccupiedProperty = true"
                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                     New</button>
-            </div>
+                <button @click="investmentStore.dailog_LetOutProperty = true"
+                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                    New</button>
+                <button @click="investmentStore.dailog_DeemedLetOutProperty = true"
+                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                    New</button>
+            </div> -->
             <!-- {{ investmentStore.housePropertySource }} -->
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
@@ -200,268 +266,6 @@
                 @click="investmentStore.investment_exemption_steps++">Next</button>
         </div>
 
-        <Dialog v-model:visible="investmentStore.dailog_SelfOccupiedProperty" modal
-            :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-            <template #header>
-
-                <h6 class="mb-1 modal-title text-primary">House Property Type</h6>
-                <Dropdown class="w-4 w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-                    v-model="property_type" :options="property_types" optionLabel="name" optionValue="code"
-                    placeholder="Select a Property" />
-            </template>
-
-
-            <!-- SOP -->
-
-            <div v-if="property_type == 'Self Occupied Property'">
-                <div
-                    class="grid my-4 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
-                    <div class="">
-                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
-                            Name</label>
-                        <input type="text" id="lender_name" v-model="investmentStore.sop.lender_name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
-                            PAN</label>
-                        <input type="text" id="lender_name" v-model="investmentStore.sop.lender_pan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-
-
-
-                    <div class="">
-
-                        <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
-                            Type</label>
-                        <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-                            v-model="investmentStore.sop.lender_type" :options="lender_types" optionLabel="name"
-                            optionValue="code" placeholder="Select a Property" />
-                        <!-- <select id="lender_type" v-model="investmentStore.sop.lender_type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        <option selected>Choose Type</option>
-                        <option>Others</option>
-                        <option>Financial Institution</option>
-
-                    </select> -->
-                    </div>
-                    <div class="">
-                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Loss
-                            From Housing Property</label>
-                        <input type="text" id="lender_name" v-model="investmentStore.sop.loss_from_housing_property"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                </div>
-                <div
-                    class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
-                    <div class="">
-                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
-                            Address</label>
-                        <!-- {{-- <input type="text" id="lender_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required> --}} -->
-                        <textarea name="" id="" rows="3" v-model="investmentStore.sop.address"
-                            class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required></textarea>
-                    </div>
-                </div>
-                <div class="text-end">
-                    <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                        @click="investmentStore.saveSelfOccupiedProperty">Save</button>
-                </div>
-
-            </div>
-
-
-            <!-- LOP -->
-
-            <div v-if="property_type == 'Let Out Property'">
-
-                <div
-                    class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
-                    <div class="">
-                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
-                            Name</label>
-                        <input type="text" id="lender_name" v-model="investmentStore.lop.lender_name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-                        <label for="lender_pan" class="block mb-2 font-medium text-gray-900 ">Lender
-                            PAN</label>
-                        <input type="text" id="lender_pan" v-model="investmentStore.lop.lender_pan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-
-
-                    <div class="">
-
-                        <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
-                            Type</label>
-                        <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-                            v-model="investmentStore.lop.lender_type" :options="lender_types" optionLabel="name"
-                            optionValue="code" placeholder="Select a Property" />
-                        <!-- <select id="lender_type" v-model="investmentStore.lop.lender_type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        <option selected>Choose Type</option>
-                        <option>Others</option>
-                        <option>Financial Institution</option>
-
-                    </select> -->
-                    </div>
-
-                    <div class="">
-                        <label for="rend_received" class="block mb-2 font-medium text-gray-900 ">Rent
-                            Received</label>
-                        <input type="text" id="rend_received" v-model="investmentStore.lop.rent_received"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-
-                        <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
-                            Tax</label>
-
-                        <input type="text" id="municipal_tax" v-model="investmentStore.lop.municipal_tax"
-                            @input="investmentStore.income_loss_calculation"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-                        <label for="maintenance" class="block mb-2 font-medium text-gray-900">Maintenance</label>
-                        <input type="text" id="maintenance" v-model="investmentStore.lop.maintenance" readonly
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                        <span class="text-sm font-semibold text-gray-500">(Auto-calculated)</span>
-                    </div>
-                    <div class="">
-                        <label for="Net_Value" class="block mb-2 font-medium text-gray-900 ">Net
-                            Value</label>
-                        <input type="text" id="Net_Value" v-model="investmentStore.lop.net_value" readonly
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                            required>
-                        <span class="text-sm font-semibold text-gray-500">(Auto-calculated)</span>
-                    </div>
-                    <div class="">
-                        <label for="Interest" class="block mb-2 font-medium text-gray-900 ">Interest</label>
-                        <input type="text" id="Interest" v-model="investmentStore.lop.interest"
-                            @input="investmentStore.income_loss_calculation"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-
-                    </div>
-                    <div class="">
-                        <label for="Income/Loss" class="block mb-2 font-medium text-gray-900 ">Income/Loss</label>
-                        <input type="text" id="Income/Loss" v-model="investmentStore.lop.income_loss" readonly
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                        <span class="text-sm font-semibold text-gray-500">(Auto-calculated)</span>
-                    </div>
-                </div>
-                <div class="text-end">
-                    <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                        @click="investmentStore.saveLetOutProperty">Save</button>
-                </div>
-
-            </div>
-
-
-            <!-- DLOP -->
-
-            <div v-if="property_type == 'Deemed Let Out Property'">
-                <div
-                    class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
-                    <div class="">
-                        <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
-                            Name</label>
-                        <input type="text" id="lender_name" v-model="investmentStore.dlop.lender_name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-                        <label for="lender_pan" class="block mb-2 font-medium text-gray-900 ">Lender
-                            PAN</label>
-                        <input type="text" id="lender_pan" v-model="investmentStore.dlop.lender_pan"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-
-
-                    <div class="">
-
-                        <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
-                            Type</label>
-                        <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-                            v-model="investmentStore.dlop.lender_type" :options="lender_types" optionLabel="name"
-                            optionValue="code" placeholder="Select a Property" />
-
-                    </div>
-
-                    <div class="">
-                        <label for="rend_received" class="block mb-2 font-medium text-gray-900 ">Rent
-                            Received</label>
-                        <input type="text" id="rend_received" v-model="investmentStore.dlop.rent_received"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-
-                        <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
-                            Tax</label>
-                        <!-- {{ -- < select id = "municipal_tax"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " >
-                    <option selected > Choose Municipal < /option>
-
-                        < /select> --}} -->
-                        <input type="text" id="municipal_tax" v-model="investmentStore.dlop.municipal_tax"
-                            @input="investmentStore.income_loss_calculation"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-                        <label for="maintenance" class="block mb-2 font-medium text-gray-900 ">Maintenance</label>
-                        <input type="text" id="maintenance" v-model="investmentStore.dlop.maintenance" readonly
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                        <span class="text-sm font-semibold text-gray-500">(Auto-calculated)</span>
-                    </div>
-                    <div class="">
-                        <label for="Net_Value" class="block mb-2 font-medium text-gray-900 ">Net
-                            Value</label>
-                        <input type="text" id="Net_Value" v-model="investmentStore.dlop.net_value" readonly
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                            required>
-                        <span class="text-sm font-semibold text-gray-500">(Auto-calculated)</span>
-                    </div>
-                    <div class="">
-                        <label for="Interest" class="block mb-2 font-medium text-gray-900 ">Interest</label>
-                        <input type="text" id="Interest" v-model="investmentStore.dlop.interest"
-                            @input="investmentStore.income_loss_calculation"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                    </div>
-                    <div class="">
-                        <label for="Income/Loss" class="block mb-2 font-medium text-gray-900 ">Income/Loss</label>
-                        <input type="text" id="Income/Loss" v-model="investmentStore.dlop.income_loss" readonly
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            required>
-                        <span class="text-sm font-semibold text-gray-500">(Auto-calculated)</span>
-                    </div>
-                </div>
-                <div class="text-end">
-                    <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                        @click="investmentStore.saveDeemedLetOutProperty">Save</button>
-                </div>
-
-            </div>
-
-
-        </Dialog>
 
 
         <!-- Code End -->
@@ -693,16 +497,74 @@
 
 
 
-    <!-- <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-        Let Out Property</button>
-    <button  class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-        Deemed Let Out Property</button> -->
+
+
+    <Dialog v-model:visible="investmentStore.dailog_SelfOccupiedProperty" modal
+        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+        <template #header>
+            <h6 class="mb-1 modal-title text-primary">Self Occupied Property</h6>
+        </template>
+        <div class="grid my-4 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
+            <div class="">
+                <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
+                    Name</label>
+                <input type="text" id="lender_name" v-model="investmentStore.sop.lender_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    required>
+            </div>
+            <div class="">
+                <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
+                    PAN</label>
+                <input type="text" id="lender_name" v-model="investmentStore.sop.lender_pan"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    required>
+            </div>
 
 
 
+            <div class="">
+
+                <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
+                    Type</label>
+                <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                    v-model="investmentStore.sop.lender_type" :options="lender_types" optionLabel="name" optionValue="code"
+                    placeholder="Select a Property" />
+                <!-- <select id="lender_type" v-model="investmentStore.sop.lender_type"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                        <option selected>Choose Type</option>
+                        <option>Others</option>
+                        <option>Financial Institution</option>
+
+                    </select> -->
+            </div>
+            <div class="">
+                <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Loss
+                    From Housing Property</label>
+                <input type="text" id="lender_name" v-model="investmentStore.sop.loss_from_housing_property"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    required>
+            </div>
+        </div>
+        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
+            <div class="">
+                <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
+                    Address</label>
+                <!-- {{-- <input type="text" id="lender_name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                            required> --}} -->
+                <textarea name="" id="" rows="3" v-model="investmentStore.sop.address"
+                    class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                    required></textarea>
+            </div>
+        </div>
+        <div class="text-end">
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
+                @click="investmentStore.saveSelfOccupiedProperty">Save</button>
+        </div>
 
 
-    <!-- 
+    </Dialog>
+
     <Dialog v-model:visible="investmentStore.dailog_LetOutProperty" modal
         :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
@@ -710,7 +572,7 @@
         </template>
 
 
-        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 my-4">
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                     Name</label>
@@ -782,11 +644,11 @@
                     required>
             </div>
             <div class="text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                @click="investmentStore.saveLetOutProperty">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
+                    @click="investmentStore.saveLetOutProperty">Save</button>
+            </div>
         </div>
-        </div>
-       
+
 
 
     </Dialog>
@@ -798,7 +660,7 @@
             <h6 class="mb-1 modal-title text-primary">Deemed Let Out Property</h6>
         </template>
 
-        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3">
+        <div class="grid mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 my-4">
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                     Name</label>
@@ -839,7 +701,7 @@
 
                 <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
                     Tax</label>
-              
+
                 <input type="text" id="municipal_tax" v-model="investmentStore.dlop.municipal_tax"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
@@ -875,9 +737,7 @@
                 @click="investmentStore.saveDeemedLetOutProperty">Save</button>
         </div>
 
-
-
-    </Dialog> -->
+    </Dialog>
 </template>
 
 
