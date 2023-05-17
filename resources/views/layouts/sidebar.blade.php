@@ -765,6 +765,12 @@
                                             Template
                                         </span></a>
                                 </li>
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+
+                                <li lass="nav-item">
+                                    <a href="/documents_settings" class="nav-link"><span>Documents Settings</span></a>
+                                </li>
+                                @endcan
                                 <li class="nav-item">
                                     {{-- <a href="{{ route('manage_emp_mail_notifications') }}" class="nav-link"><span>Document
                                             Manage Employee Mail Notifications

@@ -77,9 +77,10 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
              month : month,
              year : year
         }).then((response) => {
-             console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
+            //  console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
              console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
-             window.open(`data:application/pdf;base64,${response.data.data}`);
+              window.open(`data:application/pdf;base64,${response.data.data}`);
+            //saveAs(`data:application/pdf;base64,${response.data.data}`, 'payslip.pdf');
 
          })
 

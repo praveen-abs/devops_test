@@ -143,84 +143,15 @@ class VmtAttendanceController extends Controller
         Also used VJS and gridjs table
 
     */
-    public function fetchLeaveRequestDetails(Request $request)
+    public function getLeaveRequestDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        //Convert  'Pending', ' Approved' , 'Rejected' from csv to array
-        $statusArray = explode(",", $request->statusArray);
+        $response = $serviceVmtAttendanceService->getLeaveRequestDetails();
 
-        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
-        $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
-
-        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
-         $start_date =  $time_periods_of_year_query->start_date;
-
-        $end_date   = $time_periods_of_year_query->end_date;
-
-        if ($request->type == 'org') {
-            $employeeLeaves_Org = '';
-
-            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
-
-            foreach ($employeeLeaves_Org as $singleItem) {
-
-               //Map emp names
-               if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-
-                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-
-               }
-
-               //Map reviewer names
-               if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
-               }
-
-               //Map leave types
-                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
-            }
-
-            return $employeeLeaves_Org;
-        }
-        else
-        if ($request->type == 'team') {
-            //Get the list of employees for the given Manager
-            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', auth::user()->user_code)->get('user_id');
-
-            //use wherein and fetch the relevant records
-            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)->whereIn('status', $statusArray)->get();
-
-
-            //dd($map_allEmployees[1]["name"]);
-            foreach ($employeeLeaves_team as $singleItem) {
-
-                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-                }
-
-                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
-
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
-                }
-
-                //Map leave types
-                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
-
-            }
-
-
-            //dd($employeeLeaves_team);
-            return $employeeLeaves_team;
-        }
-        else
-        if ($request->type == 'employee') {
-
-            return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)
-                                    ->whereBetween('start_date',[$start_date,$end_date])->get();
-        }
+        return response()->json([
+            "status" => "success",
+            "message" => "",
+           "data" => $response
+        ]);
     }
 
     public function fetchSingleLeavePolicyRecord($id)
@@ -659,7 +590,7 @@ class VmtAttendanceController extends Controller
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
 
                 //If direction is only "in" or empty or "-"
-                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA")
+                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PA")
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
