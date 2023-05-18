@@ -163,18 +163,18 @@ class VmtInvestmentsController extends Controller
     }
 
      // Get And Delete for House Property in Investment's Forms
-    public function fetchHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){ 
+    public function fetchHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
         $user_code = $request->user_code;
         $fs_id = $request->hop;
 
         return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code,$fs_id);
     }
-    public function deleteHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){ 
+    public function deleteHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
 
         return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
     }
 
-   
+
 
     public function showInvestmentsFormMgmtPage(Request $request)
     {

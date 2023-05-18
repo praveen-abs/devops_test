@@ -341,29 +341,26 @@ class VmtInvestmentsService
 
     public function fetchHousePropertyDetails($user_code, $fs_id)
     {
+             $user_id = User::where('user_code', $user_code)->first()->id;
 
-        $user_id = User::where('user_code', $user_code)->first()->id;
-
-         $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
-
-       // dd($form_assignrd_id);
-
+              $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
         $res =array();
-
         foreach ($fs_id as $single_fs_id) {
-            $rentalDetails = VmtInvEmpFormdata::
-                where('fs_id', $single_fs_id)
-                ->where('f_emp_id',$form_assigned_id)
-                ->first();
+            $query_rentalDetails = VmtInvEmpFormdata::where('fs_id', $single_fs_id)->where('f_emp_id',$form_assigned_id);
 
+            if($query_rentalDetails->exists())
+            {
+                $rentalDetails = $query_rentalDetails->first();
 
-            $rentalDetail['id'] = $rentalDetails->id;
-            $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
-            $rentalDetail['fs_id'] = $rentalDetails->fs_id;
-            $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
-            $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
-            array_push($res,$rentalDetail);
+                $rentalDetail['id'] = $rentalDetails->id;
+                $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
+                $rentalDetail['fs_id'] = $rentalDetails->fs_id;
+                $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
+                $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
+                array_push($res,$rentalDetail);
+            }
+
     }
 
 
