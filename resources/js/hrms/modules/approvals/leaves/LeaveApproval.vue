@@ -47,7 +47,7 @@
     <div>
       <DataTable :value="att_leaves" :paginator="true" :rows="10" dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" sortField="leaverequest_date" :sortOrder="-1"
         v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']"
         style="white-space: nowrap;">
         <template #empty> No Employee found </template>
