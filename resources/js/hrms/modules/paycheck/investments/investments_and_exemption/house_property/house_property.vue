@@ -138,9 +138,10 @@
                     New</button>
             </div> -->
             <!-- {{ investmentStore.housePropertySource}} -->
-            
+            <!-- {{ investmentStore.house_props_data.json_popups_value. }} -->
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
+                    :value="investmentStore.house_props_data"
                     :sortOrder="+1" sortField="property_type" :paginator="true" :rows="10" scrollable
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -148,115 +149,109 @@
                     responsiveLayout="scroll">
 
 
-                    <Column header="Property Type" field="property_type" style="min-width: 15rem" frozen>
+                    <Column header="Property Type" field="json_popups_value.property_type" style="min-width: 15rem" frozen>
                         <template #body="slotProps">
-                        
-                            <div v-if="slotProps.data.property_type == 'Deemed Let Out Property'">
-                                <span class="text-lg font-bold text-red-400">{{ slotProps.data['json_popups_value'].property_type }}</span>
-                            </div>
-                            <div v-if="slotProps.data.property_type == 'Self Occupied Property'">
-                                <span class="text-lg font-bold text-blue-500">{{ slotProps.data['json_popups_value'].property_type }}</span>
-                            </div>
-                            <div v-if="slotProps.data.property_type == 'Let Out Property'">
-                                <span class="text-lg font-bold text-green-500">{{ slotProps.data['json_popups_value'].property_type }}</span>
-                            </div>
-
+                            {{ slotProps.data.json_popups_value.property_type }}
                         </template>
                     </Column>
 
                     <Column header="Lender Name" field="lender_name" style="min-width: 12rem">
                         <template #body="slotProps">
-                        <!-- {{  slotProps.data['json_popups_value'].lender_name }} -->
+                        {{  slotProps.data['json_popups_value'].lender_name }}
+                        <!-- {{ slotProps.data.json_popups_value.lender_name }} -->
                       </template>
                     </Column>
 
                     <Column field="lender_pan" header="Lender PAN" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <!-- {{  slotProps.data['json_popups_value'].lender_pan }} -->
+                            {{  slotProps.data['json_popups_value'].lender_pan }}
+                            <!-- {{ slotProps.data.json_popups_value.lender_pan }} -->
                       </template>
                     </Column>
 
                     <Column field="lender_type" header="Lender Type " style="min-width: 12rem">
                         <template #body="slotProps">
+                            <!-- {{ slotProps.data.json_popups_value.lender_type }} -->
 
-                            <!-- <p v-if="slotProps.data['json_popups_value'].lender_type == ''">
+                            <p v-if="slotProps.data['json_popups_value'].lender_type == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{  slotProps.data['json_popups_value'].lender_type }}
-                            </p> -->
+                            </p>
                         </template>
                     </Column>
 
                     <Column field="loss_from_housing_property" header="Loss From Housing Property" style="min-width: 18rem">
                         <template #body="slotProps">
-                            <!-- <p v-if="slotProps.data['json_popups_value'].loss_from_housing_property == ''">
+                            <!-- {{ slotProps.data.json_popups_value.loss_from_housing_property }} -->
+                            <p v-if="slotProps.data['json_popups_value'].loss_from_housing_property == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{ slotProps.data['json_popups_value'].loss_from_housing_property }}
-                            </p>  -->
+                            </p> 
                         </template>
                     </Column>
                     <Column field="rent_received" header="Rent Received" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <!-- <p v-if="slotProps.data['json_popups_value'].rent_received == ''">
+                            <p v-if="slotProps.data['json_popups_value'].rent_received == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{slotProps.data['json_popups_value'].rent_received}}
-                            </p> -->
+                            </p>
                         </template>
                     </Column>
                     <Column field="maintenance" header="Maintenace" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <!-- <p v-if="slotProps.data['json_popups_value'].maintenance == ''">
+                            <p v-if="slotProps.data['json_popups_value'].maintenance == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{ slotProps.data['json_popups_value'].maintenance }}
-                            </p> -->
+                            </p>
                         </template>
                     </Column>
 
                     <Column field="net_value" header="Net Value" style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <!-- <p v-if="slotProps.data['json_popups_value'].net_value == ''">
+                            <p v-if="slotProps.data['json_popups_value'].net_value == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{ slotProps.data['json_popups_value'].net_value }}
-                            </p> -->
+                            </p>
                         </template>
                     </Column>
                     <Column field="interest" header="Interest" style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <!-- <p v-if="slotProps.data['json_popups_value'].interest == ''">
+                            <p v-if="slotProps.data['json_popups_value'].interest == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{ slotProps.data['json_popups_value'].interest }}
-                            </p> -->
+                            </p>
                         </template>
                     </Column>
                     <Column field="income_loss" header="Income/Loss" style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <!-- <p v-if="slotProps.data['json_popups_value'].income_loss == ''">
+                            <p v-if="slotProps.data['json_popups_value'].income_loss == ''">
                                 -
                             </p>
                             <p v-else>
                                 {{ slotProps.data['json_popups_value'].income_loss }}
-                            </p> -->
+                            </p>
                         </template>
                     </Column>
-                    <Column field="" header="Action" style="min-width: 12rem">
-                        <template>
-                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl">
+                    <Column field="" header="Action" style="min-width: 12rem" alignFrozen="right" frozen>
+                        <template #body="slotProps">
+                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl" @click="investmentStore.editHouseProps(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="w-10 h-8">
+                                    stroke="currentColor" class="w-10 h-8"> 
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                 </svg>
@@ -778,6 +773,6 @@ const lender_types = ref([
 ]);
 
 onMounted(() => {
-    investmentStore.fetchPropertyType()
+    // investmentStore.fetchPropertyType()
 })
 </script>

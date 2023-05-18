@@ -126,20 +126,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                      taxSavingInvestments.max_limit = max_limit
                 });
                 
-                // housePropertySource.value.forEach(item => {
-                //     // console.log(item);
-                //     if(item.particular ="Self Occupied Property"){
-                //         hop.push(item.fs_id)
-                //     }else
-                //     if(item.particular ="Let Out Property"){
-                //         hop.push(item.fs_id)
-                //     }else
-                //     if(item.particular ="Deemed Let Out Property"){
-                //         hop.push(item.fs_id)
-                //     }
-
-                //     console.log(Object.values(hop));
-                // });
+                housePropertySource.value.forEach(item => {
+                    // console.log(item);        
+                        hop.push(item.fs_id)
+                    console.log(Object.values(hop));
+                });
             })
 
     }
@@ -639,7 +630,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             hop
         }).then(res => {
             console.log(res.data);
-            house_props_data.value = res.data
+            house_props_data.value = Object.values(res.data)
         })
     }
 
@@ -662,6 +653,29 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(data);
         dlop.user_code = service.current_user_code
         dlop.fs_id = data.fs_id
+    }
+
+    const editHouseProps = (currentRowData) =>{
+        console.log(currentRowData);
+        if(currentRowData.json_popups_value.property_type == "Self Occupied Property"){
+            dailog_SelfOccupiedProperty.value = true
+            sop.lender_name = currentRowData.json_popups_value.lender_name
+            sop.lender_pan = currentRowData.json_popups_value.lender_pan
+            sop.lender_type = currentRowData.json_popups_value.lender_type
+            sop.loss_from_housing_property = currentRowData.json_popups_value.loss_from_housing_property
+            sop.property_type = currentRowData.json_popups_value.property_type
+            sop.address = currentRowData.json_popups_value.address
+        }else
+        if(currentRowData.json_popups_value.property_type == "Let Out Property"){
+
+        }else
+        if(currentRowData.json_popups_value.property_type == "Deemed Let Out Property"){
+
+        }else{
+
+        }
+
+
     }
 
     const saveSelfOccupiedProperty = () => {
@@ -727,7 +741,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // House Property Begins
 
         house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty, income_loss_calculation,
-        fetchPropertyType, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,
+        fetchPropertyType, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,editHouseProps,
 
 
         // House Property End
