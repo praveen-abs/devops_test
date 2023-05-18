@@ -452,8 +452,44 @@ class VmtTestingController extends Controller
                                            // 'vmt_inv_f_emp_assigned.user_id',
                                            // 'vmt_inv_emp_formdata.json_popups_value',
                                         ]
-                                    );
+                                    )->toArray();
 
+
+                                       // dd($query_inv_form_template);
+        $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata','vmt_inv_emp_formdata.f_emp_id','=','vmt_inv_f_emp_assigned.id')
+                                    ->where('vmt_inv_f_emp_assigned.user_id',$user_id)->get()->toArray();
+                                //  dd($inv_emp_value );
+
+
+                                      //  $arr = array();
+                                    $count =0;
+                                    foreach($query_inv_form_template as $single_template){
+
+                                        if(!array_key_exists($single_template["fs_id"], $inv_emp_value)){
+                                            
+                                           // echo "true";
+
+                                            $single_template["fs_id"] = array();
+                                          
+
+                                        }else{
+                                         
+                                           array_push($single_template["fs_id"],$inv_emp_value);
+
+
+                                        }
+                                        unset($query_inv_form_template[$count]);
+
+                                         $count++;
+
+                                    }
+
+                                    dd($query_inv_form_template);
+                                 //   dd($single_inv_form_template);
+
+
+
+                                  //  dd($inv_emp_value);
                                     //dd($query_inv_form_template->toArray());
         //Get the emp filled data
 
@@ -506,7 +542,8 @@ class VmtTestingController extends Controller
                                     //     array_push(($query_inv_form_template[$single_inv_form_template->section_group]), $single_inv_form_template);
                                     //             dd($query_inv_form_template[$single_inv_form_template->section_group]);
                                     // }
-                                        dd( $query_inv_form_template);
+
+                                     //   dd([$query_inv_form_template,$simma->toArray()]);
 
         $response["form_name"] = $query_form_details->form_name;
         $response["form_details"] = $query_inv_form_template;
@@ -530,11 +567,10 @@ class VmtTestingController extends Controller
 
         $user_id =  User::where('user_code', auth()->user()->user_code)->first()->id;
 
-
            $simma = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata','vmt_inv_emp_formdata.f_emp_id','=','vmt_inv_f_emp_assigned.id')
                                         ->where('vmt_inv_f_emp_assigned.user_id',$user_id)->get();
 
-                                       //dd($simma);
+                                       dd($simma->toArray());
         //      $sum=0;
         //    foreach( $simma as $simmas){
         //         $sum +=  $simmas['dec_amount'];

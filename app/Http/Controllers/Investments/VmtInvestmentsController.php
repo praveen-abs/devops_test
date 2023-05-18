@@ -38,7 +38,7 @@ class VmtInvestmentsController extends Controller
 
     public function SaveInvDetails(Request $request)
     {
-        // dd($request->all());
+       //  dd($request->all());
 
 
         $form_id = $request->form_id;
@@ -81,6 +81,8 @@ class VmtInvestmentsController extends Controller
                 $emp_formdata->f_emp_id = $query_assign->id;
                 $emp_formdata->fs_id = $singleFormData['fs_id'];
                 $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+             //    $emp_formdata->json_popups_value = $singleFormData['json_popups_value'];
+
             //   $emp_formdata->json_popups_value = $sima ?? "none";
                 $emp_formdata->save();
 
@@ -93,7 +95,7 @@ class VmtInvestmentsController extends Controller
 
     }
 
-    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){  
+    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
         $user_code = $request->user_code;
         $fs_id = $request->fs_id;
 
@@ -106,7 +108,7 @@ class VmtInvestmentsController extends Controller
     }
 
     public function saveSectionPopups(Request $request){
-        //  dd($request->all());
+        // dd($request->all());
         $json_decodeHra = json_encode($request->all());
 
         // dd($json_decodeHra);
