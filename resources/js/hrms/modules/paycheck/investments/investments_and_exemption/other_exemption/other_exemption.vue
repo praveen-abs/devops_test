@@ -30,7 +30,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data.json_popups_value.interest_amount_paid }}
+                                {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EESlotData(slotProps.data)"
@@ -40,7 +40,7 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data.json_popups_value.interest_amount_paid }}
+                                {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}
 
                             </div>
                             <div v-else>
@@ -51,7 +51,7 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data.json_popups_value.interest_amount_paid }}
+                                {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
@@ -69,8 +69,24 @@
                         </div>
                     </template>
                     <template #editor="{ data, field }">
-                        <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
+                        <div v-if="data.section == '80EE'">
+                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency" currency="INR" locale="en-US"
+                            class="w-5 text-lg font-semibold" />         
+                        </div>
+                        <div v-else-if="data.section == '80EEA'">
+                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency" currency="INR" locale="en-US"
+                            class="w-5 text-lg font-semibold" />    
+                        </div>
+                        <div v-else-if="data.section == '80EEB'">
+                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency" currency="INR" locale="en-US"
+                            class="w-5 text-lg font-semibold" />    
+                        </div>
+                        <div v-else>
+                            <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
                             class="w-5 text-lg font-semibold" />
+                        </div>
+                    
+                        
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
@@ -347,11 +363,17 @@ const onRowEditSave = (event) => {
     investmentStore.otherExemptionSource[index] = newData;
     investmentStore.updatedRowSource = newData;
     investmentStore.getFormId = 1
+    let dec_amount = '';
+    if(newData.section == '80EE'){
+            dec_amount =  newData.json_popups_value.interest_amount_paid
+        }else{
+            dec_amount = newData.dec_amount
+        }
     var data = {
         fs_id: newData.fs_id,
-        declaration_amount: newData.dec_amount,
+        declaration_amount: dec_amount,
     }
-
+    console.log(dec_amount);
     investmentStore.formDataSource.push(data)
     console.log(newData);
 };

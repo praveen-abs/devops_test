@@ -148,7 +148,7 @@
 
                     <Column header="Lender Name" field="lender_name" style="min-width: 12rem">
                         <template #body="slotProps">
-                        {{  slotProps.data['json_popups_value'].lender_name }}
+                        <!-- {{  slotProps.data['json_popups_value'].lender_name }} -->
                       </template>
                     </Column>
 
