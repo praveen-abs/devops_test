@@ -96,7 +96,8 @@ class VmtInvestmentsService
                         'vmt_inv_section_group.section_group',
                         'vmt_inv_formsection.id as fs_id',
                         'vmt_inv_formsection.form_id',
-                        'vmt_inv_emp_formdata.dec_amount'
+                        'vmt_inv_emp_formdata.dec_amount',
+                        'vmt_inv_emp_formdata.json_popups_value'
 
                     ]
                 );

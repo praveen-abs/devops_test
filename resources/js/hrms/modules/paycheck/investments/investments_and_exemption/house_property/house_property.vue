@@ -119,7 +119,8 @@
                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                     New</button>
             </div> -->
-            <!-- {{ investmentStore.housePropertySource }} -->
+            <!-- {{ investmentStore.housePropertySource}} -->
+            
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
                     :sortOrder="+1" sortField="property_type" :paginator="true" :rows="10" scrollable
@@ -132,107 +133,106 @@
 
                     <Column header="Property Type" field="property_type" style="min-width: 15rem" frozen>
                         <template #body="slotProps">
+                        
                             <div v-if="slotProps.data.property_type == 'Deemed Let Out Property'">
-                                <span class="text-lg font-bold text-red-400">{{ slotProps.data.property_type }}</span>
+                                <span class="text-lg font-bold text-red-400">{{ slotProps.data['json_popups_value'].property_type }}</span>
                             </div>
                             <div v-if="slotProps.data.property_type == 'Self Occupied Property'">
-                                <span class="text-lg font-bold text-blue-500">{{ slotProps.data.property_type }}</span>
+                                <span class="text-lg font-bold text-blue-500">{{ slotProps.data['json_popups_value'].property_type }}</span>
                             </div>
                             <div v-if="slotProps.data.property_type == 'Let Out Property'">
-                                <span class="text-lg font-bold text-green-500">{{ slotProps.data.property_type }}</span>
+                                <span class="text-lg font-bold text-green-500">{{ slotProps.data['json_popups_value'].property_type }}</span>
                             </div>
 
                         </template>
                     </Column>
 
                     <Column header="Lender Name" field="lender_name" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+                        <template #body="slotProps">
+                        {{  slotProps.data['json_popups_value'].lender_name }}
+                      </template>
                     </Column>
 
                     <Column field="lender_pan" header="Lender PAN" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+                        <template #body="slotProps">
+                            <!-- {{  slotProps.data['json_popups_value'].lender_pan }} -->
+                      </template>
                     </Column>
 
                     <Column field="lender_type" header="Lender Type " style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <p v-if="slotProps.data.lender_type == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].lender_type == ''">
                                 -
                             </p>
                             <p v-else>
-                                {{ slotProps.data.lender_type }}
-                            </p>
+                                {{  slotProps.data['json_popups_value'].lender_type }}
+                            </p> -->
                         </template>
                     </Column>
 
                     <Column field="loss_from_housing_property" header="Loss From Housing Property" style="min-width: 18rem">
                         <template #body="slotProps">
-
-                            <p v-if="slotProps.data.loss_from_housing_property == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].loss_from_housing_property == ''">
                                 -
                             </p>
                             <p v-else>
-                                {{ slotProps.data.loss_from_housing_property }}
-                            </p>
+                                {{ slotProps.data['json_popups_value'].loss_from_housing_property }}
+                            </p>  -->
                         </template>
                     </Column>
                     <Column field="rent_received" header="Rent Received" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <p v-if="slotProps.data.rent_received == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].rent_received == ''">
                                 -
                             </p>
                             <p v-else>
-                                <!-- {{ slotProps.data.rent_received }} -->
-                            </p>
+                                {{slotProps.data['json_popups_value'].rent_received}}
+                            </p> -->
                         </template>
                     </Column>
                     <Column field="maintenance" header="Maintenace" style="min-width: 12rem">
                         <template #body="slotProps">
-
-                            <p v-if="slotProps.data.maintenance == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].maintenance == ''">
                                 -
                             </p>
                             <p v-else>
-                                {{ slotProps.data.maintenance }}
-                            </p>
+                                {{ slotProps.data['json_popups_value'].maintenance }}
+                            </p> -->
                         </template>
                     </Column>
 
                     <Column field="net_value" header="Net Value" style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <p v-if="slotProps.data.net_value == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].net_value == ''">
                                 -
                             </p>
                             <p v-else>
-                                {{ slotProps.data.net_value }}
-                            </p>
+                                {{ slotProps.data['json_popups_value'].net_value }}
+                            </p> -->
                         </template>
                     </Column>
                     <Column field="interest" header="Interest" style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <p v-if="slotProps.data.interest == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].interest == ''">
                                 -
                             </p>
                             <p v-else>
-                                {{ slotProps.data.interest }}
-                            </p>
+                                {{ slotProps.data['json_popups_value'].interest }}
+                            </p> -->
                         </template>
                     </Column>
                     <Column field="income_loss" header="Income/Loss" style="min-width: 12rem">
                         <template #body="slotProps">
 
-                            <p v-if="slotProps.data.income_loss == ''">
+                            <!-- <p v-if="slotProps.data['json_popups_value'].income_loss == ''">
                                 -
                             </p>
                             <p v-else>
-                                {{ slotProps.data.income_loss }}
-                            </p>
+                                {{ slotProps.data['json_popups_value'].income_loss }}
+                            </p> -->
                         </template>
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">

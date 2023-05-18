@@ -30,7 +30,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <!-- {{ slotProps.data.json_popups_value.interest_amount_paid }} -->
+                                {{ slotProps.data.json_popups_value.interest_amount_paid }}
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EESlotData(slotProps.data)"
@@ -40,7 +40,7 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <!-- {{ slotProps.data.json_popups_value.interest_amount_paid }} -->
+                                {{ slotProps.data.json_popups_value.interest_amount_paid }}
 
                             </div>
                             <div v-else>
@@ -51,7 +51,7 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <!-- {{ slotProps.data.json_popups_value.interest_amount_paid }} -->
+                                {{ slotProps.data.json_popups_value.interest_amount_paid }}
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
@@ -62,10 +62,10 @@
                         <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
-                        <div v-else-if="slotProps.data.json">
+                        <div v-else>
                             <InputNumber class="w-6 text-lg font-semibold" v-model="slotProps.data.dec_amt"
-                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                            @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                            currency="INR" locale="en-US" />
                         </div>
                     </template>
                     <template #editor="{ data, field }">
