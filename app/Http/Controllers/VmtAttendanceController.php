@@ -138,14 +138,29 @@ class VmtAttendanceController extends Controller
                                                                     $request->status, $request->review_comment );
     }
 
+    public function getEmployeeLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+    }
+
+    public function getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+    }
+
+    public function getAllEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails( $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+    }
+
+
     /*
         Fetches all leave details
         Also used VJS and gridjs table
 
+        used in leave approvals page only
+
     */
-    public function getLeaveRequestDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function getLeaveRequestDetailsBasedOnCurrentRole(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        $response = $serviceVmtAttendanceService->getLeaveRequestDetails();
+        $response = $serviceVmtAttendanceService->getLeaveRequestDetailsBasedOnCurrentRole();
 
         return response()->json([
             "status" => "success",
