@@ -126,11 +126,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                      taxSavingInvestments.max_limit = max_limit
                 });
                 
-                housePropertySource.value.forEach(item => {
-                    // console.log(item);        
-                        hop.push(item.fs_id)
-                    console.log(Object.values(hop));
-                });
             })
 
     }
@@ -616,7 +611,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             const dlop_net = formula.net_value_cal(dlop.rent_received, dlop.municipal_tax, dlop.maintenance)
             console.log(dlop_net);
             dlop.net_value = dlop_net;
-        }, 1000);
+        }, 100);
         lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value)
         dlop.income_loss = formula.income_loss_cal(dlop.interest, dlop.net_value)
 
@@ -624,6 +619,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     }
 
     const fetchPropertyType = () => {
+        
+        housePropertySource.value.forEach(item => {
+            // console.log(item);        
+                hop.push(item.fs_id)
+            console.log(Object.values(hop));
+        });
 
         axios.post('/investments/fetchHousePropertyDetails',{
             user_code: service.current_user_code,
@@ -683,24 +684,27 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(sop);
         axios.post('/investments/saveSectionPopups', sop).then(res => {
             console.log(res.data);
+        }).finally(()=>{
+            fetchPropertyType()
         })
     }
     const saveLetOutProperty = () => {
         console.log(lop);
         dailog_LetOutProperty.value = false
-        // axios.post('http://localhost:3000/investment',
-        //     lop).then(res => {
-        //         console.log(res.data);
-        //         fetchSelfOccupiedProperty()
-        //     })
+        axios.post('/investments/saveSectionPopups', lop).then(res => {
+            console.log(res.data);
+        }).finally(()=>{
+            fetchPropertyType()
+        })
     }
     const saveDeemedLetOutProperty = () => {
         console.log(dlop);
         dailog_DeemedLetOutProperty.value = false
-        // axios.post('http://localhost:3000/investment', dlop).then(res => {
-        //     console.log(res.data);
-        //     fetchSelfOccupiedProperty()
-        // })
+        axios.post('/investments/saveSectionPopups', dlop).then(res => {
+            console.log(res.data);
+        }).finally(()=>{
+            fetchPropertyType()
+        })
 
     }
 

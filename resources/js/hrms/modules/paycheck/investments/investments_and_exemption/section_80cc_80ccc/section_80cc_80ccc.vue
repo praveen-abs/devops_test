@@ -11,7 +11,7 @@
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 12rem">
+                <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">

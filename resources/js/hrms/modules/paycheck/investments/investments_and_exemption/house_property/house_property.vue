@@ -35,7 +35,7 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Sections" field="section" style="min-width: 8rem">
+                    <Column header="Sections" field="section" style="min-width: 8rem;text-align: left !important;">
                     </Column>
 
                     <Column field="particular" header="Particulars" style="min-width: 12rem">
@@ -66,28 +66,29 @@
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getSopSlotData(slotProps.data)"
-                                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                                    class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                                 </div>                       
                             </div>
-                            <div v-else-if="slotProps.data.particular == 'Let Out Property'">
+                            <div v-if="slotProps.data.particular == 'Let Out Property'">
                                 <div v-if="slotProps.data.json_popups_value">
-                                    {{slotProps.data['json_popups_value'].fs_id}}                          
+                                    {{slotProps.data['json_popups_value'].income_loss}}                          
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getLopSlotData(slotProps.data)"
-                                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                                    class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                                 </div>
                              
                             </div>
-                            <div v-else-if="slotProps.data.particular == 'Deemed Let Out Property'">
+                            <div v-if="slotProps.data.particular == 'Deemed Let Out Property'">
                                 <div v-if="slotProps.data.json_popups_value">
-                                    {{slotProps.data['json_popups_value'].fs_id}}                          
+                                    <!-- {{slotProps.data['json_popups_value'].fs_id}}                           -->
+                                    {{slotProps.data['json_popups_value'].income_loss}}                          
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getDlopSlotData(slotProps.data)"
-                                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
+                                    class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                                 </div>
                               
@@ -623,33 +624,33 @@
                 <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
                     Tax</label>
 
-                <input type="text" id="municipal_tax" v-model="investmentStore.lop.municipal_tax"
+                <input type="text" id="municipal_tax" v-model="investmentStore.lop.municipal_tax" @input="investmentStore.income_loss_calculation"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="maintenance" class="block mb-2 font-medium text-gray-900 ">Maintenance</label>
-                <input type="text" id="maintenance" v-model="investmentStore.lop.maintenance"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                <input type="text" id="maintenance" v-model="investmentStore.lop.maintenance" readonly
+                    class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="Net_Value" class="block mb-2 font-medium text-gray-900 ">Net
                     Value</label>
-                <input type="text" id="Net_Value" v-model="investmentStore.lop.net_value"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                <input type="text" id="Net_Value" v-model="investmentStore.lop.net_value" readonly
+                    class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="Interest" class="block mb-2 font-medium text-gray-900 ">Interest</label>
-                <input type="text" id="Interest" v-model="investmentStore.lop.interest"
+                <input type="text" id="Interest" v-model="investmentStore.lop.interest"  @input="investmentStore.income_loss_calculation"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="Income/Loss" class="block mb-2 font-medium text-gray-900 ">Income/Loss</label>
-                <input type="text" id="Income/Loss" v-model="investmentStore.lop.income_loss"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                <input type="text" id="Income/Loss" v-model="investmentStore.lop.income_loss"  readonly
+                    class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
 
@@ -713,33 +714,33 @@
                 <label for="municipal_tax" class="block mb-2 font-medium text-gray-900 ">Municipal
                     Tax</label>
 
-                <input type="text" id="municipal_tax" v-model="investmentStore.dlop.municipal_tax"
+                <input type="text" id="municipal_tax" v-model="investmentStore.dlop.municipal_tax"  @input="investmentStore.income_loss_calculation"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="maintenance" class="block mb-2 font-medium text-gray-900 ">Maintenance</label>
-                <input type="text" id="maintenance" v-model="investmentStore.dlop.maintenance"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                <input type="text" id="maintenance" v-model="investmentStore.dlop.maintenance" readonly
+                    class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="Net_Value" class="block mb-2 font-medium text-gray-900 ">Net
                     Value</label>
-                <input type="text" id="Net_Value" v-model="investmentStore.dlop.net_value"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
+                <input type="text" id="Net_Value" v-model="investmentStore.dlop.net_value" readonly
+                    class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="Interest" class="block mb-2 font-medium text-gray-900 ">Interest</label>
-                <input type="text" id="Interest" v-model="investmentStore.dlop.interest"
+                <input type="text" id="Interest" v-model="investmentStore.dlop.interest"  @input="investmentStore.income_loss_calculation"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
             <div class="">
                 <label for="Income/Loss" class="block mb-2 font-medium text-gray-900 ">Income/Loss</label>
-                <input type="text" id="Income/Loss" v-model="investmentStore.dlop.income_loss"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                <input type="text" id="Income/Loss" v-model="investmentStore.dlop.income_loss" readonly
+                    class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
         </div>

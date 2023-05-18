@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="25"
+            <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="25"
                 :value="investmentStore.reimbursmentSource" @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
@@ -45,14 +45,14 @@
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>
-                            <InputNumber class="w-6 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
                         </div>
                     </template>
                     <template #editor="{ data, field }">
                         <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="w-6 text-lg font-semibold" />
+                            class="w-5 text-lg font-semibold" />
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">

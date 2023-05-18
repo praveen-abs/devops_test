@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
-                :value="investmentStore.otherExemptionSource" @row-edit-save="onRowEditSave"
-                tableClass="editable-cells-table" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
+            <DataTable ref="dt" dataKey="fs_id" :paginator="true" :rows="25" :value="investmentStore.otherExemptionSource"
+                @row-edit-save="onRowEditSave" tableClass="editable-cells-table" editMode="row"
+                v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -11,7 +11,7 @@
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 12rem">
+                <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -64,29 +64,29 @@
                         </div>
                         <div v-else>
                             <InputNumber class="w-6 text-lg font-semibold" v-model="slotProps.data.dec_amt"
-                            @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                            currency="INR" locale="en-US" />
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
                         </div>
                     </template>
                     <template #editor="{ data, field }">
                         <div v-if="data.section == '80EE'">
-                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />         
+                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency"
+                                currency="INR" locale="en-US" class="w-6 text-lg font-semibold" />
                         </div>
                         <div v-else-if="data.section == '80EEA'">
-                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />    
+                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency"
+                                currency="INR" locale="en-US" class="w-6 text-lg font-semibold" />
                         </div>
                         <div v-else-if="data.section == '80EEB'">
-                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />    
+                            <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency"
+                                currency="INR" locale="en-US" class="w-6 text-lg font-semibold" />
                         </div>
                         <div v-else>
                             <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />
+                                class="w-6 text-lg font-semibold" />
                         </div>
-                    
-                        
+
+
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
@@ -96,7 +96,6 @@
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                         </div>
                         <div v-else>
-                            <!-- <Tag value="Pending" severity="warning" /> -->
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
@@ -137,8 +136,6 @@
                         required>
                 </div>
 
-
-
                 <div class="">
 
                     <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
@@ -175,8 +172,6 @@
                 <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
                     @click="investmentStore.save80EE">Save</button>
             </div>
-
-
         </Dialog>
 
 
@@ -253,10 +248,6 @@
                         this section is Rs. 1.5 Lakhs for electric vehicle purchase)</span> </h6>
             </template>
 
-
-
-
-
             <div
                 class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
                 <div class="">
@@ -267,25 +258,12 @@
                         required>
                 </div>
 
-
-
                 <div class="">
-
                     <label for="vechicle_brand" class="block mb-2 font-medium text-gray-900 ">Vechicle Brand</label>
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         @change="switchVechileModel(investmentStore.other_exe_80EEB.vechicle_brand)"
                         v-model="investmentStore.other_exe_80EEB.vechicle_brand" :options="vechicle_types"
                         optionLabel="vechicle_model" optionValue="value" placeholder="Select a Vechicle Brand" />
-                    <!-- <select id="vechicle_brand" v-model="investmentStore.other_exe_80EEB.vechicle_brand"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        <option selected hidden disabled>Choose Vechicle</option>
-                        <option value="">TATA</option>
-                        <option value="">Hyundai</option>
-                        <option value="">Mahindra</option>
-                        <option value="">Kia</option>
-                        <option value="">MG</option>
-
-                    </select> -->
                 </div>
 
                 <div class="">
@@ -294,33 +272,6 @@
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         v-model="investmentStore.other_exe_80EEB.vechicle_model" :options="vechicle_model_options"
                         optionLabel="vechicle_model" optionValue="value" placeholder="Select a Vechicle Model" />
-                    <!-- {{-- <input type="text" id=""
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required> --}} -->
-                    <!-- <select id="vechicle_model" v-model="investmentStore.other_exe_80EEB.vechicle_model"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        <option selected hidden>Choose Model</option>
-                        <option value="">Tata Tiago</option>
-                        <option value="">Tata Tigor</option>
-                        <option value="">Tata Nexon</option>
-                        <option value="">Tata AVINYA</option>
-                        <option value="">Tata Punch</option>
-                        <option value="">Tata CURVV SUV Coupe</option>
-                        <option value="">Mahindra eVerito</option>
-                        <option value="">Mahindra e2oPlus</option>
-                        <option value="">Mahindra eSupro</option>
-                        <option value="">Mahindra Treo</option>
-                        <option value="">Mahindra Treo Zor</option>
-                        <option value="">Mahindra eAlfa Mini</option>
-                        <option value="">Hyundai Kona Electric</option>
-                        <option value="">Hyundai IONIQ 5</option>
-                        <option value="">Mahindra XUV400 EV</option>
-                        <option value="">Mahindra E Verito</option>
-                        <option value="">Kia EV6</option>
-                        <option value="">MG ZS EV</option>
-
-
-                    </select> -->
                 </div>
 
                 <div class="">
@@ -337,10 +288,7 @@
                 <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
                     @click="investmentStore.save80EEB">Save</button>
             </div>
-
-
         </Dialog>
-
 
     </div>
 </template>
@@ -364,11 +312,18 @@ const onRowEditSave = (event) => {
     investmentStore.updatedRowSource = newData;
     investmentStore.getFormId = 1
     let dec_amount = '';
-    if(newData.section == '80EE'){
-            dec_amount =  newData.json_popups_value.interest_amount_paid
-        }else{
-            dec_amount = newData.dec_amount
-        }
+    if (newData.section == '80EE') {
+        dec_amount = newData.json_popups_value.interest_amount_paid
+    } else
+        if (newData.section == '80EEA') {
+            dec_amount = newData.json_popups_value.interest_amount_paid
+        } else
+            if (newData.section == '80EEB') {
+                dec_amount = newData.json_popups_value.interest_amount_paid
+            }
+            else {
+                dec_amount = newData.dec_amount
+            }
     var data = {
         fs_id: newData.fs_id,
         declaration_amount: dec_amount,
@@ -378,7 +333,14 @@ const onRowEditSave = (event) => {
     console.log(newData);
 };
 
+
 const vechicle_model_options = ref()
+
+const lender_types = ref([
+    { name: 'Financial Institution', code: 'Financial Institution' },
+    { name: 'Others', code: 'Others' },
+
+]);
 
 
 const vechicle_types = ref([
@@ -446,51 +408,6 @@ const switchVechileModel = (vechicle_brand) => {
     }
 
 }
-
-
-
-
-
-
-
-
-
-const lender_types = ref([
-    { name: 'Financial Institution', code: 'Financial Institution' },
-    { name: 'Others', code: 'Others' },
-
-]);
-
-
-
-const sample = ref([
-    { id: 1, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 2, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 3, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 4, section: "80EE", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 5, section: "80EEA", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-    { id: 6, section: "80EEB", particular: "House Rent Allowance", ref: 'data', max: '1000' },
-])
-
-
-
-
-
-const text = ref()
-
-const te = (data) => {
-    console.log(text.value);
-    console.log(data.test);
-}
-
-
-const op = ref();
-const toggle = (event) => {
-    op.value.toggle(event);
-}
-
-
-
 
 </script>
 
