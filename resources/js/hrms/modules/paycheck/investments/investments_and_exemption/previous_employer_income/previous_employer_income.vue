@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="25"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
                 :value="investmentStore.previousEmployeerIncomeSource" @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
@@ -49,7 +49,6 @@
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                         </div>
                         <div v-else>
-                            <!-- <Tag value="Pending" severity="warning" /> -->
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
@@ -62,7 +61,7 @@
         </div>
 
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"

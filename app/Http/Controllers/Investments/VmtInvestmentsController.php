@@ -36,11 +36,11 @@ class VmtInvestmentsController extends Controller
         return $serviceVmtInvestmentsService->ImportInvestmentForm_Excel($request->form_name, $request->excel_file);
     }
 
+
+    // Common Save function Saving Investment Form
     public function SaveInvDetails(Request $request)
     {
        //  dd($request->all());
-
-
         $form_id = $request->form_id;
         $user_id = User::where('user_code', $request->user_code)->first()->id;
         $form_data = $request->formDataSource;
@@ -88,31 +88,10 @@ class VmtInvestmentsController extends Controller
 
             }
 
-
         }
-
-
-
     }
 
-    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
-        $user_code = $request->user_code;
-        $fs_id = $request->fs_id;
-
-        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
-    }
-    public function fetchHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){ 
-        $user_code = $request->user_code;
-        $fs_id = $request->hop;
-
-        return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code,$fs_id);
-    }
-
-    public function deleteRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
-
-        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
-    }
-
+    // Common Function For Saving All Popup In Investment Form's
     public function saveSectionPopups(Request $request){
         // dd($request->all());
         $json_decodeHra = json_encode($request->all());
@@ -170,7 +149,32 @@ class VmtInvestmentsController extends Controller
 
  }
 
+    // Get And Delete for HRA in Investment's Forms
+    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+        $user_code = $request->user_code;
+        $fs_id = $request->fs_id;
 
+        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
+    }
+
+    public function deleteRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+
+        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
+    }
+
+     // Get And Delete for House Property in Investment's Forms
+    public function fetchHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){ 
+        $user_code = $request->user_code;
+        $fs_id = $request->hop;
+
+        return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code,$fs_id);
+    }
+    public function deleteHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){ 
+
+        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
+    }
+
+   
 
     public function showInvestmentsFormMgmtPage(Request $request)
     {

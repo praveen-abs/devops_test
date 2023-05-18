@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="5"
                 :value="investmentStore.otherIncomeSource" @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]" v-model:editingRows="investmentStore.editingRowSource"
+                :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
@@ -62,11 +62,11 @@
 
         </div>
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"  @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
-                @click="investmentStore.investment_exemption_steps++">Next</button>
+                @click="investmentStore.investment_exemption_steps++">Submit</button>
         </div>
     </div>
 </template>
@@ -80,14 +80,13 @@ const investmentStore = investmentMainStore()
 
 const onRowEditSave = (event) => {
     let { newData, index } = event;
-    investmentStore.otherExemptionSource[index] = newData;
+    investmentStore.otherIncomeSource[index] = newData;
     investmentStore.updatedRowSource = newData;
     investmentStore.getFormId = 1
     var data = {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
     }
-
     investmentStore.formDataSource.push(data)
     console.log(newData);
 };

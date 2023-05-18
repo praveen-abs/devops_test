@@ -30,7 +30,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}
+                                <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EESlotData(slotProps.data)"
@@ -40,7 +40,7 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}
+                                <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p>
 
                             </div>
                             <div v-else>
@@ -51,7 +51,7 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}
+                                <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
