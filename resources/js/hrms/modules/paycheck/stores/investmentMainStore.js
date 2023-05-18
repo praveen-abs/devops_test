@@ -111,7 +111,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 previousEmployeerIncomeSource.value = res.data.data.form_details["Previous Employer Income"]
 
 
-                // console.log(res.data.data.form_details["Previous Employer Income"]);
+                console.log(res.data.data.form_details["House Properties "]);
             }).catch(e => console.log(e))
             .finally(() => {
                 var declared_amt = 0;
@@ -125,20 +125,21 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                      max_limit += item.max_amount
                      taxSavingInvestments.max_limit = max_limit
                 });
-                housePropertySource.value.forEach(item => {
-                    // console.log(item);
-                    if(item.particular ="Self Occupied Property"){
-                        hop.push(item.fs_id)
-                    }else
-                    if(item.particular ="Let Out Property"){
-                        hop.push(item.fs_id)
-                    }else
-                    if(item.particular ="Deemed Let Out Property"){
-                        hop.push(item.fs_id)
-                    }
+                
+                // housePropertySource.value.forEach(item => {
+                //     // console.log(item);
+                //     if(item.particular ="Self Occupied Property"){
+                //         hop.push(item.fs_id)
+                //     }else
+                //     if(item.particular ="Let Out Property"){
+                //         hop.push(item.fs_id)
+                //     }else
+                //     if(item.particular ="Deemed Let Out Property"){
+                //         hop.push(item.fs_id)
+                //     }
 
-                    console.log(Object.values(hop));
-                });
+                //     console.log(Object.values(hop));
+                // });
             })
 
     }

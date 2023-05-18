@@ -21,7 +21,7 @@
         </li>
     </ul> -->
 
-    <!-- {{ investmentStore.house_props_data }} -->
+    <!-- {{ investmentStore.housePropertySource }} -->
 
     <div class="tab-content " id="">
         <div class="tab-pane fade active show" id="self_occupied_property" role="tabpanel" aria-labelledby="">
@@ -39,6 +39,7 @@
                     </Column>
 
                     <Column field="particular" header="Particulars" style="min-width: 12rem">
+                
                     </Column>
 
                     <Column field="reference" header="References " style="min-width: 12rem">
@@ -60,19 +61,36 @@
                         <template #body="slotProps">
                             
                             <div v-if="slotProps.data.particular == 'Self Occupied Property'">
-                                <button @click="investmentStore.getSopSlotData(slotProps.data)"
+                                <div v-if="slotProps.data.json_popups_value">
+                                    {{slotProps.data['json_popups_value'].fs_id}}                          
+                                </div>
+                                <div v-else>
+                                    <button @click="investmentStore.getSopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                     New</button>
+                                </div>                       
                             </div>
                             <div v-else-if="slotProps.data.particular == 'Let Out Property'">
-                                <button @click="investmentStore.getLopSlotData(slotProps.data)"
+                                <div v-if="slotProps.data.json_popups_value">
+                                    {{slotProps.data['json_popups_value'].fs_id}}                          
+                                </div>
+                                <div v-else>
+                                    <button @click="investmentStore.getLopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                     New</button>
+                                </div>
+                             
                             </div>
                             <div v-else-if="slotProps.data.particular == 'Deemed Let Out Property'">
-                                <button @click="investmentStore.getDlopSlotData(slotProps.data)"
+                                <div v-if="slotProps.data.json_popups_value">
+                                    {{slotProps.data['json_popups_value'].fs_id}}                          
+                                </div>
+                                <div v-else>
+                                    <button @click="investmentStore.getDlopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
                                     New</button>
+                                </div>
+                              
                             </div>
                             <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                                 {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
@@ -124,7 +142,6 @@
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
                     :sortOrder="+1" sortField="property_type" :paginator="true" :rows="10" scrollable
-                    :value="investmentStore.housePropertySource"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
