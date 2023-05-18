@@ -1,13 +1,11 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
-import { ref } from "vue";
 
 /*
     This Pinia code will store the ajax values of the
     profile page.
     This code is called from Parents onMounted method asynchronously
-
 
 */
 
@@ -22,7 +20,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
         let regime = "new"
 
-        let age = 65
+        let age = 59
 
 
         if (regime == 'old') {
@@ -37,7 +35,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                     console.log("taxable_amount :" + Math.floor(taxable_amount));
 
 
-                    console.log("old regime total income greater than 250000");
+                    console.log("old regime total income is greater than 250000");
 
                 }
 

@@ -90,6 +90,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const reimbursmentSource = ref()
     const otherIncomeSource = ref()
     const previousEmployeerIncomeSource = ref()
+    const hop = reactive([])
 
     const getInvestmentSource = async () => {
 
@@ -123,8 +124,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
                      max_limit += item.max_amount
                      taxSavingInvestments.max_limit = max_limit
+                });
+                housePropertySource.value.forEach(item => {
+                    // console.log(item);
+                    if(item.particular ="Self Occupied Property"){
+                        hop.push(item.fs_id)
+                    }else
+                    if(item.particular ="Let Out Property"){
+                        hop.push(item.fs_id)
+                    }else
+                    if(item.particular ="Deemed Let Out Property"){
+                        hop.push(item.fs_id)
+                    }
 
-
+                    console.log(Object.values(hop));
                 });
             })
 
@@ -618,12 +631,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     }
 
-    const fetchSelfOccupiedProperty = () => {
+    const fetchPropertyType = () => {
 
-        // axios.get('http://localhost:3000/investment').then(res => {
-        //     console.log(res.data);
-        //     house_props_data.value = res.data
-        // })
+        axios.post('/investments/fetchHousePropertyDetails',{
+            user_code: service.current_user_code,
+            hop
+        }).then(res => {
+            console.log(res.data);
+            house_props_data.value = res.data
+        })
     }
 
     
@@ -652,7 +668,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(sop);
         axios.post('/investments/saveSectionPopups', sop).then(res => {
             console.log(res.data);
-            fetchSelfOccupiedProperty()
         })
     }
     const saveLetOutProperty = () => {
@@ -711,7 +726,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // House Property Begins
 
         house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty, income_loss_calculation,
-        fetchSelfOccupiedProperty, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,
+        fetchPropertyType, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,
 
 
         // House Property End

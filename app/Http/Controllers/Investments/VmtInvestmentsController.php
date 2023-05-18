@@ -101,6 +101,12 @@ class VmtInvestmentsController extends Controller
 
         return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
     }
+    public function fetchHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){ 
+        $user_code = $request->user_code;
+        $fs_id = $request->hop;
+
+        return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code,$fs_id);
+    }
 
     public function deleteRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
 

@@ -200,7 +200,7 @@
             <div class="">
                 <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
                     Rent Paid</label>
-                <InputNumber type="text" id="rendPaid_inp" class=" w-full  " v-model="investmentStore.hra.total_rent_paid"
+                <InputNumber type="text" id="rendPaid_inp" class="w-full " v-model="investmentStore.hra.total_rent_paid"
                     required />
             </div>
 
@@ -220,7 +220,7 @@
                 <!-- <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     v-model="investmentStore.hra.landlord_PAN" required> -->
-                <InputMask  id="serial" mask="aaaPa9999a"   class=" w-full  "
+                <InputMask  id="serial" mask="aaaPa9999a"   class="w-full "
                     placeholder="AHFCS1234F" style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN"  />
 
             </div>
@@ -264,6 +264,9 @@ onMounted(async () => {
     setTimeout(async () => {
         await investmentStore.fetchHraNewRental()
     }, 1000);
+    setTimeout(async () => {
+        investmentStore.fetchPropertyType()
+    }, 3000);
 })
 
 

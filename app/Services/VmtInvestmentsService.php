@@ -328,14 +328,44 @@ class VmtInvestmentsService
             $rentalDetail['fs_id'] = $item->fs_id;
             $rentalDetail['dec_amount'] = $item->dec_amount;
             $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
-
+                 
             return $rentalDetail;
+
+
 
         });
 
         // dd($popupjson);
 
         return $popupjson;
+    }
+
+    public function fetchHousePropertyDetails($user_code, $fs_id)
+    {
+
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        foreach ($fs_id as $single_fs_id) {
+            $rentalDetails = VmtInvEmpFormdata::all()
+                ->where('fs_id', $single_fs_id)
+                ->where('f_emp_id', $user_id);
+        
+
+        $popupjson = $rentalDetails->map(function ($item, $key) {
+
+            $rentalDetail['id'] = $item->id;
+            $rentalDetail['f_emp_id'] = $item->f_emp_id;
+            $rentalDetail['fs_id'] = $item->fs_id;
+            $rentalDetail['dec_amount'] = $item->dec_amount;
+            $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
+
+             return $rentalDetail;
+
+        });
+
+        return $popupjson;
+    }
+    
     }
 
     public function deleteEmpRentalDetails($currentTableId)

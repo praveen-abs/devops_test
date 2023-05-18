@@ -17,11 +17,11 @@
             </div>
             <div class="flex gap-6 my-4">
                 <div class="w-6">
-                    <div class="text-2xl font-semibold mb-2">Your current chosen tax regime is <span class="text-blue-500 text-xl font-semibold ">Old
+                    <div class="mb-2 text-2xl font-semibold">Your current chosen tax regime is <span class="text-xl font-semibold text-blue-500 ">Old
                             Tax Regime</span> </div>
 
                             <!-- text-sm -->
-                    <p class=" fs-6 fst-italic text-gray-600 ">The confirmed old tax regime will be used in future payroll
+                    <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
                         calculations
                     </p>
                     <div>
@@ -29,7 +29,7 @@
                 </div>
                 <div>
                     <button @click="switch_regime_dailo = true" type="button"
-                        class="btn btn-primary px-4 px-2">
+                        class="px-2 px-4 btn btn-primary">
                         Old Tax Regime</button>
                     <span class="text-sm text-green-500">Maximum benefit</span>
 
@@ -97,9 +97,9 @@
 
     </Dialog>
 
-<!-- <input type="number" v-model="test" name="" class="form-control" id="">
+<input type="number" v-model="test" name="" class="form-control" id="">
 {{ test }}<br>
-<button @click="formula.taxCalculation(test)">click</button> -->
+<button @click="formula.taxCalculation(test)">click</button>
 
 
 </template>
