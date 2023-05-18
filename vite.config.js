@@ -18,6 +18,8 @@ export default defineConfig({
 
                 // Leaves
 
+                'resources/js/hrms/modules/leave_module/LeaveModule.js',
+
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
                 'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
