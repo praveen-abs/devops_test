@@ -347,16 +347,15 @@ class VmtInvestmentsService
 
         $user_id = User::where('user_code', $user_code)->first()->id;
 
-         $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+         $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
         $res =array();
 
         foreach ($fs_id as $single_fs_id) {
             $rentalDetails = VmtInvEmpFormdata::
                 where('fs_id', $single_fs_id)
-                ->where('f_emp_id',$form_assignrd_id)
+                ->where('f_emp_id',$form_assigned_id)
                 ->first();
-
             $rentalDetail['id'] = $rentalDetails->id;
             $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
             $rentalDetail['fs_id'] = $rentalDetails->fs_id;
@@ -375,6 +374,27 @@ class VmtInvestmentsService
     {
         try {
             $rentalDetails = VmtInvEmpFormdata::where('id', $currentTableId)->delete();
+
+            $response = [
+                'status' => 'success',
+                'message' => "Rental details deleted successfully"
+            ];
+
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while Deleting Rental Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+
+        return response()->json($response);
+
+    }
+    public function deleteHouseProperty($currentTableId)
+    {
+        try {
+            $houseProperty = VmtInvEmpFormdata::where('id', $currentTableId)->delete();
 
             $response = [
                 'status' => 'success',

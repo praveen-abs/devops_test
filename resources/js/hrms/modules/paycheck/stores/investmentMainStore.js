@@ -207,7 +207,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     }
 
 
-
     // HRA Begins
 
     const hra_data = ref()
@@ -342,7 +341,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         STBIBNAR: "",
         SPF: "",
     })
-
 
 
 
@@ -492,6 +490,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
+            getInvestmentSource()
+
         })
     }
 
@@ -506,11 +506,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             toast.add({
                 severity: "success",
                 summary: "Drafted",
-                detail: "New Rental Added",
+                detail: "80EEA Added",
                 life: 3000,
             });
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
+            getInvestmentSource()
         })
     }
 
@@ -524,11 +525,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             toast.add({
                 severity: "success",
                 summary: "Drafted",
-                detail: "New Rental Added",
+                detail: "80EEB Added",
                 life: 3000,
             });
         }).catch(e => console.log(e)).finally(() => {
             canShowLoading.value = false
+            getInvestmentSource()
         })
     }
 
@@ -614,12 +616,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         }, 100);
         lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value)
         dlop.income_loss = formula.income_loss_cal(dlop.interest, dlop.net_value)
-
-
     }
-
     const fetchPropertyType = () => {
-        
+
         housePropertySource.value.forEach(item => {
             // console.log(item);        
                 hop.push(item.fs_id)
@@ -668,42 +667,110 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             sop.address = currentRowData.json_popups_value.address
         }else
         if(currentRowData.json_popups_value.property_type == "Let Out Property"){
+            dailog_LetOutProperty.value = true
+            lop.lender_name = currentRowData.json_popups_value.lender_name
+            lop.lender_pan = currentRowData.json_popups_value.lender_pan
+            lop.lender_type = currentRowData.json_popups_value.lender_type
+            lop.rent_received = currentRowData.json_popups_value.rent_received
+            lop.municipal_tax = currentRowData.json_popups_value.municipal_tax
+            lop.maintenance = currentRowData.json_popups_value.maintenance
+            lop.net_value = currentRowData.json_popups_value.net_value
+            lop.interest = currentRowData.json_popups_value.interest
+            lop.income_loss = currentRowData.json_popups_value.income_loss
 
         }else
         if(currentRowData.json_popups_value.property_type == "Deemed Let Out Property"){
-
+            dailog_DeemedLetOutProperty.value = true
+            dlop.lender_name = currentRowData.json_popups_value.lender_name
+            dlop.lender_pan = currentRowData.json_popups_value.lender_pan
+            dlop.lender_type = currentRowData.json_popups_value.lender_type
+            dlop.rent_received = currentRowData.json_popups_value.rent_received
+            dlop.municipal_tax = currentRowData.json_popups_value.municipal_tax
+            dlop.maintenance = currentRowData.json_popups_value.maintenance
+            dlop.net_value = currentRowData.json_popups_value.net_value
+            dlop.interest = currentRowData.json_popups_value.interest
+            dlop.income_loss = currentRowData.json_popups_value.income_loss
         }else{
-
+             console.log("No more Property Type");
         }
-
-
     }
 
+    const deleteHouseProps = (currentRowData) =>{
+        console.log(currentRowData);
+        confirm.require({
+            message: 'Do you want to delete this record?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-info-circle',
+            acceptClass: 'p-button-danger',
+            accept: () => {
+                canShowLoading.value = true
+                axios.post('/investments/deleteHousePropertyDetails', {
+                    current_table_id: currentRowData.id
+                }).finally(() => {
+                    canShowLoading.value = false
+                    toast.add({
+                        severity: "error",
+                        summary: "Deleted",
+                        detail: `${currentRowData.property_type} is Deleted`,
+                        life: 3000,
+                    });
+                    fetchPropertyType()
+                })
+            },
+            reject: () => {
+                console.log("House property Delete Action Rejected");
+            }
+        });
+    }
     const saveSelfOccupiedProperty = () => {
+        canShowLoading.value = true
         dailog_SelfOccupiedProperty.value = false
         console.log(sop);
         axios.post('/investments/saveSectionPopups', sop).then(res => {
             console.log(res.data);
         }).finally(()=>{
             fetchPropertyType()
+            canShowLoading.value = false
+            toast.add({
+                severity: "success",
+                summary: "Saved",
+                detail: `new ${sop.property_type} is Drafted `,
+                life: 3000,
+            });
         })
     }
     const saveLetOutProperty = () => {
         console.log(lop);
+        canShowLoading.value = true
         dailog_LetOutProperty.value = false
         axios.post('/investments/saveSectionPopups', lop).then(res => {
             console.log(res.data);
         }).finally(()=>{
             fetchPropertyType()
+            canShowLoading.value = false
+            toast.add({
+                severity: "success",
+                summary: "Saved",
+                detail: `new ${lop.property_type} is Drafted `,
+                life: 3000,
+            });
         })
     }
     const saveDeemedLetOutProperty = () => {
         console.log(dlop);
+        canShowLoading.value = true
         dailog_DeemedLetOutProperty.value = false
         axios.post('/investments/saveSectionPopups', dlop).then(res => {
             console.log(res.data);
         }).finally(()=>{
             fetchPropertyType()
+            canShowLoading.value = false
+            toast.add({
+                severity: "success",
+                summary: "Saved",
+                detail: `new ${dlop.property_type} is Drafted `,
+                life: 3000,
+            });
         })
 
     }
@@ -745,7 +812,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // House Property Begins
 
         house_props_data, dailog_SelfOccupiedProperty, dailog_DeemedLetOutProperty, dailog_LetOutProperty, income_loss_calculation,
-        fetchPropertyType, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,editHouseProps,
+        fetchPropertyType, saveSelfOccupiedProperty, saveLetOutProperty, saveDeemedLetOutProperty, lop, sop, dlop,getDlopSlotData,getLopSlotData,getSopSlotData,editHouseProps,deleteHouseProps,
 
 
         // House Property End
