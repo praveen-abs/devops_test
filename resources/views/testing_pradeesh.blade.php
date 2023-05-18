@@ -1,6 +1,7 @@
 <?php
 
     use Illuminate\Support\Facades\Storage;
+    use App\Models\VmtClientMaster;
 ?>
 
 @extends('layouts.master')
@@ -44,9 +45,9 @@
 <?php
      $general_info = \DB::table('vmt_general_info')->first();
 
-      $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+     $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
 
-      dd($query_client_logo);
+      dd($newUser);
 ?>
 
 
