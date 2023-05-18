@@ -315,10 +315,10 @@ const onRowEditSave = (event) => {
     let dec_amount = '';
     if (newData.section == '80EE') {
         dec_amount = newData.json_popups_value.interest_amount_paid
-    } else
+    } 
         if (newData.section == '80EEA') {
             dec_amount = newData.json_popups_value.interest_amount_paid
-        } else
+        } 
             if (newData.section == '80EEB') {
                 dec_amount = newData.json_popups_value.interest_amount_paid
             }

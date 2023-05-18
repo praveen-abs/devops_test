@@ -142,7 +142,7 @@
             <!-- {{ investmentStore.house_props_data.json_popups_value. }} -->
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
-                    :value="investmentStore.house_props_data"
+                    :value="investmentStore.house_props_data" 
                     :sortOrder="+1" sortField="property_type" :paginator="true" :rows="10" scrollable
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
