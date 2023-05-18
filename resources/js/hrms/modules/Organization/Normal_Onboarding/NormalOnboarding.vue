@@ -57,6 +57,7 @@
                             class="capitalize onboard-form form-control textbox"
                             type="text"  :readonly="is_emp_name_quick"
                             v-model="v$.employee_name.$model"
+                            @keypress="isLetter($event)"
                             :class="[{
                               'p-invalid': v$.employee_name.$invalid && submitted,
                             },
@@ -1205,7 +1206,7 @@
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="flex my-4 header-card-text">
+                  <div class="flex header-card-text">
                     <!-- <img src="../../../assests/images/office-building.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2 "><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details</h6>
                   </div>
@@ -1543,9 +1544,9 @@
 
               <div class="p-2 my-6 shadow card profile-box card-top-border" >
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="flex my-4 header-card-text">
+                  <div class="flex header-card-text">
                     <img src="../../../assests/images/family_image.png" alt="" style="height: 20px;">
-                    <h6 class="mx-2 my-auto">Family Details</h6>
+                    <h6 class="mx-2 my-2">Family Details</h6>
                   </div>
 
 
@@ -2347,7 +2348,7 @@
 
               <div class="p-2 my-6 mb-0 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="flex my-4 header-card-text">
+                  <div class="flex header-card-text">
                     <!-- <img src="../../../assests/images/folder.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2"><i class="fa fa-file-image-o" aria-hidden="true"></i> Personal Documents</h6>
                   </div>
@@ -2970,6 +2971,14 @@ const parentFormat = ref(new Date('1995/12/31'))
 
 
 //   Events
+
+const isLetter = (e)=> {
+  let char = String.fromCharCode(e.keyCode); // Get the character
+  if(/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex 
+  else e.preventDefault(); // If not match, don't add to input text
+}
+
+
 
 const handleSubmit = (isFormValid) => {
   console.log(employee_onboarding);
