@@ -1,70 +1,80 @@
 <template>
-    <div class="my-4">
+    <div class="card p-3" style="margin-top: -35px;">
 
-        <DataTable :value="employeePayslipStore.array_employeePayslips_list" :paginator="true" :rows="10" dataKey="id"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-            v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+        <h1 class="mt-2  fs-4 fw-bold">Documents Settings</h1>
 
-            <Column field="PAYROLL_MONTH" header="Month" >
-                <template #body="slotProps">
-                    {{dayjs(slotProps.data.PAYROLL_MONTH).format('DD-MMM-YYYY') }}
-                </template>
-            </Column>
+        <div class="my-5">
+            <DataTable :value="DocumentSettingsStore.array_emp_documents_details" :paginator="true" :rows="10" dataKey="id"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="[5, 10, 25]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
+               filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
 
-            <Column field="TOTAL_EARNED_GROSS" header="Gross Pay"></Column>
-            <Column field="Reimbursements" header="Reimbursements">
-                <template #body="slotProps">
-                    {{0}}
-                </template>
-            </Column>
-            <Column field="TOTAL_DEDUCTIONS" header="Deductions"></Column>
-            <Column field="NET_TAKE_HOME" header="Take Home"></Column>
-
-            <Column header="Action">
-                <template #body="slotProps">
-                    <Button class="btn-primary" label="View " @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('',slotProps.data.PAYROLL_MONTH)" />
-                </template>
-            </Column>
-            <column header="Download">
-                <template  #body="slotProps">
-                <!-- {{slotProps.data}} -->
-                    <Button class="btn-primary" label="Download " @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('',slotProps.data.PAYROLL_MONTH)" />
-                </template>
-
-            </column>
-        </DataTable>
-    </div>
-    <!-- <div class="d-flex justify-content-end">
-        <Button class="mb-2 btn btn-primary" label="Submit" />
-    </div> -->
-    <!-- dialog for show details -->
-    <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="employeePayslipStore.canShowPayslipView" modal header="Payslip" :style="{ width: '50vw' }">
-        <div v-html="employeePayslipStore.paySlipHTMLView">
+                <Column headerStyle="width: 3rem"></Column>
+                <Column field="document_name" header="Document Name">
+                </Column>
+                <Column field="is_onboarding_doc" header="Is Onboarding Document ?">
+                    <template #body="slotProps">
+                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_onboarding_doc" :binary="true" :trueValue="1" :falseValue="0" />
+                    </template>
+                </Column>
+                <Column field="is_mandatory" header="Is Mandatory Document ?">
+                    <template #body="slotProps">
+                        <Checkbox @change="DocumentSettingsStore.updateDocumentState(slotProps.data)" v-model="slotProps.data.is_mandatory"  :binary="true" :trueValue="1" :falseValue="0"  />
+                    </template>
+                </Column>
+            </DataTable>
 
         </div>
+
+        <div class="mx-5 mt-4">
+            <button class="btn-orange p-2 rounded float-right" @click="DocumentSettingsStore.submitDocumentSettings">Submit</button>
+        </div>
+
+
+        <!-- show loading -->
+
+        <Dialog header="Header" v-model:visible="DocumentSettingsStore.loading"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+            :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
         </Dialog>
+
+
+
     </div>
 </template>
 
 <script setup>
-import dayjs from 'dayjs';
-
-import { ref, onMounted, reactive } from "vue";
 import axios from "axios";
-import { useEmployeePayslipStore } from './EmployeePayslipsService';
+import { ref, onMounted, reactive, computed } from "vue";
+import { useDocumentSettingsStore } from './DocumentsSettingsService';
+
+const DocumentSettingsStore = useDocumentSettingsStore();
+
+const selected = ref();
 
 
 
-const employeePayslipStore = useEmployeePayslipStore()
 
 onMounted(async () => {
-    console.log("EmployeePayslips,vue loaded");
-    await employeePayslipStore.getEmployeeAllPayslipList();
+   await DocumentSettingsStore.getEmployeesDocumentsDetails();
+    // console.log(DocumentSettingsStore.array_emp_documents_details)
 
 });
+
+
+
+
+
+
+
 
 
 
@@ -73,6 +83,10 @@ onMounted(async () => {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
+
+.p-dialog-mask .p-component-overlay .p-component-overlay-enter {
+    z-index: 0 !important;
+}
 
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
@@ -249,3 +263,25 @@ onMounted(async () => {
     color: white;
 }
 </style>
+
+
+{
+
+<!--
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Checkbox v-model="checked" :binary="true" />
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const checked = ref(false);
+</script>
+
+ -->
+
+}

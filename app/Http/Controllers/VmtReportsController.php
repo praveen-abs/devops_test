@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\Bank;
 
@@ -19,12 +20,14 @@ use App\Exports\VmtPayrollReports;
 use App\Exports\VmtPmsReviewsReport;
 use App\Exports\ManagerReimbursementsExport;
 use App\Exports\EmployeeReimbursementsExport;
+use App\Exports\AnnualEarnedExport;
 use App\Models\VmtEmployeeAttendance;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use App\Models\VmtEmployeeReimbursements;
 use App\Services\VmtReimbursementsService;
+use App\Services\VmtReportsservice;
 use Carbon\Carbon;
 
 class VmtReportsController extends Controller
@@ -922,5 +925,18 @@ class VmtReportsController extends Controller
         // dd($attendanceResponseArray);
 
         return $attendanceResponseArray;
+    }
+
+    public function generateAnnualEarnedReport(Request $request, VmtReportsservice $reportsService)
+    {
+        $headings=array();
+        $start_date = '2022-04-01';
+        $end_date = '2023-03-31';
+        $response = $reportsService->fetchAnnualEarnedDetails($start_date, $end_date);
+         foreach($response[0] as $key=>$value){
+             array_push($headings,$key);
+         }
+
+        return Excel::download(new AnnualEarnedExport($response,$headings), 'Annual Earned Report.xlsx');
     }
 }
