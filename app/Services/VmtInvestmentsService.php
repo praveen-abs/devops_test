@@ -313,14 +313,11 @@ class VmtInvestmentsService
 
         $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-        // $rentalDetails =  VmtInvEmpFormdata::join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
-        //                                      ->where('fs_id',$fs_id)
-        //                                      ->where('vmt_inv_f_emp_assigned.user_id',$user_id)
-        //                                      ->get();
+        $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
         $rentalDetails = VmtInvEmpFormdata::all()
             ->where('fs_id', $fs_id)
-            ->where('f_emp_id', $user_id);
+            ->where('f_emp_id', $form_assignrd_id);
 
         $popupjson = $rentalDetails->map(function ($item, $key) {
 
@@ -330,7 +327,7 @@ class VmtInvestmentsService
             $rentalDetail['fs_id'] = $item->fs_id;
             $rentalDetail['dec_amount'] = $item->dec_amount;
             $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
-                 
+
             return $rentalDetail;
 
 
@@ -349,6 +346,9 @@ class VmtInvestmentsService
 
          $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
+       // dd($form_assignrd_id);
+
+
         $res =array();
 
         foreach ($fs_id as $single_fs_id) {
@@ -357,18 +357,18 @@ class VmtInvestmentsService
                 ->where('f_emp_id',$form_assignrd_id)
                 ->first();
 
+
             $rentalDetail['id'] = $rentalDetails->id;
             $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
             $rentalDetail['fs_id'] = $rentalDetails->fs_id;
             $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
             $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
-
             array_push($res,$rentalDetail);
-              
     }
 
+
     return $res;
-    
+
     }
 
     public function deleteEmpRentalDetails($currentTableId)
