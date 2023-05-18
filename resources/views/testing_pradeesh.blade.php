@@ -19,7 +19,6 @@
 </head>
 <body>
 
-
   {{-- @vite('resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js')
    <div id="EmployeeDocsUpload"></div> --}}
 
@@ -40,8 +39,16 @@
      @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js')
      {{-- <div id="RolesPermission"></div> --}}
 
-     @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
-     <div id="vjs_employeeDocsManager"></div>
+     {{-- @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
+     <div id="vjs_employeeDocsManager"></div> --}}
+<?php
+     $general_info = \DB::table('vmt_general_info')->first();
+
+      $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+
+      dd($query_client_logo);
+?>
+
 
 </body>
 </html>

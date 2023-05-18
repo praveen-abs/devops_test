@@ -192,6 +192,11 @@ class VmtProfilePagesService
            ->where('vmt_employee_documents.user_id', $response->id)
            ->get();
 
+           $general_info = \DB::table('vmt_general_info')->first();
+           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+
+        // $response['client_logo'] = base64_encode($query_client_logo);
+        $response['client_logo'] = $query_client_logo;
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
