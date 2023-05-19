@@ -79,71 +79,95 @@ class VmtInvestmentsService
 
             $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-            //Get the query structure
+           // $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
+            // ->where('year', $year)
+           //  ->first();
 
-            $query_inv_form_template = VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
-                ->join('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
-                ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
-                ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
-                ->where('vmt_inv_formsection.form_id', $query_form_details->id)
-                //    ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
-                //    ->orWherNull('vmt_inv_emp_formdata.id')
-                ->get(
-                    [
-                        'vmt_inv_formsection.section_id',
-                        'vmt_inv_section.section',
-                        'vmt_inv_section.particular',
-                        'vmt_inv_section.reference',
-                        'vmt_inv_section.max_amount',
-                        'vmt_inv_section_group.section_group',
-                        'vmt_inv_formsection.id as fs_id',
-                        'vmt_inv_formsection.form_id',
-                        'vmt_inv_emp_formdata.dec_amount',
-                        'vmt_inv_emp_formdata.json_popups_value'
+       //  $assigned_form_id = $query_fempAssigned_table->form_id;
+       //  $f_emp_id = $query_fempAssigned_table->id;
 
-                    ]
-                );
+         //Get the form template
+         $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+             ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+            // ->where('vmt_inv_formsection.form_id', $assigned_form_id)
 
-            $popupjson = $query_inv_form_template->map(function ($item, $key) {
+             ->get(
+                 [
+                     'vmt_inv_formsection.section_id',
+                     'vmt_inv_section.section',
+                     'vmt_inv_section.particular',
+                     'vmt_inv_section.reference',
+                     'vmt_inv_section.max_amount',
+                     'vmt_inv_section_group.section_group',
+                     'vmt_inv_formsection.id as fs_id',
 
-                $inv_details['section'] = $item->section;
-                $inv_details['particular'] = $item->particular;
-                $inv_details['reference'] = $item->reference;
-                $inv_details['max_amount'] = $item->max_amount;
-                $inv_details['section_group'] = $item->section_group;
-                $inv_details['fs_id'] = $item->fs_id;
-                $inv_details['dec_amount'] = $item->dec_amount;
-                $inv_details['dec_amount'] = $item->dec_amount;
-                $inv_details['json_popups_value'] = (json_decode($item->json_popups_value, true));
+                 ]
+             )->toArray();
 
-                return $inv_details;
+           //  dd($query_inv_form_template);
 
-            });
+     // employee declaration amount
+         $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+             ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get()->toArray();
 
-            //  dd($sima->toArray());
 
-            $query_inv_form_template = $popupjson->toArray();
-            //  $query_inv_form_template = $query_inv_form_template->toArray();
+                    // json decode popup value;
+            $popdecode = array();
+            foreach($inv_emp_value as $details_tem){
 
-            // dd($query_inv_form_template[0]);
-            $count = 0;
-            foreach ($query_inv_form_template as $single_inv_form_template) {
+                    $rentalDetail['id'] =$details_tem["id"];
+                    $rentalDetail['user_id'] =$details_tem["user_id"];
+                    $rentalDetail['form_id'] =$details_tem["form_id"];
+                    $rentalDetail['f_emp_id'] = $details_tem["f_emp_id"];
+                    $rentalDetail['year'] = $details_tem["year"];
+                    $rentalDetail['fs_id'] = $details_tem["fs_id"];
+                    $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
+                    $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
+                    array_push($popdecode,$rentalDetail);
 
-                if (!array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template)) {
-                    $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
-                    array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
-                } else {
-                    array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+            };
 
-                }
 
-                //remove from outer json
-                unset($query_inv_form_template[$count]);
 
-                $count++;
+         $arr = array();
+         foreach ($query_inv_form_template as $single_template) {
+             foreach ($popdecode as $single_emp_env_value) {
+                   if($single_template['fs_id']==$single_emp_env_value['fs_id']){
+                     $single_template['id']=$single_emp_env_value['id'];
+                     $single_template['user_id']=$single_emp_env_value['user_id'];
+                     $single_template['form_id']=$single_emp_env_value['form_id'];
+                     $single_template['year']=$single_emp_env_value['year'];
+                     $single_template['f_emp_id']=$single_emp_env_value['f_emp_id'];
+                     $single_template['dec_amount']=$single_emp_env_value['dec_amount'];
+                     $single_template['json_popups_value']=$single_emp_env_value['json_popups_value'];
+                   }
+             }
+             array_push($arr, $single_template);
+         }
+//dd($arr);
 
-            }
-            // dd($query_inv_form_template);
+        $query_inv_form_template = $arr;
+
+
+         $count = 0;
+         foreach ($query_inv_form_template as $single_inv_form_template) {
+
+             if (!array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template)) {
+                 $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
+                 array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+             } else {
+                 array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+
+             }
+
+             //remove from outer json
+             unset($query_inv_form_template[$count]);
+
+             $count++;
+
+         }
+              //  dd($query_inv_form_template);
+
 
             $response["form_name"] = $query_form_details->form_name;
             $response["form_details"] = $query_inv_form_template;
@@ -352,7 +376,6 @@ class VmtInvestmentsService
             if($query_rentalDetails->exists())
             {
                 $rentalDetails = $query_rentalDetails->first();
-
                 $rentalDetail['id'] = $rentalDetails->id;
                 $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
                 $rentalDetail['fs_id'] = $rentalDetails->fs_id;

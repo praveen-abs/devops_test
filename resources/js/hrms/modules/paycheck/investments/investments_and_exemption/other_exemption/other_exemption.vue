@@ -30,6 +30,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
+                                {{ slotProps.data.json_popups_value['interest_amount_paid'] }}
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
                                 <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
@@ -41,23 +42,25 @@
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEA'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p>
+                                <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
+                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEASlotData(slotProps.data)"
                                     class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                    80EE</button>
+                                    80EEA</button>
                             </div>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p>
+                                <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
+                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
                                     class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                    80EE</button>
+                                    80EEB</button>
                             </div>
                         </div>
                         <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
@@ -70,7 +73,7 @@
                         </div>
                     </template>
                     <template #editor="{ data, field }">
-                        <div v-if="data.section == '80EE'">
+                        <!-- <div v-if="data.section == '80EE'">
                             <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency"
                                 currency="INR" locale="en-US" class="w-6 text-lg font-semibold" />
                         </div>
@@ -81,8 +84,8 @@
                         <div v-else-if="data.section == '80EEB'">
                             <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency"
                                 currency="INR" locale="en-US" class="w-6 text-lg font-semibold" />
-                        </div>
-                        <div v-else>
+                        </div> -->
+                        <div >
                             <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
                                 class="w-6 text-lg font-semibold" />
                         </div>
@@ -297,6 +300,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
+import axios from "axios";
 
 const investmentStore = investmentMainStore()
 const editingRows = ref([]);
@@ -313,23 +317,31 @@ const onRowEditSave = (event) => {
     investmentStore.updatedRowSource = newData;
     investmentStore.getFormId = 1
     let dec_amount = '';
-    if (newData.section == '80EE') {
-        dec_amount = newData.json_popups_value.interest_amount_paid
-    } 
-        if (newData.section == '80EEA') {
-            dec_amount = newData.json_popups_value.interest_amount_paid
-        } 
-            if (newData.section == '80EEB') {
-                dec_amount = newData.json_popups_value.interest_amount_paid
-            }
-            else {
-                dec_amount = newData.dec_amount
-            }
+    // if (newData.section == '80EE') {
+    //     dec_amount = newData.json_popups_value.interest_amount_paid
+    // }
+    //     if (newData.section == '80EEA') {
+    //         dec_amount = newData.json_popups_value.interest_amount_paid
+    //         axios.post("/investments/saveSectionPopups", newData)
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //     }
+    //         if (newData.section == '80EEB') {
+    //             dec_amount = newData.json_popups_value.interest_amount_paid
+    //             axios.post("/investments/saveSectionPopups", newData)
+    //         .then((res) => {
+    //             console.log(res.data);
+    //         })
+    //         }
+    //         else {
+    //             dec_amount = newData.dec_amount
+    //         }
     var data = {
         fs_id: newData.fs_id,
-        declaration_amount: dec_amount,
+        declaration_amount: newData.dec_amount,
     }
-    console.log(dec_amount);
+    // console.log(dec_amount);
     investmentStore.formDataSource.push(data)
     console.log(newData);
 };

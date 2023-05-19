@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- {{ investmentStore.previousEmployeerIncomeSource }} -->
         <div class="table-responsive">
             <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
                 :value="investmentStore.previousEmployeerIncomeSource" @row-edit-save="onRowEditSave"
