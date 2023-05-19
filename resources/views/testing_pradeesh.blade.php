@@ -42,13 +42,9 @@
 
      {{-- @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
      <div id="vjs_employeeDocsManager"></div> --}}
-<?php
-     $general_info = \DB::table('vmt_general_info')->first();
 
-     $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
-
-      dd($newUser);
-?>
+       @vite('resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js')
+            <div id="OnboardingFromMgmt"></div>
 
 
 </body>

@@ -109,7 +109,11 @@ export default defineConfig({
                 // testing_pradeesh
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
                 'resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js',
-                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js'
+                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
+
+                // Onboarding From management
+               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
+
             ],
             refresh: true,
         }),
