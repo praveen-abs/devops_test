@@ -151,7 +151,7 @@ class VmtReimbursementsService {
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
                                 ->where('vmt_employee_reimbursements.reimbursement_type_id',$reimbursement_type_id)
                                 ->select('vmt_employee_reimbursements.id','vmt_employee_reimbursements.reimbursement_type_id','vmt_employee_reimbursements.date',
-                                'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to', 'vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
+                                'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to','user_comments','vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
 
             if($status!=null){
                 $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);
@@ -179,7 +179,6 @@ class VmtReimbursementsService {
 
         }
 
-        //dd($json_response);
 
         return $json_response;
 
