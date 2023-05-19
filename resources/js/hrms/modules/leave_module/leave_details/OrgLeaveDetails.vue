@@ -170,25 +170,25 @@ let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
 onMounted(() => {
-  let url_org_leave_balance = window.location.origin + "/fetch-org-leaves-balance";
+//   let url_org_leave_balance = window.location.origin + "/fetch-org-leaves-balance";
 
-  console.log("Fetching ORG LEAVE from url : " + url_org_leave_balance);
+//   console.log("Fetching ORG LEAVE from url : " + url_org_leave_balance);
 
-  axios.get(url_org_leave_balance).then((response) => {
-      leaves.value = Object.values(response.data);
-      leave_types.value = Object.values(response.data.leave_types);
-      leave_data.value = Object.values(response.data.employees);
-      loading.value = false;
-  });
+//   axios.get(url_org_leave_balance).then((response) => {
+//       leaves.value = Object.values(response.data);
+//       leave_types.value = Object.values(response.data.leave_types);
+//       leave_data.value = Object.values(response.data.employees);
+//       loading.value = false;
+//   });
 
-  let url_org_leave_history =
-      window.location.origin + "/fetch-leaverequests/org/Approved,Rejected,Pending";
+//   let url_org_leave_history =
+//       window.location.origin + "/fetch-leaverequests/org/Approved,Rejected,Pending";
 
-  axios.get(url_org_leave_history).then((response) => {
+//   axios.get(url_org_leave_history).then((response) => {
 
-      Leave_data.value = response.data;
+//       Leave_data.value = response.data;
 
-      loading.value = false;
-  });
+//       loading.value = false;
+//   });
 });
 </script>

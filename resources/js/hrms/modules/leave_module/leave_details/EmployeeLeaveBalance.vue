@@ -5,7 +5,7 @@
                 <h6 class="text-lg font-semibold text-gray-900 modal-title">Leave Balance</h6>
             </div>
             <div class="col-6 justify-content-end d-flex">
-                <LeaveApply />
+                <!-- <LeaveApply /> -->
             </div>
         </div>
 
