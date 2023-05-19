@@ -183,7 +183,7 @@ onMounted(() => {
 });
 
 function ajax_GetLeaveData() {
-  let url = window.location.origin + "/fetch-leaverequests";
+  let url = window.location.origin + "/fetch-leaverequests-based-on-currentrole";
 
   //console.log("AJAX URL : " + url);
 
