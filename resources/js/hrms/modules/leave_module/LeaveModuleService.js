@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import {ref} from "vue";
 import axios from "axios";
 import dayjs from "dayjs";
+import { Service }  from "../Service/Service";
 
 export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
@@ -12,6 +13,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     const selected_LeaveDetails = ref();
 
+    const baseService = Service();
 
     async function getEmployeeLeaveHistory(user_code, filter_month, filter_year, filter_leave_status){
         axios.post('/attendance/getEmployeeLeaveDetails', {
@@ -68,6 +70,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     return {
 
         // Varaible Declartion
+        baseService,
 
         array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory,
 

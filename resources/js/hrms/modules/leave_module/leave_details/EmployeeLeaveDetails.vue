@@ -110,7 +110,7 @@ import { useLeaveModuleStore } from '../LeaveModuleService'
 import LeaveBalance from "./EmployeeLeaveBalance.vue";
 
 
-const useLeaveStore = useLeaveModuleStore()
+const leaveModuleStore = useLeaveModuleStore()
 
 const overlayPanel = ref();
 const toggle = (event) => {
@@ -130,5 +130,10 @@ const filters = ref({
 });
 
 const statuses = ref(["Pending", "Approved", "Rejected"]);
+
+onMounted( async () => {
+    console.log("Fetching leave details for current user : "+leaveModuleStore.baseService.current_user_code);
+   // leaveModuleStore.getEmployeeLeaveHistory(user_code,)
+});
 
 </script>
