@@ -28,7 +28,7 @@
             <ul class="navbar-nav" id="navbar-nav">
 
                 <!-- end Dashboard Menu -->
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link sidebar menu-link pt-0" href="{{ route('index') }}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-grid-fill" viewBox="0 0 16 16">
@@ -51,7 +51,7 @@
                 <!-- CRM -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     @if (!Str::contains(getCurrentClientName(), 'Vasa'))
-                        <li class="nav-item">
+                        <li class="nav-item mb-1">
 
                             <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
                                 role="button" aria-expanded="false" aria-controls="sidebarRoles">
@@ -92,7 +92,7 @@
 
                 <!-- Navigation Menu for attendance-->
                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
@@ -130,7 +130,7 @@
                 </li>
 
 
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}" data-bs-toggle=""
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
@@ -253,7 +253,7 @@
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
 
-                    <li class="nav-item">
+                    <li class="nav-item mb-1">
                         <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down"
                             data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="sidebar360questions">
@@ -381,7 +381,7 @@
                 <!-- PMS module -->
                 @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines']))
 
-                    <li class="nav-item">
+                    <li class="nav-item mb-1">
                         <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down"
                             data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="sidebarRoles">
@@ -503,7 +503,7 @@
                     <!-- pay roll -->
                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
-                    <li class="nav-item">
+                    <li class="nav-item mb-1">
                         <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
                             role="button" aria-expanded="false" aria-controls="sidebarRoles">
                             <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652"
@@ -568,7 +568,7 @@
                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                 <!-- pay check -->
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#paycheckDrop-Down"
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
@@ -620,7 +620,7 @@
 
                 <!-- claims -->
 
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down"
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
@@ -729,7 +729,7 @@
                 </li> --}}
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin']))
-                    <li class="nav-item">
+                    <li class="nav-item mb-1">
                         <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse"
                             role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                             <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
@@ -765,6 +765,12 @@
                                             Template
                                         </span></a>
                                 </li>
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+
+                                <li lass="nav-item">
+                                    <a href="/documents_settings" class="nav-link"><span>Documents Settings</span></a>
+                                </li>
+                                @endcan
                                 <li class="nav-item">
                                     {{-- <a href="{{ route('manage_emp_mail_notifications') }}" class="nav-link"><span>Document
                                             Manage Employee Mail Notifications
@@ -779,7 +785,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('showAttendanceSettingsPage') }}" class="nav-link sidebar py-1">
-                                        <span> Attendance </span></a>
+                                        <span> Attendance Settings</span></a>
                                 </li>
                                 {{-- @endif --}}
                             </ul>
@@ -788,7 +794,7 @@
                 @endif
 
                 <!-- exit -->
-                <li class="nav-item">
+                <li class="nav-item mb-1">
                     <a class="nav-link sidebar menu-link pt-0" href="#exitDrop-down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.227" height="17.699"

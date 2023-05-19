@@ -31,6 +31,9 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use App\Models\VmtOrgTimePeriod;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class VmtAttendanceService{
 
@@ -1764,90 +1767,7 @@ class VmtAttendanceService{
 
 
     }
-    public function getAllEmployeesLeaveDetails($filter_month, $filter_year, $filter_leave_status){
 
-        $validator = Validator::make(
-            $data = [
-                "filter_month"=>$filter_month,
-                "filter_year"=>$filter_year,
-                "filter_leave_status"=>$filter_leave_status,
-            ],
-            $rules = [
-                'filter_month' =>'required',
-                'filter_year' =>'required',
-                'filter_leave_status' =>'required|in:Approved,Pending,Rejected',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-            ]
-
-        );
-
-        if($validator->fails()){
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-
-
-        try{
-
-
-            $query_employees_leaves = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
-                            ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
-                            ->whereYear('leaverequest_date', $filter_year)
-                            ->whereMonth('leaverequest_date', $filter_month)
-                            ->where('status',$filter_leave_status)
-                            ->get([
-                                "vmt_employee_leaves.leaverequest_date",
-                                "vmt_employee_leaves.start_date",
-                                "vmt_employee_leaves.end_date",
-                                "vmt_employee_leaves.total_leave_datetime",
-                                "vmt_employee_leaves.leave_reason",
-                                "vmt_employee_leaves.reviewer_user_id",
-                                "vmt_employee_leaves.reviewed_date",
-                                "vmt_employee_leaves.reviewer_comments",
-                                "vmt_employee_leaves.status",
-                                "vmt_employee_leaves.is_revoked",
-                                "name",
-                                "user_code",
-                                "leave_type",
-                            ]);
-                          // dd($query_employees_leaves->toArray());
-            $query_employees_leaves = $query_employees_leaves->toArray();
-
-            for($i=0;$i< count($query_employees_leaves);$i++){
-
-                $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
-                $query_employees_leaves[$i]["manager_name"] = $manager_name;
-
-            }
-
-
-            return response()->json([
-                'status' => 'success',
-                'message' => '',
-                'data' => $query_employees_leaves
-            ]);
-
-        }
-        catch(\Exception $e)
-        {
-           // dd($e);
-            return response()->json([
-                'status' => 'failure',
-                'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
-                'data' => $e
-            ]);
-        }
-
-
-
-
-    }
     public function getTeamEmployeesLeaveDetails($manager_code,$filter_month, $filter_year, $filter_leave_status){
 
         $validator = Validator::make(
@@ -1936,6 +1856,177 @@ class VmtAttendanceService{
 
 
 
+    }
+
+    public function getAllEmployeesLeaveDetails($filter_month, $filter_year, $filter_leave_status){
+
+        $validator = Validator::make(
+            $data = [
+                "filter_month"=>$filter_month,
+                "filter_year"=>$filter_year,
+                "filter_leave_status"=>$filter_leave_status,
+            ],
+            $rules = [
+                'filter_month' =>'required',
+                'filter_year' =>'required',
+                'filter_leave_status' =>'required|in:Approved,Pending,Rejected',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+
+            $query_employees_leaves = VmtEmployeeLeaves::join('users','users.id','=','vmt_employee_leaves.user_id')
+                            ->join('vmt_leaves','vmt_leaves.id','=','vmt_employee_leaves.leave_type_id')
+                            ->whereYear('leaverequest_date', $filter_year)
+                            ->whereMonth('leaverequest_date', $filter_month)
+                            ->where('status',$filter_leave_status)
+                            ->get([
+                                "vmt_employee_leaves.leaverequest_date",
+                                "vmt_employee_leaves.start_date",
+                                "vmt_employee_leaves.end_date",
+                                "vmt_employee_leaves.total_leave_datetime",
+                                "vmt_employee_leaves.leave_reason",
+                                "vmt_employee_leaves.reviewer_user_id",
+                                "vmt_employee_leaves.reviewed_date",
+                                "vmt_employee_leaves.reviewer_comments",
+                                "vmt_employee_leaves.status",
+                                "vmt_employee_leaves.is_revoked",
+                                "name",
+                                "user_code",
+                                "leave_type",
+                            ]);
+                          // dd($query_employees_leaves->toArray());
+            $query_employees_leaves = $query_employees_leaves->toArray();
+
+            for($i=0;$i< count($query_employees_leaves);$i++){
+
+                $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $query_employees_leaves[$i]["manager_name"] = $manager_name;
+
+            }
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => '',
+                'data' => $query_employees_leaves
+            ]);
+
+        }
+        catch(\Exception $e)
+        {
+           // dd($e);
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
+                'data' => $e
+            ]);
+        }
+
+
+
+
+    }
+    /*
+
+        Get the leave details based on the employee roles.
+
+
+    */
+    public function getLeaveRequestDetailsBasedOnCurrentRole()
+    {
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+        $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
+
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+        $start_date =  $time_periods_of_year_query->start_date;
+
+        $end_date   = $time_periods_of_year_query->end_date;
+
+        //Get all the employee's leave details
+        if(Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+        {
+            $employeeLeaves_Org = '';
+
+            $employeeLeaves_Org = VmtEmployeeLeaves::all();
+
+            foreach ($employeeLeaves_Org as $singleItem) {
+
+               //Map emp names
+               if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+
+               }
+
+               //Map reviewer names
+               if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+               }
+
+               //Map leave types
+                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+            }
+
+            return $employeeLeaves_Org;
+        }
+        else         //Get the manager's employees leave details
+        if(Str::contains(currentLoggedInUserRole(), ['Manager']))
+        {
+            //Get the list of employees for the given Manager
+            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', auth::user()->user_code)->get('user_id');
+
+            //use wherein and fetch the relevant records
+            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)->get();
+
+
+            //dd($map_allEmployees[1]["name"]);
+            foreach ($employeeLeaves_team as $singleItem) {
+
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+                }
+
+                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+                }
+
+                //Map leave types
+                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
+
+            }
+
+
+            //dd($employeeLeaves_team);
+            return $employeeLeaves_team;
+        }
+        else  ///Get the current employee's leave details
+        if(Str::contains(currentLoggedInUserRole(), ['Employee']))
+         {
+
+            return VmtEmployeeLeaves::where('user_id', auth::user()->id)
+                                    ->whereBetween('start_date',[$start_date,$end_date])->get();
+        }
     }
 }
 

@@ -196,7 +196,7 @@ class VmtEmployeeService {
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
 
-            $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']) );
+            $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
             $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
 
             $newUser->active = '0';
