@@ -747,6 +747,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/documents_settings', function () {
         return view('configurations.vmt_documents_settings'); })->name('document_settings');
 
+    Route::get('/investment_settings', function () {
+        return view('configurations.investment_setting'); })->name('investment_settings');
+
     Route::get('/documents/employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'getEmployeeDocumentsSettings'])->name('getEmployeeDocumentsSettings');
     Route::post('/documents/update_employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'updateEmployeeDocumentsSettings'])->name('updateEmployeeDocumentsSettings');
 

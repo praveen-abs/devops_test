@@ -92,9 +92,9 @@
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <!-- {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }} -->
-                        </template>
+                        <!-- <template #body="slotProps">
+                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
+                        </template> -->
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">

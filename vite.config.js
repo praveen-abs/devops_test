@@ -63,6 +63,10 @@ export default defineConfig({
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
+                // Investment Setting
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
+
 
                 // Paycheck
 
