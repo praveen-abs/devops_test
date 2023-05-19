@@ -2007,4 +2007,35 @@ class VmtAttendanceService
         }
         return $response;
     }
+
+    public function teamLeaveBalance($start_date, $end_date, $month)
+    {
+        $manager_user_code = User::where('id', auth()->user()->id)->first()->user_code;
+        $response = array();
+        $all_active_user = User::leftJoin('vmt_employee_details', 'users.id', '=', 'vmt_employee_details.userid')->leftJoin('vmt_employee_office_details', 'users.id', '=', 'vmt_employee_office_details.user_id')
+            ->where('active', 1)->where('is_ssa', 0)
+            ->where('vmt_employee_office_details.l1_manager_code', $manager_user_code)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
+        foreach ($all_active_user as $single_user) {
+            $total_leave_balance = 0;
+            $overall_leave_balance = calculateLeaveDetails($single_user->id, $start_date, $end_date);
+            $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
+            $each_user['user_code'] = $single_user->user_code;
+            $each_user['name'] = $single_user->name;
+            $each_user['location'] = $single_user->location;
+            if ($single_user->department_id == null) {
+                $each_user['department'] = $single_user->department_id;
+            } else {
+                $each_user['department'] =  Department::where('id', $single_user->department_id)->first()->name;
+            }
+
+            foreach ($overall_leave_balance['Leave Balance'] as $single_leave_balance) {
+                //   dd($single_leave_balance);
+                $total_leave_balance =  $total_leave_balance + $single_leave_balance;
+            }
+            $each_user['total_leave_balance'] =  $total_leave_balance;
+            $each_user['leave_balance_details'] =  $leavetypeAndBalanceDetails;
+            array_push($response, $each_user);
+        }
+        return $response;
+    }
 }
