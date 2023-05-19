@@ -80,6 +80,8 @@ onMounted(()=>{
     }, 2000);
 })
 
+
+
 </script>
 
 <style lang="scss">

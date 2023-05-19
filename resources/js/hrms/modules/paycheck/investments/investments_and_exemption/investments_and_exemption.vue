@@ -111,10 +111,12 @@ const investmentStore = investmentMainStore()
 
 const activetab = ref(investmentStore.investment_exemption_steps);
 
-// onMounted(async () => {
-//     console.log(activetab.value);
-//     await investmentStore.getInvestmentSource()
-// })
+onMounted(async () => {
+    console.log(activetab.value);
+    setTimeout(async () => {
+        investmentStore.fetchPropertyType()
+    }, 2000);
+})
 
 </script>
 
