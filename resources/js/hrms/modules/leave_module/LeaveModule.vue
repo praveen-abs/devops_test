@@ -74,11 +74,6 @@ import { onMounted } from 'vue';
 
 const  useLeaveStore = useLeaveModuleStore()
 
-onMounted(()=>{
-    setTimeout(() => {
-        useLeaveStore.getCurrentEmployeeLeaveBalance()
-    }, 2000);
-})
 
 </script>
 

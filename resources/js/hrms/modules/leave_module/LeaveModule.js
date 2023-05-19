@@ -28,7 +28,9 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar';
-import Checkbox from 'primevue/checkbox'
+import Checkbox from 'primevue/checkbox';
+import Chips from 'primevue/chips'
+import MultiSelect from 'primevue/multiselect';
 
 import LeaveModule from './LeaveModule.vue'
 
@@ -62,6 +64,8 @@ app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Checkbox', Checkbox)
+app.component('Chips', Chips)
+app.component('MultiSelect', MultiSelect)
 
 app.mount("#LeaveModule");
 
