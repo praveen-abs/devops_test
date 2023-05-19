@@ -103,11 +103,13 @@ class VmtAttendanceService
     }
 
     /*
-        Get the employee's compensatory work days (Worked on holidays)
+        Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
         This wont check whether these comp days are used by emps
     */
-    private function fetchEmployeeCompensatoryOffDays($user_id)
-    {
+    private function fetchEmployeeCompensatoryOffDays($user_id){
+
+        //Need to move to separate table settings
+        $work_leave_days = ['Sunday'];
 
         //Final array response
         //Get list of holidays
@@ -131,16 +133,33 @@ class VmtAttendanceService
 
         foreach ($dates_emp_attendanceDetails as $singleAttendanceDate) {
 
-            $trimmed_date = substr($singleAttendanceDate, 5);
+                ////Need to check whether the given date is in holiday AND given date is in leave days(Eg : Sunday , saturday)
+                $timestamp = strtotime($singleAttendanceDate);
+                $day = date('l', $timestamp);
 
-            //dd($trimmed_date);
+                //Test : Checking whether emp worked in work_leave_days
+                /*
+                    if(in_array($day, $work_leave_days)){
+                     dd("Worked in leave days : ".$singleAttendanceDate);
+                    }else
+                    {
+                       dd("Not Worked in leave days : ".$singleAttendanceDate);
 
-            //Check whether it is in Holiday or not
-            if (!in_array($trimmed_date, $array_query_holidays)) {
-                //If not in holiday, then remove from array
-                unset($query_emp_attendanceDetails[$singleAttendanceDate]);
+                    }
+                */
+                //Test : End
+
+                $trimmed_date = substr($singleAttendanceDate, 5);
+
+
+                //Check whether not worked in Holidays or not in work_leave days
+                if(!in_array($trimmed_date, $array_query_holidays) && !in_array($day, $work_leave_days))
+                {
+                    //If not in holiday, then remove from array
+                    unset($query_emp_attendanceDetails[$singleAttendanceDate]);
+                }
+
             }
-        }
 
         //dd($query_emp_attendanceDetails);
 
