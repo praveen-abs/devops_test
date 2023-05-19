@@ -209,6 +209,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attendance/getEmployeeLeaveDetails', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeLeaveDetails'])->name('getEmployeeLeaveDetails');
     Route::post('/attendance/getTeamEmployeesLeaveDetails', [App\Http\Controllers\VmtAttendanceController::class, 'getTeamEmployeesLeaveDetails'])->name('getTeamEmployeesLeaveDetails');
     Route::post('/attendance/getAllEmployeesLeaveDetails', [App\Http\Controllers\VmtAttendanceController::class, 'getAllEmployeesLeaveDetails'])->name('getAllEmployeesLeaveDetails');
+    Route::post('/attendance/getLeaveInformation', [App\Http\Controllers\VmtAttendanceController::class, 'getLeaveInformation'])->name('getLeaveInformation');
 
 
     Route::get('/get-singleleavepolicy-record/{id}', [App\Http\Controllers\VmtAttendanceController::class, 'fetchSingleLeavePolicyRecord'])->name('get-singleleavepolicy-record');

@@ -139,7 +139,8 @@ class VmtAttendanceController extends Controller
     }
 
     public function getEmployeeLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
-        return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+       //dd($request->user_code);
+        return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $request->filter_leave_status );
     }
 
     public function getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
@@ -195,30 +196,10 @@ class VmtAttendanceController extends Controller
     }
 
     /*
-     AJAX : Get leave details based on given leave_id
+         Get leave info based on given leave_id
     */
-    public function fetchLeaveDetails(Request $request){
-        $leave_details = VmtEmployeeLeaves::find($request->leave_id);
-
-        $leave_details['user_name'] = User::find($leave_details->user_id)->name;
-        $leave_details['leave_type'] = VmtLeaves::find($leave_details->leave_type_id)->leave_type;
-        // $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
-        $leave_details['approver_name'] =  User::find($leave_details->reviewer_user_id)->name;
-        $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-
-        if(!empty($leave_details->notifications_users_id))
-        {
-            $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
-            $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-        }
-        else
-            $leave_details['notification_userName'] = "";
-
-        $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
-
-
-
-        return $leave_details;
+    public function getLeaveInformation(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getLeaveInformation($request->record_id);
     }
 
     /*
