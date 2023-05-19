@@ -2974,7 +2974,7 @@ const parentFormat = ref(new Date('1995/12/31'))
 
 const isLetter = (e)=> {
   let char = String.fromCharCode(e.keyCode); // Get the character
-  if(/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex 
+  if(/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
   else e.preventDefault(); // If not match, don't add to input text
 }
 
@@ -3581,8 +3581,8 @@ const ValidateAccountNo =()=> {
               .finally(() => {
                 console.log("completed");
               });
-            
-            }      
+
+            }
 
            const ifsc = ref(false)
           const ValidateIfscNo =()=> {
@@ -3603,7 +3603,7 @@ const actual_gross = ref()
 
 const compensatory_calculation = () => {
   let basic = (employee_onboarding.cic * 50) / 100;
-  
+
   console.log("Basic :" + Math.floor(basic));
 
   employee_onboarding.basic = Math.floor(basic);
@@ -3622,7 +3622,7 @@ const compensatory_calculation = () => {
   console.log("Actual gross" +  actual_gross.value);
 
   let gross = basic + hra + employee_onboarding.special_allowance;
-  
+
   employee_onboarding.gross = Math.floor(gross);
 
   console.log("Gross",Math.floor(gross));
@@ -3891,7 +3891,8 @@ console.log("date checking");
 
 
 const compensatoryCalWhileQuick = () =>{
-  compen_disable.value = false
+//   compen_disable.value = false
+
   family_details_disable.value = true
 
   let gross = parseInt(employee_onboarding.basic) + parseInt(employee_onboarding.hra) + parseInt(employee_onboarding.special_allowance);
@@ -4197,7 +4198,7 @@ function populateQuickOnboardData(emp_data){
       console.log( emp_data.onboard_type + "Onboarding");
 
         family_details_disable.value = true
-        // compen_disable.value = false
+        compen_disable.value = false
         is_emp_code_quick.value = true
         is_doj_quick.value = true
         is_emp_name_quick.value = true

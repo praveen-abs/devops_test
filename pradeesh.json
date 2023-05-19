@@ -1,0 +1,52 @@
+{
+  "OnboardingFormDetails": [
+    {
+      "id": 1,
+      "emp_code": "BC001",
+      "emp_name": "Prakesh",
+      "onboarding_status": 1,
+      "action": 1
+    },
+    {
+      "id": 2,
+      "emp_code": "BC002",
+      "emp_name": "Arul",
+      "onboarding_status": 0,
+      "action": 1
+    },
+    {
+      "id": 3,
+      "emp_code": "BC003",
+      "emp_name": "nihal",
+      "onboarding_status": 0,
+      "action": 1
+    },
+    {
+      "id": 4,
+      "emp_code": "BC004",
+      "emp_name": "Hari",
+      "onboarding_status": 0,
+      "action": 1
+    }
+  ],
+  "DeleteOnboardingFormDetails": [
+
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "selected_Id": 1
+  }
+}
