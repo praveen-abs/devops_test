@@ -8,15 +8,19 @@
     <div class="mt-30">
         <h1 class="fs-4 fw-bold mb-4"> Onboarding Form management</h1>
         <div class="card">
-            <DataTable :value="OnboardingFromService.array_OnboardingFromDetails">
+            <DataTable :value="OnboardingFromService.array_OnboardingFromDetails" :paginator="true" :rows="10" dataKey="id"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[5, 10, 25]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
+            v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
                 <Column field="emp_code" header="Employee Code"></Column>
                 <Column field="emp_name" header="Employee Name"></Column>
                 <Column field="onboarding_status" header="Onboarding Status"></Column>
                 <Column field="action" header="Action">
                     <template #body="slotProps">
-                        <Button class="btn-primary mr-2 p-2 pi-pencil" style="" label="Edit"
+                        <Button class="btn-primary mr-2 p-2" icon="pi  pi-pencil" style="" label="Edit"
                             @click="OnboardingFromService.EditOnboardingFormDetails(slotProps.data.id)" />
-                        <Button class="btn-orange p-2 pi-delete-left" label="Delete" @click="showConfirmationDialog(slotProps.data.id)" />
+                        <Button class="btn-orange p-2 " icon="pi pi-delete-left" label="Delete" @click="showConfirmationDialog(slotProps.data.id)" />
                     </template>
                 </Column>
             </DataTable>
