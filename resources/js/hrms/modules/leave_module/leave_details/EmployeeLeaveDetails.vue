@@ -107,7 +107,7 @@ import { ref, onMounted } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import moment from "moment";
 import { useLeaveModuleStore } from '../LeaveModuleService'
-import LeaveBalance from "./LeaveBalance.vue";
+import LeaveBalance from "./EmployeeLeaveBalance.vue";
 
 
 const useLeaveStore = useLeaveModuleStore()
