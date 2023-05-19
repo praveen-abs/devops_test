@@ -172,7 +172,7 @@ let currentlySelectedRowData = null;
 onMounted(() => {
   let url_org_leave_balance = window.location.origin + "/fetch-org-leaves-balance";
 
-  console.log("Fetching ORG LEAVE from url : " + url_org_leave);
+  console.log("Fetching ORG LEAVE from url : " + url_org_leave_balance);
 
   axios.get(url_org_leave_balance).then((response) => {
       leaves.value = Object.values(response.data);

@@ -165,9 +165,7 @@
 
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div id="vue_OrgLeaveBalance">
-
-                </div>
+            
                 <div class="mt-3 row">
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
