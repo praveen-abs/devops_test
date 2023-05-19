@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <Button label="Apply Leave"  class=" btn btn-orange outline-none border-0 py-2 px-2 font-base" @click="visible = true" />
+    <Button label="Apply Leave" class="px-2 py-2 border-0 outline-none btn btn-orange font-base" @click="visible = true" />
     <!-- <Transition name="modal" >
         <ABS_loading_spinner v-if="service.data_checking" />
     </Transition> -->
@@ -23,8 +23,8 @@
         </template>
         <template #footer>
             <div class="text-center">
-                <Button label="OK" style="justify-content: center;" severity="help" @click="service.ReloadPage"
-                    raised class="justify-content-center" />
+                <Button label="OK" style="justify-content: center;" severity="help" @click="service.ReloadPage" raised
+                    class="justify-content-center" />
             </div>
         </template>
     </Dialog>
@@ -32,7 +32,7 @@
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
 
         <template #header>
-            <h5 class="m-auto"> {{service.leave_data.leave_request_error_messege}}</h5>
+            <h5 class="m-auto"> {{ service.leave_data.leave_request_error_messege }}</h5>
         </template>
         <template #footer>
             <div class="text-center">
@@ -63,13 +63,15 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <div class="form-group">
-                            <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
+                            <Dropdown editable @change="service.Permission"  style="  height: 38px;font-weight: 500;"  class="w-full"  v-model="service.leave_data.selected_leave"  :options="service.leave_types"
+                                optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" />
+                            <!-- <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
                                 aria-label="Default select example" class="outline-none form-select"
                                 v-model="service.leave_data.selected_leave" @change="service.Permission">
                                 <option selected>Select Leave Type</option>
                                 <option v-for="leavetype in service.leave_types" :key="leavetype.id">
                                     {{ leavetype.leave_type }}</option>
-                            </select>
+                            </select> -->
 
                         </div>
                     </div>
@@ -178,8 +180,8 @@
 
                                 <label for="" class="float-label">Start Date</label><br>
                                 <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                    v-model="service.leave_data.custom_start_date"
-                                    :minDate="first_day_of_the_month"  :manualInput="true" />
+                                    v-model="service.leave_data.custom_start_date" :minDate="first_day_of_the_month"
+                                    :manualInput="true" />
 
                             </div>
 
@@ -205,7 +207,8 @@
 
                                 <label for="" class="float-label">End Day</label><br>
                                 <Calendar inputId="icon" @date-select="service.dayCalculation" dateFormat="dd-mm-yy"
-                                    :showIcon="true" v-model="service.leave_data.custom_end_date" :minDate="first_day_of_the_month" />
+                                    :showIcon="true" v-model="service.leave_data.custom_end_date"
+                                    :minDate="first_day_of_the_month" />
 
                             </div>
                         </div>
@@ -275,11 +278,16 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xxl-6 mb-md-0">
 
-                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves" :options="service.leave_data.compensatory_leaves" optionLabel="emp_attendance_date" placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5" >
+                        <MultiSelect v-model="service.leave_data.selected_compensatory_leaves"
+                            :options="service.leave_data.compensatory_leaves" optionLabel="emp_attendance_date"
+                            placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5">
 
                             <template #footer>
                                 <div class="px-3 py-2">
-                                    <b>{{ service.leave_data.selected_compensatory_leaves ? service.leave_data.selected_compensatory_leaves.length : 0 }}</b> Date{{ (service.leave_data.selected_compensatory_leaves ? service.leave_data.selected_compensatory_leaves.length : 0) > 1 ? 's' : '' }} selected.
+                                    <b>{{ service.leave_data.selected_compensatory_leaves ?
+                                        service.leave_data.selected_compensatory_leaves.length : 0 }}</b> Date{{
+        (service.leave_data.selected_compensatory_leaves ?
+            service.leave_data.selected_compensatory_leaves.length : 0) > 1 ? 's' : '' }} selected.
                                 </div>
                             </template>
                         </MultiSelect>
@@ -291,7 +299,7 @@
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                              v-model="service.leave_data.compensatory_start_date" :minDate="first_day_of_the_month" />
+                                v-model="service.leave_data.compensatory_start_date" :minDate="first_day_of_the_month" />
                         </div>
                     </div>
 
@@ -313,7 +321,9 @@
                             <label for="" class="float-label">End Day</label>
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
-                            <Calendar @date-select="service.dayCalculation" inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" v-model="service.leave_data.compensatory_end_date" :minDate="first_day_of_the_month"   />
+                            <Calendar @date-select="service.dayCalculation" inputId="icon" dateFormat="dd-mm-yy"
+                                :showIcon="true" v-model="service.leave_data.compensatory_end_date"
+                                :minDate="first_day_of_the_month" />
                         </div>
                     </div>
                 </div>
@@ -355,7 +365,8 @@
                 <div class="mt-6 text-center ">
                     <button type="button" class="btn btn-border-primary" @click="visible = false">Cancel</button>
                     <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
-                        :disabled="service.leave_data.selected_leave.length > 0 && service.leave_data.leave_reason ? false : true" @click="service.Submit">
+                        :disabled="service.leave_data.selected_leave == ''  ? true : false"
+                        @click="service.Submit">
                         Request Leave</button>
                 </div>
             </div>
@@ -480,6 +491,7 @@ label {
     color: #ffffff;
     border-color: none;
 }
+
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 0.2rem 0.55rem;
     margin-right: 0.5rem;
@@ -487,6 +499,7 @@ label {
     color: #495057;
     border-radius: 16px;
 }
+
 .p-checkbox .p-checkbox-box.p-highlight {
     border-color: #3B82F6;
     background: #103674;
@@ -505,11 +518,13 @@ label {
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
 }
+
 .form-control:focus {
     border-color: #002f56;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
 }
+
 .p-chips-multiple-container {
     margin: 0;
     padding: 0;
@@ -521,6 +536,7 @@ label {
     flex-wrap: wrap;
     width: 100%;
 }
+
 /*.p-dialog.p-component:before {
     content: "";
     background: #002f56;
@@ -528,7 +544,4 @@ label {
     border-radius: 50px 50px 0px;
     position: relative;
     top: 3px;
-}*/
-
-
-</style>
+}*/</style>

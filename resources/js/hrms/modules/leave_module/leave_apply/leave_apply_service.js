@@ -98,10 +98,6 @@ export const Service = defineStore("Service", () => {
     };
     const dayCalculation = () => {
 
-
-
-
-
         if (custom_format.value == true) {
             if (
                 leave_data.custom_start_date.length < 0 ||
@@ -187,7 +183,6 @@ export const Service = defineStore("Service", () => {
 
     const Permission = () => {
 
-
         if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
             TotalNoOfDays.value = false;
@@ -218,6 +213,7 @@ export const Service = defineStore("Service", () => {
             Permission_format.value = false;
             compensatory_format.value = false;
             TotalNoOfDays.value=true
+            full_day_format.value = true
         }
     };
 
