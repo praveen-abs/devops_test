@@ -34,6 +34,8 @@
       </template>
     </Dialog>
 
+
+
     <div>
       <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -111,6 +113,8 @@
       </DataTable>
     </div>
   </div>
+
+
 </template>
 <script setup>
 import { ref, onMounted } from "vue";

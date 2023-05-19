@@ -189,10 +189,12 @@
                     var nodeHtml = '';
 
 
+                   // data.user_code = ' ('+ data.user_code +') ';
+                    let label_user_code = data.user_code ? ' ( '+data.user_code+' )' : '';
 
                     if (data.image_exist) {
                         if (data.className != "logo-level")
-                            nodeHtml = '<div class="title">' + '<span>' + data.name + '</span>' + '</div>';
+                            nodeHtml = '<div class="title">' + '<span>' + data.name + data.user_code +' </span>' + '</div>';
 
                         var imageHtml = '<img class="user-avatar" src="' + data.image + '" />';
 
@@ -202,11 +204,11 @@
                             nodeHtml = '<div class="title">' + '<span>' + data.name + '</span>' + '</div>';
 
                         } else {
-                            nodeHtml = '<div class="title">' + '<span>' + data.name + '</span>' + '</div>';
+                            nodeHtml = '<div class="title">' + '<span>' + data.name + label_user_code +' </span>' + '</div>';
 
                             var imageHtml =
                                 '<span class="rounded-circle user-profile  ml-2 " id=""><i id="topbar_username" class="align-middle ">' +
-                                data.name.split(" ").join("").substring(0, 2) + '</i></span>';
+                                data.name.split(" ").join("").substring(0, 2).toUpperCase() + '</i></span>';
                         }
 
                     }

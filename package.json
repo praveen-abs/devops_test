@@ -23,6 +23,7 @@
         "@fortawesome/free-regular-svg-icons": "^6.4.0",
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^3.0.3",
+        "@types/file-saver": "^2.0.5",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vitejs/plugin-vue-jsx": "^3.0.0",
         "@vuelidate/core": "^2.0.0",

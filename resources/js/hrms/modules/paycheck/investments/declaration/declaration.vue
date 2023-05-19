@@ -97,9 +97,9 @@
 
     </Dialog>
 
-<input type="number" v-model="test" name="" class="form-control" id="">
+<!-- <input type="number" v-model="test" name="" class="form-control" id="">
 {{ test }}<br>
-<button @click="formula.taxCalculation(test)">click</button>
+<button @click="formula.taxCalculation(test)">click</button> -->
 
 
 </template>

@@ -92,9 +92,9 @@
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <!-- {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }} -->
-                        </template>
+                        <!-- <template #body="slotProps">
+                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
+                        </template> -->
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
@@ -220,8 +220,8 @@
                 <!-- <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     v-model="investmentStore.hra.landlord_PAN" required> -->
-                <InputMask  id="serial" mask="aaaPa9999a"   class="w-full "
-                    placeholder="AHFCS1234F" style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN"  />
+                <InputMask id="serial" mask="aaaPa9999a" class="w-full " placeholder="AHFCS1234F"
+                    style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN" />
 
             </div>
 
@@ -242,7 +242,7 @@
 
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 import { ref } from "vue";
@@ -251,7 +251,6 @@ import moment from "moment";
 const test = () => {
     alert("test")
 }
-
 
 const op = ref();
 const toggle = (event) => {
@@ -264,10 +263,17 @@ onMounted(async () => {
     setTimeout(async () => {
         await investmentStore.fetchHraNewRental()
     }, 1000);
-    setTimeout(async () => {
-        investmentStore.fetchPropertyType()
-    }, 3000);
+
 })
+
+
+// onUnmounted(() => {
+//     setTimeout(() => {
+//         investmentStore.fetchPropertyType()
+//             console.log("destroyed");
+//     }, 3000);
+// })
+
 
 
 

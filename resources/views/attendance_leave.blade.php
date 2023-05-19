@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <div class="Leave_dashboard mt-30">
-        <div class="mb-3 tw-card left-line pt-1 pb-0">
+        <div class="pt-1 pb-0 mb-3 tw-card left-line">
             <div class="flex justify-between">
 
                 <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
@@ -37,7 +37,7 @@
                 </ul>
 
                 <div class="flex items-center">
-                    <div class=" mr-3">
+                    <div class="mr-3 ">
                         <div class="input-group me-2">
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
@@ -63,10 +63,10 @@
         </div>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div class="tw-card mb-3">
+                <div class="mb-3 tw-card">
                     <div class="mb-2 row">
                         <div class="col-sm-6 col-xl-6 col-md-6 col-lg-6">
-                            <h6 class="text-gray-900 font-semibold text-lg modal-title">Leave Balance</h6>
+                            <h6 class="text-lg font-semibold text-gray-900 modal-title">Leave Balance</h6>
                         </div>
                         <div class="col-6 justify-content-end d-flex">
                             {{-- <div class="pendingLeave_notify me-3">
@@ -82,14 +82,14 @@
 
                         </div>
                     </div>
-                    {{-- <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-3 xl:grid-cols-3 gap-4"> --}}
+                    {{-- <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 xl:grid-cols-3"> --}}
 
-                    <div class="grid md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 gap-4"
+                    <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
                         style="display: grid;">
                         @foreach ($leave_balance_details['Leave Balance'] as $key => $value)
-                            <div class="tw-card  dynamic-card ">
+                            <div class="tw-card dynamic-card ">
                                 <div class="text-center">
-                                    <p class="mb-2 font-semibold text-base  ">{{ $key }}</p>
+                                    <p class="mb-2 text-base font-semibold ">{{ $key }}</p>
                                     <h6 class="mb-0 text-sm font-semibold">
                                         {{ $value }}
                                     </h6>
@@ -101,13 +101,13 @@
                 <div class="tw-card ">
                     {{-- </div> --}}
 
-                    <h6 class="text-gray-900 mb-4 font-semibold text-lg modal-title">Leave Availed</h6>
-                    <div class="grid md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 gap-4"
+                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Leave Availed</h6>
+                    <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
                         style="display: grid;">
                         @foreach ($leave_balance_details['Avalied Leaves'] as $Leave_type => $balance)
-                            <div class="tw-card bg-indigo-100 border-indigo-300  border-l-4 ">
+                            <div class="bg-indigo-100 border-l-4 border-indigo-300 tw-card ">
                                 <div class="text-center">
-                                    <p class="mb-2 font-semibold text-base  ">{{ $Leave_type }}</p>
+                                    <p class="mb-2 text-base font-semibold ">{{ $Leave_type }}</p>
                                     <h6 class="mb-0 text-base font-semibold">
                                         {{ $balance }}
                                     </h6>
@@ -122,7 +122,7 @@
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
                             <div class="card-body">
-                                <h6 class="text-gray-900 mb-4 font-semibold text-lg modal-title">Leave history</h6>
+                                <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Leave history</h6>
 
                                 <div class="table-responsive">
                                     <div id="emp_leaveHistory" class="custom_gridJs"></div>
@@ -132,6 +132,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="tab-pane fade show " id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">
 
                 <div class="card top-line">
@@ -164,9 +165,7 @@
 
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <div id="vue_OrgLeaveBalance">
-
-                </div>
+            
                 <div class="mt-3 row">
                     <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
                         <div class="mb-0 card leave-history">
