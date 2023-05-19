@@ -1,5 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import { ref } from "vue";
 
 
 /*
@@ -14,26 +15,22 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
     // Tax Calculation
 
-    const taxCalculation = (total_income) => {
+    const tax_amt = ref()
+
+    const taxCalculation = (total_income,regime) => {
 
         console.log("total income :" + total_income);
 
-        let regime = "new"
-
-        let age = 59
-
 
         if (regime == 'old') {
-
-
             if (total_income > 250000 && total_income < 500000) {
-
                 if (age < 80) {
 
                     let taxable_amount = total_income * 5 / 100;
 
                     console.log("taxable_amount :" + Math.floor(taxable_amount));
 
+                    tax_amt.value = Math.floor(taxable_amount)
 
                     console.log("old regime total income is greater than 250000");
 
@@ -50,6 +47,8 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
                     console.log("old regime total income greater than 500000");
 
+                    tax_amt.value = Math.floor(taxable_amount)
+
 
                 } else
                     if (total_income > 1000000) {
@@ -59,6 +58,8 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                         console.log("taxable_amount :" + Math.floor(taxable_amount));
 
                         console.log("old regime total income greater than 1000000");
+
+                        tax_amt.value = Math.floor(taxable_amount)
 
                     }
                     else {
@@ -70,52 +71,33 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
             if (regime == 'new') {
 
                 if (total_income > 300001 && total_income < 600000) {
-
                     let taxable_amount = total_income * 5 / 100;
-
                     console.log("taxable_amount :" + Math.floor(taxable_amount));
-
                     console.log("new regime total income greater than 300001");
-
-
                 } else
                     if (total_income > 600001 && total_income < 900000) {
-
                         let taxable_amount = total_income * 10 / 100;
-
                         console.log("taxable_amount :" + Math.floor(15000 + taxable_amount));
-
                         console.log("new regime total income greater than 600001");
-
-
+                        tax_amt.value = Math.floor(taxable_amount)
                     } else
                         if (total_income > 900001 && total_income < 1200000) {
-
                             let taxable_amount = total_income * 15 / 100;
-
                             console.log("taxable_amount :" + Math.floor(30000 + taxable_amount));
-
                             console.log("new regime total income greater than 900001 ");
-
 
                         } else
                             if (total_income > 1200001 && total_income < 1500000) {
-
                                 let taxable_amount = total_income * 20 / 100;
-
                                 console.log("taxable_amount :" + Math.floor(45000 + taxable_amount));
-
                                 console.log("new regime total income greater than 1200001");
+                                tax_amt.value = Math.floor(taxable_amount)
 
                             } else
                                 if (total_income > 1500000) {
-
                                     let taxable_amount = total_income * 30 / 100;
-
                                     console.log("taxable_amount :" + Math.floor(90000 + taxable_amount));
-
                                     console.log("new regime total income greater than 1000000");
-
                                 } else {
                                     console.log("less than 300000 ");
                                 }
@@ -135,9 +117,9 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
         // if (lender_type == 'Financial Institution' || lender_type == 'Others') {
 
-            let main = (rent_rec - munic_tax) * 30 / 100
+        let main = (rent_rec - munic_tax) * 30 / 100
 
-            return main
+        return main
 
         // } else {
         //     console.log("Lender type is not exists");
@@ -157,12 +139,53 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
     }
 
 
+    /* Income Tax Slabs
+     
+    Old Tax Regime 
+    New 
+    
+    */
 
+
+
+    //  const tax_Cal = (total_income) =>{
+
+    //     console.log(total_income);
+    //     switch (total_income) {   
+    //         case total_income > 300001 || total_income < 600000:
+    //              taxable_amount = total_income * 5 / 100;
+    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
+    //             console.log("new regime total income greater than 300001");
+    //             break;
+    //         case total_income > 600001 || total_income < 900000:
+    //              taxable_amount = total_income * 10 / 100;
+    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
+    //             console.log("new regime total income greater than 300001");
+    //             break;
+    //         case total_income > 900001 || total_income < 1200000:
+    //              taxable_amount = total_income * 15 / 100;
+    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
+    //             console.log("new regime total income greater than 300001");
+    //             break;
+    //         case total_income > 1200001 || total_income < 1500000:
+    //              taxable_amount = total_income * 20 / 100;
+    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
+    //             console.log("new regime total income greater than 300001");
+    //             break;
+    //         case total_income > 15000000:
+    //              taxable_amount = total_income * 20 / 100;
+    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
+    //             console.log("new regime total income greater than 300001");
+    //             break;
+    //         default:
+    //         console.log("greater than 15 lakhs");
+    //     }
+    //  }
 
     return {
 
         // varaible Declarations
-        taxCalculation, maintenance_cal, net_value_cal, income_loss_cal
+        taxCalculation, maintenance_cal, net_value_cal, income_loss_cal, tax_amt,
 
     };
 });

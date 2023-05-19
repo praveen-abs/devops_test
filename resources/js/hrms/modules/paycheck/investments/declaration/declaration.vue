@@ -5,11 +5,13 @@
                 <p class="text-2xl text-black">Tax Deductions FY 2022-2023</p>
             </div>
             <div class="p-2 my-2 text-black border-red-100 rounded-lg bg-red-50">
-                <div style="font-weight: 600;" class="px-2 my-2 fs-5 d-flex ">Kindly update your <span class="text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
+                <div style="font-weight: 600;" class="px-2 my-2 fs-5 d-flex ">Kindly update your <span
+                        class="text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
                     deduction (if applicable) </div>
             </div>
             <div class="my-4 bg-gray-100 rounded-lg border-1">
-                <p style="font-weight: 400;" class="p-3 text-black fs-6">You have the option of either using a new regime(with no tax deducations), or
+                <p style="font-weight: 400;" class="p-3 text-black fs-6">You have the option of either using a new
+                    regime(with no tax deducations), or
                     using the same regime as FY 2019-20.To help you make an informed decision., we are displaying your tax
                     liability in both these regimes,and you can choose the option that you prefer.For us to accurately
                     calculated your tax liabilities , please ensure you full in all the information requested
@@ -17,10 +19,11 @@
             </div>
             <div class="flex gap-6 my-4">
                 <div class="w-6">
-                    <div class="mb-2 text-2xl font-semibold">Your current chosen tax regime is <span class="text-xl font-semibold text-blue-500 ">Old
+                    <div class="mb-2 text-2xl font-semibold">Your current chosen tax regime is <span
+                            class="text-xl font-semibold text-blue-500 ">Old
                             Tax Regime</span> </div>
 
-                            <!-- text-sm -->
+                    <!-- text-sm -->
                     <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
                         calculations
                     </p>
@@ -28,8 +31,7 @@
                     </div>
                 </div>
                 <div>
-                    <button @click="switch_regime_dailo = true" type="button"
-                        class="px-2 px-4 btn btn-primary">
+                    <button @click="switch_regime_dailo = true" type="button" class="px-2 px-4 btn btn-primary">
                         Old Tax Regime</button>
                     <span class="text-sm text-green-500">Maximum benefit</span>
 
@@ -97,37 +99,41 @@
 
     </Dialog>
 
-<!-- <input type="number" v-model="test" name="" class="form-control" id="">
-{{ test }}<br>
-<button @click="formula.taxCalculation(test)">click</button> -->
-
-
+    <div class="mt-6 row">
+        <input type="number" v-model="amount" name="" class="form-control col-2" id="">
+        <Dropdown editable  v-model="regime" :options="regimeOption" optionLabel="name"
+            optionValue="value" class="mx-4 col-2" placeholder="Choose Regime" />
+        <div class="col-4">
+            <button class="btn btn-orange" @click="formula.taxCalculation(test,regime)">click</button>
+        </div>
+    </div>
 </template>
 
 
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import {investmentFormulaStore} from '../../stores/investmentFormulaStore'
+import { investmentFormulaStore } from '../../stores/investmentFormulaStore'
 
 const formula = investmentFormulaStore()
 
+const amount = ref()
+const regime = ref()
 
-
-
-
-
-
+const regimeOption = ref([
+    {name:"old", value:"old"},
+    {name:"new", value:"new"}
+])
 
 
 
 const tax_deduction = ref([
-    {id:'1',particulars:'Earings',old_regime :'0' ,new_regime:'0'},
-    {id:'2',particulars:'Exemption',old_regime :'0' ,new_regime:'0'},
-    {id:'3',particulars:'Standard Deduction',old_regime :'50000' ,new_regime:'50000'},
-    {id:'4',particulars:'Deduction',old_regime :'0' ,new_regime:'0'},
-    {id:'5',particulars:'Taxable Income',old_regime :'0' ,new_regime:'0'},
-    {id:'6',particulars:'Total Tax Liability',old_regime :'0' ,new_regime:'0'},
+    { id: '1', particulars: 'Earings', old_regime: '0', new_regime: '0' },
+    { id: '2', particulars: 'Exemption', old_regime: '0', new_regime: '0' },
+    { id: '3', particulars: 'Standard Deduction', old_regime: '50000', new_regime: '50000' },
+    { id: '4', particulars: 'Deduction', old_regime: '0', new_regime: '0' },
+    { id: '5', particulars: 'Taxable Income', old_regime: '0', new_regime: '0' },
+    { id: '6', particulars: 'Total Tax Liability', old_regime: '0', new_regime: '0' },
 ])
 
 
