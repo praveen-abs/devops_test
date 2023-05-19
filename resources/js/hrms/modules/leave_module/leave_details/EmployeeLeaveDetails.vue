@@ -5,13 +5,7 @@
                 <h6 class="text-lg font-semibold text-gray-900 modal-title">Leave Balance</h6>
             </div>
             <div class="col-6 justify-content-end d-flex">
-                <!-- <div class="pendingLeave_notify me-3" >
-                  <button class="btn btn-border-primary " data-bs-target="#leavepending_modal" data-bs-toggle="modal" >
-                      Pending
-                      </button>
-                      <span class="badge badge-soft-light rounded-circle fs-13 bg-danger" >
-                          0 </span>
-                          </div> -->
+                <LeaveApply />
             </div>
         </div>
 
@@ -156,6 +150,7 @@ import { ref, onMounted } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import moment from "moment";
 import {useLeaveModuleStore} from '../LeaveModuleService'
+import LeaveApply from '../leave_apply/LeaveApply.vue'
 
 
 const useLeaveStore = useLeaveModuleStore()
