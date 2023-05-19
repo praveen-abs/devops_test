@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\VmtConfigAppService;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtCoreService;
 
 class HRMSBaseAPIController extends Controller
 {
