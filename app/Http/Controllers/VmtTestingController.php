@@ -428,7 +428,8 @@ class VmtTestingController extends Controller
 
         //get assigned form id
         $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
-            ->where('year', $year)->first();
+           // ->where('year', $year)
+            ->first();
 
         $assigned_form_id = $query_fempAssigned_table->form_id;
         $f_emp_id = $query_fempAssigned_table->id;
@@ -451,12 +452,31 @@ class VmtTestingController extends Controller
                 ]
             )->toArray();
 
+    // employee declaration amount
         $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
-            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get()->toArray();
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
+
+
+                    // json decode popup value;
+            $popdecode = array();
+            foreach($inv_emp_value as $details_tem){
+
+                    $rentalDetail['id'] =$details_tem["id"];
+                    $rentalDetail['user_id'] =$details_tem["user_id"];
+                    $rentalDetail['form_id'] =$details_tem["form_id"];
+                    $rentalDetail['f_emp_id'] = $details_tem["f_emp_id"];
+                    $rentalDetail['year'] = $details_tem["year"];
+                    $rentalDetail['fs_id'] = $details_tem["fs_id"];
+                    $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
+                    $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
+                    array_push($popdecode,$rentalDetail);
+
+            };
 
         $arr = array();
         foreach ($query_inv_form_template as $single_template) {
-            foreach ($inv_emp_value as $single_emp_env_value) {
+            foreach ($popdecode as $single_emp_env_value) {
+
                   if($single_template['fs_id']==$single_emp_env_value['fs_id']){
                     $single_template['id']=$single_emp_env_value['id'];
                     $single_template['user_id']=$single_emp_env_value['user_id'];

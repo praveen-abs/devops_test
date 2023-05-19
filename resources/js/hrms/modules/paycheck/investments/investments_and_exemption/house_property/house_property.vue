@@ -39,7 +39,7 @@
                     </Column>
 
                     <Column field="particular" header="Particulars" style="min-width: 12rem" :sortable="true">
-                
+
                     </Column>
 
                     <Column field="reference" header="References " style="min-width: 12rem">
@@ -59,39 +59,39 @@
 
                     <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                         <template #body="slotProps">
-                            
+
                             <div v-if="slotProps.data.particular == 'Self Occupied Property'">
                                 <div v-if="slotProps.data.json_popups_value">
-                                    {{slotProps.data['json_popups_value'].fs_id}}                          
+                                    {{slotProps.data['json_popups_value'].loss_from_housing_property}}
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getSopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
-                                </div>                       
+                                </div>
                             </div>
                             <div v-if="slotProps.data.particular == 'Let Out Property'">
                                 <div v-if="slotProps.data.json_popups_value">
-                                    {{slotProps.data['json_popups_value'].income_loss}}                          
+                                    {{slotProps.data['json_popups_value'].income_loss}}
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getLopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                                 </div>
-                             
+
                             </div>
                             <div v-if="slotProps.data.particular == 'Deemed Let Out Property'">
                                 <div v-if="slotProps.data.json_popups_value">
                                     <!-- {{slotProps.data['json_popups_value'].fs_id}}                           -->
-                                    {{slotProps.data['json_popups_value'].income_loss}}                          
+                                    {{slotProps.data['json_popups_value'].income_loss}}
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getDlopSlotData(slotProps.data)"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                                 </div>
-                              
+
                             </div>
                             <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                                 {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
@@ -126,7 +126,7 @@
             </div>
 
 
-            <!-- 
+            <!--
             <div class="text-end">
                 <button @click="investmentStore.dailog_SelfOccupiedProperty = true"
                     class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
@@ -142,7 +142,7 @@
             <!-- {{ investmentStore.house_props_data.json_popups_value. }} -->
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
-                    :value="investmentStore.house_props_data" 
+                    :value="investmentStore.house_props_data"
                     :sortOrder="+1" sortField="property_type" :paginator="true" :rows="10" scrollable
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -191,7 +191,7 @@
                             </p>
                             <p v-else>
                                --
-                            </p> 
+                            </p>
                         </template>
                     </Column>
                     <Column field="rent_received" header="Rent Received" style="min-width: 12rem">
@@ -252,7 +252,7 @@
                         <template #body="slotProps">
                             <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl" @click="investmentStore.editHouseProps(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" class="w-10 h-8"> 
+                                    stroke="currentColor" class="w-10 h-8">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                 </svg>
