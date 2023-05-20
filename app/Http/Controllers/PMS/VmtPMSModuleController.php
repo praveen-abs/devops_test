@@ -1692,4 +1692,30 @@ class VmtPMSModuleController extends Controller
         return $dashboardCountersData;
     }
 
+    /*
+        Revoke a manager reviewed form. It can be done by HR .
+
+        Todo : In future, manager also can revoke the form based on end date. After that, he cant .
+                This is controlled via PMS settings page.
+
+    */
+    public function revokeSubmittedForm(Request $request){
+        //dd($request->all());
+
+        $vmtAssignedFormReview = VmtPMS_KPIFormReviewsModel::where('id',$request->assigneeGoalId)->first();
+
+        $json_values = json_decode($vmtAssignedFormReview->is_reviewer_submitted, true);
+
+        foreach($json_values as $key => $value)
+        {
+            $json_values[$key] = "0";
+            //dd(json_encode($json_values));
+            $vmtAssignedFormReview->is_reviewer_submitted = json_encode($json_values);
+            $vmtAssignedFormReview->save();
+        }
+        return response()->json([
+            "status" => "success"
+        ]);
+    }
+
 }
