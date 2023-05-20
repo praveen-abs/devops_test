@@ -91,11 +91,11 @@ class VmtAttendanceController extends Controller
             $leaveData_Org = VmtEmployeeLeaves::all();
         }
          //Calculate Leave Balance
-         $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
+      //   $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
 
         //dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames','time_frame'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','available_time_frames','time_frame'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
