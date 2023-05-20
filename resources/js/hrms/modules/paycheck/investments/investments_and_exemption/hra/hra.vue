@@ -46,21 +46,16 @@
 
                 <Column field="status" header="Status" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <div v-if="slotProps.data.dec_amount">
+                        <div v-if="slotProps.data.json_popups_value">
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                         </div>
                         <div v-else>
-                            <!-- <Tag value="Pending" severity="warning" /> -->
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" header="Action" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center">
-                </Column>
-
-
             </DataTable>
 
         </div>
@@ -70,9 +65,9 @@
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
             <span class="mx-4 my-2 mt-2 text-lg font-semibold text-indigo-950">Rental Property</span>
-            <!-- <button v-if="investmentStore.hraSource" class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
+            <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
                     class="fa fa-plus-circle me-2" aria-hidden="true"></i>
-                Add Rented</button> -->
+                Add Rented</button>
         </div>
 
         <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
@@ -220,7 +215,7 @@
                 <!-- <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     v-model="investmentStore.hra.landlord_PAN" required> -->
-                <InputMask id="serial" mask="aaaPa9999a" class="w-full " placeholder="AHFCS1234F"
+                <InputMask id="serial" mask="aaaaa9999a" class="w-full " placeholder="AHFCS1234F"
                     style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN" />
 
             </div>

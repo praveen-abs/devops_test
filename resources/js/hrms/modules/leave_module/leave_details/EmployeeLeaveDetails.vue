@@ -10,72 +10,34 @@
           <div class="d-flex justify-content-end">
             <label for="" class="my-2 text-lg font-semibold">Select Month</label>
             <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
-                style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
+              style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
             <Button class="h-10 mb-2 btn btn-orange" label="Submit"
-                @click="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(),statuses)" />
-            <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
-        </div>
+              @click="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)" />
+          </div>
 
           <div class="table-responsive">
-            <DataTable
-                :value="leaveModuleStore.array_employeeLeaveHistory"
-                :loading=isLoading
-              :paginator="true"
-              :rows="5"
-              dataKey="id"
-              :rowsPerPageOptions="[5, 10, 25]"
+            <DataTable :value="leaveModuleStore.array_employeeLeaveHistory" :loading=isLoading :paginator="true" :rows="5"
+              dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
               paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-              responsiveLayout="scroll"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-              v-model:filters="filters"
-              filterDisplay="menu"
-              :globalFilterFields="['name', 'status']"
-            >
+              responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+              v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
               <template #empty> No Employee data..... </template>
               <template #loading> Loading customers data. Please wait. </template>
-              <!-- <Column field="name" header="Employee Name">
+              <Column field="leave_type" header="Leave Type" style="min-width: 8rem"></Column>
+              <Column field="start_date" header="Start Date" style="min-width: 8rem">
                 <template #body="slotProps">
-                  <div></div>
-                  {{ slotProps.data.name }}
-                </template>
-                <template #filter="{ filterModel, filterCallback }">
-                  <InputText
-                    v-model="filterModel.value"
-                    @input="filterCallback()"
-                    placeholder="Search"
-                    class="p-column-filter"
-                    :showClear="true"
-                  />
-                </template>
-              </Column> -->
-
-              <Column
-                field="leave_type"
-                header="Leave Type"
-                style="min-width: 8rem"
-              ></Column>
-              <Column field="start_date" header="Start Date">
-                <template #body="slotProps">
-                    {{ dayjs(slotProps.data.start_date).format('DD-MMM-YYYY') }}
+                  {{ dayjs(slotProps.data.start_date).format('DD-MMM-YYYY') }}
                 </template>
               </Column>
-              <Column field="end_date" header="End Date" dataType="date">
+              <Column field="end_date" header="End Date" dataType="date" style="min-width: 8rem">
                 <template #body="slotProps">
-                    {{ dayjs(slotProps.data.end_date).format('DD-MMM-YYYY') }}
+                  {{ dayjs(slotProps.data.end_date).format('DD-MMM-YYYY') }}
                 </template>
               </Column>
               <Column field="leave_reason" header="Leave Reason" style="min-width: 12rem">
                 <template #body="slotProps">
-                  <div
-                    v-if="
-                      slotProps.data.leave_reason &&
-                      slotProps.data.leave_reason.length > 70
-                    "
-                  >
-                    <p
-                      @click="toggle"
-                      class="font-medium text-orange-400 underline cursor-pointer"
-                    >
+                  <div v-if="slotProps.data.leave_reason && slotProps.data.leave_reason.length > 70">
+                    <p @click="toggle" class="font-medium text-orange-400 underline cursor-pointer">
                       explore more...
                     </p>
                     <OverlayPanel ref="overlayPanel" style="height: 80px">
@@ -97,26 +59,16 @@
                   }}</span>
                 </template>
                 <template #filter="{ filterModel, filterCallback }">
-                  <Dropdown
-                    v-model="filterModel.value"
-                    @click="filterCallback()"
-                    :options="statuses"
-                    placeholder="Select"
-                    class="p-column-filter"
-                    :showClear="true"
-                  >
+                  <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses"
+                    placeholder="Select" class="p-column-filter" :showClear="true">
                     <template #value="slotProps">
-                      <span
-                        :class="'customer-badge status-' + slotProps.value"
-                        v-if="slotProps.value"
-                        >{{ slotProps.value }}</span
-                      >
+                      <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{ slotProps.value
+                      }}</span>
                       <span v-else>{{ slotProps.placeholder }}</span>
                     </template>
                     <template #option="slotProps">
                       <span :class="'customer-badge status-' + slotProps.option">
-                        {{ slotProps.option }}</span
-                      >
+                        {{ slotProps.option }}</span>
                     </template>
                   </Dropdown>
                 </template>
@@ -124,14 +76,8 @@
 
               <Column field="" header="Action" style="min-width: 15rem">
                 <template #body="slotProps">
-                    <Button
-                      type="button"
-                      icon="pi pi-check-circle"
-                      class=" text-white Button py-2.5"
-                      label="View"
-                      @click="showLeaveDetails(slotProps.data.id)"
-                      style="height: 2em"
-                    />
+                  <Button type="button" icon="pi pi-check-circle" class=" text-white Button py-2.5" label="View"
+                    @click="leaveModuleStore.getLeaveDetails(slotProps.data)" style="height: 2em" />
                 </template>
               </Column>
             </DataTable>
@@ -141,6 +87,21 @@
       </div>
     </div>
   </div>
+
+  <Dialog header="Header" v-model:visible="leaveModuleStore.canShowLeaveDetails"
+    :breakpoints="{ '960px': '75vw', '640px': '90vw' }"  :style="{ width: '50vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="false"
+    :closeOnEscape="false">
+    <template #header>
+      <div>
+        <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+          class="fs-5 fw-bold">
+           Leave Details Request</h5>
+      </div>
+      </template>
+
+      {{ leaveModuleStore.setLeaveDetails }}
+
+  </Dialog>
 </template>
 
 <script setup>
@@ -176,17 +137,17 @@ const filters = ref({
 const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 onMounted(async () => {
- // console.log( "Fetching leave details for current user : " +   leaveModuleStore.baseService.current_user_code );
-    console.log(selectedLeaveDate.v);
-   await leaveModuleStore.getEmployeeLeaveHistory(dayjs().month()+1 , dayjs().year() , ["Approved", "Pending", "Rejected"]);
-   isLoading.value = false;
+  // console.log( "Fetching leave details for current user : " +   leaveModuleStore.baseService.current_user_code );
+  console.log(selectedLeaveDate.v);
+  await leaveModuleStore.getEmployeeLeaveHistory(dayjs().month() + 1, dayjs().year(), ["Approved", "Pending", "Rejected"]);
+  isLoading.value = false;
 });
 
 
 
-async function showLeaveDetails(leave_record_id){
-    console.log("Showing leave details for record_id : "+leave_record_id);
+async function showLeaveDetails(leave_record_id) {
+  console.log("Showing leave details for record_id : " + leave_record_id);
 
-    await leaveModuleStore.getLeaveInformation(leave_record_id);
+  await leaveModuleStore.getLeaveInformation(leave_record_id);
 }
 </script>

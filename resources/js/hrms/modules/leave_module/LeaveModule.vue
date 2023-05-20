@@ -203,10 +203,6 @@ onMounted(() => {
     }
 }
 
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-    width: 200px;
-}
-
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
     color: red;
 }
@@ -287,7 +283,4 @@ onMounted(() => {
     color: #fff !important;
 }
 
-.p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
-    margin-left: 30px;
-}
 </style>
