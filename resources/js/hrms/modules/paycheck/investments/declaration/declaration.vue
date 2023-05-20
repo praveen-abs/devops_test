@@ -19,8 +19,8 @@
             </div>
             <div class="flex gap-6 my-4">
                 <div class="w-6">
-                    <div class="mb-2 text-2xl font-semibold">Your current chosen tax regime is <span
-                            class="text-xl font-semibold text-blue-500 ">Old
+                    <div class="text-2xl font-semibold ">Your current chosen tax regime is <span
+                            class="font-semibold text-blue-500 fs-4">Old
                             Tax Regime</span> </div>
 
                     <!-- text-sm -->

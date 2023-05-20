@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import axios from "axios";
 import dayjs from "dayjs";
 import { Service } from '../Service/Service'
@@ -8,7 +8,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     const service = Service()
 
-    const canShowLoading = ref(true)
+    const canShowLoading = ref(false)
 
     //Leave history vars
     const array_employeeLeaveBalance = ref()
@@ -18,6 +18,27 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     const array_orgLeaveHistory = ref();
 
     const selected_LeaveInformation = ref();
+    const canShowLeaveDetails = ref(false)
+
+
+    const setLeaveDetails = reactive({
+        emp_name:"",
+        request_date:'',
+        leave_duration:'',
+        leave_type:'',
+        start_date:'',
+        end_date:'',
+        notify_to:'',
+        reviewer_name:'',
+        reviewer_comments:'',
+    })
+
+    const getLeaveDetails = (leaveDetails) =>{
+        canShowLeaveDetails.value = true
+        console.log(leaveDetails);
+        setLeaveDetails.emp_name = leaveDetails.name
+
+    }
 
     async function getEmployeeLeaveBalance() {
         canShowLoading.value = true
@@ -93,7 +114,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     return {
 
-        canShowLoading,
+        canShowLoading,canShowLeaveDetails,setLeaveDetails,getLeaveDetails,
 
         array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance,
 

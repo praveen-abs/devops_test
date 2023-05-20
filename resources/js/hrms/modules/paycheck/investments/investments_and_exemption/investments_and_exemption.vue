@@ -116,6 +116,11 @@ onMounted(async () => {
     setTimeout(async () => {
         investmentStore.fetchPropertyType()
     }, 2000);
+
+    setTimeout(async () => {
+        investmentStore.hop.splice(0,  investmentStore.hop.length);
+    }, 3000);
+
 })
 
 </script>

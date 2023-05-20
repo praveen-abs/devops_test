@@ -224,10 +224,10 @@
 
                     <div class="timeline">
                         <div class="container bg- left" id="experience_card">
-                            <div class="card   experience-card  " style="margin-right: 500px;">
-                                <div class="card-body py-1 " >
+                            <div class="card experience-card " style="margin-right: 500px;">
+                                <div class="py-1 card-body " >
                                     <ul class="personal-info ">
-                                        <li class="border-bottom-liteAsh border-0 pb-1">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title"></div>
                                             <div class="text text-end">
                                                 <a class="edit-icon" data-bs-toggle="modal" data-bs-target=""><i
@@ -235,27 +235,27 @@
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Organization</div>
                                             <div class="text" data-toggle="tooltip" data-placement="bottom">
                                                 Organization Organization Organization
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Designation</div>
                                             <div class="text">
                                                 Designation
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 ">
+                                        <li class="pb-1 border-bottom-liteAsh ">
                                             <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
                                             <div class="text">
                                                 From
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 border-0">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
                                             <div class="text">
@@ -267,10 +267,10 @@
                             </div>
                         </div>
                         <div class="container bg-white right">
-                            <div class="card   experience-card  ">
-                                <div class="card-body py-1">
+                            <div class="card experience-card ">
+                                <div class="py-1 card-body">
                                     <ul class="personal-info">
-                                        <li class="border-bottom-liteAsh border-0 pb-1">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title"></div>
                                             <div class="text text-end">
                                                 <a class="edit-icon" data-bs-toggle="modal"
@@ -278,27 +278,27 @@
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Organization</div>
                                             <div class="text">
                                                 Organization
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Designation</div>
                                             <div class="text">
                                                 Designation
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 ">
+                                        <li class="pb-1 border-bottom-liteAsh ">
                                             <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
                                             <div class="text">
                                                 From
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 border-0">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
                                             <div class="text">

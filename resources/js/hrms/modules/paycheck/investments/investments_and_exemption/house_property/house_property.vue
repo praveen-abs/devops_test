@@ -51,12 +51,6 @@
                         </template>
                     </Column>
 
-                    <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
-                        </template>
-                    </Column> -->
-
                     <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                         <template #body="slotProps">
 
@@ -118,9 +112,9 @@
                             </div>
                         </template>
                     </Column>
-                    <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"
+                    <!-- <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center"
                         header="Action">
-                    </Column>
+                    </Column> -->
                 </DataTable>
 
             </div>
