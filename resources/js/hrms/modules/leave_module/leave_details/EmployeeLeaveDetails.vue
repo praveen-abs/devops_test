@@ -7,6 +7,14 @@
           <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">
             Leave history
           </h6>
+          <div class="d-flex justify-content-end">
+            <label for="" class="my-2 text-lg font-semibold">Select Month</label>
+            <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
+                style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
+            <Button class="h-10 mb-2 btn btn-orange" label="Submit"
+                @click="managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())" />
+            <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
+        </div>
 
           <div class="table-responsive">
             <DataTable
@@ -147,6 +155,8 @@ const leaveModuleStore = useLeaveModuleStore();
 const isLoading = ref(true);
 
 const overlayPanel = ref();
+const selectedLeaveDate = ref();
+
 const toggle = (event) => {
   overlayPanel.value.toggle(event);
 };
@@ -167,7 +177,7 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 onMounted(async () => {
  // console.log( "Fetching leave details for current user : " +   leaveModuleStore.baseService.current_user_code );
 
-   await leaveModuleStore.getEmployeeLeaveHistory("5","2023","Approved");
+   await leaveModuleStore.getEmployeeLeaveHistory(dayjs().month()+1 , dayjs().year() , ["Approved", "Pending", "Rejected"]);
    isLoading.value = false;
 });
 

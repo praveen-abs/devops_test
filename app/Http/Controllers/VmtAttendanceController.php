@@ -139,7 +139,6 @@ class VmtAttendanceController extends Controller
     }
 
     public function getEmployeeLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
-       //dd($request->user_code);
         return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $request->filter_leave_status );
     }
 
