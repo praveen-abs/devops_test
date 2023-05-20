@@ -91,6 +91,15 @@ function sessionGetSelectedClientCode()
     else
         return "";
 }
+function sessionGetSelectedClientid()
+{
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->id;
+    else
+        return "";
+}
 
 function sessionGetSelectedClientName()
 {
