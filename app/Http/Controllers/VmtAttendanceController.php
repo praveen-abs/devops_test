@@ -1452,7 +1452,8 @@ class VmtAttendanceController extends Controller
     public function fetchUnusedCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         //dd($request->user_id);
         //TODO : Need to get current user_id instead of fetching from req params.
-        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
+        $user_id=auth()->user()->id;
+        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($user_id);
     }
 
     public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
@@ -1460,7 +1461,7 @@ class VmtAttendanceController extends Controller
         return $serviceVmtAttendanceService->employeeProfile($request);
     }
 
-    public function getEmployeeLeaveBalance(Request $request){
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
           //Accrued Leave Year Frame
           if(empty($request->all())){
             $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
@@ -1473,14 +1474,15 @@ class VmtAttendanceController extends Controller
           $calender_type = $time_periods_of_year_query->abbrevation;
          // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
          $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
-        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
+        $leave_balance_details = $serviceVmtAttendanceService->calculateEmployeeLeaveBalance(auth::user()->id,$start_date,$end_date);
         return  $leave_balance_details;
     }
 
-    public function fetchEmployeeLeaveBalance(Request $request){
-        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
-        return $leave_balance_details;
-    }
+    // public function fetchEmployeeLeaveBalance(Request $request){
+    //     $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
+    //     return $leave_balance_details;
+    // }
+
 
     public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         $start_date = '2023-04-01';

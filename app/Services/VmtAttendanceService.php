@@ -2077,7 +2077,7 @@ class VmtAttendanceService
         //  dd( $all_active_user);
         foreach ($all_active_user as $single_user) {
             $total_leave_balance = 0;
-            $overall_leave_balance = calculateLeaveDetails($single_user->id, $start_date, $end_date);
+            $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
             $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
             $each_user['user_code'] = $single_user->user_code;
             $each_user['name'] = $single_user->name;
@@ -2108,7 +2108,7 @@ class VmtAttendanceService
             ->where('vmt_employee_office_details.l1_manager_code', $manager_user_code)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
         foreach ($all_active_user as $single_user) {
             $total_leave_balance = 0;
-            $overall_leave_balance = calculateLeaveDetails($single_user->id, $start_date, $end_date);
+            $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
             $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
             $each_user['user_code'] = $single_user->user_code;
             $each_user['name'] = $single_user->name;
@@ -2128,5 +2128,69 @@ class VmtAttendanceService
             array_push($response, $each_user);
         }
         return $response;
+    }
+    public function calculateEmployeeLeaveBalance($user_id,$start_time_period,$end_time_period){
+        // TODO:: Which Leave Types we Have to Find Avalied And Balance //Need To Change In Setting Page
+       //  $visible_leave_types = array('Casual/Sick Leave'=>1,'Earned Leave'=>2);
+          $leave_balance_for_all_types=array();
+          $avalied_leaves=array();
+        $accrued_leave_types = VmtLeaves::get();
+
+        foreach($accrued_leave_types as $single_leave_types){
+            if($single_leave_types->is_finite==1){
+                if($single_leave_types->is_carry_forward!=1){
+                    $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                                             ->whereBetween('start_date',[$start_time_period,$end_time_period])
+                                                             ->where('leave_type_id',$single_leave_types->id)
+                                                             ->whereIn('status',array('Approved','Pending'))
+                                                             ->sum('total_leave_datetime');
+                    $total_accrued = VmtEmployeesLeavesAccrued::where('user_id',$user_id)
+                                                              ->whereBetween('date',[$start_time_period,$end_time_period])
+                                                              ->where('leave_type_id',$single_leave_types->id)
+                                                              ->sum('accrued_leave_count');
+                    if($single_leave_types->leave_type=='Compensatory Off'){
+                        $leave_balance_for_all_types[$single_leave_types->leave_type] = count($this->fetchUnusedCompensatoryOffDays($user_id));
+                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    } else{
+                        $leave_balance =  $total_accrued -  $total_avalied_leaves;
+                        $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
+                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    }
+
+
+                 }else if($single_leave_types->is_carry_forward==1){
+                    // $total_avalied_leaves_for_find_balance = VmtEmployeeLeaves::where('user_id',$user_id)
+                    //                                          ->where('leave_type_id',$single_leave_types->id)
+                    //                                          ->whereIn('status',array('Approved','Pending'))
+                    //                                          ->sum('total_leave_datetime');
+                    $total_accrued = VmtEmployeesLeavesAccrued::where('user_id',$user_id)
+                                                             ->where('leave_type_id',$single_leave_types->id)
+                                                             ->sum('accrued_leave_count');
+                     $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                                             ->whereBetween('start_date',[$start_time_period,$end_time_period])
+                                                             ->where('leave_type_id',$single_leave_types->id)
+                                                             ->whereIn('status',array('Approved','Pending'))
+                                                             ->sum('total_leave_datetime');
+                    $leave_balance =  $total_accrued - $total_avalied_leaves;
+                    $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
+                    $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+
+
+                 }
+            }else{
+                $total_avalied_leaves = VmtEmployeeLeaves::where('user_id',$user_id)
+                                                             ->whereBetween('start_date',[$start_time_period,$end_time_period])
+                                                             ->where('leave_type_id',$single_leave_types->id)
+                                                             ->whereIn('status',array('Approved','Pending'))
+                                                             ->sum('total_leave_datetime');
+                $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
+            }
+
+
+        }
+         $leave_details=array('Leave Balance'=>$leave_balance_for_all_types,'Avalied Leaves'=>$avalied_leaves);
+
+        return $leave_details;
+
     }
 }
