@@ -32,6 +32,15 @@ class sendemailjobs implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to('simmasrfc1330@gmail.com')->send(new dommimails());
+       $simmamail  = array('simmasrfc1330@gmail.com','sathishrain2001@gmail.com','sathishraina159@gmail.com');
+
+            for($i=0; $i<count($simmamail); $i++){
+                Mail::to($simmamail[$i])->send(new dommimails());
+            }
+
+
+      // dd($simmamail);
+
+      //  Mail::to('simmasrfc1330@gmail.com')->send(new dommimails());
     }
 }

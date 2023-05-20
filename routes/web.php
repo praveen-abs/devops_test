@@ -282,14 +282,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/testSendBulkMail', [App\Http\Controllers\VmtTestingController::class, 'testSendBulkMail'])->name('testSendBulkMail');
 
 
-    Route::get('email-test', function () {
+    Route::get('email-test', [App\Http\Controllers\VmtTestingController::class, 'jobsmail']);
 
-        $details['email'] = 'sheltonfdo23@gmail.com';
 
-        dispatch(new App\Jobs\SendEmailJob($details));
-
-        dd('done');
-    });
     // notifications
     Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
