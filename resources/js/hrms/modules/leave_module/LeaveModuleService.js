@@ -12,7 +12,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     //Leave history vars
     const array_employeeLeaveBalance = ref()
-    const array_employeeAaviledLeaveBalance = ref()
+    const array_employeeAvailedLeaveBalance = ref()
     const array_employeeLeaveHistory = ref();
     const array_teamLeaveHistory = ref();
     const array_orgLeaveHistory = ref();
@@ -23,9 +23,9 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         canShowLoading.value = true
         let url_leave_balance = `/get-employee-leave-balance`
         await axios.get(url_leave_balance).then(res => {
-            console.log(Object.values(res.data));
-            array_employeeLeaveBalance.value = Object.values(res.data["Leave Balance"])
-            array_employeeAaviledLeaveBalance.value = res.data["Avalied Leaves"]
+            console.log(res.data);
+            array_employeeLeaveBalance.value = res.data
+            array_employeeAvailedLeaveBalance.value = res.data["Avalied Leaves"]
         }).finally(()=>{
             canShowLoading.value = false
         })
@@ -95,7 +95,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
         canShowLoading,
 
-        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAaviledLeaveBalance,
+        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance,
 
         // Functions
 
