@@ -32,14 +32,15 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     }
     async function getEmployeeLeaveHistory(filter_month, filter_year, filter_leave_status) {
 
-        // let user_code = 0;
-        // await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
-        //     user_code = response.data;
-        // });
+        let user_code = 0;
+
+        await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
+            user_code = response.data;
+        });
 
 
         await axios.post('/attendance/getEmployeeLeaveDetails', {
-            user_code: service.current_user_code,
+            user_code: user_code,
             filter_month: filter_month,
             filter_year: filter_year,
             filter_leave_status: filter_leave_status,

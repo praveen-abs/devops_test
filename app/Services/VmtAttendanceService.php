@@ -1700,7 +1700,16 @@ class VmtAttendanceService
                 'user_code' => 'required|exists:users,user_code',
                 'filter_month' => 'required',
                 'filter_year' => 'required',
-                'filter_leave_status' => 'required|in:Approved,Pending,Rejected',
+                'filter_leave_status' => ['required',
+                                        function ($attribute, $value, $fail) {
+                                            $valid_status_data = array("Approved","Rejected","Pending");
+
+                                            $diff = array_diff($value, $valid_status_data);
+
+                                            if(count($diff) != 0)
+                                                $fail('The '.$attribute.' has invalid status types.');
+                                            },
+                                    ],
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1716,7 +1725,6 @@ class VmtAttendanceService
                 'message' => $validator->errors()->all()
             ]);
         }
-
 
         try {
 
@@ -2126,7 +2134,9 @@ class VmtAttendanceService
        //  $visible_leave_types = array('Casual/Sick Leave'=>1,'Earned Leave'=>2);
           $leave_balance_for_all_types=array();
           $avalied_leaves=array();
+          $response = array();
         $accrued_leave_types = VmtLeaves::get();
+
 
         foreach($accrued_leave_types as $single_leave_types){
             if($single_leave_types->is_finite==1){
@@ -2141,14 +2151,13 @@ class VmtAttendanceService
                                                               ->where('leave_type_id',$single_leave_types->id)
                                                               ->sum('accrued_leave_count');
                     if($single_leave_types->leave_type=='Compensatory Off'){
-                        $leave_balance_for_all_types[$single_leave_types->leave_type] = count($this->fetchUnusedCompensatoryOffDays($user_id));
-                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                        $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id));
                     } else{
                         $leave_balance =  $total_accrued -  $total_avalied_leaves;
-                        $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
-                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
                     }
-
+                    // $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
+                    // $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    $temp_leave=array('leave_type'=>$single_leave_types->leave_type,'leave_balance'=>$leave_balance,'avalied_leaves'=>$total_avalied_leaves);
 
                  }else if($single_leave_types->is_carry_forward==1){
                     // $total_avalied_leaves_for_find_balance = VmtEmployeeLeaves::where('user_id',$user_id)
@@ -2163,9 +2172,10 @@ class VmtAttendanceService
                                                              ->where('leave_type_id',$single_leave_types->id)
                                                              ->whereIn('status',array('Approved','Pending'))
                                                              ->sum('total_leave_datetime');
-                    $leave_balance =  $total_accrued - $total_avalied_leaves;
-                    $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
-                    $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    // $leave_balance =  $total_accrued - $total_avalied_leaves;
+                    // $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
+                    // $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    $temp_leave=array('leave_type'=>$single_leave_types->leave_type,'leave_balance'=>$leave_balance,'avalied_leaves'=>$total_avalied_leaves);
 
 
                  }
@@ -2176,13 +2186,15 @@ class VmtAttendanceService
                                                              ->whereIn('status',array('Approved','Pending'))
                                                              ->sum('total_leave_datetime');
                 $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
+                $temp_leave=array('leave_type'=>$single_leave_types->leave_type,'avalied_leaves'=>$total_avalied_leaves);
             }
-
+                   array_push($response,$temp_leave);
+                   unset($temp_leave);
 
         }
          $leave_details=array('Leave Balance'=>$leave_balance_for_all_types,'Avalied Leaves'=>$avalied_leaves);
 
-        return $leave_details;
+        return $response;
 
     }
 }
