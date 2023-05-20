@@ -56,7 +56,7 @@ class VmtCorrectionController extends Controller
                 $new_record->status = 'Pending';
                 $new_record->from = $single_data['from'];
                 $new_record->to = $single_data['to'];
-                $new_record->vehicle_type = $single_data['vehicle_type'];
+                $new_record->vehicle_type_id = $single_data['vehicle_type_id'];
                 $new_record->distance_travelled = $single_data['distance_travelled'];
                 $new_record->total_expenses = $single_data['total_expenses'];
                 $new_record->save();

@@ -1,4 +1,6 @@
 <template>
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
     <div class=" mt-30 investments-wrapper">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
@@ -13,17 +15,16 @@
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class="mx-4 nav-item ember-view" role="presentation">
+                    <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
                             Form 12 BB</a>
                     </li>
                     <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href="" data-bs-target="#tax_filling"
-                            role="tab" aria-controls="pills-home" aria-selected="true">
+                        <a class="mx-4 nav-link ember-view" id="" data-bs-toggle="pill" href=""
+                            data-bs-target="#tax_filling" role="tab" aria-controls="pills-home" aria-selected="true">
                             Tax Filling</a>
-                    </li>
-
+                    </li> -->
 
                 </ul>
             </div>
@@ -35,37 +36,56 @@
                         aria-labelledby="pills-home-tab">
                         <Declaration />
                     </div>
-                </div>
-                <div class="tab-pane fade " id="exemptions" role="tabpanel">
-                  <InvestmentAndExemption />
 
-                </div>
-                <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="tab-pane fade " id="exemptions" role="tabpanel">
+                        <InvestmentAndExemption />
 
+                    </div>
+                    <!-- <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
 
+                    </div>
+                    <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                </div>
-                <div class="tab-pane fade " id="other_exemptions" role="tabpanel" aria-labelledby="pills-home-tab">
-
+                    </div> -->
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade " id="form_12bb" role="tabpanel">
+        <!-- <div class="tab-pane fade " id="form_12bb" role="tabpanel">
 
         </div>
         <div class="tab-pane fade " id="tax_filling" role="tabpanel">
 
-        </div>
+        </div> -->
     </div>
+
+    <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 
 
 <script setup>
-
-
-import Declaration from  './declaration/declaration.vue'
+import { onMounted } from 'vue'
+import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 
+import { investmentMainStore } from '../stores/investmentMainStore'
+import { Service } from '../../Service/Service';
+
+const investmentStore = investmentMainStore()
+const service = Service()
+
+onMounted(async () => {
+    await investmentStore.getInvestmentSource()
+})
 </script>
 
 
@@ -147,5 +167,10 @@ dialog>header {
 
 Dialog {
     color: #002f56;
+}
+
+.p-inputtext.p-component.p-inputnumber-input{
+height: 32px;
+background: #f6f4f46e;
 }
 </style>

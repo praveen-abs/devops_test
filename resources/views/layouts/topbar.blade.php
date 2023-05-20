@@ -10,7 +10,7 @@ if ($query_clientMaster) {
 
 
 
-<header id="page-topbar" class="border ">
+<header id="page-topbar" class="border">
     <div class="navbar-header d-flex justify-content-between align-items-center ">
 
         <div class="d-flex ">

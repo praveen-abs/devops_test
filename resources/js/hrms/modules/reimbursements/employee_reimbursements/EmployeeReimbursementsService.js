@@ -153,7 +153,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             let formData = new FormData();
 
             formData.append('user_code', service.current_user_code)
-            formData.append('reimbursement_type', employee_local_conveyance.type_id)
+            formData.append('reimbursement_type', 'Local Conveyance')
             formData.append('date', moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
             formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
             formData.append('from', employee_local_conveyance.travel_from)

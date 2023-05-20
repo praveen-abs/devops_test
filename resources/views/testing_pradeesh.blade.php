@@ -1,6 +1,7 @@
 <?php
 
     use Illuminate\Support\Facades\Storage;
+    use App\Models\VmtClientMaster;
 ?>
 
 @extends('layouts.master')
@@ -18,7 +19,6 @@
 
 </head>
 <body>
-
 
   {{-- @vite('resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js')
    <div id="EmployeeDocsUpload"></div> --}}
@@ -40,8 +40,12 @@
      @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js')
      {{-- <div id="RolesPermission"></div> --}}
 
-     @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
-     <div id="vjs_employeeDocsManager"></div>
+     {{-- @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
+     <div id="vjs_employeeDocsManager"></div> --}}
+
+       @vite('resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js')
+            <div id="OnboardingFromMgmt"></div>
+
 
 </body>
 </html>

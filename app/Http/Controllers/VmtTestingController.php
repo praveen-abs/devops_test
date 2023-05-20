@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VmtEmployeeDocuments;
+use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
 use App\Models\VmtInvForm;
 use Illuminate\Http\Request;
@@ -34,14 +35,18 @@ use App\Exports\AttenanceWorkShifttime;
 use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
+use Carbon\Carbon;
 
 
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
+use App\Jobs\sendemailjobs;
+
 
 class VmtTestingController extends Controller
 {
@@ -249,7 +254,7 @@ class VmtTestingController extends Controller
         $VmtGeneralInfo = VmtGeneralInfo::first();
         $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
-        $response  = array();
+        $response = array();
         try {
 
             foreach ($array_mail as $recipient) {
@@ -345,7 +350,8 @@ class VmtTestingController extends Controller
         $pdf->render();
 
         //$response=base64_encode($pdf->stream([$client_name.'.pdf']));
-        $response = base64_encode($pdf->output([$client_name . '.pdf']));;
+        $response = base64_encode($pdf->output([$client_name . '.pdf']));
+        ;
 
         return response()->json([
             'status' => 'success',
@@ -419,54 +425,99 @@ class VmtTestingController extends Controller
 
 
         $query_form_details = VmtInvForm::where('form_name', 'investment 1')->first();
-       // dd( $query_form_details);
+        // dd( $query_form_details);
         //Get the query structure
+        //PSC0060
 
-        $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-                                    ->join('vmt_inv_section_group','vmt_inv_section_group.id','=','vmt_inv_section.sectiongroup_id')
-                                    ->where('vmt_inv_formsection.form_id', $query_form_details->id)
-                                    ->get(
-                                        [
-                                            'vmt_inv_formsection.section_id',
-                                            'vmt_inv_section.section',
-                                            'vmt_inv_section.particular',
-                                            'vmt_inv_section.reference',
-                                            'vmt_inv_section.max_amount',
-                                            'vmt_inv_section_group.section_group',
-                                            'vmt_inv_formsection.id as fs_id'
-                                        ]
-                                    );
+        $user_id = User::where('user_code', 'SA100')->first()->id;
+        $year = "2023-01-01";
 
-                                  //dd($query_inv_form_template->toArray());
+        //get assigned form id
+        $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
+           // ->where('year', $year)
+            ->first();
 
-                                  $query_inv_form_template = $query_inv_form_template->toArray();
+        $assigned_form_id = $query_fempAssigned_table->form_id;
+        $f_emp_id = $query_fempAssigned_table->id;
 
-                                 // dd($query_inv_form_template[0]);
-                                    $count = 0;
-                                    foreach($query_inv_form_template as $single_inv_form_template){
+        //Get the form template
+        $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+            ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+            ->where('vmt_inv_formsection.form_id', $assigned_form_id)
 
-                                        if(! array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template))
-                                        {
-                                            $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
-                                            array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
-                                        }
-                                        else
-                                        {
-                                            array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+            ->get(
+                [
+                    'vmt_inv_formsection.section_id',
+                    'vmt_inv_section.section',
+                    'vmt_inv_section.particular',
+                    'vmt_inv_section.reference',
+                    'vmt_inv_section.max_amount',
+                    'vmt_inv_section_group.section_group',
+                    'vmt_inv_formsection.id as fs_id',
 
-                                        }
+                ]
+            )->toArray();
 
-                                        //remove from outer json
-                                        unset($query_inv_form_template[$count]);
+    // employee declaration amount
+        $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
 
-                                        $count++;
 
-                                    }
+                    // json decode popup value;
+            $popdecode = array();
+            foreach($inv_emp_value as $details_tem){
 
-                                    //     add to individual section group array
-                                    //     array_push(($query_inv_form_template[$single_inv_form_template->section_group]), $single_inv_form_template);
-                                    //             dd($query_inv_form_template[$single_inv_form_template->section_group]);
-                                    // }
+                    $rentalDetail['id'] =$details_tem["id"];
+                    $rentalDetail['user_id'] =$details_tem["user_id"];
+                    $rentalDetail['form_id'] =$details_tem["form_id"];
+                    $rentalDetail['f_emp_id'] = $details_tem["f_emp_id"];
+                    $rentalDetail['year'] = $details_tem["year"];
+                    $rentalDetail['fs_id'] = $details_tem["fs_id"];
+                    $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
+                    $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
+                    array_push($popdecode,$rentalDetail);
+
+            };
+
+        $arr = array();
+        foreach ($query_inv_form_template as $single_template) {
+            foreach ($popdecode as $single_emp_env_value) {
+
+                  if($single_template['fs_id']==$single_emp_env_value['fs_id']){
+                    $single_template['id']=$single_emp_env_value['id'];
+                    $single_template['user_id']=$single_emp_env_value['user_id'];
+                    $single_template['form_id']=$single_emp_env_value['form_id'];
+                    $single_template['year']=$single_emp_env_value['year'];
+                    $single_template['f_emp_id']=$single_emp_env_value['f_emp_id'];
+                    $single_template['dec_amount']=$single_emp_env_value['dec_amount'];
+                    $single_template['json_popups_value']=$single_emp_env_value['json_popups_value'];
+                  }
+            }
+            array_push($arr, $single_template);
+        }
+
+       $query_inv_form_template = $arr;
+
+
+        $count = 0;
+        foreach ($query_inv_form_template as $single_inv_form_template) {
+
+            if (!array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template)) {
+                $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
+                array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+            } else {
+                array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+
+            }
+
+            //remove from outer json
+            unset($query_inv_form_template[$count]);
+
+            $count++;
+
+        }
+        dd($query_inv_form_template);
+
 
 
         $response["form_name"] = $query_form_details->form_name;
@@ -486,15 +537,78 @@ class VmtTestingController extends Controller
     }
 
 
-    public function testEmployeeDocumentsJoin(Request $request){
-        //$response = VmtDocuments::all()->toArray();
+    public function testEmployeeDocumentsJoin(Request $request)
+    {
 
-        $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
-                    ->where('vmt_employee_documents.user_id','266')
-                    ->orWhereNull('vmt_employee_documents.id')
-                    ->get()
-                    ->toArray();
 
-        dd($response);
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        $simma = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
+
+        dd($simma->toArray());
+        //      $sum=0;
+        //    foreach( $simma as $simmas){
+        //         $sum +=  $simmas['dec_amount'];
+        //    }
+        //       dd($sum);
+
+
+
+
+
+        //  dd($simma);
+        // dd($request->all());
+        //    $simma = json_encode($request->all());
+
+        //    $form_id = "1";
+        //    $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        // $form_data = $request->formDataSource;
+
+        //    $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+
+        //    if ($query_femp->exists()) {
+        //        $query_assign = $query_femp->first();
+
+        //    } else {
+
+        //        $emp_assign_form = new VmtInvFEmpAssigned;
+        //        $emp_assign_form->user_id = $user_id;
+        //        $emp_assign_form->form_id = $form_id;
+        //        $emp_assign_form->save();
+        //        $query_assign = $emp_assign_form;
+        //    }
+
+        //         $Hra_save = new VmtInvEmpFormdata;
+        //         $Hra_save->f_emp_id = $query_assign->id;
+        //         $Hra_save->fs_id = '1';
+        //         $Hra_save->dec_amount ='none';
+        //         $Hra_save->json_popups_value = $simma;
+        //         $Hra_save->save();
+
+
+
+
+        // return 'saved';
+
+
     }
+
+    public function jobsmail()
+    {
+
+        $jobs = (new sendemailjobs())
+            ->delay(Carbon::now()->addSeconds(5));
+
+        dispatch($jobs);
+
+        return "mail send successfully";
+    }
+
+    public function test_getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails("MC0005",5, 2023, ["Approved","Rejected","Pending"] );
+    }
+
 }

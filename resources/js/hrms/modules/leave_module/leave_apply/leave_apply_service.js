@@ -4,7 +4,7 @@ import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
 
-export const Service = defineStore("Service", () => {
+export const useLeaveService = defineStore("useLeaveService", () => {
 
     // Notification service
     const toast = useToast();
@@ -98,10 +98,6 @@ export const Service = defineStore("Service", () => {
     };
     const dayCalculation = () => {
 
-
-
-
-
         if (custom_format.value == true) {
             if (
                 leave_data.custom_start_date.length < 0 ||
@@ -187,7 +183,6 @@ export const Service = defineStore("Service", () => {
 
     const Permission = () => {
 
-
         if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
             TotalNoOfDays.value = false;
@@ -218,13 +213,14 @@ export const Service = defineStore("Service", () => {
             Permission_format.value = false;
             compensatory_format.value = false;
             TotalNoOfDays.value=true
+            full_day_format.value = true
         }
     };
 
 
-    const get_user=()=>{
+    const get_user  = () =>{
 
-        // data_checking.value=true
+     // data_checking.value=true
 
         axios.get('/currentUser').then(res=>{
              leave_data.current_login_user=res.data;
@@ -237,7 +233,7 @@ export const Service = defineStore("Service", () => {
 
 
 
-    const get_leave_types=()=>{
+    const get_leave_types = () =>{
 
         axios.get('/fetch-leave-policy-details').then(res=>{
             console.log(res.data);

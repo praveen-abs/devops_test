@@ -1,91 +1,59 @@
 <template>
     <div class="mb-4 tw-card bg-gray-50">
-
+        <!-- {{ investmentStore.hraSource }} -->
         <div class="table-responsive">
-            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
+            <DataTable ref="dt" dataKey="fs_id" :paginator="true" :rows="10" :value="investmentStore.hraSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
+                :rowsPerPageOptions="[5, 10, 25]" v-model:editingRows="investmentStore.editingRowSource" editMode="row"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
                 <Column header="Sections" field="section" style="min-width: 8rem">
-                    <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
                 </Column>
 
-                <Column field="ref" header="References " style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
-                </Column>
-
-                <Column field="max_limit" header="Max Limit" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                </Column>
-
-                <Column field="Declaration Amount" header="Declaration Amount" style="min-width: 12rem">
-                    <template #body>
-                        <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
-                            @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2"
-                                aria-hidden="true"></i>
-                            Add Rented</button>
+                <Column field="reference" header="References " style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <button type="button" class="border-0 outline-none btn btn-transprarent"
+                            v-tooltip="slotProps.data.reference">
+                            <i class="fa fa-exclamation-circle text-warning" aria-hidden="true"></i>
+                        </button>
                     </template>
                 </Column>
-                <Column field="Status" header="Status" style="min-width: 12rem">
-                    <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                </Column>
-                <Column field="" header="Action" style="min-width: 12rem">
 
+                <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
+                </Column> -->
+
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <!-- <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
-                            @click="toggle" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </button>
+                        <div v-if="slotProps.data.json_popups_value" class="dec_amt">
+                            {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.total_rent_paid) }}
+                        </div>
+                        <div v-else>
+                            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                                @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2"
+                                    aria-hidden="true"></i>
+                                Add Rented</button>
+                        </div>
 
-                        <Button icon="pi pi-check" aria-label="Filter" />
-                        <Button icon="pi pi-pencil" outlined rounded severity="danger" class="p-2"
-                            @click="investmentStore.editHraNewRental(slotProps.data)" />
+                    </template>
+                    <template #editor="{ data, field }">
+                        <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
+                            class="w-5 text-lg font-semibold" />
+                    </template>
 
+                </Column>
 
-
-                        <OverlayPanel ref="op" class="p-4">
-                            <div class="p-3 mx-4">
-                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental">
-                                    <i class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
-                                    Edit</button>
-                                <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</button>
-                            </div>
-                        </OverlayPanel> -->
-                        <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-10 h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-
-                        </button>
-                        <button class="p-2 bg-red-200 border-red-500 rounded-xl"
-                            @click="investmentStore.editHraNewRental(slotProps.data)">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-10 h-8 font-bold">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                            </svg>
-                        </button>
-                      
-
-
+                <Column field="status" header="Status" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.json_popups_value">
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
+                        </div>
+                        <div v-else>
+                            <span
+                                class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                        </div>
                     </template>
                 </Column>
             </DataTable>
@@ -97,7 +65,7 @@
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
             <span class="mx-4 my-2 mt-2 text-lg font-semibold text-indigo-950">Rental Property</span>
-            <button class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
+            <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
                     class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
         </div>
@@ -106,23 +74,22 @@
             <div class="mb-3 table-responsive">
 
                 <!-- {{ investmentStore.hra_data }} -->
-
                 <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.hra_data"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Landlord Name" field="landlord_name" style="min-width: 8rem">
+                    <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem">
                         <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+                            {{ slotProps.data.json_popups_value.landlord_name }}
+                        </template> -->
                     </Column>
 
-                    <Column field="landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
+                    <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
+                        </template> -->
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
@@ -137,34 +104,20 @@
                         </template>
                     </Column>
 
-                    <Column field="city" header="City" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            {{ slotProps.data.reimbursment_remarks }}
-                        </template>
-                    </Column>
-                    <Column field="total_rent_paid" header="Total Rent" style="min-width: 12rem">
+                    <Column field="json_popups_value.city" header="City" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
+                            {{ slotProps.data.json_popups_value.city }}
+                        </template> -->
+                    </Column>
+                    <Column field="json_popups_value.total_rent_paid" header="Total Rent" style="min-width: 12rem">
+                        <!-- <template #body="slotProps">
+                            {{ slotProps.data.json_popups_value.total_rent_paid }}
                         </template> -->
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">
-
                         <template #body="slotProps">
-                            <!-- <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
-                                @click="toggle" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                            </button>
-
-                            <Button icon="pi pi-pencil" outlined rounded severity="danger"
-                                @click="investmentStore.editHraNewRental(slotProps.data)" />
-
-                            <OverlayPanel ref="op">
-                                <a class="dropdown-item"><i class="fa fa-pencil-square-o text-info me-2"
-                                        aria-hidden="true"></i> Edit</a>
-                                <a class="dropdown-item"><i class="fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</a>
-                            </OverlayPanel> -->
-                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl">
+                            <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
+                                @click="investmentStore.editHraNewRental(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-10 h-8">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -173,16 +126,13 @@
 
                             </button>
                             <button class="p-2 bg-red-200 border-red-500 rounded-xl"
-                                @click="investmentStore.editHraNewRental(slotProps.data)">
+                                @click="investmentStore.deleteRentalDetails(slotProps.data)">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                     stroke="currentColor" class="w-10 h-8 font-bold">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                 </svg>
                             </button>
-                           
-
-
                         </template>
                     </Column>
                 </DataTable>
@@ -245,9 +195,8 @@
             <div class="">
                 <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
                     Rent Paid</label>
-                <input type="text" id="rendPaid_inp"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.total_rent_paid" required>
+                <InputNumber type="text" id="rendPaid_inp" class="w-full " v-model="investmentStore.hra.total_rent_paid"
+                    required />
             </div>
 
         </div>
@@ -263,9 +212,12 @@
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Landlord
                     PAN <span class="text-red-600">*</span> </label>
-                <input type="text" id="lender_name"
+                <!-- <input type="text" id="lender_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.landlord_PAN" required>
+                    v-model="investmentStore.hra.landlord_PAN" required> -->
+                <InputMask id="serial" mask="aaaaa9999a" class="w-full " placeholder="AHFCS1234F"
+                    style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN" />
+
             </div>
 
         </div>
@@ -281,23 +233,11 @@
                 @click="investmentStore.saveHraNewRental">Save</button>
         </div>
     </Dialog>
-
-    <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
-        :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 
 import { ref } from "vue";
@@ -314,13 +254,23 @@ const toggle = (event) => {
 
 const investmentStore = investmentMainStore()
 
-onMounted(() => {
-    investmentStore.fetchHraNewRental()
+onMounted(async () => {
+    setTimeout(async () => {
+        await investmentStore.fetchHraNewRental()
+    }, 1000);
+
 })
 
-const sample = ref([
-    { id: 1, section: "Section 10(13A)", particular: "House Rent Allowance", ref: 'data', max: '1000' }
-])
+
+// onUnmounted(() => {
+//     setTimeout(() => {
+//         investmentStore.fetchPropertyType()
+//             console.log("destroyed");
+//     }, 3000);
+// })
+
+
+
 
 
 </script>
@@ -618,3 +568,25 @@ span {
 </style>
 
 
+
+
+         <!-- <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
+                            @click="toggle" aria-expanded="false">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </button>
+
+                        <Button icon="pi pi-check" aria-label="Filter" />
+                        <Button icon="pi pi-pencil" outlined rounded severity="danger" class="p-2"
+                            @click="investmentStore.editHraNewRental(slotProps.data)" />
+
+
+
+                        <OverlayPanel ref="op" class="p-4">
+                            <div class="p-3 mx-4">
+                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental">
+                                    <i class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
+                                    Edit</button>
+                                <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
+                                        aria-hidden="true"></i> Clear</button>
+                            </div>
+                        </OverlayPanel> -->

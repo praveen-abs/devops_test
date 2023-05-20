@@ -91,11 +91,11 @@ class VmtAttendanceController extends Controller
             $leaveData_Org = VmtEmployeeLeaves::all();
         }
          //Calculate Leave Balance
-         $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
+      //   $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
 
-        // dd(  $leave_balance_details);
+        //dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','leave_balance_details','available_time_frames','time_frame'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','available_time_frames','time_frame'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -138,14 +138,30 @@ class VmtAttendanceController extends Controller
                                                                     $request->status, $request->review_comment );
     }
 
+    public function getEmployeeLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $request->filter_leave_status );
+    }
+
+    public function getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        //dd($request->all());
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code, $request->filter_month, $request->filter_year, $request->filter_leave_status );
+    }
+
+    public function getAllEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails( $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+    }
+
+
     /*
         Fetches all leave details
         Also used VJS and gridjs table
 
+        used in leave approvals page only
+
     */
-    public function getLeaveRequestDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function getLeaveRequestDetailsBasedOnCurrentRole(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        $response = $serviceVmtAttendanceService->getLeaveRequestDetails();
+        $response = $serviceVmtAttendanceService->getLeaveRequestDetailsBasedOnCurrentRole();
 
         return response()->json([
             "status" => "success",
@@ -180,30 +196,10 @@ class VmtAttendanceController extends Controller
     }
 
     /*
-     AJAX : Get leave details based on given leave_id
+         Get leave info based on given leave_id
     */
-    public function fetchLeaveDetails(Request $request){
-        $leave_details = VmtEmployeeLeaves::find($request->leave_id);
-
-        $leave_details['user_name'] = User::find($leave_details->user_id)->name;
-        $leave_details['leave_type'] = VmtLeaves::find($leave_details->leave_type_id)->leave_type;
-        // $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
-        $leave_details['approver_name'] =  User::find($leave_details->reviewer_user_id)->name;
-        $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-
-        if(!empty($leave_details->notifications_users_id))
-        {
-            $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
-            $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-        }
-        else
-            $leave_details['notification_userName'] = "";
-
-        $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
-
-
-
-        return $leave_details;
+    public function getLeaveInformation(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getLeaveInformation($request->record_id);
     }
 
     /*
@@ -1457,7 +1453,8 @@ class VmtAttendanceController extends Controller
     public function fetchUnusedCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         //dd($request->user_id);
         //TODO : Need to get current user_id instead of fetching from req params.
-        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
+        $user_id=auth()->user()->id;
+        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($user_id);
     }
 
     public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
@@ -1465,7 +1462,7 @@ class VmtAttendanceController extends Controller
         return $serviceVmtAttendanceService->employeeProfile($request);
     }
 
-    public function getEmployeeLeaveBalance(Request $request){
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
           //Accrued Leave Year Frame
           if(empty($request->all())){
             $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
@@ -1478,13 +1475,30 @@ class VmtAttendanceController extends Controller
           $calender_type = $time_periods_of_year_query->abbrevation;
          // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
          $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
-        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
+        $leave_balance_details = $serviceVmtAttendanceService->calculateEmployeeLeaveBalance(auth::user()->id,$start_date,$end_date);
         return  $leave_balance_details;
     }
 
-    public function fetchEmployeeLeaveBalance(Request $request){
-        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
-        return $leave_balance_details;
+    // public function fetchEmployeeLeaveBalance(Request $request){
+    //     $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
+    //     return $leave_balance_details;
+    // }
+
+
+    public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $start_date = '2023-04-01';
+        $end_date = '2023-05-31';
+        $month = 05;
+        $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
+        return $response;
+    }
+
+    public function fetchTeamLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $start_date = '2023-04-01';
+        $end_date = '2023-05-31';
+        $month = 05;
+        $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
+        return $response;
     }
 
 }

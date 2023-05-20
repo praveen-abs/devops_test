@@ -187,15 +187,20 @@
 
         </template>
         <div class="card p-3 d-flex justify-items-center align-items-center"
-            style="width: 18rem;margin-left: 140px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            style="width: 18rem;margin-left: 150px; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
-            <img src="" alt="" class=""
+            <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`"  alt="" class=""
                 style="height: 40px;width:140px; ">
 
-            <div class="card-body d-flex justify-items-center align-items-center " style="flex-direction: column ">
+            <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
+                <div class="mx-auto rounded-circle img-xl userActive-status profile-img " style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" >
+                    <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img border"
+                            :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
+                </div>
 
-                <img v-if="profile" class="rounded-circle   profile-img"
-                    :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
+
+                <!-- <img v-if="profile" class="rounded-circle   profile-img"
+                    :src="`data:image/png;base64,${profile}`" srcset=""  /> -->
 
                 <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;" > {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
 
@@ -247,7 +252,7 @@ const getProfilePhoto = () => {
             user_code: service.current_user_code,
         })
         .then((res) => {
-            // console.log(res.data);
+            console.log( "profile :?",res.data);
             profile.value = res.data.data;
         })
         .finally(() => {
