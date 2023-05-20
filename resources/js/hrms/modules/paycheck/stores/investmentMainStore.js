@@ -84,6 +84,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const otherIncomeSource = ref();
     const previousEmployeerIncomeSource = ref();
     const hop = reactive([]);
+    const AddHraButtonDisabled = ref(false)
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
@@ -115,7 +116,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 var declared_amt = 0;
                 var max_limit = 0;
-                console.log("completed");
+                // console.log("completed");
                 otherExemptionSource.value.forEach((item) => {
                     // console.log(item);
                     declared_amt += item.dec_amount;
@@ -124,6 +125,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     max_limit += item.max_amount;
                     taxSavingInvestments.max_limit = max_limit;
                 });
+
+             
             });
     };
 
@@ -227,8 +230,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailogEditNewRental = ref(false);
 
     const fetchHraNewRental = async () => {
-        console.log("getting hra new rental  data.......");
-        console.log(hraSource.fs_id);
+        // console.log("getting hra new rental  data.......");
+        // console.log(hraSource.fs_id);
         await axios
             .post("/investments/fetchEmpRentalDetails", {
                 user_code: service.current_user_code,
@@ -241,12 +244,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .catch((e) => console.log(e))
             .finally(() => {
                 canShowLoading.value = false;
+                   // Enable Add Hra Button 
+                   if(hra_data.value.length == 0){
+                    AddHraButtonDisabled.value = false
+                   }else{
+                    AddHraButtonDisabled.value = true
+                   }
+                   getInvestmentSource()
             });
+
     };
 
     const editHraNewRental = (currentRowData) => {
-        console.log("editing Hra");
-        console.log(currentRowData);
+        // console.log("editing Hra");
+        // console.log(currentRowData);
 
         dailogAddNewRental.value = true;
 
@@ -263,14 +274,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         hra.user_code = service.current_user_code;
         canShowLoading.value = true;
         dailogAddNewRental.value = false;
-
-        console.log("saving hra new rental  data.......");
-        console.log(hra);
+        // console.log("saving hra new rental  data.......");
+        // console.log(hra);
 
         axios
             .post("/investments/saveSectionPopups", hra)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 toast.add({
                     severity: "success",
                     summary: "Drafted",
@@ -287,7 +297,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     };
 
     const deleteRentalDetails = (currentRowData) => {
-        console.log(currentRowData);
+        // console.log(currentRowData);
         confirm.require({
             message: "Do you want to delete this record?",
             header: "Delete Confirmation",
@@ -389,19 +399,19 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const get80EESlotData = (data) => {
         dailog_80EE.value = true;
-        console.log(data);
+        // console.log(data);
         other_exe_80EE.user_code = service.current_user_code;
         other_exe_80EE.fs_id = data.fs_id;
     };
     const get80EEASlotData = (data) => {
         dailog_80EEA.value = true;
-        console.log(data);
+        // console.log(data);
         other_exe_80EEA.user_code = service.current_user_code;
         other_exe_80EEA.fs_id = data.fs_id;
     };
     const get80EEBSlotData = (data) => {
         dailog_80EEB.value = true;
-        console.log(data);
+        // console.log(data);
         other_exe_80EEB.user_code = service.current_user_code;
         other_exe_80EEB.fs_id = data.fs_id;
     };
@@ -456,12 +466,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const save80EE = () => {
         dailog_80EE.value = false;
         canShowLoading.value = true;
-        console.log("Saving Other exemption 80EE");
+        // console.log("Saving Other exemption 80EE");
         console.log(data);
         axios
             .post('/investments/saveSection80', other_exe_80EE)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 toast.add({
                     severity: "success",
                     summary: "Drafted",
@@ -479,12 +489,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const save80EEA = () => {
         dailog_80EEA.value = false;
         canShowLoading.value = true;
-        console.log("Saving Other exemption 80EEA");
-        console.log(other_exe_80EEA);
+        // console.log("Saving Other exemption 80EEA");
+        // console.log(other_exe_80EEA);
         axios
             .post("/investments/saveSection80", other_exe_80EEA)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 canShowLoading.value = false;
                 toast.add({
                     severity: "success",
@@ -503,12 +513,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const save80EEB = () => {
         dailog_80EEB.value = false;
         canShowLoading.value = true;
-        console.log("Saving Other exemption 80EEB");
-        console.log(other_exe_80EEB);
+        // console.log("Saving Other exemption 80EEB");
+        // console.log(other_exe_80EEB);
         axios
             .post("/investments/saveSection80", other_exe_80EEB)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 toast.add({
                     severity: "success",
                     summary: "Drafted",
@@ -597,22 +607,22 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         );
         lop.maintenance = lop_maintenance;
         dlop.maintenance = dlop_maintenance;
-        console.log("lop:" + lop_maintenance);
-        console.log("dlop:" + dlop_maintenance);
+        // console.log("lop:" + lop_maintenance);
+        // console.log("dlop:" + dlop_maintenance);
         setTimeout(() => {
             const lop_net = formula.net_value_cal(
                 lop.rent_received,
                 lop.municipal_tax,
                 lop.maintenance
             );
-            console.log(lop_net);
+            // console.log(lop_net);
             lop.net_value = lop_net;
             const dlop_net = formula.net_value_cal(
                 dlop.rent_received,
                 dlop.municipal_tax,
                 dlop.maintenance
             );
-            console.log(dlop_net);
+            // console.log(dlop_net);
             dlop.net_value = dlop_net;
         }, 100);
         lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value);
@@ -623,9 +633,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     };
     const fetchPropertyType = () => {
         housePropertySource.value.forEach((item) => {
-            // console.log(item);
             hop.push(item.fs_id);
-            console.log(Object.values(hop));
+            // console.log(Object.values(hop));
         });
 
         axios
@@ -634,32 +643,32 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 hop,
             })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 house_props_data.value = Object.values(res.data);
             });
     };
 
     const getSopSlotData = (data) => {
         dailog_SelfOccupiedProperty.value = true;
-        console.log(data);
+        // console.log(data);
         sop.user_code = service.current_user_code;
         sop.fs_id = data.fs_id;
     };
     const getLopSlotData = (data) => {
         dailog_LetOutProperty.value = true;
-        console.log(data);
+        // console.log(data);
         lop.user_code = service.current_user_code;
         lop.fs_id = data.fs_id;
     };
     const getDlopSlotData = (data) => {
         dailog_DeemedLetOutProperty.value = true;
-        console.log(data);
+        // console.log(data);
         dlop.user_code = service.current_user_code;
         dlop.fs_id = data.fs_id;
     };
 
     const editHouseProps = (currentRowData) => {
-        console.log(currentRowData);
+        // console.log(currentRowData);
         if (
             currentRowData.json_popups_value.property_type ==
             "Self Occupied Property"
@@ -711,7 +720,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     };
 
     const deleteHouseProps = (currentRowData) => {
-        console.log(currentRowData);
+        // console.log(currentRowData['json_popups_value'].property_type);
         confirm.require({
             message: "Do you want to delete this record?",
             header: "Delete Confirmation",
@@ -728,7 +737,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         toast.add({
                             severity: "error",
                             summary: "Deleted",
-                            detail: `${currentRowData.property_type} is Deleted`,
+                            detail: `${currentRowData['json_popups_value'].property_type} is Deleted`,
                             life: 3000,
                         });
                         fetchPropertyType();
@@ -742,14 +751,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const saveSelfOccupiedProperty = () => {
         canShowLoading.value = true;
         dailog_SelfOccupiedProperty.value = false;
-        console.log(sop);
+        // console.log(sop);
         axios
             .post("/investments/saveSectionPopups", sop)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
             })
             .finally(() => {
                 fetchPropertyType();
+                getInvestmentSource();
                 canShowLoading.value = false;
                 toast.add({
                     severity: "success",
@@ -760,16 +770,17 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
     };
     const saveLetOutProperty = () => {
-        console.log(lop);
+        // console.log(lop);
         canShowLoading.value = true;
         dailog_LetOutProperty.value = false;
         axios
             .post("/investments/saveSectionPopups", lop)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
             })
             .finally(() => {
                 fetchPropertyType();
+                getInvestmentSource();
                 canShowLoading.value = false;
                 toast.add({
                     severity: "success",
@@ -780,16 +791,17 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
     };
     const saveDeemedLetOutProperty = () => {
-        console.log(dlop);
+        // console.log(dlop);
         canShowLoading.value = true;
         dailog_DeemedLetOutProperty.value = false;
         axios
             .post("/investments/saveSectionPopups", dlop)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
             })
             .finally(() => {
                 fetchPropertyType();
+                getInvestmentSource();
                 canShowLoading.value = false;
                 toast.add({
                     severity: "success",
@@ -844,6 +856,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         fetchHraNewRental,
         saveHraNewRental,
         deleteRentalDetails,
+        AddHraButtonDisabled,
 
         // hra ends
 
@@ -881,6 +894,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         saveSelfOccupiedProperty,
         saveLetOutProperty,
         saveDeemedLetOutProperty,
+        hop,
         lop,
         sop,
         dlop,

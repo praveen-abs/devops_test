@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import axios from "axios";
 import dayjs from "dayjs";
 import { Service } from '../Service/Service'
@@ -8,7 +8,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     const service = Service()
 
-    const canShowLoading = ref(true)
+    const canShowLoading = ref(false)
 
     //Leave history vars
     const array_employeeLeaveBalance = ref()
@@ -18,6 +18,18 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     const array_orgLeaveHistory = ref();
 
     const selected_LeaveInformation = ref();
+    const canShowLeaveDetails = ref(false)
+
+
+    const setLeaveDetails = ref({})
+
+    const getLeaveDetails = (leaveDetails) =>{
+        canShowLeaveDetails.value = true
+        console.log(leaveDetails);
+        setLeaveDetails.value = {...leaveDetails}
+        setLeaveDetails.emp_name = leaveDetails.name
+
+    }
 
     async function getEmployeeLeaveBalance() {
         canShowLoading.value = true
@@ -53,14 +65,24 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     }
 
 
-    async function getTeamLeaveHistory(manager_code, filter_month, filter_year, filter_leave_status) {
-        axios.post('/attendance/getTeamLeaveDetails', {
-            manager_code: manager_code,
+    async function getTeamLeaveHistory(filter_month, filter_year, filter_leave_status) {
+
+
+        let user_code = 0;
+
+        await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
+            user_code = response.data;
+        });
+
+
+
+        axios.post('/attendance/getTeamEmployeesLeaveDetails', {
+            manager_code: user_code,
             filter_month: filter_month,
             filter_year: filter_year,
             filter_leave_status: filter_leave_status
         }).then((response) => {
-            array_teamLeaveHistory.value = response.data;
+            array_teamLeaveHistory.value = response.data.data;
             console.log("getTeamLeaveHistory() : " + response.data);
         });
 
@@ -93,7 +115,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     return {
 
-        canShowLoading,
+        canShowLoading,canShowLeaveDetails,setLeaveDetails,getLeaveDetails,
 
         array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance,
 

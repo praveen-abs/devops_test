@@ -308,10 +308,15 @@ class VmtTestingController extends Controller
             $user = User::find($user_id);
         }
 
-        $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id', $user_id)
-            ->whereMonth('payroll_month', $month)
-            ->whereYear('payroll_month', $year)->first();
-        // dd($data['employee_payslip']);
+        $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
+                    ->whereYear('payroll_date', $year)->where('client_id',$query_user->client_id)->first();
+            //dd(payroll_month);
+
+            $emp_payslip_id =VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_month->id)->first()->id;
+
+            $data['employee_payslip'] = VmtEmployeePaySlipv2::where('emp_payroll_id',$emp_payslip_id)->first();
+
+            $data['emp_payroll_month'] = $payroll_month;
 
         $data['employee_name'] = $user->name;
         // dd( $data['employee_name']);
