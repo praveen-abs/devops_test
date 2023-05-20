@@ -1,63 +1,78 @@
 import { defineStore } from "pinia";
-import {ref} from "vue";
+import { ref } from "vue";
 import axios from "axios";
 import dayjs from "dayjs";
+import { Service } from '../Service/Service'
 
 export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
+    const service = Service()
+
+    const canShowLoading = ref(true)
+
     //Leave history vars
+    const array_employeeLeaveBalance = ref()
+    const array_employeeAaviledLeaveBalance = ref()
     const array_employeeLeaveHistory = ref();
     const array_teamLeaveHistory = ref();
     const array_orgLeaveHistory = ref();
 
     const selected_LeaveInformation = ref();
 
-    async function getEmployeeLeaveHistory(filter_month, filter_year, filter_leave_status){
+    async function getEmployeeLeaveBalance() {
+        canShowLoading.value = true
+        let url_leave_balance = `/get-employee-leave-balance`
+        await axios.get(url_leave_balance).then(res => {
+            console.log(Object.values(res.data));
+            array_employeeLeaveBalance.value = Object.values(res.data["Leave Balance"])
+            array_employeeAaviledLeaveBalance.value = res.data["Avalied Leaves"]
+        }).finally(()=>{
+            canShowLoading.value = false
+        })
+    }
+    async function getEmployeeLeaveHistory(filter_month, filter_year, filter_leave_status) {
 
-        let user_code = 0;
-
-       await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
-
-            user_code = response.data;
-
-        });
+        // let user_code = 0;
+        // await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
+        //     user_code = response.data;
+        // });
 
 
-       await axios.post('/attendance/getEmployeeLeaveDetails', {
-            user_code  : user_code,
-            filter_month  : filter_month,
-            filter_year : filter_year,
-            filter_leave_status : filter_leave_status,
+        await axios.post('/attendance/getEmployeeLeaveDetails', {
+            user_code: service.current_user_code,
+            filter_month: filter_month,
+            filter_year: filter_year,
+            filter_leave_status: filter_leave_status,
 
         }).then((response) => {
             array_employeeLeaveHistory.value = response.data.data;
-            console.log("getEmployeeLeaveHistory() : "+response.data);
+            console.log("getEmployeeLeaveHistory() : " + response.data);
         });
 
     }
 
 
-    async function getTeamLeaveHistory(manager_code, filter_month, filter_year, filter_leave_status){
-        axios.post('/attendance/getTeamLeaveDetails',{
-            manager_code : manager_code,
-            filter_month :filter_month,
-            filter_year : filter_year,
-            filter_leave_status : filter_leave_status
+    async function getTeamLeaveHistory(manager_code, filter_month, filter_year, filter_leave_status) {
+        axios.post('/attendance/getTeamLeaveDetails', {
+            manager_code: manager_code,
+            filter_month: filter_month,
+            filter_year: filter_year,
+            filter_leave_status: filter_leave_status
         }).then((response) => {
             array_teamLeaveHistory.value = response.data;
-            console.log("getTeamLeaveHistory() : "+response.data);
+            console.log("getTeamLeaveHistory() : " + response.data);
         });
 
     }
 
-    async function getAllEmployeesLeaveDetails(filter_month, filter_year, filter_leave_status){
-        axios.post('/attendance/getAllEmployeesLeaveDetails',{
-            filter_month :filter_month,
-            filter_year : filter_year,
-            filter_leave_status : filter_leave_status
+    async function getAllEmployeesLeaveDetails(filter_month, filter_year, filter_leave_status) {
+        axios.post('/attendance/getAllEmployeesLeaveDetails', {
+            filter_month: filter_month,
+            filter_year: filter_year,
+            filter_leave_status: filter_leave_status
         }).then((response) => {
             array_orgLeaveHistory.value = response.data;
-            console.log("getOrgLeaveHistory() : "+response.data);
+            console.log("getOrgLeaveHistory() : " + response.data);
         });
 
     }
@@ -65,22 +80,25 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     /*
         Get the leave details of a particular leave record_id
     */
-    async function getLeaveInformation(record_id){
-        axios.post('/attendance/getLeaveInformation' ,{
-            record_id : record_id
+    async function getLeaveInformation(record_id) {
+        axios.post('/attendance/getLeaveInformation', {
+            record_id: record_id
 
         }).then((response) => {
             selected_LeaveInformation.value = response.data.data;
-            console.log("getLeaveInformation() : "+response.data);
+            console.log("getLeaveInformation() : " + response.data);
         });
     }
 
     return {
-        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory,
+
+        canShowLoading,
+
+        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAaviledLeaveBalance,
 
         // Functions
 
-        getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveDetails, getLeaveInformation
+        getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveDetails, getLeaveInformation, getEmployeeLeaveBalance
 
     };
 });

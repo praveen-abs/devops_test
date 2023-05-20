@@ -31,6 +31,7 @@ import Calendar from 'primevue/calendar';
 import Checkbox from 'primevue/checkbox';
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
+import Textarea from 'primevue/textarea';
 
 import LeaveModule from './LeaveModule.vue'
 
@@ -66,6 +67,7 @@ app.component('Calendar', Calendar)
 app.component('Checkbox', Checkbox)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
+app.component('Textarea', Textarea)
 
 app.mount("#LeaveModule");
 

@@ -54,7 +54,7 @@
                 <EmployeeLeaveDetails />
             </div>
             <div class="tab-pane fade show " id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <TeamLeaveDetails /> 
+                <TeamLeaveDetails />
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <OrgLeaveDetails />
@@ -62,17 +62,33 @@
 
         </div>
     </div>
+    <Dialog header="Header" v-model:visible="useLeaveStore.canShowLoading"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 
 <script setup>
 import EmployeeLeaveDetails from './leave_details/EmployeeLeaveDetails.vue';
 import OrgLeaveDetails from './leave_details/OrgLeaveDetails.vue';
 import TeamLeaveDetails from './leave_details/TeamLeaveDetails.vue';
-import {useLeaveModuleStore} from './LeaveModuleService'
+import { useLeaveModuleStore } from './LeaveModuleService'
 import { onMounted } from 'vue';
 
 
-const  useLeaveStore = useLeaveModuleStore()
+const useLeaveStore = useLeaveModuleStore()
+
+
+onMounted(() => {
+    useLeaveStore.getEmployeeLeaveBalance()
+})
 
 
 </script>

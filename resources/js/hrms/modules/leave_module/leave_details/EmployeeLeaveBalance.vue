@@ -5,19 +5,17 @@
                 <h6 class="text-lg font-semibold text-gray-900 modal-title">Leave Balance</h6>
             </div>
             <div class="col-6 justify-content-end d-flex">
-                <!-- <LeaveApply /> -->
+                <LeaveApply />
             </div>
         </div>
-
-
         <!-- <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 xl:grid-cols-3" > -->
 
         <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
-            style="display: grid;">
+            style="display: grid;" v-for="leave_balance in useLeaveStore.array_employeeLeaveBalance" :key="leave_balance">
             <div class="tw-card dynamic-card ">
                 <div class="text-center">
                     <p class="mb-2 text-base font-semibold ">
-                        <!-- {{ $key }} -->
+                       {{ leave_balance }}
                     </p>
                     <h6 class="mb-0 text-sm font-semibold">
                         <!-- {{ $value }} -->
@@ -46,4 +44,7 @@
 
 <script setup>
 import LeaveApply from '../leave_apply/LeaveApply.vue'
+import { useLeaveModuleStore } from '../LeaveModuleService';
+
+const useLeaveStore = useLeaveModuleStore()
 </script>

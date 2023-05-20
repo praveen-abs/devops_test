@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <Button label="Apply Leave" class="px-2 py-2 border-0 outline-none btn btn-orange font-base" @click="visible = true" />
+    <Button label="Apply Leave" class="px-2 py-2 border-0 outline-none btn btn-orange" @click="visible = true" />
     <!-- <Transition name="modal" >
         <ABS_loading_spinner v-if="service.data_checking" />
     </Transition> -->
@@ -18,7 +18,6 @@
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
 
         <template #header>
-
             <h5 class="m-auto">Leave applied Successfully</h5>
         </template>
         <template #footer>
@@ -63,7 +62,8 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <div class="form-group">
-                            <Dropdown editable @change="service.Permission"  style="  height: 38px;font-weight: 500;"  class="w-full"  v-model="service.leave_data.selected_leave"  :options="service.leave_types"
+                            <Dropdown editable @change="service.Permission" style="  height: 38px;font-weight: 500;"
+                                class="w-full" v-model="service.leave_data.selected_leave" :options="service.leave_types"
                                 optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" />
                             <!-- <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
                                 aria-label="Default select example" class="outline-none form-select"
@@ -365,8 +365,7 @@
                 <div class="mt-6 text-center ">
                     <button type="button" class="btn btn-border-primary" @click="visible = false">Cancel</button>
                     <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
-                        :disabled="service.leave_data.selected_leave == ''  ? true : false"
-                        @click="service.Submit">
+                        :disabled="service.leave_data.selected_leave == '' ? true : false" @click="service.Submit">
                         Request Leave</button>
                 </div>
             </div>
@@ -391,7 +390,7 @@ import { onMounted, reactive, ref } from "vue";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import axios from "axios";
 
-import { Service } from './leave_apply_service'
+import { useLeaveService } from './leave_apply_service'
 
 const visible = ref(false)
 
@@ -406,16 +405,16 @@ var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
 
 // Check All Varaibles and Events Here
-const service = Service()
+const service = useLeaveService()
 
 
 onMounted(() => {
 
+        service.get_user()
+        service.get_leave_types()
+        service.leave_data.custom_start_date = new Date()
+        service.leave_data.permission_start_time = new Date()
 
-    service.get_user()
-    service.get_leave_types()
-    service.leave_data.custom_start_date = new Date()
-    service.leave_data.permission_start_time = new Date()
 
 });
 
@@ -544,4 +543,5 @@ label {
     border-radius: 50px 50px 0px;
     position: relative;
     top: 3px;
-}*/</style>
+}*/
+</style>
