@@ -9,10 +9,15 @@
     use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
+
+    use App\Models\VmtEmployeePayroll;
+    use App\Models\VmtEmployeePaySlip;
+    use App\Models\VmtEmployeePayslipV2;
     use App\Models\VmtPMS_KPIFormModel;
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;
+    use App\Models\VmtPayroll;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
     use App\Mail\WelcomeMail;
@@ -30,94 +35,183 @@
 @section('content')
     <?php
 
+//     foreach ($emp_payroll_user_id as $key => $singleuser) {
+
+// $user_code = User::where('id',$singleuser)->first()->user_code;
+//     $emp_client_code = preg_replace('/\d+/', '',strtoupper($user_code));
+// $client_data = VmtClientMaster::where('client_code',$emp_client_code)->first();
+// $client_id = array();
+// if(!empty($client_data)){
+// $client_id[]=$client_data->id;
+
+// }
+// }
+
+
+ /*Get all employee payslip details */
+
+        $query_all_payslip = VmtEmployeePayslip::all();
+
+/* save single payrollmonth in vmt_payroll*/
+            $emp_payroll_month = VmtEmployeePayslip::whereYear('created_at', '2022')->orwhereYear('created_at','2023')->distinct('created_at')->orderBy('PAYROLL_MONTH', 'ASC')->pluck('PAYROLL_MONTH');
+
+//  $client_details_id = VmtClientMaster::get("id");
+
+//  foreach ($client_details_id as $key => $singleclient) {
+
+//             foreach ($emp_payroll_month as $key => $singlepayrollmonth) {
+//                 $query_payroll = new Vmtpayroll;
+//                 $query_payroll->client_id=$singleclient->id;
+//                 $query_payroll->payroll_date=$singlepayrollmonth;
+//                 $query_payroll->save();
+//             }
+// }
 
 
 
-        //  $is_response_docs = VmtEmployeeDocuments::where('user_id', $user_id);
-        //  if($is_response_docs->exists())
-        //  {
-        //     $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
-        //     ->where('vmt_employee_documents.user_id', $response->id)
-        //     ->get();
-        //     dd($response_docs);
-        //  }else{
-        //     $response_docs = VmtDocuments::all();
-        //     dd($response_docs);
-        //  }
-        // $emp_assignedpmsfrom=VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform.id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
-        //                                         ->join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform_details.vmt_pms_kpiform_id')
-        //                                         ->join('users','users.id','=','vmt_pms_kpiform_assigned.assignee_id')
-        //                                         ->where('vmt_pms_kpiform_assigned.assignee_id',$user_id)
-        //                                         ->get();
-        //  dd($emp_assignedpmsfrom->toarray());
+// /* save user id and payroll id in the table vmt_emp_payroll*/
+//           foreach ($query_all_payslip as $key => $singleuserdata) {
+//                 $query_payroll_data= new VmtEmployeePayroll;
+//                 $query_payroll_data->user_id=$singleuserdata->user_id;
+//                 $client_id = User::where('id',$singleuserdata->user_id)->first()->client_id;
+//                 $payroll_id =VmtPayroll::where('payroll_date',$singleuserdata->PAYROLL_MONTH)
+//                                          ->where('client_id',$client_id)->first()->id;
+//                 $query_payroll_data->payroll_id=$payroll_id;
+//                 $query_payroll_data->save();
+//             }
+
+//  /*save all employee payslip details in vmt_employee_payslipv2 */
+
+//         foreach ($query_all_payslip as $key => $singlepayslipdetails) {
+
+//             $emppayslip = new VmtEmployeePayslipV2;
+//  /*get payroll id from vmt_emp_payroll in order to filter payroll_date and find emp_payroll_id */
+
+//                $client_id = User::where('id',$singlepayslipdetails->user_id)->first()->client_id;
+//                 $payroll_id =VmtPayroll::where('payroll_date',$singlepayslipdetails->PAYROLL_MONTH)
+//                                          ->where('client_id',$client_id)->first()->id;
+//            $emp_payroll_id=VmtEmployeePayroll::where('user_id',$singlepayslipdetails->user_id)->where('payroll_id',$payroll_id)->first()->id;
+//            $emppayslip->emp_payroll_id= $emp_payroll_id;
+//            $emppayslip->basic=$singlepayslipdetails->BASIC;
+//            $emppayslip->hra=$singlepayslipdetails->HRA;
+//            $emppayslip->child_edu_allowance=$singlepayslipdetails->CHILD_EDU_ALLOWANCE;
+//            $emppayslip->spl_alw=$singlepayslipdetails->SPL_ALW;
+//            $emppayslip->total_fixed_gross=$singlepayslipdetails->TOTAL_FIXED_GROSS;
+//            $emppayslip->month_days=$singlepayslipdetails->MONTH_DAYS;
+//            $emppayslip->worked_Days=$singlepayslipdetails->Worked_Days;
+//            $emppayslip->arrears_Days=$singlepayslipdetails->Arrears_Days;
+//            $emppayslip->lop=$singlepayslipdetails->LOP;
+//            $emppayslip->earned_basic=$singlepayslipdetails->Earned_BASIC;
+//            $emppayslip->basic_arrear=$singlepayslipdetails->BASIC_ARREAR;
+//            $emppayslip->earned_hra=$singlepayslipdetails->Earned_HRA;
+//            $emppayslip->hra_arrear=$singlepayslipdetails->HRA_ARREAR;
+//            $emppayslip->earned_child_edu_allowance=$singlepayslipdetails->Earned_CHILD_EDU_ALLOWANCE;
+//            $emppayslip->child_edu_allowance_arrear=$singlepayslipdetails->CHILD_EDU_ALLOWANCE_ARREAR;
+//            $emppayslip->earned_spl_alw=$singlepayslipdetails->Earned_SPL_ALW;
+//            $emppayslip->spl_alw_arrear=$singlepayslipdetails->SPL_ALW_ARREAR;
+//            $emppayslip->overtime=$singlepayslipdetails->Overtime;
+//            $emppayslip->total_earned_gross=$singlepayslipdetails->TOTAL_EARNED_GROSS;
+//            $emppayslip->pf_wages=$singlepayslipdetails->PF_WAGES;
+//            $emppayslip->pf_wages_arrear_epfr=$singlepayslipdetails->PF_WAGES_ARREAR_EPFR;
+//            $emppayslip->epfr=$singlepayslipdetails->EPFR;
+//            $emppayslip->epfr_arrear=$singlepayslipdetails->EPFR_ARREAR;
+//            $emppayslip->edli_charges=$singlepayslipdetails->EDLI_CHARGES;
+//            $emppayslip->edli_charges_arrears=$singlepayslipdetails->EDLI_CHARGES_ARREARS;
+//            $emppayslip->pf_admin_charges=$singlepayslipdetails->PF_ADMIN_CHARGES;
+//            $emppayslip->pf_admin_charges_arrears=$singlepayslipdetails->PF_ADMIN_CHARGES_ARREARS;
+//            $emppayslip->employer_esi=$singlepayslipdetails->EMPLOYER_ESI;
+//            $emppayslip->employer_lwf=$singlepayslipdetails->Employer_LWF;
+//            $emppayslip->ctc=$singlepayslipdetails->CTC;
+//            $emppayslip->epf_ee=$singlepayslipdetails->EPF_EE;
+//            $emppayslip->epf_ee_arrear=$singlepayslipdetails->EPF_EE_ARREAR;
+//            $emppayslip->employee_esic=$singlepayslipdetails->EMPLOYEE_ESIC;
+//            $emppayslip->prof_tax=$singlepayslipdetails->PROF_TAX;
+//            $emppayslip->income_tax=$singlepayslipdetails->income_tax;
+//            $emppayslip->sal_adv=$singlepayslipdetails->SAL_ADV;
+//            $emppayslip->canteen_dedn=$singlepayslipdetails->CANTEEN_DEDN;
+//            $emppayslip->other_deduc=$singlepayslipdetails->OTHER_DEDUC;
+//            $emppayslip->lwf=$singlepayslipdetails->LWF;
+//            $emppayslip->total_deductions=$singlepayslipdetails->TOTAL_DEDUCTIONS;
+//            $emppayslip->net_take_home=$singlepayslipdetails->NET_TAKE_HOME;
+//            $emppayslip->rupees=$singlepayslipdetails->Rupees;
+//            $emppayslip->el_opn_bal=$singlepayslipdetails->EL_Opn_Bal;
+//            $emppayslip->availed_el=$singlepayslipdetails->Availed_EL;
+//            $emppayslip->balance_el=$singlepayslipdetails->Balance_EL;
+//            $emppayslip->sl_opn_bal=$singlepayslipdetails->SL_Opn_Bal;
+//            $emppayslip->availed_sl=$singlepayslipdetails->Availed_SL;
+//            $emppayslip->balance_sl=$singlepayslipdetails->Balance_SL;
+//            $emppayslip->greetings=$singlepayslipdetails->Greetings;
+//            $emppayslip->travel_conveyance=$singlepayslipdetails->travel_conveyance;
+//            $emppayslip->other_earnings=$singlepayslipdetails->other_earnings;
+//            $emppayslip->save();
 
 
+//          }
 
+  // $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
+            //                                      ->whereYear('payroll_date', $year)->first();
 
+                //  $emp_payslip_id =VmtEmployeePayroll::where('user_id','144')->get('id');
+                //  $query_payslips=array();
+                //   foreach ($emp_payslip_id as $key => $singleuserid) {
 
-    //     $query_client = VmtClientMaster::find(session('client_id'));
-    //     if (!empty($query_client))
-    //     return $query_client->client_name;
-    // else
-    //     return "";
+                // //     $query_payslips[] = VmtEmployeePayslipV2::where('emp_payroll_id',$singleuserid->id)
+                // //                                     ->orderBy('emp_payroll_id', 'ASC')
+                // //                                     ->get(['id','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
+                //  }
+        //         $month='08';
+        //          $year='2022';
+        //          $user_id ='144';
 
-         //to store mailstatus
-         //$isSent=true;
-    //    $user_code= 'IMA0002';
-    //      $user_id=User::where('user_code',$user_code)->first()->id;
+        //          $response['payslip_data'] = User::with([
+        //                                     'getEmployeeDetails' => function($query){
+        //                                        $query->select(['id','userid','dob','doj','location','pan_number','bank_id','bank_account_number','bank_ifsc_code']);
+        //                                     },
+        //                                     'getEmployeeOfficeDetails' => function($query){
+        //                                             $query->select(['id','user_id','designation']);
+        //                                     },
+        //                                     'getStatutoryDetails' =>function($query){
+        //                                         $query->select(['id','user_id','epf_number','esic_number','uan_number']);
+        //                                     },
+        //                                     'single_payslip_empid' =>function($query){
+        //                                         $query->select(['user_id']);
+        //                                     },
+        //                                     'single_payslip_month' =>function($query) use($month , $year){
+        //                                         $query->whereMonth('payroll_date', $month)
+        //                                               ->whereYear('payroll_date', $year)
+        //                                               ->select(['payroll_date']);
+        //                                     },
+        //                                     'single_payslip_detail' => function($query) {
+        //                                             $query->select(['id','month_days as MONTH_DAYS','worked_Days as Worked_Days','lop as LOP','arrears_Days as ArrearS_Days','basic as BASIC','hra as HRA','spl_alw as SPL_ALW',
+        //                                                     'overtime as Overtime','travel_conveyance','total_earned_gross as TOTAL_EARNED_GROSS','prof_tax as PROF_TAX','income_tax','sal_adv as SAL_ADV','other_deduc as OTHER_DEDUC','total_deductions as TOTAL_DEDUCTIONS','epfr as EPFR','employee_esic as EMPLOYEE_ESIC',
+        //                                                     'net_take_home as NET_TAKE_HOME','employer_esi as EMPLOYER_ESI']);
+        //                                         },
+        //                                     ])
+        //                                     ->where('users.id','144')
+        //                                     ->get(['users.id','users.name','users.user_code','users.email']);
 
-    //         $query_emp_welcomemailstatus =VmtEmployeeMailStatus::where('user_id',$user_id);
+        //   dd( $response['payslip_data']);
+// $year='2022';
+// $month='10';
 
-    //         if($query_emp_welcomemailstatus->exists())
-    //         {
-    //         //update
-    //         $query_emp_welcomemailstatus = $query_emp_welcomemailstatus->first();
-    //         $query_emp_welcomemailstatus->welcome_mail_status  = $isSent? '1':'0';
-    //         dd($query_emp_welcomemailstatus);
+//         $query_payslips = VmtEmployeePayslipV2::leftjoin('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
+//                                              ->leftjoin('vmt_payroll','vmt_payroll.id','=','vmt_emp_payroll.payroll_id')
+//                                              ->leftjoin('users','users.id','=','vmt_emp_payroll.user_id')
+//                                              ->whereYear('vmt_payroll.payroll_date', $year)
+//                                              ->whereMonth('vmt_payroll.payroll_date',$month)
+//                                             ->where('users.is_ssa','0')
+//                                             ->where('users.active','1')
+//                                             ->get(['payroll_date','users.name','users.id']);
+$payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
+        for($i=0; $i < count($payroll_month); $i++)
+        {
 
-    //         }
-    //         else
-    //         {
-    //             //create new record
-    //            $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
-    //            $query_emp_welcomemailstatus->user_id=$user_id;
-    //            $query_emp_welcomemailstatus->welcome_mail_status =$isSent? '1':'0';
-    //            dd($query_emp_welcomemailstatus);
+            $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
+        }
+        $payroll_available_months = array_unique($payroll_month->toArray());
 
-    //         }
-    // $user_id ="175";
-    // $response = VmtDocuments::leftJoin('vmt_employee_documents','vmt_employee_documents.doc_id','=','vmt_documents.id')
-    //                 ->where('vmt_employee_documents.user_id',$user_id)
-    //                 ->orWhereNull('vmt_employee_documents.id')
-    //                 ->where('vmt_documents.document_name','<>','Birth Certificate')
-    //                 ->where('vmt_documents.document_name','<>','Check')
-    //                 ->get();
-    //                 dd($response->toarray());
-
-         $query_all_users_details=User::get();
-
-          foreach($query_all_users_details as $single_user_data){
-    //get the mandatory document id
-                $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
-
-    //get the employees uploaded documents mandatory id
-                $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
-                                                                ->where('vmt_employee_documents.user_id',$single_user_data->id)
-                                                                ->pluck('doc_id');
-
-            if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
-              {
-     //set the onboard status to 1
-                  $currentUser =User::where('id',$single_user_data->id)->first();
-                  $currentUser->is_onboarded = '1';
-                  $currentUser->save();
-
-             }
-          }
-
-
-
-?>
+dd($payroll_available_months);
+    ?>
 
 
 @endsection

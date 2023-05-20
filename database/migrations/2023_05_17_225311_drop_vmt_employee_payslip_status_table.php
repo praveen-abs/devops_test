@@ -13,9 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vmt_employee_payslip', function (Blueprint $table) {
-            $table->integer('is_released')->after('user_id');
-        });
+        Schema::dropIfExists('vmt_employee_payslip_status');
     }
 
     /**
@@ -25,8 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('vmt_employee_payslip', function (Blueprint $table) {
-            $table->dropColumn('is_released');
-        });
+        Schema::dropIfExists('vmt_employee_payslip_status');
     }
 };
