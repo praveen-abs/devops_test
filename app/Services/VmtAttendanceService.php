@@ -1700,7 +1700,16 @@ class VmtAttendanceService
                 'user_code' => 'required|exists:users,user_code',
                 'filter_month' => 'required',
                 'filter_year' => 'required',
-                'filter_leave_status' => 'required|in:Approved,Pending,Rejected',
+                'filter_leave_status' => ['required',
+                                        function ($attribute, $value, $fail) {
+                                            $valid_status_data = array("Approved","Rejected","Pending");
+
+                                            $diff = array_diff($value, $valid_status_data);
+
+                                            if(count($diff) != 0)
+                                                $fail('The '.$attribute.' has invalid status types.');
+                                            },
+                                    ],
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1716,7 +1725,6 @@ class VmtAttendanceService
                 'message' => $validator->errors()->all()
             ]);
         }
-
 
         try {
 
