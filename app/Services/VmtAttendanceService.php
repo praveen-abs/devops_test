@@ -103,11 +103,13 @@ class VmtAttendanceService
     }
 
     /*
-        Get the employee's compensatory work days (Worked on holidays)
+        Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
         This wont check whether these comp days are used by emps
     */
-    private function fetchEmployeeCompensatoryOffDays($user_id)
-    {
+    private function fetchEmployeeCompensatoryOffDays($user_id){
+
+        //Need to move to separate table settings
+        $work_leave_days = ['Sunday'];
 
         //Final array response
         //Get list of holidays
@@ -131,16 +133,33 @@ class VmtAttendanceService
 
         foreach ($dates_emp_attendanceDetails as $singleAttendanceDate) {
 
-            $trimmed_date = substr($singleAttendanceDate, 5);
+                ////Need to check whether the given date is in holiday AND given date is in leave days(Eg : Sunday , saturday)
+                $timestamp = strtotime($singleAttendanceDate);
+                $day = date('l', $timestamp);
 
-            //dd($trimmed_date);
+                //Test : Checking whether emp worked in work_leave_days
+                /*
+                    if(in_array($day, $work_leave_days)){
+                     dd("Worked in leave days : ".$singleAttendanceDate);
+                    }else
+                    {
+                       dd("Not Worked in leave days : ".$singleAttendanceDate);
 
-            //Check whether it is in Holiday or not
-            if (!in_array($trimmed_date, $array_query_holidays)) {
-                //If not in holiday, then remove from array
-                unset($query_emp_attendanceDetails[$singleAttendanceDate]);
+                    }
+                */
+                //Test : End
+
+                $trimmed_date = substr($singleAttendanceDate, 5);
+
+
+                //Check whether not worked in Holidays or not in work_leave days
+                if(!in_array($trimmed_date, $array_query_holidays) && !in_array($day, $work_leave_days))
+                {
+                    //If not in holiday, then remove from array
+                    unset($query_emp_attendanceDetails[$singleAttendanceDate]);
+                }
+
             }
-        }
 
         //dd($query_emp_attendanceDetails);
 
@@ -1603,6 +1622,69 @@ class VmtAttendanceService
         }
     }
 
+    /*
+        Get the Leave information for the selected leave record_id.
+        Used in Leave module ...
+
+    */
+    public function getLeaveInformation($record_id){
+
+        $validator = Validator::make(
+            $data = [
+                "record_id" => $record_id,
+            ],
+            $rules = [
+                'record_id' => 'required|exists:vmt_employee_leaves,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try
+        {
+            $leave_details = VmtEmployeeLeaves::find($record_id);
+
+            $leave_details['user_name'] = User::find($leave_details->user_id)->name;
+            $leave_details['leave_type'] = VmtLeaves::find($leave_details->leave_type_id)->leave_type;
+            // $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
+            $leave_details['approver_name'] =  User::find($leave_details->reviewer_user_id)->name;
+            $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
+
+            if(!empty($leave_details->notifications_users_id))
+            {
+                $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
+                $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
+            }
+            else
+                $leave_details['notification_userName'] = "";
+
+            $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
+
+            return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" =>  $leave_details
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" =>  ''
+            ]);
+        }
+
+    }
 
     public function getEmployeeLeaveDetails($user_code, $filter_month, $filter_year, $filter_leave_status)
     {
@@ -1648,6 +1730,7 @@ class VmtAttendanceService
                 ->whereMonth('leaverequest_date', $filter_month)
                 ->where('status', $filter_leave_status)
                 ->get([
+                    "vmt_employee_leaves.id",
                     "vmt_employee_leaves.leaverequest_date",
                     "vmt_employee_leaves.start_date",
                     "vmt_employee_leaves.end_date",
@@ -1662,13 +1745,13 @@ class VmtAttendanceService
                     "user_code",
                     "leave_type",
                 ]);
-            //  dd($query_employees_leaves->toArray());
+             // dd($query_employees_leaves->toArray());
             $query_employees_leaves = $query_employees_leaves->toArray();
 
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
-                $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
-                $query_employees_leaves[$i]["manager_name"] = $manager_name;
+                $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
             }
 
 

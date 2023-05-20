@@ -25,6 +25,7 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeEmergencyContactDetails;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -407,6 +408,7 @@ class HomeController extends Controller
     }
 
     public function updateCheckin(Request $request) {
+
         $checked = $request->input('checkin');
         if ($checked == 'true') {
             $attendance = new VmtEmployeeAttendance;
@@ -418,38 +420,38 @@ class HomeController extends Controller
             $attendance->save();
 
             //Check whether if its LC/EG
-            $regularization_type = checkRegularizationType($currentTime, "check-in");
-            $isSent = null;
-            $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
+            // $regularization_type = checkRegularizationType($currentTime, "check-in");
+            // $isSent = null;
+            // $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
 
             //Send mail if its LC
-            if( !empty($regularization_type) &&  $regularization_type == "LC")
-            {
-                //dd("adsf");
-                $VmtGeneralInfo = VmtGeneralInfo::first();
-                $image_view = url('/') . $VmtGeneralInfo->logo_img;
-                $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
-
-                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
-                    auth::user()->name,
-                    auth::user()->user_code,
-                    Carbon::parse($attendance->date)->format('M jS, Y'),
-                    Carbon::parse($currentTime)->format('h:i:s A'),
-                    $image_view,
-                    $emp_avatar,
-                    request()->getSchemeAndHttpHost(),
+            // if( !empty($regularization_type) &&  $regularization_type == "LC")
+            // {
+               // dd("adsf");
+                // $VmtGeneralInfo = VmtGeneralInfo::first();
+                // $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                // $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+                // dd($emp_avatar);
+                // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                //     auth::user()->name,
+                //     auth::user()->user_code,
+                //     Carbon::parse($attendance->date)->format('M jS, Y'),
+                //     Carbon::parse($currentTime)->format('h:i:s A'),
+                //     $image_view,
+                //     $emp_avatar,
+                //     request()->getSchemeAndHttpHost(),
                     // Carbon::parse($leave_request_date)->format('M jS Y'),
-                    $regularization_type
-                ));
-            }
+                //     $regularization_type
+                // ));
+          //  }
 
 
 
             return response()->json([
                 'message' => 'You have successfully checkedin!',
                 'time' => $attendance->checkin_time,
-                'regularization_type' => $regularization_type,
-                'regularization_mail_sent' => $isSent ? "True" : $isSent
+               // 'regularization_type' => $regularization_type,
+               // 'regularization_mail_sent' => $isSent ? "True" : $isSent
             ]);
         } else {
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
