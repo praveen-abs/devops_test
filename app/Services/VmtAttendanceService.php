@@ -1975,10 +1975,18 @@ class VmtAttendanceService
                     ->sum('total_leave_datetime');
                 if ($single_leave_types->is_carry_forward != 1) {
 
-                    $total_accrued = VmtEmployeesLeavesAccrued::where('user_id', $user_id)
+                    if($single_leave_types->leave_type=='Compensatory Off'){
+                        $total_accrued =  count($this->fetchUnusedCompensatoryOffDays($user_id));
+                    }else{
+                        $total_accrued = VmtEmployeesLeavesAccrued::where('user_id', $user_id)
                         ->whereBetween('date', [$start_date, $end_date])
                         ->where('leave_type_id', $single_leave_types->id)
                         ->sum('accrued_leave_count');
+                        // dd($single_leave_types->leave_type);
+                    }
+
+
+
                 } else if ($single_leave_types->is_carry_forward == 1) {
                     $total_accrued = VmtEmployeesLeavesAccrued::where('user_id', $user_id)
                         ->where('leave_type_id', $single_leave_types->id)
