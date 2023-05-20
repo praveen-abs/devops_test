@@ -2069,7 +2069,7 @@ class VmtAttendanceService
         //  dd( $all_active_user);
         foreach ($all_active_user as $single_user) {
             $total_leave_balance = 0;
-            $overall_leave_balance = calculateLeaveDetails($single_user->id, $start_date, $end_date);
+            $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
             $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
             $each_user['user_code'] = $single_user->user_code;
             $each_user['name'] = $single_user->name;
@@ -2100,7 +2100,7 @@ class VmtAttendanceService
             ->where('vmt_employee_office_details.l1_manager_code', $manager_user_code)->get(['users.id', 'users.user_code', 'users.name', 'vmt_employee_details.location', 'vmt_employee_office_details.department_id']);
         foreach ($all_active_user as $single_user) {
             $total_leave_balance = 0;
-            $overall_leave_balance = calculateLeaveDetails($single_user->id, $start_date, $end_date);
+            $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
             $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
             $each_user['user_code'] = $single_user->user_code;
             $each_user['name'] = $single_user->name;
