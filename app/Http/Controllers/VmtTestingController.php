@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
 use App\Jobs\sendemailjobs;
@@ -599,6 +600,10 @@ class VmtTestingController extends Controller
         dispatch($jobs);
 
         return "mail send successfully";
+    }
+
+    public function test_getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails("MC0005",5, 2023, ["Approved","Rejected","Pending"] );
     }
 
 }
