@@ -59,6 +59,10 @@ export default defineConfig({
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
 
+                // Investment Setting
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
+
 
                 // Paycheck
 
@@ -105,6 +109,9 @@ export default defineConfig({
 
                 //manage welcome mail status
                 'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
+
+                // Exit 
+                'resources/js/hrms/modules/exit/exit.js',
 
                 // testing_pradeesh
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',

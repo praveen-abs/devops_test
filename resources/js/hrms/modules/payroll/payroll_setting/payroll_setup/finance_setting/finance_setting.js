@@ -2,14 +2,13 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../../assests/tailwind.css';
-
+// import '../../../.././../../../public/assets/css/tailwind.css';
+import  '../../../../../../../../public/assets/css/tailwind.css'
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
-import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -28,22 +27,19 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
+import InputNumber from 'primevue/inputnumber'
+import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
-import Chips from 'primevue/chips'
-import MultiSelect from 'primevue/multiselect';
-import InputNumber from 'primevue/inputnumber'
-import InputMask from 'primevue/inputmask'
-import OverlayPanel from 'primevue/overlaypanel';
-import Tag from 'primevue/tag'
+import Chips from 'primevue/chips';
+import Steps from 'primevue/steps';
 
 
 
+import InvestmentSetting from './finance_setting.vue'
 
 
-import Investments from './investment.vue'
-  
-const app = createApp(Investments);
+const app = createApp(InvestmentSetting);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -73,11 +69,8 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
-app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
-app.component('InputMask', InputMask)
-app.component('OverlayPanel',OverlayPanel)
-app.component('Tag',Tag)
+app.component('Steps', Steps)
 
-app.mount("#Investments");
+app.mount("#InvestmentSetting");
 

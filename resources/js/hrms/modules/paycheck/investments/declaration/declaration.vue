@@ -5,11 +5,13 @@
                 <p class="text-2xl text-black">Tax Deductions FY 2022-2023</p>
             </div>
             <div class="p-2 my-2 text-black border-red-100 rounded-lg bg-red-50">
-                <div class="px-2 my-2">Kindly update your <strong class="text-blue-500">PAN </strong>to avoid 20$ TDS
+                <div style="font-weight: 600;" class="px-2 my-2 fs-5 d-flex ">Kindly update your <span
+                        class="text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
                     deduction (if applicable) </div>
             </div>
             <div class="my-4 bg-gray-100 rounded-lg border-1">
-                <p class="p-3 text-black">You have the option of either using a new regime(with no tax deducations), or
+                <p style="font-weight: 400;" class="p-3 text-black fs-6">You have the option of either using a new
+                    regime(with no tax deducations), or
                     using the same regime as FY 2019-20.To help you make an informed decision., we are displaying your tax
                     liability in both these regimes,and you can choose the option that you prefer.For us to accurately
                     calculated your tax liabilities , please ensure you full in all the information requested
@@ -17,27 +19,27 @@
             </div>
             <div class="flex gap-6 my-4">
                 <div class="w-6">
-                    <div class="text-lg ">Your current chosen tax regime is <strong class="text-lg text-blue-500">Old
-                            Tax Regime</strong> </div>
+                    <div class="mb-2 text-2xl font-semibold">Your current chosen tax regime is <span
+                            class="text-xl font-semibold text-blue-500 ">Old
+                            Tax Regime</span> </div>
 
-                    <p class="text-sm font-bold text-gray-400 ">The confirmed old tax regime will be used in future payroll
+                    <!-- text-sm -->
+                    <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
                         calculations
                     </p>
                     <div>
                     </div>
                 </div>
                 <div>
-                    <button @click="switch_regime_dailo = true" type="button"
-                        class="p-2 font-thin text-white bg-blue-500 rounded-lg ">
+                    <button @click="switch_regime_dailo = true" type="button" class="px-2 px-4 btn btn-primary">
                         Old Tax Regime</button>
-                    <span class="text-sm">Maximum benefit</span>
+                    <span class="text-sm text-green-500">Maximum benefit</span>
 
                 </div>
                 <div>
 
-
                     <button @click="switch_regime_dailog = true" type="button"
-                        class="p-2 text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
+                        class="p-2 text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
                         Switch Regime
                     </button>
 
@@ -47,7 +49,7 @@
 
             </div>
             <div class="h-full p-3 my-4 bg-blue-50">
-                <p class="text-blue-700">
+                <p class="text-blue-700 fs-6">
                     Choosing old regime will give you an additional benefits of &#x20B9; 41,222.00 as compared to New
                     Regime.Calculations are based on the latest released payroll - Jul 2022
                 </p>
@@ -61,7 +63,8 @@
         v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
         <template #empty> No Data Found. </template>
         <template #loading> Loading customers data. Please wait. </template>
-        <Column field="particulars" header="Particulars"></Column>
+        <Column field="particulars" header="Particulars">
+        </Column>
         <Column field="new_regime" header="New Tax Regime"></Column>
         <Column field="old_regime" header="Old Tax Regime"></Column>
     </DataTable>
@@ -96,37 +99,43 @@
 
     </Dialog>
 
-<input type="number" v-model="test" name="" class="form-control" id="">
-{{ test }}<br>
-<button @click="formula.taxCalculation(test)">click</button>
-
-    
+    <div class="mt-6 row">
+        <input type="number" v-model="amount" name="" class="form-control col-2" id="">
+        <input type="number" v-model="age" name="" class="mx-4 form-control col-1" id="">
+        <Dropdown editable  v-model="regime" :options="regimeOption" optionLabel="name"
+            optionValue="value" class="mx-4 col-2" placeholder="Choose Regime" />
+        <div class="col-4">
+            <button class="btn btn-orange" @click="formula.taxCalculation(amount,regime,age)">click</button>
+        </div>
+    </div>
 </template>
 
 
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import {investmentFormulaStore} from '../../stores/investmentFormulaStore'
+import { investmentFormulaStore } from '../../stores/investmentFormulaStore'
 
 const formula = investmentFormulaStore()
 
+const amount = ref()
+const regime = ref()
+const age = ref()
 
-
-
-
-
-
+const regimeOption = ref([
+    {name:"old", value:"old"},
+    {name:"new", value:"new"}
+])
 
 
 
 const tax_deduction = ref([
-    {id:'1',particulars:'Earings',old_regime :'0' ,new_regime:'0'},
-    {id:'2',particulars:'Exemption',old_regime :'0' ,new_regime:'0'},
-    {id:'3',particulars:'Standard Deduction',old_regime :'50000' ,new_regime:'50000'},
-    {id:'4',particulars:'Deduction',old_regime :'0' ,new_regime:'0'},
-    {id:'5',particulars:'Taxable Income',old_regime :'0' ,new_regime:'0'},
-    {id:'6',particulars:'Total Tax Liability',old_regime :'0' ,new_regime:'0'},
+    { id: '1', particulars: 'Earings', old_regime: '0', new_regime: '0' },
+    { id: '2', particulars: 'Exemption', old_regime: '0', new_regime: '0' },
+    { id: '3', particulars: 'Standard Deduction', old_regime: '50000', new_regime: '50000' },
+    { id: '4', particulars: 'Deduction', old_regime: '0', new_regime: '0' },
+    { id: '5', particulars: 'Taxable Income', old_regime: '0', new_regime: '0' },
+    { id: '6', particulars: 'Total Tax Liability', old_regime: '0', new_regime: '0' },
 ])
 
 

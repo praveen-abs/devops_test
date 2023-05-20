@@ -3462,8 +3462,6 @@ const AadharCardExits = () => {
 
               }
 
-
-
 };
 
 

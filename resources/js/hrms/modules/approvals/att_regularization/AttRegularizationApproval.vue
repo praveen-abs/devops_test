@@ -38,10 +38,10 @@
 
     <div>
       <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
-      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        :rowsPerPageOptions="[5, 10, 25]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+        responsiveLayout="scroll" v-model:filters="filters" filterDisplay="menu" :loading="loading2"
+        :globalFilterFields="['name', 'status']">
         <template #empty> No Employeee found. </template>
         <template #loading> Loading customers data. Please wait. </template>
 
@@ -55,9 +55,9 @@
           </template>
         </Column>
         <Column field="attendance_date" header="Date" :sortable="true">
-        <template #body="slotProps">
-          {{ moment(slotProps.data.attendance_date).format('DD-MM-YYYY') }}
-        </template>
+          <template #body="slotProps">
+            {{ moment(slotProps.data.attendance_date).format('DD-MM-YYYY') }}
+          </template>
         </Column>
         <Column field="regularization_type" header="Type"></Column>
         <Column field="user_time" header="Actual Time"></Column>
@@ -77,8 +77,8 @@
 
         <Column field="status" header="Status" icon="pi pi-check">
           <template #body="{ data }">
-                    <Tag :value="data.status" :severity="getSeverity(data.status)" />
-                </template>
+            <Tag :value="data.status" :severity="getSeverity(data.status)" />
+          </template>
           <!-- <template #body="{ data }">
             <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
           </template> -->
@@ -98,7 +98,7 @@
             </Dropdown>
           </template>
         </Column>
-        <Column  field="" header="Action">
+        <Column field="" header="Action">
           <template #body="slotProps">
             <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
                         <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
@@ -184,18 +184,18 @@ function resetVars() {
 }
 
 const getSeverity = (status) => {
-    switch (status) {
-        case 'Rejected':
-            return 'danger';
+  switch (status) {
+    case 'Rejected':
+      return 'danger';
 
-        case 'Approved':
-            return 'success';
+    case 'Approved':
+      return 'success';
 
 
-        case 'Pending':
-            return 'warning';
+    case 'Pending':
+      return 'warning';
 
-    }
+  }
 };
 
 ////PrimeVue ConfirmDialog code -- Keeping here for reference
@@ -448,7 +448,8 @@ function processApproveReject() {
   content: "\e9a2";
   color: white;
 }
-.p-datatable .p-datatable-thead > tr > th >.p-column-header-content>.p-column-title:nth-child(1){
-  margin-left:30px;
+
+.p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
+  margin-left: 30px;
 }
 </style>

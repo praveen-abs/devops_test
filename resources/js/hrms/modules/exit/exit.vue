@@ -39,7 +39,7 @@
             <div class="py-1 card-body">
                 <div class="row">
                     <div class="col-6 d-flex align-items-center">
-                        <h6 class="">Resignation</h6>
+                        <h6 class="font-semifold">Resignation</h6>
                     </div>
 
                     <div class="col-6 text-end">
@@ -101,7 +101,8 @@
 
                                 <Column header="Status" style="min-width: 12rem">
                                     <template #body="slotProps">
-                                        <Tag :value="slotProps.data.status" style="font-weight: 600;" :severity="getSeverity(slotProps.data)" />
+                                        <Tag :value="slotProps.data.status" style="font-weight: 600;"
+                                            :severity="getSeverity(slotProps.data)" />
                                     </template>
                                 </Column>
 
@@ -182,7 +183,7 @@
                                 </div>
                                 <div class="col-sm-12 col-lg-12 col-xxl-12 col-xl-12 col-md-12 text-end">
                                     <button type="button" class="btn btn-border-orange me-2" @click="save">Save</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-primary">Submit</button>
                                 </div>
 
                             </form>
@@ -622,8 +623,4 @@ const getSeverity = (status) => {
      line-height: 28px;
      color: #003056;
  }
-
-
- 
- 
- </style>
+</style>

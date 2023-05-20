@@ -35,6 +35,7 @@ Route::get('/offer-letter', function () {
 
 
 
+
 Route::get('/roles', function () {
     return view('rolesAndPermission');
 })->name('roles');
@@ -58,6 +59,10 @@ Route::get('/paycheckDashboard', function () {
 
 Route::get('/create-holiday', function () {
     return view('createHoliday');
+})->name('create-holiday');
+
+Route::get('/testing-shelly', function () {
+    return view('testing_shelly');
 })->name('create-holiday');
 
 // Route::post('/employee_profile', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
@@ -747,6 +752,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/documents_settings', function () {
         return view('configurations.vmt_documents_settings'); })->name('document_settings');
 
+    Route::get('/investment_settings', function () {
+        return view('configurations.investment_setting'); })->name('investment_settings');
+
     Route::get('/documents/employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'getEmployeeDocumentsSettings'])->name('getEmployeeDocumentsSettings');
     Route::post('/documents/update_employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'updateEmployeeDocumentsSettings'])->name('updateEmployeeDocumentsSettings');
 
@@ -788,8 +796,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/investments/investments-form-details-template', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'getInvestmentsFormDetailsTemplate'])->name('getInvestmentsFormDetailsTemplate');
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
+    Route::post('/investments/fetchEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchEmpRentalDetails'])->name('fetchEmpRentalDetails');
+    Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
+    Route::post('/investments/fetchHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchHousePropertyDetails'])->name('fetchHousePropertyDetails');
+    Route::post('/investments/deleteHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteHousePropertyDetails'])->name('deleteHousePropertyDetails');
 
     Route::post('/investments/saveEmpdetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'SaveInvDetails']);
+
+    Route::post('/investments/saveSectionPopups',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
+    Route::post('/investments/saveSection80',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
 
 
     //Emp Mail Notifications
