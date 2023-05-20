@@ -24,7 +24,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         let url_leave_balance = `/get-employee-leave-balance`
         await axios.get(url_leave_balance).then(res => {
             console.log(res.data);
-            array_employeeLeaveBalance.value = Object(res.data["Leave Balance"])
+            array_employeeLeaveBalance.value = res.data
             array_employeeAvailedLeaveBalance.value = res.data["Avalied Leaves"]
         }).finally(()=>{
             canShowLoading.value = false
