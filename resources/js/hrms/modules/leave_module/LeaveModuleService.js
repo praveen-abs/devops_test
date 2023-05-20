@@ -21,21 +21,12 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     const canShowLeaveDetails = ref(false)
 
 
-    const setLeaveDetails = reactive({
-        emp_name:"",
-        request_date:'',
-        leave_duration:'',
-        leave_type:'',
-        start_date:'',
-        end_date:'',
-        notify_to:'',
-        reviewer_name:'',
-        reviewer_comments:'',
-    })
+    const setLeaveDetails = ref({})
 
     const getLeaveDetails = (leaveDetails) =>{
         canShowLeaveDetails.value = true
         console.log(leaveDetails);
+        setLeaveDetails.value = {...leaveDetails}
         setLeaveDetails.emp_name = leaveDetails.name
 
     }

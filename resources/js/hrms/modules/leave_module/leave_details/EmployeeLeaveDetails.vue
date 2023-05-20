@@ -99,7 +99,7 @@
       </div>
       </template>
 
-      {{ leaveModuleStore.setLeaveDetails.emp_name }}
+      {{ leaveModuleStore.setLeaveDetails }}
 
   </Dialog>
 </template>
