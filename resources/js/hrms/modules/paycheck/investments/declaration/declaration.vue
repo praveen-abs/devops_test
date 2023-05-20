@@ -101,10 +101,11 @@
 
     <div class="mt-6 row">
         <input type="number" v-model="amount" name="" class="form-control col-2" id="">
+        <input type="number" v-model="age" name="" class="mx-4 form-control col-1" id="">
         <Dropdown editable  v-model="regime" :options="regimeOption" optionLabel="name"
             optionValue="value" class="mx-4 col-2" placeholder="Choose Regime" />
         <div class="col-4">
-            <button class="btn btn-orange" @click="formula.taxCalculation(test,regime)">click</button>
+            <button class="btn btn-orange" @click="formula.taxCalculation(amount,regime,age)">click</button>
         </div>
     </div>
 </template>
@@ -119,6 +120,7 @@ const formula = investmentFormulaStore()
 
 const amount = ref()
 const regime = ref()
+const age = ref()
 
 const regimeOption = ref([
     {name:"old", value:"old"},
