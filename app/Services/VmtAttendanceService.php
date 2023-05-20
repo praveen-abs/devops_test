@@ -1736,7 +1736,7 @@ class VmtAttendanceService
                 ->where('users.id', $user_id)
                 ->whereYear('leaverequest_date', $filter_year)
                 ->whereMonth('leaverequest_date', $filter_month)
-                ->where('status', $filter_leave_status)
+                ->whereIn('status', $filter_leave_status)
                 ->get([
                     "vmt_employee_leaves.id",
                     "vmt_employee_leaves.leaverequest_date",
@@ -1753,7 +1753,7 @@ class VmtAttendanceService
                     "user_code",
                     "leave_type",
                 ]);
-             // dd($query_employees_leaves->toArray());
+            //  dd($query_employees_leaves->toArray());
             $query_employees_leaves = $query_employees_leaves->toArray();
 
             for ($i = 0; $i < count($query_employees_leaves); $i++) {

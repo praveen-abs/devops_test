@@ -12,7 +12,7 @@
             <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
                 style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
             <Button class="h-10 mb-2 btn btn-orange" label="Submit"
-                @click="managePayslipStore.getAllEmployeesPayslipDetails(managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear())" />
+                @click="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(),statuses)" />
             <!-- {{ managePayslipStore.array_employees_list.user_code.data.data }} -->
         </div>
 
@@ -157,6 +157,7 @@ const isLoading = ref(true);
 const overlayPanel = ref();
 const selectedLeaveDate = ref();
 
+
 const toggle = (event) => {
   overlayPanel.value.toggle(event);
 };
@@ -176,10 +177,12 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 onMounted(async () => {
  // console.log( "Fetching leave details for current user : " +   leaveModuleStore.baseService.current_user_code );
-
+    console.log(selectedLeaveDate.v);
    await leaveModuleStore.getEmployeeLeaveHistory(dayjs().month()+1 , dayjs().year() , ["Approved", "Pending", "Rejected"]);
    isLoading.value = false;
 });
+
+
 
 async function showLeaveDetails(leave_record_id){
     console.log("Showing leave details for record_id : "+leave_record_id);
