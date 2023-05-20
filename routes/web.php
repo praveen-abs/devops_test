@@ -196,7 +196,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Leave Balance fetchEmployeeLeaveBalance
     Route::get('/get-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeLeaveBalance'])->name('getEmployeeLeaveBalance');
-    Route::get('/fetch-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeLeaveBalance'])->name('fetchEmployeeLeaveBalance');
+   // Route::get('/fetch-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeLeaveBalance'])->name('fetchEmployeeLeaveBalance');
 
     //Leave history pages
 
