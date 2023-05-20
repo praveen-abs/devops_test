@@ -1453,7 +1453,8 @@ class VmtAttendanceController extends Controller
     public function fetchUnusedCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         //dd($request->user_id);
         //TODO : Need to get current user_id instead of fetching from req params.
-        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
+        $user_id=auth()->user()->id;
+        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($user_id);
     }
 
     public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
@@ -1478,10 +1479,10 @@ class VmtAttendanceController extends Controller
         return  $leave_balance_details;
     }
 
-    public function fetchEmployeeLeaveBalance(Request $request){
-        $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
-        return $leave_balance_details;
-    }
+    // public function fetchEmployeeLeaveBalance(Request $request){
+    //     $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
+    //     return $leave_balance_details;
+    // }
 
 
     public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){

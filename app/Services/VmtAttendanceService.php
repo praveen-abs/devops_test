@@ -2140,9 +2140,15 @@ class VmtAttendanceService
                                                               ->whereBetween('date',[$start_time_period,$end_time_period])
                                                               ->where('leave_type_id',$single_leave_types->id)
                                                               ->sum('accrued_leave_count');
-                    $leave_balance =  $total_accrued -  $total_avalied_leaves;
-                    $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
-                    $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    if($single_leave_types->leave_type=='Compensatory Off'){
+                        $leave_balance_for_all_types[$single_leave_types->leave_type] = count($this->fetchUnusedCompensatoryOffDays($user_id));
+                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    } else{
+                        $leave_balance =  $total_accrued -  $total_avalied_leaves;
+                        $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
+                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                    }
+
 
                  }else if($single_leave_types->is_carry_forward==1){
                     // $total_avalied_leaves_for_find_balance = VmtEmployeeLeaves::where('user_id',$user_id)
@@ -2158,7 +2164,7 @@ class VmtAttendanceService
                                                              ->whereIn('status',array('Approved','Pending'))
                                                              ->sum('total_leave_datetime');
                     $leave_balance =  $total_accrued - $total_avalied_leaves;
-                    $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
+                    $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
                     $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
 
 
