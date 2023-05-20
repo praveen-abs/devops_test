@@ -4,7 +4,17 @@
         <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 ">
             <div class="mb-0 card leave-history">
                 <div class="card-body">
-                    <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Leave history</h6>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Leave history</h6>
+                        <div>
+                            <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="useLeaveStore.selectedPayRollDate"
+            style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
+                            <Button class="h-10 mb-2 btn btn-orange" label="Generate"
+            @click="useLeaveStore.getEmployeeLeaveHistory(useLeaveStore.selected_LeaveDetails.getMonth() + 1, useLeaveStore.selected_LeaveDetails.getFullYear())" />
+                        </div>
+                    </div>
+
+
 
                     <div class="table-responsive">
 
@@ -116,6 +126,10 @@ const overlayPanel = ref();
 const toggle = (event) => {
     overlayPanel.value.toggle(event);
 }
+
+onMounted(()=>{
+    useLeaveStore.getLeaveDetails(useLeaveStore.selected_LeaveDetails.getMonth() + 1, useLeaveStore.selected_LeaveDetails.getFullYear())
+})
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },

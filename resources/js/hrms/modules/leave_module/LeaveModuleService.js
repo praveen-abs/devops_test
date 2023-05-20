@@ -69,7 +69,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
         // Varaible Declartion
 
-        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory,
+        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory,selected_LeaveDetails,
 
         // Functions
 
