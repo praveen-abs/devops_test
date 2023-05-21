@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_inv_formsection', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('form_id')->constrained('vmt_inv_form');
-            $table->foreignId('section_id')->constrained('vmt_inv_section');
-            $table->timestamps();
-        });
+
+        Schema::dropIfExists('vmt_inv_emp_formdata');
+        Schema::dropIfExists('vmt_inv_f_emp_assigned');
+        Schema::dropIfExists('vmt_inv_formsection');
+        Schema::dropIfExists('vmt_inv_section');
+        Schema::dropIfExists('vmt_inv_section_group');
+        Schema::dropIfExists('vmt_inv_form');
+
     }
 
     /**
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_inv_formsection');
+        //
     }
 };
