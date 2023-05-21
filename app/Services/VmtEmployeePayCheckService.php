@@ -795,7 +795,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                                             ->orderBy('vmt_payroll.payroll_date', 'ASC')
                                             ->get(['vmt_employee_payslip_v2.id as id',
                                             'vmt_payroll.payroll_date as PAYROLL_MONTH',
-                                            'vmt_employee_payslip_v2.total_deductions as NET_TAKE_HOME',
+                                            'vmt_employee_payslip_v2.net_take_home as NET_TAKE_HOME',
                                             'vmt_employee_payslip_v2.total_deductions as TOTAL_DEDUCTIONS',
                                             'vmt_employee_payslip_v2.total_earned_gross as TOTAL_EARNED_GROSS']);
 
