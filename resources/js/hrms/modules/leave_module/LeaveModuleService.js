@@ -65,14 +65,24 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     }
 
 
-    async function getTeamLeaveHistory(manager_code, filter_month, filter_year, filter_leave_status) {
-        axios.post('/attendance/getTeamLeaveDetails', {
-            manager_code: manager_code,
+    async function getTeamLeaveHistory(filter_month, filter_year, filter_leave_status) {
+
+
+        let user_code = 0;
+
+        await axios.get(window.location.origin + "/currentUserCode ").then((response) => {
+            user_code = response.data;
+        });
+
+
+
+        axios.post('/attendance/getTeamEmployeesLeaveDetails', {
+            manager_code: user_code,
             filter_month: filter_month,
             filter_year: filter_year,
             filter_leave_status: filter_leave_status
         }).then((response) => {
-            array_teamLeaveHistory.value = response.data;
+            array_teamLeaveHistory.value = response.data.data;
             console.log("getTeamLeaveHistory() : " + response.data);
         });
 

@@ -130,7 +130,19 @@ if ($query_clientMaster) {
                                                 <img src="{{ URL::asset($client->client_logo) }}" alt=""
                                                     class=" mh-100 mw-100">
                                             </div>
-                                            <span class=" fw-bold ">{{ $client->client_name }}</span>
+                                            <?php
+                                                    if(sessionGetSelectedClientName()){
+                                                        if(sessionGetSelectedClientName() == 'All'){
+                                                            echo sessionGetSelectedClientFullName();
+                                                        }else{
+                                                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                                                        }
+                                                    }else{
+                                                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                                                    }
+
+
+                                             ?>
                                         </div>
                                         @if (!empty($currentClientID) && $currentClientID == $client->id)
                                             <img src='{{ URL::asset('assets/images/check.png') }}'

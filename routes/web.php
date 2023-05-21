@@ -628,6 +628,10 @@ Route::middleware(['auth'])->group(function () {
 
     //PMS v2
     Route::get('/pms', [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'showPMSDashboard'])->name('pms-dashboard');
+    Route::get('/pms/revokeSubmittedForm', [App\Http\Controllers\PMS\VmtPMSModuleController::class, 'revokeSubmittedForm'])->name('pms-revokeSubmittedForm');
+
+
+
     // flow 2 starts
     Route::get('team-appraisal', [VmtPMSModuleController::class, 'showPMSDashboardForManager'])->name('team-appraisal-pms-dashboard');
     // flow 2 ends
