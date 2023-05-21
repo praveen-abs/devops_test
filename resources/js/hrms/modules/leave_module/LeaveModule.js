@@ -32,6 +32,7 @@ import Checkbox from 'primevue/checkbox';
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 import Textarea from 'primevue/textarea';
+import OverlayPanel from 'primevue/overlaypanel';
 
 import LeaveModule from './LeaveModule.vue'
 
@@ -68,6 +69,7 @@ app.component('Checkbox', Checkbox)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('Textarea', Textarea)
+app.component('OverlayPanel', OverlayPanel)
 
 app.mount("#LeaveModule");
 
