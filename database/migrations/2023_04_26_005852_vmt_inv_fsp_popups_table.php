@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('vmt_inv_fsp_popups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('fsp_id')->constrained('vmt_investment_form_secpat');
-            $table->foreignId('popupfield_id')->constrained('vmt_inv_popup_fields');
+            $table->integer('fsp_id');
+            $table->integer('popupfield_id');
 
             $table->timestamps();
         });
