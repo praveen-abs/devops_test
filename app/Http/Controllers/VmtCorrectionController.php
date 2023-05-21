@@ -110,10 +110,13 @@ class VmtCorrectionController extends Controller
             foreach ($client_details_id as $key => $singleclient) {
 
                 foreach ($emp_payroll_month as $key => $singlepayrollmonth) {
+               $Payroll_data=VmtPayroll::where('client_id',$singleclient->id)->where('payroll_date',$singlepayrollmonth)->first();
+                  if(empty($Payroll_data)){
                     $query_payroll = new Vmtpayroll;
                     $query_payroll->client_id=$singleclient->id;
                     $query_payroll->payroll_date=$singlepayrollmonth;
                     $query_payroll->save();
+                    }
                 }
             }
 
@@ -121,26 +124,30 @@ class VmtCorrectionController extends Controller
 
          /* save user id and payroll id in the table vmt_emp_payroll*/
              foreach ($query_all_payslip as $key => $singleuserdata) {
-
-                $query_payroll_data= new VmtEmployeePayroll;
-                $query_payroll_data->user_id=$singleuserdata->user_id;
                 $client_id = User::where('id',$singleuserdata->user_id)->first()->client_id;
                 $payroll_id =VmtPayroll::where('payroll_date',$singleuserdata->PAYROLL_MONTH)
-                                         ->where('client_id',$client_id)->first()->id;
-                $query_payroll_data->payroll_id=$payroll_id;
-                $query_payroll_data->save();
+                                                  ->where('client_id',$client_id)->first()->id;
+                $emp_payroll_data = VmtEmployeePayroll::where('payroll_id',$payroll_id)->where('user_id',$singleuserdata->user_id)->first();
+                    if(empty($emp_payroll_data)){
+                    $query_payroll_data= new VmtEmployeePayroll;
+                    $query_payroll_data->user_id=$singleuserdata->user_id;
+                    $query_payroll_data->payroll_id=$payroll_id;
+                    $query_payroll_data->save();
+                  }
             }
          /*save all employee payslip details in vmt_employee_payslipv2 */
 
          foreach ($query_all_payslip as $key => $singlepayslipdetails) {
 
-             $emppayslip = new VmtEmployeePayslipV2;
-            /*get payroll id from vmt_emp_payroll in order to filter payroll_date and find emp_payroll_id */
-
             $client_id = User::where('id',$singlepayslipdetails->user_id)->first()->client_id;
             $payroll_id =VmtPayroll::where('payroll_date',$singlepayslipdetails->PAYROLL_MONTH)
                                         ->where('client_id',$client_id)->first()->id;
            $emp_payroll_id=VmtEmployeePayroll::where('user_id',$singlepayslipdetails->user_id)->where('payroll_id',$payroll_id)->first()->id;
+
+            /*get payroll id from vmt_emp_payroll in order to filter payroll_date and find emp_payroll_id */
+            $emp_payslip_data = VmtEmployeePayslipV2::where('emp_payroll_id',$emp_payroll_id)->first();
+            if(empty($emp_payslip_data)){
+           $emppayslip = new VmtEmployeePayslipV2;
            $emppayslip->emp_payroll_id= $emp_payroll_id;
            $emppayslip->basic=$singlepayslipdetails->BASIC;
            $emppayslip->hra=$singlepayslipdetails->HRA;
@@ -194,7 +201,7 @@ class VmtCorrectionController extends Controller
            $emppayslip->travel_conveyance=$singlepayslipdetails->travel_conveyance;
            $emppayslip->other_earnings=$singlepayslipdetails->other_earnings;
            $emppayslip->save();
-
+            }
 
          }
     }
