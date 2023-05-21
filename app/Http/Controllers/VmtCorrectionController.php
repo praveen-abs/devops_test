@@ -11,7 +11,7 @@ use App\Models\VmtEmployeePayroll;
 use App\Models\VmtClientMaster;
 use App\Models\VmtPayroll;
 use App\Models\VmtEmployeePayslipV2;
-use App\Models\VmtEmployeePayslip;
+use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeLeaves;
 use Carbon\Carbon;
 
@@ -100,10 +100,10 @@ class VmtCorrectionController extends Controller
 
     /*Get all employee payslip details */
 
-        $query_all_payslip = VmtEmployeePayslip::all();
+        $query_all_payslip = VmtEmployeePaySlip::all();
 
     /* save single payrollmonth in vmt_payroll*/
-            $emp_payroll_month = VmtEmployeePayslip::whereYear('created_at', '2022')->orwhereYear('created_at','2023')->distinct('created_at')->orderBy('PAYROLL_MONTH', 'ASC')->pluck('PAYROLL_MONTH');
+            $emp_payroll_month = VmtEmployeePaySlip::whereYear('created_at', '2022')->orwhereYear('created_at','2023')->distinct('created_at')->orderBy('PAYROLL_MONTH', 'ASC')->pluck('PAYROLL_MONTH');
 
             $client_details_id = VmtClientMaster::get("id");
 
