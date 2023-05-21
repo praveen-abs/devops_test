@@ -490,7 +490,7 @@ class VmtAttendanceService
         $emp_leave_details->reviewer_user_id = $manager_id;
 
         if (!empty($notifications_users_id))
-            $emp_leave_details->notifications_users_id = implode(",", $notifications_users_id);
+            $emp_leave_details->notifications_users_id =  $notifications_users_id;
 
         $emp_leave_details->reviewer_comments = "";
         $emp_leave_details->status = "Pending";
@@ -528,7 +528,13 @@ class VmtAttendanceService
         $notification_mails = array();
 
         if (!empty($notifications_users_id))
-            $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id', $notifications_users_id)->pluck('officical_mail');
+        {
+            //Create array from CSV value
+            $array_notif_ids = explode(',',$notifications_users_id);
+
+           // dd($array_notif_ids);
+            $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id', $array_notif_ids)->pluck('officical_mail');
+        }
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
 
