@@ -7,7 +7,7 @@
                     <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">
                         Leave history
                     </h6>
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end mb-2">
                         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
                         <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
                             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
@@ -106,7 +106,7 @@
 
             <div class="border w-full mt-5">
                 <div class="p-3 pl-5 d-flex align-items-center border">
-                    <div class="rounded-circle border d-flex justify-content-center align-items-center bg-orange-200"
+                    <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-yellow-100"
                         style="width:80px ; height: 80px;">
                         <h1 class="fs-5 fw-bold">K K</h1>
                     </div>
@@ -119,8 +119,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="border w-full d-flex py-4 px-4">
-                    <div class=" shadow-sm  mx-2 p-1  rounded-lg">
+                <div class="border w-full d-flex py-4 px-4 ">
+                    <div class="mx-2 p-1  rounded-lg">
                         <h1 class="text-center py-1 px-2 text-light rounded-top fw-bold" style="background-color: navy;">{{
                             dayjs(leaveModuleStore.setLeaveDetails.end_date).format('MMM') }}</h1>
                         <h1 class="text-center py-1 px-2 fs-5 fw-bold">{{
@@ -130,8 +130,8 @@
                             dayjs(leaveModuleStore.setLeaveDetails.end_date).format('dddd') }}</h1>
                     </div>
                     <div class="py-3">
-                        <h1 class="fs- font-semibold">{{ leaveModuleStore.setLeaveDetails.total_leave_datetime }} Day of {{
-                            leaveModuleStore.setLeaveDetails.leave_type }} <span class="font-semibold fs-6">({{leaveModuleStore.setLeaveDetails.leave_reason }})</span></h1>
+                        <h1 class="fs- font-semibold text-primary-800">{{ leaveModuleStore.setLeaveDetails.total_leave_datetime }} Day of {{
+                            leaveModuleStore.setLeaveDetails.leave_type }} <span class="font-semibold fs-6 ">({{leaveModuleStore.setLeaveDetails.leave_reason }})</span></h1>
 
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                     <h1 class="fs-5 fw-bold">Notified To:</h1>
                     <div class="card px-3 py-2 d-flex mt-3" style="min-width: 250px; max-width: 220px; display: flex;">
                         <div class="d-flex p-2 align-items-center">
-                            <div class="rounded-circle bg-green-400 d-flex justify-content-center align-items-center"
+                            <div class="rounded-circle bg-blue-100 d-flex justify-content-center align-items-center"
                                 style="width:40px ; height: 40px;">DK</div>
                             <div class="flex-column px-3">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
@@ -163,12 +163,12 @@
                     </div>
                 </div>
                 <div class="my-4 mx-3">
-                    <Textarea name="" id="" cols="80" rows="5" autoResize placeholder="Add Comment" />
+                    <Textarea name="" id="" cols="90" rows="5" autoResize placeholder="Add Comment"  />
                 </div>
             </div>
         </div>
         <div class="text-end mx-4 my-4">
-            <button class="btn btn-orange">Post</button>
+            <button class="btn btn-orange px-5 "  @click="Leavehistory_Addcomment_btn">Post</button>
         </div>
         <!-- {{ leaveModuleStore.setLeaveDetails }} -->
         <!-- {{ dayjs(slotProps.data.end_date).format('DD-MMM-YYYY') }} -->
@@ -227,4 +227,8 @@ async function showLeaveDetails(leave_record_id) {
 
     await leaveModuleStore.getLeaveInformation(leave_record_id);
 }
+ function Leavehistory_Addcomment_btn(){
+    leaveModuleStore.canShowLeaveDetails = false;
+ }
+
 </script>

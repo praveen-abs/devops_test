@@ -43,8 +43,11 @@
      {{-- @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
      <div id="vjs_employeeDocsManager"></div> --}}
 
-       @vite('resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js')
-            <div id="OnboardingFromMgmt"></div>
+       {{-- @vite('resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js')
+            <div id="OnboardingFromMgmt"></div> --}}
+
+            @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
+            <div id="vjs_attendance_master"></div>
 
 
 </body>

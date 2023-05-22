@@ -18,7 +18,9 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     const array_orgLeaveHistory = ref();
 
     const selected_LeaveInformation = ref();
-    const canShowLeaveDetails = ref(false)
+    const canShowLeaveDetails = ref(false);
+
+    // const
 
 
     const setLeaveDetails = ref({})

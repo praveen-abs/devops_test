@@ -13,7 +13,7 @@
                 <p class="mx-4 text-lg font-semibold text-gray-600 py-auto">Min</p>
 
             </div>
-          
+
 
         </div>
         <div class="p-4 my-5 rounded-lg bg-blue-50 ">
@@ -49,8 +49,8 @@
 
                 </div>
             </div>
-          
-          
+
+
             <div class="flex gap-4 p-4">
                 <input type="checkbox" name="" id="">
                 <p class="text-lg font-semibold py-auto" >Apply To All Days Except Week Off</p>
@@ -59,14 +59,17 @@
         <div class="my-3 text-end">
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
             <button
-                class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 ">Previous</button>
+                class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 " @click="useAttendanceStore.manageshift_exemption_steps--" >Previous</button>
             <button
-                class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
+                class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md" @click="useAttendanceStore.manageshift_exemption_steps++" >Next</button>
         </div>
     </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import {useAttendanceSettingMainStore} from '../../stores/attendanceSettingMainStore';
+
+const useAttendanceStore  = useAttendanceSettingMainStore();
 
 const position = ref("center");
 let canShowAssignShift = ref(false);
