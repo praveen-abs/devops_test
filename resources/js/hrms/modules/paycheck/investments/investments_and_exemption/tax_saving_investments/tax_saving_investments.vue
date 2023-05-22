@@ -28,6 +28,7 @@
             </div>
         </div>
     </div>
+
 </template>
 
 
@@ -35,3 +36,5 @@
 import {investmentMainStore} from '../../../stores/investmentMainStore'
 const investmentStore = investmentMainStore()
 </script>
+
+

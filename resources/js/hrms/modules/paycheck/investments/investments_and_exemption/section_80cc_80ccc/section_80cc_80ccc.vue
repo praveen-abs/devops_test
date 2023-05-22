@@ -23,10 +23,14 @@
                     </template>
                 </Column>
 
-                <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                    <template #body="slotProps">
-                        {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
+                <Column  style="min-width: 12rem">
+                    <template #header>
+                         <p style="font-weight: 501;">Max Limit</p>
+                         <p style="font-weight: 501;">(&#8377; 1,50,000)</p>
                     </template>
+                    <!-- <template #body="slotProps">
+                        {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
+                    </template> -->
                 </Column>
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
@@ -66,10 +70,10 @@
 
         </div>
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
-                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps++">Next</button>
         </div>

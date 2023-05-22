@@ -7,6 +7,7 @@ import { reactive, ref } from "vue";
 import { Service } from "../../Service/Service";
 import { data } from "autoprefixer";
 
+
 /*
     This Pinia code will store the ajax values of the
     profile page.
@@ -28,6 +29,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Notification Service
 
     const toast = useToast();
+    const canShowSubmissionStatus = ref(false)
 
     // Confirmation Service
 
@@ -226,6 +228,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         address: "",
     });
 
+
     const dailogAddNewRental = ref(false);
     const dailogEditNewRental = ref(false);
 
@@ -270,12 +273,26 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         hra.total_rent_paid = currentRowData.json_popups_value.total_rent_paid;
     };
 
+
+    const disableSaveHra = ref(false)
+
     const saveHraNewRental = () => {
         hra.user_code = service.current_user_code;
         canShowLoading.value = true;
         dailogAddNewRental.value = false;
         // console.log("saving hra new rental  data.......");
         // console.log(hra);
+
+        if(hra.from_month && hra.to_month){
+            if(hra.city && hra.total_rent_paid){
+                if(hra.landlord_name & hra.landlord_PAN){
+                    if(hra.address){
+                        disableSaveHra.value = false
+                    }
+                }
+            }
+        }else{
+    
 
         axios
             .post("/investments/saveSectionPopups", hra)
@@ -295,6 +312,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 taxSavingInvestments.status = "Drafed";
             });
     };
+
+}
 
     const deleteRentalDetails = (currentRowData) => {
         // console.log(currentRowData);
@@ -551,7 +570,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         lender_name: "",
         lender_pan: "",
         lender_type: "",
-        loss_from_housing_property: "",
+        income_loss: "",
         address: "",
         property_type: "Self Occupied Property",
     });
@@ -741,6 +760,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                             life: 3000,
                         });
                         fetchPropertyType();
+                        getInvestmentSource()
                     });
             },
             reject: () => {
@@ -812,6 +832,22 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
     };
 
+
+    const metrocitiesOption = ref([
+        {id:1,name:"Chennai",value:"Chennai"},
+        {id:2,name:"Mumbai",value:"Mumbai"},
+        {id:3,name:"Hyderabad",value:"Hyderabad"},
+        {id:4,name:"Kolkatta",value:"Kolkatta"},
+        {id:5,name:"Other Non Metro",value:"Other Non Metro"},
+    ])
+
+    const lenderTypeOption = ref([
+        { name: 'Financial Institution', code: 'Financial Institution' },
+        { name: 'Others', code: 'Others' },
+    
+    ]);
+    
+
     return {
         fetchOtherExe,
         Dec80EE,
@@ -828,6 +864,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         formatCurrency,
         editingRowSource,
         updatedRowSource,
+        canShowSubmissionStatus,
 
         // Data Source
 
@@ -848,6 +885,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // hra begins
 
         hra_data,
+        disableSaveHra,
         hra,
         current_data,
         dailogAddNewRental,
@@ -905,5 +943,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         deleteHouseProps,
 
         // House Property End
+
+        metrocitiesOption,lenderTypeOption
     };
 });

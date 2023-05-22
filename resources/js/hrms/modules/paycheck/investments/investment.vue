@@ -50,16 +50,12 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="tab-pane fade " id="form_12bb" role="tabpanel">
-
-        </div>
-        <div class="tab-pane fade " id="tax_filling" role="tabpanel">
-
-        </div> -->
     </div>
 
+
+
     <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="true"
         :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -77,8 +73,10 @@ import { onMounted } from 'vue'
 import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
 
+
 import { investmentMainStore } from '../stores/investmentMainStore'
 import { Service } from '../../Service/Service';
+import dayjs from 'dayjs'
 
 const investmentStore = investmentMainStore()
 const service = Service()
@@ -89,17 +87,30 @@ onMounted(async () => {
 </script>
 
 
-<style scoped>
+<style >
+.p-dropdown {
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    height: 32px;
+    background: #f6f4f46e;
+}
+
 .p-dropdown .p-dropdown-label.p-placeholder {
     position: relative;
     top: -5px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     color: #6c757d;
 }
-
-.p-button .p-fileupload-choose {
-    /* height: 2.1em; */
+.p-dialog .p-dialog-header-icons {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 0;
 }
+
+
 
 i,
 span,
@@ -140,7 +151,7 @@ dialog>header {
 }
 
 .p-dialog-header {
-    border-left: #e63b1f 5px solid !important;
+    /* border-left: #e63b1f 5px solid !important; */
 }
 
 .form-selects ::-webkit-scrollbar {
@@ -169,8 +180,8 @@ Dialog {
     color: #002f56;
 }
 
-.p-inputtext.p-component.p-inputnumber-input{
-height: 32px;
-background: #f6f4f46e;
+.p-inputtext.p-component.p-inputnumber-input {
+    height: 32px;
+    background: #f6f4f46e;
 }
 </style>
