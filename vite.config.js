@@ -108,9 +108,9 @@ export default defineConfig({
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
                 //manage welcome mail status
-                'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
+               'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
 
-                // Exit 
+                // Exit
                 'resources/js/hrms/modules/exit/exit.js',
 
                 // testing_pradeesh
