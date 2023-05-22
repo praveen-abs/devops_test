@@ -92,15 +92,15 @@
                         </template> -->
                     </Column>
 
-                    <Column field="from_month" header="From Month " style="min-width: 12rem">
+                    <Column field="json_popups_value.from_month" header="From Month " style="min-width: 12rem">
                         <template #body="slotProps">
-                            {{ moment(slotProps.data.from_month).format('DD-MM-YYYY') }}
+                            {{ moment(slotProps.data.json_popups_value.from_month).format('DD-MM-YYYY') }}
                         </template>
                     </Column>
 
-                    <Column field="to_month" header="To Month" style="min-width: 12rem">
+                    <Column field="json_popups_value.to_month" header="To Month" style="min-width: 12rem">
                         <template #body="slotProps">
-                            {{ moment(slotProps.data.to_month).format('DD-MM-YYYY') }}
+                            {{ moment(slotProps.data.json_popups_value.to_month).format('DD-MM-YYYY') }}
                         </template>
                     </Column>
 
