@@ -124,11 +124,12 @@
                                             <p style="margin:0;">
                                                 Employee Code
                                             </p>
-                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">EMP</p>
+                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;"> @php echo $uEmail; @endphp </b></p></p>
                                         </div>
                                         <div style="padding-bottom:5px ">
                                             <p style="margin: 0;">Employee Password </p>
-                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">EMP</p>
+                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;"> @php echo $uPassowrd; @endphp </b></p>
+                                        </p>
                                         </div>
 
                                         <div style="padding: 15px 0;">
@@ -140,7 +141,8 @@
                                          border-radius: 50px;
                                          text-decoration: none;
                                          font-weight: 600;
-                                        ">Login
+                                        "  href="{{ $loginLink }}/login"
+                                                        class="mail-button log-in">Login
                                             </a>
                                         </div>
 
