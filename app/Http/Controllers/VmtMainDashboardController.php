@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
 use App\Models\VmtGeneralInfo;
+use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
 use App\Models\VmtAnnouncement;
@@ -51,7 +52,7 @@ class VmtMainDashboardController extends Controller
 
     public function index(Request $request)
     {
-       
+
         if(auth()->user()->active == 0)
         {
 
@@ -84,8 +85,26 @@ class VmtMainDashboardController extends Controller
             else
             if(auth()->user()->is_onboarded == 1)
             {
-                //Profile is not activated . Show a message
-                return view('vmt_profile_under_review');
+             //Check all the docs are approved or not
+                     $all_document_approved =VmtEmployeeDocuments::where('user_id',auth()->user()->id);
+
+                if($all_document_approved->exists()){
+
+                     $all_document_approval_count = $all_document_approved ->where('Status','Rejected')->count();
+                }else{
+
+                     $all_document_approval_count ='0';
+                }
+             //check the login epolyee is active or not
+                     $active_status = User::where('id', auth()->user()->id)->first()->active;
+
+                if($all_document_approval_count > '0' && $active_status == '0' ){
+                   // dd("dfgsdfg");
+                    return view('vmt_documents');
+                }else{
+             // Profile is not activated . Show a message
+                    return view('vmt_profile_under_review');
+                }
 
             }
 
@@ -115,7 +134,7 @@ class VmtMainDashboardController extends Controller
         {
             if (!$request->session()->has('client_id')) {
                 //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
                 $this->updateSessionVariables($assigned_client_id);
             }
@@ -125,7 +144,7 @@ class VmtMainDashboardController extends Controller
         {
             if (!$request->session()->has('client_id')) {
                 //get the employee client_code
-                $assigned_client_id = getEmployeeClientDetails(auth()->id())->id;
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
                 $this->updateSessionVariables($assigned_client_id);
             }

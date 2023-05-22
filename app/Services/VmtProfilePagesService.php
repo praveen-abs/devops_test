@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\VmtEmployeeDetails;
 use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\VmtOnboardingDocuments;
+use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use Illuminate\Support\Facades\DB;
 use App\Models\Department;
@@ -19,7 +19,6 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
-use App\Services\VmtEmployeePayslipService;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -162,7 +161,6 @@ class VmtProfilePagesService
 
         }
     }
-
     /*
 
         Get employee details related to profile pages.
@@ -186,19 +184,35 @@ class VmtProfilePagesService
             ->where('users.id', $user_id)
             ->first();
 
-        // dd($response->id);
-        $response_docs = DB::table('vmt_employee_documents')
-            ->join('vmt_onboarding_documents', 'vmt_onboarding_documents.id', '=', 'vmt_employee_documents.doc_id')
-            ->where('vmt_employee_documents.user_id', $response->id)
-            ->get();
-        // dd($response_docs);
+
+
+           $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
+           ->where('vmt_employee_documents.user_id', $response->id)
+           ->get();
+
+           $general_info = \DB::table('vmt_general_info')->first();
+           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+
+        // $response['client_logo'] = base64_encode($query_client_logo);
+        $response['client_logo'] = $query_client_logo;
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
 
         //Add the documents details
         $response['avatar'] = $this->getProfilePicture($response->user_code);
-        $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name;
+
+        if(!empty($response['getEmployeeOfficeDetails']['department_id']))
+            $response['getEmployeeOfficeDetails']['department_name'] = Department::find($response['getEmployeeOfficeDetails']['department_id'])->name ?? 'NA';
+
+        if(!empty($response['getEmployeeOfficeDetails']['l1_manager_code']))
+            $response['getEmployeeOfficeDetails']['l1_manager_name'] = User::where('user_code',$response['getEmployeeOfficeDetails']['l1_manager_code'])->first()->name ?? 'NA';
+
+        if(!empty($response['getEmployeeDetails']['bank_id']))
+        {
+            $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->bank_name;
+
+        }
 
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);
@@ -207,6 +221,7 @@ class VmtProfilePagesService
         //Remove ID from user table
         unset($response['id']);
 
+        //dd($response->toArray());
 
         return $response;
     }
@@ -220,7 +235,7 @@ class VmtProfilePagesService
             {
                 $user_id=User::where('user_code',$user_code)->first()->id;
 
-                $doc_id = VmtOnboardingDocuments::where('document_name', $doc_name)->first()->id;
+                $doc_id = VmtDocuments::where('document_name', $doc_name)->first()->id;
 
                 $doc_filename = VmtEmployeeDocuments::where('user_id',$user_id)->where('doc_id', $doc_id)->first()->doc_url;
             }
@@ -270,19 +285,17 @@ class VmtProfilePagesService
         return response()->file(storage_path('employees/' . $private_file));
     }
 
-    public function updateEmployeeGeneralInformation($user_code, $birthday, $gender, $doj, $marital_status, $blood_group, $phy_challenged)
+    public function updateEmployeeGeneralInformation($user_id, $birthday, $gender, $marital_status, $blood_group, $phy_challenged)
     {
 
         try {
-            $user_id = user::where('user_code', $user_code)->first()->id;
+
             $details = VmtEmployee::where('userid', $user_id)->first();
             $details->dob = $birthday;
             $details->gender = $gender;
             $details->marital_status_id = VmtMaritalStatus::where('name', $marital_status)->first()->id;
-            $details->doj = $doj;
             $details->blood_group_id = $blood_group;
             $details->physically_challenged = $phy_challenged;
-
             $details->save();
 
             return $response = [
@@ -371,7 +384,7 @@ class VmtProfilePagesService
         try {
             //dd($request->all());
             //$user_id = user::where('user_code', $user_code)->first()->id;
-            $emp_familydetails = VmtEmployeeFamilyDetails::find('id', $record_id);
+            $emp_familydetails = VmtEmployeeFamilyDetails::where('id', $record_id)->first();
             $emp_familydetails->name = $name;
             $emp_familydetails->relationship = $relationship;
             $emp_familydetails->dob = $dob;
@@ -389,15 +402,16 @@ class VmtProfilePagesService
                 'error_message' => $e->getMessage()
             ];
         }
+        return $response;
     }
-    public function deleteFamilyDetails($record_id, $user_code)
+    public function deleteEmployeeFamilyDetails($record_id, $user_code)
     {
         try {
-            $user_id = user::where('user_code', $user_code)->first()->id;
 
-            $familyDetails = VmtEmployeeFamilyDetails::where('id', $record_id)->first();
-            $familyDetails->where('user_id', $user_id)->delete();
-            return $response = [
+
+
+            $familyDetails = VmtEmployeeFamilyDetails::where('id', $record_id)->delete();
+             return $response = [
                 'status' => 'success',
                 'message' => "Family details deleted successfully"
             ];
@@ -409,4 +423,108 @@ class VmtProfilePagesService
             ];
         }
     }
+    public function updateEmployeeBankDetails($user_id,$bank_id,$bank_ifsc_code,$bank_account_number,$pan_number)
+    {
+
+        try{
+
+            $details = VmtEmployee::where('userid', $user_id)->first();
+            $details->bank_id =$bank_id;
+            $details->bank_ifsc_code =$bank_ifsc_code;
+            $details->bank_account_number =$bank_account_number;
+            $details->pan_number =$pan_number;
+            $details->save();
+
+
+        return $response=[
+            'status' => 'success',
+            'message' => 'Bank details updated successfully',
+        ];
+    } catch(\Exception $e){
+        $response = [
+        'status' => 'failure',
+        'message' => 'Error while updateing Bank Details ',
+        'error_message' => $e->getMessage()
+        ];
+    }
+}
+    public function addEmployeeExperianceDetails($user_code,$company_name,$location,$job_position,$period_from,$period_to)
+    {
+
+
+    try{
+        //  dd($request->all());
+        $user_id = user::where('user_code', $user_code)->first()->id;
+            $exp = new Experience;
+            $exp->user_id = $user_id;
+            $exp->company_name = $company_name;
+            $exp->location = $location;
+            $exp->job_position = $job_position ;
+            $exp->period_from = $period_from ;
+            $exp->period_to = $period_to;
+            $exp->save();
+        $response = [
+            'status' => 'success',
+            'message' =>"Experiance details Added successfully"
+        ];
+    } catch(\Exception $e){
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Experiance Details ',
+            'error_message' => $e->getMessage()
+        ];
+    }
+
+         return $response;
+}
+    public function updateEmployeeExperianceDetails($user_code,$company_name,$location,$job_position,$period_from,$period_to,$exp_current_table_id)
+    {
+
+
+    try{
+        //  dd($request->all());
+        $user_id = user::where('user_code', $user_code)->first()->id;
+        $exp = Experience::where('id',$exp_current_table_id)->first();
+            $exp->user_id = $user_id;
+            $exp->company_name = $company_name;
+            $exp->location = $location;
+            $exp->job_position = $job_position ;
+            $exp->period_from = $period_from ;
+            $exp->period_to = $period_to;
+            $exp->save();
+        $response = [
+            'status' => 'success',
+            'message' =>"Experiance details updated successfully"
+        ];
+    } catch(\Exception $e){
+        $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Experience Information',
+            'error_message' => $e->getMessage()
+        ];
+    }
+
+         return $response;
+}
+    public function deleteEmployeeExperianceDetails($exp_current_table_id)
+    {
+
+
+        try{
+            $ExperianceDetails = Experience::where('id',$exp_current_table_id)->delete();
+            $response = [
+                'status' => 'success',
+                'message' =>"Experiance details deleted successfully"
+              ];
+        }catch(\Exception $e){
+             $response = [
+                'status' => 'failure',
+                'message' => 'Error while deleting Experience Information ',
+                'error_message' => $e->getMessage()
+             ];
+        }
+
+
+         return $response;
+}
 }

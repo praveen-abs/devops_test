@@ -12,7 +12,9 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtLeaves;
 use App\Models\ConfigPms;
 use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\VmtEmployeeOfficeDetails;
+use App\Models\VmtOrgTimePeriod;
 
 
 
@@ -27,7 +29,7 @@ function getLeaveCountDetails($user_id){
                                                 ->groupBy('leave_type_id')->get();
 
     //Add leave names to the array
-    
+
     foreach($leaveCountDetails_user as $singleData){
         $singleData->leave_name = $leaveTypes[$singleData->leave_type_id]["leave_type"];
     }
@@ -89,5 +91,6 @@ function checkRegularizationType($user_time, $attendance_type){
     }
 
 }
+
 
 

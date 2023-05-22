@@ -173,36 +173,9 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
-    public function fetchEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-
-        //Use TRY CATCH
-
-        //Validate the request
-            //If vaildation fails, send error json
-
-            // $validated = $request->validate([
-        //     'title' => 'required|unique:posts|max:255',
-        //     'body' => 'required',
-        // ]);
-
-
-        //If validation success, fetch data
-
-        //Send proper JSON
-        /*
-            {
-                "status":"success",
-                "message":"success/error message",
-                "data":{
-
-                }
-
-            }
-
-        */
-
-        return $serviceVmtAttendanceService->fetchEmployeeLeaveBalance($request->user_id);
+        return $serviceVmtAttendanceService->getEmployeeLeaveBalance($request->user_code);
     }
 
     public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService){
@@ -266,32 +239,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'record_id' => 'required|exists:users,user_code',
-                'approver_user_code' => 'required',
-                'status' => 'required',
-                'leave_rejection_text' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
-            ]);
-        }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, $request->approver_user_code, $request->status , $request->leave_rejection_text);
+        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment);
 
-        return $response;
     }
 
 
@@ -328,6 +279,19 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message' => '',
             'data' => $response
         ]);
+
+    }
+
+    public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->applyRequestAbsentRegularization(user_code : $request->user_code,
+                                                                                attendance_date: $request->attendance_date,
+                                                                                regularization_type : $request->regularization_type,
+                                                                                checkin_time : $request->checkin_time,
+                                                                                checkout_time : $request->checkout_time,
+                                                                                reason : $request->reason,
+                                                                                custom_reason : $request->custom_reason
+                                                                            );
 
     }
 
@@ -467,4 +431,26 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
 
     }
+
+    public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
+
+    }
+    public function getEmployeeLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+    public function getAllEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails($request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+    public function getTeamEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+
 }

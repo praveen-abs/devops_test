@@ -55,27 +55,14 @@ class VmtPMS_KPIFormAssignedModel extends Model
     function getUserDetails($assignersId){
         $userEmpNames = [];
         $userEmpNos = [];
-        // $explodedAssignerId = explode(',',$assignersId);
-        // if(count($explodedAssignerId)){
-        //     foreach($explodedAssignerId as $user){
-        //         $userDetails = User::find($user);
-        //         if(!empty($userDetails)){
-        //             $userEmpNames[] = $userDetails->name;
-        //             $empDetails = VmtEmployee::where('userid',$user)->first();
-        //             if(!empty($empDetails)){
 
-        //                 $userEmpNos[] = $empDetails->emp_no;
-        //             }
-        //         }
-        //     }
-        // }
         $userDetails = User::find($assignersId);
         if(!empty($userDetails)){
             $userEmpNames[] = $userDetails->name;
             $empDetails = VmtEmployee::where('userid',$assignersId)->first();
             if(!empty($empDetails)){
 
-                $userEmpNos[] = $empDetails->emp_no;
+                $userEmpNos[] = $userDetails->user_code;
             }
         }
         $userEmpNames = implode(',',$userEmpNames);

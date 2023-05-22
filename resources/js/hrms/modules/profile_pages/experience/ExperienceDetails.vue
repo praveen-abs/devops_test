@@ -2,7 +2,7 @@
     <div>
         <div class="mb-2 card">
             <div class="card-body">
-                <h6 class="">Experience Information
+                <h6 class="fw-bold fs-15">Experience Information
                     <!-- <span class="personal-edit">
                                         <a href="#" class="edit-icon"
                                             data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
@@ -19,12 +19,12 @@
                         Add New
                         <!-- <i class="ri-pencil-fill"></i> -->
                     </button>
-                    <Dialog v-model:visible="dialog_ExperienceInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }"
-                        id="">
+                    <Dialog v-model:visible="dialog_ExperienceInfovisible" modal
+                        :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
                         <template #header>
                             <div>
-                                <h5
-                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                    class="fs-5 fw-bold">
                                     Experience Information</h5>
                             </div>
                         </template>
@@ -128,88 +128,189 @@
 
                         </Column>
                         <Column :exportable="false" header="Action" style="min-width:12rem">
-                        <template #body="slotProps">
+                            <template #body="slotProps">
 
-                            <button class="mr-3 btn btn-success"  @click="editExperienceDetails(slotProps.data)">Edit</button>
-                            <button class="btn btn-danger"  @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
+                                <button class="mr-3 btn btn-success"
+                                    @click="editExperienceDetails(slotProps.data)">Edit</button>
+                                <button class="btn btn-danger"
+                                    @click="diolog_Delete_Exp_Details(slotProps.data)">Delete</button>
 
-                            <template>
+                                <template>
 
-                                <Dialog v-model:visible="dialog_EditInfovisible" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-                                    <template #header>
-                                        <div>
-                                            <h5
-                                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
-                                                Experience Information</h5>
-                                        </div>
-                                    </template>
-
-                                    <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
-
-                                        <div class="space-between">
-                                            <div class="flex-col input_text">
-                                                <span>Company Name <span class="text-danger">*</span></span>
-                                                <InputText type="text" v-model="ExperienceInfo.company_name"
-                                                    name="ExperienceDetails_company_name[]" required />
+                                    <Dialog v-model:visible="dialog_EditInfovisible" modal
+                                        :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                                        <template #header>
+                                            <div>
+                                                <h5
+                                                    :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                                    Experience Information</h5>
                                             </div>
-                                            <div class="flex-col input_text">
-                                                <span> Location<span class="text-danger">*</span></span>
-                                                <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
-                                                    required />
+                                        </template>
 
+                                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
+
+                                            <div class="space-between">
+                                                <div class="flex-col input_text">
+                                                    <span>Company Name <span class="text-danger">*</span></span>
+                                                    <InputText type="text" v-model="ExperienceInfo.company_name"
+                                                        name="ExperienceDetails_company_name[]" required />
+                                                </div>
+                                                <div class="flex-col input_text">
+                                                    <span> Location<span class="text-danger">*</span></span>
+                                                    <InputText type="text" v-model="ExperienceInfo.location"
+                                                        name="experienceDet_location[]" required />
+
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="space-between M-T">
-                                            <div class="flex-col input_text">
-                                                <span>Job Position <span class="text-danger">*</span></span>
-                                                <InputText type="text" v-model="ExperienceInfo.job_position"
-                                                    name="experienceDet_job_position[]" required />
+                                            <div class="space-between M-T">
+                                                <div class="flex-col input_text">
+                                                    <span>Job Position <span class="text-danger">*</span></span>
+                                                    <InputText type="text" v-model="ExperienceInfo.job_position"
+                                                        name="experienceDet_job_position[]" required />
+                                                </div>
+
+                                                <div class="flex-col input_text" style="margin-right: 7px;">
+                                                    <span :style="{ paddingLeft: '6px' }">Period From<span
+                                                            class="text-danger">*</span></span>
+                                                    <Calendar showIcon v-model="ExperienceInfo.period_from"
+                                                        :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
+                                                        name="experienceDet_period_from[]" />
+                                                </div>
                                             </div>
 
-                                            <div class="flex-col input_text" style="margin-right: 7px;">
-                                                <span :style="{ paddingLeft: '6px' }">Period From<span
-                                                        class="text-danger">*</span></span>
-                                                <Calendar showIcon v-model="ExperienceInfo.period_from"
-                                                    :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
-                                                    name="experienceDet_period_from[]" />
+                                            <div class="space-between M-T">
+                                                <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
+                                                    <span :style="{ paddingLeft: '6px' }">Period To <span
+                                                            class="text-danger">*</span></span>
+                                                    <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
+                                                        :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
+                                                        name="experienceDet_period_to[]" />
+                                                </div>
                                             </div>
+
                                         </div>
 
-                                        <div class="space-between M-T">
-                                            <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
-                                                <span :style="{ paddingLeft: '6px' }">Period To <span
-                                                        class="text-danger">*</span></span>
-                                                <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
-                                                    :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
-                                                    name="experienceDet_period_to[]" />
+                                        <template #footer>
+                                            <div>
+                                                <Toast />
+                                                <button type="button" class="submit_btn success warning" severity="success"
+                                                    id="" @click="sumbit_Edit_Exp_details()">submit</button>
                                             </div>
-                                        </div>
+                                        </template>
 
-                                    </div>
-
-                                    <template #footer>
-                                        <div>
-                                            <Toast />
-                                            <button type="button" class="submit_btn success warning" severity="success" id=""
-                                                @click="sumbit_Edit_Exp_details()">submit</button>
-                                        </div>
-                                    </template>
-
-                                </Dialog>
-                            </template>
+                                    </Dialog>
+                                </template>
 
 
 
 
-                        <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
+                                <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
                         <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
-                    </template>
-                </Column>
+                            </template>
+                        </Column>
 
 
                     </DataTable>
 
                 </div>
+<!--
+
+                <div  >
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-border-primary" data-bs-target="#edit_experienceInfo"
+                            data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Add More</button>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="container bg- left" id="experience_card">
+                            <div class="card experience-card " style="margin-right: 500px;">
+                                <div class="py-1 card-body " >
+                                    <ul class="personal-info ">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
+                                            <div class="title"></div>
+                                            <div class="text text-end">
+                                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target=""><i
+                                                        class="ri-pencil-fill"></i></a>
+
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-bottom-liteAsh">
+                                            <div class="title">Organization</div>
+                                            <div class="text" data-toggle="tooltip" data-placement="bottom">
+                                                Organization Organization Organization
+
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-bottom-liteAsh">
+                                            <div class="title">Designation</div>
+                                            <div class="text">
+                                                Designation
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-bottom-liteAsh ">
+                                            <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
+                                            <div class="text">
+                                                From
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
+                                            <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
+                                            <div class="text">
+                                                To
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container bg-white right">
+                            <div class="card experience-card ">
+                                <div class="py-1 card-body">
+                                    <ul class="personal-info">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
+                                            <div class="title"></div>
+                                            <div class="text text-end">
+                                                <a class="edit-icon" data-bs-toggle="modal"
+                                                    data-bs-target="#edit_generalInfo"><i class="ri-pencil-fill"></i></a>
+
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-bottom-liteAsh">
+                                            <div class="title">Organization</div>
+                                            <div class="text">
+                                                Organization
+
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-bottom-liteAsh">
+                                            <div class="title">Designation</div>
+                                            <div class="text">
+                                                Designation
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-bottom-liteAsh ">
+                                            <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
+                                            <div class="text">
+                                                From
+                                            </div>
+                                        </li>
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
+                                            <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
+                                            <div class="text">
+                                                To
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
 
 
                 <!-- </form> -->
@@ -253,51 +354,51 @@ const saveExperienceDetails = () => {
 
     console.log(ExperienceInfo);
 
-_instance_profilePagesStore.loading_screen = true
+    _instance_profilePagesStore.loading_screen = true
 
     // if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
 
     //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
 
     // } else {
-        let id = fetch_data.current_user_id
-        let url = `/add-experience-info/${id}`
+    let id = fetch_data.current_user_id
+    let url = `/add-experience-info/${id}`
 
-        axios.post(url, {
-            user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            company_name: ExperienceInfo.company_name,
-            experience_location:ExperienceInfo.location,
-            job_position:ExperienceInfo.job_position,
-            period_from: ExperienceInfo.period_from,
-            period_to: ExperienceInfo.period_to
+    axios.post(url, {
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        company_name: ExperienceInfo.company_name,
+        experience_location: ExperienceInfo.location,
+        job_position: ExperienceInfo.job_position,
+        period_from: ExperienceInfo.period_from,
+        period_to: ExperienceInfo.period_to
+    })
+        .then((res) => {
+
+            if (res.data.status == "success") {
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Experiance information updated', life: 3000 });
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.company_name = ExperienceInfo.company_name
+
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.location = ExperienceInfo.location;
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.job_position = ExperienceInfo.job_position;
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.period_from = ExperienceInfo.period_from;
+                // _instance_profilePagesStore.employeeDetails.get_experience_details.period_to = ExperienceInfo.period_to;
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
         })
-            .then((res) => {
-
-                if (res.data.status == "success") {
-                    toast.add({ severity: 'success', summary: 'Updated', detail: 'Experiance information updated', life: 3000 });
-                    // _instance_profilePagesStore.employeeDetails.get_experience_details.company_name = ExperienceInfo.company_name
-
-                    // _instance_profilePagesStore.employeeDetails.get_experience_details.location = ExperienceInfo.location;
-                    // _instance_profilePagesStore.employeeDetails.get_experience_details.job_position = ExperienceInfo.job_position;
-                    // _instance_profilePagesStore.employeeDetails.get_experience_details.period_from = ExperienceInfo.period_from;
-                    // _instance_profilePagesStore.employeeDetails.get_experience_details.period_to = ExperienceInfo.period_to;
-                } else if (res.data.status == "failure") {
-                    leave_data.leave_request_error_messege = res.data.message;
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            }).finally(()=>{
+        .catch((err) => {
+            console.log(err);
+        }).finally(() => {
             _instance_profilePagesStore.fetchEmployeeDetails()
             _instance_profilePagesStore.loading_screen = false
-            })
-        // window.location.reload();
+        })
+    // window.location.reload();
 
-        dialog_ExperienceInfovisible.value = false;
+    dialog_ExperienceInfovisible.value = false;
 
 
 
-    }
+}
 
 
 
@@ -322,26 +423,26 @@ const editExperienceDetails = (get_experience_details) => {
 
 };
 
-const  sumbit_Edit_Exp_details =(get_experience_details)=>{
+const sumbit_Edit_Exp_details = (get_experience_details) => {
     dialog_EditInfovisible.value = false;
 
     let id = fetch_data.current_user_id
-    let url =`/update-experience-info/${id}`;
+    let url = `/update-experience-info/${id}`;
 
 
     axios.post(url, {
-            user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            exp_current_table_id: Exp_current_table_id.value,
-            company_name:ExperienceInfo.company_name  ,
-            experience_location:ExperienceInfo.location  ,
-            job_position:   ExperienceInfo.job_position ,
-            period_from:  ExperienceInfo.period_from,
-            period_to: ExperienceInfo.period_to
-        })
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        exp_current_table_id: Exp_current_table_id.value,
+        company_name: ExperienceInfo.company_name,
+        experience_location: ExperienceInfo.location,
+        job_position: ExperienceInfo.job_position,
+        period_from: ExperienceInfo.period_from,
+        period_to: ExperienceInfo.period_to
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
+                window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
                 // ExperienceInfo.company_name = get_experience_details.company_name
@@ -364,25 +465,28 @@ const diolog_Delete_Exp_Details = (family) => {
 
     Exp_current_table_id.value = family.id
 
-let id = fetch_data.current_user_id
-let url = `/delete-experience-info/${id}`;
+    let id = fetch_data.current_user_id
+    let url = `/delete-experience-info/${id}`;
 
-axios.post(url, {
-    exp_current_table_id: Exp_current_table_id.value,
+    axios.post(url, {
+        exp_current_table_id: Exp_current_table_id.value,
     })
-    .then((res) => {
+        .then((res) => {
 
-        if (res.data.status == "success") {
-             window.location.reload();
-            toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
+            if (res.data.status == "success") {
+                // window.location.reload();
+                toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
 
-        } else if (res.data.status == "failure") {
-            leave_data.leave_request_error_messege = res.data.message;
-        }
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+            } else if (res.data.status == "failure") {
+                leave_data.leave_request_error_messege = res.data.message;
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.loading_screen = false
+        });
 
 
 }

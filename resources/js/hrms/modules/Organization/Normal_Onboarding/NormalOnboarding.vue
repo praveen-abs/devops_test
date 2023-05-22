@@ -57,6 +57,7 @@
                             class="capitalize onboard-form form-control textbox"
                             type="text"  :readonly="is_emp_name_quick"
                             v-model="v$.employee_name.$model"
+                            @keypress="isLetter($event)"
                             :class="[{
                               'p-invalid': v$.employee_name.$invalid && submitted,
                             },
@@ -1205,7 +1206,7 @@
 
               <div class="p-2 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="flex my-4 header-card-text">
+                  <div class="flex header-card-text">
                     <!-- <img src="../../../assests/images/office-building.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2 "><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details</h6>
                   </div>
@@ -1543,9 +1544,9 @@
 
               <div class="p-2 my-6 shadow card profile-box card-top-border" >
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="flex my-4 header-card-text">
+                  <div class="flex header-card-text">
                     <img src="../../../assests/images/family_image.png" alt="" style="height: 20px;">
-                    <h6 class="mx-2 my-auto">Family Details</h6>
+                    <h6 class="mx-2 my-2">Family Details</h6>
                   </div>
 
 
@@ -2347,7 +2348,7 @@
 
               <div class="p-2 my-6 mb-0 shadow card profile-box card-top-border">
                 <div class="card-body justify-content-center align-items-center">
-                  <div class="flex my-4 header-card-text">
+                  <div class="flex header-card-text">
                     <!-- <img src="../../../assests/images/folder.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2"><i class="fa fa-file-image-o" aria-hidden="true"></i> Personal Documents</h6>
                   </div>
@@ -2971,6 +2972,14 @@ const parentFormat = ref(new Date('1995/12/31'))
 
 //   Events
 
+const isLetter = (e)=> {
+  let char = String.fromCharCode(e.keyCode); // Get the character
+  if(/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+  else e.preventDefault(); // If not match, don't add to input text
+}
+
+
+
 const handleSubmit = (isFormValid) => {
   console.log(employee_onboarding);
 
@@ -3453,8 +3462,6 @@ const AadharCardExits = () => {
 
               }
 
-
-
 };
 
 
@@ -3572,8 +3579,8 @@ const ValidateAccountNo =()=> {
               .finally(() => {
                 console.log("completed");
               });
-            
-            }      
+
+            }
 
            const ifsc = ref(false)
           const ValidateIfscNo =()=> {
@@ -3588,13 +3595,14 @@ const ValidateAccountNo =()=> {
     }
 
 
-
+const actual_gross = ref()
 
 // compensatory Logic
 
 const compensatory_calculation = () => {
   let basic = (employee_onboarding.cic * 50) / 100;
-  console.log("Basic :" + basic);
+
+  console.log("Basic :" + Math.floor(basic));
 
   employee_onboarding.basic = Math.floor(basic);
 
@@ -3607,8 +3615,15 @@ const compensatory_calculation = () => {
 
   console.log(employee_onboarding.special_allowance);
 
+  actual_gross.value = basic + hra +  employee_onboarding.special_allowance;
+
+  console.log("Actual gross" +  actual_gross.value);
+
   let gross = basic + hra + employee_onboarding.special_allowance;
+
   employee_onboarding.gross = Math.floor(gross);
+
+  console.log("Gross",Math.floor(gross));
 
   epf_esic_calculation();
 
@@ -3838,6 +3853,7 @@ const graduity = () => {
 const epf_esic_calculation = () => {
 
   let EpfCalculation = employee_onboarding.gross - employee_onboarding.hra;
+  let gross = actual_gross.value
 
   console.log("EpfCalculation:" + EpfCalculation);
 
@@ -3850,12 +3866,13 @@ const epf_esic_calculation = () => {
     employee_onboarding.epf_employer_contribution = epfConstant;
   }
 
-  if (employee_onboarding.gross <= 21000) {
+  if (gross <= 21000) {
     employee_onboarding.esic_employer_contribution = Math.floor( (employee_onboarding.gross * 3.25) / 100
     );
     employee_onboarding.esic_employee = Math.floor( (employee_onboarding.gross * 0.75) / 100
     );
-  } else if (employee_onboarding.gross > 21000) {
+  } else if (gross > 21000) {
+    console.log(gross);
     let EsicConstant = 0;
     employee_onboarding.esic_employee = EsicConstant;
     employee_onboarding.esic_employer_contribution = EsicConstant;
@@ -3872,7 +3889,8 @@ console.log("date checking");
 
 
 const compensatoryCalWhileQuick = () =>{
-  compen_disable.value = false
+//   compen_disable.value = false
+
   family_details_disable.value = true
 
   let gross = parseInt(employee_onboarding.basic) + parseInt(employee_onboarding.hra) + parseInt(employee_onboarding.special_allowance);

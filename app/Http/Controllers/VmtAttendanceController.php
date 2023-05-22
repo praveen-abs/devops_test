@@ -23,6 +23,8 @@ use Illuminate\Support\Str;
 use App\Mail\WelcomeMail;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
+use App\Models\VmtOrgTimePeriod;
+use App\Models\VmtTimePeriod;
 use \Datetime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -52,11 +54,29 @@ class VmtAttendanceController extends Controller
         $leaveData_Org = null;
 
         $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
-
+       // dd( $leaveData_currentUser->get());
         //Get how many leaves taken for each leave_type
         $leaveData_currentUser = getLeaveCountDetails(auth::user()->id);
 
         //dd($leaveData_currentUser->toArray());
+
+        //Accrued Leave Year Frame
+        $available_time_frames = array();
+        $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+        $start_date =  $time_periods_of_year_query->start_date;
+        $end_date   = $time_periods_of_year_query->end_date;
+        $calender_type = $time_periods_of_year_query->abbrevation;
+       // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+       $available_time_frame_query = VmtOrgTimePeriod::get();
+       foreach($available_time_frame_query as $single_time_frame){
+        $time_frame_start_date=$single_time_frame->start_date;
+        $time_frame_end_date=$single_time_frame->end_date;
+        $available_time_frames[$single_time_frame->start_date."/".$single_time_frame->end_date]=$single_time_frame->abbrevation.' '.substr($time_frame_start_date, 0, 4).'-'.substr($time_frame_end_date, 0, 4);
+       }
+      $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
+
+
+
 
         //Generate Team leave data
         if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
@@ -70,10 +90,12 @@ class VmtAttendanceController extends Controller
         if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR'])) {
             $leaveData_Org = VmtEmployeeLeaves::all();
         }
+         //Calculate Leave Balance
+      //   $leave_balance_details = calculateLeaveDetails(auth::user()->id,$start_date,$end_date);
 
-
+        //dd(  $leave_balance_details);
         //dd($leaveTypes->toArray());
-        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser'));
+        return view('attendance_leave', compact('allEmployeesList', 'leaveTypes', 'leaveData_Org', 'leaveData_Team', 'leaveData_currentUser','time_frame','available_time_frames','time_frame'));
     }
 
     public function showAttendanceLeaveSettings(Request $request)
@@ -109,162 +131,43 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejetRevokeLeaveRequest(Request $request)
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        // $approval_status = $request->status;
-        $leave_record = VmtEmployeeLeaves::where('id', $request->leave_id)->first();
-        //dd($leave_record);
-        //dd( $leave_record);
-        //dd( $request->status);
-        if ($request->status == "Revoked"){
-            $leave_record->is_revoked = "true";
-            $leave_record->status = "Pending";
-        }
-        else
-        {
-            //For Approved or rejected status
-            $leave_record->status = $request->status;
-
-        }
-
-
-        $leave_record->reviewer_comments = $request->leave_rejection_text;
-        $leave_record->reviewed_date = Carbon::now();
-        $leave_record->save();
-
-        //Send mail to the employee
-        $employee_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('user_id');
-        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->value('officical_mail');
-        $obj_employee = User::where('id', $employee_user_id);
-        $manager_user_id = VmtEmployeeLeaves::where('id', $request->leave_id)->value('reviewer_user_id');
-
-        $message = "";
-        $mail_status = "";
-
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
-
-
-        $isSent    = \Mail::to($employee_mail)->send(
-            new ApproveRejectLeaveMail(
-                $obj_employee->value('name'),
-                $obj_employee->value('user_code'),
-                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                User::find($manager_user_id)->name,
-                User::find($manager_user_id)->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $emp_avatar,
-                $request->status
-            )
-        );
-
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
-        }
-
-        if($request->status == "Approved")
-            $text_status = "approved";
-        else
-        if($request->status == "Rejected")
-            $text_status = "rejected";
-        else
-        if($request->status == "Revoked")
-            $text_status = "revoked";
-
-
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Request '.$text_status.' successfully',
-            'mail_status' => $mail_status,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
+       return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code,
+                                                                    $request->status, $request->review_comment );
     }
+
+    public function getEmployeeLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $request->filter_leave_status );
+    }
+
+    public function getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        //dd($request->all());
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code, $request->filter_month, $request->filter_year, $request->filter_leave_status );
+    }
+
+    public function getAllEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails( $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+    }
+
 
     /*
         Fetches all leave details
         Also used VJS and gridjs table
 
+        used in leave approvals page only
+
     */
-    public function fetchLeaveRequestDetails(Request $request)
+    public function getLeaveRequestDetailsBasedOnCurrentRole(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        //Convert  'Pending', ' Approved' , 'Rejected' from csv to array
-        $statusArray = explode(",", $request->statusArray);
+        $response = $serviceVmtAttendanceService->getLeaveRequestDetailsBasedOnCurrentRole();
 
-        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
-        $map_leaveTypes = VmtLeaves::all(['id','leave_type'])->keyBy('id');
-
-        if ($request->type == 'org') {
-            $employeeLeaves_Org = '';
-
-            $employeeLeaves_Org = VmtEmployeeLeaves::whereIn('status', $statusArray)->get();
-
-            foreach ($employeeLeaves_Org as $singleItem) {
-
-               //Map emp names
-               if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-
-                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-
-               }
-
-               //Map reviewer names
-               if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
-               }
-
-               //Map leave types
-                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
-            }
-
-            return $employeeLeaves_Org;
-        }
-        else
-        if ($request->type == 'team') {
-            //Get the list of employees for the given Manager
-            $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', auth::user()->user_code)->get('user_id');
-
-            //use wherein and fetch the relevant records
-            $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)->whereIn('status', $statusArray)->get();
-
-
-            //dd($map_allEmployees[1]["name"]);
-            foreach ($employeeLeaves_team as $singleItem) {
-
-                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-                }
-
-                if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
-
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
-                }
-
-                //Map leave types
-                $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
-
-            }
-
-
-            //dd($employeeLeaves_team);
-            return $employeeLeaves_team;
-        }
-        else
-        if ($request->type == 'employee') {
-            return VmtEmployeeLeaves::whereIn('status', $statusArray)->where('user_id', auth::user()->id)->get();
-        }
+        return response()->json([
+            "status" => "success",
+            "message" => "",
+           "data" => $response
+        ]);
     }
 
     public function fetchSingleLeavePolicyRecord($id)
@@ -293,30 +196,10 @@ class VmtAttendanceController extends Controller
     }
 
     /*
-     AJAX : Get leave details based on given leave_id
+         Get leave info based on given leave_id
     */
-    public function fetchLeaveDetails(Request $request){
-        $leave_details = VmtEmployeeLeaves::find($request->leave_id);
-
-        $leave_details['user_name'] = User::find($leave_details->user_id)->name;
-        $leave_details['leave_type'] = VmtLeaves::find($leave_details->leave_type_id)->leave_type;
-        // $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
-        $leave_details['approver_name'] =  User::find($leave_details->reviewer_user_id)->name;
-        $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-
-        if(!empty($leave_details->notifications_users_id))
-        {
-            $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
-            $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->value('designation');
-        }
-        else
-            $leave_details['notification_userName'] = "";
-
-        $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
-
-
-
-        return $leave_details;
+    public function getLeaveInformation(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getLeaveInformation($request->record_id);
     }
 
     /*
@@ -340,6 +223,27 @@ class VmtAttendanceController extends Controller
 
         // dd($request ->all());
 
+        //get manager of this employee
+        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->first()->l1_manager_code;
+        $query_manager = User::where('user_code', $manager_emp_code);
+        $reviewer_mail =  null;
+
+        if($query_manager->exists())
+        {
+            $query_manager = $query_manager->first();
+            $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $query_manager->id)->first()->officical_mail;
+
+        }
+        else
+        {
+            //throw error
+            return [
+                "status" => "failure",
+                "message" => "Manager not found for the given employee. Please contact the admin",
+                "data" => "",
+            ];
+        }
+
 
         $leave_month = date('m',strtotime($request->start_date));
         $compensatory_leavetype_id = VmtLeaves::where('leave_type','LIKE','%Compensatory%')->value('id');
@@ -356,15 +260,27 @@ class VmtAttendanceController extends Controller
             //$endDate = new Carbon($singleLeaveRange->end_date);
             //$endDate->addDay();
 
-            //create leave range
-            $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+            if($singleLeaveRange->start_date == $singleLeaveRange->end_date)
+            {
+                //Since start and end range are same , add one day
+                $end_date = date('Y-m-d', strtotime($singleLeaveRange->end_date . ' +1 day'));
 
-            //dd($leave_range);
+                    //dd($stop_date);
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $end_date );
+               // dd($leave_range);
+            }
+            else
+            {
+                //create leave range
+                $leave_range = $this->createLeaveRange($singleLeaveRange->start_date, $singleLeaveRange->end_date);
+            }
 
             //check with the user given leave range
             foreach ($leave_range as $date) {
                 //if date already exists in previous leaves
                 // if ($processed_leave_start_date->format('Y-m-d') == $date->format('Y-m-d') || $processed_leave_end_date->format('Y-m-d') == $date->format('Y-m-d'))
+
                 if ($request->start_date == $date->format('Y-m-d') || $request->end_date == $date->format('Y-m-d') )
                 {
                     return $response = [
@@ -423,12 +339,9 @@ class VmtAttendanceController extends Controller
         // $emp_leave_details->total_leave_datetime = $diff;
 
 
-        //get manager of this employee
-        $manager_emp_code = VmtEmployeeOfficeDetails::where('user_id', auth::user()->id)->value('l1_manager_code');
-        $manager_name = User::where('user_code', $manager_emp_code)->value('name');
-        $manager_id = User::where('user_code', $manager_emp_code)->value('id');
 
-        $emp_leave_details->reviewer_user_id = $manager_id;
+
+        $emp_leave_details->reviewer_user_id = $query_manager->id;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         if (!empty($request->notifications_users_id))
@@ -462,7 +375,6 @@ class VmtAttendanceController extends Controller
         ////
 
         //Need to send mail to 'reviewer' and 'notifications_users_id' list
-        $reviewer_mail =  VmtEmployeeOfficeDetails::where('user_id', $manager_id)->value('officical_mail');
 
         $message = "";
         $mail_status = "";
@@ -476,12 +388,13 @@ class VmtAttendanceController extends Controller
         else
             $notification_mails = array();
 
+       // dd($reviewer_mail);
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                                                     uEmployeeName : auth::user()->name,
                                                     uEmpCode : auth::user()->user_code,
                                                     uEmpAvatar : $emp_avatar,
-                                                    uManagerName : $manager_name,
+                                                    uManagerName : $query_manager->name,
                                                     uLeaveRequestDate : Carbon::parse($request->leave_request_date)->format('M jS Y'),
                                                     uStartDate : Carbon::parse($request->start_date)->format('M jS Y'),
                                                     uEndDate : Carbon::parse($request->end_date)->format('M jS Y'),
@@ -672,8 +585,8 @@ class VmtAttendanceController extends Controller
                 //Need to process the checkin and checkout time based on the client.
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
 
-                //If direction is only "in"
-                if(sessionGetSelectedClientCode() == "DM")
+                //If direction is only "in" or empty or "-"
+                if(sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PA")
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -704,6 +617,7 @@ class VmtAttendanceController extends Controller
                         ->where('user_Id', $userCode)
                         ->first(['check_in_time']);
                 }
+
 
                 $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                 $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
@@ -1090,7 +1004,7 @@ class VmtAttendanceController extends Controller
         $reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
         $reportees_details = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')
+            ->whereIn('users.id', $reportees_id)->where('users.is_ssa', '0')->where('users.active','1')
             ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
 
@@ -1109,7 +1023,7 @@ class VmtAttendanceController extends Controller
         //$reportees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $request->user_code)->get('user_id');
 
         $all_employees = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.is_ssa', '0')
+            ->where('users.is_ssa', '0')->where('users.active','1')
             ->get(['users.id', 'users.name', 'vmt_employee_office_details.designation']);
 
 
@@ -1539,12 +1453,52 @@ class VmtAttendanceController extends Controller
     public function fetchUnusedCompensatoryOffDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
         //dd($request->user_id);
         //TODO : Need to get current user_id instead of fetching from req params.
-        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($request->user_id);
+        $user_id=auth()->user()->id;
+        return $serviceVmtAttendanceService->fetchUnusedCompensatoryOffDays($user_id);
     }
 
     public function employeeProfile(Request $request , VmtAttendanceService $serviceVmtAttendanceService){
 
         return $serviceVmtAttendanceService->employeeProfile($request);
+    }
+
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+          //Accrued Leave Year Frame
+          if(empty($request->all())){
+            $time_periods_of_year_query = VmtOrgTimePeriod::where('status',1)->first();
+          }else{
+            $time_periods_of_year_query = VmtOrgTimePeriod::whereYear('start_date',)->whereMonth('start_date',)
+                                                           ->whereYear('end_date',)->whereMonth('end_date',)->first();
+          }
+          $start_date =  $time_periods_of_year_query->start_date;
+          $end_date   = $time_periods_of_year_query->end_date;
+          $calender_type = $time_periods_of_year_query->abbrevation;
+         // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+         $time_frame = $calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4);
+        $leave_balance_details = $serviceVmtAttendanceService->calculateEmployeeLeaveBalance(auth::user()->id,$start_date,$end_date);
+        return  $leave_balance_details;
+    }
+
+    // public function fetchEmployeeLeaveBalance(Request $request){
+    //     $leave_balance_details = calculateLeaveDetails(auth::user()->id,$request->start_date,$request->end_date);
+    //     return $leave_balance_details;
+    // }
+
+
+    public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $start_date = '2023-04-01';
+        $end_date = '2023-05-31';
+        $month = 05;
+        $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
+        return $response;
+    }
+
+    public function fetchTeamLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $start_date = '2023-04-01';
+        $end_date = '2023-05-31';
+        $month = 05;
+        $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
+        return $response;
     }
 
 }

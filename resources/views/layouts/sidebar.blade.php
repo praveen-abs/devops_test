@@ -1,12 +1,12 @@
 <?php //getCurrentClientName()
 
 //Notification counts
-$approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
-    ->where('status', 'Pending')
-    ->count();
-$approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
-    ->where('status', 'Pending')
-    ->count();
+// $approvals_leave_notif_count = \DB::table('vmt_employee_leaves')
+//     ->where('status', 'Pending')
+//     ->count();
+// $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regularizations')
+//     ->where('status', 'Pending')
+//     ->count();
 
 //dd($approvals_leave_notif_count);
 
@@ -15,7 +15,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box ">
-        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+        <button type="button" class="p-0 btn btn-sm fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
             <i class="ri-record-circle-line"></i>
         </button>
@@ -28,8 +28,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
             <ul class="navbar-nav" id="navbar-nav">
 
                 <!-- end Dashboard Menu -->
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="{{ route('index') }}">
+                <li class="mb-1 nav-item">
+                    <a class="pt-0 nav-link sidebar menu-link" href="{{ route('index') }}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path
@@ -38,7 +38,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                         </i>
                         <span data-key="t-landing">Dashboard</span>
                     </a>
-                    <!-- <a class="nav-link sidebar menu-link pt-0" href="{{ route('index') }}">
+                    <!-- <a class="pt-0 nav-link sidebar menu-link" href="{{ route('index') }}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
                             </svg>
@@ -51,9 +51,9 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 <!-- CRM -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     @if (!Str::contains(getCurrentClientName(), 'Vasa'))
-                        <li class="nav-item">
+                        <li class="mb-1 nav-item">
 
-                            <a class="nav-link sidebar menu-link pt-0" href="#crmDrop-Down" data-bs-toggle="collapse"
+                            <a class="pt-0 nav-link sidebar menu-link" href="#crmDrop-Down" data-bs-toggle="collapse"
                                 role="button" aria-expanded="false" aria-controls="sidebarRoles">
                                 <i>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -75,13 +75,13 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                             <div class="collapse menu-dropdown" id="crmDrop-Down">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="{{ route('vmt-vendor-route') }}" class="nav-link sidebar py-1">
+                                        <a href="{{ route('vmt-vendor-route') }}" class="py-1 nav-link sidebar">
                                             <span>Vendor</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
 
-                                        <a href="{{ route('vmt-clients-route') }}" class="nav-link sidebar py-1"
+                                        <a href="{{ route('vmt-clients-route') }}" class="py-1 nav-link sidebar"
                                             role="button"><span>Client</span></a>
                                     </li>
                                 </ul>
@@ -92,8 +92,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                 <!-- Navigation Menu for attendance-->
                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#attendanceDrop-Down" data-bs-toggle="collapse"
+                <li class="mb-1 nav-item">
+                    <a class="pt-0 nav-link sidebar menu-link" href="#attendanceDrop-Down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-fingerprint" viewBox="0 0 16 16">
@@ -114,13 +114,13 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                         <ul class="nav nav-sm flex-column">
 
                             {{-- <li class="nav-item active">
-                                <a href="{{ route('attendance-dashboard') }}" class="nav-link sidebar py-1">
+                                <a href="{{ route('attendance-dashboard') }}" class="py-1 nav-link sidebar">
                                     <span>Dashboard</span>
                                 </a>
                             </li> --}}
 
                             <li class="nav-item">
-                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">
+                                <a href="{{ route('attendance-timesheet') }}" class="py-1 nav-link sidebar">
                                     <span>
                                         Timesheet</span></a>
                             </li>
@@ -130,8 +130,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 </li>
 
 
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0"href="{{ route('attendance-leave') }}" data-bs-toggle=""
+                <li class="mb-1 nav-item">
+                    <a class="pt-0 nav-link sidebar menu-link"href="{{ route('attendance-leave') }}" data-bs-toggle=""
                         role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="512.000000pt"
                                 height="512.000000pt" viewBox="0 0 512.000000 512.000000"
@@ -182,7 +182,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 <!-- Organization -->
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" href="#orgDrop-Down" data-bs-toggle="collapse"
+                        <a class="pt-0 nav-link sidebar menu-link" href="#orgDrop-Down" data-bs-toggle="collapse"
                             role="button" aria-expanded="false" aria-controls="sidebarRoles">
 
                             <i><svg xmlns="http://www.w3.org/2000/svg" width="22.04" height="17.142"
@@ -200,46 +200,52 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                                 <li class="nav-item ">
                                     <a href="{{ route('manageEmployees') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>Manage Employees</span></a>
+                                        class="py-1 nav-link sidebar"><span>Manage Employees</span></a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="{{ route('showOrgTree') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>ORG
+                                        class="py-1 nav-link sidebar"><span>ORG
                                             structure</span></a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="{{ route('department') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>Department</span></a>
+                                        class="py-1 nav-link sidebar"><span>Department</span></a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="{{ route('employee-onboarding-v2') }}" id=""
-                                        class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding</span>
+                                        class="py-1 nav-link sidebar" aria-expanded="false"><span>Onboarding</span>
                                     </a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="{{ route('bulkEmployeeOnboarding') }}" id=""
-                                        class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Bulk
+                                        class="py-1 nav-link sidebar" aria-expanded="false"><span>Onboarding Bulk
                                             Upload</span> </a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="{{ route('quickEmployeeOnboarding') }}" id=""
-                                        class="nav-link sidebar py-1" aria-expanded="false"><span>Onboarding Quick
+                                        class="py-1 nav-link sidebar" aria-expanded="false"><span>Onboarding Quick
                                             Upload</span> </a>
                                 </li>
                                 <li class="nav-item ">
                                     <a href="{{ route('page-not-found') }}" id="tds"
-                                        class="nav-link sidebar py-1"><span>Exit</span></a>
+                                        class="py-1 nav-link sidebar"><span>Exit</span></a>
                                 </li>
                                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
                                     <li class="nav-item ">
                                         <a href="{{ route('vmt-documents-route') }}" id="tds"
-                                            class="nav-link sidebar py-1"><span>Documents</span></a>
+                                            class="py-1 nav-link sidebar"><span>Documents</span></a>
                                     </li>
                                     <li class="nav-item ">
                                         <a href="{{ route('assetinventory-index') }}" id="tds"
-                                            class="nav-link sidebar py-1"><span>Assets</span></a>
+                                            class="py-1 nav-link sidebar"><span>Assets</span></a>
                                     </li>
                                 @endif
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+                                    <li class="nav-item ">
+                                        <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
+                                            class="py-1 nav-link sidebar"><span>Manage WelcomeMail Status</span></a>
+                                    </li>
+                                @endcan
                             </ul>
                         </div>
                     </li>
@@ -247,8 +253,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
 
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#mytasksDrop-Down"
+                    <li class="mb-1 nav-item">
+                        <a class="pt-0 nav-link sidebar menu-link" id="employeeInfo" href="#mytasksDrop-Down"
                             data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="sidebar360questions">
                             <i>
@@ -277,7 +283,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                             </i>
                             <span>Approvals</span>
-                            {{-- <span>Approvals <span class="badge bg-danger rounded-circle text-white">4</span></span> --}}
+                            {{-- <span>Approvals <span class="text-white badge bg-danger rounded-circle">4</span></span> --}}
 
                         </a>
                         <div class="collapse menu-dropdown" id="mytasksDrop-Down">
@@ -287,10 +293,10 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
                                     <li class="nav-item">
                                         <a href="{{ route('vmt-approvals-emp-documents') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>
-                                                Onboarding <span class="badge bg-danger rounded-circle text-white">4
+                                                Onboarding <span class="text-white badge bg-danger rounded-circle">4
                                                 </span>
                                             </span> --}}
                                             <span>
@@ -304,10 +310,10 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-leave-approvals') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>Leaves <span
-                                                    class="badge bg-danger rounded-circle text-white">{{ $approvals_leave_notif_count}}</span>
+                                                    class="text-white badge bg-danger rounded-circle">{{ $approvals_leave_notif_count}}</span>
                                             </span> --}}
                                             <span>Leaves <span </span>
                                         </a>
@@ -315,11 +321,11 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                                     <li class="nav-item">
                                         <a href="{{ route('attendance-regularization-approvals') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>
                                                 Attendance Regularization<span
-                                                    class="badge bg-danger rounded-circle text-white"> {{ $approvals_att_regularization_count }}</span>
+                                                    class="text-white badge bg-danger rounded-circle"> {{ $approvals_att_regularization_count }}</span>
                                             </span> --}}
                                             <span>
                                                 Attendance Regularization<span </span>
@@ -328,37 +334,37 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                     </li>
                                     {{-- @endif --}}
 
-                                    <li class="nav-item">
+                                    {{-- <li class="nav-item">
                                         <a href="{{ route('showPMSApprovalPage') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
-                                            {{-- <span>
+                                            <span>
                                                 OKR /PMS<span
-                                                    class="badge bg-danger rounded-circle text-white">4</span>
-                                            </span> --}}
+                                                    class="text-white badge bg-danger rounded-circle">4</span>
+                                            </span>
                                             <span>
                                                 OKR /PMS
                                             </span>
                                         </a>
-                                        {{-- PMS forms are approved here. Redirect to PMS dashboard --}}
-                                    </li>
+                                        PMS forms are approved here. Redirect to PMS dashboard
+                                    </li> --}}
                                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                     <li class="nav-item">
                                         <a href="{{ route('showReimbursementApprovalPage') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false"><span>
                                                 Reimbursement</span> </a>
-                                        {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> --}}
+                                        {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="py-1 nav-link sidebar"><span>Dashboard</span></a> --}}
 
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('page-not-found') }}" id=""
-                                            class="nav-link sidebar py-1" data-bs-toggle="" role="button"
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>
                                                 Taxations<span
-                                                    class="badge bg-danger rounded-circle text-white">4</span>
+                                                    class="text-white badge bg-danger rounded-circle">4</span>
                                             </span> --}}
                                             <span>
                                                 Taxations
@@ -375,8 +381,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 <!-- PMS module -->
                 @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines']))
 
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" href="#PerformanceDrop-Down"
+                    <li class="mb-1 nav-item">
+                        <a class="pt-0 nav-link sidebar menu-link" href="#PerformanceDrop-Down"
                             data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="sidebarRoles">
                             <i>
@@ -406,9 +412,9 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                 @endif
                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                                     <li class="nav-item">
-                                        <!-- <a href="{{ url('vmt-pms-assigngoals') }}" class="nav-link sidebar py-1"><span>Dashboard</span></a> -->
+                                        <!-- <a href="{{ url('vmt-pms-assigngoals') }}" class="py-1 nav-link sidebar"><span>Dashboard</span></a> -->
                                         <a href="{{ route('pms-dashboard') }}"
-                                            class="nav-link sidebar py-1"><span>Org
+                                            class="py-1 nav-link sidebar"><span>Org
                                                 Appraisal</span></a>
                                     </li>
                                 @endif
@@ -420,6 +426,28 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                                 Config</span></a>
                                     </li>
                                 @endif
+
+                                @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('showPMSFormsMgmtPage_HRView') }}" class="nav-link">
+                                            <span>PMS Forms Management : HR</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                {{-- @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR', 'Manager']))
+                                    <li class="nav-item">
+                                        <a href="{{ route('showPMSFormsMgmtPage_TeamView') }}" class="nav-link">
+                                            <span>PMS Forms Management : Team</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li class="nav-item">
+                                    <a href="{{ route('showPMSFormsMgmtPage_SelfView') }}" class="nav-link">
+                                        <span>PMS Forms Management : Self</span>
+                                    </a>
+                                </li> --}}
                             </ul>
                         </div>
                     </li>
@@ -429,7 +457,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <!-- team -->
 
                     {{-- <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#teamDrop-Down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarRoles">
+                    <a class="pt-0 nav-link sidebar menu-link" href="#teamDrop-Down" data-bs-toggle="" role="button" aria-expanded="false" aria-controls="sidebarRoles">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="11.2" viewBox="0 0 16 11.2">
                                 <path id="people-group-solid" d="M4.6,33.4A1.4,1.4,0,1,1,3.2,32,1.4,1.4,0,0,1,4.6,33.4Zm.61,2.707A3.594,3.594,0,0,0,4,38.8a3.459,3.459,0,0,0,.8,2.262V41.6a.8.8,0,0,1-.8.8H2.4a.8.8,0,0,1-.8-.8v-.67A2.8,2.8,0,0,1,2.8,35.6h.8a2.841,2.841,0,0,1,1.61.507ZM1.6,37.343a1.6,1.6,0,0,0,0,2.115ZM11.2,41.6v-.537a3.6,3.6,0,0,0-.41-4.955A2.788,2.788,0,0,1,12.4,35.6h.8a2.8,2.8,0,0,1,1.2,5.33v.67a.8.8,0,0,1-.8.8H12A.8.8,0,0,1,11.2,41.6Zm3.2-2.142a1.6,1.6,0,0,0,0-2.115ZM14.2,33.4A1.4,1.4,0,1,1,12.8,32,1.4,1.4,0,0,1,14.2,33.4Zm-7.8.2A1.6,1.6,0,1,1,8,35.2,1.6,1.6,0,0,1,6.4,33.6Zm4.8,5.2a2.8,2.8,0,0,1-1.6,2.53V42.4a.8.8,0,0,1-.8.8H7.2a.8.8,0,0,1-.8-.8V41.33A2.8,2.8,0,0,1,7.6,36h.8A2.8,2.8,0,0,1,11.2,38.8ZM6.4,39.857V37.743a1.6,1.6,0,0,0,0,2.115Zm3.2-2.115v2.115a1.6,1.6,0,0,0,0-2.115Z" transform="translate(0 -32)" fill="#686363" />
                             </svg>
@@ -440,31 +468,31 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <div class="collapse menu-dropdown" id="teamDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1"><span>Summary</span></a>
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar"><span>Summary</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Leave</span></a>
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Leave</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Attendance</span></a>
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Attendance</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Expenses & Trevel</span></a>
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Expenses & Trevel</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Timesheet</span></a>
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Timesheet</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Profile
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Profile
                                         change</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Salary
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Salary
                                         on
                                         hold</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('page-not-found')}}" class="nav-link sidebar py-1" role="button"><span>Performance</span></a>
+                                <a href="{{route('page-not-found')}}" class="py-1 nav-link sidebar" role="button"><span>Performance</span></a>
                             </li>
                         </ul>
                     </div>
@@ -475,8 +503,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <!-- pay roll -->
                     {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" href="#payRollDrop-Down" data-bs-toggle="collapse"
+                    <li class="mb-1 nav-item">
+                        <a class="pt-0 nav-link sidebar menu-link" href="#payRollDrop-Down" data-bs-toggle="collapse"
                             role="button" aria-expanded="false" aria-controls="sidebarRoles">
                             <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.652"
                                     viewBox="0 0 16 12.652">
@@ -499,30 +527,32 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                             <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item">
-                                    <a href="{{ route('showPayrollAnalyticsPage') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ route('showPayrollAnalyticsPage') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>
                                             Analytics</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ route('showPayRunPage') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ route('showPayRunPage') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>Pay
                                             Run</span></a>
                                 </li>
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
                                 <li class="nav-item">
-                                    <a href="{{ route('showManagePayslipsPage') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ route('showManagePayslipsPage') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>Manage Payslip</span></a>
                                 </li>
+                                @endcan
                                 <li class="nav-item">
-                                    <a href="{{ route('showPayrollClaimsPage') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ route('showPayrollClaimsPage') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>
                                             Claim</span>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ route('showPayrollReportsPage') }}" class="nav-link sidebar py-1"
+                                    <a href="{{ route('showPayrollReportsPage') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>
                                             Reports</span>
                                     </a>
@@ -538,8 +568,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                 <!-- pay check -->
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#paycheckDrop-Down"
+                <li class="mb-1 nav-item">
+                    <a class="pt-0 nav-link sidebar menu-link" id="employeeInfo" href="#paycheckDrop-Down"
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -554,20 +584,30 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <div class="collapse menu-dropdown" id="paycheckDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             {{-- <li class="nav-item">
-                                <a href="{{ route('paycheckDashboard') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('paycheckDashboard') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Dashboard</span></a>
                             </li> --}}
                             <li class="nav-item">
-                                <a href="{{ route('vmt_salary_details') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('vmt_salary_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Salary
                                         Details</span></a>
                             </li>
-                            {{-- <li class="nav-item">
-                                <a href="{{ route('vmt_investments_details') }}" class="nav-link sidebar py-1"
-                                    role="button"><span>Investments</span></a>
-                            </li> --}}
+
+                            @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+
                             <li class="nav-item">
-                                <a href="{{ route('vmt_form16_details') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('showInvestmentsFormMgmtPage') }}" class="py-1 nav-link sidebar"
+                                    role="button"><span>Investment Form Mgmt
+                                       </span></a>
+                            </li>
+                            @endcan
+
+                            <li class="nav-item">
+                                <a href="{{ route('vmt_investments_details') }}" class="py-1 nav-link sidebar"
+                                    role="button"><span>Investments</span></a>
+                            </li> 
+                            <li class="nav-item">
+                                <a href="{{ route('vmt_form16_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>
                                         Form 16</span></a>
                             </li>
@@ -580,8 +620,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                 <!-- claims -->
 
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" id="employeeInfo" href="#claimsDrop-Down"
+                <li class="mb-1 nav-item">
+                    <a class="pt-0 nav-link sidebar menu-link" id="employeeInfo" href="#claimsDrop-Down"
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="18.46" height="24.613"
@@ -602,11 +642,11 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <div class="collapse menu-dropdown" id="claimsDrop-Down">
                         <ul class="nav nav-sm flex-column">
                             {{-- <li class="nav-item">
-                                <a href="{{ route('paycheckDashboard') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('paycheckDashboard') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Dashboard</span></a>
                             </li> --}}
                             <li class="nav-item">
-                                <a href="{{ route('showReimbursementsPage') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('showReimbursementsPage') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Reimbursements</span></a>
                             </li>
                         </ul>
@@ -618,7 +658,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <!-- reports -->
                     <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" id="employeeInfo"
+                        <a class="pt-0 nav-link sidebar menu-link" id="employeeInfo"
                             href="{{ route('reports-page') }} " data-bs-toggle="" role="button"
                             aria-expanded="false" aria-controls="sidebar360questions">
                             <i>
@@ -634,25 +674,25 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
 
-                                <a href="{{ route('page-not-found') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('page-not-found') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Leave
                                         Report</span></a>
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{ route('showAttendanceReport') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('showAttendanceReport') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Attendance
                                         Report</span></a>
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{ route('Reports.showPayrollReportsPage') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('Reports.showPayrollReportsPage') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Payroll Reports</span>
                                 </a>
                             </li>
                             <li class="nav-item">
 
-                                <a href="{{ route('showPmsReviewsReportPage') }}" class="nav-link sidebar py-1"
+                                <a href="{{ route('showPmsReviewsReportPage') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Pms Reports</span>
                                 </a>
                             </li>
@@ -664,7 +704,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
 
                 <!-- help desk -->
                 {{-- <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#helpDeskDrop-down" data-bs-toggle=""
+                    <a class="pt-0 nav-link sidebar menu-link" href="#helpDeskDrop-down" data-bs-toggle=""
                         role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="18.306" height="16"
                                 viewBox="0 0 18.306 16">
@@ -680,7 +720,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                     <div class="collapse menu-dropdown" id="helpDeskDrop-down">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('attendance-timesheet') }}" class="nav-link sidebar py-1">Timesheet</a>
+                                <a href="{{ route('attendance-timesheet') }}" class="py-1 nav-link sidebar">Timesheet</a>
                             </li>
 
 
@@ -689,8 +729,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 </li> --}}
 
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin']))
-                    <li class="nav-item">
-                        <a class="nav-link sidebar menu-link pt-0" href="#configDrop-down" data-bs-toggle="collapse"
+                    <li class="mb-1 nav-item">
+                        <a class="pt-0 nav-link sidebar menu-link" href="#configDrop-down" data-bs-toggle="collapse"
                             role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                             <i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                     class="bi bi-gear-fill" viewBox="0 0 16 16">
@@ -703,7 +743,7 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                         <div class="collapse menu-dropdown" id="configDrop-down">
                             <ul class="nav nav-sm flex-column">
                                 {{-- <li class="nav-item">
-                                    <a href="{{ route('roles') }}" id="" class="nav-link sidebar py-1"
+                                    <a href="{{ route('roles') }}" id="" class="py-1 nav-link sidebar"
                                         data-bs-toggle="" role="button" aria-expanded="false">
 
                                         <span>
@@ -725,7 +765,17 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                             Template
                                         </span></a>
                                 </li>
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
 
+                                <li lass="nav-item">
+                                    <a href="/documents_settings" class="nav-link"><span>Documents Settings</span></a>
+                                </li>
+                                @endcan
+                                <li class="nav-item">
+                                    {{-- <a href="{{ route('manage_emp_mail_notifications') }}" class="nav-link"><span>Document
+                                            Manage Employee Mail Notifications
+                                        </span></a> --}}
+                                </li>
                                 {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
                                 <li class="nav-item">
@@ -734,8 +784,12 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('showAttendanceSettingsPage') }}" class="nav-link sidebar py-1">
-                                        <span> Attendance </span></a>
+                                    <a href="{{ route('showAttendanceSettingsPage') }}" class="py-1 nav-link sidebar">
+                                        <span> Attendance Settings</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('investment_settings') }}" class="py-1 nav-link sidebar">
+                                        <span> Investment Settings</span></a>
                                 </li>
                                 {{-- @endif --}}
                             </ul>
@@ -744,8 +798,8 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                 @endif
 
                 <!-- exit -->
-                <li class="nav-item">
-                    <a class="nav-link sidebar menu-link pt-0" href="#exitDrop-down" data-bs-toggle="collapse"
+                <li class="mb-1 nav-item">
+                    <a class="pt-0 nav-link sidebar menu-link" href="#exitDrop-down" data-bs-toggle="collapse"
                         role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i><svg xmlns="http://www.w3.org/2000/svg" width="20.227" height="17.699"
                                 viewBox="0 0 20.227 17.699">
@@ -760,13 +814,13 @@ $approvals_att_regularization_count = \DB::table('vmt_employee_attendance_regula
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item ">
                                 <a href="{{ route('page-not-found') }}" id=""
-                                    class="nav-link sidebar py-1"><span> Resignation
+                                    class="py-1 nav-link sidebar"><span> Resignation
                                         Entry
                                     </span> </a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{ route('page-not-found') }}" id="tds"
-                                    class="nav-link sidebar py-1"><span>Resignation
+                                    class="py-1 nav-link sidebar"><span>Resignation
                                         Status
                                     </span></a>
                             </li>

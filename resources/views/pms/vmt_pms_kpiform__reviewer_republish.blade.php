@@ -100,7 +100,7 @@
                                                     placeholder="type here">{{ $formData->source }}</textarea>
                                             </td>
                                         @endif
-                                        @if (isset($columnHeader['kpiWeightage']))
+                                        @if (isset($columnHeader['kpi_weightage']))
                                             <td class="text-box-td">
                                                 <textarea name="kpiWeightage[]" id="kpiWeightage"
                                                     onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 37'
@@ -289,7 +289,7 @@
                                          });
 
                                         $('.loader').hide();
-                                        
+
                                     },
                                     error: function(error) {
                                         $('.loader').hide();

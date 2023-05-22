@@ -110,13 +110,13 @@ class VmtPMSModuleController extends Controller
 
         $allEmployeesList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
             ->get();
 
         $allEmployeesWithoutLoggedUserList = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('users.id','!=',Auth::id())
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation')
+            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation')
             ->get();
 
         $loggedInUser = Auth::user();
@@ -169,12 +169,13 @@ class VmtPMSModuleController extends Controller
             ->get();
 
         // Get logged in user Employee deatils
-        $loggedUserManagerNumber = VmtEmployee::where('userid',$loggedUserId)->value('emp_no');
+        $loggedUserManagerNumber = User::where('id',$loggedUserId)->first()->user_code;
+
         // Get logged in Manager Employees List
         $loggedManagerEmployees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
             ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
             ->where('l1_manager_code',$loggedUserManagerNumber)
-            ->select('users.name','users.id','vmt_employee_details.emp_no','vmt_employee_office_details.designation','users.avatar as avatar')
+            ->select('users.name','users.id','users.user_code','vmt_employee_office_details.designation','users.avatar as avatar')
             ->get();
 
         $loggedManagerEmployeesIDs = [];
@@ -424,8 +425,10 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpi_weightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+           // dd( $config->selected_columns);
         }
+        //dd($show);
         return view('pms.vmt_pms_kpiform_create',compact('config','show','selectedYear'));
     }
 
@@ -684,7 +687,7 @@ class VmtPMSModuleController extends Controller
                                                        $request->hidden_calendar_year." - ".strtoupper($request->assignment_period_start),
                                                        $receiverName,
                                                        $comments_employee,
-                                                       $login_Link));    
+                                                       $login_Link));
                     }
                 }
             }
@@ -723,7 +726,7 @@ class VmtPMSModuleController extends Controller
         $show['kpiWeightage'] = 'true';
         $show['appraiser'] = false;
         $show['manager'] = false;
-
+       //  dd($config);
         if ($config) {
             $config->header = json_decode($config->column_header, true);
             $show['dimension'] = $config->available_columns && in_array('dimension', explode(',', $config->available_columns)) ? 'true': 'false';
@@ -734,9 +737,9 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->available_columns && in_array('target', explode(',', $config->available_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->available_columns && in_array('stretchTarget', explode(',', $config->available_columns)) ? 'true': 'false';
             $show['source'] = $config->available_columns && in_array('source', explode(',', $config->available_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->available_columns && in_array('kpiWeightage', explode(',', $config->available_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->available_columns && in_array('kpi_weightage', explode(',', $config->available_columns)) ? 'true': 'false';
         }
-
+      // dd($show);
         $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id')
         ->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')
         ->where('vmt_pms_kpiform_reviews.assignee_id','=',$request->assigneeId)
@@ -754,7 +757,7 @@ class VmtPMSModuleController extends Controller
                 $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
             }
         }
-
+          //dd($show);
         $kpiRows      =  VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->get();
         $reviewCompleted = false;
         $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->pluck('id')->toArray();
@@ -826,7 +829,7 @@ class VmtPMSModuleController extends Controller
         $enableButton = false;
 
         return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
-        dD("Assigner's review page is pending");
+
 
 
     }
@@ -877,7 +880,7 @@ class VmtPMSModuleController extends Controller
                                     ->cc($hr_details->officical_mail)
                                     ->send(new VmtPMSMail_NotifyManager($assigneeUser->name,
                                                                         $currentUser_empDetails->designation,
-                                                                        $userEmployeeDetails->name, 
+                                                                        $userEmployeeDetails->name,
                                                                         $assignment_period, request()->getSchemeAndHttpHost() ));
 
                             $message = "Employee has submitted KPI Assessment.  ";
@@ -991,7 +994,8 @@ class VmtPMSModuleController extends Controller
     public function getEmployeesOfManager(Request $request)
     {
         // dd($request->all());
-         $currentEmpCode = VmtEmployee::whereIn('userid',explode(',', $request->emp_id))->pluck('emp_no');
+         $currentEmpCode = User::whereIn('id',explode(',', $request->emp_id))->pluck('user_code');
+
         $employeesList = User::leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                          ->whereIn('vmt_employee_office_details.l1_manager_code', $currentEmpCode)
                          ->where('users.active','1')
@@ -1245,7 +1249,7 @@ class VmtPMSModuleController extends Controller
                     \Mail::to($mailingList)
                             ->cc($hr_details->officical_mail)
                             ->send(new VmtPMSMail_Reviewer("approved",
-                                                            
+
                                                              $receiverDetails->name,
                                                              $request->hidden_calendar_year,
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
@@ -1593,7 +1597,8 @@ class VmtPMSModuleController extends Controller
         try{
 // dd($request->selectedReviewer);
             if(isset($request->selectedReviewer)){
-                $reviewerEmpNo = VmtEmployee::where('userid',$request->selectedReviewer)->pluck('emp_no')->first();
+                $reviewerEmpNo = User::where('id',$request->selectedReviewer)->first()->user_code;
+
                 if(!empty($reviewerEmpNo)){
                     $employees = User::leftJoin('vmt_employee_office_details','users.id','=','vmt_employee_office_details.user_id')
                                 ->leftJoin('vmt_employee_details','users.id','=','vmt_employee_details.userid')
@@ -1685,6 +1690,32 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;
 
         return $dashboardCountersData;
+    }
+
+    /*
+        Revoke a manager reviewed form. It can be done by HR .
+
+        Todo : In future, manager also can revoke the form based on end date. After that, he cant .
+                This is controlled via PMS settings page.
+
+    */
+    public function revokeSubmittedForm(Request $request){
+        //dd($request->all());
+
+        $vmtAssignedFormReview = VmtPMS_KPIFormReviewsModel::where('id',$request->assigneeGoalId)->first();
+
+        $json_values = json_decode($vmtAssignedFormReview->is_reviewer_submitted, true);
+
+        foreach($json_values as $key => $value)
+        {
+            $json_values[$key] = "0";
+            //dd(json_encode($json_values));
+            $vmtAssignedFormReview->is_reviewer_submitted = json_encode($json_values);
+            $vmtAssignedFormReview->save();
+        }
+        return response()->json([
+            "status" => "success"
+        ]);
     }
 
 }

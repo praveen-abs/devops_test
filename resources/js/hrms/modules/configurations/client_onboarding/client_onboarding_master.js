@@ -35,7 +35,7 @@ import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber'
 
 
-import clientOnboarding from './client_onboarding_master.vue'  
+import clientOnboarding from './client_onboarding/client_onboarding.vue'
 const app = createApp(clientOnboarding);
 const pinia=createPinia()
 

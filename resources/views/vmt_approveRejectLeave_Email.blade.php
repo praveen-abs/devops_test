@@ -1,5 +1,5 @@
 <?php
-//$employee = \DB::table('vmt_employee_payslip')->first();
+
 $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
@@ -97,7 +97,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                                         <table>
                                                             <tbody>
                                                                 <tr></tr>
-                                                                    <?php $empAvatar = json_decode($empAvatar, true) ?>
+                                                                    <?php $empAvatar = $empAvatar ?>
                                                                     @if ($empAvatar->type == 'shortname')
                                                                         <td align="center"
                                                                             style="height: 100px;

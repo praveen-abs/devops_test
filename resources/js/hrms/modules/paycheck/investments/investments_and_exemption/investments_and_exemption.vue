@@ -1,12 +1,13 @@
 <template>
+     <Toast />
     <div>
         <TaxSavingInvestments />
 
         <!-- Navigation Bar -->
 
-        <div class="p-2 pb-0 mb-3 rounded-lg shadow tw-card left-line">
+        <div class="p-2 pb-0 mb-3 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
 
-            <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
+            <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class="nav-item " role="presentation"  >
                     <a class="mx-4 nav-link" id="" data-bs-toggle="pill" href="" 
                         role="tab" aria-controls="" aria-selected="true" @click="investmentStore.investment_exemption_steps = 1" :class="[investmentStore.investment_exemption_steps === 1 ? 'active' : '']">
@@ -110,8 +111,45 @@ const investmentStore = investmentMainStore()
 
 const activetab = ref(investmentStore.investment_exemption_steps);
 
-onMounted(() => {
+onMounted(async () => {
     console.log(activetab.value);
+    setTimeout(async () => {
+        investmentStore.fetchPropertyType()
+    }, 2000);
+
+    setTimeout(async () => {
+        investmentStore.hop.splice(0,  investmentStore.hop.length);
+    }, 3000);
+
 })
 
 </script>
+
+<style>
+
+.dec_amt {
+    font-weight: 501;
+}
+.p-inputtext.p-component.p-inputnumber-input{
+height: 32px;
+background: #f6f4f46e;
+border: 0.1px solid rgba(187, 187, 187, 0.65);
+}
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #3b82f6fc ;
+  border-color: #3B82F6;
+}
+.p-inputtext {
+  margin: 0;
+  height: 32px;
+  background: #f6f4f46e;
+  border: 0.1px solid rgba(187, 187, 187, 0.65);
+}
+.p-datatable-scrollable .p-datatable-thead {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+}
+</style>

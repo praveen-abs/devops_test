@@ -1,7 +1,7 @@
 <template>
     <div class="mb-2 card">
         <div class="card-body">
-            <h6 class="">Family Information
+            <h6 class="fw-bold fs-15">Family Information
                 <button type="button" class="float-right btn btn-orange"
                 style="margin-left: 79%"
                     @click="DialogFamilyinfovisible = true" >
@@ -13,7 +13,7 @@
                     <template #header>
                         <div>
                             <h5
-                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
+                                :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }" class="fw-bold fs-15">
                                 Family Information</h5>
                         </div>
                     </template>
@@ -33,8 +33,7 @@
                     <div class="space-between M-T">
                         <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02"
-                                v-model="familydetails.dob">
+                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" v-model="familydetails.dob">
                         </div>
 
                         <div class="flex-col input_text">
@@ -78,8 +77,15 @@
                     </Column>
 
                     <Column field="dob" header="Date of Birth " style="min-width: 12rem">
+                            <template #body="slotProps">
+                            <div v-if="slotProps.data.dob == 'Invalid Date'">
+                            -
+                            </div>
+                            <div v-else>
+                            {{ dayjs(slotProps.data.dob).format('DD-MMM-YYYY') }}
+                            </div>
+                            </template>
                     </Column>
-
                     <Column field="phone_number" header="Phone" style="min-width: 12rem">
                     </Column>
                     <Column :exportable="false" header="Action" style="min-width:8rem">
@@ -156,6 +162,7 @@
 
 </template>
 <script setup>
+import dayjs from 'dayjs';
 
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'

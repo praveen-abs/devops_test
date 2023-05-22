@@ -1,0 +1,381 @@
+{
+  "investment": [
+    {
+      "lender_name": "Hyacinth Randall",
+      "lender_pan": "Porter Cruz",
+      "lender_type": "Others",
+      "loss_from_housing_property": "Igor Winters",
+      "address": "Ipsa aspernatur seq",
+      "property_type": "Self Occupied Property",
+      "id": 1
+    },
+    {
+      "lender_name": "Roanna Bishop",
+      "lender_pan": "Aiko Odonnell",
+      "lender_type": "Financial Institution",
+      "loss_from_housing_property": "Rigel Cohen",
+      "address": "Modi quis sit ut ne",
+      "property_type": "Self Occupied Property",
+      "id": 2
+    },
+    {
+      "lender_name": "Upton Lancaster",
+      "lender_pan": "Nelle Dillard",
+      "lender_type": "Financial Institution",
+      "loss_from_housing_property": "Kennan Snyder",
+      "address": "Voluptate excepturi ",
+      "property_type": "Self Occupied Property",
+      "id": 3
+    },
+    {
+      "lender_name": "Kitra Doyle",
+      "lender_pan": "Earum quis in a poss",
+      "lender_type": "Financial Institution",
+      "loss_from_housing_property": "",
+      "address": "",
+      "rent_received": "Fugiat qui animi m",
+      "municipal_tax": "In molestiae asperio",
+      "maintenance": "In aliquip optio ex",
+      "net_value": "Veritatis aute aut a",
+      "interest": "Saepe tempore commo",
+      "income_loss": "225",
+      "property_type": "Let Out Property",
+      "id": 4
+    },
+    {
+      "lender_name": "Madonna Knox",
+      "lender_pan": "Expedita ratione ips",
+      "lender_type": "Financial Institution",
+      "loss_from_housing_property": "",
+      "address": "",
+      "rent_received": "Id enim praesentium ",
+      "municipal_tax": "Voluptatem ut est ",
+      "maintenance": "Debitis dicta offici",
+      "net_value": "Laboris repudiandae ",
+      "interest": "Beatae omnis amet f",
+      "income_loss": "579",
+      "property_type": "Let Out Property",
+      "id": 5
+    },
+    {
+      "lender_name": "Xander Freeman",
+      "lender_pan": "Voluptas similique l",
+      "lender_type": "",
+      "loss_from_housing_property": "",
+      "address": "",
+      "rent_received": "Rem et est qui quo ",
+      "municipal_tax": "Odit quos ab ex dele",
+      "maintenance": "Nulla aut dicta ut d",
+      "net_value": "Labore duis aut corr",
+      "interest": "Inventore distinctio",
+      "income_loss": "59",
+      "property_type": "Deemed Let Out Property",
+      "id": 6
+    },
+    {
+      "lender_name": "Kamal Ratliff",
+      "lender_pan": "Impedit ullamco est",
+      "lender_type": "Others",
+      "loss_from_housing_property": "",
+      "address": "",
+      "rent_received": "Sit ut sed illo dol",
+      "municipal_tax": "Qui vitae non sunt c",
+      "maintenance": "Autem voluptatem dui",
+      "net_value": "Itaque impedit mole",
+      "interest": "Magna perferendis au",
+      "income_loss": "349",
+      "property_type": "Deemed Let Out Property",
+      "id": 7
+    },
+    {
+      "lender_name": "Upton Lancaster",
+      "lender_pan": "Nelle Dillard",
+      "lender_type": "Financial Institution",
+      "loss_from_housing_property": "Kennan Snyder",
+      "address": "Voluptate excepturi ",
+      "property_type": "Self Occupied Property",
+      "id": 8
+    },
+    {
+      "lender_name": "",
+      "lender_pan": "",
+      "lender_type": "Others",
+      "loss_from_housing_property": "",
+      "address": "",
+      "rent_received": "10000",
+      "municipal_tax": "1000",
+      "maintenance": "",
+      "net_value": "",
+      "interest": "",
+      "income_loss": "",
+      "property_type": "Let Out Property",
+      "id": 9
+    }
+  ],
+  "rental": [
+    {
+      "from_month": "2023-04-19",
+      "to_month": "2023-04-04",
+      "city": "Mumbai",
+      "total_rent_paid": "1000",
+      "landlord_name": "shelly",
+      "landlord_PAN": "1245664321",
+      "address": "12131231313",
+      "id": 1
+    },
+    {
+      "from_month": "2003-06-21",
+      "to_month": "2013-01-27",
+      "city": "",
+      "total_rent_paid": "Magni consequatur c",
+      "landlord_name": "Jerome Bradley",
+      "landlord_PAN": "Octavius Zamora",
+      "address": "Est sed quod laboru",
+      "id": 2
+    },
+    {
+      "from_month": "2004-05-16",
+      "to_month": "2005-06-15",
+      "city": "Mumbai",
+      "total_rent_paid": "Sed vel velit elit",
+      "landlord_name": "Otto Kirk",
+      "landlord_PAN": "Tana Valdez",
+      "address": "Culpa officiis exerc",
+      "id": 3
+    },
+    {
+      "from_month": "1980-04-15",
+      "to_month": "2004-07-27",
+      "city": "",
+      "total_rent_paid": "Quae illum ut do re",
+      "landlord_name": "Britanni Atkinson",
+      "landlord_PAN": "Noelle Macdonald",
+      "address": "Tempore pariatur V",
+      "id": 4
+    },
+    {
+      "from_month": "2023-04-19",
+      "to_month": "2023-04-04",
+      "city": "Kolkatta",
+      "total_rent_paid": "1000",
+      "landlord_name": "shelly",
+      "landlord_PAN": "1245664321",
+      "address": "12131231313",
+      "id": 5
+    },
+    {
+      "from_month": "1998-08-14",
+      "to_month": "2016-04-26",
+      "city": "",
+      "total_rent_paid": "Non temporibus neque",
+      "landlord_name": "Desirae Langley",
+      "landlord_PAN": "August Savage",
+      "address": "Nesciunt vel ullamc",
+      "id": 6
+    }
+  ],
+  "salary": [
+    {
+      "ymi": "5",
+      "ra": "9",
+      "reason": "Magna sunt earum nul",
+      "id": 1
+    }
+  ],
+  "Interst_free_loan": [],
+  "TravelAdvance": [
+    {
+      "tdl": "",
+      "deductMethod": "",
+      "sumbitWithIn": "",
+      "isDeductedInsubsequentpayroll": "",
+      "ra": "",
+      "reason": "",
+      "id": 1
+    },
+    {
+      "tdl": "",
+      "deductMethod": "",
+      "sumbitWithIn": "",
+      "isDeductedInsubsequentpayroll": "",
+      "ra": "11",
+      "reason": "Obcaecati est assume",
+      "id": 2
+    }
+  ],
+  "InterestWithLoan": [
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "2000",
+      "Term": "",
+      "Interest_rate": "1995",
+      "month_EMI": "1998",
+      "EMI_END_Month": "",
+      "Total_Month": "2012",
+      "Reason": "Ut aut ut similique ",
+      "id": 1
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "2000",
+      "Term": "",
+      "Interest_rate": "1995",
+      "month_EMI": "1998",
+      "EMI_END_Month": "",
+      "Total_Month": "2012",
+      "Reason": "Ut aut ut similique ",
+      "id": 2
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1982",
+      "Term": "",
+      "Interest_rate": "2005",
+      "month_EMI": "2011",
+      "EMI_END_Month": "2023-04-27T18:30:00.000Z",
+      "Total_Month": "2006",
+      "Reason": "Excepteur omnis pari",
+      "id": 3
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1982",
+      "Term": "",
+      "Interest_rate": "2005",
+      "month_EMI": "2011",
+      "EMI_END_Month": "2023-04-27T18:30:00.000Z",
+      "Total_Month": "2006",
+      "Reason": "Excepteur omnis pari",
+      "id": 4
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1982",
+      "Term": "",
+      "Interest_rate": "2005",
+      "month_EMI": "2011",
+      "EMI_END_Month": "2023-04-27T18:30:00.000Z",
+      "Total_Month": "2006",
+      "Reason": "Excepteur omnis pari",
+      "id": 5
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1982",
+      "Term": "",
+      "Interest_rate": "2005",
+      "month_EMI": "2011",
+      "EMI_END_Month": "2023-04-27T18:30:00.000Z",
+      "Total_Month": "2006",
+      "Reason": "Excepteur omnis pari",
+      "id": 6
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1992",
+      "Term": "",
+      "Interest_rate": "1980",
+      "month_EMI": "1978",
+      "EMI_Start_Month": "2023-04-21T18:30:00.000Z",
+      "EMI_END_Month": "2023-04-27T18:30:00.000Z",
+      "Total_Month": "2001",
+      "Reason": "Accusamus quis volup",
+      "id": 7
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1976",
+      "Term": "",
+      "Interest_rate": "1984",
+      "month_EMI": "1982",
+      "EMI_Start_Month": "2023-04-14T18:30:00.000Z",
+      "EMI_END_Month": "2023-04-19T18:30:00.000Z",
+      "Total_Month": "1999",
+      "Reason": "Autem quis incidunt",
+      "id": 8
+    },
+    {
+      "minEligibile": "",
+      "availPerInCtc": "",
+      "deductMethod": "",
+      "cusDeductMethod": "",
+      "maxTenure": "",
+      "ra": "1982",
+      "Term": "",
+      "Interest_rate": "1989",
+      "month_EMI": "2009",
+      "EMI_Start_Month": "2023-04-14T18:30:00.000Z",
+      "EMI_END_Month": "2023-04-19T18:30:00.000Z",
+      "Total_Month": "2012",
+      "Reason": "Non eiusmod ut eos ",
+      "id": 9
+    }
+  ],
+  "exit": [
+    {
+      "dori": "24-Feb-1994",
+      "resignation": "",
+      "npd": "1983-09-22",
+      "elwd": "",
+      "ped": "2004-06-25",
+      "exlRes": "",
+      "wr": "",
+      "status": "pending",
+      "id": 1
+    },
+    {
+      "dori": "21-Jun-1983",
+      "resignation": "Illness",
+      "npd": "1983-03-11",
+      "elwd": "2023-04-11",
+      "ped": "1987-07-03",
+      "exlRes": "",
+      "wr": "",
+      "status": "pending",
+      "id": 2
+    },
+    {
+      "dori": "31-May-2020",
+      "resignation": "Marriage & Relocating",
+      "npd": "1986-12-27",
+      "elwd": "2023-05-16",
+      "ped": "2012-07-22",
+      "exlRes": "",
+      "wr": "",
+      "status": "pending",
+      "id": 3
+    }
+  ]
+}

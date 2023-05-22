@@ -91,13 +91,16 @@ class User extends Authenticatable
         return $this->hasMany(VmtEmployeeDocuments::class,'user_id');
     }
 
-    function array_payslip_detail(){
-        return $this->hasMany(VmtEmployeePaySlip::class,'user_id');
+    function single_payslip_detail(){
+        return $this->hasOne(VmtEmployeePaySlipV2::class,'emp_payroll_id');
+    }
+    function single_payslip_empid(){
+        return $this->hasOne(VmtEmployeePayroll::class,'user_id');
+    }
+    function single_payslip_month(){
+        return $this->hasOne(VmtEmployeePayroll::class,'client_id');
     }
 
-    function single_payslip_detail(){
-        return $this->hasOne(VmtEmployeePaySlip::class,'user_id');
-    }
 
     function array_notifications(){
         return $this->hasMany(VmtNotifications::class,'user_id');

@@ -10,8 +10,9 @@ if ($query_clientMaster) {
 
 
 
-<header id="page-topbar">
+<header id="page-topbar" class="border">
     <div class="navbar-header d-flex justify-content-between align-items-center ">
+
         <div class="d-flex ">
             <button type="button" class="btn btn-sm fs-16 vertical-menu-btn topnav-hamburger border-0 outline-none"
                 id="topnav-hamburger-icon">
@@ -29,31 +30,49 @@ if ($query_clientMaster) {
 
         <div class="d-flex">
             <div class="notify-content d-flex justify-content-center align-items-center">
-                <button type="button" class="form-select outline-none border-0 fw-bold" id="page-header-user-dropdown"
+                <button type="button" class="form-select outline-none border-0 fw-bold dropdown-toggle" id="page-header-user-dropdown"
                     data-bs-toggle="offcanvas" data-bs-target=".offcanvas" aria-controls="" aria-haspopup="true"
                     aria-expanded="false">
+                    <?php
+                    if(sessionGetSelectedClientName()){
+                        if(sessionGetSelectedClientName() == 'All'){
+                            echo sessionGetSelectedClientFullName();
+                        }else{
+                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                        }
+                    }else{
+                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                    }
 
-                    {{ getClientName(auth()->user()->id) }}
+
+                    ?>
+
+                    {{-- {{ empty(  ) ? "Client not assigned" :  }} --}}
 
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
-                    style="top: 50px;border-radius:10px 0px 0px 0px">
-                    <div class="offcanvas-header pb-0 bg-ash  align-items-center border-0 ">
+                    style="top: 50px;border-radius:10px 0px 0px 0px;">
+                    <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
+
                         <a role="button" href="{{ route('pages-profile-new') }}"
-                            class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
+                            {{-- class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
                             data-bs-placement="right" title="View Profile">
                             <i class="fa fa-user text-muted fs-15"></i>
-                        </a>
+                        </a> --}}
+                        class="text-dark profile-icon d-flex align-items-center "  >
+                        <i class="fa fa-user fs-4 text-primary" ></i>
+                        <h1 class="ml-3 text-primary">View Profile</h1>
+                    </a>
 
-                        <button type="button" class="close outline-none bg-transparent border-0 h3"
-                            data-bs-dismiss="offcanvas" aria-label="Close">
+                        <button type="button" class="close outline-none  h3"
+                            data-bs-dismiss="offcanvas" aria-label="Close" style="" >
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="offcanvas-body overflow-hidden p-0">
+                    <div class="offcanvas-body overflow-hidden p-0 ">
                         <div
-                            class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column">
+                            class="bg-ash border-bottom-liteAsh d-flex align-items-center justify-content-center flex-column pt-3">
                             <?php
                             //dd($currentUser);
                             $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
@@ -69,16 +88,18 @@ if ($query_clientMaster) {
                                     src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
                             @endif
 
-                            <p class="text-dark text-center  fs-15  mb-1">
+                            <p class="text-dark text-center  fs-5 my-2">
                                 {{ Auth::user()->name }}</p>
-                            <p class="text-muted text-center mb-1"><span class="">User Id :</span>
-                                {{ Auth::user()->user_code }}</p>
+                            <div class="text-muted fs-5 d-flex justify-items-center">
+                                <span class="fs-5 text-center">User Id :{{ Auth::user()->user_code }}</span>
+                            </div>
 
-                            <div class="mb-3">
-                                <a class="text-danger " href="javascript:void();"
+                            <div class="mb-3 mt-3">
+                                <a class="bg-danger p-2 rounded-1 d-flex justify-items-center align-items-center" href="javascript:void();"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
-                                        class="bx bx-power-off fs-16 align-middle me-1 "></i> <span key="t-logout">Sign
-                                        Out</span></a>
+                                        class="bx bx-power-off fs-5 text-light "></i>
+                                        <span key="t-logout " class="text-light">Sign Out</span>
+                                </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
                                     @csrf
@@ -88,7 +109,7 @@ if ($query_clientMaster) {
 
                         @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']) && hasSubClients())
                             <?php
-                            $clientsList = fetchClients();
+                            $clientsList = fetchClients() ;
                             $currentClientID = session('client_id');
 
                             ?>
@@ -109,7 +130,19 @@ if ($query_clientMaster) {
                                                 <img src="{{ URL::asset($client->client_logo) }}" alt=""
                                                     class=" mh-100 mw-100">
                                             </div>
-                                            <span class=" fw-bold ">{{ $client->client_name }}</span>
+                                            <?php
+                                                    if(sessionGetSelectedClientName()){
+                                                        if(sessionGetSelectedClientName() == 'All'){
+                                                            echo sessionGetSelectedClientFullName();
+                                                        }else{
+                                                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                                                        }
+                                                    }else{
+                                                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                                                    }
+
+
+                                             ?>
                                         </div>
                                         @if (!empty($currentClientID) && $currentClientID == $client->id)
                                             <img src='{{ URL::asset('assets/images/check.png') }}'
@@ -215,3 +248,12 @@ if ($query_clientMaster) {
         updateGlobalClient(selectedClientID);
     });
 </script>
+
+
+{
+    {{-- <a role="button" href="{{ route('pages-profile-new') }}"
+                            class="border-0 outline-none profile-icon bg-transparent" data-bs-toggle="tooltip"
+                            data-bs-placement="right" title="View Profile">
+                            <i class="fa fa-user text-muted fs-15"></i>
+                        </a> --}}
+}

@@ -8,15 +8,17 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth as auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
 
 use App\Models\VmtGeneralInfo;
 use App\Models\User;
 use App\Models\VmtClientMaster;
 use Illuminate\Support\Facades\Cache;
 use App\Mail\PasswordResetLinkMail;
+use Illuminate\Support\Facades\URL;
+use App\Services\VmtLoginService;
 
 use App\Http\Controllers\VmtStaffAttendanceController;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -91,7 +93,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-     
+
         $request->validate([
             'user_code' => 'required',
             'password' => 'required',
@@ -200,56 +202,8 @@ class LoginController extends Controller
         return view('auth.reset_password',compact('generalInfo'));
     }
 
-    public function sendPasswordResetLink(Request $request){
-
-        $message = "";
-        $mail_status = "";
-        $status = "";
-
-        $user = User::where('email',$request->email);
-
-        //Check whether the given email exists in system
-        if($user->exists())
-        {
-
-            //Generate temporary URL
-            $passwordResetLink =  URL::temporarySignedRoute(
-                'vmt-signed-passwordresetlink', now()->addMinutes(1), ['uid' => $user->value('id')]
-            );
-
-            //Then, send mail to that email
-
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-            $isSent    = \Mail::to($request->email)->send(new PasswordResetLinkMail($user->value('name'), $user->value('user_code'), $passwordResetLink, $image_view));
-
-            if( $isSent) {
-                $mail_status = "Mail sent successfully";
-
-            } else {
-                $mail_status= "Mail Error : There was one or more failures.";
-            }
-
-            $status = "success";
-            $message = "Instructions to reset password reset is sent to your mail.";
-
-
-        }
-        else
-        {
-            $status = "failure";
-            $message = "Email doesnt exist in our system. Kindly check and try again.";
-        }
-
-
-        $response = [
-            'status' => $status,
-            'message' => $message,
-            'mail_status' => $mail_status,
-        ];
-
-        return $response;
+    public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){
+        return $serviceVmtLoginService->sendPasswordResetLink($request->user_code, $request->email);
     }
 
     public function processSignedPasswordResetLink(Request $request){
@@ -264,6 +218,15 @@ class LoginController extends Controller
         }
 
     }
+
+   function isEmail($email) {
+        if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
+             return true;
+        } else {
+             return false;
+        }
+   }
+
 
     protected function syncStaffAttendance(){
 

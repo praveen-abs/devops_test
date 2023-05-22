@@ -77,4 +77,6 @@ class VmtAttendanceSettingsController extends Controller
         return VmtWorkShifts::get();
 
     }
+
+
 }

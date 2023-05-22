@@ -1,4 +1,10 @@
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 :root {
     --color-primary_blue: #002f54;
     --color-primary_orange: #e54e0d;
@@ -9,6 +15,15 @@
     --color-medium-ash: #c9c9c9;
     --color-dark-ash: #646464;
     --color-lite-ash: #e2e2e2;
+}
+@layer components {
+    .tw-card {
+        background-color: theme("colors.white");
+        border-radius: theme("borderRadius.lg");
+        padding: theme("spacing.6") theme("spacing.6");
+        width: 100%;
+        box-shadow: theme("boxShadow.xl");
+    }
 }
 
 button,label,p,span,*{
@@ -180,7 +195,10 @@ textarea {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 
 }
+img{
+display: revert !important;
 
+}
 th.gridjs-th-sort:hover{
     background-color: #003056 !important;
 }
@@ -523,7 +541,7 @@ table.no-padding tr td {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(50px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(70px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 /* sub header (bread-crumb) nav bar */
 .page-title-box {
