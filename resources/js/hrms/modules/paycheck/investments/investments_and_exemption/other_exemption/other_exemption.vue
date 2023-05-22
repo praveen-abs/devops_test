@@ -12,9 +12,9 @@
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
-                    <template #body="slotProps">
-                       
-                    </template>
+                    <!-- <template #body="slotProps">
+                       <div v-if="slotProps.data."></div>
+                    </template> -->
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
