@@ -52,7 +52,7 @@ if ($query_clientMaster) {
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
-                    style="top: 50px;border-radius:10px 0px 0px 0px">
+                    style="top: 50px;border-radius:10px 0px 0px 0px;">
                     <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
 
                         <a role="button" href="{{ route('pages-profile-new') }}"
