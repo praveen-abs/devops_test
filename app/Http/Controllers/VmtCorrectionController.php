@@ -10,6 +10,7 @@ use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployeePayroll;
 use App\Models\VmtClientMaster;
 use App\Models\VmtPayroll;
+use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeePayslipV2;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeLeaves;
