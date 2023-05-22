@@ -10,7 +10,7 @@ if ($query_clientMaster) {
 
 
 
-<header id="page-topbar" class="border ">
+<header id="page-topbar" class="border">
     <div class="navbar-header d-flex justify-content-between align-items-center ">
 
         <div class="d-flex ">
@@ -35,9 +35,13 @@ if ($query_clientMaster) {
                     aria-expanded="false">
                     <?php
                     if(sessionGetSelectedClientName()){
-                        echo sessionGetSelectedClientName();
+                        if(sessionGetSelectedClientName() == 'All'){
+                            echo sessionGetSelectedClientFullName();
+                        }else{
+                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                        }
                     }else{
-                        echo getClientName(auth()->user()->id);
+                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
                     }
 
 
@@ -48,7 +52,7 @@ if ($query_clientMaster) {
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
-                    style="top: 50px;border-radius:10px 0px 0px 0px">
+                    style="top: 50px;border-radius:10px 0px 0px 0px;">
                     <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
 
                         <a role="button" href="{{ route('pages-profile-new') }}"
@@ -126,7 +130,19 @@ if ($query_clientMaster) {
                                                 <img src="{{ URL::asset($client->client_logo) }}" alt=""
                                                     class=" mh-100 mw-100">
                                             </div>
-                                            <span class=" fw-bold ">{{ $client->client_name }}</span>
+                                            <?php
+                                                    if(sessionGetSelectedClientName()){
+                                                        if(sessionGetSelectedClientName() == 'All'){
+                                                            echo sessionGetSelectedClientFullName();
+                                                        }else{
+                                                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                                                        }
+                                                    }else{
+                                                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
+                                                    }
+
+
+                                             ?>
                                         </div>
                                         @if (!empty($currentClientID) && $currentClientID == $client->id)
                                             <img src='{{ URL::asset('assets/images/check.png') }}'

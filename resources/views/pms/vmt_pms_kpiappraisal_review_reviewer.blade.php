@@ -1,3 +1,8 @@
+<?php
+
+    //dd($assignedGoals);
+
+?>
 @extends('layouts.master')
 @section('css')
 
@@ -721,6 +726,13 @@
                                 @endif
 
                             </form>
+
+                                @if (str_contains($assignedGoals->is_reviewer_submitted,'"1"') &&  Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR'])   )
+                                    <div class="buttons d-flex align-items-center justify-content-end ">
+                                        <button class="btn btn-orange" id="revoke_form"> Revoke Form</button>
+                                    </div>
+                                @endif
+
                             @if ($enableButton)
                                 @if ($assignedGoals->is_assignee_submitted == '1')
                                     @if ($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
@@ -887,6 +899,53 @@
         $(document).on('keyup', '.reviewer_kpi_percentage', function() {
             calculateOverallReviewerKpiPercentage();
         })
+
+        //Revoke PMS form . For now this is done by HR only. In future, Manager too can do this
+        $('#revoke_form').click(function(e) {
+            e.preventDefault();
+            console.log("Revoking the PMS form");
+
+            //$('.loader').show();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to revoke this form?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then(function(value) {
+                if (value.isConfirmed) {
+                    var assigneeGoalId = "{{ $assignedGoals->id }}";
+
+                    //$('.loader').show();
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('pms-revokeSubmittedForm') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            assigneeGoalId: assigneeGoalId,
+                        },
+                        success: function(data) {
+                            if (data.status == "success") {
+                                Swal.fire("Form revoked successfully", data.message, "success").then(function() {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire("Error!", data.message, "error");
+                            }
+                            $('.loader').hide();
+                        },
+                        error: function(error) {
+                            $('.loader').hide();
+                        }
+                    });
+                }
+            });
+        });
+
 
         function getCalculationResult(idValue) {
             var kpiAchievementReviewerReview = idValue.val();

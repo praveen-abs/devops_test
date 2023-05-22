@@ -72,4 +72,6 @@ class VmtAttendanceSettingsController extends Controller
 
 
     }
+
+
 }

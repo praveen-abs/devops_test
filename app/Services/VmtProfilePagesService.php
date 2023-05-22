@@ -184,14 +184,17 @@ class VmtProfilePagesService
             ->where('users.id', $user_id)
             ->first();
 
-        // dd($response->id);
-
 
 
            $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
            ->where('vmt_employee_documents.user_id', $response->id)
            ->get();
 
+           $general_info = \DB::table('vmt_general_info')->first();
+           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+
+        // $response['client_logo'] = base64_encode($query_client_logo);
+        $response['client_logo'] = $query_client_logo;
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
@@ -207,8 +210,7 @@ class VmtProfilePagesService
 
         if(!empty($response['getEmployeeDetails']['bank_id']))
         {
-
-            $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->first()->bank_name;
+            $response['getEmployeeDetails']['bank_name'] = Bank::find($response['getEmployeeDetails']['bank_id'])->bank_name;
 
         }
 
@@ -219,6 +221,7 @@ class VmtProfilePagesService
         //Remove ID from user table
         unset($response['id']);
 
+        //dd($response->toArray());
 
         return $response;
     }

@@ -96,7 +96,7 @@
                         {{ "&#8377; " + slotProps.data.total_expenses }}
                     </template>
                 </Column>
-                <Column field="" header="Action">
+                <Column field="" header="Action" :style="{ width: '15vw'}" >
                     <template #body="slotProps">
                         <span v-if="slotProps.data.has_pending_reimbursements == 'true'">
                             <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approve"

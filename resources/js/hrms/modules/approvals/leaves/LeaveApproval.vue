@@ -47,7 +47,7 @@
     <div>
       <DataTable :value="att_leaves" :paginator="true" :rows="10" dataKey="id" :rowsPerPageOptions="[5, 10, 25]"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" sortField="leaverequest_date" :sortOrder="-1"
         v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']"
         style="white-space: nowrap;">
         <template #empty> No Employee found </template>
@@ -72,13 +72,15 @@
         <Column field="start_date" header="Start Time">
           <template #body="slotProps">
             <!-- {{ slotProps.data.reimbursement_date }} -->
-            {{ dateFormat(slotProps.data.start_date, "dd-mm-yyyy, h:MM TT") }}
+            <!-- {{ Date.parse(slotProps.data.start_date) }} -->
+            {{ processDate(slotProps.data.start_date ) }}
           </template>
         </Column>
         <Column field="end_date" header="End Time">
           <template #body="slotProps">
+            {{ processDate(slotProps.data.end_date ) }}
             <!-- {{ slotProps.data.reimbursement_date }} -->
-            {{ dateFormat(slotProps.data.end_date, "dd-mm-yyyy, h:MM TT") }}
+            <!-- {{ dateFormat(slotProps.data.end_date, "dd-mm-yyyy, h:MM TT") }} -->
           </template>
         </Column>
         <!-- <Column field="total_leave_datetime" header="Total"></Column> -->
@@ -181,15 +183,22 @@ onMounted(() => {
 });
 
 function ajax_GetLeaveData() {
-  let url = window.location.origin + "/fetch-leaverequests/org/Approved,Rejected,Pending";
+  let url = window.location.origin + "/fetch-leaverequests-based-on-currentrole";
 
   //console.log("AJAX URL : " + url);
 
   axios.get(url).then((response) => {
    // console.log("Axios : " + response.data);
-    att_leaves.value = response.data;
+    att_leaves.value = response.data.data;
     loading.value = false;
   });
+}
+
+function processDate(date){
+     if(isNaN(Date.parse(date)) )
+        return "Invalid date";
+    else
+        return dateFormat(date, "dd-mm-yyyy, h:MM TT");
 }
 
 function showConfirmDialog(selectedRowData, status) {

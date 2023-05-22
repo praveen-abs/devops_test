@@ -18,13 +18,11 @@ export default defineConfig({
 
                 // Leaves
 
+                'resources/js/hrms/modules/leave_module/LeaveModule.js',
+
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
-                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
-                'resources/js/hrms/modules/leave_module/leave_balance/leave_balance.js',
-                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
 
-                'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
                 //Reports
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
@@ -41,13 +39,13 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
                 'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
 
-
                 ////Reimbursements Module
 
                 //Employee Reimbursements
                 'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
                 //Configurations
+                //Attendance settings
 
                 'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
 
@@ -60,6 +58,10 @@ export default defineConfig({
 
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
+
+                // Investment Setting
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
 
 
                 // Paycheck
@@ -105,11 +107,19 @@ export default defineConfig({
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
-                //managewelcomemailstatus
+                //manage welcome mail status
                 'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
 
+                // Exit 
+                'resources/js/hrms/modules/exit/exit.js',
+
                 // testing_pradeesh
-                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
+                'resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js',
+                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
+
+                // Onboarding From management
+               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
 
             ],
             refresh: true,

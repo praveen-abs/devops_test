@@ -194,9 +194,9 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
           $drawing->setName($this->client_name);
           $drawing->setDescription($this->client_name);
           $drawing->setPath(public_path($this->client_logo_path));
-          $drawing->setHeight(60);
-          $drawing->setWidth(65);
-          $drawing->setCoordinates('H1');
+          $drawing->setHeight(1200);
+          $drawing->setWidth(275);
+          $drawing->setCoordinates('G1');
 
           return $drawing;
       }

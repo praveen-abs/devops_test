@@ -91,6 +91,15 @@ function sessionGetSelectedClientCode()
     else
         return "";
 }
+function sessionGetSelectedClientid()
+{
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->id;
+    else
+        return "";
+}
 
 function sessionGetSelectedClientName()
 {
@@ -99,6 +108,28 @@ function sessionGetSelectedClientName()
 
     if (!empty($query_client))
         return $query_client->client_name;
+    else
+        return "";
+}
+
+function sessionGetSelectedClientFullName()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_fullname;
+    else
+        return "";
+}
+
+function sessionGetSelected_abs_clientcode()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->abs_client_code;
     else
         return "";
 }
@@ -112,6 +143,17 @@ function getClientName($user_id)
     else
         return "";
 }
+
+function getClientFullName($user_id)
+{
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
+
+    if (!empty($query_client))
+        return $query_client->client_fullname;
+    else
+        return "";
+}
+
 
 function getOrganization_HR_Details()
 {
