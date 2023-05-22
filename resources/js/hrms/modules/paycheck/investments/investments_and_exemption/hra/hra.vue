@@ -21,9 +21,6 @@
                     </template>
                 </Column>
 
-                <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                </Column> -->
-
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.json_popups_value" class="dec_amt">
@@ -65,8 +62,8 @@
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
             <span class="mx-4 my-2 mt-2 text-lg font-semibold text-indigo-950">Rental Property</span>
-            <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange" @click="investmentStore.dailogAddNewRental = true"><i
-                    class="fa fa-plus-circle me-2" aria-hidden="true"></i>
+            <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange"
+                @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
         </div>
 
@@ -81,15 +78,9 @@
                     responsiveLayout="scroll">
 
                     <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                            {{ slotProps.data.json_popups_value.landlord_name }}
-                        </template> -->
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
-                        </template> -->
                     </Column>
 
                     <Column field="from_month" header="From Month " style="min-width: 12rem">
@@ -105,14 +96,8 @@
                     </Column>
 
                     <Column field="json_popups_value.city" header="City" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                            {{ slotProps.data.json_popups_value.city }}
-                        </template> -->
                     </Column>
                     <Column field="json_popups_value.total_rent_paid" header="Total Rent" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                            {{ slotProps.data.json_popups_value.total_rent_paid }}
-                        </template> -->
                     </Column>
                     <Column field="" header="Action" style="min-width: 12rem">
                         <template #body="slotProps">
@@ -150,38 +135,40 @@
 
 
 
-    <Dialog v-model:visible="investmentStore.dailogAddNewRental" modal
+    <Dialog v-model:visible="investmentStore.dailogAddNewRental" :modal="true" :closable="true"
         :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
-
         <template #header>
             <span class="text-lg font-semibold modal-title text-indigo-950">Add New Rental</span>
 
         </template>
-
         <div
             class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">
 
             <div class="">
-                <label for="rentFrom_month" class="block mb-2 font-medium text-gray-900 ">From
+                <label for="rentFrom_month" class="block mb-2 font-medium text-gray-900">From
                     Month</label>
-                <input type="date" id="rentFrom_month"
+                <Calendar view="month" dateFormat="mm/yy" v-model="investmentStore.hra.from_month" class="w-full" showIcon
+                    required />
+                <!-- <input type="date" id="rentFrom_month"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.from_month" required>
+                    v-model="investmentStore.hra.from_month" required> -->
             </div>
             <div class="">
                 <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
                     Month</label>
-                <input type="date" id="toFrom_month
-                                                                                                    "
+                <Calendar view="month" dateFormat="mm/yy" v-model="investmentStore.hra.to_month" class="w-full" showIcon
+                    required />
+
+                <!-- <input type="date" id="toFrom_month                                                                                  "
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.to_month" required>
+                    v-model="investmentStore.hra.to_month" required> -->
             </div>
             <div class="">
                 <label for="metro_city" class="block mb-2 font-medium text-gray-900 ">City</label>
-                <!-- {{-- <input type="text" id="lender_type"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required> --}} -->
-                <select id="metro_city" v-model="investmentStore.hra.city"
+                <Dropdown editable class="w-full"
+                v-model="investmentStore.hra.city" :options="investmentStore.metrocitiesOption" optionLabel="name"
+                    optionValue="value" placeholder="Select City" />
+                <!-- <select id="metro_city" v-model="investmentStore.hra.city"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                     <option selected disabled hiddedn>Choose Metro</option>
                     <option>Chennai</option>
@@ -190,7 +177,7 @@
                     <option>Kolkatta</option>
                     <option>Other Non Metro</option>
 
-                </select>
+                </select> -->
             </div>
             <div class="">
                 <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
@@ -228,9 +215,9 @@
                 class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 v-model="investmentStore.hra.address" required></textarea>
         </div>
-        <div class="text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                @click="investmentStore.saveHraNewRental">Save</button>
+        <div class="text-end"> 
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
+                @click="investmentStore.saveHraNewRental" disabled>Save</button>
         </div>
     </Dialog>
 </template>
@@ -277,6 +264,10 @@ onMounted(async () => {
 
 
 <style  lang="scss">
+.p-datepicker .p-monthpicker {
+    margin: 2px 85px 2px 104px;
+}
+
 .p-button.p-component.p-button-icon-only.p-datepicker-trigger {
     height: 100%;
 }
@@ -294,6 +285,15 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 .p-button .p-component .p-button-icon-only .p-datepicker-trigger>button {
     height: 100%;
 
+}
+
+.pi.pi-calendar.p-button-icon {
+    margin-left: 15px;
+}
+
+.p-button.p-button-icon-only {
+    width: 3rem;
+    padding: 6px 0;
 }
 
 // .main-content {
@@ -565,28 +565,36 @@ span {
     line-height: 1.5;
     margin: 0;
 }
+
+.p-datepicker .p-datepicker-header {
+    padding: 0.5rem;
+    color: #061328;
+    background: #002f56;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    color: #fff;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    font-weight: 600;
+    padding: 0.5rem;
+}
+
+.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
+    background: #002f56;
+    color: black;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #002f56;
+}
 </style>
 
 
-
-
-         <!-- <button class="m-auto bg-transparent border-0 outline-none " type="button" aria-haspopup="true"
-                            @click="toggle" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </button>
-
-                        <Button icon="pi pi-check" aria-label="Filter" />
-                        <Button icon="pi pi-pencil" outlined rounded severity="danger" class="p-2"
-                            @click="investmentStore.editHraNewRental(slotProps.data)" />
-
-
-
-                        <OverlayPanel ref="op" class="p-4">
-                            <div class="p-3 mx-4">
-                                <button class="py-4 my-4" @click="investmentStore.editHraNewRental">
-                                    <i class="py-2 my-4 fa fa-pencil-square-o text-info me-2" aria-hidden="true"></i>
-                                    Edit</button>
-                                <button class=""><i class="my-4 fa fa-times-circle-o text-danger me-2"
-                                        aria-hidden="true"></i> Clear</button>
-                            </div>
-                        </OverlayPanel> -->
