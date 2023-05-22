@@ -39,7 +39,7 @@
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>
-                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                            <InputNumber class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
                         </div>
@@ -47,7 +47,7 @@
                     </template>
                     <template #editor="{ data, field }">
                         <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />
+                            class="text-lg font-semibold w-7" />
                     </template>
 
                 </Column>
