@@ -128,7 +128,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     taxSavingInvestments.max_limit = max_limit;
                 });
 
-             
+
             });
     };
 
@@ -247,13 +247,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .catch((e) => console.log(e))
             .finally(() => {
                 canShowLoading.value = false;
-                   // Enable Add Hra Button 
-                   if(hra_data.value.length == 0){
-                    AddHraButtonDisabled.value = false
-                   }else{
-                    AddHraButtonDisabled.value = true
-                   }
-                   getInvestmentSource()
+                // Enable Add Hra Button 
+                //    if(hra_data.value.length == 0){
+                //     AddHraButtonDisabled.value = false
+                //    }else{
+                //     AddHraButtonDisabled.value = true
+                //    }
+                getInvestmentSource()
             });
 
     };
@@ -280,20 +280,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         hra.user_code = service.current_user_code;
         canShowLoading.value = true;
         dailogAddNewRental.value = false;
-        // console.log("saving hra new rental  data.......");
-        // console.log(hra);
-
-        if(hra.from_month && hra.to_month){
-            if(hra.city && hra.total_rent_paid){
-                if(hra.landlord_name & hra.landlord_PAN){
-                    if(hra.address){
-                        disableSaveHra.value = false
-                    }
-                }
-            }
-        }else{
-    
-
         axios
             .post("/investments/saveSectionPopups", hra)
             .then((res) => {
@@ -310,10 +296,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 canShowLoading.value = false;
                 fetchHraNewRental();
                 taxSavingInvestments.status = "Drafed";
+                restChars()
             });
     };
 
-}
 
     const deleteRentalDetails = (currentRowData) => {
         // console.log(currentRowData);
@@ -339,7 +325,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         fetchHraNewRental();
                     });
             },
-            reject: () => {},
+            reject: () => { },
         });
     };
 
@@ -834,19 +820,37 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
 
     const metrocitiesOption = ref([
-        {id:1,name:"Chennai",value:"Chennai"},
-        {id:2,name:"Mumbai",value:"Mumbai"},
-        {id:3,name:"Hyderabad",value:"Hyderabad"},
-        {id:4,name:"Kolkatta",value:"Kolkatta"},
-        {id:5,name:"Other Non Metro",value:"Other Non Metro"},
+        { id: 1, name: "Chennai", value: "Chennai" },
+        { id: 2, name: "Mumbai", value: "Mumbai" },
+        { id: 3, name: "Hyderabad", value: "Hyderabad" },
+        { id: 4, name: "Kolkatta", value: "Kolkatta" },
+        { id: 5, name: "Other Non Metro", value: "Other Non Metro" },
     ])
 
     const lenderTypeOption = ref([
         { name: 'Financial Institution', code: 'Financial Institution' },
         { name: 'Others', code: 'Others' },
-    
+
     ]);
-    
+
+    const restChars = () => {
+        hra.from_month = null
+        hra.to_month = null
+        hra.total_rent_paid = null
+        hra.address = null
+        hra.city = null
+        hra.landlord_name = null
+        hra.landlord_PAN = null
+        other_exe_80EE.loan_sanction_date = null
+        other_exe_80EE.lender_type = null
+        other_exe_80EE.property_value = null
+        other_exe_80EE.loan_amount = null
+        other_exe_80EE.interest_amount_paid = null
+        other_exe_80EE.vechicle_brand = null
+        other_exe_80EE.vechicle_model = null
+        other_exe_80EE.interest_amount_paid = null
+    }
+
 
     return {
         fetchOtherExe,
@@ -944,6 +948,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         // House Property End
 
-        metrocitiesOption,lenderTypeOption
+        metrocitiesOption, lenderTypeOption
     };
 });

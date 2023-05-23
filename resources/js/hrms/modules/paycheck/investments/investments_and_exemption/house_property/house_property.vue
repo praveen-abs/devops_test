@@ -489,9 +489,11 @@
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Lender
                     PAN</label>
-                <input type="text" id="lender_name" v-model="investmentStore.sop.lender_pan"
+                    <InputMask id="serial" mask="aaaaa9999a" class="w-full " placeholder="AHFCS1234F"
+                    style="text-transform: uppercase" v-model="investmentStore.sop.lender_pan" />
+                <!-- <input type="text" id="lender_name" v-model="investmentStore.sop.lender_pan"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    required> -->
             </div>
 
 
@@ -555,9 +557,11 @@
             <div class="">
                 <label for="lender_pan" class="block mb-2 font-medium text-gray-900 ">Lender
                     PAN</label>
-                <input type="text" id="lender_pan" v-model="investmentStore.lop.lender_pan"
+                    <InputMask id="serial" mask="aaaaa9999a" class="w-full " placeholder="AHFCS1234F"
+                    style="text-transform: uppercase" v-model="investmentStore.lop.lender_pan" />
+                <!-- <input type="text" id="lender_pan" v-model="investmentStore.lop.lender_pan"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    required> -->
             </div>
 
 
@@ -565,13 +569,16 @@
 
                 <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                     Type</label>
-                <select id="lender_type" v-model="investmentStore.lop.lender_type"
+                    <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                    v-model="investmentStore.lop.lender_type" :options="lender_types" optionLabel="name" optionValue="code"
+                    placeholder="Select a Property" />
+                <!-- <select id="lender_type" v-model="investmentStore.lop.lender_type"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                     <option selected>Choose Type</option>
                     <option>Others</option>
                     <option>Financial Institution</option>
 
-                </select>
+                </select> -->
             </div>
 
             <div class="">
@@ -645,9 +652,11 @@
             <div class="">
                 <label for="lender_pan" class="block mb-2 font-medium text-gray-900 ">Lender
                     PAN</label>
-                <input type="text" id="lender_pan" v-model="investmentStore.dlop.lender_pan"
+                    <InputMask id="serial" mask="aaaaa9999a" class="w-full " placeholder="AHFCS1234F"
+                    style="text-transform: uppercase" v-model="investmentStore.dlop.lender_pan" />
+                <!-- <input type="text" id="lender_pan" v-model="investmentStore.dlop.lender_pan"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    required>
+                    required> -->
             </div>
 
 
@@ -655,13 +664,16 @@
 
                 <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
                     Type</label>
-                <select id="lender_type" v-model="investmentStore.dlop.lender_type"
+                    <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+                    v-model="investmentStore.dlop.lender_type" :options="lender_types" optionLabel="name" optionValue="code"
+                    placeholder="Select a Property" />
+                <!-- <select id="lender_type" v-model="investmentStore.dlop.lender_type"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                     <option selected>Choose Type</option>
                     <option>Others</option>
                     <option>Financial Institution</option>
 
-                </select>
+                </select> -->
             </div>
 
             <div class="">

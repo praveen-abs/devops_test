@@ -8,7 +8,21 @@
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
-                <Column header="Sections" field="section" style="min-width: 8rem">
+                <Column header="Sections" field="section" style="min-width: 15rem">
+                    
+                     <template #body="slotProps">
+                       <div v-if="slotProps.data.section == '80DD'">
+                        <p style="font-weight: 501;">{{ slotProps.data.section }}</p>
+                        <div class="flex">
+                            <input type="radio" name="" id="">
+                            <p style="font-weight: 501;">{{ slotProps.data.section_options }}</p>
+                        </div>
+                        
+                       </div>
+                    <div v-else>
+                        <p style="font-weight: 501;">{{ slotProps.data.section }}</p>
+                    </div>
+                    </template>
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
@@ -27,7 +41,7 @@
                 </Column>
 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                <template #body="slotProps">
+                    <template #body="slotProps">
                         {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
                     </template>
                 </Column>
@@ -91,7 +105,7 @@
                             <InputNumber v-model="data.json_popups_value['interest_amount_paid']" mode="currency"
                                 currency="INR" locale="en-US" class="w-6 text-lg font-semibold" />
                         </div> -->
-                        <div >
+                        <div>
                             <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
                                 class="text-lg font-semibold w-7" />
                         </div>
@@ -141,11 +155,12 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
+                    <Calendar :minDate="new Date('01/04/2016')" :maxDate="new Date('31/03/2017')"  placeholder="Loan Sanction Date"
+                        v-model="investmentStore.other_exe_80EE.loan_sanction_date" class="w-full " showIcon required />
+                    <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                        required> -->
                 </div>
-
                 <div class="">
 
                     <label for="lender_type" class="block mb-2 font-medium text-gray-900 ">Lender
@@ -179,8 +194,8 @@
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                    @click="investmentStore.save80EE">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EE"
+                    :disabled="investmentStore.other_exe_80EE.loan_sanction_date && investmentStore.other_exe_80EE.interest_amount_paid ? false : true">Save</button>
             </div>
         </Dialog>
 
@@ -199,9 +214,11 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
+                        <Calendar :minDate="new Date('01/04/2019')" :maxDate="new Date('31/03/2020')"  placeholder="Loan Sanction Date"
+                        v-model="investmentStore.other_exe_80EEA.loan_sanction_date" class="w-full " showIcon required />
+                    <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                        required> -->
                 </div>
 
 
@@ -242,7 +259,7 @@
             </div>
             <div class="text-end">
                 <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                    @click="investmentStore.save80EEA">Save</button>
+                    @click="investmentStore.save80EEA" :disabled="investmentStore.other_exe_80EEA.loan_sanction_date && investmentStore.other_exe_80EEA.interest_amount_paid ? false : true">Save</button>
             </div>
 
         </Dialog>
@@ -263,9 +280,11 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
+                        <Calendar :minDate="new Date('01/04/2019')" :maxDate="new Date('31/03/2023')" placeholder="Loan Sanction Date"
+                        v-model="investmentStore.other_exe_80EEB.loan_sanction_date" class="w-full " showIcon required />
+                    <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                        required> -->
                 </div>
 
                 <div class="">
@@ -296,7 +315,7 @@
             </div>
             <div class="text-end">
                 <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                    @click="investmentStore.save80EEB">Save</button>
+                    @click="investmentStore.save80EEB"   :disabled="investmentStore.other_exe_80EEB.loan_sanction_date && investmentStore.other_exe_80EEB.interest_amount_paid ? false : true">Save</button>
             </div>
         </Dialog>
 
