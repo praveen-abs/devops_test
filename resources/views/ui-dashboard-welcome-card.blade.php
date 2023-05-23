@@ -260,6 +260,7 @@
 
 
             //Update check-in toggle button
+            updateCheckInButtonStatus();
 
              $('#checkin_function').prop('checked', true);
 
