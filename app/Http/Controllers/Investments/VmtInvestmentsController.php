@@ -40,7 +40,7 @@ class VmtInvestmentsController extends Controller
     // Common Save function Saving Investment Form
     public function SaveInvDetails(Request $request)
     {
-       // dd($request->all());
+       dd($request->all());
         $form_id = $request->form_id;
         $user_id = User::where('user_code', $request->user_code)->first()->id;
         $form_data = $request->formDataSource;

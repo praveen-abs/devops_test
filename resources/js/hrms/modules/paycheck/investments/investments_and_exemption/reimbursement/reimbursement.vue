@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="25"
-                :value="investmentStore.reimbursmentSource" @row-edit-save="onRowEditSave"
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="25" :value="investmentStore.reimbursmentSource"
+                @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -10,6 +10,24 @@
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.particular == 'Vehicle Reimbursement'">
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                            <div class="flex py-2">
+                                <input type="radio" name="Vehicle Reimbursement" id="" style="height: 20px;width: 20px;" :value="slotProps.data.section_option_1"
+                                    class="form-check-input" v-model="slotProps.data.select_option">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
+                            </div>
+                            <div class="flex py-2">
+                                <input type="radio" name="Vehicle Reimbursement" id="" style="height: 20px;width: 20px;" :value="slotProps.data.section_option_2"
+                                    class="form-check-input" v-model="slotProps.data.select_option">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                        </div>
+                    </template>
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -20,7 +38,7 @@
                         </button>
                     </template>
                 </Column>
-<!-- 
+                <!-- 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                 </Column> -->
 
@@ -103,8 +121,8 @@ const onRowEditSave = (event) => {
         declaration_amount: newData.dec_amount,
     }
 
-        investmentStore.formDataSource.push(data)
-     console.log(newData);
+    investmentStore.formDataSource.push(data)
+    console.log(newData);
 };
 
 

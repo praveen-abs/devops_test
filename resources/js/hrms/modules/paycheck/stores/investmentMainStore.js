@@ -141,6 +141,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         var data = {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
+            select_option : amount.select_option
         };
 
         if (amount.dec_amt) {
