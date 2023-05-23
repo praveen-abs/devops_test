@@ -10,8 +10,8 @@
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
                             Declaration</a>
                     </li> -->
-                    <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                    <li class=" nav-item ember-view" role="presentation">
+                        <a class="mx-2 active nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
@@ -55,7 +55,7 @@
 
 
     <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="true"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"

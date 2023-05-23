@@ -90,7 +90,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
-
+        canShowLoading.value = true
         await axios
             .post(url, {
                 form_name: "investment 1",
@@ -116,6 +116,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .catch((e) => console.log(e))
             .finally(() => {
+                canShowLoading.value = false
                 var declared_amt = 0;
                 var max_limit = 0;
                 // console.log("completed");
@@ -186,6 +187,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .post(url, {
                 user_code: service.current_user_code,
                 form_id: getFormId.value,
+                is_submitted: 0,
                 formDataSource,
             })
             .finally(() => {
@@ -202,6 +204,22 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 restChars()
             });
     };
+
+    // Investment Form Submission
+
+    const submitFormData = () => {
+        let url = `/investments/saveEmpdetails`
+        axios.post(url, {
+            user_code: service.current_user_code,
+            is_submitted: 1
+        }).then(res => {
+            console.log(res.data);
+        }).finally(() => {
+            canShowSubmissionStatus.value = true
+        })
+    }
+
+
 
     // COnvert Declaration Amount Into INR Currency
 
@@ -237,6 +255,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const fetchHraNewRental = async () => {
         // console.log("getting hra new rental  data.......");
         // console.log(hraSource.fs_id);
+        // canShowLoading.value = true;
         await axios
             .post("/investments/fetchEmpRentalDetails", {
                 user_code: service.current_user_code,
@@ -248,14 +267,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .catch((e) => console.log(e))
             .finally(() => {
-                canShowLoading.value = false;
+                // canShowLoading.value = false;
                 // Enable Add Hra Button 
                 //    if(hra_data.value.length == 0){
                 //     AddHraButtonDisabled.value = false
                 //    }else{
                 //     AddHraButtonDisabled.value = true
                 //    }
-                getInvestmentSource()
             });
 
     };
@@ -325,7 +343,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                             life: 3000,
                         });
                         fetchHraNewRental();
-                        
+
                     });
             },
             reject: () => { },
@@ -923,6 +941,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         editingRowSource,
         updatedRowSource,
         canShowSubmissionStatus,
+        submitFormData,
 
         // Data Source
 

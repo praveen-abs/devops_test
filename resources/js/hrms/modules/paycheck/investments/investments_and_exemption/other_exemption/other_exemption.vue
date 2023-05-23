@@ -11,7 +11,7 @@
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 18rem;text-align: left !important;">
+                <Column field="particular" header="Particulars" style="min-width: 22rem;text-align: left !important;">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80DD'">
                             <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
@@ -96,7 +96,7 @@
                     </template>
                 </Column>
 
-                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
