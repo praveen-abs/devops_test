@@ -53,7 +53,8 @@
             "app/Services/Admin/VmtEmployeeMailNotifMgmtService.php",
             "app/Services/VmtConfigAppService.php",
             "app/Services/PMSReportsService/VmtPMSFormsMgmtService.php",
-            "app/Services/VmtEmployeeDocumentsService.php"
+            "app/Services/VmtEmployeeDocumentsService.php",
+            "app/Services/VmtAttendanceSettingsService.php"
         ]
     },
     "autoload-dev": {
