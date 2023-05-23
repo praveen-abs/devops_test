@@ -124,7 +124,7 @@ if ($query_clientMaster) {
                                 @foreach ($clientsList as $client)
                                     <div class="choose-client justify-content-between d-flex p-2  border-bottom-liteAsh  align-items-center  @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif>"
                                         data-client_id="{{ $client->id }}">
-                                        <div class="d-flex mx-2   align-items-center   ">
+                                        <div class="d-flex mx-2   align-items-center">
                                             <div class="mx-2 p-1 border d-flex align-items-center  rounded border-1"
                                                 style="height: 40px;width:40px">
                                                 <img src="{{ URL::asset($client->client_logo) }}" alt=""
@@ -160,9 +160,9 @@ if ($query_clientMaster) {
             </div>
 
 
-            <a role="button"   href="{{ route('pages-profile-new') }}"  type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
+            <a role="button"    type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
                 aria-haspopup="true" aria-expanded="false"
-                aria-controls="" aria-haspopup="true" aria-expanded="false">
+                aria-controls="" aria-haspopup="true" aria-expanded="false"   data-bs-toggle="offcanvas" data-bs-target=".offcanvas">
                 <div class="d-flex align-items-center page-header-user-dropdown">
 
                     <?php
