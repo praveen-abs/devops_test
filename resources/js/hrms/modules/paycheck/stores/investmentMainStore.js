@@ -6,6 +6,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { reactive, ref } from "vue";
 import { Service } from "../../Service/Service";
 import { data } from "autoprefixer";
+import dayjs from "dayjs";
 
 
 /*
@@ -284,8 +285,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         dailogAddNewRental.value = true;
 
-        hra.from_month = currentRowData.json_popups_value.from_month;
-        hra.to_month = currentRowData.json_popups_value.to_month;
+        hra.from_month = dayjs(currentRowData.json_popups_value.from_month).format('DD-MM-YYYY');
+        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format('DD-MM_y');
         hra.address = currentRowData.json_popups_value.address;
         hra.city = currentRowData.json_popups_value.city;
         hra.landlord_PAN = currentRowData.json_popups_value.landlord_PAN;

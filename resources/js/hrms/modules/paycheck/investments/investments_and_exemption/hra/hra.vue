@@ -77,10 +77,13 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem">
+                    <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem"  @keypress="isLetter($event)">
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
+                        <template #body="slotProps">
+                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase()}}
+                        </template>
                     </Column>
 
                     <Column field="json_popups_value.from_month" header="From Month " style="min-width: 12rem">
@@ -168,16 +171,6 @@
                 <Dropdown editable class="w-full"
                 v-model="investmentStore.hra.city" :options="investmentStore.metrocitiesOption" optionLabel="name"
                     optionValue="value" placeholder="Select City" />
-                <!-- <select id="metro_city" v-model="investmentStore.hra.city"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                    <option selected disabled hiddedn>Choose Metro</option>
-                    <option>Chennai</option>
-                    <option>Mumbai</option>
-                    <option>Hyderabad</option>
-                    <option>Kolkatta</option>
-                    <option>Other Non Metro</option>
-
-                </select> -->
             </div>
             <div class="">
                 <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
@@ -216,7 +209,7 @@
                 v-model="investmentStore.hra.address" required></textarea>
         </div>
         <div class="text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
+            <button :disabled="investmentStore.hra.landlord_name && investmentStore.hra.landlord_PAN && investmentStore.hra.address && investmentStore.hra.total_rent_paid? false : true"  class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
                 @click="investmentStore.saveHraNewRental" >Save</button>
         </div>
     </Dialog>
@@ -247,6 +240,12 @@ onMounted(async () => {
     }, 1000);
 
 })
+
+const isLetter = (e)=> {
+  let char = String.fromCharCode(e.keyCode); // Get the character
+  if(/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+  else e.preventDefault(); // If not match, don't add to input text
+}
 
 
 // onUnmounted(() => {
