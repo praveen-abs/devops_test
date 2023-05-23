@@ -12,6 +12,9 @@
                 </Column>
 
                 <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
+                    <!-- <template #body="slotProps">
+                       <div v-if="slotProps.data."></div>
+                    </template> -->
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -24,6 +27,9 @@
                 </Column>
 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
+                <template #body="slotProps">
+                        {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
+                    </template>
                 </Column>
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
@@ -34,9 +40,9 @@
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
                                 <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
-                            <div v-else>
+                            <div v-else class="px-auto">
                                 <button @click="investmentStore.get80EESlotData(slotProps.data)"
-                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EE</button>
                             </div>
                         </div>
@@ -48,7 +54,7 @@
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEASlotData(slotProps.data)"
-                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EEA</button>
                             </div>
                         </div>
@@ -59,7 +65,7 @@
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
-                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
+                                    class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EEB</button>
                             </div>
                         </div>
@@ -67,7 +73,7 @@
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>
-                            <InputNumber class="w-6 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                            <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
                         </div>
@@ -87,7 +93,7 @@
                         </div> -->
                         <div >
                             <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                                class="w-6 text-lg font-semibold" />
+                                class="text-lg font-semibold w-7" />
                         </div>
 
 
@@ -112,10 +118,10 @@
         </div>
 
         <div class="my-3 text-end">
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
+                @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
                 @click="investmentStore.saveFormData">Save</button>
-            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 "
-                @click="investmentStore.investment_exemption_steps--">Previous</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps++">Next</button>
         </div>

@@ -9,7 +9,7 @@
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 12rem">
+                <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -20,9 +20,9 @@
                         </button>
                     </template>
                 </Column>
-
+<!-- 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                </Column>
+                </Column> -->
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
@@ -74,12 +74,11 @@
             </DataTable>
 
         </div>
-
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                @click="investmentStore.saveFormData">Save</button>
-            <button class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps++">Next</button>
         </div>

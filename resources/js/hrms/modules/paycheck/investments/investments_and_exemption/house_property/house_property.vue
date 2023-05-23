@@ -56,7 +56,7 @@
 
                             <div v-if="slotProps.data.particular == 'Self Occupied Property'">
                                 <div v-if="slotProps.data.json_popups_value">
-                                    {{slotProps.data['json_popups_value'].loss_from_housing_property}}
+                                    {{slotProps.data['json_popups_value'].income_loss}}
                                 </div>
                                 <div v-else>
                                     <button @click="investmentStore.getSopSlotData(slotProps.data)"
@@ -102,7 +102,7 @@
 
                     <Column field="status" header="Status" style="min-width: 12rem">
                         <template #body="slotProps">
-                            <div v-if="slotProps.data.dec_amount">
+                            <div v-if="slotProps.data.json_popups_value">
                                 <span
                                     class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                             </div>
@@ -119,21 +119,6 @@
 
             </div>
 
-
-            <!--
-            <div class="text-end">
-                <button @click="investmentStore.dailog_SelfOccupiedProperty = true"
-                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
-                    New</button>
-                <button @click="investmentStore.dailog_LetOutProperty = true"
-                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
-                    New</button>
-                <button @click="investmentStore.dailog_DeemedLetOutProperty = true"
-                    class="px-4 py-2 mb-3 text-center text-white bg-indigo-600 rounded-md">Add
-                    New</button>
-            </div> -->
-            <!-- {{ investmentStore.housePropertySource}} -->
-            <!-- {{ investmentStore.house_props_data.json_popups_value. }} -->
             <div class=" table-responsive">
                 <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
                     :value="investmentStore.house_props_data"
@@ -172,19 +157,7 @@
                                 {{  slotProps.data['json_popups_value'].lender_type }}
                             </p>
                             <p v-else>
-                                --
-                            </p>
-                        </template>
-                    </Column>
-
-                    <Column field="loss_from_housing_property" header="Loss From Housing Property" style="min-width: 18rem">
-                        <template #body="slotProps">
-                            <!-- {{ slotProps.data.json_popups_value.loss_from_housing_property }} -->
-                            <p v-if="slotProps.data['json_popups_value'].loss_from_housing_property">
-                                {{ slotProps.data['json_popups_value'].loss_from_housing_property }}
-                            </p>
-                            <p v-else>
-                               --
+                                NA
                             </p>
                         </template>
                     </Column>
@@ -194,7 +167,7 @@
                                 {{slotProps.data['json_popups_value'].rent_received}}
                             </p>
                             <p v-else>
-                                --
+                             NA
                             </p>
                         </template>
                     </Column>
@@ -204,7 +177,7 @@
                                 {{ slotProps.data['json_popups_value'].maintenance }}
                             </p>
                             <p v-else>
-                                --
+                                NA
                             </p>
                         </template>
                     </Column>
@@ -216,7 +189,7 @@
                                 {{ slotProps.data['json_popups_value'].net_value }}
                             </p>
                             <p v-else>
-                                --
+                                NA
                             </p>
                         </template>
                     </Column>
@@ -227,18 +200,17 @@
                                 {{ slotProps.data['json_popups_value'].interest }}
                             </p>
                             <p v-else>
-                               --
+                                NA
                             </p>
                         </template>
                     </Column>
                     <Column field="income_loss" header="Income/Loss" style="min-width: 12rem">
                         <template #body="slotProps">
-
                             <p v-if="slotProps.data['json_popups_value'].income_loss">
                                 {{ slotProps.data['json_popups_value'].income_loss }}
                             </p>
                             <p v-else>
-                                --
+                                NA
                             </p>
                         </template>
                     </Column>
@@ -266,11 +238,11 @@
             </div>
 
         </div>
-
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Save</button>
-            <button class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps++">Next</button>
         </div>
@@ -540,9 +512,9 @@
                     </select> -->
             </div>
             <div class="">
-                <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Loss
-                    From Housing Property</label>
-                <input type="text" id="lender_name" v-model="investmentStore.sop.loss_from_housing_property"
+                <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
+                    Income/Loss</label>
+                <input type="text" id="lender_name" v-model="investmentStore.sop.income_loss"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required>
             </div>
@@ -551,9 +523,6 @@
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
                     Address</label>
-                <!-- {{-- <input type="text" id="lender_name"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                            required> --}} -->
                 <textarea name="" id="" rows="3" v-model="investmentStore.sop.address"
                     class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     required></textarea>

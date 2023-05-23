@@ -100,6 +100,7 @@ class VmtInvestmentsService
                      'vmt_inv_section.max_amount',
                      'vmt_inv_section_group.section_group',
                      'vmt_inv_formsection.id as fs_id',
+                     'vmt_inv_section.section_options',
 
                  ]
              )->toArray();
