@@ -2179,7 +2179,7 @@ class VmtAttendanceService
                         ->where('leave_type_id', $single_leave_types->id)
                         ->sum('accrued_leave_count');
                     if ($single_leave_types->leave_type == 'Compensatory Off') {
-                        $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id)) - $total_avalied_leaves;
+                        $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id));
                     } else {
                         $leave_balance =  $total_accrued -  $total_avalied_leaves;
                         $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;

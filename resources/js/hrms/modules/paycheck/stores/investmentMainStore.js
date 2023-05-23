@@ -90,7 +90,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
-
+        canShowLoading.value = true
         await axios
             .post(url, {
                 form_name: "investment 1",
@@ -116,6 +116,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .catch((e) => console.log(e))
             .finally(() => {
+                canShowLoading.value = false
                 var declared_amt = 0;
                 var max_limit = 0;
                 // console.log("completed");
@@ -141,6 +142,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         var data = {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
+            select_option: amount.select_option
         };
 
         if (amount.dec_amt) {
@@ -185,6 +187,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .post(url, {
                 user_code: service.current_user_code,
                 form_id: getFormId.value,
+                is_submitted: 0,
                 formDataSource,
             })
             .finally(() => {
@@ -198,8 +201,25 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 getInvestmentSource();
                 formDataSource.splice(0, formDataSource.length);
                 taxSavingInvestments.status = "Drafed";
+                restChars()
             });
     };
+
+    // Investment Form Submission
+
+    const submitFormData = () => {
+        let url = `/investments/saveEmpdetails`
+        axios.post(url, {
+            user_code: service.current_user_code,
+            is_submitted: 1
+        }).then(res => {
+            console.log(res.data);
+        }).finally(() => {
+            canShowSubmissionStatus.value = true
+        })
+    }
+
+
 
     // COnvert Declaration Amount Into INR Currency
 
@@ -235,6 +255,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const fetchHraNewRental = async () => {
         // console.log("getting hra new rental  data.......");
         // console.log(hraSource.fs_id);
+        // canShowLoading.value = true;
         await axios
             .post("/investments/fetchEmpRentalDetails", {
                 user_code: service.current_user_code,
@@ -247,13 +268,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .catch((e) => console.log(e))
             .finally(() => {
                 canShowLoading.value = false;
-                // Enable Add Hra Button 
+                // Enable Add Hra Button
                 //    if(hra_data.value.length == 0){
                 //     AddHraButtonDisabled.value = false
                 //    }else{
                 //     AddHraButtonDisabled.value = true
                 //    }
-                getInvestmentSource()
             });
 
     };
@@ -323,6 +343,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                             life: 3000,
                         });
                         fetchHraNewRental();
+
                     });
             },
             reject: () => { },
@@ -488,6 +509,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars()
             });
     };
 
@@ -512,6 +534,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars()
             });
     };
 
@@ -535,6 +558,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars()
             });
     };
 
@@ -773,6 +797,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${sop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars()
             });
     };
     const saveLetOutProperty = () => {
@@ -794,6 +819,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${lop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars()
             });
     };
     const saveDeemedLetOutProperty = () => {
@@ -815,6 +841,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${dlop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars()
             });
     };
 
@@ -849,6 +876,51 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         other_exe_80EE.vechicle_brand = null
         other_exe_80EE.vechicle_model = null
         other_exe_80EE.interest_amount_paid = null
+        other_exe_80EEA.loan_sanction_date = null
+        other_exe_80EEA.lender_type = null
+        other_exe_80EEA.property_value = null
+        other_exe_80EEA.loan_amount = null
+        other_exe_80EEA.interest_amount_paid = null
+        other_exe_80EEA.vechicle_brand = null
+        other_exe_80EEA.vechicle_model = null
+        other_exe_80EEA.interest_amount_paid = null
+        other_exe_80EEB.loan_sanction_date = null
+        other_exe_80EEB.lender_type = null
+        other_exe_80EEB.property_value = null
+        other_exe_80EEB.loan_amount = null
+        other_exe_80EEB.interest_amount_paid = null
+        other_exe_80EEB.vechicle_brand = null
+        other_exe_80EEB.vechicle_model = null
+        other_exe_80EEB.interest_amount_paid = null
+        sop.lender_name = null
+        sop.lender_pan = null
+        sop.lender_type = null
+        sop.address = null
+        lop.lender_name = null
+        lop.lender_pan = null
+        lop.lender_type = null
+        lop.loss_from_housing_property = null
+        lop.address = null
+        lop.rent_received = null
+        lop.municipal_tax = null
+        lop.maintenance = null
+        lop.net_value = null
+        lop.interest = null
+        lop.income_loss = null
+        dlop.lender_name = null
+        dlop.lender_pan = null
+        dlop.lender_type = null
+        dlop.loss_from_housing_property = null
+        dlop.address = null
+        dlop.rent_received = null
+        dlop.municipal_tax = null
+        dlop.maintenance = null
+        dlop.net_value = null
+        dlop.interest = null
+        dlop.income_loss = null
+
+
+
     }
 
 
