@@ -214,6 +214,18 @@ class VmtProfilePagesService
 
         }
 
+        if(!empty($response['getEmployeeDetails']['blood_group_id']))
+        {
+            $response['getEmployeeDetails']['blood_group_name '] = VmtBloodGroup::where('id',$response['getEmployeeDetails']['blood_group_id'])->first()->name;
+
+        }
+
+        if(!empty($response['getEmployeeDetails']['marital_status_id']))
+        {
+            $response['getEmployeeDetails']['marital_status'] = VmtMaritalStatus::where('id',$response['getEmployeeDetails']['marital_status_id'])->first()->name;
+
+        }
+
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);
 
