@@ -33,13 +33,13 @@ return new class extends Migration
     public function down()
     {
         //
-        Schema::table('vmt_inv_emp_formdata', function (Blueprint $table) {
+        Schema::table('vmt_inv_section', function (Blueprint $table) {
             $table->dropColumn('section_option_1');
             $table->dropColumn('section_option_2');
         });
 
-        Schema::table('vmt_inv_section', function (Blueprint $table) {
-            $table->dropColumn('section_options');
+        Schema::table('vmt_inv_emp_formdata', function (Blueprint $table) {
+            $table->dropColumn('selected_section_options');
         });
 
 
