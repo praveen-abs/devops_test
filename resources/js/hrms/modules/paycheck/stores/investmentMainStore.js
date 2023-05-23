@@ -268,8 +268,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .catch((e) => console.log(e))
             .finally(() => {
-                // canShowLoading.value = false;
-                // Enable Add Hra Button 
+                canShowLoading.value = false;
+                // Enable Add Hra Button
                 //    if(hra_data.value.length == 0){
                 //     AddHraButtonDisabled.value = false
                 //    }else{
@@ -942,7 +942,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         editingRowSource,
         updatedRowSource,
         canShowSubmissionStatus,
-        submitFormData,
 
         // Data Source
 

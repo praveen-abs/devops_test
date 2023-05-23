@@ -11,21 +11,23 @@
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 22rem;text-align: left !important;">
+                <Column field="particular" header="Particulars" style="min-width: 20rem;text-align: left !important;">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80DD'">
                             <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
                             <div class="flex py-2">
                                 <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_1">
+                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
+
                                 <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_2">
+                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false" >
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
+
                             </div>
                         </div>
                         <div v-else-if="slotProps.data.section == '80DDB'">
@@ -33,13 +35,13 @@
                             <div class="flex py-2">
                                 <input type="radio" name="80DDB" id="" style="height: 20px;width: 20px;"
                                     v-model="slotProps.data.select_option" class="form-check-input"
-                                    :value="slotProps.data.section_option_1">
+                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
                                 <input type="radio" name="80DDB" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_2">
+                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
                             </div>
                         </div>
@@ -48,13 +50,13 @@
                             <div class="flex py-2">
                                 <input type="radio" name="80U" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_1">
+                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
                                 <input type="radio" name="80U" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_2">
+                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
                             </div>
                         </div>
@@ -78,16 +80,22 @@
                         <div v-if="slotProps.data.section == '80DD'">
                             <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
                             <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
                             <p v-else style="font-weight: 501;">--</p>
                         </div>
                         <div v-else-if="slotProps.data.section == '80DDB'">
                             <p v-if="slotProps.data.select_option == 'Individuals (less than 60 years)'" style="font-weight: 501;">{{investmentStore.formatCurrency(40000)}}</p>
                             <p v-else-if="slotProps.data.select_option == 'Senior citizen (aged 60 years or more)'" style="font-weight: 501;">{{investmentStore.formatCurrency(100000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Individuals (less than 60 years)'" style="font-weight: 501;">{{investmentStore.formatCurrency(40000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Senior citizen (aged 60 years or more)'" style="font-weight: 501;">{{investmentStore.formatCurrency(100000)}}</p>
                             <p v-else style="font-weight: 501;">--</p>
                         </div>
                         <div v-else-if="slotProps.data.section == '80U'">
                             <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
                             <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
                             <p v-else style="font-weight: 501;">--</p>
                         </div>
                         <div v-else>
@@ -418,6 +426,7 @@ const onRowEditSave = (event) => {
     var data = {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
+        select_option: newData.select_option
     }
     // console.log(dec_amount);
     investmentStore.formDataSource.push(data)
