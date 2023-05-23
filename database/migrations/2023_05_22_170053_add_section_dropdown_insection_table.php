@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vmt_inv_section', function (Blueprint $table) {
-            $table->text('section_options')->after('max_amount')->nullable();
+            $table->text('section_option_1')->after('max_amount')->nullable();
+            $table->text('section_option_2')->after('section_option_1')->nullable();
         });
 
         Schema::table('vmt_inv_emp_formdata', function (Blueprint $table) {
@@ -33,7 +34,8 @@ return new class extends Migration
     {
         //
         Schema::table('vmt_inv_emp_formdata', function (Blueprint $table) {
-            $table->dropColumn('selected_section_options');
+            $table->dropColumn('section_option_1');
+            $table->dropColumn('section_option_2');
         });
 
         Schema::table('vmt_inv_section', function (Blueprint $table) {
