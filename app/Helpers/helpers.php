@@ -133,6 +133,27 @@ function sessionGetSelected_abs_clientcode()
     else
         return "";
 }
+function GetSelectedClientFullName($client_id)
+{
+
+    $query_client = VmtClientMaster::where('id',$client_id)->first();
+
+    if (!empty($query_client))
+        return $query_client->client_fullname;
+    else
+        return "";
+}
+
+function GetSelected_abs_clientcode($client_id)
+{
+
+    $query_client = VmtClientMaster::where('id',$client_id)->first();
+
+    if (!empty($query_client))
+        return $query_client->abs_client_code;
+    else
+        return "";
+}
 
 function getClientName($user_id)
 {
