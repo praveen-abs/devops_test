@@ -11,7 +11,7 @@
                             Declaration</a>
                     </li> -->
                     <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                        <a class="mx-4 active nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>

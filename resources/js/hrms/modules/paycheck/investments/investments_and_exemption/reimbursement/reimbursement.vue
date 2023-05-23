@@ -15,12 +15,12 @@
                             <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
                             <div class="flex py-2">
                                 <input type="radio" name="Vehicle Reimbursement" id="" style="height: 20px;width: 20px;" :value="slotProps.data.section_option_1"
-                                    class="form-check-input" v-model="slotProps.data.select_option">
+                                    class="form-check-input" v-model="slotProps.data.select_option" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
                                 <input type="radio" name="Vehicle Reimbursement" id="" style="height: 20px;width: 20px;" :value="slotProps.data.section_option_2"
-                                    class="form-check-input" v-model="slotProps.data.select_option">
+                                    class="form-check-input" v-model="slotProps.data.select_option" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                         </button>
                     </template>
                 </Column>
-                <!-- 
+                <!--
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                 </Column> -->
 
@@ -119,6 +119,7 @@ const onRowEditSave = (event) => {
     var data = {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
+        select_option: newData.select_option
     }
 
     investmentStore.formDataSource.push(data)

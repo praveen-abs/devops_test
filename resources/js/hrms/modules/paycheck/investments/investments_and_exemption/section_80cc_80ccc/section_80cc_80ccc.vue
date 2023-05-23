@@ -23,7 +23,7 @@
                     </template>
                 </Column>
 
-                <Column  style="min-width: 12rem">
+                <Column  style="min-width: 2rem">
                     <template #header>
                          <p style="font-weight: 501;">Max Limit</p>
                          <p style="font-weight: 501;">(&#8377; 1,50,000)</p>
