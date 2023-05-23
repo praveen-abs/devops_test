@@ -215,7 +215,7 @@
                 class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                 v-model="investmentStore.hra.address" required></textarea>
         </div>
-        <div class="text-end"> 
+        <div class="text-end">
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
                 @click="investmentStore.saveHraNewRental" >Save</button>
         </div>
