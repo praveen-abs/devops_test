@@ -8,27 +8,62 @@
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
-                <Column header="Sections" field="section" style="min-width: 15rem">
-                    
-                     <template #body="slotProps">
-                       <div v-if="slotProps.data.section == '80DD'">
-                        <p style="font-weight: 501;">{{ slotProps.data.section }}</p>
-                        <div class="flex">
-                            <input type="radio" name="" id="">
-                            <p style="font-weight: 501;">{{ slotProps.data.section_options }}</p>
-                        </div>
-                        
-                       </div>
-                    <div v-else>
-                        <p style="font-weight: 501;">{{ slotProps.data.section }}</p>
-                    </div>
-                    </template>
+                <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
-                    <!-- <template #body="slotProps">
-                       <div v-if="slotProps.data."></div>
-                    </template> -->
+                <Column field="particular" header="Particulars" style="min-width: 20rem;text-align: left !important;">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.section == '80DD'">
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                            <div class="flex py-2">
+                                <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
+                                    class="form-check-input" v-model="slotProps.data.select_option"
+                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
+                            </div>
+                            <div class="flex py-2">
+
+                                <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
+                                    class="form-check-input" v-model="slotProps.data.select_option"
+                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false" >
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
+
+                            </div>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80DDB'">
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                            <div class="flex py-2">
+                                <input type="radio" name="80DDB" id="" style="height: 20px;width: 20px;"
+                                    v-model="slotProps.data.select_option" class="form-check-input"
+                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
+                            </div>
+                            <div class="flex py-2">
+                                <input type="radio" name="80DDB" id="" style="height: 20px;width: 20px;"
+                                    class="form-check-input" v-model="slotProps.data.select_option"
+                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
+                            </div>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80U'">
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                            <div class="flex py-2">
+                                <input type="radio" name="80U" id="" style="height: 20px;width: 20px;"
+                                    class="form-check-input" v-model="slotProps.data.select_option"
+                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
+                            </div>
+                            <div class="flex py-2">
+                                <input type="radio" name="80U" id="" style="height: 20px;width: 20px;"
+                                    class="form-check-input" v-model="slotProps.data.select_option"
+                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                        </div>
+                    </template>
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -42,11 +77,34 @@
 
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                     <template #body="slotProps">
-                        {{ investmentStore.formatCurrency(slotProps.data.max_amount) }}
+                        <div v-if="slotProps.data.section == '80DD'">
+                            <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
+                            <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-else style="font-weight: 501;">--</p>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80DDB'">
+                            <p v-if="slotProps.data.select_option == 'Individuals (less than 60 years)'" style="font-weight: 501;">{{investmentStore.formatCurrency(40000)}}</p>
+                            <p v-else-if="slotProps.data.select_option == 'Senior citizen (aged 60 years or more)'" style="font-weight: 501;">{{investmentStore.formatCurrency(100000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Individuals (less than 60 years)'" style="font-weight: 501;">{{investmentStore.formatCurrency(40000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Senior citizen (aged 60 years or more)'" style="font-weight: 501;">{{investmentStore.formatCurrency(100000)}}</p>
+                            <p v-else style="font-weight: 501;">--</p>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80U'">
+                            <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
+                            <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-else style="font-weight: 501;">--</p>
+                        </div>
+                        <div v-else>
+                            <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.max_amount) }}</p>
+                        </div>
                     </template>
                 </Column>
 
-                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
@@ -155,8 +213,9 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                    <Calendar :minDate="new Date('01/04/2016')" :maxDate="new Date('31/03/2017')"  placeholder="Loan Sanction Date"
-                        v-model="investmentStore.other_exe_80EE.loan_sanction_date" class="w-full " showIcon required />
+                    <Calendar :minDate="new Date('04/01/2016')" :maxDate="new Date('03/31/2017')"
+                        placeholder="Loan Sanction Date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
+                        class="w-full " showIcon required />
                     <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required> -->
@@ -214,8 +273,9 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                        <Calendar :minDate="new Date('01/04/2019')" :maxDate="new Date('31/03/2020')"  placeholder="Loan Sanction Date"
-                        v-model="investmentStore.other_exe_80EEA.loan_sanction_date" class="w-full " showIcon required />
+                    <Calendar :minDate="new Date('04/01/2019')" :maxDate="new Date('03/31/2020')"
+                        placeholder="Loan Sanction Date" v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
+                        class="w-full " showIcon required />
                     <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required> -->
@@ -258,8 +318,8 @@
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                    @click="investmentStore.save80EEA" :disabled="investmentStore.other_exe_80EEA.loan_sanction_date && investmentStore.other_exe_80EEA.interest_amount_paid ? false : true">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EEA"
+                    :disabled="investmentStore.other_exe_80EEA.loan_sanction_date && investmentStore.other_exe_80EEA.interest_amount_paid ? false : true">Save</button>
             </div>
 
         </Dialog>
@@ -280,8 +340,9 @@
                 <div class="">
                     <label for="sanction_date" class="block mb-2 font-medium text-gray-900 ">Loan
                         Sanction Date</label>
-                        <Calendar :minDate="new Date('01/04/2019')" :maxDate="new Date('31/03/2023')" placeholder="Loan Sanction Date"
-                        v-model="investmentStore.other_exe_80EEB.loan_sanction_date" class="w-full " showIcon required />
+                    <Calendar :minDate="new Date('04/01/2019')" :maxDate="new Date('03/31/2023')"
+                        placeholder="Loan Sanction Date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
+                        class="w-full " showIcon required />
                     <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         required> -->
@@ -314,8 +375,8 @@
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                    @click="investmentStore.save80EEB"   :disabled="investmentStore.other_exe_80EEB.loan_sanction_date && investmentStore.other_exe_80EEB.interest_amount_paid ? false : true">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EEB"
+                    :disabled="investmentStore.other_exe_80EEB.loan_sanction_date && investmentStore.other_exe_80EEB.interest_amount_paid ? false : true">Save</button>
             </div>
         </Dialog>
 
@@ -365,6 +426,7 @@ const onRowEditSave = (event) => {
     var data = {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
+        select_option: newData.select_option
     }
     // console.log(dec_amount);
     investmentStore.formDataSource.push(data)
