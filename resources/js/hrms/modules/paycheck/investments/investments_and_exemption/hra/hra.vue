@@ -217,7 +217,7 @@
         </div>
         <div class="text-end"> 
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
-                @click="investmentStore.saveHraNewRental" disabled>Save</button>
+                @click="investmentStore.saveHraNewRental" >Save</button>
         </div>
     </Dialog>
 </template>
