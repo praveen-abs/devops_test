@@ -112,7 +112,7 @@ class VmtInvestmentsService
          $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
              ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get()->toArray();
 
-
+           //  dd($inv_emp_value);
                     // json decode popup value;
             $popdecode = array();
             foreach($inv_emp_value as $details_tem){
@@ -124,6 +124,7 @@ class VmtInvestmentsService
                     $rentalDetail['year'] = $details_tem["year"];
                     $rentalDetail['fs_id'] = $details_tem["fs_id"];
                     $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
+                    $rentalDetail['selected_section_options'] = $details_tem["selected_section_options"];
                     $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
                     array_push($popdecode,$rentalDetail);
 
@@ -142,6 +143,7 @@ class VmtInvestmentsService
                      $single_template['f_emp_id']=$single_emp_env_value['f_emp_id'];
                      $single_template['dec_amount']=$single_emp_env_value['dec_amount'];
                      $single_template['json_popups_value']=$single_emp_env_value['json_popups_value'];
+                     $single_template['selected_section_options']=$single_emp_env_value['selected_section_options'];
                    }
              }
              array_push($arr, $single_template);

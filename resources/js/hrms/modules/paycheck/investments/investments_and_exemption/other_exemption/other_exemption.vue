@@ -108,7 +108,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data.json_popups_value['interest_amount_paid'] }}
+                                <!-- {{ slotProps.data.json_popups_value['interest_amount_paid'] }} -->
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
                                 <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
@@ -510,6 +510,14 @@ const switchVechileModel = (vechicle_brand) => {
 }
 
 </script>
+
+<style>
+
+.p-datepicker .p-component{
+    z-index: 400;
+}
+
+</style>
 
 
 
