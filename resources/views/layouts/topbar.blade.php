@@ -131,17 +131,7 @@ if ($query_clientMaster) {
                                                     class=" mh-100 mw-100">
                                             </div>
                                             <?php
-                                                    if(sessionGetSelectedClientName()){
-                                                        if(sessionGetSelectedClientName() == 'All'){
-                                                            echo sessionGetSelectedClientFullName();
-                                                        }else{
-                                                        echo sessionGetSelectedClientFullName().'  ( '.(sessionGetSelected_abs_clientcode()).' )';
-                                                        }
-                                                    }else{
-                                                        echo getClientFullName(auth()->user()->id).'  ( '.(sessionGetSelected_abs_clientcode()).' )';
-                                                    }
-
-
+                                               echo GetSelectedClientFullName($client->id).'  ( '.(GetSelected_abs_clientcode($client->id)).' )';
                                              ?>
                                         </div>
                                         @if (!empty($currentClientID) && $currentClientID == $client->id)

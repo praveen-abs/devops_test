@@ -65,7 +65,8 @@ class VmtInvSectionImport implements OnEachRow,WithHeadingRow
         $query_vmtInvSection->particular = $row['particular'];
         $query_vmtInvSection->reference = $row['references'];
         $query_vmtInvSection->max_amount = $row['max_amount'];
-        $query_vmtInvSection->section_options = $row['section_options'];
+        $query_vmtInvSection->section_option_1  = $row['section_option_1'];
+        $query_vmtInvSection->section_option_2  = $row['section_option_2'];
         $query_vmtInvSection->save();
 
         //Link table
