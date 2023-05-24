@@ -1757,12 +1757,17 @@ class VmtAttendanceService
                     "leave_type",
                 ]);
             //  dd($query_employees_leaves->toArray());
+
             $query_employees_leaves = $query_employees_leaves->toArray();
 
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
                 $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id',$query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
+                $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
+                $query_employees_leaves[$i]["reviewer_short_name"] = getEmployeeAvatarOrShortName($query_employees_leaves[$i]["reviewer_user_id"]);
+                $query_employees_leaves[$i]["user_short_name"] = getEmployeeAvatarOrShortName($user_id);
             }
 
 
