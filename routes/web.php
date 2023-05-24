@@ -580,20 +580,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('vmt-pms-appraisal-review', 'App\Http\Controllers\VmtApraisalController@storeEmployeeApraisalReview');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     //
     Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
     Route::get('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
