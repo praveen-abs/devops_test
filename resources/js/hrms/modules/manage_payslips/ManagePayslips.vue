@@ -19,21 +19,21 @@
             </Column>
             <Column field="name" header="Employee Name"></Column>
             <Column field="email" header="Personal Mail"></Column>
-            <Column field="is_released" header="Payslip Status">
+            <Column field="is_payslip_released" header="Payslip Status">
                 <template #body="slotProps">
                     <div class="d-flex flex-column">
 
-                        <button class="btn" style="border:1px solid navy ;" v-if="slotProps.data.is_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
+                        <button class="btn" style="border:1px solid navy ;" v-if="slotProps.data.is_payslip_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
 
                     <button class="btn-primary rounded" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
-                     <!-- {{slotProps.data.is_released}} -->
-                     <h1 v-if="slotProps.data.is_released == 1"  class="text-success mt-2">
+                     <!-- {{slotProps.data.is_payslip_released}} -->
+                     <h1 v-if="slotProps.data.is_payslip_released == 1"  class="text-success mt-2">
                         Released
                      </h1>
-                     <h1 v-if="slotProps.data.is_released == 0 || slotProps.data.is_released == null"  class="text-danger mt-2">
+                     <h1 v-if="slotProps.data.is_payslip_released == 0 || slotProps.data.is_payslip_released == null"  class="text-danger mt-2">
                        Not Released
                      </h1>
-                     <!-- {{is_released}} -->
+                     <!-- {{is_payslip_released}} -->
             </div>
 
                 </template>
