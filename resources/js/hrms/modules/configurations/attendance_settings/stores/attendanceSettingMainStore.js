@@ -28,6 +28,10 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     const manageshift_exemption_steps = ref(1);
 
+    // steps for Apply Flexible Gross Break Toggle button
+
+    const change = ref();
+
     // Shift Details Begins
 
     const array_shiftDetails = ref();
@@ -36,11 +40,20 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     let currentlySelectedRowData = null;
     let selectedEmployees = ref();
 
+    // const selectedWeek_Off = ref();
+
     const shiftDetails = reactive({
         txt_shift_name:"",
         Shift_Code:"",
         txt_shift_start_time:"",
         Is_Default:"",
+        AFGH_Min:"",
+        Shift_start_Time:"",
+        Shift_End_Time:"",
+        Week_Off:"",
+        Grace_Time:"",
+        AFGB_Min:"",
+
     })
 
     // shift Time range
@@ -126,6 +139,10 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
             });
     }
 
+    // resetVars(){
+
+    // }
+
 
 
 
@@ -133,10 +150,10 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     return {
 
         // Variable Declaration
-        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,
+        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,
 
         //
-        fetchShiftDetails, saveWorkShiftDetails
+        fetchShiftDetails, saveWorkShiftDetails,
 
     };
 });
