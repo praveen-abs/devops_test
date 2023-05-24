@@ -5,13 +5,13 @@
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="mx-4 nav-item ember-view" role="presentation">
+                    <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
                             Declaration</a>
-                    </li>
-                    <li class="mx-4 nav-item ember-view" role="presentation">
-                        <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                    </li> -->
+                    <li class=" nav-item ember-view" role="presentation">
+                        <a class="mx-2 active nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
@@ -32,12 +32,12 @@
         <div class="mb-0 card top-line">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
+                    <!-- <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
                         aria-labelledby="pills-home-tab">
                         <Declaration />
-                    </div>
+                    </div> -->
 
-                    <div class="tab-pane fade " id="exemptions" role="tabpanel">
+                    <div class="tab-pane fade active show" id="exemptions" role="tabpanel">
                         <InvestmentAndExemption />
 
                     </div>
@@ -55,7 +55,7 @@
 
 
     <Dialog header="Header" v-model:visible="investmentStore.canShowLoading"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="true"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -103,11 +103,25 @@ onMounted(async () => {
     /* border: 1px solid red; */
     color: #6c757d;
 }
+
 .p-dialog .p-dialog-header-icons {
-  display: flex;
-  align-items: center;
-  position: relative;
-  top: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 0;
+}
+
+.p-dialog-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 216;
 }
 
 

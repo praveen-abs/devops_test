@@ -24,13 +24,13 @@
                 <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                 </Column> -->
 
-                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
                         <div v-else>
-                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                            <InputNumber class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
                         </div>
@@ -38,7 +38,7 @@
                     </template>
                     <template #editor="{ data, field }">
                         <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />
+                            class="text-lg font-semibold w-7" />
                     </template>
 
                 </Column>
@@ -68,7 +68,7 @@
             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
                 @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
-            @click="investmentStore.canShowSubmissionStatus = true">Submit</button>
+            @click="investmentStore.submitFormData">Submit</button>
         </div>
         </div>
     </div>
@@ -79,9 +79,9 @@
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '40vw' }" :modal="true" :closable="true"
         :closeOnEscape="false">
         <template #header>
-            <i class="m-auto my-4 text-green-400 pi pi-check-circle" style="font-size: 9rem"></i>
+            <i class="m-auto my-4 text-green-400 pi pi-check-circle" style="font-size: 8rem"></i>
         </template>
-        <p class="font-semibold text-center fs-1">Submission Successfull</p>
+        <p class="font-semibold text-center fs-2">Submission Successfull</p>
         <div class="p-3 my-3">
             <div>
                 <span class="text-lg font-semibold">Dear</span>
@@ -114,8 +114,11 @@
 <script setup>
 import { ref } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
+import { Service } from "../../../../Service/Service";
+import dayjs from "dayjs";
 
 const investmentStore = investmentMainStore()
+const service = Service()
 
 const onRowEditSave = (event) => {
     let { newData, index } = event;
@@ -140,4 +143,9 @@ const onRowEditSave = (event) => {
     position: relative;
     top: -65px;
 }
+.p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
+    margin-right: 0;
+    position: relative;
+    top: -20px;
+  }
 </style>

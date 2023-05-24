@@ -11,7 +11,7 @@
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
+                <Column field="particular" header="Particulars" style="min-width: 18rem;text-align: left !important;">
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -22,8 +22,7 @@
                         </button>
                     </template>
                 </Column>
-
-                <Column  style="min-width: 12rem">
+                <Column  style="min-width: 2rem">
                     <template #header>
                          <p style="font-weight: 501;">Max Limit</p>
                          <p style="font-weight: 501;">(&#8377; 1,50,000)</p>
@@ -33,7 +32,7 @@
                     </template> -->
                 </Column>
 
-                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}

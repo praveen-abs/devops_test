@@ -6,7 +6,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { reactive, ref } from "vue";
 import { Service } from "../../Service/Service";
 import { data } from "autoprefixer";
-
+import dayjs from "dayjs";
 
 /*
     This Pinia code will store the ajax values of the
@@ -29,7 +29,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Notification Service
 
     const toast = useToast();
-    const canShowSubmissionStatus = ref(false)
+    const canShowSubmissionStatus = ref(false);
 
     // Confirmation Service
 
@@ -86,11 +86,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const otherIncomeSource = ref();
     const previousEmployeerIncomeSource = ref();
     const hop = reactive([]);
-    const AddHraButtonDisabled = ref(false)
+    const AddHraButtonDisabled = ref(false);
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
-
+        canShowLoading.value = true;
         await axios
             .post(url, {
                 form_name: "investment 1",
@@ -116,6 +116,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .catch((e) => console.log(e))
             .finally(() => {
+                canShowLoading.value = false;
                 var declared_amt = 0;
                 var max_limit = 0;
                 // console.log("completed");
@@ -128,7 +129,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     taxSavingInvestments.max_limit = max_limit;
                 });
 
-
+                housePropertySource.value.forEach((item) => {
+                    hop.push(item.fs_id);
+                });
             });
     };
 
@@ -141,6 +144,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         var data = {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
+            select_option: amount.select_option,
         };
 
         if (amount.dec_amt) {
@@ -185,6 +189,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .post(url, {
                 user_code: service.current_user_code,
                 form_id: getFormId.value,
+                is_submitted: 0,
                 formDataSource,
             })
             .finally(() => {
@@ -198,6 +203,24 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 getInvestmentSource();
                 formDataSource.splice(0, formDataSource.length);
                 taxSavingInvestments.status = "Drafed";
+                restChars();
+            });
+    };
+
+    // Investment Form Submission
+
+    const submitFormData = () => {
+        let url = `/investments/saveEmpdetails`;
+        axios
+            .post(url, {
+                user_code: service.current_user_code,
+                is_submitted: 1,
+            })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .finally(() => {
+                canShowSubmissionStatus.value = true;
             });
     };
 
@@ -228,13 +251,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         address: "",
     });
 
-
     const dailogAddNewRental = ref(false);
     const dailogEditNewRental = ref(false);
 
     const fetchHraNewRental = async () => {
         // console.log("getting hra new rental  data.......");
         // console.log(hraSource.fs_id);
+        // canShowLoading.value = true;
         await axios
             .post("/investments/fetchEmpRentalDetails", {
                 user_code: service.current_user_code,
@@ -247,15 +270,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .catch((e) => console.log(e))
             .finally(() => {
                 canShowLoading.value = false;
-                // Enable Add Hra Button 
+                // Enable Add Hra Button
                 //    if(hra_data.value.length == 0){
                 //     AddHraButtonDisabled.value = false
                 //    }else{
                 //     AddHraButtonDisabled.value = true
                 //    }
-                getInvestmentSource()
             });
-
     };
 
     const editHraNewRental = (currentRowData) => {
@@ -264,8 +285,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         dailogAddNewRental.value = true;
 
-        hra.from_month = currentRowData.json_popups_value.from_month;
-        hra.to_month = currentRowData.json_popups_value.to_month;
+        hra.from_month = dayjs(currentRowData.json_popups_value.from_month).format('DD-MM-YYYY');
+        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format('DD-MM_y');
         hra.address = currentRowData.json_popups_value.address;
         hra.city = currentRowData.json_popups_value.city;
         hra.landlord_PAN = currentRowData.json_popups_value.landlord_PAN;
@@ -273,8 +294,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         hra.total_rent_paid = currentRowData.json_popups_value.total_rent_paid;
     };
 
-
-    const disableSaveHra = ref(false)
+    const disableSaveHra = ref(false);
 
     const saveHraNewRental = () => {
         hra.user_code = service.current_user_code;
@@ -296,10 +316,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 canShowLoading.value = false;
                 fetchHraNewRental();
                 taxSavingInvestments.status = "Drafed";
-                restChars()
+                restChars();
             });
     };
-
 
     const deleteRentalDetails = (currentRowData) => {
         // console.log(currentRowData);
@@ -325,7 +344,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         fetchHraNewRental();
                     });
             },
-            reject: () => { },
+            reject: () => {},
         });
     };
 
@@ -474,7 +493,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log("Saving Other exemption 80EE");
         console.log(data);
         axios
-            .post('/investments/saveSection80', other_exe_80EE)
+            .post("/investments/saveSection80", other_exe_80EE)
             .then((res) => {
                 // console.log(res.data);
                 toast.add({
@@ -488,6 +507,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars();
             });
     };
 
@@ -512,6 +532,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars();
             });
     };
 
@@ -535,6 +556,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars();
             });
     };
 
@@ -637,11 +659,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         );
     };
     const fetchPropertyType = () => {
-        housePropertySource.value.forEach((item) => {
-            hop.push(item.fs_id);
-            // console.log(Object.values(hop));
-        });
-
         axios
             .post("/investments/fetchHousePropertyDetails", {
                 user_code: service.current_user_code,
@@ -742,11 +759,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         toast.add({
                             severity: "error",
                             summary: "Deleted",
-                            detail: `${currentRowData['json_popups_value'].property_type} is Deleted`,
+                            detail: `${currentRowData["json_popups_value"].property_type} is Deleted`,
                             life: 3000,
                         });
                         fetchPropertyType();
-                        getInvestmentSource()
+                        getInvestmentSource();
                     });
             },
             reject: () => {
@@ -773,6 +790,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${sop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars();
             });
     };
     const saveLetOutProperty = () => {
@@ -794,6 +812,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${lop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars();
             });
     };
     const saveDeemedLetOutProperty = () => {
@@ -815,9 +834,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${dlop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars();
             });
     };
-
 
     const metrocitiesOption = ref([
         { id: 1, name: "Chennai", value: "Chennai" },
@@ -825,32 +844,72 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         { id: 3, name: "Hyderabad", value: "Hyderabad" },
         { id: 4, name: "Kolkatta", value: "Kolkatta" },
         { id: 5, name: "Other Non Metro", value: "Other Non Metro" },
-    ])
+    ]);
 
     const lenderTypeOption = ref([
-        { name: 'Financial Institution', code: 'Financial Institution' },
-        { name: 'Others', code: 'Others' },
-
+        { name: "Financial Institution", code: "Financial Institution" },
+        { name: "Others", code: "Others" },
     ]);
 
     const restChars = () => {
-        hra.from_month = null
-        hra.to_month = null
-        hra.total_rent_paid = null
-        hra.address = null
-        hra.city = null
-        hra.landlord_name = null
-        hra.landlord_PAN = null
-        other_exe_80EE.loan_sanction_date = null
-        other_exe_80EE.lender_type = null
-        other_exe_80EE.property_value = null
-        other_exe_80EE.loan_amount = null
-        other_exe_80EE.interest_amount_paid = null
-        other_exe_80EE.vechicle_brand = null
-        other_exe_80EE.vechicle_model = null
-        other_exe_80EE.interest_amount_paid = null
-    }
-
+        hra.from_month = null;
+        hra.to_month = null;
+        hra.total_rent_paid = null;
+        hra.address = null;
+        hra.city = null;
+        hra.landlord_name = null;
+        hra.landlord_PAN = null;
+        other_exe_80EE.loan_sanction_date = null;
+        other_exe_80EE.lender_type = null;
+        other_exe_80EE.property_value = null;
+        other_exe_80EE.loan_amount = null;
+        other_exe_80EE.interest_amount_paid = null;
+        other_exe_80EE.vechicle_brand = null;
+        other_exe_80EE.vechicle_model = null;
+        other_exe_80EE.interest_amount_paid = null;
+        other_exe_80EEA.loan_sanction_date = null;
+        other_exe_80EEA.lender_type = null;
+        other_exe_80EEA.property_value = null;
+        other_exe_80EEA.loan_amount = null;
+        other_exe_80EEA.interest_amount_paid = null;
+        other_exe_80EEA.vechicle_brand = null;
+        other_exe_80EEA.vechicle_model = null;
+        other_exe_80EEA.interest_amount_paid = null;
+        other_exe_80EEB.loan_sanction_date = null;
+        other_exe_80EEB.lender_type = null;
+        other_exe_80EEB.property_value = null;
+        other_exe_80EEB.loan_amount = null;
+        other_exe_80EEB.interest_amount_paid = null;
+        other_exe_80EEB.vechicle_brand = null;
+        other_exe_80EEB.vechicle_model = null;
+        other_exe_80EEB.interest_amount_paid = null;
+        sop.lender_name = null;
+        sop.lender_pan = null;
+        sop.lender_type = null;
+        sop.address = null;
+        lop.lender_name = null;
+        lop.lender_pan = null;
+        lop.lender_type = null;
+        lop.loss_from_housing_property = null;
+        lop.address = null;
+        lop.rent_received = null;
+        lop.municipal_tax = null;
+        lop.maintenance = null;
+        lop.net_value = null;
+        lop.interest = null;
+        lop.income_loss = null;
+        dlop.lender_name = null;
+        dlop.lender_pan = null;
+        dlop.lender_type = null;
+        dlop.loss_from_housing_property = null;
+        dlop.address = null;
+        dlop.rent_received = null;
+        dlop.municipal_tax = null;
+        dlop.maintenance = null;
+        dlop.net_value = null;
+        dlop.interest = null;
+        dlop.income_loss = null;
+    };
 
     return {
         fetchOtherExe,
@@ -869,6 +928,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         editingRowSource,
         updatedRowSource,
         canShowSubmissionStatus,
+        submitFormData,
 
         // Data Source
 
@@ -948,6 +1008,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         // House Property End
 
-        metrocitiesOption, lenderTypeOption
+        metrocitiesOption,
+        lenderTypeOption,
     };
 });

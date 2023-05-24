@@ -44,8 +44,11 @@ class VmtInvestmentsController extends Controller
         $form_id = $request->form_id;
         $user_id = User::where('user_code', $request->user_code)->first()->id;
         $form_data = $request->formDataSource;
+        $current_date = date("Y-m-d");
+
 
         $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
         if ($query_femp->exists()) {
             $query_assign = $query_femp->first();
 
@@ -54,6 +57,9 @@ class VmtInvestmentsController extends Controller
             $emp_assign_form = new VmtInvFEmpAssigned;
             $emp_assign_form->user_id = $user_id;
             $emp_assign_form->form_id = $form_id;
+            $emp_assign_form->year = $current_date;
+            $emp_assign_form->is_sumbit = $request->is_submitted;
+
             $emp_assign_form->save();
             $query_assign = $emp_assign_form;
 
@@ -62,6 +68,7 @@ class VmtInvestmentsController extends Controller
         // dd($form_data);
          $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first()->id;
 
+if(isset($form_data)){
 
         foreach ($form_data as $singleFormData) {
 
@@ -73,6 +80,7 @@ class VmtInvestmentsController extends Controller
                 $emp_formdata->f_emp_id = $query_assign->id;
                 $emp_formdata->fs_id = $singleFormData['fs_id'];
                 $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+                $emp_formdata->selected_section_options = $singleFormData['select_option']?? '';
             //   $emp_formdata->json_popups_value = $sima ?? "none";
                 $emp_formdata->save();
 
@@ -81,6 +89,7 @@ class VmtInvestmentsController extends Controller
                 $emp_formdata->f_emp_id = $query_assign->id;
                 $emp_formdata->fs_id = $singleFormData['fs_id'];
                 $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+                $emp_formdata->selected_section_options = $singleFormData['select_option']?? '';
              //    $emp_formdata->json_popups_value = $singleFormData['json_popups_value'];
 
             //   $emp_formdata->json_popups_value = $sima ?? "none";
@@ -90,11 +99,27 @@ class VmtInvestmentsController extends Controller
 
         }
     }
+    else{
+
+        $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first();
+
+        if($assigned_form_user_id->exists()){
+
+            $assigned_form_user_id->is_sumbit = $request->is_submitted;
+            $assigned_form_user_id->save();
+
+        }
+
+        return "sumbit" ;
+    }
+
+    }
 
     // Common Function For Saving All Popup In Investment Form's
     public function saveSectionPopups(Request $request){
         // dd($request->all());
         $json_decodeHra = json_encode($request->all());
+        $current_date = date("Y-m-d");
 
         // dd($json_decodeHra);
 
@@ -102,6 +127,7 @@ class VmtInvestmentsController extends Controller
 
         $fs_id = $request->fs_id;
 
+       // dd($fs_id);
         $user_id = User::where('user_code', $request->user_code)->first()->id;
 
        // $form_data = $request->formDataSource;
@@ -117,6 +143,8 @@ class VmtInvestmentsController extends Controller
             $emp_assign_form = new VmtInvFEmpAssigned;
             $emp_assign_form->user_id = $user_id;
             $emp_assign_form->form_id = $form_id;
+            $emp_assign_form->year = $current_date;
+            $emp_assign_form->is_sumbit = $request->is_submitted;
             $emp_assign_form->save();
             $query_assign = $emp_assign_form;
         }
@@ -125,20 +153,24 @@ class VmtInvestmentsController extends Controller
 
         $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$fs_id)->first();
 
+
         if(empty($emp_formdata)){
 
            $Hra_save = new VmtInvEmpFormdata;
-           $Hra_save->f_emp_id = $query_assign->id;
            $Hra_save->fs_id = $fs_id;
-           $Hra_save->dec_amount ='none';
+           $Hra_save->f_emp_id = $query_assign->id;
+           $Hra_save->dec_amount ="0";
            $Hra_save->json_popups_value = $json_decodeHra;
            $Hra_save->save();
 
-        }else{
+        }
+        else{
+
             $emp_formdata->f_emp_id = $query_assign->id;
             $emp_formdata->fs_id =  $fs_id ;
-            $emp_formdata->dec_amount = 'none';
-           $emp_formdata->json_popups_value = $json_decodeHra;
+            $emp_formdata->dec_amount = "0";
+            $emp_formdata->json_popups_value = $json_decodeHra;
+
             $emp_formdata->save();
 
         }
@@ -177,7 +209,7 @@ class VmtInvestmentsController extends Controller
     public function saveSection80(Request $request){
 
      $json_decodeHra = json_encode($request->all());
-
+     $current_date = date("Y-m-d");
      // dd($json_decodeHra);
 
      $form_id = "1";
@@ -201,6 +233,7 @@ class VmtInvestmentsController extends Controller
          $emp_assign_form = new VmtInvFEmpAssigned;
          $emp_assign_form->user_id = $user_id;
          $emp_assign_form->form_id = $form_id;
+         $emp_assign_form->year = $current_date;
          $emp_assign_form->save();
          $query_assign = $emp_assign_form;
      }
@@ -209,23 +242,25 @@ class VmtInvestmentsController extends Controller
 
      $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$fs_id)->first();
 
-     if(empty($emp_formdata)){
+    if(empty($emp_formdata)){
 
         $Hra_save = new VmtInvEmpFormdata;
         $Hra_save->f_emp_id = $query_assign->id;
         $Hra_save->fs_id = $fs_id;
         $Hra_save->dec_amount =$dec_amount;
         $Hra_save->json_popups_value = $json_decodeHra;
+        $Hra_save->selected_section_options = '0';
         $Hra_save->save();
 
-     }else{
+    }else{
          $emp_formdata->f_emp_id = $query_assign->id;
          $emp_formdata->fs_id =  $fs_id ;
          $emp_formdata->dec_amount = $dec_amount;
         $emp_formdata->json_popups_value = $json_decodeHra;
+        $emp_formdata->selected_section_options = '0';
          $emp_formdata->save();
 
-     }
+    }
 
 
   return 'saved';
