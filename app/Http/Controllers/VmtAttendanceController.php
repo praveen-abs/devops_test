@@ -514,7 +514,7 @@ class VmtAttendanceController extends Controller
             })->get();
 
         //Shift timings
-        $shift_timings = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+        $shift_timings = VmtWorkShifts::where('shift_name', 'First Shift')->first();
 
         return view('vmt_daily_staff_attendance', compact('users', 'shift_timings'));
     }
@@ -528,8 +528,8 @@ class VmtAttendanceController extends Controller
 
     public function showTimesheet(Request $request)
     {
-        $shift_start_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_start_time');
-        $shift_end_time = VmtWorkShifts::where('shift_type', "First Shift")->value('shift_end_time');
+        $shift_start_time = VmtWorkShifts::where('shift_name', "First Shift")->value('shift_start_time');
+        $shift_end_time = VmtWorkShifts::where('shift_name', "First Shift")->value('shift_end_time');
         $leaveTypes = VmtLeaves::all();
         $leaveData_currentUser = VmtEmployeeLeaves::where('user_id', auth::user()->id);
           //Get how many leaves taken for each leave_type
@@ -555,7 +555,7 @@ class VmtAttendanceController extends Controller
         $user = User::find($request->user_id);
         $userCode = $user->user_code;
 
-        $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+        $regularTime  = VmtWorkShifts::where('shift_name', 'First Shift')->first();
 
         $requestedDate = $request->year . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
