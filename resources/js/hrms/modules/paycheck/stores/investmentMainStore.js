@@ -7,6 +7,9 @@ import { reactive, ref } from "vue";
 import { Service } from "../../Service/Service";
 import { data } from "autoprefixer";
 import dayjs from "dayjs";
+import {
+    required, email, minLength, sameAs, helpers, // include helper functions from Vuelidate
+} from '@vuelidate/validators'
 
 /*
     This Pinia code will store the ajax values of the
@@ -113,6 +116,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     res.data.data.form_details["Previous Employer Income"];
 
                 // console.log(res.data.data.form_details);
+
+                // Enable Add Hra Button
+                   
             })
             .catch((e) => console.log(e))
             .finally(() => {
@@ -127,10 +133,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
                     max_limit += item.max_amount;
                     taxSavingInvestments.max_limit = max_limit;
-                });
-
-                housePropertySource.value.forEach((item) => {
-                    hop.push(item.fs_id);
                 });
             });
     };
@@ -266,16 +268,16 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .then((res) => {
                 console.log(Object.values(res.data));
                 hra_data.value = Object.values(res.data);
+                if(Object.values(res.data)){
+                    AddHraButtonDisabled.value = true
+                   }else{
+                    AddHraButtonDisabled.value = false
+                   }
             })
             .catch((e) => console.log(e))
             .finally(() => {
                 canShowLoading.value = false;
-                // Enable Add Hra Button
-                //    if(hra_data.value.length == 0){
-                //     AddHraButtonDisabled.value = false
-                //    }else{
-                //     AddHraButtonDisabled.value = true
-                //    }
+
             });
     };
 
@@ -315,6 +317,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 fetchHraNewRental();
+                getInvestmentSource()
                 taxSavingInvestments.status = "Drafed";
                 restChars();
             });
@@ -344,7 +347,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         fetchHraNewRental();
                     });
             },
-            reject: () => {},
+            reject: () => { },
         });
     };
 

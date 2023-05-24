@@ -137,15 +137,4 @@ const onRowEditSave = (event) => {
 </script>
 
 <style>
-.p-dialog .p-dialog-header-icons {
-    display: flex;
-    align-items: center;
-    position: relative;
-    top: -65px;
-}
-.p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
-    margin-right: 0;
-    position: relative;
-    top: -20px;
-  }
 </style>

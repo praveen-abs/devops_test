@@ -40,7 +40,7 @@ class VmtInvestmentsController extends Controller
     // Common Save function Saving Investment Form
     public function SaveInvDetails(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $form_id = $request->form_id;
         $user_id = User::where('user_code', $request->user_code)->first()->id;
         $form_data = $request->formDataSource;
@@ -66,57 +66,57 @@ class VmtInvestmentsController extends Controller
         }
 
         // dd($form_data);
-         $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first()->id;
+        $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-if(isset($form_data)){
+        if (isset($form_data)) {
 
-        foreach ($form_data as $singleFormData) {
+            foreach ($form_data as $singleFormData) {
 
-            $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$singleFormData['fs_id'])->first();
+                $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $singleFormData['fs_id'])->first();
 
-            if(empty($emp_formdata)){
+                if (empty($emp_formdata)) {
 
-                $emp_formdata = new VmtInvEmpFormdata;
-                $emp_formdata->f_emp_id = $query_assign->id;
-                $emp_formdata->fs_id = $singleFormData['fs_id'];
-                $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
-                $emp_formdata->selected_section_options = $singleFormData['select_option']?? '';
-            //   $emp_formdata->json_popups_value = $sima ?? "none";
-                $emp_formdata->save();
+                    $emp_formdata = new VmtInvEmpFormdata;
+                    $emp_formdata->f_emp_id = $query_assign->id;
+                    $emp_formdata->fs_id = $singleFormData['fs_id'];
+                    $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+                    $emp_formdata->selected_section_options = $singleFormData['select_option'] ?? '';
+                    //   $emp_formdata->json_popups_value = $sima ?? "none";
+                    $emp_formdata->save();
 
-            }else{
+                } else {
 
-                $emp_formdata->f_emp_id = $query_assign->id;
-                $emp_formdata->fs_id = $singleFormData['fs_id'];
-                $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
-                $emp_formdata->selected_section_options = $singleFormData['select_option']?? '';
-             //    $emp_formdata->json_popups_value = $singleFormData['json_popups_value'];
+                    $emp_formdata->f_emp_id = $query_assign->id;
+                    $emp_formdata->fs_id = $singleFormData['fs_id'];
+                    $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+                    $emp_formdata->selected_section_options = $singleFormData['select_option'] ?? '';
+                    //    $emp_formdata->json_popups_value = $singleFormData['json_popups_value'];
 
-            //   $emp_formdata->json_popups_value = $sima ?? "none";
-                $emp_formdata->save();
+                    //   $emp_formdata->json_popups_value = $sima ?? "none";
+                    $emp_formdata->save();
+
+                }
+
+            }
+        } else {
+
+            $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first();
+
+            if ($assigned_form_user_id->exists()) {
+
+                $assigned_form_user_id->is_sumbit = $request->is_submitted;
+                $assigned_form_user_id->save();
 
             }
 
+            return "sumbit";
         }
-    }
-    else{
-
-        $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first();
-
-        if($assigned_form_user_id->exists()){
-
-            $assigned_form_user_id->is_sumbit = $request->is_submitted;
-            $assigned_form_user_id->save();
-
-        }
-
-        return "sumbit" ;
-    }
 
     }
 
     // Common Function For Saving All Popup In Investment Form's
-    public function saveSectionPopups(Request $request){
+    public function saveSectionPopups(Request $request)
+    {
         // dd($request->all());
         $json_decodeHra = json_encode($request->all());
         $current_date = date("Y-m-d");
@@ -127,10 +127,10 @@ if(isset($form_data)){
 
         $fs_id = $request->fs_id;
 
-       // dd($fs_id);
+        // dd($fs_id);
         $user_id = User::where('user_code', $request->user_code)->first()->id;
 
-       // $form_data = $request->formDataSource;
+        // $form_data = $request->formDataSource;
 
         $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
 
@@ -149,25 +149,24 @@ if(isset($form_data)){
             $query_assign = $emp_assign_form;
         }
 
-        $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first()->id;
+        $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-        $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$fs_id)->first();
+        $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $fs_id)->first();
 
 
-        if(empty($emp_formdata)){
+        if (empty($emp_formdata)) {
 
-           $Hra_save = new VmtInvEmpFormdata;
-           $Hra_save->fs_id = $fs_id;
-           $Hra_save->f_emp_id = $query_assign->id;
-           $Hra_save->dec_amount ="0";
-           $Hra_save->json_popups_value = $json_decodeHra;
-           $Hra_save->save();
+            $Hra_save = new VmtInvEmpFormdata;
+            $Hra_save->fs_id = $fs_id;
+            $Hra_save->f_emp_id = $query_assign->id;
+            $Hra_save->dec_amount = "0";
+            $Hra_save->json_popups_value = $json_decodeHra;
+            $Hra_save->save();
 
-        }
-        else{
+        } else {
 
             $emp_formdata->f_emp_id = $query_assign->id;
-            $emp_formdata->fs_id =  $fs_id ;
+            $emp_formdata->fs_id = $fs_id;
             $emp_formdata->dec_amount = "0";
             $emp_formdata->json_popups_value = $json_decodeHra;
 
@@ -176,94 +175,99 @@ if(isset($form_data)){
         }
 
 
-     return 'saved';
+        return 'saved';
 
 
- }
+    }
 
     // Get And Delete for HRA in Investment's Forms
-    public function fetchEmpRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+    public function fetchEmpRentalDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+    {
         $user_code = $request->user_code;
         $fs_id = $request->fs_id;
 
-        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code,$fs_id);
+        return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code, $fs_id);
     }
 
-    public function deleteRentalDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+    public function deleteRentalDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+    {
 
         return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
     }
 
-     // Get And Delete for House Property in Investment's Forms
-    public function fetchHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+    // Get And Delete for House Property in Investment's Forms
+    public function fetchHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+    {
         $user_code = $request->user_code;
         $fs_id = $request->hop;
 
-        return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code,$fs_id);
+        return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code, $fs_id);
     }
-    public function deleteHousePropertyDetails(Request $request,VmtInvestmentsService $serviceVmtInvestmentsService){
+    public function deleteHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+    {
 
         return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
     }
 
-    public function saveSection80(Request $request){
+    public function saveSection80(Request $request)
+    {
 
-     $json_decodeHra = json_encode($request->all());
-     $current_date = date("Y-m-d");
-     // dd($json_decodeHra);
+        $json_decodeHra = json_encode($request->all());
+        $current_date = date("Y-m-d");
+        // dd($json_decodeHra);
 
-     $form_id = "1";
+        $form_id = "1";
 
-     $dec_amount = $request->interest_amount_paid;
+        $dec_amount = $request->interest_amount_paid;
 
-     $fs_id = $request->fs_id;
+        $fs_id = $request->fs_id;
 
-     $user_id = User::where('user_code', $request->user_code)->first()->id;
+        $user_id = User::where('user_code', $request->user_code)->first()->id;
 
-    // $form_data = $request->formDataSource;
+        // $form_data = $request->formDataSource;
 
-     $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
-
-
-     if ($query_femp->exists()) {
-         $query_assign = $query_femp->first();
-
-     } else {
-
-         $emp_assign_form = new VmtInvFEmpAssigned;
-         $emp_assign_form->user_id = $user_id;
-         $emp_assign_form->form_id = $form_id;
-         $emp_assign_form->year = $current_date;
-         $emp_assign_form->save();
-         $query_assign = $emp_assign_form;
-     }
-
-     $assigned_form_user_id  = VmtInvFEmpAssigned::where('user_id' , $user_id)->first()->id;
-
-     $emp_formdata = VmtInvEmpFormdata::where('f_emp_id',$assigned_form_user_id)->where('fs_id',$fs_id)->first();
-
-    if(empty($emp_formdata)){
-
-        $Hra_save = new VmtInvEmpFormdata;
-        $Hra_save->f_emp_id = $query_assign->id;
-        $Hra_save->fs_id = $fs_id;
-        $Hra_save->dec_amount =$dec_amount;
-        $Hra_save->json_popups_value = $json_decodeHra;
-        $Hra_save->selected_section_options = '0';
-        $Hra_save->save();
-
-    }else{
-         $emp_formdata->f_emp_id = $query_assign->id;
-         $emp_formdata->fs_id =  $fs_id ;
-         $emp_formdata->dec_amount = $dec_amount;
-        $emp_formdata->json_popups_value = $json_decodeHra;
-        $emp_formdata->selected_section_options = '0';
-         $emp_formdata->save();
-
-    }
+        $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
 
 
-  return 'saved';
+        if ($query_femp->exists()) {
+            $query_assign = $query_femp->first();
+
+        } else {
+
+            $emp_assign_form = new VmtInvFEmpAssigned;
+            $emp_assign_form->user_id = $user_id;
+            $emp_assign_form->form_id = $form_id;
+            $emp_assign_form->year = $current_date;
+            $emp_assign_form->save();
+            $query_assign = $emp_assign_form;
+        }
+
+        $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+        $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $fs_id)->first();
+
+        if (empty($emp_formdata)) {
+
+            $Hra_save = new VmtInvEmpFormdata;
+            $Hra_save->f_emp_id = $query_assign->id;
+            $Hra_save->fs_id = $fs_id;
+            $Hra_save->dec_amount = $dec_amount;
+            $Hra_save->json_popups_value = $json_decodeHra;
+            $Hra_save->selected_section_options = '0';
+            $Hra_save->save();
+
+        } else {
+            $emp_formdata->f_emp_id = $query_assign->id;
+            $emp_formdata->fs_id = $fs_id;
+            $emp_formdata->dec_amount = $dec_amount;
+            $emp_formdata->json_popups_value = $json_decodeHra;
+            $emp_formdata->selected_section_options = '0';
+            $emp_formdata->save();
+
+        }
+
+
+        return 'saved';
 
     }
 
@@ -273,6 +277,22 @@ if(isset($form_data)){
         //dd($request->all());
 
         return view('investments_forms_mgmt');
+
+    }
+
+
+    public function taxDeducationCalculate(Request $request)
+    {
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        $table = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
+
+        $sumOfDeclarationAmount = 0;
+        foreach ($table as $dec_amt) {
+            $sumOfDeclarationAmount += $dec_amt['dec_amount'];
+        }
+        dd($sumOfDeclarationAmount);
 
     }
 

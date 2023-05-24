@@ -40,7 +40,6 @@ import Tag from 'primevue/tag'
 
 
 
-
 import Investments from './investment.vue'
   
 const app = createApp(Investments);
@@ -50,7 +49,7 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-app.use(pinia)
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);

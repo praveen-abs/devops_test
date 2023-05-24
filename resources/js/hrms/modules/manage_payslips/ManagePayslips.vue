@@ -23,9 +23,10 @@
                 <template #body="slotProps">
                     <div class="d-flex flex-column">
 
-                        <button class="btn" style="border:1px solid navy ;" v-if="slotProps.data.is_payslip_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
+                        <button class="btn z-0" style="border:1px solid navy ;" v-if="slotProps.data.is_payslip_released == 1"  @click="showWithdraw_confimationDialog(slotProps.data.user_code)" >withdraw</button>
 
-                    <button class="btn-primary rounded" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+                    <button class="btn-primary rounded z-0" v-else style="padding: 4px 0 !important; margin-top: 10px;"  @click="showReleasePayslipConfirmationDialog(slotProps.data.user_code)">Release payslip</button>
+
                      <!-- {{slotProps.data.is_payslip_released}} -->
                      <h1 v-if="slotProps.data.is_payslip_released == 1"  class="text-success mt-2">
                         Released
@@ -45,19 +46,19 @@
                    <h1> Payslip sent</h1>
                 </div>
                 <div v-else>
-                    <button class="btn-primary rounded" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
+                    <button class="btn-primary rounded z-0" @click="showConfirmationDialog(slotProps.data.user_code)">Send Payslip</button>
                 </div>
                 </template>
             </Column>
 
             <Column header="Download">
                 <template #body="slotProps">
-                    <Button class="btn-primary" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
+                    <Button class="btn-primary z-0" style="" label="Download" @click="showdownloadPayslipConfirmationDialog(slotProps.data.user_code)" />
                 </template>
             </Column>
             <Column header="View Payslip">
                 <template #body="slotProps">
-                    <Button class="btn-primary" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
+                    <Button class="btn-primary z-0" style="" label="View" @click="showPaySlipHTMLView(slotProps.data.user_code)" />
                 </template>
             </Column>
 

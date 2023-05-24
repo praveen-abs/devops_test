@@ -24,6 +24,7 @@ return new class extends Migration
             $table->time('shift_end_time')->nullable();
             $table->text('grace_time')->nullable();
             $table->text('week_off_days');
+            $table->text('custom_shift_time_for_specific_days')->nullable();
             $table->text('break_timerange_type');
             $table->text('flexible_gross_break')->nullable();
             $table->text('breaktime_morning')->nullable();
