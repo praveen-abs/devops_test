@@ -108,14 +108,15 @@
                 <div class="p-3 pl-5 d-flex align-items-center border">
                     <div class="rounded-circle shadow-sm d-flex justify-content-center align-items-center bg-yellow-100"
                         style="width:80px ; height: 80px;">
-                        <h1 class="fs-5 fw-bold">K K</h1>
+                        <h1 class="fs-5 fw-bold">{{leaveModuleStore.setLeaveDetails.user_short_name }}</h1>
                     </div>
                     <div class="ml-5">
                         <h1 class="fs-5 fw-bold mb-2">{{ leaveModuleStore.setLeaveDetails.name }}</h1>
 
                         <div>
-                            <p class="fs-6 text-neutral-400 ">Requested on
+                            <p class="fs-6 text-neutral-400 " >Requested on
                                 {{ leaveModuleStore.setLeaveDetails.leaverequest_date }}</p>
+
                         </div>
                     </div>
                 </div>
@@ -140,10 +141,10 @@
                     <div class="card px-3 py-2 d-flex mt-3" style="min-width: 250px; max-width: 220px; display: flex;">
                         <div class="d-flex p-2 align-items-center">
                             <div class="rounded-circle bg-blue-100 d-flex justify-content-center align-items-center"
-                                style="width:40px ; height: 40px;">DK</div>
+                                style="width:40px ; height: 40px;">{{leaveModuleStore.setLeaveDetails.reviewer_short_name}}</div>
                             <div class="flex-column px-3">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
-                                <h1 class="py-2 text-neutral-400">Lorem, ipsum.</h1>
+                                <h1 class="py-2 text-neutral-400">{{  leaveModuleStore.setLeaveDetails.reviewer_designation}}</h1>
                             </div>
                         </div>
                     </div>
