@@ -126,8 +126,6 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <!-- {{ slotProps.data.json_popups_value['interest_amount_paid'] }} -->
-                                <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
                                 <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else class="px-auto">
@@ -157,6 +155,45 @@
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
                                     class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EEB</button>
+                            </div>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80DD'">
+                            <div v-if="slotProps.data.selected_section_options">
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                            </div>
+                            <div v-else-if="slotProps.data.select_option">
+                                <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
+                            </div>
+                            <div v-else>
+                                <p style="font-weight: 501;">--</p>
+                            </div>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80DDB'">
+                            <div v-if="slotProps.data.selected_section_options">
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                            </div>
+                            <div v-else-if="slotProps.data.select_option">
+                                <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
+                            </div>
+                            <div v-else>
+                                <p style="font-weight: 501;">--</p>
+                            </div>
+                        </div>
+                        <div v-else-if="slotProps.data.section == '80U'">
+                            <div v-if="slotProps.data.selected_section_options">
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                            </div>
+                            <div v-else-if="slotProps.data.select_option">
+                                <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
+                            </div>
+                            <div v-else>
+                                <p style="font-weight: 501;">--</p>
                             </div>
                         </div>
                         <div v-else-if="slotProps.data.dec_amount" class="dec_amt">

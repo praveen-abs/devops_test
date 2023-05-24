@@ -203,6 +203,13 @@ class VmtInvestmentsController extends Controller
 
         return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code, $fs_id);
     }
+    public function fetchOtherExemptionDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+    {
+        $user_code = $request->user_code;
+        $fs_id = $request->otherExe;
+
+        return $serviceVmtInvestmentsService->fetchHousePropertyDetails($user_code, $fs_id);
+    }
     public function deleteHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
     {
 

@@ -25,7 +25,6 @@
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
-
                         <div v-if="slotProps.data.particular == 'Self Occupied Property'">
                             <div v-if="slotProps.data.json_popups_value">
                                 {{ slotProps.data['json_popups_value'].income_loss }}
@@ -58,6 +57,7 @@
                             </div>
 
                         </div>
+                        
                         <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
@@ -533,7 +533,7 @@ const submitSOP = () => {
     if (!s$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        // investmentStore.save80EEA()
+        investmentStore.saveSelfOccupiedProperty()
     } else {
         console.log('Form failed validation')
     }
@@ -563,7 +563,7 @@ const submitLop = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        // investmentStore.save80EE()
+        investmentStore.saveLetOutProperty()
     } else {
         console.log('Form failed validation')
     }
@@ -592,7 +592,7 @@ const submitDlop = () => {
     if (!p$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        // investmentStore.save80EEA()
+        investmentStore.saveDeemedLetOutProperty()
     } else {
         console.log('Form failed validation')
     }
