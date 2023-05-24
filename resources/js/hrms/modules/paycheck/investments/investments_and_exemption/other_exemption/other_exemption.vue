@@ -18,14 +18,16 @@
                             <div class="flex py-2">
                                 <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                    :value="slotProps.data.section_option_1"
+                                    :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
 
                                 <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false" >
+                                    :value="slotProps.data.section_option_2"
+                                    :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
 
                             </div>
@@ -35,13 +37,15 @@
                             <div class="flex py-2">
                                 <input type="radio" name="80DDB" id="" style="height: 20px;width: 20px;"
                                     v-model="slotProps.data.select_option" class="form-check-input"
-                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                    :value="slotProps.data.section_option_1"
+                                    :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
                                 <input type="radio" name="80DDB" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
+                                    :value="slotProps.data.section_option_2"
+                                    :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
                             </div>
                         </div>
@@ -50,13 +54,15 @@
                             <div class="flex py-2">
                                 <input type="radio" name="80U" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_1" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                    :value="slotProps.data.section_option_1"
+                                    :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
                             </div>
                             <div class="flex py-2">
                                 <input type="radio" name="80U" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
-                                    :value="slotProps.data.section_option_2" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
+                                    :value="slotProps.data.section_option_2"
+                                    :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
                                 <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
                             </div>
                         </div>
@@ -78,24 +84,36 @@
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80DD'">
-                            <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
-                            <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
-                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
-                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(75000) }}</p>
+                            <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(125000) }}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(75000) }}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(125000) }}</p>
                             <p v-else style="font-weight: 501;">--</p>
                         </div>
                         <div v-else-if="slotProps.data.section == '80DDB'">
-                            <p v-if="slotProps.data.select_option == 'Individuals (less than 60 years)'" style="font-weight: 501;">{{investmentStore.formatCurrency(40000)}}</p>
-                            <p v-else-if="slotProps.data.select_option == 'Senior citizen (aged 60 years or more)'" style="font-weight: 501;">{{investmentStore.formatCurrency(100000)}}</p>
-                            <p v-else-if="slotProps.data.selected_section_options == 'Individuals (less than 60 years)'" style="font-weight: 501;">{{investmentStore.formatCurrency(40000)}}</p>
-                            <p v-else-if="slotProps.data.selected_section_options == 'Senior citizen (aged 60 years or more)'" style="font-weight: 501;">{{investmentStore.formatCurrency(100000)}}</p>
+                            <p v-if="slotProps.data.select_option == 'Individuals (less than 60 years)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(40000) }}</p>
+                            <p v-else-if="slotProps.data.select_option == 'Senior citizen (aged 60 years or more)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(100000) }}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Individuals (less than 60 years)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(40000) }}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Senior citizen (aged 60 years or more)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(100000) }}</p>
                             <p v-else style="font-weight: 501;">--</p>
                         </div>
                         <div v-else-if="slotProps.data.section == '80U'">
-                            <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
-                            <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
-                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(75000)}}</p>
-                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'" style="font-weight: 501;">{{investmentStore.formatCurrency(125000)}}</p>
+                            <p v-if="slotProps.data.select_option == 'Normal Disability ( 40% to 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(75000) }}</p>
+                            <p v-else-if="slotProps.data.select_option == 'Severe Disability (More than 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(125000) }}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Normal Disability ( 40% to 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(75000) }}</p>
+                            <p v-else-if="slotProps.data.selected_section_options == 'Severe Disability (More than 80%)'"
+                                style="font-weight: 501;">{{ investmentStore.formatCurrency(125000) }}</p>
                             <p v-else style="font-weight: 501;">--</p>
                         </div>
                         <div v-else>
@@ -188,6 +206,52 @@
             </DataTable>
 
         </div>
+        <div class="mb-3 table-responsive">
+
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExemptionSource"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="[5, 10, 25]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+                <Column header="Loan Sanction Date" field="json_popups_value.loan_sanction_date" style="min-width: 8rem">
+
+                </Column>
+
+                <Column field="json_popups_value.lender_type" header="Lender Type" style="min-width: 12rem">
+
+                </Column>
+
+                <Column field="json_popups_value.property_value" header="Property Value " style="min-width: 12rem">
+                </Column>
+
+                <Column field="json_popups_value.loan_amount" header="Loan Amount" style="min-width: 12rem">
+                </Column>
+
+                <Column field="json_popups_value.interest_amount_paid" header="Interest Amount Paid" style="min-width: 12rem">
+                </Column>
+                <Column field="" header="Action" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
+                            @click="investmentStore.editHraNewRental(slotProps.data)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-8">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+
+                        </button>
+                        <button class="p-2 bg-red-200 border-red-500 rounded-xl"
+                            @click="investmentStore.deleteRentalDetails(slotProps.data)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-10 h-8 font-bold">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                        </button>
+                    </template>
+                </Column>
+            </DataTable>
+
+        </div>
 
         <div class="my-3 text-end">
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
@@ -215,10 +279,12 @@
                         Sanction Date</label>
                     <Calendar :minDate="new Date('04/01/2016')" :maxDate="new Date('03/31/2017')"
                         placeholder="Loan Sanction Date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
-                        class="w-full " showIcon required />
-                    <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EE.loan_sanction_date"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required> -->
+                        class="w-full " showIcon required :class="[
+                            v$.loan_sanction_date.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="v$.loan_sanction_date.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ v$.loan_sanction_date.$errors[0].$message }}
+                    </span>
                 </div>
                 <div class="">
 
@@ -226,35 +292,58 @@
                         Type</label>
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         v-model="investmentStore.other_exe_80EE.lender_type" :options="lender_types" optionLabel="name"
-                        optionValue="code" placeholder="Select a Property" />
+                        optionValue="code" placeholder="Select a Property" required :class="[
+                            v$.lender_type.$error ? 'border border-red-500' : '',
+                        ]" />
+                    <span v-if="v$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ v$.lender_type.$errors[0].$message }}
+                    </span>
                 </div>
 
                 <div class="">
                     <label for="property_value" class="block mb-2 font-medium text-gray-900 ">Property
                         Value</label>
-                    <input type="text" id="property_value" v-model="investmentStore.other_exe_80EE.property_value"
+                    <!-- <input type="text" id="property_value" v-model="investmentStore.other_exe_80EE.property_value"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                        required :class="[
+                            v$.property_value.$error ? 'border border-red-500' : '',
+                        ]" /> -->
+                    <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.other_exe_80EE.property_value"
+                        required :class="[
+                            v$.property_value.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="v$.property_value.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ v$.property_value.$errors[0].$message }}
+                    </span>
                 </div>
                 <div class="">
                     <label for="loan_amount" class="block mb-2 font-medium text-gray-900 ">Loan
                         Amount</label>
-                    <input type="text" id="loan_amount" v-model="investmentStore.other_exe_80EE.loan_amount"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                        required>
+                    <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.other_exe_80EE.loan_amount"
+                        required :class="[
+                            v$.loan_amount.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="v$.loan_amount.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ v$.loan_amount.$errors[0].$message }}
+                    </span>
+
                 </div>
                 <div class="">
                     <label for="declaration_amount" class="block mb-2 font-medium text-gray-900 ">Interest
                         Amount Paid</label>
-                    <input type="text" id="declaration_amount" v-model="investmentStore.other_exe_80EE.interest_amount_paid"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                    <InputNumber id="rendPaid_inp" class="w-full "
+                        v-model="investmentStore.other_exe_80EE.interest_amount_paid" required :class="[
+                            v$.interest_amount_paid.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="v$.interest_amount_paid.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ v$.interest_amount_paid.$errors[0].$message }}
+                    </span>
                 </div>
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EE"
-                    :disabled="investmentStore.other_exe_80EE.loan_sanction_date && investmentStore.other_exe_80EE.interest_amount_paid ? false : true">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
+                    @click="submitForm80EE">Save</button>
             </div>
         </Dialog>
 
@@ -275,10 +364,12 @@
                         Sanction Date</label>
                     <Calendar :minDate="new Date('04/01/2019')" :maxDate="new Date('03/31/2020')"
                         placeholder="Loan Sanction Date" v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
-                        class="w-full " showIcon required />
-                    <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEA.loan_sanction_date"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required> -->
+                        class="w-full " showIconrequired :class="[
+                            s$.loan_sanction_date.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="s$.loan_sanction_date.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ s$.loan_sanction_date.$errors[0].$message }}
+                    </span>
                 </div>
 
 
@@ -289,37 +380,54 @@
                         Type</label>
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         v-model="investmentStore.other_exe_80EEA.lender_type" :options="lender_types" optionLabel="name"
-                        optionValue="code" placeholder="Select a Property" />
+                        optionValue="code" placeholder="Select a Property" required :class="[
+                            s$.lender_type.$error ? 'border border-red-500' : '',
+                        ]" />
+                    <span v-if="s$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ s$.lender_type.$errors[0].$message }}
+                    </span>
 
                 </div>
 
                 <div class="">
                     <label for="property_value" class="block mb-2 font-medium text-gray-900 ">Property
                         Value</label>
-                    <input type="text" id="property_value" v-model="investmentStore.other_exe_80EEA.property_value"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+
+                    <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.other_exe_80EEA.property_value"
+                        required :class="[
+                            s$.property_value.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="s$.property_value.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ s$.property_value.$errors[0].$message }}
+                    </span>
                 </div>
                 <div class="">
                     <label for="loan_amount" class="block mb-2 font-medium text-gray-900 ">Loan
                         Amount</label>
-                    <input type="text" id="loan_amount" v-model="investmentStore.other_exe_80EEA.loan_amount"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-100 focus:outline-none focus:ring outline-1  block w-full p-2.5 "
-                        required>
+                    <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.other_exe_80EEA.loan_amount"
+                        required :class="[
+                            s$.loan_amount.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="s$.loan_amount.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ s$.loan_amount.$errors[0].$message }}
+                    </span>
                 </div>
                 <div class="">
                     <label for="declaration_amount" class="block mb-2 font-medium text-gray-900 ">Interest
                         Amount Paid</label>
-                    <input type="text" id="declaration_amount"
-                        v-model="investmentStore.other_exe_80EEA.interest_amount_paid"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                    <InputNumber id="rendPaid_inp" class="w-full "
+                        v-model="investmentStore.other_exe_80EEA.interest_amount_paid" required :class="[
+                            s$.interest_amount_paid.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="s$.interest_amount_paid.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ s$.interest_amount_paid.$errors[0].$message }}
+                    </span>
                 </div>
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EEA"
-                    :disabled="investmentStore.other_exe_80EEA.loan_sanction_date && investmentStore.other_exe_80EEA.interest_amount_paid ? false : true">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
+                    @click="submitForm80EEA">Save</button>
             </div>
 
         </Dialog>
@@ -342,10 +450,12 @@
                         Sanction Date</label>
                     <Calendar :minDate="new Date('04/01/2019')" :maxDate="new Date('03/31/2023')"
                         placeholder="Loan Sanction Date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
-                        class="w-full " showIcon required />
-                    <!-- <input type="date" id="sanction_date" v-model="investmentStore.other_exe_80EEB.loan_sanction_date"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required> -->
+                        class="w-full " showIcon required :class="[
+                            p$.loan_sanction_date.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="p$.loan_sanction_date.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ p$.loan_sanction_date.$errors[0].$message }}
+                    </span>
                 </div>
 
                 <div class="">
@@ -353,7 +463,13 @@
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         @change="switchVechileModel(investmentStore.other_exe_80EEB.vechicle_brand)"
                         v-model="investmentStore.other_exe_80EEB.vechicle_brand" :options="vechicle_types"
-                        optionLabel="vechicle_model" optionValue="value" placeholder="Select a Vechicle Brand" />
+                        optionLabel="vechicle_model" optionValue="value" placeholder="Select a Vechicle Brand" required
+                        :class="[
+                            p$.vechicle_brand.$error ? 'border border-red-500' : '',
+                        ]" />
+                    <span v-if="p$.vechicle_brand.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ p$.vechicle_brand.$errors[0].$message }}
+                    </span>
                 </div>
 
                 <div class="">
@@ -361,22 +477,31 @@
                     </label>
                     <Dropdown class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
                         v-model="investmentStore.other_exe_80EEB.vechicle_model" :options="vechicle_model_options"
-                        optionLabel="vechicle_model" optionValue="value" placeholder="Select a Vechicle Model" />
+                        optionLabel="vechicle_model" optionValue="value" placeholder="Select a Vechicle Model" required
+                        :class="[
+                            p$.vechicle_model.$error ? 'border border-red-500' : '',
+                        ]" />
+                    <span v-if="p$.vechicle_model.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ p$.vechicle_model.$errors[0].$message }}
+                    </span>
                 </div>
 
                 <div class="">
                     <label for="declaration_amount" class="block mb-2 font-medium text-gray-900 ">Interest
                         Amount Paid</label>
-                    <input type="text" id="declaration_amount"
-                        v-model="investmentStore.other_exe_80EEB.interest_amount_paid"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        required>
+                    <InputNumber id="rendPaid_inp" class="w-full "
+                        v-model="investmentStore.other_exe_80EEB.interest_amount_paid" required :class="[
+                            p$.interest_amount_paid.$error ? 'p-invalid' : '',
+                        ]" />
+                    <span v-if="p$.interest_amount_paid.$error" class="text-red-400 fs-6 font-semibold">
+                        {{ p$.interest_amount_paid.$errors[0].$message }}
+                    </span>
                 </div>
 
             </div>
             <div class="text-end">
-                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" @click="investmentStore.save80EEB"
-                    :disabled="investmentStore.other_exe_80EEB.loan_sanction_date && investmentStore.other_exe_80EEB.interest_amount_paid ? false : true">Save</button>
+                <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
+                    @click="submitForm80EEB">Save</button>
             </div>
         </Dialog>
 
@@ -384,12 +509,85 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 import axios from "axios";
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import useValidate from '@vuelidate/core'
 
 const investmentStore = investmentMainStore()
 const editingRows = ref([]);
+
+
+const rulesSec80E = computed(() => {
+    return {
+        loan_sanction_date: { required },
+        lender_type: { required },
+        property_value: { required },
+        loan_amount: { required },
+        interest_amount_paid: { required },
+    }
+})
+
+const v$ = useValidate(rulesSec80E, investmentStore.other_exe_80EE)
+
+const submitForm80EE = () => {
+    console.log(v$.value);
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        investmentStore.save80EE()
+    } else {
+        console.log('Form failed validation')
+    }
+}
+
+const rulesSec80EA = computed(() => {
+    return {
+        loan_sanction_date: { required },
+        lender_type: { required },
+        property_value: { required },
+        loan_amount: { required },
+        interest_amount_paid: { required },
+    }
+})
+
+const s$ = useValidate(rulesSec80EA, investmentStore.other_exe_80EEA)
+
+const submitForm80EEA = () => {
+    console.log(s$.value);
+    s$.value.$validate() // checks all inputs
+    if (!s$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        investmentStore.save80EEA()
+    } else {
+        console.log('Form failed validation')
+    }
+}
+
+const rulesSec80EB = computed(() => {
+    return {
+        loan_sanction_date: { required },
+        vechicle_brand: { required },
+        vechicle_model: { required },
+        interest_amount_paid: { required },
+    }
+})
+const p$ = useValidate(rulesSec80EB, investmentStore.other_exe_80EEB)
+
+const submitForm80EEB = () => {
+    console.log(p$.value);
+    p$.value.$validate() // checks all inputs
+    if (!p$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        investmentStore.save80EEB()
+    } else {
+        console.log('Form failed validation')
+    }
+}
 
 onMounted(() => {
     setTimeout(() => {
@@ -512,11 +710,9 @@ const switchVechileModel = (vechicle_brand) => {
 </script>
 
 <style>
-
-.p-datepicker .p-component{
+.p-datepicker .p-component {
     z-index: 400;
 }
-
 </style>
 
 

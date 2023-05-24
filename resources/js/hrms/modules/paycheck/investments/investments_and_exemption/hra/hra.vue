@@ -23,6 +23,7 @@
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
                     <template #body="slotProps">
+                        <!-- {{ slotProps.data }} -->
                         <div v-if="slotProps.data.json_popups_value" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.total_rent_paid) }}
                         </div>
@@ -77,12 +78,12 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem"  @keypress="isLetter($event)">
+                    <Column header="Landlord Name" field="json_popups_value.landlord_name" style="min-width: 8rem">
                     </Column>
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
                         <template #body="slotProps">
-                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase()}}
+                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
                         </template>
                     </Column>
 
@@ -150,33 +151,46 @@
             <div class="">
                 <label for="rentFrom_month" class="block mb-2 font-medium text-gray-900">From
                     Month</label>
-                <Calendar view="month" dateFormat="mm/yy" v-model="investmentStore.hra.from_month" class="w-full" showIcon
-                    required />
-                <!-- <input type="date" id="rentFrom_month"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.from_month" required> -->
+                <Calendar view="month" :minDate="new Date('04/01/2023')" :maxDate="new Date('03/31/2024')"
+                    dateFormat="mm/yy" v-model="investmentStore.hra.from_month" class="w-full" showIcon required :class="[
+                        v$.from_month.$error ? 'p-invalid' : '',
+                    ]" />
+                <span v-if="v$.from_month.$error" class="text-red-400 fs-6 font-semibold">
+                    {{ v$.from_month.$errors[0].$message }}
+                </span>
             </div>
             <div class="">
                 <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
                     Month</label>
-                <Calendar view="month" dateFormat="mm/yy" v-model="investmentStore.hra.to_month" class="w-full" showIcon
-                    required />
-
-                <!-- <input type="date" id="toFrom_month                                                                                  "
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.to_month" required> -->
+                <Calendar view="month" :minDate="new Date('04/01/2023')" :maxDate="new Date('03/31/2024')"
+                    dateFormat="mm/yy" v-model="investmentStore.hra.to_month" class="w-full" showIcon required :class="[
+                        v$.to_month.$error ? 'p-invalid' : '',
+                    ]" />
+                <span v-if="v$.to_month.$error" class="text-red-400 fs-6 font-semibold">
+                    {{ v$.to_month.$errors[0].$message }}
+                </span>
             </div>
             <div class="">
                 <label for="metro_city" class="block mb-2 font-medium text-gray-900 ">City</label>
-                <Dropdown editable class="w-full"
-                v-model="investmentStore.hra.city" :options="investmentStore.metrocitiesOption" optionLabel="name"
-                    optionValue="value" placeholder="Select City" />
+                <Dropdown editable class="w-full" v-model="investmentStore.hra.city"
+                    :options="investmentStore.metrocitiesOption" optionLabel="name" optionValue="value"
+                    placeholder="Select City" required :class="[
+                        v$.city.$error ? 'p-invalid' : '',
+                    ]" />
+                <span v-if="v$.city.$error" class="text-red-400 fs-6 font-semibold">
+                    {{ v$.city.$errors[0].$message }}
+                </span>
             </div>
             <div class="">
                 <label for="rendPaid_inp" class="block mb-2 font-medium text-gray-900 ">Total
                     Rent Paid</label>
                 <InputNumber type="text" id="rendPaid_inp" class="w-full " v-model="investmentStore.hra.total_rent_paid"
-                    required />
+                    required :class="[
+                        v$.total_rent_paid.$error ? 'p-invalid' : '',
+                    ]" />
+                <span v-if="v$.total_rent_paid.$error" class="text-red-400 fs-6 font-semibold">
+                    {{ v$.total_rent_paid.$errors[0].$message }}
+                </span>
             </div>
 
         </div>
@@ -184,9 +198,14 @@
             <div class="">
                 <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">Landlord
                     Name <span class="text-red-600">*</span> </label>
-                <input type="text" id="lender_name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="investmentStore.hra.landlord_name" required>
+                <input type="text" id="lender_name" @keypress="isLetter($event)"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 capitalize"
+                    v-model="investmentStore.hra.landlord_name" required :class="[
+                        v$.landlord_name.$error ? 'border border-red-500' : '',
+                    ]" />
+                <span v-if="v$.landlord_name.$error" class="text-red-400 fs-6 font-semibold">
+                    {{ v$.landlord_name.$errors[0].$message }}
+                </span>
             </div>
 
             <div class="">
@@ -196,7 +215,12 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     v-model="investmentStore.hra.landlord_PAN" required> -->
                 <InputMask id="serial" mask="aaaaa9999a" class="w-full " placeholder="AHFCS1234F"
-                    style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN" />
+                    style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN" required :class="[
+                        v$.landlord_PAN.$error ? 'p-invalid' : '',
+                    ]" />
+                <span v-if="v$.landlord_PAN.$error" class="text-red-400 fs-6 font-semibold">
+                    {{ v$.landlord_PAN.$errors[0].$message }}
+                </span>
 
             </div>
 
@@ -204,22 +228,29 @@
         <div class="grid mb-6 md:grid-cols-1 2xl:grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1">
             <label for="lender_name" class="block mb-2 font-medium text-gray-900 ">
                 Address </label>
-            <textarea name="" id="" rows="3"
+            <Textarea name="" id="" autoResize rows="5" cols="30"
                 class="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                v-model="investmentStore.hra.address" required></textarea>
+                v-model="investmentStore.hra.address" required :class="[
+                    v$.address.$error ? 'border border-red-500' : '',
+                ]" />
+            <span v-if="v$.address.$error" class="text-red-400 fs-6 font-semibold">
+                {{ v$.address.$errors[0].$message }}
+            </span>
+
         </div>
         <div class="text-end">
-            <button :disabled="investmentStore.hra.landlord_name && investmentStore.hra.landlord_PAN && investmentStore.hra.address && investmentStore.hra.total_rent_paid? false : true"  class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
-                @click="investmentStore.saveHraNewRental" >Save</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md" type="button"
+                @click="submitForm">Save</button>
         </div>
     </Dialog>
 </template>
 
 
 <script setup>
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, computed, reactive } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
-
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
 import { ref } from "vue";
 import moment from "moment";
 
@@ -241,10 +272,36 @@ onMounted(async () => {
 
 })
 
-const isLetter = (e)=> {
-  let char = String.fromCharCode(e.keyCode); // Get the character
-  if(/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
-  else e.preventDefault(); // If not match, don't add to input text
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const rules = computed(() => {
+    return {
+        from_month: { required },
+        to_month: { required },
+        city: { required },
+        total_rent_paid: { required },
+        landlord_name: { required },
+        landlord_PAN: { required },
+        address: { required },
+    }
+})
+
+const v$ = useValidate(rules, investmentStore.hra)
+
+const submitForm = () => {
+    console.log(v$.value);
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        investmentStore.saveHraNewRental()
+    } else {
+        console.log('Form failed validation')
+    }
 }
 
 

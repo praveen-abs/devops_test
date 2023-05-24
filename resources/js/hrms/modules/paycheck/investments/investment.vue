@@ -104,13 +104,6 @@ onMounted(async () => {
     color: #6c757d;
 }
 
-.p-dialog .p-dialog-header-icons {
-    display: flex;
-    align-items: center;
-    position: relative;
-    top: 0;
-}
-
 .p-dialog-mask {
     position: fixed;
     top: 0;

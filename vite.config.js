@@ -125,9 +125,13 @@ export default defineConfig({
                'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
 
             ],
+            
             refresh: true,
         }),
     ],
+    resolve: {
+        dedupe: ['vue', 'vue-router'],
+      },
     // css: {
     //     preprocessorOptions: {
     //       scss: {
