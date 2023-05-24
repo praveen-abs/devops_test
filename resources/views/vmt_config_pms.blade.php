@@ -410,7 +410,7 @@
                                     <th scope="col">Score Range</th>
                                     <th scope="col">Performance Rating</th>
                                     <th scope="col">Ranking</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Recommendation</th>
                                     {{-- <th scope="col">Sort Order</th> --}}
 
 
