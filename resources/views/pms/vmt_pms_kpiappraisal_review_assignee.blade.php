@@ -58,15 +58,12 @@
                     <div class="col-md-12 col-sm-12 col-lg-9 col-xl-9 col-xxl-9 d-flex">
                         <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4 w-full mr-4"  style="width: 250px">
                             <div class="card-body">
-                                <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
+                                <p class="mb-2 fw-bold f-14 text-primary"> Current Ratings</p>
                                 <div class="mb-3">
                                     <p class="f-14    mt-2 ">Score</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width:25%"
-                                                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
+
                                         </div>
                                         <div class="col-2">
                                             {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
@@ -86,7 +83,7 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <p class="f-14    mt-2 ">Corresponding PERFORMANCE Rating</p>
+                                    <p class="f-14    mt-2 ">Performance Rating</p>
                                     <div class="row">
                                         {{-- <div class="col-10 mt-2">
                                             <div class="progress">
@@ -114,7 +111,7 @@
                                     <div class="row">
                                         <div class="col-10 mt-2">
                                             <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"
+                                                <div class="progress-bar  bg-green-400" role="progressbar" style="width: 75%"
                                                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
@@ -140,10 +137,7 @@
                                     <p class="f-14    mt-2 ">Recommendation</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
-                                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
+
                                         </div>
                                         <div class="col-2">
                                             <b class="f-15 text-primary">
@@ -166,13 +160,13 @@
 
                         <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4 w-full"  style="width: 250px">
                             <div class="card-body">
-                                <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
+                                <p class="mb-2 fw-bold f-14 text-primary">Overall Ratings</p>
                                 <div class="mb-3">
                                     <p class="f-14    mt-2 ">Overall Annual Score</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
                                             <div class="progress">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width:25%"
+                                                <div class="progress-bar bg-yellow-400" role="progressbar" style="width:25%"
                                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
@@ -194,7 +188,7 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <p class="f-14    mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
+                                    <p class="f-14    mt-2 ">Overall Corresponding ANNUAL PERFORMANCE Rating</p>
                                     <div class="row">
                                         {{-- <div class="col-10 mt-2">
                                             <div class="progress">
@@ -218,11 +212,11 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <p class="f-14    mt-2 ">Ranking</p>
+                                    <p class="f-14    mt-2 ">Overall Ranking</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
                                             <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"
+                                                <div class="progress-bar bg-green-400" role="progressbar" style="width: 75%"
                                                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
@@ -245,14 +239,10 @@
 
 
                                 <div class="mb-3">
-                                    <p class="f-14    mt-2 ">Recommendation</p>
+                                    <p class="f-14    mt-2 "> Overall Recommendation</p>
                                     <div class="row">
                                         <div class="col-10 mt-2">
-                                            <div class="progress">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%"
-                                                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div>
+
                                         <div class="col-2">
                                             <b class="f-15 text-primary">
                                             @if ($isAllReviewersSubmittedOrNot)
