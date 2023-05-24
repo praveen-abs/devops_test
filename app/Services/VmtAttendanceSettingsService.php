@@ -37,12 +37,91 @@ use App\Models\VmtOrgTimePeriod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
+
 class VmtAttendanceSettingsService
 {
-    //TODO : Need to add the entire parameters
-    // public function saveWorkShiftSettings($shift_name, $shift_code, $is_default, $shift_timerange_type,
-    //                                         $flexible_gross_hours, $shift_start_time, $shift_start_time){
+    // TODO : Need to add the entire parameters
+    public function saveWorkShiftSettings(
+        $shift_code,
+        $shift_name,
+        $is_default,
+        $shift_timerange_type,
+        $flexible_gross_hours,
+        $shift_start_time,
+        $shift_end_time,
+        $grace_time,
+        $week_off_days,
+        $custom_shift_time_for_specific_days,
+        $break_timerange_type,
+        $flexible_gross_break,
+        $breaktime_morning,
+        $breaktime_lunch,
+        $breaktime_evening,
+        $halfday_min_workhrs,
+        $fullday_min_workhrs
+    ) {
 
-    // }
 
+        $validator = Validator::make(
+            $data = [
+                "shift_code" => $shift_code,
+                "shift_name" => $shift_name,
+                "is_default"=> $is_default,
+                "shift_timerange_type"=>$shift_timerange_type,
+                "flexible_gross_hours"=>$flexible_gross_hours,
+                "shift_start_time" => $shift_start_time,
+                'shift_end_time' => $shift_end_time,
+                'grace_time'=> $grace_time,
+                'week_off_days'=> $week_off_days,
+                'custom_shift_time_for_specific_days'=>$custom_shift_time_for_specific_days,
+                '$break_timerange_type'=>$break_timerange_type,
+                'flexible_gross_break'=>$flexible_gross_break,
+                'breaktime_morning'=>$breaktime_morning,
+                'breaktime_lunch'=>$breaktime_lunch,
+                'breaktime_evening'=> $breaktime_evening,
+                'halfday_min_workhrs'=> $halfday_min_workhrs,
+                'fullday_min_workhrs'=> $fullday_min_workhrs
+            ],
+            $rules = [
+                "shift_code" => 'required',
+                "shift_name" => 'required',
+                "shift_timerange_type"=>'required',
+                'week_off_days'=>'required',
+                '$break_timerange_type'=>'required',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try {
+
+            $response = '';
+
+            return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" => $response,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while saving Work ShiftSettings",
+                "data" => $e,
+            ]);
+        }
+
+
+        dd($shift_code);
+    }
 }
