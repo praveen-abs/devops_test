@@ -12,6 +12,9 @@ export default defineConfig({
 
                 'resources/js/app.js',
 
+                //Main dashboard
+                'resources/js/hrms/modules/dashboard/dashboard.js',
+
                 // Profile Page new
 
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',

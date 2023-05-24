@@ -96,7 +96,7 @@
                                                 <div class="cal-icon">
 
                                                 </div>
-                                                <InputText class="form-controls onboard-form" inputId="integeronly"
+                                                <InputText class="form-controls onboard-form pl-2" inputId="integeronly"
                                                     name="account_no" :min="0" :max="100" type="number"
                                                     v-model="bank_information.bank_ac_no" />
                                             </div>
@@ -105,14 +105,14 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>IFSC Code</label>
-                                                <InputText type="text" name="bank_ifsc_" class="form-controls"
+                                                <InputText type="text" name="bank_ifsc_" class="form-controls pl-2"
                                                     v-model="bank_information.ifsc_code" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>PAN No</label>
-                                                <InputText type="text" name="pan_nos" class="form-controls"
+                                                <InputText type="text" name="pan_nos" class="form-controls pl-2"
                                                     v-model="bank_information.pan_no" />
 
                                             </div>
@@ -497,7 +497,7 @@ function onClick_EditButton_BankInfo() {
 
     // Assign json values into dialog elements also
 
-    bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id;
+    bank_information.bank_id =  parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.bank_id);
     bank_information.bank_ac_no = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number;
     bank_information.ifsc_code = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
     bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number;

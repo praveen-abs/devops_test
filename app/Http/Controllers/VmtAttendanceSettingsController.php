@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtWorkShifts;
+use App\Services\VmtAttendanceService;
 
 class VmtAttendanceSettingsController extends Controller
 {
@@ -73,5 +74,7 @@ class VmtAttendanceSettingsController extends Controller
 
     }
 
-
+    public function saveWorkShiftSettings(Request $request, VmtAttendanceService $vmtAttendanceService){
+       // return $vmtAttendanceService->
+    }
 }

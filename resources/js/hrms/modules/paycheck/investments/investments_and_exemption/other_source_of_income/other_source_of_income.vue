@@ -146,6 +146,6 @@ const onRowEditSave = (event) => {
 .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
     margin-right: 0;
     position: relative;
-    top: -50px;
+    top: -20px;
   }
 </style>

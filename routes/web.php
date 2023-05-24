@@ -254,6 +254,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-emergency-info/{id}', [App\Http\Controllers\HomeController::class, 'updateEmergencyInfo'])->name('updateEmergencyInfo');
     Route::post('/update-family-info/{id}', [App\Http\Controllers\HomeController::class, 'updateFamilyInfo'])->name('updateFamilyInfo');
     Route::post('/update-checkin', [App\Http\Controllers\HomeController::class, 'updateCheckin'])->name('updateCheckin');
+    Route::get('/attendance/isAlreadyCheckedIn', [App\Http\Controllers\HomeController::class, 'isAlreadyCheckedIn'])->name('isAlreadyCheckedIn');
     Route::get('/topbar-settings', [App\Http\Controllers\HomeController::class, 'vmt_topbar_settings'])->name('vmt_topbar_settings');
 
 

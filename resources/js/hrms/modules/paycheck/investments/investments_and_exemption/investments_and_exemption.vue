@@ -128,11 +128,11 @@ onMounted(async () => {
     console.log(activetab.value);
     setTimeout(async () => {
         investmentStore.fetchPropertyType()
-    }, 2000);
+    }, 3000);
 
     setTimeout(async () => {
         investmentStore.hop.splice(0, investmentStore.hop.length);
-    }, 3000);
+    }, 4000);
 
 })
 
@@ -158,7 +158,7 @@ onMounted(async () => {
 
 /* .p-dropdown .p-dropdown-label:focus,
 .p-dropdown .p-dropdown-label:enabled:focus {
- 
+
 } */
 
 #pv_id_20:focus {

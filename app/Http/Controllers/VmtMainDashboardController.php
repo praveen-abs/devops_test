@@ -213,6 +213,7 @@ class VmtMainDashboardController extends Controller
         //$dashboardEmployeeEventsData['wedding_anniversary'] = $employeesEventDetails;
 
         //dd($dashboardEmployeeEventsData);
+        //get the last attendance data for the current user
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
                                         ->orderBy('created_at', 'DESC')->first();
         $effective_hours="";
