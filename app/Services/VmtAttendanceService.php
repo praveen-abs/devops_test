@@ -1766,8 +1766,8 @@ class VmtAttendanceService
                 $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id',$query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
-                $query_employees_leaves[$i]["reviewer_short_name"] = getEmployeeAvatarOrShortName($query_employees_leaves[$i]["reviewer_user_id"]);
-                $query_employees_leaves[$i]["user_short_name"] = getEmployeeAvatarOrShortName($user_id);
+                $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
+                $query_employees_leaves[$i]["user_short_name"] = getUserShortName($user_id);
             }
 
 
