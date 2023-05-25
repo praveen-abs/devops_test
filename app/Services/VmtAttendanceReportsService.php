@@ -10,6 +10,7 @@ use App\Models\VmtLeaves;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
 use \Datetime;
@@ -69,8 +70,8 @@ class VmtAttendanceReportsService{
 
 
 
-
-            $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+            $work_shift_id = VmtEmployeeWorkShifts::where('user_id',$singleUser->id)->first()->work_shift_id;
+            $regularTime  = VmtWorkShifts::where('id',$work_shift_id)->first();
 
              $requestedDate = $year . '-' . $month . '-01';
              $currentDate = Carbon::now();
