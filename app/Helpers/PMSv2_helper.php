@@ -245,7 +245,7 @@ function calculateOverallReviewRating($assigneeId)
         $over_all_score =   $over_all_score + substr(calculateReviewRatings($all_frequency_review_ratings[$i]->id, $assigneeId)['score'], 0, -1);
     }
 
-    $annual_avarge_of_review_rating =  ceil($over_all_score/$review_count );
+    $annual_avarge_of_review_rating =  $review_count != 0 ? ceil($over_all_score/$review_count ) : 0;
 
 
         $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order', 'DESC')->get();
