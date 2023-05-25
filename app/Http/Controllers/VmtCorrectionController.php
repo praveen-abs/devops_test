@@ -13,41 +13,42 @@ use App\Models\VmtPayroll;
 use App\Models\VmtEmployeePayslipV2;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeLeaves;
+use App\Models\VmtStaffAttendanceDevice;
 use Carbon\Carbon;
 
 class VmtCorrectionController extends Controller
 {
-    public function processsExpense(Request $request){
-        $reimbursement_details=VmtEmployeeReimbursements::select('id','vehicle_type_id','distance_travelled','total_expenses')
-                                                         ->get();
-        foreach( $reimbursement_details as $single_details){
-                 if($single_details->vehicle_type_id==1){
-                    $totalExpense=3.5*$single_details->distance_travelled;
-                    $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
-                    $UpdateDetails->total_expenses= $totalExpense;
-                    $UpdateDetails->save();
+    public function processsExpense(Request $request)
+    {
+        $reimbursement_details = VmtEmployeeReimbursements::select('id', 'vehicle_type_id', 'distance_travelled', 'total_expenses')
+            ->get();
+        foreach ($reimbursement_details as $single_details) {
+            if ($single_details->vehicle_type_id == 1) {
+                $totalExpense = 3.5 * $single_details->distance_travelled;
+                $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
+                $UpdateDetails->total_expenses = $totalExpense;
+                $UpdateDetails->save();
+            } else if ($single_details->vehicle_type_id == 2) {
+                $totalExpense = 6 * $single_details->distance_travelled;
+                $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
+                $UpdateDetails->total_expenses = $totalExpense;
+                $UpdateDetails->save();
+                // dd('---------------');
 
-                 }else if( $single_details->vehicle_type_id==2){
-                    $totalExpense=6*$single_details->distance_travelled;
-                    $UpdateDetails = VmtEmployeeReimbursements::where('id', '=',  $single_details->id)->first();
-                    $UpdateDetails->total_expenses= $totalExpense;
-                    $UpdateDetails->save();
-                   // dd('---------------');
-
-                  //  dd( $single_details);
-                 }
+                //  dd( $single_details);
+            }
         }
         return  $reimbursement_details;
-
     }
 
-    public function addingReimbursementsDataForSpecificMonth(Request $request){
-         $existing_data = VmtEmployeeReimbursements::where('user_id',$request->user_id)
-                                                    ->whereMonth('date',$request->month)
-                                                    ->get()->toArray();
+    public function addingReimbursementsDataForSpecificMonth(Request $request)
+    {
+        $existing_data = VmtEmployeeReimbursements::where('user_id', $request->user_id)
+            ->whereMonth('date', $request->month)
+            ->get()->toArray();
         $response = array();
-         foreach(  $existing_data as $single_data){
-               try{
+        foreach ($existing_data as $single_data) {
+            try {
                 $new_record = new VmtEmployeeReimbursements;
                 $new_record->user_id = $single_data['user_id'];
                 $new_record->reimbursement_type_id = $single_data['reimbursement_type_id'];
@@ -60,155 +61,153 @@ class VmtCorrectionController extends Controller
                 $new_record->distance_travelled = $single_data['distance_travelled'];
                 $new_record->total_expenses = $single_data['total_expenses'];
                 $new_record->save();
-                $response = array_merge($response,array(Carbon::parse($single_data['date'])->addMonth()->toDateString()=>$new_record->toArray()));
-
-               }catch(\Exception $e){
-                  dd($e);
-               }
-
-         }
-
-         return $response;
-    }
-    public function  checkallemployeeonboardingstatus(){
-
-        $query_all_users_details=User::get();
-    try{
-        foreach($query_all_users_details as $single_user_data){
-              //get the mandatory document id
-              $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
-
-             //get the employees uploaded documents mandatory id
-              $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
-                                                              ->where('vmt_employee_documents.user_id',$single_user_data->id)
-                                                              ->pluck('doc_id');
-
-          if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
-            {
-             //set the onboard status to 1
-                $currentUser =User::where('id',$single_user_data->id)->first();
-                $currentUser->is_onboarded = '1';
-                $currentUser->save();
-
-           }
+                $response = array_merge($response, array(Carbon::parse($single_data['date'])->addMonth()->toDateString() => $new_record->toArray()));
+            } catch (\Exception $e) {
+                dd($e);
+            }
         }
-    }catch(\Exception $e){
-        dd($e);
-     }
-    }
-    public function  addAllEmployeePayslipDetails(){
 
-    /*Get all employee payslip details */
+        return $response;
+    }
+    public function  checkallemployeeonboardingstatus()
+    {
+
+        $query_all_users_details = User::get();
+        try {
+            foreach ($query_all_users_details as $single_user_data) {
+                //get the mandatory document id
+                $mandatory_doc_ids = VmtDocuments::where('is_mandatory', '1')->pluck('id');
+
+                //get the employees uploaded documents mandatory id
+                $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id', $mandatory_doc_ids)
+                    ->where('vmt_employee_documents.user_id', $single_user_data->id)
+                    ->pluck('doc_id');
+
+                if (count($mandatory_doc_ids) == count($user_uploaded_docs_ids)) {
+                    //set the onboard status to 1
+                    $currentUser = User::where('id', $single_user_data->id)->first();
+                    $currentUser->is_onboarded = '1';
+                    $currentUser->save();
+                }
+            }
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
+    public function  addAllEmployeePayslipDetails()
+    {
+
+        /*Get all employee payslip details */
 
         $query_all_payslip = VmtEmployeePaySlip::all();
 
-    /* save single payrollmonth in vmt_payroll*/
-            $emp_payroll_month = VmtEmployeePaySlip::whereYear('created_at', '2022')->orwhereYear('created_at','2023')->distinct('created_at')->orderBy('PAYROLL_MONTH', 'ASC')->pluck('PAYROLL_MONTH');
+        /* save single payrollmonth in vmt_payroll*/
+        $emp_payroll_month = VmtEmployeePaySlip::whereYear('created_at', '2022')->orwhereYear('created_at', '2023')->distinct('created_at')->orderBy('PAYROLL_MONTH', 'ASC')->pluck('PAYROLL_MONTH');
 
-            $client_details_id = VmtClientMaster::get("id");
+        $client_details_id = VmtClientMaster::get("id");
 
-            foreach ($client_details_id as $key => $singleclient) {
+        foreach ($client_details_id as $key => $singleclient) {
 
-                foreach ($emp_payroll_month as $key => $singlepayrollmonth) {
-               $Payroll_data=VmtPayroll::where('client_id',$singleclient->id)->where('payroll_date',$singlepayrollmonth)->first();
-                  if(empty($Payroll_data)){
+            foreach ($emp_payroll_month as $key => $singlepayrollmonth) {
+                $Payroll_data = VmtPayroll::where('client_id', $singleclient->id)->where('payroll_date', $singlepayrollmonth)->first();
+                if (empty($Payroll_data)) {
                     $query_payroll = new Vmtpayroll;
-                    $query_payroll->client_id=$singleclient->id;
-                    $query_payroll->payroll_date=$singlepayrollmonth;
+                    $query_payroll->client_id = $singleclient->id;
+                    $query_payroll->payroll_date = $singlepayrollmonth;
                     $query_payroll->save();
-                    }
                 }
             }
+        }
 
 
 
-         /* save user id and payroll id in the table vmt_emp_payroll*/
-             foreach ($query_all_payslip as $key => $singleuserdata) {
-                $client_id = User::where('id',$singleuserdata->user_id)->first()->client_id;
-                $payroll_id =VmtPayroll::where('payroll_date',$singleuserdata->PAYROLL_MONTH)
-                                                  ->where('client_id',$client_id)->first()->id;
-                $emp_payroll_data = VmtEmployeePayroll::where('payroll_id',$payroll_id)->where('user_id',$singleuserdata->user_id)->first();
-                    if(empty($emp_payroll_data)){
-                    $query_payroll_data= new VmtEmployeePayroll;
-                    $query_payroll_data->user_id=$singleuserdata->user_id;
-                    $query_payroll_data->payroll_id=$payroll_id;
-                    $query_payroll_data->save();
-                  }
+        /* save user id and payroll id in the table vmt_emp_payroll*/
+        foreach ($query_all_payslip as $key => $singleuserdata) {
+            $client_id = User::where('id', $singleuserdata->user_id)->first()->client_id;
+            $payroll_id = VmtPayroll::where('payroll_date', $singleuserdata->PAYROLL_MONTH)
+                ->where('client_id', $client_id)->first()->id;
+            $emp_payroll_data = VmtEmployeePayroll::where('payroll_id', $payroll_id)->where('user_id', $singleuserdata->user_id)->first();
+            if (empty($emp_payroll_data)) {
+                $query_payroll_data = new VmtEmployeePayroll;
+                $query_payroll_data->user_id = $singleuserdata->user_id;
+                $query_payroll_data->payroll_id = $payroll_id;
+                $query_payroll_data->save();
             }
-         /*save all employee payslip details in vmt_employee_payslipv2 */
+        }
+        /*save all employee payslip details in vmt_employee_payslipv2 */
 
-         foreach ($query_all_payslip as $key => $singlepayslipdetails) {
+        foreach ($query_all_payslip as $key => $singlepayslipdetails) {
 
-            $client_id = User::where('id',$singlepayslipdetails->user_id)->first()->client_id;
-            $payroll_id =VmtPayroll::where('payroll_date',$singlepayslipdetails->PAYROLL_MONTH)
-                                        ->where('client_id',$client_id)->first()->id;
-           $emp_payroll_id=VmtEmployeePayroll::where('user_id',$singlepayslipdetails->user_id)->where('payroll_id',$payroll_id)->first()->id;
+            $client_id = User::where('id', $singlepayslipdetails->user_id)->first()->client_id;
+            $payroll_id = VmtPayroll::where('payroll_date', $singlepayslipdetails->PAYROLL_MONTH)
+                ->where('client_id', $client_id)->first()->id;
+            $emp_payroll_id = VmtEmployeePayroll::where('user_id', $singlepayslipdetails->user_id)->where('payroll_id', $payroll_id)->first()->id;
 
             /*get payroll id from vmt_emp_payroll in order to filter payroll_date and find emp_payroll_id */
-            $emp_payslip_data = VmtEmployeePayslipV2::where('emp_payroll_id',$emp_payroll_id)->first();
-            if(empty($emp_payslip_data)){
-           $emppayslip = new VmtEmployeePayslipV2;
-           $emppayslip->emp_payroll_id= $emp_payroll_id;
-           $emppayslip->basic=$singlepayslipdetails->BASIC;
-           $emppayslip->hra=$singlepayslipdetails->HRA;
-           $emppayslip->child_edu_allowance=$singlepayslipdetails->CHILD_EDU_ALLOWANCE;
-           $emppayslip->spl_alw=$singlepayslipdetails->SPL_ALW;
-           $emppayslip->total_fixed_gross=$singlepayslipdetails->TOTAL_FIXED_GROSS;
-           $emppayslip->month_days=$singlepayslipdetails->MONTH_DAYS;
-           $emppayslip->worked_Days=$singlepayslipdetails->Worked_Days;
-           $emppayslip->arrears_Days=$singlepayslipdetails->Arrears_Days;
-           $emppayslip->lop=$singlepayslipdetails->LOP;
-           $emppayslip->earned_basic=$singlepayslipdetails->Earned_BASIC;
-           $emppayslip->basic_arrear=$singlepayslipdetails->BASIC_ARREAR;
-           $emppayslip->earned_hra=$singlepayslipdetails->Earned_HRA;
-           $emppayslip->hra_arrear=$singlepayslipdetails->HRA_ARREAR;
-           $emppayslip->earned_child_edu_allowance=$singlepayslipdetails->Earned_CHILD_EDU_ALLOWANCE;
-           $emppayslip->child_edu_allowance_arrear=$singlepayslipdetails->CHILD_EDU_ALLOWANCE_ARREAR  ;
-           $emppayslip->earned_spl_alw=$singlepayslipdetails->Earned_SPL_ALW;
-           $emppayslip->spl_alw_arrear=$singlepayslipdetails->SPL_ALW_ARREAR;
-           $emppayslip->overtime=$singlepayslipdetails->Overtime;
-           $emppayslip->total_earned_gross=$singlepayslipdetails->TOTAL_EARNED_GROSS;
-           $emppayslip->pf_wages=$singlepayslipdetails->PF_WAGES;
-           $emppayslip->pf_wages_arrear_epfr=$singlepayslipdetails->PF_WAGES_ARREAR_EPFR;
-           $emppayslip->epfr=$singlepayslipdetails->EPFR;
-           $emppayslip->epfr_arrear=$singlepayslipdetails->EPFR_ARREAR;
-           $emppayslip->edli_charges=$singlepayslipdetails->EDLI_CHARGES;
-           $emppayslip->edli_charges_arrears=$singlepayslipdetails->EDLI_CHARGES_ARREARS;
-           $emppayslip->pf_admin_charges=$singlepayslipdetails->PF_ADMIN_CHARGES;
-           $emppayslip->pf_admin_charges_arrears=$singlepayslipdetails->PF_ADMIN_CHARGES_ARREARS;
-           $emppayslip->employer_esi=$singlepayslipdetails->EMPLOYER_ESI;
-           $emppayslip->employer_lwf=$singlepayslipdetails->Employer_LWF;
-           $emppayslip->ctc=$singlepayslipdetails->CTC;
-           $emppayslip->epf_ee=$singlepayslipdetails->EPF_EE;
-           $emppayslip->epf_ee_arrear=$singlepayslipdetails->EPF_EE_ARREAR;
-           $emppayslip->employee_esic=$singlepayslipdetails->EMPLOYEE_ESIC;
-           $emppayslip->prof_tax=$singlepayslipdetails->PROF_TAX;
-           $emppayslip->income_tax=$singlepayslipdetails->income_tax;
-           $emppayslip->sal_adv=$singlepayslipdetails->SAL_ADV;
-           $emppayslip->canteen_dedn=$singlepayslipdetails->CANTEEN_DEDN;
-           $emppayslip->other_deduc=$singlepayslipdetails->OTHER_DEDUC;
-           $emppayslip->lwf=$singlepayslipdetails->LWF;
-           $emppayslip->total_deductions=$singlepayslipdetails->TOTAL_DEDUCTIONS;
-           $emppayslip->net_take_home=$singlepayslipdetails->NET_TAKE_HOME;
-           $emppayslip->rupees=$singlepayslipdetails->Rupees;
-           $emppayslip->el_opn_bal=$singlepayslipdetails->EL_Opn_Bal;
-           $emppayslip->availed_el=$singlepayslipdetails->Availed_EL;
-           $emppayslip->balance_el=$singlepayslipdetails->Balance_EL;
-           $emppayslip->sl_opn_bal=$singlepayslipdetails->SL_Opn_Bal;
-           $emppayslip->availed_sl=$singlepayslipdetails->Availed_SL;
-           $emppayslip->balance_sl=$singlepayslipdetails->Balance_SL;
-           $emppayslip->greetings=$singlepayslipdetails->Greetings;
-           $emppayslip->travel_conveyance=$singlepayslipdetails->travel_conveyance;
-           $emppayslip->other_earnings=$singlepayslipdetails->other_earnings;
-           $emppayslip->save();
+            $emp_payslip_data = VmtEmployeePayslipV2::where('emp_payroll_id', $emp_payroll_id)->first();
+            if (empty($emp_payslip_data)) {
+                $emppayslip = new VmtEmployeePayslipV2;
+                $emppayslip->emp_payroll_id = $emp_payroll_id;
+                $emppayslip->basic = $singlepayslipdetails->BASIC;
+                $emppayslip->hra = $singlepayslipdetails->HRA;
+                $emppayslip->child_edu_allowance = $singlepayslipdetails->CHILD_EDU_ALLOWANCE;
+                $emppayslip->spl_alw = $singlepayslipdetails->SPL_ALW;
+                $emppayslip->total_fixed_gross = $singlepayslipdetails->TOTAL_FIXED_GROSS;
+                $emppayslip->month_days = $singlepayslipdetails->MONTH_DAYS;
+                $emppayslip->worked_Days = $singlepayslipdetails->Worked_Days;
+                $emppayslip->arrears_Days = $singlepayslipdetails->Arrears_Days;
+                $emppayslip->lop = $singlepayslipdetails->LOP;
+                $emppayslip->earned_basic = $singlepayslipdetails->Earned_BASIC;
+                $emppayslip->basic_arrear = $singlepayslipdetails->BASIC_ARREAR;
+                $emppayslip->earned_hra = $singlepayslipdetails->Earned_HRA;
+                $emppayslip->hra_arrear = $singlepayslipdetails->HRA_ARREAR;
+                $emppayslip->earned_child_edu_allowance = $singlepayslipdetails->Earned_CHILD_EDU_ALLOWANCE;
+                $emppayslip->child_edu_allowance_arrear = $singlepayslipdetails->CHILD_EDU_ALLOWANCE_ARREAR;
+                $emppayslip->earned_spl_alw = $singlepayslipdetails->Earned_SPL_ALW;
+                $emppayslip->spl_alw_arrear = $singlepayslipdetails->SPL_ALW_ARREAR;
+                $emppayslip->overtime = $singlepayslipdetails->Overtime;
+                $emppayslip->total_earned_gross = $singlepayslipdetails->TOTAL_EARNED_GROSS;
+                $emppayslip->pf_wages = $singlepayslipdetails->PF_WAGES;
+                $emppayslip->pf_wages_arrear_epfr = $singlepayslipdetails->PF_WAGES_ARREAR_EPFR;
+                $emppayslip->epfr = $singlepayslipdetails->EPFR;
+                $emppayslip->epfr_arrear = $singlepayslipdetails->EPFR_ARREAR;
+                $emppayslip->edli_charges = $singlepayslipdetails->EDLI_CHARGES;
+                $emppayslip->edli_charges_arrears = $singlepayslipdetails->EDLI_CHARGES_ARREARS;
+                $emppayslip->pf_admin_charges = $singlepayslipdetails->PF_ADMIN_CHARGES;
+                $emppayslip->pf_admin_charges_arrears = $singlepayslipdetails->PF_ADMIN_CHARGES_ARREARS;
+                $emppayslip->employer_esi = $singlepayslipdetails->EMPLOYER_ESI;
+                $emppayslip->employer_lwf = $singlepayslipdetails->Employer_LWF;
+                $emppayslip->ctc = $singlepayslipdetails->CTC;
+                $emppayslip->epf_ee = $singlepayslipdetails->EPF_EE;
+                $emppayslip->epf_ee_arrear = $singlepayslipdetails->EPF_EE_ARREAR;
+                $emppayslip->employee_esic = $singlepayslipdetails->EMPLOYEE_ESIC;
+                $emppayslip->prof_tax = $singlepayslipdetails->PROF_TAX;
+                $emppayslip->income_tax = $singlepayslipdetails->income_tax;
+                $emppayslip->sal_adv = $singlepayslipdetails->SAL_ADV;
+                $emppayslip->canteen_dedn = $singlepayslipdetails->CANTEEN_DEDN;
+                $emppayslip->other_deduc = $singlepayslipdetails->OTHER_DEDUC;
+                $emppayslip->lwf = $singlepayslipdetails->LWF;
+                $emppayslip->total_deductions = $singlepayslipdetails->TOTAL_DEDUCTIONS;
+                $emppayslip->net_take_home = $singlepayslipdetails->NET_TAKE_HOME;
+                $emppayslip->rupees = $singlepayslipdetails->Rupees;
+                $emppayslip->el_opn_bal = $singlepayslipdetails->EL_Opn_Bal;
+                $emppayslip->availed_el = $singlepayslipdetails->Availed_EL;
+                $emppayslip->balance_el = $singlepayslipdetails->Balance_EL;
+                $emppayslip->sl_opn_bal = $singlepayslipdetails->SL_Opn_Bal;
+                $emppayslip->availed_sl = $singlepayslipdetails->Availed_SL;
+                $emppayslip->balance_sl = $singlepayslipdetails->Balance_SL;
+                $emppayslip->greetings = $singlepayslipdetails->Greetings;
+                $emppayslip->travel_conveyance = $singlepayslipdetails->travel_conveyance;
+                $emppayslip->other_earnings = $singlepayslipdetails->other_earnings;
+                $emppayslip->save();
             }
-
-         }
+        }
     }
 
 
-    public function addElbalancewithjsonString(Request $request){
-      $data ='[{"user_code": "DM001","el_balance": 15},{ "user_code": "DM002", "el_balance": 15},
+    public function addElbalancewithjsonString(Request $request)
+    {
+        $data = '[{"user_code": "DM001","el_balance": 15},{ "user_code": "DM002", "el_balance": 15},
         {
          "user_code": "DM003",
          "el_balance": 15
@@ -455,15 +454,15 @@ class VmtCorrectionController extends Controller
         }
        ]';
 
-       $data = preg_replace('/\s+/', '', $data);
-       $el_balance_json = json_decode($data, true);
-       $leave_type_id=1;
-        foreach( $el_balance_json as $single_user){
-           $user_id = User::where('user_code',$single_user['user_code'])->first();
-            if( $user_id==null){
-               dd($single_user['user_code'].' does not exists in database');
-            }else{
-                // Joobi Karthi
+        $data = preg_replace('/\s+/', '', $data);
+        $el_balance_json = json_decode($data, true);
+        $leave_type_id = 1;
+        foreach ($el_balance_json as $single_user) {
+            $user_id = User::where('user_code', $single_user['user_code'])->first();
+            if ($user_id == null) {
+                dd($single_user['user_code'] . ' does not exists in database');
+            } else {
+
                 try {
 
 
@@ -472,18 +471,140 @@ class VmtCorrectionController extends Controller
                     $employee_leave->leave_type_id =   $leave_type_id;
                     $employee_leave->start_date = '2022-06-01';
                     $employee_leave->end_date = '2022-06-10';
-                    $employee_leave->total_leave_datetime=$single_user['el_balance'];
+                    $employee_leave->total_leave_datetime = $single_user['el_balance'];
                     $employee_leave->status = 'Approved';
                     $employee_leave->save();
-
-
-                  } catch (\Exception $e) {
-                      return $e->getMessage();
-                  }
+                } catch (\Exception $e) {
+                    return $e->getMessage();
+                }
             }
         }
 
         return 'Leave Balance Added Sucessfully';
     }
 
+    public function changeAttendanceBioMatricIdToHrmsUserid(Request $request)
+    {
+        $dunamis = '[
+            {
+             "attendance_id": "DMC026",
+             "user_id": "DM161"
+            },
+            {
+             "attendance_id": "DMC027",
+             "user_id": "DM162"
+            },
+            {
+             "attendance_id": "DMC028",
+             "user_id": "DM163"
+            },
+            {
+             "attendance_id": "DMC032",
+             "user_id": "DM165"
+            },
+            {
+             "attendance_id": "DMC034",
+             "user_id": "DM166"
+            },
+            {
+             "attendance_id": "DMC035",
+             "user_id": "DM167"
+            },
+            {
+             "attendance_id": "DMC041",
+             "user_id": "DM169"
+            },
+            {
+             "attendance_id": "DMC042",
+             "user_id": "DM170"
+            },
+            {
+             "attendance_id": "DMC049",
+             "user_id": "DM172"
+            },
+            {
+             "attendance_id": "DMC050",
+             "user_id": "DM173"
+            },
+            {
+             "attendance_id": "DMC051",
+             "user_id": "DM175"
+            },
+            {
+             "attendance_id": "DMC053",
+             "user_id": "DM174"
+            },
+            {
+             "attendance_id": "DMC054",
+             "user_id": "DM176"
+            },
+            {
+             "attendance_id": "DMC056",
+             "user_id": "DM177"
+            },
+            {
+             "attendance_id": "DMC057",
+             "user_id": "DM178"
+            },
+            {
+             "attendance_id": "DMC062",
+             "user_id": "DM179"
+            },
+            {
+             "attendance_id": "DMC063",
+             "user_id": "DM180"
+            },
+            {
+             "attendance_id": "DMC064",
+             "user_id": "DM181"
+            },
+            {
+             "attendance_id": "DMC066",
+             "user_id": "DM182"
+            },
+            {
+             "attendance_id": "DMC65",
+             "user_id": "DM183"
+            },
+            {
+             "attendance_id": "DMC067",
+             "user_id": "DM184"
+            },
+            {
+             "attendance_id": "DMC078",
+             "user_id": "DM185"
+            }
+           ]';
+
+        //Removing Extra Spaace and white space in string
+        $dunamis = preg_replace('/\s+/', '',   $dunamis);
+        $dunamis = json_decode($dunamis, true);
+        $not_existed_user = array('The Give User IDS Does Not Exists In DataBase Please Check Ur Json data');
+        $not_existed_attedance_id = array('The Give Attendance IDS Does Not Exists In DataBase Please Check Ur Json data');
+        $update_ids = array('Scuessfully Updated');
+        foreach ($dunamis as $single_id) {
+            if (User::where('user_code', $single_id['user_id'])->exists()) {
+                if (VmtStaffAttendanceDevice::where('user_Id', $single_id['attendance_id'])->exists()) {
+
+                    try {
+                        $staff_attedance = VmtStaffAttendanceDevice::where('user_Id', $single_id['attendance_id'])
+                            ->update(['user_Id' => $single_id['user_id']]);
+                            array_push($update_ids,$single_id['user_id']);
+                    } catch (\Exception $e) {
+                        return $e->getMessage();
+                    }
+                } else {
+                    array_push($not_existed_attedance_id, $single_id['attendance_id']);
+                }
+            } else {
+                array_push($not_existed_user, $single_id['user_id']);
+            }
+        }
+
+        return response()->json([
+          'not_existed_user'=> $not_existed_user,
+          'not_existed_attedance_id'=>  $not_existed_attedance_id,
+          'update_ids'=>  $update_ids
+        ]);
+    }
 }
