@@ -809,6 +809,14 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/manage_welcome_mails_status', 'ManageWelcomeMailStatus')->name('manage_welcome_mails_status');
 
 
+    //New Dashboard URL
+    Route::post('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
+
+
+
+
+
+
     //Testing controller
     Route::get('/view-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewPrivateFile'])->name('viewPrivateFile');
     Route::get('/view-base64-private-file', [App\Http\Controllers\VmtTestingController::class, 'viewBASE64_PrivateFile'])->name('viewBASE64_PrivateFile');

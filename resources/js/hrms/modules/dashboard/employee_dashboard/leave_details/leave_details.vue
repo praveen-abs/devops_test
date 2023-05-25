@@ -53,10 +53,9 @@
 <script setup>
 
 import { onMounted, ref ,reactive } from "vue";
-import { Service } from '../../dashboard_service'
+import { useMainDashboardStore } from "../../dashboard_service";
 
-
-const leave = Service()
+const mainDashboardStore = useMainDashboardStore();
 
 const leave_history = ref([])
 
@@ -65,20 +64,15 @@ const total_leave_days = ref()
 const total_absent_days = ref()
 
 
-const leave_splitting = () =>{
 
-console.log(leave_history.value);
-
-
-}
 
 
 onMounted(() =>{
-  leave_splitting();
-  leave.fetch_leave_history().then(res =>{
-    console.log(res.data);
-    
-  })
+
+//     mainDashboardStore.fetch_leave_history().then(res =>{
+//     console.log(res.data);
+
+//   })
 })
 
 </script>
