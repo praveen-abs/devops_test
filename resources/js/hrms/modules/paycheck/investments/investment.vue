@@ -5,21 +5,21 @@
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
-                    <li class="mx-4 nav-item ember-view" role="presentation">
+                    <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#investment_dec" role="tab" aria-controls="pills-home" aria-selected="true">
                             Declaration</a>
-                    </li>
+                    </li> -->
                     <li class=" nav-item ember-view" role="presentation">
-                        <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                        <a class="mx-2 nav-link active ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class=" nav-item ember-view" role="presentation">
+                    <!-- <li class=" nav-item ember-view" role="presentation">
                         <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true">
                             Income Tax Computations</a>
-                    </li>
+                    </li> -->
                     <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
@@ -37,12 +37,12 @@
         <div class="mb-0 top-line">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
-                    <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
+                    <!-- <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
                         aria-labelledby="pills-home-tab">
                         <Declaration />
-                    </div>
+                    </div> -->
 
-                    <div class="tab-pane fade " id="exemptions" role="tabpanel">
+                    <div class="tab-pane  active show fade " id="exemptions" role="tabpanel">
                         <InvestmentAndExemption />
 
                     </div>
