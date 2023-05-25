@@ -232,7 +232,7 @@
                     required :class="[
                         s$.lender_name.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="s$.lender_name.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="s$.lender_name.$error" class="font-semibold text-red-400 fs-6">
                     {{ s$.lender_name.$errors[0].$message }}
                 </span>
             </div>
@@ -243,7 +243,7 @@
                     style="text-transform: uppercase" v-model="investmentStore.sop.lender_pan" required :class="[
                         s$.lender_pan.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="s$.lender_pan.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="s$.lender_pan.$error" class="font-semibold text-red-400 fs-6">
                     {{ s$.lender_pan.$errors[0].$message }}
                 </span>
             </div>
@@ -259,7 +259,7 @@
                     placeholder="Select a Property" required :class="[
                         s$.lender_type.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="s$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="s$.lender_type.$error" class="font-semibold text-red-400 fs-6">
                     {{ s$.lender_type.$errors[0].$message }}
                 </span>
             </div>
@@ -269,7 +269,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.sop.income_loss" required :class="[
                     s$.income_loss.$error ? 'p-invalid' : '',
                 ]" />
-                <span v-if="s$.income_loss.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="s$.income_loss.$error" class="font-semibold text-red-400 fs-6">
                     {{ s$.income_loss.$errors[0].$message }}
                 </span>
             </div>
@@ -284,7 +284,7 @@
                         s$.address.$error ? 'border border-red-500' : '',
                     ]">
                     </textarea>
-                <span v-if="s$.address.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="s$.address.$error" class="font-semibold text-red-400 fs-6">
                     {{ s$.address.$errors[0].$message }}
                 </span>
             </div>
@@ -313,7 +313,7 @@
                     required :class="[
                         v$.lender_name.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="v$.lender_name.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.lender_name.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.lender_name.$errors[0].$message }}
                 </span>
             </div>
@@ -324,7 +324,7 @@
                     style="text-transform: uppercase" v-model="investmentStore.lop.lender_pan" required :class="[
                         v$.lender_pan.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="v$.lender_pan.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.lender_pan.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.lender_pan.$errors[0].$message }}
                 </span>
 
@@ -340,7 +340,7 @@
                     placeholder="Select a Property" required :class="[
                         v$.lender_type.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="v$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.lender_type.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.lender_type.$errors[0].$message }}
                 </span>
             </div>
@@ -351,7 +351,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.lop.rent_received" required :class="[
                     v$.rent_received.$error ? 'p-invalid' : '',
                 ]" />
-                <span v-if="v$.rent_received.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.rent_received.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.rent_received.$errors[0].$message }}
                 </span>
             </div>
@@ -362,7 +362,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.lop.municipal_tax" required :class="[
                     v$.municipal_tax.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
-                <span v-if="v$.municipal_tax.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.municipal_tax.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.municipal_tax.$errors[0].$message }}
                 </span>
             </div>
@@ -382,7 +382,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.lop.interest" required :class="[
                     v$.interest.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
-                <span v-if="v$.interest.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.interest.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.interest.$errors[0].$message }}
                 </span>
             </div>
@@ -418,7 +418,7 @@
                     required :class="[
                         p$.lender_name.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="p$.lender_name.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="p$.lender_name.$error" class="font-semibold text-red-400 fs-6">
                     {{ p$.lender_name.$errors[0].$message }}
                 </span>
             </div>
@@ -429,7 +429,7 @@
                     style="text-transform: uppercase" v-model="investmentStore.dlop.lender_pan" required :class="[
                         p$.lender_pan.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="p$.lender_pan.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="p$.lender_pan.$error" class="font-semibold text-red-400 fs-6">
                     {{ p$.lender_pan.$errors[0].$message }}
                 </span>
             </div>
@@ -444,7 +444,7 @@
                     placeholder="Select a Property" required :class="[
                         p$.lender_type.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="p$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="p$.lender_type.$error" class="font-semibold text-red-400 fs-6">
                     {{ p$.lender_type.$errors[0].$message }}
                 </span>
             </div>
@@ -455,7 +455,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.dlop.rent_received" required :class="[
                     p$.rent_received.$error ? 'p-invalid' : '',
                 ]" />
-                <span v-if="p$.rent_received.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="p$.rent_received.$error" class="font-semibold text-red-400 fs-6">
                     {{ p$.rent_received.$errors[0].$message }}
                 </span>
             </div>
@@ -467,7 +467,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.dlop.municipal_tax" required :class="[
                     p$.municipal_tax.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
-                <span v-if="p$.municipal_tax.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="p$.municipal_tax.$error" class="font-semibold text-red-400 fs-6">
                     {{ p$.municipal_tax.$errors[0].$message }}
                 </span>
             </div>
@@ -487,7 +487,7 @@
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.dlop.interest" required :class="[
                     p$.interest.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
-                <span v-if="p$.interest.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="p$.interest.$error" class="font-semibold text-red-400 fs-6">
                     {{ p$.interest.$errors[0].$message }}
                 </span>
             </div>
@@ -612,9 +612,7 @@ const lender_types = ref([
 
 ]);
 
-onMounted(() => {
-    // investmentStore.fetchPropertyType()
-})
+
 
 
 const isLetter = (e) => {

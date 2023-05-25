@@ -245,12 +245,14 @@
         </div>
         <div class="mb-3 table-responsive">
 
-            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExemptionSource"
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <Column header="Loan Sanction Date" field="json_popups_value.loan_sanction_date" style="min-width: 8rem">
-
+                    <template #body="slotProps">
+                        {{ moment(slotProps.data.json_popups_value.loan_sanction_date).format('DD-MM-YYYY') }}
+                    </template>
                 </Column>
 
                 <Column field="json_popups_value.lender_type" header="Lender Type" style="min-width: 12rem">
@@ -319,7 +321,7 @@
                         class="w-full " showIcon required :class="[
                             v$.loan_sanction_date.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="v$.loan_sanction_date.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="v$.loan_sanction_date.$error" class="font-semibold text-red-400 fs-6">
                         {{ v$.loan_sanction_date.$errors[0].$message }}
                     </span>
                 </div>
@@ -332,7 +334,7 @@
                         optionValue="code" placeholder="Select a Property" required :class="[
                             v$.lender_type.$error ? 'border border-red-500' : '',
                         ]" />
-                    <span v-if="v$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="v$.lender_type.$error" class="font-semibold text-red-400 fs-6">
                         {{ v$.lender_type.$errors[0].$message }}
                     </span>
                 </div>
@@ -349,7 +351,7 @@
                         required :class="[
                             v$.property_value.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="v$.property_value.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="v$.property_value.$error" class="font-semibold text-red-400 fs-6">
                         {{ v$.property_value.$errors[0].$message }}
                     </span>
                 </div>
@@ -360,7 +362,7 @@
                         required :class="[
                             v$.loan_amount.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="v$.loan_amount.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="v$.loan_amount.$error" class="font-semibold text-red-400 fs-6">
                         {{ v$.loan_amount.$errors[0].$message }}
                     </span>
 
@@ -372,7 +374,7 @@
                         v-model="investmentStore.other_exe_80EE.interest_amount_paid" required :class="[
                             v$.interest_amount_paid.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="v$.interest_amount_paid.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="v$.interest_amount_paid.$error" class="font-semibold text-red-400 fs-6">
                         {{ v$.interest_amount_paid.$errors[0].$message }}
                     </span>
                 </div>
@@ -404,7 +406,7 @@
                         class="w-full " showIconrequired :class="[
                             s$.loan_sanction_date.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="s$.loan_sanction_date.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="s$.loan_sanction_date.$error" class="font-semibold text-red-400 fs-6">
                         {{ s$.loan_sanction_date.$errors[0].$message }}
                     </span>
                 </div>
@@ -420,7 +422,7 @@
                         optionValue="code" placeholder="Select a Property" required :class="[
                             s$.lender_type.$error ? 'border border-red-500' : '',
                         ]" />
-                    <span v-if="s$.lender_type.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="s$.lender_type.$error" class="font-semibold text-red-400 fs-6">
                         {{ s$.lender_type.$errors[0].$message }}
                     </span>
 
@@ -434,7 +436,7 @@
                         required :class="[
                             s$.property_value.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="s$.property_value.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="s$.property_value.$error" class="font-semibold text-red-400 fs-6">
                         {{ s$.property_value.$errors[0].$message }}
                     </span>
                 </div>
@@ -445,7 +447,7 @@
                         required :class="[
                             s$.loan_amount.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="s$.loan_amount.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="s$.loan_amount.$error" class="font-semibold text-red-400 fs-6">
                         {{ s$.loan_amount.$errors[0].$message }}
                     </span>
                 </div>
@@ -456,7 +458,7 @@
                         v-model="investmentStore.other_exe_80EEA.interest_amount_paid" required :class="[
                             s$.interest_amount_paid.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="s$.interest_amount_paid.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="s$.interest_amount_paid.$error" class="font-semibold text-red-400 fs-6">
                         {{ s$.interest_amount_paid.$errors[0].$message }}
                     </span>
                 </div>
@@ -490,7 +492,7 @@
                         class="w-full " showIcon required :class="[
                             p$.loan_sanction_date.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="p$.loan_sanction_date.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="p$.loan_sanction_date.$error" class="font-semibold text-red-400 fs-6">
                         {{ p$.loan_sanction_date.$errors[0].$message }}
                     </span>
                 </div>
@@ -504,7 +506,7 @@
                         :class="[
                             p$.vechicle_brand.$error ? 'border border-red-500' : '',
                         ]" />
-                    <span v-if="p$.vechicle_brand.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="p$.vechicle_brand.$error" class="font-semibold text-red-400 fs-6">
                         {{ p$.vechicle_brand.$errors[0].$message }}
                     </span>
                 </div>
@@ -518,7 +520,7 @@
                         :class="[
                             p$.vechicle_model.$error ? 'border border-red-500' : '',
                         ]" />
-                    <span v-if="p$.vechicle_model.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="p$.vechicle_model.$error" class="font-semibold text-red-400 fs-6">
                         {{ p$.vechicle_model.$errors[0].$message }}
                     </span>
                 </div>
@@ -530,7 +532,7 @@
                         v-model="investmentStore.other_exe_80EEB.interest_amount_paid" required :class="[
                             p$.interest_amount_paid.$error ? 'p-invalid' : '',
                         ]" />
-                    <span v-if="p$.interest_amount_paid.$error" class="text-red-400 fs-6 font-semibold">
+                    <span v-if="p$.interest_amount_paid.$error" class="font-semibold text-red-400 fs-6">
                         {{ p$.interest_amount_paid.$errors[0].$message }}
                     </span>
                 </div>
@@ -550,7 +552,8 @@ import { onMounted, ref, computed } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 import axios from "axios";
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
-import useValidate from '@vuelidate/core'
+import useValidate from '@vuelidate/core';
+import moment from "moment";
 
 const investmentStore = investmentMainStore()
 const editingRows = ref([]);
@@ -627,9 +630,9 @@ const submitForm80EEB = () => {
 }
 
 onMounted(() => {
-    setTimeout(() => {
-        investmentStore.fetchOtherExe()
-    }, 2000);
+    // setTimeout(() => {
+    //     investmentStore.fetchOtherExe()
+    // }, 2000);
 })
 
 const onRowEditSave = (event) => {

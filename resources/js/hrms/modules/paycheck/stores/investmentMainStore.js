@@ -84,12 +84,14 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const hraSource = ref();
     const section80ccSource = ref();
     const otherExemptionSource = ref();
+    const otherExeSectionData= ref()
     const housePropertySource = ref();
     const reimbursmentSource = ref();
     const otherIncomeSource = ref();
     const previousEmployeerIncomeSource = ref();
     const hop = reactive([]);
     const otherExe = reactive([]);
+    const hra_fs = reactive([]);
     const AddHraButtonDisabled = ref(false);
 
     const getInvestmentSource = async () => {
@@ -118,29 +120,33 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
                 // console.log(res.data.data.form_details);
 
+
                 res.data.data.form_details["House Properties "].forEach(data => {
                     hop.push(data.fs_id)
-                    console.log(data.fs_id);
+                    // console.log(data.fs_id);
+                })
+
+                res.data.data.form_details.HRA.forEach(data => {
+                    hra_fs.push(data.fs_id)
+                    console.log(hra_fs[0]);
                 })
 
 
                 let sec80DD = res.data.data.form_details["Other Excemptions "].filter(function (item) {
-                    return item.section == '80DD';
+                    return item.section == '80EE';
                 });
                 let sec80DDB = res.data.data.form_details["Other Excemptions "].filter(function (item) {
-                    return item.section == '80DDB';
+                    return item.section == '80EEA';
                 });
                 let sec80U = res.data.data.form_details["Other Excemptions "].filter(function (item) {
-                    return item.section == '80U';
+                    return item.section == '80EEB';
                 });
 
-                // console.log(sec80DD[0].fs_id, sec80DDB[0].fs_id, sec80U[0].fs_id);
                 otherExe.push(sec80DD[0].fs_id)
                 otherExe.push(sec80DDB[0].fs_id)
                 otherExe.push(sec80U[0].fs_id)
 
-                console.log(otherExe);
-
+                // console.log(otherExe);
 
             })
             .catch((e) => console.log(e))
@@ -159,11 +165,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 });
                 fetchPropertyType()
                 fetchotherExe()
+                fetchHraNewRental()
                 setTimeout(() => {
                     hop.splice(0, hop.length);
                 }, 3000);
                 setTimeout(() => {
-                    // fetchotherExe()
+                    hop.splice(0, otherExe.length);
                 }, 3000);
             });
     };
@@ -274,7 +281,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const hra = reactive({
         user_code: "",
-        fs_id: "48",
+        fs_id: "",
         from_month: "",
         to_month: "",
         city: "",
@@ -289,12 +296,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const fetchHraNewRental = async () => {
         // console.log("getting hra new rental  data.......");
-        // console.log(hraSource.fs_id);
+        console.log(Object.values(hra_fs[0]));
         // canShowLoading.value = true;
         await axios
             .post("/investments/fetchEmpRentalDetails", {
                 user_code: service.current_user_code,
-                fs_id: "48",
+                 fs_id:hra_fs[0]
             })
             .then((res) => {
                 console.log(Object.values(res.data));
@@ -331,6 +338,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const saveHraNewRental = () => {
         hra.user_code = service.current_user_code;
+        hra.fs_id= hra_fs[0]
         canShowLoading.value = true;
         dailogAddNewRental.value = false;
         axios
@@ -485,8 +493,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 otherExe,
             })
             .then((res) => {
-                // console.log(res.data);
-                // house_props_data.value = Object.values(res.data);
+                console.log(res.data);
+                otherExeSectionData.value = Object.values(res.data);
             });
     };
 
@@ -512,6 +520,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 canShowLoading.value = false;
                 getInvestmentSource();
                 restChars();
+                fetchotherExe()
             });
     };
 
@@ -537,6 +546,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 canShowLoading.value = false;
                 getInvestmentSource();
                 restChars();
+                fetchotherExe()
             });
     };
 
@@ -561,6 +571,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 canShowLoading.value = false;
                 getInvestmentSource();
                 restChars();
+                fetchotherExe()
             });
     };
 
@@ -986,6 +997,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         get80EESlotData,
         get80EEASlotData,
         get80EEBSlotData,
+        otherExeSectionData,
 
         // Other exemptiom Ends
 
