@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DashboardAnnouncementMail;
+use App\Services\VmtAttendanceService;
+use App\Services\VmtDashboardService;
+use App\Services\VmtHolidayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
@@ -511,5 +514,16 @@ class VmtMainDashboardController extends Controller
 
     }
 
+    public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService  $serviceHolidayService ){
+
+        //Fetch the data
+        $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
+    }
 
 }

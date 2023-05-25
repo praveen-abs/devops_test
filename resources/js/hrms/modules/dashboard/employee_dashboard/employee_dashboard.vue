@@ -25,7 +25,7 @@
 
 <script setup>
 import WelcomeCard from "./welcome_card/welcome_card.vue";
-import LeaveDetials from "./leave_details/leave_detials.vue";
+import LeaveDetials from "./leave_details/leave_details.vue";
 import Notification from "./notifications/notification.vue";
 import LeaveBalance from "./leave_balance/leave_balance.vue";
 import Calender from "./calender/calender.vue";
