@@ -125,7 +125,7 @@ export default defineConfig({
                'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
 
             ],
-            
+
             refresh: true,
         }),
     ],

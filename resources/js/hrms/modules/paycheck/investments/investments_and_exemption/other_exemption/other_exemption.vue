@@ -245,12 +245,14 @@
         </div>
         <div class="mb-3 table-responsive">
 
-            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExemptionSource"
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <Column header="Loan Sanction Date" field="json_popups_value.loan_sanction_date" style="min-width: 8rem">
-
+                    <template #body="slotProps">
+                        {{ moment(slotProps.data.json_popups_value.loan_sanction_date).format('DD-MM-YYYY') }}
+                    </template>
                 </Column>
 
                 <Column field="json_popups_value.lender_type" header="Lender Type" style="min-width: 12rem">
@@ -550,7 +552,8 @@ import { onMounted, ref, computed } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 import axios from "axios";
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
-import useValidate from '@vuelidate/core'
+import useValidate from '@vuelidate/core';
+import moment from "moment";
 
 const investmentStore = investmentMainStore()
 const editingRows = ref([]);
