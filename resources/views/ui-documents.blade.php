@@ -19,7 +19,7 @@
 </head>
 <body>
 
-   @vite('resources\js\hrms\modules\profile_pages\EmployeeDocumentsManager.js')
+   @vite('resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js')
    <div id="EmployeeDocumentManager"></div>
 
 </body>
