@@ -243,7 +243,7 @@
             </DataTable>
 
         </div>
-        <div class="mb-3 table-responsive">
+        <div class="my-4 table-responsive">
 
             <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -256,13 +256,38 @@
                 </Column>
 
                 <Column field="json_popups_value.lender_type" header="Lender Type" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <p v-if="slotProps.data.json_popups_value.section =='80EEB'" style="font-weight: 501;">NA</p>
+                        <p v-else style="font-weight: 501;">{{slotProps.data.json_popups_value.lender_type}}</p>
+                        </template>
 
                 </Column>
 
                 <Column field="json_popups_value.property_value" header="Property Value " style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <p v-if="slotProps.data.json_popups_value.section =='80EEB'" style="font-weight: 501;">NA</p>
+                        <p v-else style="font-weight: 501;">{{slotProps.data.json_popups_value.lender_type}}</p>
+                        </template>
+                </Column>
+
+                <Column field="json_popups_value.vechicle_model" header="Vechile Type " style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <p v-if="slotProps.data.json_popups_value.section =='80EEB'" style="font-weight: 501;">{{slotProps.data.json_popups_value.vechicle_model}}</p>
+                        <p v-else style="font-weight: 501;">NA</p>
+                        </template>
+                </Column>
+                <Column field="json_popups_value.vechile_brand" header="Vechile Brand " style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <p v-if="slotProps.data.json_popups_value.section =='80EEB'" style="font-weight: 501;">{{slotProps.data.json_popups_value.vechicle_brand}}</p>
+                        <p v-else style="font-weight: 501;">NA</p>
+                        </template>
                 </Column>
 
                 <Column field="json_popups_value.loan_amount" header="Loan Amount" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <p v-if="slotProps.data.json_popups_value.section =='80EEB'" style="font-weight: 501;">NA</p>
+                        <p v-else style="font-weight: 501;">{{slotProps.data.json_popups_value.loan_amount}}</p>
+                        </template>
                 </Column>
 
                 <Column field="json_popups_value.interest_amount_paid" header="Interest Amount Paid" style="min-width: 12rem">
@@ -270,7 +295,7 @@
                 <Column field="" header="Action" style="min-width: 12rem">
                     <template #body="slotProps">
                         <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
-                            @click="investmentStore.editHraNewRental(slotProps.data)">
+                            @click="investmentStore.editOtherExe(slotProps.data)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-10 h-8">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -279,7 +304,7 @@
 
                         </button>
                         <button class="p-2 bg-red-200 border-red-500 rounded-xl"
-                            @click="investmentStore.deleteRentalDetails(slotProps.data)">
+                            @click="investmentStore.deleteOtherExeDetails(slotProps.data)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-10 h-8 font-bold">
                                 <path stroke-linecap="round" stroke-linejoin="round"
