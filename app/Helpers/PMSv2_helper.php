@@ -240,10 +240,12 @@ function calculateOverallReviewRating($assigneeId)
     $org_time_period_id = VmtOrgTimePeriod::where('status', 0)->first()->id;
     $all_frequency_review_ratings = VmtPMS_KPIFormAssignedModel::where('assignee_id', $assigneeId)
         ->where('vmt_org_time_period_id', $org_time_period_id)->get();
+        $review_count =count($all_frequency_review_ratings);
     for ($i = 0; $i < count($all_frequency_review_ratings); $i++) {
         $over_all_score =   $over_all_score + substr(calculateReviewRatings($all_frequency_review_ratings[$i]->id, $assigneeId)['score'], 0, -1);
     }
-    $annual_avarge_of_review_rating =  ceil($over_all_score / $i);
+
+    $annual_avarge_of_review_rating =  ceil($over_all_score/$review_count );
 
 
         $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order', 'DESC')->get();
