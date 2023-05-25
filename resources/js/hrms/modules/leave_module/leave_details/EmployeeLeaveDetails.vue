@@ -138,7 +138,7 @@
                 </div>
                 <div class="border w-full py-4 px-4">
                     <h1 class="fs-5 fw-bold">Notified To:</h1>
-                    <div class="card px-3 py-2 d-flex mt-3" style="min-width: 250px; max-width: 220px; display: flex;">
+                    <div class="card px-3 py-2 d-flex mt-3" style="min-width: 250px; max-width: 300px; display: flex;">
                         <div class="d-flex p-2 align-items-center">
                             <div class="rounded-circle bg-blue-100 d-flex justify-content-center align-items-center"
                                 style="width:40px ; height: 40px;">{{leaveModuleStore.setLeaveDetails.reviewer_short_name}}</div>
@@ -151,13 +151,13 @@
                 </div>
                 <div class="border w-full  py-4 px-4 ">
                     <h1 class="fs-5 fw-bold">Approved by</h1>
-                    <div class="card px-3 py-2 d-flex mt-3" style="min-width: 180px; max-width: 250px; display: flex;">
+                    <div class="card px-3 py-2 d-flex mt-3" style="min-width: 180px; max-width: 300px; display: flex;">
                         <div class="d-flex p-2 align-items-center">
                             <div class="rounded-circle bg-green-400 d-flex justify-content-center align-items-center"
                                 style="width:40px ; height: 40px;"><i class="pi pi-check text-light"></i></div>
                             <div class="flex-column px-3">
                                 <h1 class="fs-6 fw-bold ">{{ leaveModuleStore.setLeaveDetails.reviewer_name }}</h1>
-                                <h1 class="py-2 text-neutral-400"> on {{ leaveModuleStore.setLeaveDetails.leaverequest_date }} </h1>
+                                <h1 class="py-2 text-neutral-400"> on {{ dayjs(leaveModuleStore.setLeaveDetails.leaverequest_date).format('DD-MMM-YYYY hh:mm:ss A') }} </h1>
                             </div>
                         </div>
 
