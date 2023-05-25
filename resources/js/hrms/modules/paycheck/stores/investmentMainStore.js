@@ -142,13 +142,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     return item.section == '80EEB';
                 });
 
-                // console.log(sec80DD[0].fs_id, sec80DDB[0].fs_id, sec80U[0].fs_id);
                 otherExe.push(sec80DD[0].fs_id)
                 otherExe.push(sec80DDB[0].fs_id)
                 otherExe.push(sec80U[0].fs_id)
 
                 // console.log(otherExe);
-
 
             })
             .catch((e) => console.log(e))
