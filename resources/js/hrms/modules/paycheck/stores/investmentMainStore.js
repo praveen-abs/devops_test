@@ -515,10 +515,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(currentRowData);
         if (currentRowData.json_popups_value.section == "80EE") {
             dailog_80EE.value = true;
-            other_exe_80EE.fs_id = currentRowData.fs_id
-            console.log(currentRowData.fs_id);
+            other_exe_80EE.fs_id = currentRowData.json_popups_value.fs_id
             other_exe_80EE.user_code = service.current_user_code
-            other_exe_80EE.loan_sanction_date =dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("DD-MM-YYYY");
+            other_exe_80EE.loan_sanction_date =dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
             other_exe_80EE.lender_type =
                 currentRowData.json_popups_value.lender_type;
             other_exe_80EE.loan_amount =
@@ -529,10 +528,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 currentRowData.json_popups_value.interest_amount_paid;
         } else if (currentRowData.json_popups_value.section == "80EEA") {
             dailog_80EEA.value = true;
-            other_exe_80EEA.fs_id = currentRowData.fs_id
+            other_exe_80EEA.fs_id = currentRowData.json_popups_value.fs_id
             other_exe_80EEA.user_code = service.current_user_code
             other_exe_80EEA.loan_sanction_date =
-            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("DD-MM-YYYY");
+            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
             other_exe_80EEA.lender_type =
                 currentRowData.json_popups_value.lender_type;
             other_exe_80EEA.loan_amount =
@@ -542,11 +541,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             other_exe_80EEA.interest_amount_paid =
                 currentRowData.json_popups_value.interest_amount_paid;
         } else if (currentRowData.json_popups_value.section == "80EEB") {
-            other_exe_80EEB.fs_id = currentRowData.fs_id
+            other_exe_80EEB.fs_id = currentRowData.json_popups_value.fs_id
             other_exe_80EEB.user_code = service.current_user_code
             dailog_80EEB.value = true;
             other_exe_80EEB.loan_sanction_date =
-            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("DD-MM-YYYY");
+            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
             other_exe_80EEB.vechicle_brand =
                 currentRowData.json_popups_value.vechicle_brand;
             other_exe_80EEB.vechicle_model =
@@ -590,7 +589,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const save80EE = () => {
         dailog_80EE.value = false;
         canShowLoading.value = true;
-        other_exe_80EE.fs_id =
         // console.log("Saving Other exemption 80EE");
         console.log(data);
         axios

@@ -266,7 +266,7 @@
                 <Column field="json_popups_value.property_value" header="Property Value " style="min-width: 12rem">
                     <template #body="slotProps">
                         <p v-if="slotProps.data.json_popups_value.section =='80EEB'" style="font-weight: 501;">NA</p>
-                        <p v-else style="font-weight: 501;">{{slotProps.data.json_popups_value.lender_type}}</p>
+                        <p v-else style="font-weight: 501;">{{slotProps.data.json_popups_value.property_value}}</p>
                         </template>
                 </Column>
 
