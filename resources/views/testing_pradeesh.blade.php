@@ -49,6 +49,9 @@
             @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
             <div id="vjs_attendance_master"></div>
 
+            {{-- @vite('resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js') --}}
+            {{-- <div id="General_Shift"></div> --}}
+
 
 </body>
 </html>

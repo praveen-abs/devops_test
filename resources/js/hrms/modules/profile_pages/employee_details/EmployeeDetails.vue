@@ -479,9 +479,9 @@ function onClick_EditButton_GeneralInfo(){
 
 
 function saveGeneralInformationDetails() {
-    console.log("Called saveGeneralInformationDetails.... ");
+
     let id = fetch_data.current_user_id
-    let url = `/profile-pages-update-generalinfo/${id}`
+    let url = `/profile-pages-update-generalinfo/${id}`;
 
     axios.post(url, {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
@@ -495,7 +495,7 @@ function saveGeneralInformationDetails() {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
+                //  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob,'YYYY-MM-DD' );
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
@@ -516,7 +516,7 @@ function saveGeneralInformationDetails() {
         is_dialog_generalInfo_visible.value = false
 
 
-            window.location.reload();
+            // window.location.reload();
 
 }
 
@@ -537,22 +537,15 @@ function onClick_EditButtonContacttInfo(){
 
     dailog_contactinfo.email = _instance_profilePagesStore.employeeDetails.email;
     dailog_contactinfo.official_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
-    // dailog_contactinfo.mobile_number = _instance_profilePagesStore.employeeDetails.get_employee_office_details.mobile_number;
-    console.log("Mobile number : "+_instance_profilePagesStore.employeeDetails.mobile_number);
-
     dailog_contactinfo.mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number);
     dailog_contactinfo.official_mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile);
 
     console.log("testing");
 
     ContactVisible.value = true;
-
-    // console.log(ContactVisible.value);
 }
 
 function save_contactinfoDetails(){
-    console.log("testing contact");
-
     let id = fetch_data.current_user_id
     let url = `/profile-pages-update-contactinfo/${id}`;
 
@@ -566,7 +559,7 @@ function save_contactinfoDetails(){
         .then((res) => {
 
             if (res.data.status == "success") {
-                console.log("Updating mobile number : "+ dailog_contactinfo.mobile_number);
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Contact information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.email =  dailog_contactinfo.email
                 _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail =  dailog_contactinfo.official_email
                 _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number =  dailog_contactinfo.mobile_number
@@ -582,7 +575,7 @@ function save_contactinfoDetails(){
 
         ContactVisible.value = false;
 
-        window.location.reload();
+
 
 }
 
@@ -614,7 +607,6 @@ const saveAddressinfoDetails = () => {
 
     if (diolog_Addressinfo.current_address == " " || diolog_Addressinfo.Permanent_Address == " ") {
         Addresstoast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-        console.log(Addressinfo);
     }
     else {
         let id = fetch_data.current_user_id
@@ -629,7 +621,7 @@ const saveAddressinfoDetails = () => {
         .then((res) => {
             data_checking.value = false;
             if (res.data.status == "success") {
-
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Address information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.current_address_line_1 =  diolog_Addressinfo.current_address
                 _instance_profilePagesStore.employeeDetails.get_employee_office_details.permanent_address_line_1 =  diolog_Addressinfo.Permanent_Address
 
@@ -642,8 +634,6 @@ const saveAddressinfoDetails = () => {
         });
 
         addressVisible.value = false;
-
-        window.location.reload();
     }
 
 }

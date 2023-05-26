@@ -60,7 +60,21 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     const shift_Time_range = reactive({
 
-    })
+    });
+
+    // const AllWeeks = ref();
+    const updatestate = ref([]);
+
+
+    const Week_Off_Days = ref([
+        {weeks:"Sunday" ,week_off_list : 0,first_week: 0,sec_week:0,third_week:0,fourth_week:0,fifth_week:0 ,id:1 },
+        {weeks:"Monday" ,week_off_list : 0,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:0,id:2 },
+        {weeks:"Tuesday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:0,id:3 },
+        {weeks:"Wednesday" ,week_off_list : 1,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:1,id:4 } ,
+        {weeks:"Thursday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:1,id:5 } ,
+        {weeks:"Friday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:1,id:6 } ,
+        {weeks:"Saturday" ,week_off_list : 0,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:1,id:7 }
+    ]);
 
 
     // const fetchShiftDetails = (async () => {
@@ -139,6 +153,34 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
             });
     }
 
+    async function updateWeekOffState(data){
+
+
+        // AllWeeks.value = data;
+        console.log(data);
+
+        // if(data.AllWeeks == 1){
+
+        // }
+
+        let val = {
+            AllWeeks:data.AllWeeks,
+            Week_1st:data.first_week,
+            Week_2st:data.sec_week,
+            Week_3st:data.third_week,
+            Week_4st:data.fourth_week,
+            Week_5st:data.fifth_week,
+        }
+        console.log(val);
+
+        // updatestate.push(val);
+        // console.log(updatestate);
+        // console.log("get update Week_Off State : ", AllWeeks.value);
+
+    }
+
+
+
     // resetVars(){
 
     // }
@@ -147,13 +189,16 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
 
 
+
+
+
     return {
 
         // Variable Declaration
-        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,
+        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,Week_Off_Days,
 
         //
-        fetchShiftDetails, saveWorkShiftDetails,
+        fetchShiftDetails, saveWorkShiftDetails,updateWeekOffState
 
     };
 });

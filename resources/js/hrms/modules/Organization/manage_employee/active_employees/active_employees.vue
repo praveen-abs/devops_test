@@ -11,6 +11,7 @@
       </template>
     </Dialog>
 
+
     <div>
       <DataTable :value="manageEmployeesStore.array_active_employees" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -50,6 +51,8 @@
           </template>
         </Column>
       </DataTable>
+
+      <!-- {{manageEmployeesStore.array_active_employees}} -->
     </div>
   </div>
 </template>

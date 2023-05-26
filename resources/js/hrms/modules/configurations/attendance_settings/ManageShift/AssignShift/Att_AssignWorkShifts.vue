@@ -61,8 +61,6 @@
                     <InputText type="text" v-model="txt_shift_start_time" class="w-8 h-10" />
                     <p class="mx-4 text-lg font-semibold text-gray-600 py-auto">Min</p>
                 </div>
-
-
             </div>
             <div class="p-3 my-5 rounded-lg bg-blue-50 ">
                 <div class="flex gap-4 col-12">
@@ -87,7 +85,6 @@
                             </div>
                             <div>
                                 <InputText type="text" v-model="txt_shift_start_time" class="h-10 " />
-
                             </div>
 
                         </div>
@@ -98,15 +95,9 @@
                                 <p class="text-lg font-semibold py-auto ">Week Off</p>
                             </div>
                             <div class="ml-7 col-9">
-
-                                <!-- <Dropdown v-model="selectedWeek_Off" :options="Week_Off_Days" optionLabel="name"
-                                placeholder="Select Week Off" class="h-15 " style="width:180px" /> -->
                                 <MultiSelect v-model="useAttendanceStore.shiftDetails.Week_Off" :options="Week_Off_Days"
                                     optionLabel="name" placeholder="Select Week Off" :maxSelectedLabels="3" class="h-15"
                                     style="width:180px" />
-
-                                <!-- <InputText type="text" v-model="txt_shift_start_time" class="h-10 " /> -->
-
                             </div>
                         </div>
                         <div class="flex gap-1 col-6">
@@ -120,31 +111,74 @@
                             </div>
 
                         </div>
-                        <!-- <div class="flex gap-1 col-6">
-                    <div class="" >
-                        <p class="text-lg font-semibold py-auto">Grace Time</p>
 
-                    </div>
-                    <div class="flex gap-1 ml-6 col-9" >
-                        <InputText type="text" v-model="txt_shift_start_time" /><p class="text-lg font-semibold text-gray-600 py-auto ">Mins</p>
-                    </div>
-
-                </div> -->
                     </div>
                 </div>
-
-                <!-- <div class="flex gap-4 p-2">
-                <input type="checkbox" name="" id="">
-                <p class="text-lg font-semibold py-auto">Apply To All Days Except Week Off</p>
-            </div> -->
             </div>
-            <!-- <div class="my-3 text-end">
-                <button
-                    class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4 "
-                    @click="useAttendanceStore.manageshift_exemption_steps--">Previous</button>
-                <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
-                    @click="useAttendanceStore.manageshift_exemption_steps++">Next</button>
-            </div> -->
+
+            <DataTable :value="useAttendanceStore.Week_Off_Days" tableStyle="min-width: 50rem">
+                <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
+                <Column field="weeks" header="Days">
+                </Column>
+                <Column field="week_off_list" header="ALL Weeks">
+                    <template #body="slotProps">
+                        <div>
+                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                v-model="slotProps.data.AllWeeks">
+                        </div>
+                    </template>
+                </Column>
+                <Column field="first_week" header="1st Week">
+                    <template #body="slotProps">
+                        <div>
+                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.first_week"  >
+                        </div>
+                    </template>
+                </Column>
+                <Column field="sec_week" header="2nd Week">
+                    <template #body="slotProps">
+                        <div>
+                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.sec_week">
+                        </div>
+                    </template>
+                </Column>
+                <Column field="third_week" header="3rd Week">
+                    <template #body="slotProps">
+                        <div>
+                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.third_week">
+                        </div>
+                    </template>
+                </Column>
+                <Column field="fourth_week" header="4th Week">
+                    <template #body="slotProps">
+                        <div>
+                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fourth_week">
+                        </div>
+                    </template>
+                </Column>
+                <Column field="fifth_week" header="5th Week">
+                    <template #body="slotProps">
+                        <div>
+                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                style="height: 20px;width: 20px; " class="form-check-input" type="checkbox" name="" id=""
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fifth_week">
+                        </div>
+                    </template>
+                </Column>
+                <!-- <Column field="quantity" header=""></Column> -->
+            </DataTable>
+
+
+
         </div>
 
         <!--  -->
@@ -237,11 +271,22 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+// import {GeneralShift} from "../GeneralShift/GeneralShift.vue"
 import { useAttendanceSettingMainStore } from '../../stores/attendanceSettingMainStore';
 
 const useAttendanceStore = useAttendanceSettingMainStore();
 
 let canShowConfirmation = ref(false);
+
+// const checked =ref(false);
+
+const checkdata = ref();
+const checked = (data) => {
+
+    checkdata.value = data;
+    console.log(data);
+
+}
 
 
 
@@ -262,17 +307,10 @@ const cities = ref([
     { name: 'Paris', code: 'PRS' }
 ]);
 
+const select_Week_Off = ref({});
 
-const Week_Off_Days = ref([
-    { name: 'Sunday', id: 1 },
-    { name: 'Monday', id: 2 },
-    { name: 'Tuesday', id: 3 },
-    { name: 'Wednesday', id: 4  },
-    { name: 'Thursday', id: 5 },
-    { name: 'Friday', id: 6 },
-    { name: 'saturday', id: 7 },
 
-]);
+
 
 
 const filters = ref({
@@ -377,33 +415,55 @@ const css_statusColumn = (data) => {
 
 */
 
-
-
-
-
 </script>
+
 
 {
     <!--
 
+
+
+
+<template>
+    <div class="card">
+        <DataTable v-model:selection="selectedProduct" :value="products" dataKey="id" tableStyle="min-width: 50rem">
+            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+            <Column field="code" header="Code"></Column>
+            <Column field="name" header="Name"></Column>
+            <Column field="category" header="Category"></Column>
+            <Column field="quantity" header="Quantity"></Column>
+        </DataTable>
+    </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { ProductService } from '@/service/ProductService';
+
+onMounted(() => {
+    ProductService.getProductsMini().then((data) => (products.value = data));
+});
+
+const products = ref();
+const selectedProduct = ref();
+const metaKey = ref(true);
+
+</script>
+
+
+
+
 <template>
     <div class="card flex justify-content-center">
-        <MultiSelect v-model="selectedCities" :options="cities" optionLabel="name" placeholder="Select Cities"
-            :maxSelectedLabels="3" class="w-full md:w-20rem" />
+        <Checkbox v-model="checked" :binary="true" />
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
-const selectedCities = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
+const checked = ref(false);
 </script>
      -->
 }
+
