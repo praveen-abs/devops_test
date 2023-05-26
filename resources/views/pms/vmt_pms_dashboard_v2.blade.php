@@ -240,7 +240,7 @@
                                                     <div class="col-2">
                                                         {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
                                                         <b class="f-15 text-primary">
-                                                                {{ calculateOverallReviewRating(auth()->user()->id) ."%" }}
+                                                                {{-- {{ calculateOverallReviewRating(auth()->user()->id) ."%" }} --}}
                                                         </b>
                                                     </div>
                                                 </div>
@@ -379,8 +379,8 @@
                     <div id="review_current" class="tab-pane fade show active">
                         <div class="card mb-0" style="position:relative;">
                             <div class="card-body">
-                                <button id="add-goals" class="btn btn-orange add-goals"><i
-                                        class="text-white fa fa-plus mx-1"></i>Add
+                                <button id="add-goals" class="btn btn-orange add-goals "  style="z-index:1 "><i
+                                        class="text-white fa fa-plus mx-1 "></i>Add
                                     Goals</button>
                                 <div class="table-responsive">
                                     <table id='empTable' class=' table Fem table-borderd w-100  mb-0 '

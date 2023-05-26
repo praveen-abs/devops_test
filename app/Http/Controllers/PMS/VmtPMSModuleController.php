@@ -764,15 +764,19 @@ class VmtPMSModuleController extends Controller
         $kpiRowsId = implode(',',$kpiRowsId);
 
         // Get assigned Details
-        $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
+        $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)
+                                                      ->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)
+                                                      ->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
 
 
 
         $assignedUserDetails = User::where('id',$request->assigneeId)->with('getEmployeeDetails','getEmployeeOfficeDetails')->first();
+        $assignedUserDepartment = Department::where('id',$assignedUserDetails->getEmployeeOfficeDetails->department_id)->first();
         $assignedEmployee_Userdata = User::where('id',  $request->assigneeId)->first();
         $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $request->assigneeId)->first();
         $empSelected = true;
         $employeeData = VmtEmployee::where('userid', $request->assigneeId)->first();
+
 
         $reviewersId = explode(',',$assignedGoals->reviewer_id);
 
@@ -814,21 +818,22 @@ class VmtPMSModuleController extends Controller
 
         //Calculate score for the currently selected form
         $ratingDetail = calculateReviewRatings($request->assignedFormid, $request->assigneeId);
+        $overallRatingDetails = calculateOverallReviewRating($request->assigneeId);
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
+            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedUserDepartment','assignedGoals','empSelected','assignersName','config','show','ratingDetail','overallRatingDetails','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
 
         // check if logged in user is reviewer or not
         if(in_array(Auth::id(), $reviewersId)){
            // $assigneeId = $request->assigneeId;
             $enableButton = true;
-            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','canShowOverallScoreCard_ReviewPage','canShowRatingCard','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
+            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','canShowOverallScoreCard_ReviewPage','canShowRatingCard','assignedUserDepartment','assignedGoals','empSelected','assignersName','config','show','ratingDetail','overallRatingDetails','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
         }
         $enableButton = false;
 
-        return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
+        return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedUserDepartment','assignedGoals','empSelected','assignersName','config','show','ratingDetail','overallRatingDetails','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
 
 
 

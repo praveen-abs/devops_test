@@ -26,7 +26,6 @@ Route::get('/vuejs', function () {
 
 Route::get('/create-offer', function () {
     return view('offer_letter/Create_OfferLetter.blade.php');
-
 })->name('create-offer');
 
 Route::get('/offer-letter', function () {
@@ -118,7 +117,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/isEmailExists/{email?}', function ($email) {
 
         return isEmailExists($email);
-
     })->name('isEmailExists');
 
     // Profile Page
@@ -132,7 +130,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/addDepartment/{emp_code?}', function ($emp_code) {
 
         return isEmpCodeExists($emp_code);
-
     })->name('isEmpCodeExists');
 
     Route::controller(VmtEmployeeOnboardingController::class)->group(function () {
@@ -150,7 +147,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('fetch-quickonboarded-emp-details', 'fetchQuickOnboardedEmployeeData')->name('fetch-quickonboarded-emp-details');
 
         Route::post('/employee-documents-details', 'getEmployeeAllDocumentDetails')->name('employee-documents-details');
-
     });
 
 
@@ -196,7 +192,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Leave Balance fetchEmployeeLeaveBalance
     Route::get('/get-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeLeaveBalance'])->name('getEmployeeLeaveBalance');
-   // Route::get('/fetch-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeLeaveBalance'])->name('fetchEmployeeLeaveBalance');
+    // Route::get('/fetch-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeLeaveBalance'])->name('fetchEmployeeLeaveBalance');
 
     //Leave history pages
 
@@ -227,8 +223,8 @@ Route::middleware(['auth'])->group(function () {
     //Route::get('/fetch-employee-compensatory-days/{user_id}', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeCompensatoryOffDays'])->name('fetch-employee-compensatory-days');
     Route::get('/fetch-employee-unused-compensatory-days', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUnusedCompensatoryOffDays'])->name('fetch-employee-unused-compensatory-days');
 
-      //Attendance Settings route
-    Route::get('/save-work-shift',[App\Http\Controllers\VmtAttendanceSettingsController::class,'saveWorkShiftSettings'])->name('saveWorkShiftSettings');
+    //Attendance Settings route
+    Route::get('/save-work-shift', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'saveWorkShiftSettings'])->name('saveWorkShiftSettings');
 
     //Ajax For Leave withdraw
     Route::get('/withdrawLeave', [App\Http\Controllers\VmtAttendanceController::class, 'withdrawLeave'])->name('withdrawLeave');
@@ -348,8 +344,7 @@ Route::middleware(['auth'])->group(function () {
         return view('offer_letter.create_offerletter');
     })->name('create-offer');
 
-    Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');
-    ;
+    Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
     // Permission Roles Routing
@@ -584,7 +579,7 @@ Route::middleware(['auth'])->group(function () {
 
     //
     Route::post('vmt_clientOnboarding', 'App\Http\Controllers\VmtClientController@store');
-    Route::get('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
+    Route::Post('/department', 'App\Http\Controllers\VmtDepartmentController@showPage')->name('department');
 
 
     Route::get('/getPMSRatingJSON', [App\Http\Controllers\ConfigPmsController::class, 'getPMSRating'])->name('getPMSRatingJSON');
@@ -725,9 +720,11 @@ Route::middleware(['auth'])->group(function () {
     //Vmt Correction Controller
     Route::get('/processsExpense', [App\Http\Controllers\VmtCorrectionController::class, 'processsExpense'])->name('processsExpense');
     Route::get('/adding-reimbursement-data', [App\Http\Controllers\VmtCorrectionController::class, 'addingReimbursementsDataForSpecificMonth'])->name('addingReimbursementsDataForSpecificMonth');
-    Route::get('/check-allemployee-onboardingstatus', [ App\Http\Controllers\VmtCorrectionController::class,'checkallemployeeonboardingstatus'])->name('checkallemployeeonboardingstatus');
-    Route::get('/addAllEmployeePayslipDetails', [ App\Http\Controllers\VmtCorrectionController::class,'addAllEmployeePayslipDetails'])->name('addAllEmployeePayslipDetails');
+    Route::get('/check-allemployee-onboardingstatus', [App\Http\Controllers\VmtCorrectionController::class, 'checkallemployeeonboardingstatus'])->name('checkallemployeeonboardingstatus');
+    Route::get('/addAllEmployeePayslipDetails', [App\Http\Controllers\VmtCorrectionController::class, 'addAllEmployeePayslipDetails'])->name('addAllEmployeePayslipDetails');
     Route::get('/addElbalancewithjsonString', [App\Http\Controllers\VmtCorrectionController::class, 'addElbalancewithjsonString'])->name('addElbalancewithjsonString');
+    Route::get('/changeAttendanceBioMatricIdToHrmsUserid', [App\Http\Controllers\VmtCorrectionController::class, 'changeAttendanceBioMatricIdToHrmsUserid'])->name('changeAttendanceBioMatricIdToHrmsUserid');
+    Route::get('/adding-work-shift-for-all-employees',  [App\Http\Controllers\VmtCorrectionController::class, 'addingWorkShiftForAllEmployees'])->name('addingWorkShiftForAllEmployees');
 
 
 
@@ -741,10 +738,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/attendance_settings/save-shiftdetails', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
     // Document Setting
     Route::get('/documents_settings', function () {
-        return view('configurations.vmt_documents_settings'); })->name('document_settings');
+        return view('configurations.vmt_documents_settings');
+    })->name('document_settings');
 
     Route::get('/investment_settings', function () {
-        return view('configurations.investment_setting'); })->name('investment_settings');
+        return view('configurations.investment_setting');
+    })->name('investment_settings');
 
     Route::get('/documents/employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'getEmployeeDocumentsSettings'])->name('getEmployeeDocumentsSettings');
     Route::post('/documents/update_employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'updateEmployeeDocumentsSettings'])->name('updateEmployeeDocumentsSettings');
@@ -790,12 +789,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/investments/fetchEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchEmpRentalDetails'])->name('fetchEmpRentalDetails');
     Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
     Route::post('/investments/fetchHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchHousePropertyDetails'])->name('fetchHousePropertyDetails');
+    Route::post('/investments/fetchOtherExemption', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchOtherExemptionDetails'])->name('fetchOtherExemptionDetails');
     Route::post('/investments/deleteHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteHousePropertyDetails'])->name('deleteHousePropertyDetails');
 
     Route::post('/investments/saveEmpdetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'SaveInvDetails']);
 
     Route::post('/investments/saveSectionPopups',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
     Route::post('/investments/saveSection80',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
+    Route::get('/investments/TaxDeducation',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
 
 
     //Emp Mail Notifications
@@ -806,6 +807,14 @@ Route::middleware(['auth'])->group(function () {
     //welcomemailstatus
 
     Route::view('/manage_welcome_mails_status', 'ManageWelcomeMailStatus')->name('manage_welcome_mails_status');
+
+
+    //New Dashboard URL
+    Route::post('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
+
+
+
+
 
 
     //Testing controller
@@ -839,7 +848,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/testinginestmentsectionss', [App\Http\Controllers\VmtTestingController::class, 'testinginestmentsection']);
 
     Route::post('/payroll/getAllEmployeesPayslipDetails', [App\Http\Controllers\VmtPayCheckController::class, 'getAllEmployeesPayslipDetails'])->name('getAllEmployeesPayslipDetails');
-
 });
 
 Route::get('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingController::class, 'testEmployeeDocumentsJoin']);

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="5"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="5"
                 :value="investmentStore.otherIncomeSource" @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
@@ -137,15 +137,4 @@ const onRowEditSave = (event) => {
 </script>
 
 <style>
-.p-dialog .p-dialog-header-icons {
-    display: flex;
-    align-items: center;
-    position: relative;
-    top: -65px;
-}
-.p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
-    margin-right: 0;
-    position: relative;
-    top: -20px;
-  }
 </style>

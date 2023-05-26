@@ -2,7 +2,7 @@
     <div>
         <!-- {{ investmentStore.previousEmployeerIncomeSource }} -->
         <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="id" :paginator="true" :rows="10"
+            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="10"
                 :value="investmentStore.previousEmployeerIncomeSource" @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
@@ -21,9 +21,6 @@
                         </button>
                     </template>
                 </Column>
-
-                <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                </Column> -->
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">

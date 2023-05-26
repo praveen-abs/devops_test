@@ -77,11 +77,11 @@
                               v$.employee_name.$pending.$response
                             "
                             class="p-error"
-                            >{{
+                           >{{
                               v$.employee_name.required.$message.replace(
                                 "Value",
                                 "Employee Name as per in Aadhar"
-                              )
+                               )
                             }}</span
                           >
                         </div>

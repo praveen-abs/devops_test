@@ -1,81 +1,204 @@
 <template>
-    <div class=" justify-content-center align-items-center">
-        <div class="mx-2 ">
-            <div class="my-3">
-                <p class="text-2xl text-black">Tax Deductions FY 2022-2023</p>
-            </div>
-            <div class="p-2 my-2 text-black border-red-100 rounded-lg bg-red-50">
-                <div style="font-weight: 600;" class="px-2 my-2 fs-5 d-flex ">Kindly update your <span
-                        class="text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
-                    deduction (if applicable) </div>
-            </div>
-            <div class="my-4 bg-gray-100 rounded-lg border-1">
-                <p style="font-weight: 400;" class="p-3 text-black fs-6">You have the option of either using a new
-                    regime(with no tax deducations), or
-                    using the same regime as FY 2019-20.To help you make an informed decision., we are displaying your tax
-                    liability in both these regimes,and you can choose the option that you prefer.For us to accurately
-                    calculated your tax liabilities , please ensure you full in all the information requested
-                    below,irrespective of the regime that you pick</p>
-            </div>
-            <div class="flex gap-6 my-4">
-                <div class="w-6">
-                    <div class="text-2xl font-semibold ">Your current chosen tax regime is <span
-                            class="font-semibold text-blue-500 fs-4">Old
-                            Tax Regime</span> </div>
-
-                    <!-- text-sm -->
-                    <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
-                        calculations
-                    </p>
-                    <div>
+    <div class="p-1">
+        <div class=" justify-content-center align-items-center">
+            <div class="mx-2 ">
+                <div class="my-3">
+                    <p class="text-2xl font-semibold text-black">Tax Deductions FY 2022-2023</p>
+                </div>
+                <div class="p-2 my-2 text-left text-black border-l-4 rounded-lg bg-red-50 border-l-red-400">
+                    <div style="font-weight: 600;" class="px-2 my-2 fs-5 d-flex ">Kindly update your <span
+                            class="text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
+                        deduction (if applicable) </div>
+                </div>
+                <div class="my-4 rounded-lg card ">
+                    <div class="card-body">
+                        <p class="text-black font-meduim fs-6">You have the option of either using a new
+                            regime(with no tax deducations), or
+                            using the same regime as FY 2019-20.To help you make an informed decision., we are displaying
+                            your
+                            tax
+                            liability in both these regimes,and you can choose the option that you prefer.For us to
+                            accurately
+                            calculated your tax liabilities , please ensure you full in all the information requested
+                            below,irrespective of the regime that you pick</p>
                     </div>
                 </div>
-                <div>
-                    <button @click="switch_regime_dailo = true" type="button" class="px-2 px-4 btn btn-primary">
-                        Old Tax Regime</button>
-                    <span class="text-sm text-green-500">Maximum benefit</span>
+                <div class="flex gap-6 my-4">
+                    <div class="w-6">
+                        <div class="font-semibold fs-5 ">Your current chosen tax regime is <strong
+                                class="font-semibold text-blue-500 fs-5">Old
+                                Tax Regime</strong> </div>
+
+                        <!-- text-sm -->
+                        <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
+                            calculations
+                        </p>
+                        <div>
+                        </div>
+                    </div>
+                    <div>
+                        <button @click="switch_regime_dailo = true" type="button" class="px-2 btn btn-primary">
+                            Old Tax Regime</button>
+                        <span class="text-sm text-green-500">Maximum benefit</span>
+
+                    </div>
+                    <div>
+
+                        <button @click="switch_regime_dailog = true" type="button"
+                            class="p-2 text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
+                            Switch Regime
+                        </button>
+
+                    </div>
+
+
 
                 </div>
-                <div>
-
-                    <button @click="switch_regime_dailog = true" type="button"
-                        class="p-2 text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
-                        Switch Regime
-                    </button>
-
+                <div class="h-full p-3 my-4 border-l-4 rounded-lg bg-sky-50 border-l-sky-400">
+                    <p class="text-blue-700 fs-6">
+                        Choosing old regime will give you an additional benefits of &#x20B9; 41,222.00 as compared to New
+                        Regime.Calculations are based on the latest released payroll - Jul 2022
+                    </p>
                 </div>
-
-
-
             </div>
-            <div class="h-full p-3 my-4 bg-blue-50">
-                <p class="text-blue-700 fs-6">
-                    Choosing old regime will give you an additional benefits of &#x20B9; 41,222.00 as compared to New
-                    Regime.Calculations are based on the latest released payroll - Jul 2022
-                </p>
+        </div>
+
+        <DataTable :value="tax_deduction" :paginator="true" :rows="10" dataKey="id"
+            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+            responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+            v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+            <template #empty> No Data Found. </template>
+            <template #loading> Loading customers data. Please wait. </template>
+            <Column field="particulars" header="Particulars">
+            </Column>
+            <Column field="new_regime" header="New Tax Regime"></Column>
+            <Column field="old_regime" header="Old Tax Regime"></Column>
+        </DataTable>
+
+        <div class="my-3 card">
+            <div class="grid gap-4 my-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body">
+                <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
+                    <p class="font-semibold fs-6 ">Net Taxable Income</p>
+                    <div class="flex gap-8">
+                        <h6 class="text-lg font-bold w-7">INR 4,82,246 </h6>
+                        <p class="text-orange-400 underline"> Income Tax Computation</p>
+                    </div>
+                </div>
+                <div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400">
+                    <p class="font-semibold fs-6 ">Total Tax Payable</p>
+                    <h6 class="text-lg font-bold">INR 0</h6>
+                </div>
+
+                <div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400 ">
+                    <p class="font-semibold fs-6 ">Tax Paid Till Now</p>
+                    <h6 class="text-lg font-bold">INR 0</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-3">
+            <div>
+                <p class="text-2xl font-semibold ">Important!</p>
+                <div class="mx-2">
+                    <ul class="font-semibold f-13">
+                        <li class="my-2 text-lg font-semibold">
+                            '$' - Not considered for exemption if opted for New tax regime (Section 115BAC).
+                        </li>
+                        <li class="my-2 text-lg font-semibold">
+                            You can declare your investment amount till last day of every month until the cutoff date of Feb
+                            27, 2024.
+                        </li>
+                        <li class="my-2 text-lg font-semibold">
+                            Last date for submitting your investment proofs is Feb 27, 2024.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="my-2 card">
+            <div class="card-body">
+                <div>
+                    <p class="font-semibold fs-4 ">My Declaration</p>
+                    <p class="my-2 font-semibold fs-6"> Below are the declarations done by you under various sections.</p>
+                </div>
+                <div class="my-2 table-responsive">
+                    <DataTable :paginator="true" :rows="1" dataKey="id">
+                        <template #empty> No Data Found. </template>
+                        <template #loading> Loading customers data. Please wait. </template>
+
+                        <Column field="particulars" header="S.No">
+                            <template #body>
+                                1++
+                            </template>
+                        </Column>
+                        <Column field="particulars" header="Declarations"> </Column>
+                        <Column field="new_regime" header="Amount Declared"></Column>
+                        <Column field="old_regime" header="Proof Submitted"></Column>
+                        <Column field="old_regime" header="Amount Rejected "></Column>
+                        <Column field="old_regime" header="Amount Accepted "></Column>
+                    </DataTable>
+                </div>
+                <div class="my-3">
+                    <div>
+                        <p class="my-2 font-semibold fs-5">Month- Month Tax Deduction Details</p>
+                        <p class="my-2 font-semibold fs-6">Below deductions are based on your declared amount. Tax amount
+                            may change based on the amount approved.</p>
+                    </div>
+                    <div>
+                        <div class="grid gap-4 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body ">
+                            <div class="text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Total Tax Payable</p>
+                                <div class="flex gap-2">
+                                    <h6 class="mb-0 font-semibold fs-4">INR 0</h6>
+                                </div>
+                            </div>
+                            <div class="p-2 text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Tax Paid Till Now</p>
+                                <h6 class="mb-0 font-semibold fs-4 ">INR 0</h6>
+                            </div>
+
+                            <div class="p-2 text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Remaining Tax Amount</p>
+                                <h6 class="mb-0 font-semibold fs-4">INR 0</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <DataTable :paginator="true" :rows="1" dataKey="id" scrollable>
+                            <template #empty> No Data Found. </template>
+                            <template #loading> Loading customers data. Please wait. </template>
+                            <Column field="particulars" header="Month" frozen class="font-bold">
+                                <template #body>
+                                    <p>
+                                        Monthly Tax
+                                    </p>
+                                </template>
+                            </Column>
+                            <Column field="new_regime" header="Apr 23"></Column>
+                            <Column field="old_regime" header="May 23"></Column>
+                            <Column field="old_regime" header="June 23 "></Column>
+                            <Column field="old_regime" header="July 23 "></Column>
+                            <Column field="new_regime" header="Aug 23"></Column>
+                            <Column field="old_regime" header="Sep 23"></Column>
+                            <Column field="old_regime" header="Oct 23 "></Column>
+                            <Column field="old_regime" header="Nov 23 "></Column>
+                            <Column field="old_regime" header="Dec 23 "></Column>
+                            <Column field="old_regime" header="Jan 23 "></Column>
+                            <Column field="old_regime" header="Feb 23 "></Column>
+                            <Column field="old_regime" header="Mar 23 "></Column>
+                        </DataTable>
+                    </div>
+                    <div class="flex my-3">
+                        <p class="font-semibold fs-6">
+                            <strong class="text-red-600">*</strong>
+                            Projected Income Tax does not include any revisions, bonuses or other additional projected
+                            payments other than salary.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <DataTable :value="tax_deduction" :paginator="true" :rows="10" dataKey="id"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-        <template #empty> No Data Found. </template>
-        <template #loading> Loading customers data. Please wait. </template>
-        <Column field="particulars" header="Particulars">
-        </Column>
-        <Column field="new_regime" header="New Tax Regime"></Column>
-        <Column field="old_regime" header="Old Tax Regime"></Column>
-    </DataTable>
-
-    <!-- <i class="text-green-400 pi pi-check-circle" style="font-size: 9rem"></i> -->
-    <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-        class="text-green-400">
-        <path stroke-linecap="round" stroke-linejoin="round"
-            d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-    </svg> -->
-
 
 
 
@@ -107,7 +230,7 @@
 
     </Dialog>
 
-    <div class="mt-6 row">
+    <!-- <div class="mt-6 row">
         <input type="number" v-model="amount" name="" class="form-control col-2" id="">
         <input type="number" v-model="age" name="" class="mx-4 form-control col-1" id="">
         <Dropdown editable v-model="regime" :options="regimeOption" optionLabel="name" optionValue="value"
@@ -116,7 +239,7 @@
             <button class="btn btn-orange" @click="calucate()">click</button>
         </div>
     </div>
-    <h1>{{ totalTax }}</h1>
+    <h1>{{ totalTax }}</h1> -->
 </template>
 
 

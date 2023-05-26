@@ -11,10 +11,15 @@
                             Declaration</a>
                     </li> -->
                     <li class=" nav-item ember-view" role="presentation">
-                        <a class="mx-2 active nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                        <a class="mx-2 nav-link active ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
+                    <!-- <li class=" nav-item ember-view" role="presentation">
+                        <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                            data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true">
+                            Income Tax Computations</a>
+                    </li> -->
                     <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
@@ -29,7 +34,7 @@
                 </ul>
             </div>
         </div>
-        <div class="mb-0 card top-line">
+        <div class="mb-0 top-line">
             <div class="card-body">
                 <div class="tab-content " id="pills-tabContent">
                     <!-- <div class="tab-pane fade active show" id="investment_dec" role="tabpanel"
@@ -37,8 +42,12 @@
                         <Declaration />
                     </div> -->
 
-                    <div class="tab-pane fade active show" id="exemptions" role="tabpanel">
+                    <div class="tab-pane  active show fade " id="exemptions" role="tabpanel">
                         <InvestmentAndExemption />
+
+                    </div>
+                    <div class="tab-pane fade " id="investmentComputation" role="tabpanel">
+                        <ImvestmentComputation />
 
                     </div>
                     <!-- <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -72,6 +81,7 @@
 import { onMounted } from 'vue'
 import Declaration from './declaration/declaration.vue'
 import InvestmentAndExemption from './investments_and_exemption/investments_and_exemption.vue'
+import ImvestmentComputation from './income_tax_computation/incomeTaxComputation.vue'
 
 
 import { investmentMainStore } from '../stores/investmentMainStore'
@@ -102,13 +112,6 @@ onMounted(async () => {
     top: -5px;
     /* border: 1px solid red; */
     color: #6c757d;
-}
-
-.p-dialog .p-dialog-header-icons {
-    display: flex;
-    align-items: center;
-    position: relative;
-    top: 0;
 }
 
 .p-dialog-mask {

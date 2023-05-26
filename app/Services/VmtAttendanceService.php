@@ -716,7 +716,9 @@ class VmtAttendanceService
         //Get the user_code
         $user_id = User::where('user_code', $user_code)->first()->id;
 
-        $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+
+        //TODO : Hardcoded now. Need to fetch based on assigned shift for this employee
+        $regularTime  = VmtWorkShifts::where('shift_name', 'First Shift')->first();
 
         ////Fetch the attendance reports
         //Create date array
@@ -1442,7 +1444,7 @@ class VmtAttendanceService
                 'users.user_code as employee_code',
                 'vmt_employee_attendance.date',
 
-                'vmt_work_shifts.shift_type as shift_type',
+                'vmt_work_shifts.shift_name as shift_name',
                 'vmt_work_shifts.shift_start_time as shift_start_time',
                 'vmt_work_shifts.shift_end_time as shift_end_time',
 

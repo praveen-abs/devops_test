@@ -126,13 +126,13 @@ const activetab = ref(investmentStore.investment_exemption_steps);
 
 onMounted(async () => {
     console.log(activetab.value);
-    setTimeout(async () => {
-        investmentStore.fetchPropertyType()
-    }, 3000);
+    // setTimeout(async () => {
+    //     investmentStore.fetchPropertyType()
+    // }, 3000);
 
-    setTimeout(async () => {
-        investmentStore.hop.splice(0, investmentStore.hop.length);
-    }, 4000);
+    // setTimeout(async () => {
+    //     investmentStore.hop.splice(0, investmentStore.hop.length);
+    // }, 4000);
 
 })
 
