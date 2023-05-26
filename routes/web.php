@@ -96,16 +96,16 @@ Route::middleware(['auth'])->group(function () {
         return auth()->user()->name;
     });
 
-    //Get current logged-in user name
-    Route::get('/currentUserName', function () {
 
-        return auth()->user()->name;
-    });
     Route::get('/currentUserCode', function () {
 
         return auth()->user()->user_code;
     });
 
+    Route::get('/currentUserRole', function () {
+
+        return auth()->user()->org_role;
+    });
 
 
 

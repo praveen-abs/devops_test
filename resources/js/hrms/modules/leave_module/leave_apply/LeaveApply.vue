@@ -64,14 +64,12 @@
                         <div class="form-group">
                             <Dropdown editable @change="service.Permission" style="  height: 38px;font-weight: 500;"
                                 class="w-full" v-model="service.leave_data.selected_leave" :options="service.leave_types"
-                                optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" />
-                            <!-- <select style="  height: 38px;font-weight: 500;" name="" id="leave_type_id"
-                                aria-label="Default select example" class="outline-none form-select"
-                                v-model="service.leave_data.selected_leave" @change="service.Permission">
-                                <option selected>Select Leave Type</option>
-                                <option v-for="leavetype in service.leave_types" :key="leavetype.id">
-                                    {{ leavetype.leave_type }}</option>
-                            </select> -->
+                                optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" :class="[
+                                    v$.selected_leave.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="v$.selected_leave.$error" class="text-red-400 fs-6 font-semibold">
+                                {{ v$.selected_leave.required.$message.replace( "Value", "Leave Type"  )}}
+                            </span>
 
                         </div>
                     </div>
@@ -120,7 +118,12 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" />
+                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
+                                f$.full_day_leave_date.$error ? 'p-invalid' : '',
+                            ]" />
+                        <span v-if="f$.full_day_leave_date.$error" class="text-red-400 fs-6 font-semibold">
+                            {{ f$.full_day_leave_date.required.$message.replace( "Value", "Date"  ) }}
+                        </span>
                     </div>
                 </div>
 
@@ -135,7 +138,13 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" />
+                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
+                                h$.half_day_leave_date.$error ? 'p-invalid' : '',
+                            ]" />
+                        <span v-if="h$.half_day_leave_date.$error" class="text-red-400 fs-6 font-semibold">
+                            {{ h$.half_day_leave_date.required.$message.replace( "Value", "Date"  )}}
+
+                        </span>
                     </div>
                 </div>
 
@@ -152,20 +161,29 @@
                             <div class="form-check form-check-inline">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
                                     name="session" id="forenoon" value="forenoon"
-                                    v-model="service.leave_data.half_day_leave_session">
+                                    v-model="service.leave_data.half_day_leave_session" :class="[
+                                        h$.half_day_leave_session.$error ? 'p-invalid' : '',
+                                    ]" />
+
                                 <label class="form-check-label leave_type ms-3" for="forenoon">Forenoon</label>
 
                             </div>
                             <div class="form-check form-check-inline">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio"
                                     name="session" id="afternoon" value="afternoon"
-                                    v-model="service.leave_data.half_day_leave_session">
+                                    v-model="service.leave_data.half_day_leave_session" :class="[
+                                        h$.half_day_leave_session.$error ? 'p-invalid' : '',
+                                    ]" />
                                 <label class="form-check-label leave_type ms-3" for="afternoon">Afternoon</label>
+                            </div>
+                            <div v-if="h$.half_day_leave_session.$error" class="text-red-400 fs-6 font-semibold">
+                                {{ h$.half_day_leave_session.required.$message.replace( "Value", "Session "  )}}
                             </div>
 
 
                         </div>
                     </div>
+
                 </div>
 
                 <!-- Custom Leave -->
@@ -181,7 +199,12 @@
                                 <label for="" class="float-label">Start Date</label><br>
                                 <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
                                     v-model="service.leave_data.custom_start_date" :minDate="first_day_of_the_month"
-                                    :manualInput="true" />
+                                    :manualInput="true" :class="[
+                                        c$.custom_start_date.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="c$.custom_start_date.$error" class="text-red-400 fs-6 font-semibold">
+                                    {{ c$.custom_start_date.required.$message.replace( "Value", "Start Date "  ) }}
+                                </span>
 
                             </div>
 
@@ -208,7 +231,12 @@
                                 <label for="" class="float-label">End Day</label><br>
                                 <Calendar inputId="icon" @date-select="service.dayCalculation" dateFormat="dd-mm-yy"
                                     :showIcon="true" v-model="service.leave_data.custom_end_date"
-                                    :minDate="first_day_of_the_month" />
+                                    :minDate="first_day_of_the_month" :class="[
+                                        c$.custom_end_date.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="c$.custom_end_date.$error" class="text-red-400 fs-6 font-semibold">
+                                    {{ c$.custom_end_date.required.$message.replace( "Value", "End Date "  ) }}
+                                </span>
 
                             </div>
                         </div>
@@ -280,18 +308,25 @@
 
                         <MultiSelect v-model="service.leave_data.selected_compensatory_leaves"
                             :options="service.leave_data.compensatory_leaves" optionLabel="emp_attendance_date"
-                            placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5">
+                            placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5"
+                            :class="[
+                                        cp$.compensatory_leaves_date.$error ? 'p-invalid' : '',
+                                    ]" >
 
-                            <template #footer>
-                                <div class="px-3 py-2">
-                                    <b>{{ service.leave_data.selected_compensatory_leaves ?
-                                        service.leave_data.selected_compensatory_leaves.length : 0 }}</b> Date{{
-        (service.leave_data.selected_compensatory_leaves ?
-            service.leave_data.selected_compensatory_leaves.length : 0) > 1 ? 's' : '' }} selected.
-                                </div>
-                            </template>
+
+                        <template #footer>
+                            <div class="px-3 py-2">
+                                <b>{{ service.leave_data.selected_compensatory_leaves ?
+                                    service.leave_data.selected_compensatory_leaves.length : 0 }}</b> Date{{
+                                (service.leave_data.selected_compensatory_leaves ?
+                                service.leave_data.selected_compensatory_leaves.length : 0) > 1 ? 's' : '' }} selected.
+                            </div>
+                        </template>
                         </MultiSelect>
                         <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
+                        <span v-if="cp$.compensatory_leaves_date.$error" class="text-red-400 fs-6 font-semibold">
+                            {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "Compensatory Working Date's "  )}}
+                        </span>
                     </div>
                     <div class="mb-3 col-md-4 col-sm-12 col-lg-4 col-xl-4 col-xxl-3 mb-md-0 ">
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
@@ -299,7 +334,12 @@
                         </div>
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true"
-                                v-model="service.leave_data.compensatory_start_date" :minDate="first_day_of_the_month" />
+                                v-model="service.leave_data.compensatory_start_date" :minDate="first_day_of_the_month" :class="[
+                                        cp$.compensatory_start_date.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="cp$.compensatory_start_date.$error" class="text-red-400 fs-6 font-semibold">
+                                    {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "Start Date "  )}}
+                                </span>
                         </div>
                     </div>
 
@@ -323,7 +363,12 @@
                         <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                             <Calendar @date-select="service.dayCalculation" inputId="icon" dateFormat="dd-mm-yy"
                                 :showIcon="true" v-model="service.leave_data.compensatory_end_date"
-                                :minDate="first_day_of_the_month" />
+                                :minDate="first_day_of_the_month" :class="[
+                                        cp$.compensatory_end_date.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="cp$.compensatory_end_date.$error" class="text-red-400 fs-6 font-semibold">
+                                    {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "End Date "  )}}
+                                </span>
                         </div>
                     </div>
                 </div>
@@ -353,7 +398,12 @@
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <div class="form-group">
                             <Textarea :autoResize="true" rows="3" cols="90" placeholder="Enter the Reason"
-                                v-model="service.leave_data.leave_reason" class="form-control" />
+                                v-model="service.leave_data.leave_reason" class="form-control" :class="[
+                                    r$.leave_reason.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="r$.leave_reason.$error" class="text-red-400 fs-6 font-semibold">
+                                {{ r$.leave_reason.required.$message.replace( "Value", "Leave Reason"  )}}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -364,8 +414,7 @@
                 </div>
                 <div class="mt-6 text-center ">
                     <button type="button" class="btn btn-border-primary" @click="visible = false">Cancel</button>
-                    <button type="button" id="btn_request_leave" class="btn btn-primary ms-4"
-                        :disabled="service.leave_data.selected_leave == '' ? true : false" @click="service.Submit">
+                    <button type="button" id="btn_request_leave" class="btn btn-primary ms-4" @click="submitForm">
                         Request Leave</button>
                 </div>
             </div>
@@ -386,9 +435,11 @@
 
 
 
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import axios from "axios";
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
 import { useLeaveService } from './leave_apply_service'
 
@@ -410,20 +461,134 @@ const service = useLeaveService()
 
 onMounted(() => {
 
-        service.get_user()
-        service.get_leave_types()
-        service.leave_data.custom_start_date = new Date()
-        service.leave_data.permission_start_time = new Date()
+    service.get_user()
+    service.get_leave_types()
+    service.leave_data.custom_start_date = new Date()
+    service.leave_data.permission_start_time = new Date()
 
 
 });
 
 
+const rules = computed(() => {
+    return {
+        selected_leave: { required },
+
+    }
+}
+
+)
+
+const full_day_rules = computed(() => {
+    return {
+        full_day_leave_date: { required },
+    }
+})
+
+const half_day_rules = computed(() => {
+    return {
+        half_day_leave_date: { required },
+        half_day_leave_session: { required },
+    }
+})
+const custom_day_rules = computed(() => {
+    return {
+        custom_start_date: { required },
+        custom_end_date: { required },
+    }
+})
+const reason_rules = computed(() => {
+    return {
+        leave_reason: { required },
+    }
+})
+const compen_day_rules = computed(() => {
+    return {
+        compensatory_leaves_date: { required },//This refers to comp days selected in dropdown
+        compensatory_start_date: { required },
+        compensatory_end_date: { required },
+
+    }
+})
+const f$ = useValidate(full_day_rules, service.leave_data)
+const h$ = useValidate(half_day_rules, service.leave_data)
+const c$ = useValidate(custom_day_rules, service.leave_data)
+const cp$ = useValidate(compen_day_rules, service.leave_data)
+const r$ = useValidate(reason_rules, service.leave_data)
+
+const v$ = useValidate(rules, service.leave_data)
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+
+        if(service.leave_data.selected_leave.includes('Compensatory')){
+        cp$.value.$validate()
+        if (!cp$.value.$error) {
+            // if ANY fail validation
+            r$.value.$validate()
+            if (!r$.value.$error) {
+                service.Submit()
+            }
+
+            console.log('Form successfully submitted.')
+        } else {
+            console.log('Form failed validation')
+        }
+       }
+
+    if (service.leave_data.radiobtn_full_day == "full_day") {
+        f$.value.$validate()
+        if (!f$.value.$error) {
+            // if ANY fail validation
+            r$.value.$validate()
+            if (!r$.value.$error) {
+                service.Submit()
+            }
+            console.log('Form successfully submitted.')
+        } else {
+            console.log('Form failed validation')
+        }
+    }
+    if (service.leave_data.radiobtn_half_day == "half_day") {
+        h$.value.$validate()
+        if (!h$.value.$error) {
+            // if ANY fail validation
+            console.log('Form successfully submitted.')
+            r$.value.$validate()
+            if (!r$.value.$error) {
+                service.Submit()
+            }
+        } else {
+            console.log('Form failed validation')
+        }
+    }
+    if (service.leave_data.radiobtn_custom == "custom") {
+        c$.value.$validate()
+        if (!c$.value.$error) {
+            // if ANY fail validation
+            console.log('Form successfully submitted.')
+            r$.value.$validate()
+            if (!r$.value.$error) {
+                service.Submit()
+            }
+        } else {
+            console.log('Form failed validation')
+        }
+    }
+
+
+    } else {
+
+        console.log('Form failed validation')
+    }
 
 
 
 
-
+}
 
 </script>
 
