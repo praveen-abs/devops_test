@@ -99,7 +99,7 @@
                     </DataTable>
                 </div>
             </div>
-        </div>
+        </div>  
         <div class="my-4 card">
             <div class="card-body">
                 <div>

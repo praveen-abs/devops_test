@@ -394,6 +394,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                             life: 3000,
                         });
                         fetchHraNewRental();
+                        getInvestmentSource()
                     });
             },
             reject: () => {},
