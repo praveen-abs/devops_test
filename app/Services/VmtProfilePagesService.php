@@ -200,6 +200,7 @@ class VmtProfilePagesService
         $response['employee_documents'] = $response_docs;
 
         //Add the documents details
+
         $response['avatar'] = $this->getProfilePicture($response->user_code);
 
         if(!empty($response['getEmployeeOfficeDetails']['department_id']))
