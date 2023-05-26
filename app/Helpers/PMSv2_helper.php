@@ -238,14 +238,17 @@ function calculateOverallReviewRating($assigneeId)
     $action = 0;
     $over_all_score = 0;
     $org_time_period_id = VmtOrgTimePeriod::where('status', 0)->first()->id;
-    $all_frequency_review_ratings = VmtPMS_KPIFormAssignedModel::where('assignee_id', $assigneeId)
-        ->where('vmt_org_time_period_id', $org_time_period_id)->get();
+    $all_frequency_review_ratings = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
+        ->where('vmt_pms_kpiform_assigned.assignee_id', $assigneeId)->where('vmt_pms_kpiform_assigned.vmt_org_time_period_id', $org_time_period_id)
+        ->where('vmt_pms_kpiform_reviews.is_reviewer_submitted', 'like', '%"1"}')->get();
+
     $review_count = count($all_frequency_review_ratings);
-    for ($i = 1; $i <= count($all_frequency_review_ratings); $i++) {
-        $over_all_score =   $over_all_score + substr(calculateReviewRatings($all_frequency_review_ratings[$i]->id, $assigneeId)['score'], 0, -1);
+    for ($i = 0; $i <count($all_frequency_review_ratings); $i++) {
+        $over_all_score =   $over_all_score + substr(calculateReviewRatings($all_frequency_review_ratings[$i]->vmt_pms_kpiform_assigned_id, $assigneeId)['score'], 0, -1);
     }
 
-    $annual_avarge_of_review_rating =  $review_count != 0 ? ceil($over_all_score / $review_count) : 0;
+    $annual_avarge_of_review_rating =  $i != 0 ? ceil($over_all_score / $i) : 0;
+
 
 
     $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order', 'DESC')->get();
