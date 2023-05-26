@@ -289,6 +289,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const current_data = ref();
 
     const hra = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         from_month: "",
@@ -329,10 +330,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const editHraNewRental = (currentRowData) => {
         // console.log("editing Hra");
-        // console.log(currentRowData);
+        console.log(currentRowData);
 
         dailogAddNewRental.value = true;
-
+        hra.id = currentRowData.id;
         hra.from_month = dayjs( currentRowData.json_popups_value.from_month ).format("DD-MM-YYYY");
         hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format(
             "DD-MM_y"
