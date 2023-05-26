@@ -334,9 +334,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         dailogAddNewRental.value = true;
         hra.id = currentRowData.id;
         hra.from_month = dayjs( currentRowData.json_popups_value.from_month ).format("DD-MM-YYYY");
-        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format(
-            "DD-MM_y"
-        );
+        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format("DD-MM-YYYY");
         hra.address = currentRowData.json_popups_value.address;
         hra.city = currentRowData.json_popups_value.city;
         hra.landlord_PAN = currentRowData.json_popups_value.landlord_PAN;
