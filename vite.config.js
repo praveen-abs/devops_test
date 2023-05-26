@@ -52,6 +52,10 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
 
+                // testing GeneralShift
+
+                'resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js',
+
                 // Client Onboarding
 
                 'resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.js',
