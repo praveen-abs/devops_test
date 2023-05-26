@@ -27,18 +27,8 @@ class DatabaseSeeder extends Seeder
             vmt_employee_office_details
 
         */
-        $this->call([
-            BloodGroupSeeder::class,
-            VmtHolidaysSeeder::class,
-            OrgRolesTableSeeder::class,
-            DepartmentTableSeeder::class,
-            StateTableSeeder::class,
-            BankTableSeeder::class,
-            Seeder_VmtMaritalStatus::class,
-            CountriesTableSeeder::class,
-            LeaveTableSeeder::class,
 
-        ]);
+
 
     }
 }
