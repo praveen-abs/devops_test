@@ -31,22 +31,23 @@ export const usePMSFormsDownloadStore = defineStore("pmsFormsDownloadStore", () 
   }
 
   async function viewEmployeePmsForm(){
+
+
+    console.log("Getting PMS form for the user : "+selectedEmployee.value.user_code);
+
     loading.value = true;
 
-    axios.post('http://127.0.0.1:8000/getAssignedPMSFormTemplates',{
-        user_code:selectedEmployee.value.user_code
-    })
-    .then((res)=>{
-       console.log(res.data.data);
-    //    array_pms_forms_list.push(res.data.data)
-    array_pms_forms_list.value = res.data.data
-        loading.value= false
-    })
-    console.log(selectedEmployee.value.user_code);
-    console.log(`${selectedEmployee.value.user_code} - ${selectedEmployee.value.name}`);
-    // axios.post( ,{
-    //     emp:`${selectedEmployee.value.user_code} - ${selectedEmployee.value.name}`
+    // axios.post('http://127.0.0.1:8000/getAssignedPMSFormTemplates',{
+    //     user_code:selectedEmployee.value.user_code
     // })
+    // .then((res)=>{
+    //    console.log(res.data.data);
+    // //    array_pms_forms_list.push(res.data.data)
+    // array_pms_forms_list.value = res.data.data
+    //     loading.value= false
+    // })
+    // console.log(`${selectedEmployee.value.user_code} - ${selectedEmployee.value.name}`);
+
   }
 
   async function getEmployeePMSHrview(response){
@@ -80,9 +81,11 @@ export const usePMSFormsDownloadStore = defineStore("pmsFormsDownloadStore", () 
   return{
     /* `allEmployees`, `getAllEmployeesList`, and `service` are the properties being returned by the
     `usePMSFormsDownloadStore` store. */
-    allEmployees,getAllEmployeesList,service,array_pms_forms_list,selectedEmployee,downloadForm
+    allEmployees,getAllEmployeesList,service,array_pms_forms_list,selectedEmployee,
 
-    ,viewEmployeePmsForm,loading
+    downloadForm,
+
+    viewEmployeePmsForm,loading
   }
 
 

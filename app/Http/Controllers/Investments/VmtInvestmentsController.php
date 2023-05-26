@@ -149,12 +149,7 @@ class VmtInvestmentsController extends Controller
             $query_assign = $emp_assign_form;
         }
 
-        $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
-
-        $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $fs_id)->first();
-
-
-        if (empty($emp_formdata)) {
+        if (empty($request->id)) {
 
             $Hra_save = new VmtInvEmpFormdata;
             $Hra_save->fs_id = $fs_id;
@@ -164,6 +159,10 @@ class VmtInvestmentsController extends Controller
             $Hra_save->save();
 
         } else {
+
+            $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+            $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('id', $request->id)->first();
 
             $emp_formdata->f_emp_id = $query_assign->id;
             $emp_formdata->fs_id = $fs_id;
