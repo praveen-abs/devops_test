@@ -986,8 +986,8 @@ class VmtEmployeeController extends Controller
     //     }
     // }
 
-        public function getallemployee(){
-          $query_employee = User::where('is_ssa','<>','1')->get();
+        public function getAllEmployees(){
+          $query_employee = User::where('is_ssa','0')->get(['id', 'name','user_code']);
           return ($query_employee);
         }
 
