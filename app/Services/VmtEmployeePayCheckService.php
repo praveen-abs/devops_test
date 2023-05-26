@@ -817,82 +817,98 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             }
     }
 
-    // public function updatePayslipReleaseStatus($user_code,$month,$year,$release_status){
-    //     $validator = Validator::make(
-    //         $data = [
-    //             "user_code" => $user_code,
-    //             "month" => $month,
-    //             "year" => $year,
-    //             "status" => $release_status
-    //         ],
-    //         $rules = [
-    //             "user_code" => 'required|exists:users,user_code',
-    //             "month" => 'required',
-    //             "year" => 'required',
-    //             "status" => 'required',
-    //         ],
-    //         $messages = [
-    //             'required' => 'Field :attribute is missing',
-    //             'exists' => 'Field :attribute is invalid',
-    //         ]
-
-    //     );
+    public function updatePayslipReleaseStatus($user_code,$month,$year,$release_status){
 
 
-    //     if($validator->fails()){
-    //         return response()->json([
-    //             'status' => 'failure',
-    //             'message' => $validator->errors()->all()
-    //         ]);
-    //     }
-    //     try{
-    //         // to get user id
-    //         $user_id = User::where('user_code',$user_code)->first()->id;
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "month" => $month,
+                "year" => $year,
+                "status" => $release_status
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "month" => 'required',
+                "year" => 'required',
+                "status" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
 
 
-    //         //check if already exists
-    //        $query_emp_payslipstatus = VmtEmployeePayslipStatus::where('user_id',$user_id)
-    //                                 ->whereMonth('payroll_month', $month)
-    //                                 ->whereYear('payroll_month', $year);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+        try{
+            // to get user id
+            $user= User::where('user_code',$user_code)->first();
+            $user_id = $user->id;
 
-    //         if($query_emp_payslipstatus->exists())
-    //         {
-    //             //update
-    //            $query_emp_payslipstatus = $query_emp_payslipstatus->first();
-    //            $query_emp_payslipstatus->is_released = $release_status;
-    //            $query_emp_payslipstatus->save();
-
-    //         }
-    //         else
-    //         {
-
-    //             //create new record
-    //            $employeepaysliprelease = new VmtEmployeePayslipStatus;
-    //            $employeepaysliprelease->user_id =$user_id;
-    //            $employeepaysliprelease->payroll_month = $year.'-'.$month.'-1';
-    //            $employeepaysliprelease->is_released = $release_status;
-    //            $employeepaysliprelease->save();
-    //         }
-
-    //         $response =VmtEmployeePayslipStatus::where('user_id',$user_id)->first();
+            //check if already exists
+            $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
+                                         ->whereYear('payroll_date', $year)->where('client_id',$user->client_id)->first();
 
 
-    //         return response()->json([
-    //             'status' => 'success',
-    //             'message' => "",
-    //             'data' => $response
-    //         ]);
-    //     }
-    //     catch(\Exception $e)
-    //     {
-    //         return response()->json([
-    //             'status' => 'failure',
-    //             'message' => "Error while fetching payslip release status data",
-    //             'data' => $e
-    //         ]);
-    //     }
+            $emp_payroll_data=VmtEmployeePayroll::where('user_id',$user_id)
+                                                ->where('payroll_id',$payroll_month->id)->first();
 
-    // }
+
+            if(!empty($emp_payroll_data))
+            {
+                //update
+
+               $employeepaysliprelease = $emp_payroll_data;
+               $employeepaysliprelease->is_payslip_released = $release_status;
+               $employeepaysliprelease->save();
+
+
+            }
+            else
+            {
+
+                //create new record
+
+
+                  $query_payroll = new Vmtpayroll;
+                  $query_payroll->client_id=$user->client_id;
+                  $query_payroll->payroll_date=$year.'-'.$month.'-01';
+                  $query_payroll->save();
+                  $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
+                                             ->whereYear('payroll_date', $year)->where('client_id',$user->client_id)->first();
+                $employeepaysliprelease = new VmtEmployeePayroll;
+                $employeepaysliprelease->user_id =$user_id;
+                $employeepaysliprelease->payroll_id =$payroll_month->id ;
+                $employeepaysliprelease->is_payslip_released = $release_status;
+                $employeepaysliprelease->save();
+            }
+
+
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $employeepaysliprelease
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while fetching payslip release status data",
+                'data' => $e
+            ]);
+        }
+
+    }
 
 
 
@@ -1002,32 +1018,6 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             }else{
                 $payslip_mail_sent = '0';
             }
-
-
-            // $query_emp_payslipstatus = VmtEmployeePayslipStatus::where('user_id',$user_id)
-            // ->whereMonth('payroll_month', $month)
-            // ->whereYear('payroll_month', $year);
-
-
-            //     if($query_emp_payslipstatus->exists())
-            //     {
-            //     //update
-            //     $query_emp_payslipstatus = $query_emp_payslipstatus->first();
-            //     $query_emp_payslipstatus->is_payslip_mail_sent = $payslip_mail_sent;
-            //     $query_emp_payslipstatus->save();
-
-            //     }
-            //     else
-            //     {
-
-            //     //create new record
-            //     $employeepaysliprelease = new VmtEmployeePayslipStatus;
-            //     $employeepaysliprelease->user_id =$user_id;
-            //     $employeepaysliprelease->is_payslip_mail_sent =$payslip_mail_sent;
-            //     $employeepaysliprelease->save();
-            //     }
-
-            //     $response =VmtEmployeePayslipStatus::where('user_id',$user_id)->first();
 
 
 

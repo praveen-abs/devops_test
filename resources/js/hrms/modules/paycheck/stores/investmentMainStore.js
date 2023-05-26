@@ -6,6 +6,14 @@ import { useConfirm } from "primevue/useconfirm";
 import { reactive, ref } from "vue";
 import { Service } from "../../Service/Service";
 import { data } from "autoprefixer";
+import dayjs from "dayjs";
+import {
+    required,
+    email,
+    minLength,
+    sameAs,
+    helpers, // include helper functions from Vuelidate
+} from "@vuelidate/validators";
 
 /*
     This Pinia code will store the ajax values of the
@@ -28,6 +36,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Notification Service
 
     const toast = useToast();
+    const canShowSubmissionStatus = ref(false);
 
     // Confirmation Service
 
@@ -79,16 +88,19 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const hraSource = ref();
     const section80ccSource = ref();
     const otherExemptionSource = ref();
+    const otherExeSectionData = ref();
     const housePropertySource = ref();
     const reimbursmentSource = ref();
     const otherIncomeSource = ref();
     const previousEmployeerIncomeSource = ref();
     const hop = reactive([]);
-    const AddHraButtonDisabled = ref(false)
+    const otherExe = reactive([]);
+    const hra_fs = reactive([]);
+    const AddHraButtonDisabled = ref(false);
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
-
+        canShowLoading.value = true;
         await axios
             .post(url, {
                 form_name: "investment 1",
@@ -111,9 +123,44 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     res.data.data.form_details["Previous Employer Income"];
 
                 // console.log(res.data.data.form_details);
+
+                res.data.data.form_details["House Properties "].forEach(
+                    (data) => {
+                        hop.push(data.fs_id);
+                        // console.log(data.fs_id);
+                    }
+                );
+
+                res.data.data.form_details.HRA.forEach((data) => {
+                    hra_fs.push(data.fs_id);
+                    console.log(hra_fs[0]);
+                });
+
+                let sec80DD = res.data.data.form_details[
+                    "Other Excemptions "
+                ].filter(function (item) {
+                    return item.section == "80EE";
+                });
+                let sec80DDB = res.data.data.form_details[
+                    "Other Excemptions "
+                ].filter(function (item) {
+                    return item.section == "80EEA";
+                });
+                let sec80U = res.data.data.form_details[
+                    "Other Excemptions "
+                ].filter(function (item) {
+                    return item.section == "80EEB";
+                });
+
+                otherExe.push(sec80DD[0].fs_id);
+                otherExe.push(sec80DDB[0].fs_id);
+                otherExe.push(sec80U[0].fs_id);
+
+                // console.log(otherExe);
             })
             .catch((e) => console.log(e))
             .finally(() => {
+                canShowLoading.value = false;
                 var declared_amt = 0;
                 var max_limit = 0;
                 // console.log("completed");
@@ -125,8 +172,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     max_limit += item.max_amount;
                     taxSavingInvestments.max_limit = max_limit;
                 });
-
-             
+                fetchPropertyType();
+                fetchotherExe();
+                fetchHraNewRental();
+                setTimeout(() => {
+                    hop.splice(0, hop.length);
+                }, 1000);
+                setTimeout(() => {
+                    otherExe.splice(0, otherExe.length);
+                }, 1000);
             });
     };
 
@@ -139,6 +193,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         var data = {
             fs_id: amount.fs_id,
             declaration_amount: amount.dec_amt,
+            select_option: amount.select_option,
         };
 
         if (amount.dec_amt) {
@@ -183,6 +238,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .post(url, {
                 user_code: service.current_user_code,
                 form_id: getFormId.value,
+                is_submitted: 0,
                 formDataSource,
             })
             .finally(() => {
@@ -196,6 +252,24 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 getInvestmentSource();
                 formDataSource.splice(0, formDataSource.length);
                 taxSavingInvestments.status = "Drafed";
+                restChars();
+            });
+    };
+
+    // Investment Form Submission
+
+    const submitFormData = () => {
+        let url = `/investments/saveEmpdetails`;
+        axios
+            .post(url, {
+                user_code: service.current_user_code,
+                is_submitted: 1,
+            })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .finally(() => {
+                canShowSubmissionStatus.value = true;
             });
     };
 
@@ -216,7 +290,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const hra = reactive({
         user_code: "",
-        fs_id: "48",
+        fs_id: "",
         from_month: "",
         to_month: "",
         city: "",
@@ -231,28 +305,26 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const fetchHraNewRental = async () => {
         // console.log("getting hra new rental  data.......");
-        // console.log(hraSource.fs_id);
+        console.log(Object.values(hra_fs[0]));
+        // canShowLoading.value = true;
         await axios
             .post("/investments/fetchEmpRentalDetails", {
                 user_code: service.current_user_code,
-                fs_id: "48",
+                fs_id: hra_fs[0],
             })
             .then((res) => {
                 console.log(Object.values(res.data));
                 hra_data.value = Object.values(res.data);
+                if (Object.values(res.data)) {
+                    AddHraButtonDisabled.value = true;
+                } else {
+                    AddHraButtonDisabled.value = false;
+                }
             })
             .catch((e) => console.log(e))
             .finally(() => {
                 canShowLoading.value = false;
-                   // Enable Add Hra Button 
-                   if(hra_data.value.length == 0){
-                    AddHraButtonDisabled.value = false
-                   }else{
-                    AddHraButtonDisabled.value = true
-                   }
-                   getInvestmentSource()
             });
-
     };
 
     const editHraNewRental = (currentRowData) => {
@@ -261,8 +333,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         dailogAddNewRental.value = true;
 
-        hra.from_month = currentRowData.json_popups_value.from_month;
-        hra.to_month = currentRowData.json_popups_value.to_month;
+        hra.from_month = dayjs( currentRowData.json_popups_value.from_month ).format("DD-MM-YYYY");
+        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format(
+            "DD-MM_y"
+        );
         hra.address = currentRowData.json_popups_value.address;
         hra.city = currentRowData.json_popups_value.city;
         hra.landlord_PAN = currentRowData.json_popups_value.landlord_PAN;
@@ -270,13 +344,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         hra.total_rent_paid = currentRowData.json_popups_value.total_rent_paid;
     };
 
+    const disableSaveHra = ref(false);
+
     const saveHraNewRental = () => {
         hra.user_code = service.current_user_code;
+        hra.fs_id = hra_fs[0];
         canShowLoading.value = true;
         dailogAddNewRental.value = false;
-        // console.log("saving hra new rental  data.......");
-        // console.log(hra);
-
         axios
             .post("/investments/saveSectionPopups", hra)
             .then((res) => {
@@ -292,7 +366,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 fetchHraNewRental();
+                getInvestmentSource();
                 taxSavingInvestments.status = "Drafed";
+                restChars();
             });
     };
 
@@ -370,6 +446,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         property_value: "",
         loan_amount: "",
         interest_amount_paid: "",
+        section: "80EE",
     });
     const other_exe_80EEA = reactive({
         user_code: "",
@@ -379,6 +456,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         property_value: "",
         loan_amount: "",
         interest_amount_paid: "",
+        section: "80EEA",
     });
     const other_exe_80EEB = reactive({
         user_code: "",
@@ -391,6 +469,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         vechicle_brand: "",
         vechicle_model: "",
         interest_amount_paid: "",
+        section: "80EEB",
     });
 
     const dailog_80EE = ref(false);
@@ -420,47 +499,91 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const Dec80EEA = ref();
     const Dec80EEB = ref();
 
-    const fetchOtherExe = () => {
-        //   otherExemptionSource.value.map(x => {
-        //     if(x.section == '80EE'){
-        //       console.log("section 80EE");
-        //        axios.post('/investments/fetchEmpRentalDetails', {
-        //         user_code: service.current_user_code,
-        //         fs_id: x.fs_id
-        //     }).then(res => {
-        //         console.log(Object.values(res.data));
-        //         Dec80EE.value = Object.values(res.data)
-        //     }).catch(e => console.log(e)).finally(() => {
-        //         canShowLoading.value = false
-        //     })
-        //     }else
-        //     if(x.section == '80EEA'){
-        //         console.log("section 80EEA");
-        //         axios.post('/investments/fetchEmpRentalDetails', {
-        //             user_code: service.current_user_code,
-        //             fs_id: x.fs_id
-        //         }).then(res => {
-        //             console.log(Object.values(res.data));
-        //             Dec80EEA.value = Object.values(res.data)
-        //         }).catch(e => console.log(e)).finally(() => {
-        //             canShowLoading.value = false
-        //         })
-        //     }else
-        //     if(x.section == '80EEB'){
-        //         console.log("section 80EEB");
-        //         axios.post('/investments/fetchEmpRentalDetails', {
-        //             user_code: service.current_user_code,
-        //             fs_id: x.fs_id
-        //         }).then(res => {
-        //             console.log(Object.values(res.data));
-        //             Dec80EEB.value = Object.values(res.data)
-        //         }).catch(e => console.log(e)).finally(() => {
-        //             canShowLoading.value = false
-        //         })
-        //     }else{
-        //         console.log("no values");
-        //  }
-        //  })
+    const fetchotherExe = async () => {
+        axios
+            .post("/investments/fetchOtherExemption", {
+                user_code: service.current_user_code,
+                otherExe,
+            })
+            .then((res) => {
+                console.log(res.data);
+                otherExeSectionData.value = Object.values(res.data);
+            });
+    };
+
+    const editOtherExe = (currentRowData) => {
+        console.log(currentRowData);
+        if (currentRowData.json_popups_value.section == "80EE") {
+            dailog_80EE.value = true;
+            other_exe_80EE.fs_id = currentRowData.json_popups_value.fs_id
+            other_exe_80EE.user_code = service.current_user_code
+            other_exe_80EE.loan_sanction_date =dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
+            other_exe_80EE.lender_type =
+                currentRowData.json_popups_value.lender_type;
+            other_exe_80EE.loan_amount =
+                currentRowData.json_popups_value.loan_amount;
+            other_exe_80EE.property_value =
+                currentRowData.json_popups_value.property_value;
+            other_exe_80EE.interest_amount_paid =
+                currentRowData.json_popups_value.interest_amount_paid;
+        } else if (currentRowData.json_popups_value.section == "80EEA") {
+            dailog_80EEA.value = true;
+            other_exe_80EEA.fs_id = currentRowData.json_popups_value.fs_id
+            other_exe_80EEA.user_code = service.current_user_code
+            other_exe_80EEA.loan_sanction_date =
+            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
+            other_exe_80EEA.lender_type =
+                currentRowData.json_popups_value.lender_type;
+            other_exe_80EEA.loan_amount =
+                currentRowData.json_popups_value.loan_amount;
+            other_exe_80EEA.property_value =
+                currentRowData.json_popups_value.property_value;
+            other_exe_80EEA.interest_amount_paid =
+                currentRowData.json_popups_value.interest_amount_paid;
+        } else if (currentRowData.json_popups_value.section == "80EEB") {
+            other_exe_80EEB.fs_id = currentRowData.json_popups_value.fs_id
+            other_exe_80EEB.user_code = service.current_user_code
+            dailog_80EEB.value = true;
+            other_exe_80EEB.loan_sanction_date =
+            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
+            other_exe_80EEB.vechicle_brand =
+                currentRowData.json_popups_value.vechicle_brand;
+            other_exe_80EEB.vechicle_model =
+                currentRowData.json_popups_value.vechicle_model;
+            other_exe_80EEB.interest_amount_paid =
+                currentRowData.json_popups_value.interest_amount_paid;
+        } else {
+            console.log("completed");
+        }
+    };
+
+    const deleteOtherExeDetails = (currentRowData) => {
+        // console.log(currentRowData);
+        confirm.require({
+            message: "Do you want to delete this record?",
+            header: "Delete Confirmation",
+            icon: "pi pi-info-circle",
+            acceptClass: "p-button-danger",
+            accept: () => {
+                canShowLoading.value = true;
+                axios
+                    .post("/investments/deleteEmpRentalDetails", {
+                        current_table_id: currentRowData.id,
+                    })
+                    .finally(() => {
+                        canShowLoading.value = false;
+                        toast.add({
+                            severity: "error",
+                            summary: "Deleted",
+                            detail: `${currentRowData["json_popups_value"].section} is Deleted`,
+                            life: 3000,
+                        });
+                        fetchotherExe();
+                        getInvestmentSource();
+                    });
+            },
+            reject: () => {},
+        });
     };
 
     const save80EE = () => {
@@ -469,7 +592,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log("Saving Other exemption 80EE");
         console.log(data);
         axios
-            .post('/investments/saveSection80', other_exe_80EE)
+            .post("/investments/saveSection80", other_exe_80EE)
             .then((res) => {
                 // console.log(res.data);
                 toast.add({
@@ -483,6 +606,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars();
+                fetchotherExe();
             });
     };
 
@@ -507,6 +632,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars();
+                fetchotherExe();
             });
     };
 
@@ -530,6 +657,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .finally(() => {
                 canShowLoading.value = false;
                 getInvestmentSource();
+                restChars();
+                fetchotherExe();
             });
     };
 
@@ -551,7 +680,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         lender_name: "",
         lender_pan: "",
         lender_type: "",
-        loss_from_housing_property: "",
+        income_loss: "",
         address: "",
         property_type: "Self Occupied Property",
     });
@@ -632,11 +761,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         );
     };
     const fetchPropertyType = () => {
-        housePropertySource.value.forEach((item) => {
-            hop.push(item.fs_id);
-            // console.log(Object.values(hop));
-        });
-
         axios
             .post("/investments/fetchHousePropertyDetails", {
                 user_code: service.current_user_code,
@@ -737,10 +861,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         toast.add({
                             severity: "error",
                             summary: "Deleted",
-                            detail: `${currentRowData['json_popups_value'].property_type} is Deleted`,
+                            detail: `${currentRowData["json_popups_value"].property_type} is Deleted`,
                             life: 3000,
                         });
                         fetchPropertyType();
+                        getInvestmentSource();
                     });
             },
             reject: () => {
@@ -767,6 +892,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${sop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars();
             });
     };
     const saveLetOutProperty = () => {
@@ -788,6 +914,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${lop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars();
             });
     };
     const saveDeemedLetOutProperty = () => {
@@ -809,11 +936,85 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                     detail: `new ${dlop.property_type} is Drafted `,
                     life: 3000,
                 });
+                restChars();
             });
     };
 
+    const metrocitiesOption = ref([
+        { id: 1, name: "Chennai", value: "Chennai" },
+        { id: 2, name: "Mumbai", value: "Mumbai" },
+        { id: 3, name: "Hyderabad", value: "Hyderabad" },
+        { id: 4, name: "Kolkatta", value: "Kolkatta" },
+        { id: 5, name: "Other Non Metro", value: "Other Non Metro" },
+    ]);
+
+    const lenderTypeOption = ref([
+        { name: "Financial Institution", code: "Financial Institution" },
+        { name: "Others", code: "Others" },
+    ]);
+
+    const restChars = () => {
+        hra.from_month = null;
+        hra.to_month = null;
+        hra.total_rent_paid = null;
+        hra.address = null;
+        hra.city = null;
+        hra.landlord_name = null;
+        hra.landlord_PAN = null;
+        other_exe_80EE.loan_sanction_date = null;
+        other_exe_80EE.lender_type = null;
+        other_exe_80EE.property_value = null;
+        other_exe_80EE.loan_amount = null;
+        other_exe_80EE.interest_amount_paid = null;
+        other_exe_80EE.vechicle_brand = null;
+        other_exe_80EE.vechicle_model = null;
+        other_exe_80EE.interest_amount_paid = null;
+        other_exe_80EEA.loan_sanction_date = null;
+        other_exe_80EEA.lender_type = null;
+        other_exe_80EEA.property_value = null;
+        other_exe_80EEA.loan_amount = null;
+        other_exe_80EEA.interest_amount_paid = null;
+        other_exe_80EEA.vechicle_brand = null;
+        other_exe_80EEA.vechicle_model = null;
+        other_exe_80EEA.interest_amount_paid = null;
+        other_exe_80EEB.loan_sanction_date = null;
+        other_exe_80EEB.lender_type = null;
+        other_exe_80EEB.property_value = null;
+        other_exe_80EEB.loan_amount = null;
+        other_exe_80EEB.interest_amount_paid = null;
+        other_exe_80EEB.vechicle_brand = null;
+        other_exe_80EEB.vechicle_model = null;
+        other_exe_80EEB.interest_amount_paid = null;
+        sop.lender_name = null;
+        sop.lender_pan = null;
+        sop.lender_type = null;
+        sop.address = null;
+        lop.lender_name = null;
+        lop.lender_pan = null;
+        lop.lender_type = null;
+        lop.loss_from_housing_property = null;
+        lop.address = null;
+        lop.rent_received = null;
+        lop.municipal_tax = null;
+        lop.maintenance = null;
+        lop.net_value = null;
+        lop.interest = null;
+        lop.income_loss = null;
+        dlop.lender_name = null;
+        dlop.lender_pan = null;
+        dlop.lender_type = null;
+        dlop.loss_from_housing_property = null;
+        dlop.address = null;
+        dlop.rent_received = null;
+        dlop.municipal_tax = null;
+        dlop.maintenance = null;
+        dlop.net_value = null;
+        dlop.interest = null;
+        dlop.income_loss = null;
+    };
+
     return {
-        fetchOtherExe,
+        fetchotherExe,
         Dec80EE,
         Dec80EEA,
         Dec80EEB,
@@ -828,6 +1029,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         formatCurrency,
         editingRowSource,
         updatedRowSource,
+        canShowSubmissionStatus,
+        submitFormData,
 
         // Data Source
 
@@ -848,6 +1051,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // hra begins
 
         hra_data,
+        disableSaveHra,
         hra,
         current_data,
         dailogAddNewRental,
@@ -866,7 +1070,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // Sectiom 80cc Ends
 
         // Other exemptiom Begins
-
+        otherExe,
         other_Exe,
         dailog_80EE,
         dailog_80EEA,
@@ -880,6 +1084,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         get80EESlotData,
         get80EEASlotData,
         get80EEBSlotData,
+        otherExeSectionData,
+        editOtherExe,
+        deleteOtherExeDetails,
 
         // Other exemptiom Ends
 
@@ -905,5 +1112,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         deleteHouseProps,
 
         // House Property End
+
+        metrocitiesOption,
+        lenderTypeOption,
     };
 });

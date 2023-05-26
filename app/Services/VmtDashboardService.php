@@ -24,7 +24,8 @@ use \Datetime;
 
 use App\Services\VmtAttendanceService;
 use App\Services\VmtHolidayService;
-
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class VmtDashboardService{
 
@@ -46,6 +47,27 @@ class VmtDashboardService{
     }
 
     public function getMainDashboardData($user_code , VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService $serviceHolidayService){
+
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+            ]);
+        }
 
         $response = array();
         $user_id = User::where('user_code',$user_code)->first()->id;

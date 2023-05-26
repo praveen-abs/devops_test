@@ -71,9 +71,8 @@ class VmtAttendanceReportsService{
 
 
 
-
             $work_shift_id = VmtEmployeeWorkShifts::where('user_id',$singleUser->id)->first()->work_shift_id;
-            $regularTime  = VmtWorkShifts::where('id', $work_shift_id)->first();
+            $regularTime  = VmtWorkShifts::where('id',$work_shift_id)->first();
 
              $requestedDate = $year . '-' . $month . '-01';
              $currentDate = Carbon::now();

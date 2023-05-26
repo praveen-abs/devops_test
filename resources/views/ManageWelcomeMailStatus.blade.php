@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                @vite('resources\js\hrms\modules\Organization\manage_welcome_mails_status\ManageWelcomeMailStatus.js')
+                @vite('resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js')
                 <div id="vjs_ManageWelcomeMailStatus"></div>
             </div>
          </div>

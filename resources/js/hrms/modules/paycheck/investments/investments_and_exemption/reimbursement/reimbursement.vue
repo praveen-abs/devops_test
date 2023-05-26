@@ -1,15 +1,33 @@
 <template>
     <div>
         <div class="table-responsive">
-            <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="25"
-                :value="investmentStore.reimbursmentSource" @row-edit-save="onRowEditSave"
+            <DataTable ref="dt" dataKey="fs_id" :paginator="true" :rows="25" :value="investmentStore.reimbursmentSource"
+                @row-edit-save="onRowEditSave"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]" editMode="row" v-model:editingRows="investmentStore.editingRowSource"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
                 <Column header="Sections" field="section" style="min-width: 8rem">
                 </Column>
 
-                <Column field="particular" header="Particulars" style="min-width: 12rem">
+                <Column field="particular" header="Particulars" style="min-width: 12rem;text-align: left !important;">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.particular == 'Vehicle Reimbursement'">
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                            <div class="flex py-2">
+                                <input type="radio" name="Vehicle Reimbursement" id="" style="height: 20px;width: 20px;" :value="slotProps.data.section_option_1"
+                                    class="form-check-input" v-model="slotProps.data.select_option" :checked="slotProps.data.section_option_1 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_1 }}</p>
+                            </div>
+                            <div class="flex py-2">
+                                <input type="radio" name="Vehicle Reimbursement" id="" style="height: 20px;width: 20px;" :value="slotProps.data.section_option_2"
+                                    class="form-check-input" v-model="slotProps.data.select_option" :checked="slotProps.data.section_option_2 == slotProps.data.selected_section_options ? true : false">
+                                <p class="mx-2" style="font-weight: 501;">{{ slotProps.data.section_option_2 }}</p>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                        </div>
+                    </template>
                 </Column>
 
                 <Column field="reference" header="References " style="min-width: 12rem">
@@ -20,39 +38,37 @@
                         </button>
                     </template>
                 </Column>
-
+                <!--
                 <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                </Column>
+                </Column> -->
 
-                <Column field="dec_amount" header="Declaration Amount" style="min-width: 12rem">
-                    <template #body="slotProps">
-                        <div v-if="slotProps.data.section == '80EE'">
-                            <button @click="investmentStore.dailog_80EE = true"
-                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                80EE</button>
-                        </div>
-                        <div v-else-if="slotProps.data.section == '80EEA'">
-                            <button @click="investmentStore.dailog_80EEA = true"
-                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                80EEA</button>
-                        </div>
-                        <div v-else-if="slotProps.data.section == '80EEB'">
-                            <button @click="investmentStore.dailog_80EEB = true"
-                                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Add
-                                80EEB</button>
-                        </div>
-                        <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
+                <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
+                    <template #body="slotProps">             
+                        <div v-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
+                        <div v-else-if="slotProps.data.particular == 'Vehicle Reimbursement'">
+                            <div v-if="slotProps.data.selected_section_options">
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                            </div>
+                            <div v-else-if="slotProps.data.select_option">
+                                <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
+                                @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
+                                currency="INR" locale="en-US" />
+                            </div>
+                            <div v-else>
+                                <p style="font-weight: 501;">--</p>
+                            </div>
+                        </div>
                         <div v-else>
-                            <InputNumber class="w-5 text-lg font-semibold" v-model="slotProps.data.dec_amt"
+                            <InputNumber class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
                                 currency="INR" locale="en-US" />
                         </div>
                     </template>
                     <template #editor="{ data, field }">
                         <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="w-5 text-lg font-semibold" />
+                            class="text-lg font-semibold w-7" />
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">
@@ -74,12 +90,11 @@
             </DataTable>
 
         </div>
-
         <div class="my-3 text-end">
-            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md"
-                @click="investmentStore.saveFormData">Save</button>
-            <button class="px-4 py-2 mx-4 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md me-4"
                 @click="investmentStore.investment_exemption_steps--">Previous</button>
+            <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                @click="investmentStore.saveFormData">Save</button>
             <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
                 @click="investmentStore.investment_exemption_steps++">Next</button>
         </div>
@@ -102,10 +117,11 @@ const onRowEditSave = (event) => {
     var data = {
         fs_id: newData.fs_id,
         declaration_amount: newData.dec_amount,
+        select_option: newData.select_option
     }
 
-        investmentStore.formDataSource.push(data)
-     console.log(newData);
+    investmentStore.formDataSource.push(data)
+    console.log(newData);
 };
 
 

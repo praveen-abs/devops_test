@@ -32,7 +32,6 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
         Rs 12,50,001 to Rs 15 lakh	           25%
         Over Rs. 15 lakh	                   30%
 
-
         */
 
         console.log("total income :" + total_income)
@@ -51,76 +50,105 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                     if (total_income > 250000 && total_income <= 500000) {
                         let deduction = total_income - 250000
                         let taxable_amount = deduction * 5 / 100;
-                        console.log("taxable_amount :" + Math.floor(taxable_amount));
-                        return taxable_amount;
+                        console.log("Tax On Income" + taxable_amount)
+                        let total_amount = Math.round(taxable_amount + 12500)
+                        let heath_and_education = total_amount * 4 / 100;
+                        console.log("child Eduction :" + heath_and_education);
+                        console.log("taxable_amount :" + total_amount + heath_and_education);
+                        let final_value = total_amount + heath_and_education;
+                        return final_value;
                     } else
                         if (total_income > 500000 && total_income <= 1000000) {
-
                             let deduction = total_income - 500000
                             let taxable_amount = deduction * 20 / 100;
-                            let final_value = Math.floor(taxable_amount + 12500)
-                            console.log("taxable_amount :" + final_value);
-                            return final_value;
+                            console.log("Tax On Income" + taxable_amount);
+                            let total_amount = Math.round(taxable_amount + 12500)
+                            let heath_and_education = taxable_amount * 4 / 100;
+                            console.log("child Eduction :" + heath_and_education);
+                            console.log("taxable_amount :" + Math.round(total_amount + heath_and_education));
+                            let final_value = total_amount + heath_and_education;
+                            return final_value ;
                         } else
                             if (total_income > 1000000) {
                                 let deduction = total_income - 1000000
                                 let taxable_amount = deduction * 30 / 100;
-                                let final_value = Math.floor(taxable_amount + 20000)
-                                console.log("taxable_amount :" + final_value);
+                                console.log("Tax On Income" + taxable_amount);
+                                let total_amount = Math.floor(taxable_amount + 112500)
+                                let subcharge = subChargeCalculation(total_income)
+                                let heath_and_education = (taxable_amount + subcharge) * 4 / 100;
+                                console.log("child Eduction :" + heath_and_education);
+                                let final_value = total_amount + subcharge + heath_and_education
+                                console.log("taxable_amount :" + Math.round(final_value));
                                 return final_value;
                             } else {
-                                console.log("no more");
+                                console.log("Salary Is Less Than 250000");
                             }
 
             } else
                 // If the Employeer Age is Greater  than 60 Years and Less Than 80 Years
                 if (age >= 60 && age <= 80) {
                     if (total_income > 300000 && total_income <= 500000) {
-                        let deduction = total_income - 250000
+                        let deduction = total_income - 300000
                         let taxable_amount = deduction * 5 / 100;
-                        console.log("taxable_amount :" + Math.floor(taxable_amount));
-                        return taxable_amount;
+                        console.log("Tax On Income" + taxable_amount);
+                        let heath_and_education = taxable_amount * 4 / 100;
+                        console.log("child Eduction :" + heath_and_education);
+                        let final_value = Math.round(taxable_amount + heath_and_education)
+                        console.log("taxable_amount :" + final_value);   
+                        return final_value;
                     } else
                         if (total_income > 500000 && total_income < 1000000) {
                             // 5% (tax rebate u/s 87A is available)
                             let deduction = total_income - 500000
                             let taxable_amount = deduction * 20 / 100;
-                            let final_value = Math.floor(taxable_amount + 12500)
+                            console.log("Tax On Income" + taxable_amount);
+                            let heath_and_education = taxable_amount * 4 / 100;
+                            console.log("child Eduction :" + heath_and_education);
+                            let final_value = Math.round(taxable_amount + 10000 + heath_and_education)
                             console.log("taxable_amount :" + final_value);
                             return final_value;
-                        }else
-                        if (total_income > 1000000) {
-                            let deduction = total_income - 1000000
-                            let taxable_amount = deduction * 30 / 100;
-                            let final_value = Math.floor(taxable_amount + 20000)
-                            console.log("taxable_amount :" + final_value);
-                            return final_value;
-                        }
-                    else {
-                        console.log("less than 5 lakhs");
-                    }
+                        } else
+                            if (total_income > 1000000) {
+                                let deduction = total_income - 1000000
+                                let taxable_amount = deduction * 30 / 100;
+                                console.log("Tax On Income" + taxable_amount);
+                                let total_amount = Math.floor(taxable_amount + 110000)
+                                let subcharge = subChargeCalculation(total_income)
+                                let heath_and_education = (taxable_amount + subcharge) * 4 / 100;
+                                console.log("child Eduction :" + heath_and_education);
+                                let final_value = total_amount + subcharge + heath_and_education
+                                console.log("taxable_amount :" + final_value);
+                                return final_value;
+                            }
+                            else {
+                                console.log("Salary Is Less Than 300000");
+                            }
                 } else
                     // If the Employeer Age is Greater than 80 Years
                     if (age > 80) {
                         if (total_income > 500000 && total_income <= 1000000) {
-                            let taxable_amount = (total_income - 250000) * 20 / 100;
-                            console.log("taxable_amount :" + Math.floor(taxable_amount));
+                            let deduction = total_income - 500000
+                            let taxable_amount = deduction * 20 / 100;
+                            console.log("taxable_amount :" + Math.round(taxable_amount));
                         } else
-                            if (total_income > 500000 && total_income < 1000000) {
-                                let deduction = total_income - 500000
-                                let taxable_amount = deduction * 20 / 100;
-                                console.log("taxable_amount :" + Math.floor(taxable_amount + 12500));
+                            if (total_income > 1000000) {
+                                let deduction = total_income - 1000000
+                                let taxable_amount = deduction * 30 / 100;
+                                console.log("Tax On Income" + taxable_amount);
+                                let total_amount = Math.floor(taxable_amount + 112500)
+                                let subcharge = subChargeCalculation(total_income)
+                                let heath_and_education = (taxable_amount + subcharge) * 4 / 100;
+                                console.log("child Eduction :" + heath_and_education);
+                                let final_value = total_amount + subcharge + heath_and_education
+                                console.log("taxable_amount :" + final_value);
+                                return final_value;;
                             }
-                    } else
-                        if (total_income > 1000000) {
-                            let deduction = total_income - 1000000
-                            let taxable_amount = deduction * 30 / 100;
-                            console.log("taxable_amount :" + Math.floor(taxable_amount + 20000));
-                        }
-                        else {
-                            console.log("less than 5 lakhs");
-                        }
-        } else
+                            else {
+                                console.log("Salary Is Less Than 500000");
+                            }
+                    }
+        }
+        else
             if (regime == 'new') {
                 // Employeer Income Is Greater than 300000 and Less Than  600000
                 if (total_income > 300000 && total_income <= 600000) {
@@ -138,14 +166,14 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                         // Employeer Income Is Greater than 900000 and Less Than  1200000
                         if (total_income > 900000 && total_income <= 1200000) {
                             let taxable_amount = total_income * 15 / 100;
-                            console.log("taxable_amount :" + Math.floor(30000 + taxable_amount));
+                            console.log("taxable_amount :" + Math.floor(45000 + taxable_amount));
                             console.log("new regime total income greater than 900001 ");
 
                         } else
                             // Employeer Income Is Greater than 1200000 and Less Than  1500000
                             if (total_income > 1200000 && total_income < 1500000) {
                                 let taxable_amount = total_income * 20 / 100;
-                                console.log("taxable_amount :" + Math.floor(45000 + taxable_amount));
+                                console.log("taxable_amount :" + Math.floor(90000 + taxable_amount));
                                 console.log("new regime total income greater than 1200001");
                                 tax_amt.value = Math.floor(taxable_amount)
 
@@ -153,8 +181,12 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                                 // Employeer Income Is Greater than 1500000
                                 if (total_income > 1500000) {
                                     let taxable_amount = total_income * 30 / 100;
-                                    console.log("taxable_amount :" + Math.floor(90000 + taxable_amount));
-                                    console.log("new regime total income greater than 1000000");
+                                    let total_amount = Math.floor(taxable_amount + 150000)
+                                    let subcharge = subChargeCalculation(total_income)
+                                    let heath_and_education = (total_amount + subcharge) * 4 / 100;
+                                    let final_value = total_amount + subcharge + heath_and_education
+                                    console.log("taxable_amount :" + final_value);
+                                    return final_value;
                                 } else {
                                     console.log("less than 300000 ");
                                 }
@@ -162,6 +194,43 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
             else {
                 console.log("No More Regime");
             }
+
+    }
+
+    // Calculate Child Education
+
+    const calChildEducation = (value) => {
+        const CEF = value * 4 / 100;
+        console.log("Child Education:" + CEF);
+        return CEF
+    }
+
+    //Calculate Tax Subcharge
+
+    const subChargeCalculation = (total_income) => {
+
+        if (total_income >= 5000000 && total_income < 10000000) {
+            let subcharge = total_income * 10 / 100
+            console.log("Subcharge:" + subcharge);
+            return subcharge
+        } else
+            if (total_income >= 10000000 && total_income < 20000000) {
+                let subcharge = total_income * 15 / 100
+                console.log("Subcharge:" + subcharge);
+                return subcharge
+            } else
+                if (total_income >= 20000000 && total_income < 50000000) {
+                    let subcharge = total_income * 25 / 100
+                    console.log("Subcharge:" + subcharge);
+                    return subcharge
+                } else
+                    if (total_income > 50000000) {
+                        let subcharge = total_income * 37 / 100
+                        console.log("Subcharge:" + subcharge);
+                        return subcharge
+                    } else {
+                        console.log("Total Income is Less than 5000000");
+                    }
 
     }
 
@@ -190,44 +259,10 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
 
 
 
-    //  const tax_Cal = (total_income) =>{
-
-    //     console.log(total_income);
-    //     switch (total_income) {   
-    //         case total_income > 300001 || total_income < 600000:
-    //              taxable_amount = total_income * 5 / 100;
-    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
-    //             console.log("new regime total income greater than 300001");
-    //             break;
-    //         case total_income > 600001 || total_income < 900000:
-    //              taxable_amount = total_income * 10 / 100;
-    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
-    //             console.log("new regime total income greater than 300001");
-    //             break;
-    //         case total_income > 900001 || total_income < 1200000:
-    //              taxable_amount = total_income * 15 / 100;
-    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
-    //             console.log("new regime total income greater than 300001");
-    //             break;
-    //         case total_income > 1200001 || total_income < 1500000:
-    //              taxable_amount = total_income * 20 / 100;
-    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
-    //             console.log("new regime total income greater than 300001");
-    //             break;
-    //         case total_income > 15000000:
-    //              taxable_amount = total_income * 20 / 100;
-    //             console.log("taxable_amount :" + Math.floor(taxable_amount));
-    //             console.log("new regime total income greater than 300001");
-    //             break;
-    //         default:
-    //         console.log("greater than 15 lakhs");
-    //     }
-    //  }
-
     return {
 
         // varaible Declarations
-        taxCalculation, maintenance_cal, net_value_cal, income_loss_cal, tax_amt,
+        taxCalculation, maintenance_cal, net_value_cal, income_loss_cal, tax_amt, subChargeCalculation, calChildEducation
 
     };
 });

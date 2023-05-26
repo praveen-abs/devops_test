@@ -407,10 +407,79 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    /*
+        Check if the current user is already checkedin.
+        Used in main dashboard to control that check-in toggle button
+
+    */
+    public function isAlreadyCheckedIn(Request $request){
+
+        $query_attendance = VmtEmployeeAttendance::where('id',auth()->user()->id)->orderBy('id','desc');
+
+        if($query_attendance->exists()){
+            $query_attendance = $query_attendance->first();
+
+            if(!empty($query_attendance->checkin_time) && empty($query_attendance->checkout_time))
+            {
+                return response()->json([
+                    'status'=> 'success',
+                    'message' => 'User already checked-in',
+                    'data' => 'true'
+                ]);
+            }
+            else
+            if(empty($query_attendance->checkin_time) && empty($query_attendance->checkout_time) )
+            {
+                return response()->json([
+                    'status'=> 'success',
+                    'message' => 'No check-in/check-out done',
+                    'data' => 'false'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status'=> 'success',
+                    'message' => 'Check-in and check-out already done',
+                    'data' => 'false'
+                ]);
+
+            }
+
+        }
+        else
+        {
+            //if record doesnt exist
+            return response()->json([
+                'status'=> 'failure',
+                'message' => 'No checkin data exists',
+                'data' => 'false'
+            ]);
+
+        }
+
+    }
+
     public function updateCheckin(Request $request) {
 
         $checked = $request->input('checkin');
         if ($checked == 'true') {
+
+            //Check if the user already checked-out.
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'));
+
+
+            if($attendance->exists())
+            {
+                return response()->json([
+                    'status'=> 'failure',
+                    'message' => 'You have already checked-out for the day',
+                    'time' => ""
+                ]);
+            }
+
+
             $attendance = new VmtEmployeeAttendance;
             $attendance->user_id = auth()->user()->id;
             $attendance->date = date('Y-m-d');
@@ -448,21 +517,28 @@ class HomeController extends Controller
 
 
             return response()->json([
+                'status' => 'success',
                 'message' => 'You have successfully checkedin!',
                 'time' => $attendance->checkin_time,
                // 'regularization_type' => $regularization_type,
                // 'regularization_mail_sent' => $isSent ? "True" : $isSent
             ]);
         } else {
-            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
-            $attendance->user_id = auth()->user()->id;
-            $attendance->date = date('Y-m-d');
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                            ->where('date', date('Y-m-d'))
+                            ->first();
+
+            //dd($attendance);
+            //$attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkout_time = $currentTime;
             $attendance->attendance_mode_checkout = "web";
             $attendance->save();
 
-            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+            //Get the time diff
+            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'))
+                        ->first();
 
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
 
@@ -473,6 +549,7 @@ class HomeController extends Controller
                // dd($effective_hours);
 
             return response()->json([
+                'status' => 'success',
                 'message' => 'You have successfully checked out!',
                 'time' => $attendance->checkout_time,
                 'effective_hours' => $effective_hours,

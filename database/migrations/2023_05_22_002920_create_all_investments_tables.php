@@ -60,7 +60,7 @@ Schema::create('vmt_inv_emp_formdata', function (Blueprint $table) {
     $table->foreignId('f_emp_id')->constrained('vmt_inv_f_emp_assigned');
     $table->foreignId('fs_id')->constrained('vmt_inv_formsection');
     $table->integer('dec_amount');
-    $table->json('json_popups_value');
+    $table->json('json_popups_value')->nullable();
     $table->timestamps();
 });
 

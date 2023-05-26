@@ -12,6 +12,9 @@ export default defineConfig({
 
                 'resources/js/app.js',
 
+                //Main dashboard
+                'resources/js/hrms/modules/dashboard/dashboard.js',
+
                 // Profile Page new
 
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
@@ -48,6 +51,10 @@ export default defineConfig({
                 //Attendance settings
 
                 'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
+
+                // testing GeneralShift
+
+                'resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js',
 
                 // Client Onboarding
 
@@ -108,9 +115,9 @@ export default defineConfig({
                 'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
                 //manage welcome mail status
-                'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
+               'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
 
-                // Exit 
+                // Exit
                 'resources/js/hrms/modules/exit/exit.js',
 
                 // testing_pradeesh
@@ -122,9 +129,13 @@ export default defineConfig({
                'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
 
             ],
+
             refresh: true,
         }),
     ],
+    resolve: {
+        dedupe: ['vue', 'vue-router'],
+      },
     // css: {
     //     preprocessorOptions: {
     //       scss: {

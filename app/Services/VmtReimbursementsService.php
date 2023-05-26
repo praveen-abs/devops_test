@@ -104,7 +104,16 @@ class VmtReimbursementsService {
     }
 
     public function getReimbursementVehicleTypes(){
-        return VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+        $query_reimbursement_vehicle_types =  VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+
+        //convert 'cost_per_km' to non-string value
+       // dd($query_reimbursement_vehicle_types);
+        foreach($query_reimbursement_vehicle_types as $singleReimbursementVehicleType)
+        {
+            $singleReimbursementVehicleType['cost_per_km'] = intval($singleReimbursementVehicleType['cost_per_km']);
+        }
+
+        return $query_reimbursement_vehicle_types;
     }
 
     public function getReimbursementTypes(){

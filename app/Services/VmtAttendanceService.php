@@ -716,7 +716,9 @@ class VmtAttendanceService
         //Get the user_code
         $user_id = User::where('user_code', $user_code)->first()->id;
 
-        $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+
+        //TODO : Hardcoded now. Need to fetch based on assigned shift for this employee
+        $regularTime  = VmtWorkShifts::where('shift_name', 'First Shift')->first();
 
         ////Fetch the attendance reports
         //Create date array
@@ -1442,7 +1444,7 @@ class VmtAttendanceService
                 'users.user_code as employee_code',
                 'vmt_employee_attendance.date',
 
-                'vmt_work_shifts.shift_type as shift_type',
+                'vmt_work_shifts.shift_name as shift_name',
                 'vmt_work_shifts.shift_start_time as shift_start_time',
                 'vmt_work_shifts.shift_end_time as shift_end_time',
 
@@ -1757,12 +1759,17 @@ class VmtAttendanceService
                     "leave_type",
                 ]);
             //  dd($query_employees_leaves->toArray());
+
             $query_employees_leaves = $query_employees_leaves->toArray();
 
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
                 $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
+                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id',$query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
+                $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
+                $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
+                $query_employees_leaves[$i]["user_short_name"] = getUserShortName($user_id);
             }
 
 
@@ -2179,7 +2186,7 @@ class VmtAttendanceService
                         ->where('leave_type_id', $single_leave_types->id)
                         ->sum('accrued_leave_count');
                     if ($single_leave_types->leave_type == 'Compensatory Off') {
-                        $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id)) - $total_avalied_leaves;
+                        $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id));
                     } else {
                         $leave_balance =  $total_accrued -  $total_avalied_leaves;
                         $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;

@@ -23,7 +23,6 @@ export const Service = defineStore("Service", () => {
 
     axios.get('/currentUserCode').then(res => {
         current_user_code.value = res.data
-        //  console.log("service class" + res.data);
 
     })
 

@@ -27,6 +27,7 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import  Calendar from "primevue/calendar";
+import MultiSelect from 'primevue/multiselect';
 
 import Att_AssignWorkShifts from './Att_AssignWorkShifts.vue'
 
@@ -56,6 +57,7 @@ app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
+app.component('MultiSelect', MultiSelect)
 
 app.mount("#VJS_AttSettings_AssignWorkShifts");
 

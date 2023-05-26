@@ -84,8 +84,8 @@
                                             <div class="mb-3 form-group">
                                                 <label>Bank Name</label>
 
-                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name"
-                                                    placeholder="Select Bank Name" class="w-full form-controls "
+                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name" optionValue="id"
+                                                    placeholder="Select Bank Name" class="w-full form-controls"
                                                     v-model="bank_information.bank_id" />
 
                                             </div>
@@ -96,7 +96,7 @@
                                                 <div class="cal-icon">
 
                                                 </div>
-                                                <InputText class="form-controls onboard-form" inputId="integeronly"
+                                                <InputText class="form-controls onboard-form pl-2" inputId="integeronly"
                                                     name="account_no" :min="0" :max="100" type="number"
                                                     v-model="bank_information.bank_ac_no" />
                                             </div>
@@ -105,14 +105,14 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>IFSC Code</label>
-                                                <InputText type="text" name="bank_ifsc_" class="form-controls"
+                                                <InputText type="text" name="bank_ifsc_" class="form-controls pl-2"
                                                     v-model="bank_information.ifsc_code" />
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>PAN No</label>
-                                                <InputText type="text" name="pan_nos" class="form-controls"
+                                                <InputText type="text" name="pan_nos" class="form-controls pl-2"
                                                     v-model="bank_information.pan_no" />
 
                                             </div>
@@ -379,6 +379,7 @@ const _instance_profilePagesStore = profilePagesStore()
 const fetch_data = Service()
 
 const statutory = ref([])
+const bankNameList = ref();
 
 statutory.value.push(_instance_profilePagesStore.employeeDetails.get_statutory_details)
 
@@ -387,6 +388,7 @@ onMounted(() => {
     fetch_data.getBankList().then(res => {
         bankNameList.value = res.data;
     })
+    _instance_profilePagesStore.fetchEmployeeDetails();
 
 });
 
@@ -397,7 +399,7 @@ const dialog_statutory_visible = ref(false);
 const bank_info_data = ref()
 const statutory_info_data = ref()
 
-const bankNameList = ref();
+
 
 const bank_information = reactive({
     bank_id: '',
@@ -449,7 +451,7 @@ const saveBankinfoDetails = () => {
     let form = new FormData()
 
     form.append('user_code', _instance_profilePagesStore.employeeDetails.user_code)
-    form.append('bank_id', bank_information.bank_id.id)
+    form.append('bank_id', bank_information.bank_id)
     form.append('account_no', bank_information.bank_ac_no)
     form.append('bank_ifsc', bank_information.ifsc_code)
     form.append('pan_no', bank_information.pan_no)
@@ -495,7 +497,7 @@ function onClick_EditButton_BankInfo() {
 
     // Assign json values into dialog elements also
 
-    bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id;
+    bank_information.bank_id =  parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.bank_id);
     bank_information.bank_ac_no = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number;
     bank_information.ifsc_code = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
     bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number;

@@ -245,7 +245,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     const get_compensatroy_leaves=() =>{
 
         let user_id= leave_data.current_login_user;
-        axios.get(`/fetch-employee-unused-compensatory-days/${user_id}`).then(res=>{
+        axios.get(`/fetch-employee-unused-compensatory-days`).then(res=>{
             leave_data.compensatory_leaves=res.data
 
 
