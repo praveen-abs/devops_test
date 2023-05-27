@@ -63,18 +63,32 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     });
 
     // const AllWeeks = ref();
-    const updatestate = ref([]);
+    const update_state = reactive([]);
 
 
     const Week_Off_Days = ref([
-        {weeks:"Sunday" ,week_off_list : 0,first_week: 0,sec_week:0,third_week:0,fourth_week:0,fifth_week:0 ,id:1 },
-        {weeks:"Monday" ,week_off_list : 0,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:0,id:2 },
-        {weeks:"Tuesday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:0,id:3 },
-        {weeks:"Wednesday" ,week_off_list : 1,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:1,id:4 } ,
-        {weeks:"Thursday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:1,id:5 } ,
-        {weeks:"Friday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:1,id:6 } ,
-        {weeks:"Saturday" ,week_off_list : 0,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:1,id:7 }
+        // {weeks:"Sunday" ,week_off_list : 0,first_week: 0,sec_week:0,third_week:0,fourth_week:0,fifth_week:0 ,id:1 },
+        // {weeks:"Monday" ,week_off_list : 0,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:0,id:2 },
+        // {weeks:"Tuesday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:0,id:3 },
+        // {weeks:"Wednesday" ,week_off_list : 1,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:1,id:4 } ,
+        // {weeks:"Thursday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:1,id:5 } ,
+        // {weeks:"Friday" ,week_off_list : 0,first_week:0,sec_week:0,third_week:1,fourth_week:1,fifth_week:1,id:6 } ,
+        // {weeks:"Saturday" ,week_off_list : 0,first_week:1,sec_week:1,third_week:1,fourth_week:1,fifth_week:1,id:7 }
     ]);
+
+    function getWeek_Off_Days() {
+        canShowLoading.value = true;
+        let url = "http://localhost:3000/assingWorkShifts";
+
+        console.log("AJAX URL : " + url);
+
+        axios.get(url).then((response) => {
+            Week_Off_Days.value = response.data;
+            console.log("testing getWeek_Off_Days data : ",Week_Off_Days.value);
+            canShowLoading.value = false;
+        });
+    }
+
 
 
     // const fetchShiftDetails = (async () => {
@@ -135,14 +149,12 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         // window.location.origin +
         axios
             .post( url, {
-                selectedEmployees: array_assignedEmp_ids,
-                workshift_name: shiftDetails.txt_shift_name,
+                update_state:update_state,
             })
             .then((response) => {
                 console.log(response);
                 fetchShiftDetails();
                 canShowLoading.value = false;
-
                 // resetVars();
             })
             .catch((error) => {
@@ -157,12 +169,14 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
 
         // AllWeeks.value = data;
-        console.log(data);
 
-        // if(data.AllWeeks == 1){
-
-        // }
-
+        if(data.AllWeeks){
+            data.first_week = 1;
+            data.sec_week = 1;
+            data.third_week = 1;
+            data.fourth_week = 1;
+            data.fifth_week = 1;
+        }
         let val = {
             AllWeeks:data.AllWeeks,
             Week_1st:data.first_week,
@@ -171,10 +185,10 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
             Week_4st:data.fourth_week,
             Week_5st:data.fifth_week,
         }
-        console.log(val);
+        console.log(val.value);
 
-        // updatestate.push(val);
-        // console.log(updatestate);
+        update_state.push(val)
+        console.log(update_state);
         // console.log("get update Week_Off State : ", AllWeeks.value);
 
     }
@@ -195,10 +209,11 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     return {
 
         // Variable Declaration
-        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,Week_Off_Days,
+        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,Week_Off_Days,update_state,
 
         //
-        fetchShiftDetails, saveWorkShiftDetails,updateWeekOffState
+        fetchShiftDetails, saveWorkShiftDetails,getWeek_Off_Days,updateWeekOffState
+
 
     };
 });
