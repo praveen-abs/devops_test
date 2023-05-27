@@ -42,7 +42,7 @@
                         <Declaration />
                     </div> -->
 
-                    <div class="tab-pane  active show fade " id="exemptions" role="tabpanel">
+                    <div class="tab-pane active show fade " id="exemptions" role="tabpanel">
                         <InvestmentAndExemption />
 
                     </div>
@@ -87,12 +87,20 @@ import ImvestmentComputation from './income_tax_computation/incomeTaxComputation
 import { investmentMainStore } from '../stores/investmentMainStore'
 import { Service } from '../../Service/Service';
 import dayjs from 'dayjs'
+import { profilePagesStore } from '../../profile_pages/stores/ProfilePagesStore'
+
 
 const investmentStore = investmentMainStore()
+const useProfilePageStore = profilePagesStore()
 const service = Service()
 
 onMounted(async () => {
     await investmentStore.getInvestmentSource()
+    await useProfilePageStore.fetchEmployeeDetails()
+
+    setTimeout(() => {
+       investmentStore.employeDoj = useProfilePageStore.employeeDetails.get_employee_details.doj
+    }, 3000);
 })
 </script>
 

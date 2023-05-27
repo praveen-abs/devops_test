@@ -1818,6 +1818,16 @@ class VmtEmployeeController extends Controller
 
     }
 
+    public function getCurrentEmployeeDetails(Request $request){
+
+      $user_id = User::where('user_code', auth()->user()->user_code)->first();
+       $user =  User::where('user_code','SA100')->get();
+
+       dd($user_id);
+
+
+    }
+
     public function fetchManagerName(){
         $reportingManagers=User::join('vmt_org_roles','vmt_org_roles.id','=','users.org_role')
                                  ->whereIn('vmt_org_roles.id',[3,4])

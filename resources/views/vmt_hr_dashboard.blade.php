@@ -26,13 +26,13 @@
     <div class="hr-dashboar-wrpper mt-30 ">
         <!-- Content top -->
         <div class="row">
-            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 col-xxl-4 mb-3">
+            <div class="mb-3 col-sm-6 col-md-6 col-xl-4 col-lg-4 col-xxl-4">
                 @include('ui-dashboard-welcome-card')
             </div>
-            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4  d-flex col-xxl-4 mb-3">
+            <div class="mb-3 col-sm-6 col-md-6 col-xl-4 col-lg-4 d-flex col-xxl-4">
                 @include('ui-dashboard-action-card')
             </div>
-            <div class="col-sm-6 col-md-6  col-xl-4 col-lg-4 d-flex col-xxl-4 mb-3">
+            <div class="mb-3 col-sm-6 col-md-6 col-xl-4 col-lg-4 d-flex col-xxl-4">
                 @include('ui-dashboard-holiday-card')
             </div>
         </div>
@@ -41,10 +41,10 @@
             <div class="col-sm-12 col-md-12 col-xl-8 col-lg-8 col-xxl-8">
                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                     <div class="row mb-n4">
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                        <div class="mb-3 col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                             <a class="" data-bs-toggle="modal">
-                                <div class="card shadow profile-box top-line">
-                                    <div class="card-body text-center d-flex flex-column">
+                                <div class="shadow card profile-box top-line">
+                                    <div class="text-center card-body d-flex flex-column">
                                         <h6 class="">New Employees</h6>
                                         <p class="number-increment text-muted f-15 fw-bold">
                                             {{ json_decode($json_dashboardCountersData)->newEmployeesCount }}</p>
@@ -54,10 +54,10 @@
                             </a>
 
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
+                        <div class="mb-3 col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                             <a class="" data-bs-toggle="modal">
-                                <div class="card shadow  profile-box top-line ">
-                                    <div class="card-body d-flex text-center  flex-column">
+                                <div class="shadow card profile-box top-line ">
+                                    <div class="text-center card-body d-flex flex-column">
 
                                         <h6 class="">Offline</h6>
                                         <p class="number-increment text-muted f-15 fw-bold">0</p>
@@ -66,10 +66,10 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
-                            <div class=" card shadow profile-box top-line ">
+                        <div class="mb-3 col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                            <div class="shadow card profile-box top-line">
 
-                                <div class="card-body d-flex text-center  flex-column">
+                                <div class="text-center card-body d-flex flex-column">
 
                                     <h6 class="">Total Employees</h6>
                                     <p class="number-increment text-muted f-15 fw-bold">
@@ -78,9 +78,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
-                            <div class="card  profile-box top-line ">
-                                <div class="card-body d-flex text-center  flex-column">
+                        <div class="mb-3 col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                            <div class="card profile-box top-line ">
+                                <div class="text-center card-body d-flex flex-column">
                                     <h6 class="">Employees on Leave</h6>
                                     <p class="number-increment text-muted f-15 fw-bold">
                                         {{ json_decode($json_dashboardCountersData)->todayEmployeesOnLeaveCount }}</p>
@@ -88,18 +88,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div onClick="showOnlineUsers(this)" class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
-                            <div class="card shadow profile-box topOrange-line  ">
-                                <div class="card-body d-flex text-center  flex-column">
+                        <div onClick="showOnlineUsers(this)" class="mb-3 col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                            <div class="shadow card profile-box topOrange-line ">
+                                <div class="text-center card-body d-flex flex-column">
                                     <h6 class="fw-bold title">Online</h6>
                                     <p class="number-increment text-muted f-15 fw-bold">
                                         {{ json_decode($json_dashboardCountersData)->todayEmployeesCheckedInCount }}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4 mb-3">
-                            <div class="card shadow  profile-box top-line">
-                                <div class="card-body d-flex text-center  flex-column">
+                        <div class="mb-3 col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                            <div class="shadow card profile-box top-line">
+                                <div class="text-center card-body d-flex flex-column">
                                     <h6 class="">Future Joiners</h6>
                                     <p class="number-increment text-muted f-15 fw-bold">0</p>
 
@@ -110,7 +110,7 @@
                 @if (Str::contains(currentLoggedInUserRole(), ['Manager']))
                 <div class="row mb-n4">
                     <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                        <div class="card shadow profile-box card-top-border">
+                        <div class="shadow card profile-box card-top-border">
                             <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                        <div class="card shadow  profile-box card-top-border ">
+                        <div class="shadow card profile-box card-top-border ">
                             <!-- <div class="p-1 bg-primary" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
-                        <div class="card shadow profile-box orange-top-border ">
+                        <div class="shadow card profile-box orange-top-border ">
                             <!-- <div class="p-1 bg-danger" > -->
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <div class="text-center">
@@ -148,18 +148,18 @@
 
                 @endif
 
-                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12 mb-3">
+                <div class="my-4 col-sm-12 col-md-12 col-xl-12 col-lg-12 col-xxl-12">
                     <div class="card profile-box flex-fill card-top-border w-100">
                         <!-- <div class="p-1 bg-primary" ></div> -->
                         <div class="card-body ">
 
 
 
-                                            <ul class="nav sub-topnav mb-2">
-                                                <li class="title  topbarNav fw-bold active" id="post">
+                                            <ul class="mb-2 nav sub-topnav">
+                                                <li class="title topbarNav fw-bold active" id="post">
                                                     <a>Post</a>
                                                 </li>
-                                                <li class="title topbarNav  fw-bold" id="announcement">
+                                                <li class="title topbarNav fw-bold" id="announcement">
                                                     <a>Announcement</a>
                                                 </li>
                                                 <li class="title topbarNav fw-bold" id="poll"><a>Poll</a>
@@ -171,9 +171,9 @@
                                             <div class="topbarContent emp-post">
 
                                                     <div class="my-2 scrollBar">
-                                                        <textarea name="post_menu" id="post_menu" class="form-control outline-none w-100 h-100" placeholder="Write your Post here"></textarea>
+                                                        <textarea name="post_menu" id="post_menu" class="outline-none form-control w-100 h-100" placeholder="Write your Post here"></textarea>
                                                     </div>
-                                                    <div class="post-contents d-flex align-items-center mx-4">
+                                                    <div class="mx-4 post-contents d-flex align-items-center">
                                                         <div class="img-contents">
                                                             <i class="ri-image-2-fill"></i>
                                                             <input type="file" class="filestyle" name="image_src"
@@ -184,7 +184,7 @@
 
                                                         </div>
 
-                                                        <div class="emoji-content mx-3">
+                                                        <div class="mx-3 emoji-content">
                                                             <i class="ri-user-smile-line "></i>
                                                             <span class="tooltiptext">Emoji</span>
 
@@ -192,7 +192,7 @@
 
 
                                                     </div>
-                                                    <button class="btn btn-primary  float-end" type="submit">
+                                                    <button class="btn btn-primary float-end" type="submit">
                                                         Create Post
                                                     </button>
 
@@ -202,16 +202,16 @@
                                                     <form id="announcement-form-submit">
                                                         <div class="announcement-content scrollBar">
 
-                                                            <input class="form-control mb-2   w-100 h-100"
+                                                            <input class="mb-2 form-control w-100 h-100"
 
                                                                 placeholder="Title of the Announcement"
                                                                 type="text" id="title_data" name="title_data">
 
-                                                            <textarea class="form-control  mb-2 w-100 h-100" placeholder="Details of Announcement"
+                                                            <textarea class="mb-2 form-control w-100 h-100" placeholder="Details of Announcement"
                                                                 aria-label="default input example" type="text" name="details_data" id="details_data" required></textarea>
 
 
-                                                            <div class="bottom-content d-flex mx-2">
+                                                            <div class="mx-2 bottom-content d-flex">
 
                                                                 <div class="row">
                                                                     <div
@@ -233,7 +233,7 @@
                                                                         class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <div class="form-check ps-0">
                                                                             <input
-                                                                                class="form-check-input check-box  me-1"
+                                                                                class="form-check-input check-box me-1"
                                                                                 type="checkbox" value="1"
                                                                                 id="requireAcknowledge"
                                                                                 name="require_acknowledgement">
@@ -244,7 +244,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6  col-xxl-6 ">
+                                                                        class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 ">
                                                                         <div class="form-check ps-0">
                                                                             <input
                                                                                 class="form-check-input check-box me-1"
@@ -282,7 +282,7 @@
                                                     <div class="poll-content">
                                                         <form id="polling-questions-form-submit">
                                                             <input type="text" name="question" id=""
-                                                                class="form-control outline-none"
+                                                                class="outline-none form-control"
                                                                 placeholder="What this poll is about" required>
                                                             <hr>
                                                             <div class="content-container">
@@ -297,12 +297,12 @@
                                                                         placeholder="Add option here" required>
                                                                 </div>
                                                             </div>
-                                                            <div class="text-end my-2">
-                                                                <!-- <button class="btn btn-secondary outline-none border-0"><i class=" ri-add-circle-line mr-2">Add More</i></button> -->
+                                                            <div class="my-2 text-end">
+                                                                <!-- <button class="border-0 outline-none btn btn-secondary"><i class="mr-2 ri-add-circle-line">Add More</i></button> -->
                                                                 <button
-                                                                    class="btn text-primary p-0 bg-transparent outline-none border-0 f-12 plus-sign"
+                                                                    class="p-0 bg-transparent border-0 outline-none btn text-primary f-12 plus-sign"
                                                                     type="button"><i
-                                                                        class="f-12 me-1 fa  fa-plus-circle"
+                                                                        class="f-12 me-1 fa fa-plus-circle"
                                                                         aria-hidden="true"></i>Add
                                                                     More</i></button>
                                                             </div>
@@ -310,10 +310,10 @@
                                                             <div class="bottom-content">
                                                                 <div class="row">
                                                                     <div
-                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                        class="mt-1 col-sm-6 col-md-6 col-xl-4 col-lg-4">
                                                                         <div class=" d-flex align-items-center">
                                                                             <label for=""
-                                                                                class="me-1 mb-0">Poll
+                                                                                class="mb-0 me-1">Poll
                                                                                 Expires
                                                                                 On</label>
                                                                             <input
@@ -325,7 +325,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                        class="mt-1 col-sm-6 col-md-6 col-xl-4 col-lg-4">
 
                                                                         <input
                                                                             class="form-check-input check-box me-1"
@@ -339,7 +339,7 @@
 
                                                                     </div>
                                                                     <div
-                                                                        class="col-sm-6 col-md-6 col-xl-4 col-lg-4 mt-1">
+                                                                        class="mt-1 col-sm-6 col-md-6 col-xl-4 col-lg-4">
 
                                                                         <input
                                                                             class="form-check-input check-box me-1"
@@ -369,13 +369,13 @@
                                                 <div>
                                                     <form id="praise-form-submit">
                                                         <div>
-                                                            <div class="px-20 p-16 row no-gutters scrollBar">
-                                                                <textarea name="praise_data" id="" placeholder="Praise..." cols="30" rows="3" class=" form-control outline-none w-100"
+                                                            <div class="p-16 px-20 row no-gutters scrollBar">
+                                                                <textarea name="praise_data" id="" placeholder="Praise..." cols="30" rows="3" class="outline-none form-control w-100"
                                                                     required></textarea>
                                                             </div>
-                                                            <div class="text-end mt-2">
+                                                            <div class="mt-2 text-end">
                                                                 <button id="praise-submit-btn" type="submit"
-                                                                    class="btn btn-primary py-1 px-4  float-right">
+                                                                    class="float-right px-4 py-1 btn btn-primary">
                                                                     Submit
                                                                 </button>
                                                             </div>
@@ -393,15 +393,15 @@
 
             </div>
             <!-- content bpttom -->
-            <div class="col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4 mb-3">
-                <div class="calendar-wrapper card mb-0 border-0">
-                    <div class="card-body p-0">
+            <div class="mb-3 col-sm-12 col-md-12 col-xl-4 col-lg-4 col-xxl-4">
+                <div class="mb-0 border-0 calendar-wrapper card">
+                    <div class="p-0 card-body">
                         <div class="_wrapper">
-                            <div class="h-100  _container-calendar">
+                            <div class="h-100 _container-calendar">
                                 <div class="_button-container-calendar d-flex align-items-center justify-content-between">
                                     <button id="_previous" onclick="previous()" class="previous"><i
                                             class="fa fa-chevron-left"></i></button>
-                                    <h6 id="_monthAndYear" class="_monthAndYear text-white"></h6>
+                                    <h6 id="_monthAndYear" class="text-white _monthAndYear"></h6>
                                     <button id="_next" onclick="next()" class="next"><i
                                             class="fa fa-chevron-right"></i></button>
                                 </div>
@@ -492,7 +492,7 @@
 
             $('body').on('click', '.plus-sign', function() {
                 $('.content-container').append(
-                    '<div class="mt-3 d-flex align-items-center"><input type="text" name="options[]"id="" class="form-control" placeholder="Add option here" required><i class="delete-row ri-delete-bin-7-fill mx-2 text-danger"></i></div>'
+                    '<div class="mt-3 d-flex align-items-center"><input type="text" name="options[]"id="" class="form-control" placeholder="Add option here" required><i class="mx-2 delete-row ri-delete-bin-7-fill text-danger"></i></div>'
                 );
             });
 
