@@ -52,7 +52,6 @@
         </Column>
       </DataTable>
 
-      {{manageEmployeesStore.array_active_employees}}
     </div>
   </div>
 </template>
