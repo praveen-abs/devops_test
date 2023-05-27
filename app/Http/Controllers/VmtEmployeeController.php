@@ -1010,6 +1010,11 @@ class VmtEmployeeController extends Controller
         return response()->json($query);
     }
 
+    public function fetchclientcode(Request $request){
+        $employee_code_prefix = VmtMasterConfig::where('config_name','employee_code_prefix')->first()->config_value;
+        return response()->json($employee_code_prefix);
+    }
+
     public function fetchBloodGroups(Request $request){
         $query = VmtBloodGroup::all(['id','name']);
         return response()->json($query);

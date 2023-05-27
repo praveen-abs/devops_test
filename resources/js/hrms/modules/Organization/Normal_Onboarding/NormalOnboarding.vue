@@ -2736,6 +2736,11 @@ onMounted(() => {
 
   getBloodGroups().then((result) => (bloodGroups.value = result));
 
+   axios.get('/get-client-code').then(res =>{
+    console.log(res.data);
+    employee_onboarding.employee_code =res.data
+   })
+
 
   //If the URL has hashed param, then it means quick-onboarded user is accessing this page.So, fetch his existing data
 
