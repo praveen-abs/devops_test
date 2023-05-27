@@ -83,7 +83,7 @@
 
                     <Column field="json_popups_value.landlord_PAN" header="Landlord PAN" style="min-width: 12rem">
                         <template #body="slotProps">
-                            {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }}
+                            <!-- {{ (slotProps.data.json_popups_value.landlord_PAN).toUpperCase() }} -->
                         </template>
                     </Column>
 
@@ -155,19 +155,24 @@
                     dateFormat="mm/yy" v-model="investmentStore.hra.from_month" class="w-full" showIcon required :class="[
                         v$.from_month.$error ? 'p-invalid' : '',
                     ]" />
-                <span v-if="v$.from_month.$error" class="text-red-400 fs-6 font-semibold">
+                <!-- <span v-if="v$.from_month.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.from_month.required.$message.replace( "Value", "From Month" ) }}
+                    {{ v$.from_month.dojValidation.$message}}
+                </span> -->
+                <span v-if="v$.from_month.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.from_month.$errors[0].$message }}
                 </span>
             </div>
             <div class="">
                 <label for="toFrom_month" class="block mb-2 font-medium text-gray-900 ">To
                     Month</label>
-                <Calendar view="month" :minDate="new Date('04/01/2023')" :maxDate="new Date('03/31/2024')"
+                <Calendar view="month" :minDate="new Date('05/01/2023')" :maxDate="new Date('03/31/2024')"
                     dateFormat="mm/yy" v-model="investmentStore.hra.to_month" class="w-full" showIcon required :class="[
                         v$.to_month.$error ? 'p-invalid' : '',
                     ]" />
-                <span v-if="v$.to_month.$error" class="text-red-400 fs-6 font-semibold">
-                    {{ v$.to_month.$errors[0].$message }}
+                <span v-if="v$.to_month.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.to_month.required.$message.replace( "Value","To month"  ) }}
+
                 </span>
             </div>
             <div class="">
@@ -177,8 +182,8 @@
                     placeholder="Select City" required :class="[
                         v$.city.$error ? 'p-invalid' : '',
                     ]" />
-                <span v-if="v$.city.$error" class="text-red-400 fs-6 font-semibold">
-                    {{ v$.city.$errors[0].$message }}
+                <span v-if="v$.city.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.city.required.$message.replace( "Value","City"  ) }}
                 </span>
             </div>
             <div class="">
@@ -188,8 +193,8 @@
                     required :class="[
                         v$.total_rent_paid.$error ? 'p-invalid' : '',
                     ]" />
-                <span v-if="v$.total_rent_paid.$error" class="text-red-400 fs-6 font-semibold">
-                    {{ v$.total_rent_paid.$errors[0].$message }}
+                <span v-if="v$.total_rent_paid.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.total_rent_paid.required.$message.replace( "Value","Total rent paid"  ) }}
                 </span>
             </div>
 
@@ -203,8 +208,8 @@
                     v-model="investmentStore.hra.landlord_name" required :class="[
                         v$.landlord_name.$error ? 'border border-red-500' : '',
                     ]" />
-                <span v-if="v$.landlord_name.$error" class="text-red-400 fs-6 font-semibold">
-                    {{ v$.landlord_name.$errors[0].$message }}
+                <span v-if="v$.landlord_name.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.landlord_name.required.$message.replace( "Value","Landlord name"  ) }}
                 </span>
             </div>
 
@@ -218,7 +223,7 @@
                     style="text-transform: uppercase" v-model="investmentStore.hra.landlord_PAN" required :class="[
                         v$.landlord_PAN.$error ? 'p-invalid' : '',
                     ]" />
-                <span v-if="v$.landlord_PAN.$error" class="text-red-400 fs-6 font-semibold">
+                <span v-if="v$.landlord_PAN.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.landlord_PAN.$errors[0].$message }}
                 </span>
 
@@ -233,8 +238,8 @@
                 v-model="investmentStore.hra.address" required :class="[
                     v$.address.$error ? 'border border-red-500' : '',
                 ]" />
-            <span v-if="v$.address.$error" class="text-red-400 fs-6 font-semibold">
-                {{ v$.address.$errors[0].$message }}
+            <span v-if="v$.address.$error" class="font-semibold text-red-400 fs-6">
+                {{ v$.address.required.$message.replace( "Value","Address"  ) }}
             </span>
 
         </div>
@@ -250,27 +255,40 @@
 import { onMounted, onUnmounted, computed, reactive } from "vue";
 import { investmentMainStore } from "../../../stores/investmentMainStore";
 import useValidate from '@vuelidate/core'
-import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
+
 import { ref } from "vue";
 import moment from "moment";
-
-const test = () => {
-    alert("test")
-}
-
-const op = ref();
-const toggle = (event) => {
-    op.value.toggle(event);
-}
+import { profilePagesStore } from "../../../../profile_pages/stores/ProfilePagesStore";
 
 const investmentStore = investmentMainStore()
+const useEmployeeDetails = profilePagesStore()
+const employeDoj = ref(new Date('08/01/2023'))
 
 onMounted(async () => {
-    // setTimeout(async () => {
-    //     await investmentStore.fetchHraNewRental()
-    // }, 1000);
+    // employeDoj.value = useEmployeeDetails.employeeDetails.get_employee_details.doj
 
 })
+
+const dojValidation = (value) => {
+    console.log(value);
+    console.log(employeDoj.value);
+    if (value <= employeDoj.value) {
+        return true
+    } else {
+        return false
+    }
+}
+
+const panValidation = (value) => {
+    if (investmentStore.hra.total_rent_paid <= 100000) {
+        return true
+    } else {
+        return false
+    }
+}
+
+
 
 const isLetter = (e) => {
     let char = String.fromCharCode(e.keyCode); // Get the character
@@ -280,12 +298,12 @@ const isLetter = (e) => {
 
 const rules = computed(() => {
     return {
-        from_month: { required },
+        from_month: { required, dojValidation: helpers.withMessage('Must be greater than date of Joining!', dojValidation) },
         to_month: { required },
         city: { required },
         total_rent_paid: { required },
         landlord_name: { required },
-        landlord_PAN: { required },
+        landlord_PAN: { panValidation: helpers.withMessage('More than 1 lakh landlord PAN is mandatory!', panValidation) },
         address: { required },
     }
 })
@@ -298,7 +316,7 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        investmentStore.saveHraNewRental()
+        // investmentStore.saveHraNewRental()
     } else {
         console.log('Form failed validation')
     }

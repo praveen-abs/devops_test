@@ -238,43 +238,46 @@ function calculateOverallReviewRating($assigneeId)
     $action = 0;
     $over_all_score = 0;
     $org_time_period_id = VmtOrgTimePeriod::where('status', 0)->first()->id;
-    $all_frequency_review_ratings = VmtPMS_KPIFormAssignedModel::where('assignee_id', $assigneeId)
-        ->where('vmt_org_time_period_id', $org_time_period_id)->get();
-        $review_count =count($all_frequency_review_ratings);
-    for ($i = 0; $i < count($all_frequency_review_ratings); $i++) {
-        $over_all_score =   $over_all_score + substr(calculateReviewRatings($all_frequency_review_ratings[$i]->id, $assigneeId)['score'], 0, -1);
+    $all_frequency_review_ratings = VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_reviews', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id', '=', 'vmt_pms_kpiform_assigned.id')
+        ->where('vmt_pms_kpiform_assigned.assignee_id', $assigneeId)->where('vmt_pms_kpiform_assigned.vmt_org_time_period_id', $org_time_period_id)
+        ->where('vmt_pms_kpiform_reviews.is_reviewer_submitted', 'like', '%"1"}')->get();
+
+    $review_count = count($all_frequency_review_ratings);
+    for ($i = 0; $i <count($all_frequency_review_ratings); $i++) {
+        $over_all_score =   $over_all_score + substr(calculateReviewRatings($all_frequency_review_ratings[$i]->vmt_pms_kpiform_assigned_id, $assigneeId)['score'], 0, -1);
     }
 
-    $annual_avarge_of_review_rating =  $review_count != 0 ? ceil($over_all_score/$review_count ) : 0;
+    $annual_avarge_of_review_rating =  $i != 0 ? ceil($over_all_score / $i) : 0;
 
 
-        $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order', 'DESC')->get();
 
-        /* Use this line to test rating    */
-        //$totalRatingScore=101;
-        if (count($pmsConfigRatingDetails) > 0) {
-            foreach ($pmsConfigRatingDetails as $ratings) {
-                $rangeCheck = explode('-', $ratings->score_range);
+    $pmsConfigRatingDetails = VmtPMSRating::orderBy('sort_order', 'DESC')->get();
 
-                if ( $annual_avarge_of_review_rating >= $rangeCheck[0] &&    $annual_avarge_of_review_rating <= $rangeCheck[1]) {
-                    $rank = $ratings->ranking;
-                    $performanceRating = $ratings->performance_rating;
-                    $action = $ratings->action;
-                    break;
-                } elseif ($annual_avarge_of_review_rating >= 100) {
-                    $rank = $ratings->ranking;
-                    $performanceRating = $ratings->performance_rating;
-                    $action = $ratings->action;
-                    break;
-                }
+    /* Use this line to test rating    */
+    //$totalRatingScore=101;
+    if (count($pmsConfigRatingDetails) > 0) {
+        foreach ($pmsConfigRatingDetails as $ratings) {
+            $rangeCheck = explode('-', $ratings->score_range);
+
+            if ($annual_avarge_of_review_rating >= $rangeCheck[0] &&    $annual_avarge_of_review_rating <= $rangeCheck[1]) {
+                $rank = $ratings->ranking;
+                $performanceRating = $ratings->performance_rating;
+                $action = $ratings->action;
+                break;
+            } elseif ($annual_avarge_of_review_rating >= 100) {
+                $rank = $ratings->ranking;
+                $performanceRating = $ratings->performance_rating;
+                $action = $ratings->action;
+                break;
             }
         }
-        $response = [
-            'rank' => $rank,
-            'score' =>   $annual_avarge_of_review_rating . '%',
-            'performance_rating' => $performanceRating,
-            'action' => $action
-        ];
+    }
+    $response = [
+        'rank' => $rank,
+        'score' =>   $annual_avarge_of_review_rating . '%',
+        'performance_rating' => $performanceRating,
+        'action' => $action
+    ];
 
     return $response;
 }
