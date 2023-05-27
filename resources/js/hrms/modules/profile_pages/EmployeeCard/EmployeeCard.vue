@@ -13,7 +13,8 @@
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
                         <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img"
-                            :src="`data:image/png;base64,${ _instance_profilePagesStore.profile}`" srcset=""  />
+                            :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt=""  />
+
 
                         <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
