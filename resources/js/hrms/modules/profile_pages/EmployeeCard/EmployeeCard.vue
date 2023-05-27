@@ -12,7 +12,7 @@
                     <div class="mx-auto rounded-circle img-xl userActive-status profile-img " style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
-                        <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img"
+                        <img v-if="_instance_profilePagesStore.profile" class="rounded-circle img-xl userActive-status profile-img"
                             :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt=""  />
 
 
