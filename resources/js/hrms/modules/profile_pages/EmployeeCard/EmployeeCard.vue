@@ -195,8 +195,8 @@
 
             <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
                 <div class="mx-auto rounded-circle img-xl userActive-status profile-img " style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;" >
-                    <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img border"
-                            :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
+                    <img v-if="_instance_profilePagesStore.profile" class="rounded-circle img-xl userActive-status profile-img border"
+                            :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
                 </div>
 
 
