@@ -789,6 +789,13 @@ class VmtEmployeeOnboardingController extends Controller
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
+        if(empty($excelRowdata_row )){
+            return $rowdata_response = [
+                'status' => 'failure',
+                'message' => 'Please fill the excel',
+            ];
+
+        }else{
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
           //  dd($excelRowdata);
             $currentRowInExcel++;
@@ -903,6 +910,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $isAllRecordsValid = false;
             }
+        }
         } //for loop
 
         //Runs only if all excel records are valid
@@ -1216,7 +1224,9 @@ class VmtEmployeeOnboardingController extends Controller
            $request->validate([
                'file' => 'required|file|mimes:xls,xlsx'
            ]);
+
            $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
+
            return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
        }
 
@@ -1240,7 +1250,15 @@ class VmtEmployeeOnboardingController extends Controller
            ];
 
            $excelRowdata_row = $data;
+
            $currentRowInExcel = 0;
+            if(empty($excelRowdata_row )){
+                return $rowdata_response = [
+                    'status' => 'failure',
+                    'message' => 'Please fill the excel',
+                ];
+
+            }else{
 
            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
 
@@ -1266,7 +1284,7 @@ class VmtEmployeeOnboardingController extends Controller
                    'doj' => 'required|date',
                    'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',
                    'designation' => 'required',
-                   'basic' => 'required|numeric',
+                   'basic' => 'required|numeric|min:0|not_in:0',
                    'hra' => 'required|numeric',
                    'statutory_bonus' => 'required|numeric',
                    'child_education_allowance' => 'required|numeric',
@@ -1287,6 +1305,7 @@ class VmtEmployeeOnboardingController extends Controller
                $messages = [
                    'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+                   'not_in' => 'Field <b>:attribute</b> should be greater than zero: :values .',
                    'required' => 'Field <b>:attribute</b> is required',
                    'regex' => 'Field <b>:attribute</b> is invalid',
                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
@@ -1313,7 +1332,11 @@ class VmtEmployeeOnboardingController extends Controller
 
                    $isAllRecordsValid = false;
                }
-           }//for each
+          }
+
+        }
+
+          //for each
            //Runs only if all excel records are valid
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
