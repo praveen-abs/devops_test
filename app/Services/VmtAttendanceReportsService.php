@@ -56,9 +56,8 @@ class VmtAttendanceReportsService
                 if ($checkin_time == null) {
                     return  $regularTime;
                 } else {
-                    dd($user_id);
-                    dd($checkin_time);
-                    dd(Carbon::parse($checkin_time)->diffInHours($shift_start_time));
+                   // dd($shift_start_time);
+                    dd($shift_start_time->diffInMinutes(Carbon::parse($checkin_time)));
                     dd($shift_start_time);
                 }
             }
