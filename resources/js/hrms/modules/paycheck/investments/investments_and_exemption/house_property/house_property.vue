@@ -27,7 +27,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.particular == 'Self Occupied Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data['json_popups_value'].income_loss }}
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getSopSlotData(slotProps.data)"
@@ -37,7 +37,7 @@
                         </div>
                         <div v-if="slotProps.data.particular == 'Let Out Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data['json_popups_value'].income_loss }}
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getLopSlotData(slotProps.data)"
@@ -48,7 +48,7 @@
                         </div>
                         <div v-if="slotProps.data.particular == 'Deemed Let Out Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data['json_popups_value'].income_loss }}
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getDlopSlotData(slotProps.data)"

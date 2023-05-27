@@ -417,6 +417,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-marital-details', [App\Http\Controllers\VmtEmployeeController::class, 'fetchMaritalStatus'])->name('fetch-marital-details');
     Route::get('/fetch-blood-groups', [App\Http\Controllers\VmtEmployeeController::class, 'fetchBloodGroups'])->name('fetch-blood-groups');
     Route::get('/get-all-employees', [App\Http\Controllers\VmtEmployeeController::class, 'getAllEmployees'])->name('get-all-employees');
+    Route::get('/get-current-employee', [App\Http\Controllers\VmtEmployeeController::class, 'getCurrentEmployeeDetails'])->name('getCurrentEmployeeDetails');
 
     // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');

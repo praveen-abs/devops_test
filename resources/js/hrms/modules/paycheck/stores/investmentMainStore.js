@@ -97,6 +97,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const otherExe = reactive([]);
     const hra_fs = reactive([]);
     const AddHraButtonDisabled = ref(false);
+    const employeDoj = ref()
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
@@ -276,10 +277,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // COnvert Declaration Amount Into INR Currency
 
     const formatCurrency = (value) => {
-        return new Intl.NumberFormat("en-US", {
+        let currency =  new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "INR",
         }).format(value);
+
+       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length)}`
+
+       return format
+
     };
 
     // HRA Begins
@@ -316,10 +322,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .then((res) => {
                 console.log(Object.values(res.data));
                 hra_data.value = Object.values(res.data);
-                if (Object.values(res.data)) {
-                    AddHraButtonDisabled.value = true;
-                } else {
+                if (Object.values(res.data).length == 0) {
                     AddHraButtonDisabled.value = false;
+                } else {
+                    AddHraButtonDisabled.value = true;
                 }
             })
             .catch((e) => console.log(e))
@@ -1129,5 +1135,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         metrocitiesOption,
         lenderTypeOption,
+        employeDoj,
     };
 });
