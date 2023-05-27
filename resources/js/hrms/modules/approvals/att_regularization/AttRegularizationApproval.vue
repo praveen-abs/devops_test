@@ -47,7 +47,9 @@
 
         <Column class="font-bold" field="employee_name" header="Employee Name">
           <template #body="slotProps">
+            <!-- <div class="color-pink-600 rounded-circle" >211</div> -->
             {{ slotProps.data.employee_name }}
+            <!-- {{ JSON.parse(Object.values(slotProps.data.employee_avatar) )}} -->
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
@@ -114,6 +116,8 @@
     </div>
   </div>
 
+  <!-- {{ att_regularization[0].employee_avatar }} -->
+
 
 </template>
 <script setup>
@@ -159,7 +163,7 @@ function ajax_GetAttRegularizationData() {
 
   axios.get(url).then((response) => {
     console.log("Axios : " + response.data);
-    att_regularization.value = response.data;
+    att_regularization.value = Object.values(response.data);
     loading.value = false;
   });
 }
