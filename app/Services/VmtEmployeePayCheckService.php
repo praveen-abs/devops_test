@@ -981,7 +981,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $data['emp_payroll_month'] = $payroll_month;
 
 
-
+            $data['employee_code'] = $query_user->user_code;
             $data['employee_name'] = $query_user->name;
             $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id',$user_id)->first();
             $data['employee_details'] = VmtEmployee::where('userid',$user_id)->first();
@@ -1003,7 +1003,8 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $options->set('isRemoteEnabled', true);
 
             $pdf = new Dompdf($options);
-            $pdf->loadhtml($html, 'UTF-8');
+            $pdf->loadhtml($html);
+           
             $pdf->setPaper('A4', 'portrait');
             $pdf->render();
 
@@ -1033,7 +1034,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching payslip mail",
-                "data" =>$e
+                "data" =>$e->getMessage()
             ]);
         }
 
