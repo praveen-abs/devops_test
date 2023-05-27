@@ -100,7 +100,7 @@
                             class="onboard-form form-control textbox"
 
                           /> -->
-                          <Calendar inputId="icon"  :maxDate="dobFormat"  v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                          <Calendar inputId="icon" dropzone="true" :manualInput="true"  :maxDate="dobFormat"  v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
                             style="width: 350px;"   @date-select="datePicker" class="" />
                             <!-- {{employee_onboarding.dob}} -->
                           <span class="error" id="error_pan_no"></span>
@@ -164,7 +164,7 @@
 
                           /> -->
                           <!-- {{ageLessThanFather}} -->
-                          <Calendar inputId="icon" :minDate="dojFormat" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
+                          <Calendar inputId="icon"  dropzone="true" :manualInput="true" :minDate="dojFormat" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
                             style="width: 350px;"   :readonly="is_doj_quick" showIcon   :class="[{
                               'p-invalid': v$.doj.$invalid && submitted,
                             },
