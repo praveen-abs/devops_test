@@ -69,6 +69,39 @@ class VmtAttendanceReportsService
         }
     }
 
+    public function attendanceSettingsinfos($work_shift_id)
+    {
+        $lc_enable = false;
+        $eg_enable = false;
+        $lop_status_settings = array();
+        if ($work_shift_id == null) {
+            $all_work_shift = VmtWorkShifts::all();
+            foreach ($all_work_shift as $single_shift) {
+                if ($single_shift->is_lc_applicable == 1) {
+                    $lc_enable = true;
+                }
+                if ($single_shift->is_eg_applicable == 1) {
+                    $eg_enable = true;
+                }
+            }
+            $lop_status_settings['lc_status'] = $lc_enable;
+            $lop_status_settings['eg_status'] = $eg_enable;
+            return  $lop_status_settings;
+        } else {
+            $work_shift = VmtWorkShifts::where('id', $work_shift_id)->first();
+            if ($work_shift->is_lc_applicable == 1) {
+                $lc_enable = true;
+            }
+            if ($work_shift->is_eg_applicable == 1) {
+                $eg_enable = true;
+            }
+
+            $lop_status_settings['lc_status'] = $lc_enable;
+            $lop_status_settings['eg_status'] = $eg_enable;
+            return  $lop_status_settings;
+        }
+    }
+
     public function basicAttendanceReport($year, $month, $client_domain)
     {
         ini_set('max_execution_time', 300);
@@ -229,7 +262,8 @@ class VmtAttendanceReportsService
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
             }
-
+            $attendance_setting_details = $this->attendanceSettingsinfos(null);
+            //dd($attendance_setting_details->lc_status);
             if ($client_domain == 'brandavatar.abshrms.com' || sessionGetSelectedClientCode() == "DM") {
                 array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", "Total LC", "Total EG", "Total Payable Days");
             } else {
