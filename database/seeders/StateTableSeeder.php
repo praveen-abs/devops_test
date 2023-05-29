@@ -15,6 +15,9 @@ class StateTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::table('vmt_states')->truncate();
+
         $country_id = Countries::where('country_name', 'India')->first()->id;
 
         DB::table('vmt_states')->insert([

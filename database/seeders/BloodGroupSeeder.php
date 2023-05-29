@@ -18,14 +18,14 @@ class BloodGroupSeeder extends Seeder
         DB::table('vmt_bloodgroup')->truncate();
 
         DB::table('vmt_bloodgroup')->insert([
-            ['name'=> 'A Positive'],
-            ['name'=> 'A Negative'],
-            ['name'=> 'B Positive'],
-            ['name'=> 'B Negative'],
-            ['name'=> 'AB Positive'],
-            ['name'=> 'AB Negative'],
-            ['name'=> 'O Positive'],
-            ['name'=> 'O Negative'],
+            ['id'=>'1','name'=> 'A Positive'],
+            ['id'=>'2','name'=> 'A Negative'],
+            ['id'=>'3','name'=> 'B Positive'],
+            ['id'=>'4','name'=> 'B Negative'],
+            ['id'=>'5','name'=> 'AB Positive'],
+            ['id'=>'6','name'=> 'AB Negative'],
+            ['id'=>'7','name'=> 'O Positive'],
+            ['id'=>'8','name'=> 'O Negative'],
         ]);
     }
 }

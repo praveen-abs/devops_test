@@ -15,6 +15,9 @@ class LeaveTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::table('vmt_leaves')->truncate();
+
         DB::table('vmt_leaves')->insert([
             ['leave_type'=>'Sick Leave/Casual Leave','days_annual'=>'12','days_monthly'=>'2','days_restricted'=>'3','is_finite'=>'1'],
             ['leave_type'=>'Earned Leave','days_annual'=>'12','days_monthly'=>'2','days_restricted'=>'2','is_finite'=>'1'],
