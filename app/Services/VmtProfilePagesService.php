@@ -217,7 +217,7 @@ class VmtProfilePagesService
 
         if(!empty($response['getEmployeeDetails']['blood_group_id']))
         {
-            $response['getEmployeeDetails']['blood_group_name '] = VmtBloodGroup::where('id',$response['getEmployeeDetails']['blood_group_id'])->first()->name;
+            $response['getEmployeeDetails']['blood_group_name'] = VmtBloodGroup::where('id',$response['getEmployeeDetails']['blood_group_id'])->first()->name;
 
         }
 
@@ -307,7 +307,7 @@ class VmtProfilePagesService
             $details->dob = $birthday;
             $details->gender = $gender;
             $details->marital_status_id = VmtMaritalStatus::where('name', $marital_status)->first()->id;
-            $details->blood_group_id = $blood_group;
+            $details->blood_group_id = VmtBloodGroup::where('name', $blood_group)->first()->id;
             $details->physically_challenged = $phy_challenged;
             $details->save();
 
@@ -495,8 +495,9 @@ class VmtProfilePagesService
 
 
     try{
-        //  dd($request->all());
+
         $user_id = user::where('user_code', $user_code)->first()->id;
+
         $exp = Experience::where('id',$exp_current_table_id)->first();
             $exp->user_id = $user_id;
             $exp->company_name = $company_name;
