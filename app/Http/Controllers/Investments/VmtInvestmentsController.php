@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Investments;
 
-use App\Http\Controllers\Controller;
+use App\Models\VmtInvestmentForm;
+use App\Models\VmtInvFormSection;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\VmtInvFEmpAssigned;
+use App\Http\Controllers\Controller;
 use App\Services\VmtInvestmentsService;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -283,6 +285,126 @@ class VmtInvestmentsController extends Controller
         //dd($request->all());
 
         return view('investments_forms_mgmt');
+
+    }
+
+    public function declarationSummaryCalculation(Request $request)
+    {
+
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        // $v_form_template = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+        //     ->leftjoin('vmt_inv_formsection', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+        //     ->leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+        //     ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+        //    ->where('vmt_inv_f_emp_assigned.user_id',$user_id)
+        $v_form_template =VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+        ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+         ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+        ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+            ->get(
+                [
+                    'vmt_inv_formsection.section_id',
+                    'vmt_inv_section.section',
+                    'vmt_inv_section.particular',
+                    'vmt_inv_section.reference',
+                    'vmt_inv_section.max_amount',
+                    'vmt_inv_section_group.section_group',
+                    'vmt_inv_formsection.id as fs_id',
+                    'vmt_inv_section.section_option_1',
+                    'vmt_inv_section.section_option_2',
+                    'vmt_inv_emp_formdata.dec_amount',
+                    'vmt_inv_emp_formdata.json_popups_value',
+                ]
+            )->toArray();
+            
+            // dd($v_form_template);
+
+        // $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
+
+        $res = array();
+        $sumOfSec = 0;
+        $sumOfHra = 0;
+        $sumOfotherExemption  = 0;
+        $sumOfHouseProperty  = 0;
+        $sumOfReimbersument  = 0;
+        $sumOfPreviousEmployerIncome = 0;
+        $sumOfOtherSourceIncome = 0;
+        foreach ($v_form_template as $dec_amt) {      
+    
+             if($dec_amt['section_group'] == "HRA"){
+                $hraTotalRent  = (json_decode($dec_amt["json_popups_value"], true));
+                $sumOfHra += $hraTotalRent['total_rent_paid'];
+                $hra['section_name'] = $dec_amt['section_group'];
+                $hra['dec_amount'] = $sumOfHra;
+                $hra['proof_submitted'] = 0;
+                $hra['amount_rejected'] = 0;
+                $hra['amount_accepted'] = 0;
+                // dd($hraTotalRent);
+            }
+             if($dec_amt['section_group'] == "Section 80C & 80CC "){
+
+                $sumOfSec += $dec_amt['dec_amount'];
+                $section80['section_name'] = $dec_amt['section_group'];
+                $section80['dec_amount'] = $sumOfSec;
+                $section80['proof_submitted'] = 0;
+                $section80['amount_rejected'] = 0;
+                $section80['amount_accepted'] = 0;
+            }
+             if($dec_amt['section_group'] == "Other Excemptions "){
+              
+                $sumOfotherExemption += $dec_amt['dec_amount'];
+                $otherExemption['section_name'] = $dec_amt['section_group'];
+                $otherExemption['dec_amount'] = $sumOfotherExemption;
+                $otherExemption['proof_submitted'] = 0;
+                $otherExemption['amount_rejected'] = 0;
+                $otherExemption['amount_accepted'] = 0;
+            }
+            if($dec_amt['section_group'] == "House Properties "){
+                $totalIntersetPaid  = (json_decode($dec_amt["json_popups_value"], true));
+                // $sumOfHouseProperty += $totalIntersetPaid["income_loss"];
+                $houseProperty['section_name'] = $dec_amt['section_group'];
+                $houseProperty['dec_amount'] = $sumOfHouseProperty;
+                $houseProperty['proof_submitted'] = 0;
+                $houseProperty['amount_rejected'] = 0;
+                $houseProperty['amount_accepted'] = 0;
+                
+            }
+            if($dec_amt['section_group'] == "Reimbersument "){
+                $sumOfReimbersument += $dec_amt['dec_amount'];
+                $reimbersument['section_name'] = $dec_amt['section_group'];
+                $reimbersument['dec_amount'] = $sumOfReimbersument;
+                $reimbersument['proof_submitted'] = 0;
+                $reimbersument['amount_rejected'] = 0;
+                $reimbersument['amount_accepted'] = 0;
+                
+            }
+            if($dec_amt['section_group'] == "Previous Employer Income"){
+                $sumOfPreviousEmployerIncome += $dec_amt['dec_amount'];
+                $previousEmployerIncome['section_name'] = $dec_amt['section_group'];
+                $previousEmployerIncome['dec_amount'] = $sumOfPreviousEmployerIncome;
+                $previousEmployerIncome['proof_submitted'] = 0;
+                $previousEmployerIncome['amount_rejected'] = 0;
+                $previousEmployerIncome['amount_accepted'] = 0;
+                
+            }
+
+            if($dec_amt['section_group'] == "Other Source Of  Income"){
+                $sumOfOtherSourceIncome += $dec_amt['dec_amount'];
+                $otherSourceIncome['section_name'] = $dec_amt['section_group'];
+                $otherSourceIncome['dec_amount'] = $sumOfOtherSourceIncome;
+                $otherSourceIncome['proof_submitted'] = 0;
+                $otherSourceIncome['amount_rejected'] = 0;
+                $otherSourceIncome['amount_accepted'] = 0;
+                
+            }
+           
+           
+        }
+        
+        // array_push($res,$section80,$otherExemption,$houseProperty,$reimbersument ,$previousEmployerIncome,$otherSourceIncome);
+        array_push($res,$hra,$section80,$houseProperty,$otherExemption,$reimbersument,$previousEmployerIncome,$otherSourceIncome);
+        return $res;
 
     }
 
