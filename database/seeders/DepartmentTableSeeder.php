@@ -14,6 +14,9 @@ class DepartmentTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::table('vmt_department')->truncate();
+
         DB::table('vmt_department')->insert([
             ['name'=> 'IT', 'created_at' => now()],
             ['name'=> 'Sales', 'created_at' => now()],
