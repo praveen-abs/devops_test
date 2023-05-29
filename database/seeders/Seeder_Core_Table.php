@@ -20,12 +20,13 @@ class Seeder_Core_Table extends Seeder
             BloodGroupSeeder::class,
             VmtHolidaysSeeder::class,
             OrgRolesTableSeeder::class,
-            DepartmentTableSeeder::class,
+            //DepartmentTableSeeder::class,
+            CountriesTableSeeder::class,
             StateTableSeeder::class,
             BankTableSeeder::class,
             Seeder_VmtMaritalStatus::class,
-            CountriesTableSeeder::class,
-            LeaveTableSeeder::class,
+            //LeaveTableSeeder::class,
+
 
         ]);
 
