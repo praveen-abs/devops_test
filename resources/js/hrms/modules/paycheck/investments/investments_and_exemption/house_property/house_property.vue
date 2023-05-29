@@ -27,7 +27,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.particular == 'Self Occupied Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data['json_popups_value'].income_loss }}
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getSopSlotData(slotProps.data)"
@@ -37,7 +37,7 @@
                         </div>
                         <div v-if="slotProps.data.particular == 'Let Out Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data['json_popups_value'].income_loss }}
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getLopSlotData(slotProps.data)"
@@ -48,7 +48,7 @@
                         </div>
                         <div v-if="slotProps.data.particular == 'Deemed Let Out Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                {{ slotProps.data['json_popups_value'].income_loss }}
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getDlopSlotData(slotProps.data)"
@@ -233,7 +233,8 @@
                         s$.lender_name.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="s$.lender_name.$error" class="font-semibold text-red-400 fs-6">
-                    {{ s$.lender_name.$errors[0].$message }}
+                    <!-- {{ s$.lender_name.$errors[0].$message }} -->
+                    {{ s$.lender_name.required.$message.replace( "Value","Lender name"  ) }}
                 </span>
             </div>
             <div class="">
@@ -244,7 +245,8 @@
                         s$.lender_pan.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="s$.lender_pan.$error" class="font-semibold text-red-400 fs-6">
-                    {{ s$.lender_pan.$errors[0].$message }}
+                    <!-- {{ s$.lender_pan.$errors[0].$message }} -->
+                    {{ s$.lender_pan.required.$message.replace( "Value","Lender PAN"  )}}
                 </span>
             </div>
 
@@ -260,7 +262,8 @@
                         s$.lender_type.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="s$.lender_type.$error" class="font-semibold text-red-400 fs-6">
-                    {{ s$.lender_type.$errors[0].$message }}
+                    <!-- {{ s$.lender_type.$errors[0].$message }} -->
+                    {{ s$.lender_type.required.$message.replace( "Value","Lender type"  )}}
                 </span>
             </div>
             <div class="">
@@ -270,7 +273,8 @@
                     s$.income_loss.$error ? 'p-invalid' : '',
                 ]" />
                 <span v-if="s$.income_loss.$error" class="font-semibold text-red-400 fs-6">
-                    {{ s$.income_loss.$errors[0].$message }}
+                    <!-- {{ s$.income_loss.$errors[0].$message }} -->
+                    {{ s$.income_loss.required.$message.replace( "Value","Income loss"  ) }}
                 </span>
             </div>
         </div>
@@ -314,7 +318,8 @@
                         v$.lender_name.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="v$.lender_name.$error" class="font-semibold text-red-400 fs-6">
-                    {{ v$.lender_name.$errors[0].$message }}
+                    <!-- {{ v$.lender_name.$errors[0].$message }} -->
+                    {{ v$.lender_name.required.$message.replace( "Value","Lender name"  )}}
                 </span>
             </div>
             <div class="">
@@ -325,7 +330,8 @@
                         v$.lender_pan.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="v$.lender_pan.$error" class="font-semibold text-red-400 fs-6">
-                    {{ v$.lender_pan.$errors[0].$message }}
+                    {{ v$.lender_pan.required.$message.replace( "Value","Lender PAN"  )}}
+                    <!-- {{ v$.lender_pan.$errors[0].$message }} -->
                 </span>
 
             </div>
@@ -342,6 +348,7 @@
                     ]" />
                 <span v-if="v$.lender_type.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.lender_type.$errors[0].$message }}
+                    {{ v$.lender_type.required.$message.replace( "Value","Lender type"  ) }}
                 </span>
             </div>
 
@@ -352,7 +359,8 @@
                     v$.rent_received.$error ? 'p-invalid' : '',
                 ]" />
                 <span v-if="v$.rent_received.$error" class="font-semibold text-red-400 fs-6">
-                    {{ v$.rent_received.$errors[0].$message }}
+                    <!-- {{ v$.rent_received.$errors[0].$message }} -->
+                    {{ v$.rent_received.required.$message.replace( "Value","Rent received"  ) }}
                 </span>
             </div>
             <div class="">
@@ -363,7 +371,8 @@
                     v$.municipal_tax.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
                 <span v-if="v$.municipal_tax.$error" class="font-semibold text-red-400 fs-6">
-                    {{ v$.municipal_tax.$errors[0].$message }}
+                    <!-- {{ v$.municipal_tax.$errors[0].$message }} -->
+                    {{ v$.municipal_tax.required.$message.replace( "Value","Municipal tax"  ) }}
                 </span>
             </div>
             <div class="">
@@ -383,7 +392,8 @@
                     v$.interest.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
                 <span v-if="v$.interest.$error" class="font-semibold text-red-400 fs-6">
-                    {{ v$.interest.$errors[0].$message }}
+                    <!-- {{ v$.interest.$errors[0].$message }} -->
+                    {{ v$.interest.required.$message.replace( "Value","Interest"  ) }}
                 </span>
             </div>
             <div class="">
@@ -419,7 +429,8 @@
                         p$.lender_name.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="p$.lender_name.$error" class="font-semibold text-red-400 fs-6">
-                    {{ p$.lender_name.$errors[0].$message }}
+                    <!-- {{ p$.lender_name.$errors[0].$message }} -->
+                    {{ p$.lender_name.required.$message.replace( "Value","Lender name"  ) }}
                 </span>
             </div>
             <div class="">
@@ -430,7 +441,8 @@
                         p$.lender_pan.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="p$.lender_pan.$error" class="font-semibold text-red-400 fs-6">
-                    {{ p$.lender_pan.$errors[0].$message }}
+                    <!-- {{ p$.lender_pan.$errors[0].$message }} -->
+                    {{ p$.lender_pan.required.$message.replace( "Value","Lender PAN"  )}}
                 </span>
             </div>
 
@@ -445,7 +457,8 @@
                         p$.lender_type.$error ? 'border border-red-500' : '',
                     ]" />
                 <span v-if="p$.lender_type.$error" class="font-semibold text-red-400 fs-6">
-                    {{ p$.lender_type.$errors[0].$message }}
+                    <!-- {{ p$.lender_type.$errors[0].$message }} -->
+                    {{ p$.lender_type.required.$message.replace( "Value","Lender type"  ) }}
                 </span>
             </div>
 
@@ -456,7 +469,8 @@
                     p$.rent_received.$error ? 'p-invalid' : '',
                 ]" />
                 <span v-if="p$.rent_received.$error" class="font-semibold text-red-400 fs-6">
-                    {{ p$.rent_received.$errors[0].$message }}
+                    <!-- {{ p$.rent_received.$errors[0].$message }} -->
+                    {{ p$.rent_received.required.$message.replace( "Value","Rent received"  )}}
                 </span>
             </div>
             <div class="">
@@ -468,7 +482,8 @@
                     p$.municipal_tax.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
                 <span v-if="p$.municipal_tax.$error" class="font-semibold text-red-400 fs-6">
-                    {{ p$.municipal_tax.$errors[0].$message }}
+                    <!-- {{ p$.municipal_tax.$errors[0].$message }} -->
+                    {{ p$.municipal_tax.required.$message.replace( "Value","Municipal Tax"  ) }}
                 </span>
             </div>
             <div class="">
@@ -488,7 +503,8 @@
                     p$.interest.$error ? 'p-invalid' : '',
                 ]" @input="investmentStore.income_loss_calculation" />
                 <span v-if="p$.interest.$error" class="font-semibold text-red-400 fs-6">
-                    {{ p$.interest.$errors[0].$message }}
+                    <!-- {{ p$.interest.$errors[0].$message }} -->
+                    {{ p$.interest.required.$message.replace( "Value","Interest"  ) }}
                 </span>
             </div>
             <div class="">

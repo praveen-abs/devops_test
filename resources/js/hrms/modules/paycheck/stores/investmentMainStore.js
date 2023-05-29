@@ -97,6 +97,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const otherExe = reactive([]);
     const hra_fs = reactive([]);
     const AddHraButtonDisabled = ref(false);
+    const employeDoj = ref()
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
@@ -276,10 +277,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // COnvert Declaration Amount Into INR Currency
 
     const formatCurrency = (value) => {
-        return new Intl.NumberFormat("en-US", {
+        let currency =  new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "INR",
         }).format(value);
+
+       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length)}`
+
+       return format
+
     };
 
     // HRA Begins
@@ -289,6 +295,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const current_data = ref();
 
     const hra = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         from_month: "",
@@ -315,10 +322,10 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             .then((res) => {
                 console.log(Object.values(res.data));
                 hra_data.value = Object.values(res.data);
-                if (Object.values(res.data)) {
-                    AddHraButtonDisabled.value = true;
-                } else {
+                if (Object.values(res.data).length == 0) {
                     AddHraButtonDisabled.value = false;
+                } else {
+                    AddHraButtonDisabled.value = true;
                 }
             })
             .catch((e) => console.log(e))
@@ -329,14 +336,11 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const editHraNewRental = (currentRowData) => {
         // console.log("editing Hra");
-        // console.log(currentRowData);
-
+        console.log(currentRowData);
         dailogAddNewRental.value = true;
-
+        hra.id = currentRowData.id;
         hra.from_month = dayjs( currentRowData.json_popups_value.from_month ).format("DD-MM-YYYY");
-        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format(
-            "DD-MM_y"
-        );
+        hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format("DD-MM-YYYY");
         hra.address = currentRowData.json_popups_value.address;
         hra.city = currentRowData.json_popups_value.city;
         hra.landlord_PAN = currentRowData.json_popups_value.landlord_PAN;
@@ -394,6 +398,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                             life: 3000,
                         });
                         fetchHraNewRental();
+                        getInvestmentSource()
                     });
             },
             reject: () => {},
@@ -439,6 +444,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     });
 
     const other_exe_80EE = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         loan_sanction_date: "",
@@ -449,6 +455,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         section: "80EE",
     });
     const other_exe_80EEA = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         loan_sanction_date: "",
@@ -459,6 +466,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         section: "80EEA",
     });
     const other_exe_80EEB = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         loan_sanction_date: "",
@@ -477,18 +485,21 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const dailog_80EEB = ref(false);
 
     const get80EESlotData = (data) => {
+        other_exe_80EE.id = data.id
         dailog_80EE.value = true;
         // console.log(data);
         other_exe_80EE.user_code = service.current_user_code;
         other_exe_80EE.fs_id = data.fs_id;
     };
     const get80EEASlotData = (data) => {
+        other_exe_80EEA.id = data.id
         dailog_80EEA.value = true;
         // console.log(data);
         other_exe_80EEA.user_code = service.current_user_code;
         other_exe_80EEA.fs_id = data.fs_id;
     };
     const get80EEBSlotData = (data) => {
+        other_exe_80EEB.id = data.id
         dailog_80EEB.value = true;
         // console.log(data);
         other_exe_80EEB.user_code = service.current_user_code;
@@ -675,6 +686,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Self Occupied Property
 
     const sop = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         lender_name: "",
@@ -688,6 +700,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Let Out Property
 
     const lop = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         lender_name: "",
@@ -707,6 +720,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Deemed Let Out Property
 
     const dlop = reactive({
+        id:'',
         user_code: "",
         fs_id: "",
         lender_name: "",
@@ -774,21 +788,24 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const getSopSlotData = (data) => {
         dailog_SelfOccupiedProperty.value = true;
-        // console.log(data);
+        console.log(data);
         sop.user_code = service.current_user_code;
         sop.fs_id = data.fs_id;
+        // sop.id = data.id;
     };
     const getLopSlotData = (data) => {
         dailog_LetOutProperty.value = true;
         // console.log(data);
         lop.user_code = service.current_user_code;
         lop.fs_id = data.fs_id;
+        // lop.id = data.id;
     };
     const getDlopSlotData = (data) => {
         dailog_DeemedLetOutProperty.value = true;
         // console.log(data);
         dlop.user_code = service.current_user_code;
         dlop.fs_id = data.fs_id;
+        // dlop.id = data.id;
     };
 
     const editHouseProps = (currentRowData) => {
@@ -799,6 +816,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         ) {
             sop.user_code = service.current_user_code;
             sop.fs_id = currentRowData.fs_id;
+            sop.id = currentRowData.id;
             dailog_SelfOccupiedProperty.value = true;
             sop.lender_name = currentRowData.json_popups_value.lender_name;
             sop.lender_pan = currentRowData.json_popups_value.lender_pan;
@@ -812,6 +830,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         ) {
             dailog_LetOutProperty.value = true;
             lop.user_code = service.current_user_code;
+            lop.id = currentRowData.id;
             lop.fs_id = currentRowData.fs_id;
             lop.lender_name = currentRowData.json_popups_value.lender_name;
             lop.lender_pan = currentRowData.json_popups_value.lender_pan;
@@ -829,6 +848,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             dailog_DeemedLetOutProperty.value = true;
             dlop.user_code = service.current_user_code;
             dlop.fs_id = currentRowData.fs_id;
+            dlop.id = currentRowData.id;
             dlop.lender_name = currentRowData.json_popups_value.lender_name;
             dlop.lender_pan = currentRowData.json_popups_value.lender_pan;
             dlop.lender_type = currentRowData.json_popups_value.lender_type;
@@ -1115,5 +1135,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
         metrocitiesOption,
         lenderTypeOption,
+        employeDoj,
     };
 });

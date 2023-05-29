@@ -116,6 +116,7 @@
                 </div>
             </div>
 
+
             <DataTable :value="useAttendanceStore.Week_Off_Days" tableStyle="min-width: 50rem">
                 <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
                 <Column field="weeks" header="Days">
@@ -134,7 +135,7 @@
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.first_week"  >
+                                :checked="slotProps.data.AllWeeks" aria-checked="slotProps.data.AllWeeks" v-model="slotProps.data.first_week"  >
                         </div>
                     </template>
                 </Column>
@@ -292,6 +293,7 @@ const checked = (data) => {
 
 onMounted(() => {
     console.log(useAttendanceStore.manageshift_exemption_steps);
+
 })
 
 
@@ -354,6 +356,7 @@ let currentlySelectedRowData = null;
 onMounted(() => {
     //   ajax_GetEmployeeDetails();
     useAttendanceStore.fetchShiftDetails();
+    useAttendanceStore.getWeek_Off_Days();
 });
 
 function onClickGetEmployees() {

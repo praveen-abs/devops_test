@@ -986,8 +986,8 @@ class VmtEmployeeController extends Controller
     //     }
     // }
 
-        public function getallemployee(){
-          $query_employee = User::where('is_ssa','<>','1')->get();
+        public function getAllEmployees(){
+          $query_employee = User::where('is_ssa','0')->get(['id', 'name','user_code']);
           return ($query_employee);
         }
 
@@ -1008,6 +1008,11 @@ class VmtEmployeeController extends Controller
     public function fetchMaritalStatus(Request $request){
         $query = VmtMaritalStatus::all(['id','name']);
         return response()->json($query);
+    }
+
+    public function fetchclientcode(Request $request){
+        $employee_code_prefix = VmtMasterConfig::where('config_name','employee_code_prefix')->first()->config_value;
+        return response()->json($employee_code_prefix);
     }
 
     public function fetchBloodGroups(Request $request){
@@ -1809,6 +1814,16 @@ class VmtEmployeeController extends Controller
         }
 
         return "saved";
+
+
+    }
+
+    public function getCurrentEmployeeDetails(Request $request){
+
+      $user_id = User::where('user_code', auth()->user()->user_code)->first();
+       $user =  User::where('user_code','SA100')->get();
+
+       dd($user_id);
 
 
     }

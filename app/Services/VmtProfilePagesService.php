@@ -200,6 +200,7 @@ class VmtProfilePagesService
         $response['employee_documents'] = $response_docs;
 
         //Add the documents details
+
         $response['avatar'] = $this->getProfilePicture($response->user_code);
 
         if(!empty($response['getEmployeeOfficeDetails']['department_id']))
@@ -216,7 +217,7 @@ class VmtProfilePagesService
 
         if(!empty($response['getEmployeeDetails']['blood_group_id']))
         {
-            $response['getEmployeeDetails']['blood_group_name '] = VmtBloodGroup::where('id',$response['getEmployeeDetails']['blood_group_id'])->first()->name;
+            $response['getEmployeeDetails']['blood_group_name'] = VmtBloodGroup::where('id',$response['getEmployeeDetails']['blood_group_id'])->first()->name;
 
         }
 
@@ -494,8 +495,9 @@ class VmtProfilePagesService
 
 
     try{
-        //  dd($request->all());
+
         $user_id = user::where('user_code', $user_code)->first()->id;
+    
         $exp = Experience::where('id',$exp_current_table_id)->first();
             $exp->user_id = $user_id;
             $exp->company_name = $company_name;

@@ -14,7 +14,7 @@
                 <Column field="particular" header="Particulars" style="min-width: 20rem;text-align: left !important;">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80DD'">
-                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                        <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
                             <div class="flex py-2">
                                 <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
@@ -126,7 +126,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else class="px-auto">
                                 <button @click="investmentStore.get80EESlotData(slotProps.data)"
@@ -137,7 +137,7 @@
                         <div v-else-if="slotProps.data.section == '80EEA'">
                             <div v-if="slotProps.data.json_popups_value">
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
 
                             </div>
                             <div v-else>
@@ -147,9 +147,9 @@
                             </div>
                         </div>
                         <div v-else-if="slotProps.data.section == '80EEB'">
-                            <div v-if="slotProps.data.json_popups_value">
+                            <div v-if="slotProps.data.json_popups_value"> 
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
@@ -347,7 +347,8 @@
                             v$.loan_sanction_date.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="v$.loan_sanction_date.$error" class="font-semibold text-red-400 fs-6">
-                        {{ v$.loan_sanction_date.$errors[0].$message }}
+                        <!-- {{ v$.loan_sanction_date.$errors[0].$message }} -->
+                        {{ v$.loan_sanction_date.required.$message.replace( "Value","Loan sanction date"  )}}
                     </span>
                 </div>
                 <div class="">
@@ -360,7 +361,8 @@
                             v$.lender_type.$error ? 'border border-red-500' : '',
                         ]" />
                     <span v-if="v$.lender_type.$error" class="font-semibold text-red-400 fs-6">
-                        {{ v$.lender_type.$errors[0].$message }}
+                        <!-- {{ v$.lender_type.$errors[0].$message }} -->
+                        {{ v$.lender_type.required.$message.replace( "Value","Lender name"  ) }}
                     </span>
                 </div>
 
@@ -377,7 +379,8 @@
                             v$.property_value.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="v$.property_value.$error" class="font-semibold text-red-400 fs-6">
-                        {{ v$.property_value.$errors[0].$message }}
+                        <!-- {{ v$.property_value.$errors[0].$message }} -->
+                        {{ v$.property_value.required.$message.replace( "Value","Property value"  )}}
                     </span>
                 </div>
                 <div class="">
@@ -388,7 +391,8 @@
                             v$.loan_amount.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="v$.loan_amount.$error" class="font-semibold text-red-400 fs-6">
-                        {{ v$.loan_amount.$errors[0].$message }}
+                        <!-- {{ v$.loan_amount.$errors[0].$message }} -->
+                        {{ v$.loan_amount.required.$message.replace( "Value","Loan Amount"  ) }}
                     </span>
 
                 </div>
@@ -400,7 +404,8 @@
                             v$.interest_amount_paid.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="v$.interest_amount_paid.$error" class="font-semibold text-red-400 fs-6">
-                        {{ v$.interest_amount_paid.$errors[0].$message }}
+                        <!-- {{ v$.interest_amount_paid.$errors[0].$message }} -->
+                        {{ v$.interest_amount_paid.required.$message.replace( "Value","Loan amount paid"  )  }}
                     </span>
                 </div>
 
@@ -432,7 +437,8 @@
                             s$.loan_sanction_date.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="s$.loan_sanction_date.$error" class="font-semibold text-red-400 fs-6">
-                        {{ s$.loan_sanction_date.$errors[0].$message }}
+                        <!-- {{ s$.loan_sanction_date.$errors[0].$message }} -->
+                        {{ s$.loan_sanction_date.required.$message.replace( "Value","Loan sanction date"  )}}
                     </span>
                 </div>
 
@@ -448,7 +454,8 @@
                             s$.lender_type.$error ? 'border border-red-500' : '',
                         ]" />
                     <span v-if="s$.lender_type.$error" class="font-semibold text-red-400 fs-6">
-                        {{ s$.lender_type.$errors[0].$message }}
+                        <!-- {{ s$.lender_type.$errors[0].$message }} -->
+                        {{ s$.lender_type.required.$message.replace( "Value","Lender name"  ) }}
                     </span>
 
                 </div>
@@ -462,7 +469,8 @@
                             s$.property_value.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="s$.property_value.$error" class="font-semibold text-red-400 fs-6">
-                        {{ s$.property_value.$errors[0].$message }}
+                        <!-- {{ s$.property_value.$errors[0].$message }} -->
+                        {{ s$.property_value.required.$message.replace( "Value","Property value"  )}}
                     </span>
                 </div>
                 <div class="">
@@ -473,7 +481,8 @@
                             s$.loan_amount.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="s$.loan_amount.$error" class="font-semibold text-red-400 fs-6">
-                        {{ s$.loan_amount.$errors[0].$message }}
+                        <!-- {{ s$.loan_amount.$errors[0].$message }} -->
+                        {{ s$.loan_amount.required.$message.replace( "Value","Loan Amount"  ) }}
                     </span>
                 </div>
                 <div class="">
@@ -484,7 +493,8 @@
                             s$.interest_amount_paid.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="s$.interest_amount_paid.$error" class="font-semibold text-red-400 fs-6">
-                        {{ s$.interest_amount_paid.$errors[0].$message }}
+                        <!-- {{ s$.interest_amount_paid.$errors[0].$message }} -->
+                        {{ s$.interest_amount_paid.required.$message.replace( "Value","Loan amount paid"  )  }}
                     </span>
                 </div>
 
@@ -519,6 +529,7 @@
                         ]" />
                     <span v-if="p$.loan_sanction_date.$error" class="font-semibold text-red-400 fs-6">
                         {{ p$.loan_sanction_date.$errors[0].$message }}
+                        {{ p$.loan_sanction_date.required.$message.replace( "Value","Loan sanction date"  )  }}
                     </span>
                 </div>
 
@@ -532,7 +543,8 @@
                             p$.vechicle_brand.$error ? 'border border-red-500' : '',
                         ]" />
                     <span v-if="p$.vechicle_brand.$error" class="font-semibold text-red-400 fs-6">
-                        {{ p$.vechicle_brand.$errors[0].$message }}
+                        <!-- {{ p$.vechicle_brand.$errors[0].$message }} -->
+                        {{ p$.vechicle_brand.required.$message.replace( "Value","Vechile Brand"  ) }}
                     </span>
                 </div>
 
@@ -546,7 +558,8 @@
                             p$.vechicle_model.$error ? 'border border-red-500' : '',
                         ]" />
                     <span v-if="p$.vechicle_model.$error" class="font-semibold text-red-400 fs-6">
-                        {{ p$.vechicle_model.$errors[0].$message }}
+                        <!-- {{ p$.vechicle_model.$errors[0].$message }} -->
+                        {{ p$.vechicle_model.required.$message.replace( "Value","Vechile Model"  ) }}
                     </span>
                 </div>
 
@@ -558,7 +571,8 @@
                             p$.interest_amount_paid.$error ? 'p-invalid' : '',
                         ]" />
                     <span v-if="p$.interest_amount_paid.$error" class="font-semibold text-red-400 fs-6">
-                        {{ p$.interest_amount_paid.$errors[0].$message }}
+                        {{ p$.interest_amount_paid.required.$message.replace( "Value","Interest amount paid"  )}}
+                        <!-- {{ p$.interest_amount_paid.$errors[0].$message }} -->
                     </span>
                 </div>
 

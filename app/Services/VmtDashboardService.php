@@ -144,7 +144,7 @@ class VmtDashboardService{
 
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
-        $response["all_employee_details"] = $this->getAllUsersDOJ_DOB();
+        $response["events"] = $this->getAllEvents();
 
         return $response;
     }
@@ -154,6 +154,15 @@ class VmtDashboardService{
             ->get(['users.name','users.name','vmt_employee_details.doj','vmt_employee_details.dob']);
     }
 
+    /*
+        Events such as Birthday event, work anniversary, etc
+
+
+    */
+    public function getAllEvents(){
+        return [];
+    }
+
     private function getAllEmployeeBirthdayDetails(){
 
     }
@@ -161,6 +170,8 @@ class VmtDashboardService{
     private function getAllHolidays(){
 
     }
+
+
 }
 
 

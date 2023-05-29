@@ -1,4 +1,76 @@
 {
+  "assingWorkShifts": [
+    {
+      "weeks": "Sunday",
+      "week_off_list": 0,
+      "first_week": 0,
+      "sec_week": 0,
+      "third_week": 0,
+      "fourth_week": 0,
+      "fifth_week": 0,
+      "id": 1
+    },
+    {
+      "weeks": "Monday",
+      "week_off_list": 0,
+      "first_week": 1,
+      "sec_week": 1,
+      "third_week": 1,
+      "fourth_week": 1,
+      "fifth_week": 0,
+      "id": 2
+    },
+    {
+      "weeks": "Tuesday",
+      "week_off_list": 0,
+      "first_week": 0,
+      "sec_week": 0,
+      "third_week": 1,
+      "fourth_week": 1,
+      "fifth_week": 0,
+      "id": 3
+    },
+    {
+      "weeks": "Wednesday",
+      "week_off_list": 1,
+      "first_week": 1,
+      "sec_week": 1,
+      "third_week": 1,
+      "fourth_week": 1,
+      "fifth_week": 1,
+      "id": 4
+    },
+    {
+      "weeks": "Thursday",
+      "week_off_list": 0,
+      "first_week": 0,
+      "sec_week": 0,
+      "third_week": 1,
+      "fourth_week": 1,
+      "fifth_week": 1,
+      "id": 5
+    },
+    {
+      "weeks": "Friday",
+      "week_off_list": 0,
+      "first_week": 0,
+      "sec_week": 0,
+      "third_week": 1,
+      "fourth_week": 1,
+      "fifth_week": 1,
+      "id": 6
+    },
+    {
+      "weeks": "Saturday",
+      "week_off_list": 0,
+      "first_week": 1,
+      "sec_week": 1,
+      "third_week": 1,
+      "fourth_week": 1,
+      "fifth_week": 1,
+      "id": 7
+    }
+  ],
   "OnboardingFormDetails": [
     {
       "id": 1,
@@ -29,9 +101,7 @@
       "action": 1
     }
   ],
-  "DeleteOnboardingFormDetails": [
-
-  ],
+  "DeleteOnboardingFormDetails": [],
   "posts": [
     {
       "id": 1,
