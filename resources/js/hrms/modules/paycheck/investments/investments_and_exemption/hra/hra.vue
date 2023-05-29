@@ -62,7 +62,7 @@
 
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
-            <span class="mx-4 my-2 mt-2 text-lg font-semibold text-indigo-950">Rental Property</span>
+            <span class="mx-4 my-2 mt-2 text-2xl font-semibold text-indigo-950">Rental Property</span>
             <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange"
                 @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
@@ -261,7 +261,7 @@ import { profilePagesStore } from "../../../../profile_pages/stores/ProfilePages
 
 const investmentStore = investmentMainStore()
 const useEmployeeDetails = profilePagesStore()
-const employeDoj = ref(new Date(moment(investmentStore.employeDoj).format('YYYY/MM/DD')))
+const employeDoj = ref(new Date(moment(investmentStore.employeDoj).format('DD/MM/YYYY')))
 
 
 

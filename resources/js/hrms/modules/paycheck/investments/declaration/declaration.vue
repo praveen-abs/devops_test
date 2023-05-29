@@ -3,16 +3,17 @@
         <div class=" justify-content-center align-items-center">
             <div class="mx-2 ">
                 <div class="my-3">
-                    <p class="text-2xl font-semibold text-black">Tax Deductions FY 2022-2023</p>
+                    <p class="font-semibold text-black fs-2">Tax Deductions FY 2022-2023</p>
                 </div>
-                <div class="p-2 my-2 text-left text-black border-l-4 rounded-lg bg-red-50 border-l-red-400">
-                    <div style="font-weight: 600;" class="px-2 my-2 fs-5 d-flex ">Kindly update your <span
-                            class="text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
+                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400 w-7 ">
+                    <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
+                    <div style="font-weight: 600;" class="px-1 my-2 fs-5 d-flex ">Kindly update your <span
+                            class="font-semibold text-blue-400 fs-5">PAN to</span> avoid 20$ TDS
                         deduction (if applicable) </div>
                 </div>
                 <div class="my-4 rounded-lg card ">
                     <div class="card-body">
-                        <p class="text-black font-meduim fs-6">You have the option of either using a new
+                        <!-- <p class="text-black font-meduim fs-6">You have the option of either using a new
                             regime(with no tax deducations), or
                             using the same regime as FY 2019-20.To help you make an informed decision., we are displaying
                             your
@@ -20,14 +21,23 @@
                             liability in both these regimes,and you can choose the option that you prefer.For us to
                             accurately
                             calculated your tax liabilities , please ensure you full in all the information requested
-                            below,irrespective of the regime that you pick</p>
+                            below,irrespective of the regime that you pick</p> -->
+                        <p class="text-lg font-semibold text-black" style="line-height: 25px;">
+                            Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
+                            investment amount till last day of every month until the cutoff date of Feb 27, 2024. Last date
+                            for submitting your investment proofs is Feb 27, 2024. '$' - Not considered for exemption if
+                            opted for New tax regime (Section 115BAC). You can declare your investment amount till last day
+                            of every month until the cutoff date of Feb 27, 2024.Last date for submitting your investment
+                            proofs is Feb 27, 2024.
+                        </p>
                     </div>
                 </div>
-                <div class="flex gap-6 my-4">
-                    <div class="w-6">
-                        <div class="font-semibold fs-5 ">Your current chosen tax regime is <strong
-                                class="font-semibold text-blue-500 fs-5">Old
-                                Tax Regime</strong> </div>
+                <div class="flex justify-between gap-6 my-4">
+                    <div class="w-7">
+                        <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
+                                class="text-blue-500 underline fs-4"
+                                style="font-family: Verdana, Geneva, Tahoma, sans-serif;">OLD
+                                TAX REGIME</strong> <span class="text-sm text-green-600">Maximum benefit</span> </div>
 
                         <!-- text-sm -->
                         <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
@@ -37,36 +47,36 @@
                         </div>
                     </div>
                     <div>
-                        <button @click="switch_regime_dailo = true" type="button" class="px-2 btn btn-primary">
-                            Old Tax Regime</button>
-                        <span class="text-sm text-green-500">Maximum benefit</span>
+                        <!-- <button @click="switch_regime_dailo = true" type="button" class="px-2 btn btn-primary">
+                            Old Tax Regime</button> -->
+
 
                     </div>
-                    <div>
+                    <div class="text-end">
 
                         <button @click="switch_regime_dailog = true" type="button"
-                            class="p-2 text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
+                            class="p-2 text-lg text-end text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg  px-5 py-2.5  ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
                             Switch Regime
                         </button>
+
+                        <!-- <button  @click="switch_regime_dailog = true" class="btn btn-orange">Switch Regime</button> -->
 
                     </div>
 
 
 
                 </div>
-                <div class="h-full p-3 my-4 border-l-4 rounded-lg bg-sky-50 border-l-sky-400">
-                    <p class="text-blue-700 fs-6">
-                        Choosing old regime will give you an additional benefits of &#x20B9; 41,222.00 as compared to New
-                        Regime.Calculations are based on the latest released payroll - Jul 2022
+                <div class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
+                    <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
+                    <p class="ml-2 font-semibold text-black fs-5">
+                        Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
+                        investment amount till last day of every month.
                     </p>
                 </div>
             </div>
         </div>
 
-        <DataTable :value="tax_deduction" :paginator="true" :rows="10" dataKey="id"
-            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-            responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-            v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+        <DataTable :value="tax_deduction" dataKey="id">
             <template #empty> No Data Found. </template>
             <template #loading> Loading customers data. Please wait. </template>
             <Column field="particulars" header="Particulars">
@@ -74,6 +84,10 @@
             <Column field="new_regime" header="New Tax Regime"></Column>
             <Column field="old_regime" header="Old Tax Regime"></Column>
         </DataTable>
+
+        <div class="my-3">
+            <p class="font-semibold text-black fs-2">Declaration</p>
+        </div>
 
         <div class="my-3 card">
             <div class="grid gap-4 my-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body">
@@ -122,23 +136,22 @@
                     <p class="my-2 font-semibold fs-6"> Below are the declarations done by you under various sections.</p>
                 </div>
                 <div class="my-2 table-responsive">
-                    <DataTable :paginator="true" :rows="1" dataKey="id">
+                    <DataTable  :rows="7" dataKey="id" :value="data">
                         <template #empty> No Data Found. </template>
                         <template #loading> Loading customers data. Please wait. </template>
-
                         <Column field="particulars" header="S.No">
-                            <template #body>
-                                1++
+                            <template #body="slotProps">
+                                {{ slotProps.index + 1 }}
                             </template>
                         </Column>
-                        <Column field="particulars" header="Declarations"> </Column>
-                        <Column field="new_regime" header="Amount Declared"></Column>
-                        <Column field="old_regime" header="Proof Submitted"></Column>
-                        <Column field="old_regime" header="Amount Rejected "></Column>
-                        <Column field="old_regime" header="Amount Accepted "></Column>
+                        <Column field="section_name" header="Declarations"></Column>
+                        <Column field="dec_amount" header="Amount Declared"></Column>
+                        <Column field="proof_submitted" header="Proof Submitted"></Column>
+                        <Column field="amount_rejected" header="Amount Rejected "></Column>
+                        <Column field="amount_accepted" header="Amount Accepted "></Column>
                     </DataTable>
                 </div>
-                <div class="my-3">
+                <div class="my-6">
                     <div>
                         <p class="my-2 font-semibold fs-5">Month- Month Tax Deduction Details</p>
                         <p class="my-2 font-semibold fs-6">Below deductions are based on your declared amount. Tax amount
@@ -224,7 +237,7 @@
 
         <div class="mt-5 text-end">
             <button id="confirm_switchRegime"
-                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Confirm</button>
+                class="px-4 py-2 text-lg text-center text-white bg-orange-700 rounded-md">Confirm</button>
         </div>
 
 
@@ -245,8 +258,15 @@
 
 
 <script setup>
+import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { investmentFormulaStore } from '../../stores/investmentFormulaStore'
+const data = ref()
+onMounted(() => {
+    axios.get('/investments/investment-summary').then(res => {
+        data.value = res.data
+    })
+})
 
 const formula = investmentFormulaStore()
 
