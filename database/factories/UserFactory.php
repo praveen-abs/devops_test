@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'password' => '$2y$10$vry5bkqFn25Jq/5JVRldEurny4slho/O2NI6Nlla57o0QKf3X0kjW', // Abs@123123
             'remember_token' => Str::random(10),
 
-            'user_code' => 'ABS999',
+            'user_code' => 'ABS'.$this->faker->randomNumber(6, false),
             'client_id' => '1' ,
             'active' => '1',
 
