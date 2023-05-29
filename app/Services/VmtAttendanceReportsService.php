@@ -53,12 +53,17 @@ class VmtAttendanceReportsService
             foreach ($emp_work_shift as $single_work_shift) {
                 $regularTime  = VmtWorkShifts::where('id', $single_work_shift->work_shift_id)->first();
                 $shift_start_time = Carbon::parse($regularTime->shift_start_time);
-                if ($checkin_time == null) {
+                $shift_end_time = Carbon::parse($regularTime->shift_end_time);
+                $diffInMinutesInCheckinTime = $shift_start_time->diffInMinutes(Carbon::parse($checkin_time), false);
+                $diffInMinutesInCheckOutTime =   $shift_end_time->diffInMinutes(Carbon::parse($checkout_time), false);
+                if ($checkin_time == null && $checkout_time == null) {
+                    return  $regularTime;
+                } else  if ($diffInMinutesInCheckinTime > -65 &&    $diffInMinutesInCheckinTime < 275) {
+                    return  $regularTime;
+                } else if ($diffInMinutesInCheckOutTime > -65 &&  $diffInMinutesInCheckOutTime < 65) {
                     return  $regularTime;
                 } else {
-                   // dd($shift_start_time);
-                    dd($shift_start_time->diffInMinutes(Carbon::parse($checkin_time)));
-                    dd($shift_start_time);
+                    return  $regularTime;
                 }
             }
         }
@@ -128,7 +133,10 @@ class VmtAttendanceReportsService
                     //dd($dateString);
 
 
-                    if (sessionGetSelectedClientCode() == "DM") {
+                    if (
+                        sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                        || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA'
+                    ) {
                         $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                             ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
                             ->whereDate('date', $dateString)
@@ -233,6 +241,7 @@ class VmtAttendanceReportsService
 
             // merging result from both table
             //dd($attendance_WebMobile->toArray());
+            //dd($deviceData);
             $merged_attendanceData  = array_merge($deviceData, $attendance_WebMobile->toArray());
 
             $dateCollectionObj    =  collect($merged_attendanceData);
@@ -319,7 +328,7 @@ class VmtAttendanceReportsService
             //  $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
             //  $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
 
-            //
+            // dd($attendanceResponseArray );
             foreach ($attendanceResponseArray as $key => $value) {
 
                 //get Shift Time for day
@@ -563,10 +572,10 @@ class VmtAttendanceReportsService
 
             array_push($reportresponse, $arrayReport);
 
-            // dd( $arrayReport);
+
             unset($arrayReport);
         }
-        //dd($reportresponse);
+
         $data = array($heading_dates, $reportresponse);
         return $data;
     }
