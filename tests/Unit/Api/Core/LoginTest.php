@@ -23,7 +23,7 @@ it('can login on correct password', function() {
     // ];
     //dd($user->user_code);
     $login_data = ['user_code' => $this->user_data->user_code, 'password'=> 'Abs@123123'];
-    echo "Input data : ".json_encode($login_data);
+    //echo "Input data : ".json_encode($login_data);
 
     $response = $this->postJson('/api/auth/login', $login_data);
     $response->assertStatus(200)->assertJson([ 'status' => 'success']);
@@ -33,7 +33,7 @@ it('can login on correct password', function() {
 it('cannot login on wrong password', function() {
 
     $login_data = ['user_code' => $this->user_data->user_code, 'password'=> 'wrongpassword'];
-    echo "Input data : ".json_encode($login_data);
+    //echo "Input data : ".json_encode($login_data);
 
 
     $response = $this->postJson('/api/auth/login', $login_data);
