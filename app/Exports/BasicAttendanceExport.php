@@ -53,8 +53,8 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
             AfterSheet::class => function(AfterSheet $event) {
                 /** @var Sheet $sheet */
                 $sheet = $event->sheet;
-                $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
-                $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
+                // $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
+                // $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
                 $styleArray = [
                     'alignment' => [
                         'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
