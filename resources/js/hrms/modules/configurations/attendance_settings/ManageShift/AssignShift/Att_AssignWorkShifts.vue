@@ -126,54 +126,57 @@
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                v-model="slotProps.data.AllWeeks">
+                                v-model="slotProps.data.AllWeeks"    >
                         </div>
                     </template>
                 </Column>
-                <Column field="first_week" header="1st Week">
+                <Column field="first_week" header="first Week">
                     <template #body="slotProps">
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" aria-checked="slotProps.data.AllWeeks" v-model="slotProps.data.first_week"  >
+                                :checked="slotProps.data.AllWeeks" aria-checked="slotProps.data.AllWeeks" v-model="slotProps.data.first_week"  :true-value = 1 :false-value = 0  >
                         </div>
                     </template>
                 </Column>
-                <Column field="sec_week" header="2nd Week">
+                <Column field="sec_week" header="second week">
                     <template #body="slotProps">
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.sec_week">
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.sec_week"  :true-value = 1 :false-value = 0 >
                         </div>
                     </template>
                 </Column>
-                <Column field="third_week" header="3rd Week">
+                <Column field="third_week" header="third week">
                     <template #body="slotProps">
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.third_week">
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.third_week" :true-value = 1 :false-value = 0  >
                         </div>
                     </template>
                 </Column>
-                <Column field="fourth_week" header="4th Week">
+                <Column field="fourth_week" header="fourth week">
                     <template #body="slotProps">
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fourth_week">
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fourth_week"  :true-value = 1 :false-value = 0  >
                         </div>
                     </template>
                 </Column>
-                <Column field="fifth_week" header="5th Week">
+                <Column field="fifth_week" header="fifth week">
                     <template #body="slotProps">
                         <div>
                             <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                 style="height: 20px;width: 20px; " class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fifth_week">
+                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fifth_week"  :true-value = 1 :false-value = 0  >
                         </div>
                     </template>
+                </Column>
+                <Column field="fifth_week" header="5th Week">
+
                 </Column>
                 <!-- <Column field="quantity" header=""></Column> -->
             </DataTable>

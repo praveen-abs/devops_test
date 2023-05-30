@@ -63,7 +63,7 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     });
 
     // const AllWeeks = ref();
-    const update_state = reactive([]);
+    let update_state = reactive([]);
 
 
     const Week_Off_Days = ref([
@@ -102,7 +102,7 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     function fetchShiftDetails() {
         canShowLoading.value = true;
-        let url = window.location.origin + "/attendance_settings/fetch-emp-details";
+        let url = window.location.origin + "/save-work-shift";
 
         console.log("AJAX URL : " + url);
 
@@ -142,14 +142,14 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         let array_assignedEmp_ids = getEmployeeIDsArray();
 
         // let url = `/attendance_settings/save-shiftdetails`;
-        let url = `http://localhost:3000/assingWorkShifts`;
+        let url = `/save-work-shift`;
 
         //Shift name
         //Selected employees
         // window.location.origin +
         axios
             .post( url, {
-                update_state:update_state,
+                update_state:Week_Off_Days,
             })
             .then((response) => {
                 console.log(response);
@@ -177,17 +177,14 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
             data.fourth_week = 1;
             data.fifth_week = 1;
         }
-        let val = {
-            AllWeeks:data.AllWeeks,
+        update_state = {
+            week_off_list:data.AllWeeks,
             Week_1st:data.first_week,
             Week_2st:data.sec_week,
             Week_3st:data.third_week,
             Week_4st:data.fourth_week,
             Week_5st:data.fifth_week,
         }
-        console.log(val.value);
-
-        update_state.push(val)
         console.log(update_state);
         // console.log("get update Week_Off State : ", AllWeeks.value);
 
