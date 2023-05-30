@@ -1707,8 +1707,9 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
                                     const clientName = "{{ sessionGetSelectedClientName() }}";
+                                    console.log("Current client name : "+clientName);
 
-                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines')){
+                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Avatar Live') || clientName.includes('Dunamis Machines')){
 
                                         if (ajax_data_currentdate.isLC) {
 
@@ -1722,7 +1723,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
-                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines'))
+                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Avatar Live') || clientName.includes('Dunamis Machines'))
                                      {
                                         if (ajax_data_currentdate.isEG) {
                                             final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
