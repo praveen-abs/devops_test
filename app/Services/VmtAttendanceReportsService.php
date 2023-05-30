@@ -134,9 +134,6 @@ class VmtAttendanceReportsService
             $arrayReport = array($singleUser->user_code, $singleUser->name, $singleUser->designation, $singleUser->doj);
 
 
-
-
-
             $requestedDate = $year . '-' . $month . '-01';
             $currentDate = Carbon::now();
             $monthDateObj = Carbon::parse($requestedDate);
@@ -272,11 +269,7 @@ class VmtAttendanceReportsService
                 array_push($heading_dates, 'Total EG');
             }
             array_push($heading_dates, "Total Payable Days");
-            // if ($client_domain == 'brandavatar.abshrms.com' || sessionGetSelectedClientCode() == "DM") {
-            //     array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", "Total LC", "Total EG", "Total Payable Days");
-            // } else {
-            //     array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Leave", "Total Halfday", "Total On Duty", "Total Payable Days");
-            // }
+
 
 
 
@@ -362,13 +355,6 @@ class VmtAttendanceReportsService
                 $attendanceResponseArray[$key]["attendance_mode_checkin"] = $attendance_mode_checkin;
                 $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
             }
-
-
-            //dd($attendanceResponseArray);r
-            // $work_shift_id = VmtEmployeeWorkShifts::where('user_id',$singleUser->id)->first()->work_shift_id;
-            // $regularTime  = VmtWorkShifts::where('id',$work_shift_id)->first();
-            //  $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-            //  $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
 
             // dd($attendanceResponseArray );
             foreach ($attendanceResponseArray as $key => $value) {
@@ -572,7 +558,7 @@ class VmtAttendanceReportsService
                         if ($attendanceResponseArray[$key]['isLC'] == 'Rejected' || $attendanceResponseArray[$key]['isLC'] == 'Not Applied') {
                             if ($shift_settings->is_lc_applicable == 1) {
                                 $lc_eg_day_att = $lc_eg_day_att . '/LC';
-                                if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth!=null) {
+                                if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth != null) {
                                     $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
                                 }
                             }
@@ -580,7 +566,7 @@ class VmtAttendanceReportsService
                         if ($attendanceResponseArray[$key]['isEG'] == 'Rejected' || $attendanceResponseArray[$key]['isEG'] == 'Not Applied') {
                             if ($shift_settings->is_eg_applicable == 1) {
                                 $lc_eg_day_att = $lc_eg_day_att . '/EG';
-                                if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth!=null) {
+                                if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth != null) {
                                     $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
                                 }
                             }
@@ -606,23 +592,16 @@ class VmtAttendanceReportsService
                 }
             }
 
-            // dd($heading_dates);
-            //dd(($attendanceResponseArray));
-
-            // dd();
-            if ($client_domain == 'brandavatar.abshrms.com' || sessionGetSelectedClientCode() == "DM") {
-                $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD) - $total_lop;
-                array_push($arrayReport, $total_weekoff, $total_holidays, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD, $total_LC, $total_EG, $total_payable_days);
-            } else {
-                $total_payable_days = $total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD;
-                array_push($arrayReport, $total_weekoff, $total_holidays, $total_present, $total_absent, $total_leave, $total_halfday, $total_OD, $total_payable_days);
+            array_push($arrayReport, $total_weekoff, $total_holidays, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
+            if ($attendance_setting_details['lc_status'] == 1) {
+                array_push($arrayReport, $total_LC);
             }
-
-
-
+            if ($attendance_setting_details['eg_status'] == 1) {
+                array_push($arrayReport, $total_EG);
+            }
+            $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD) - $total_lop;
+            array_push($arrayReport,  $total_payable_days);
             array_push($reportresponse, $arrayReport);
-
-
             unset($arrayReport);
         }
 
