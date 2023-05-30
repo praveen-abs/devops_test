@@ -262,13 +262,21 @@ class VmtAttendanceReportsService
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
             }
+            array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
-            //dd($attendance_setting_details->lc_status);
-            if ($client_domain == 'brandavatar.abshrms.com' || sessionGetSelectedClientCode() == "DM") {
-                array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", "Total LC", "Total EG", "Total Payable Days");
-            } else {
-                array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Leave", "Total Halfday", "Total On Duty", "Total Payable Days");
+
+            if ($attendance_setting_details['lc_status'] == 1) {
+                array_push($heading_dates, 'Total LC');
             }
+            if ($attendance_setting_details['eg_status'] == 1) {
+                array_push($heading_dates, 'Total EG');
+            }
+            array_push($heading_dates, "Total Payable Days");
+            // if ($client_domain == 'brandavatar.abshrms.com' || sessionGetSelectedClientCode() == "DM") {
+            //     array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty", "Total LC", "Total EG", "Total Payable Days");
+            // } else {
+            //     array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Leave", "Total Halfday", "Total On Duty", "Total Payable Days");
+            // }
 
 
 
@@ -367,10 +375,10 @@ class VmtAttendanceReportsService
 
                 //get Shift Time for day
 
-                $regularTime = $this->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
-                $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-                $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
-                //   dd($shiftStartTime);
+                $shift_settings = $this->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
+                $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
+                $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
+
 
 
 
@@ -436,6 +444,10 @@ class VmtAttendanceReportsService
                                     //  dd( $leave_type[0]);
                                     if ($leave_type[0] == 'Sick Leave / Casual Leave') {
                                         $attendanceResponseArray[$key]['leave_type'] = 'SL/CL';
+                                    } else if ($leave_type[0] == 'Casual/Sick Leave') {
+                                        $attendanceResponseArray[$key]['leave_type'] = 'CL/SL';
+                                    } else if ($leave_type[0] == 'LOP Leave') {
+                                        $attendanceResponseArray[$key]['leave_type'] = 'LOP LE';
                                     } else if ($leave_type[0] == 'Earned Leave') {
                                         $attendanceResponseArray[$key]['leave_type'] = 'EL';
                                     } else if ($leave_type[0] == 'Maternity Leave') {
@@ -473,7 +485,7 @@ class VmtAttendanceReportsService
                 $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
                 $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
 
-                //Code For Check LG
+                //Code For Check LC
                 if (!empty($checkin_time)) {
                     $parsedCheckIn_time  = Carbon::parse($checkin_time);
                     //Check whether checkin done on-time
@@ -489,7 +501,7 @@ class VmtAttendanceReportsService
                         $attendanceResponseArray[$key]["isLC"] = $regularization_status;
                     }
                 }
-                //Code For Check LG
+                //Code For Check EG
                 if (!empty($checkout_time)) {
                     $parsedCheckOut_time  = Carbon::parse($checkout_time);
                     //Check whether checkin out on-time
@@ -554,23 +566,27 @@ class VmtAttendanceReportsService
                     }
                 } else if ($attendanceResponseArray[$key]['checkin_time'] != null || $attendanceResponseArray[$key]['checkout_time'] != null) {
 
-                    if ($client_domain == 'brandavatar.abshrms.com' || sessionGetSelectedClientCode() == "DM") {
+
+                    if ($shift_settings->is_lc_applicable == 1 ||  $shift_settings->is_eg_applicable == 1) {
+                        $lc_eg_day_att = 'P';
                         if ($attendanceResponseArray[$key]['isLC'] == 'Rejected' || $attendanceResponseArray[$key]['isLC'] == 'Not Applied') {
-                            array_push($arrayReport, 'P/LC');
-                            $total_present++;
-                            if ($total_LC >= 4) {
-                                $total_lop =  $total_lop + 0.5;
+                            if ($shift_settings->is_lc_applicable == 1) {
+                                $lc_eg_day_att = $lc_eg_day_att . '/LC';
+                                if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth!=null) {
+                                    $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
+                                }
                             }
-                        } else if ($attendanceResponseArray[$key]['isEG'] == 'Rejected' || $attendanceResponseArray[$key]['isEG'] == 'Not Applied') {
-                            array_push($arrayReport, 'P/EG');
-                            $total_present++;
-                            if ($total_EG >= 4) {
-                                $total_lop =  $total_lop + 0.5;
-                            }
-                        } else {
-                            array_push($arrayReport, 'P');
-                            $total_present++;
                         }
+                        if ($attendanceResponseArray[$key]['isEG'] == 'Rejected' || $attendanceResponseArray[$key]['isEG'] == 'Not Applied') {
+                            if ($shift_settings->is_eg_applicable == 1) {
+                                $lc_eg_day_att = $lc_eg_day_att . '/EG';
+                                if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth!=null) {
+                                    $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
+                                }
+                            }
+                        }
+                        array_push($arrayReport,  $lc_eg_day_att);
+                        $total_present++;
                     } else {
                         array_push($arrayReport, 'P');
                         $total_present++;
