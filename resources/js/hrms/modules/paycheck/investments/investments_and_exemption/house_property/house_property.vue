@@ -27,7 +27,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.particular == 'Self Occupied Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getSopSlotData(slotProps.data)"
@@ -37,7 +37,7 @@
                         </div>
                         <div v-if="slotProps.data.particular == 'Let Out Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getLopSlotData(slotProps.data)"
@@ -48,7 +48,7 @@
                         </div>
                         <div v-if="slotProps.data.particular == 'Deemed Let Out Property'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p> 
+                                <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.getDlopSlotData(slotProps.data)"
@@ -57,7 +57,7 @@
                             </div>
 
                         </div>
-                        
+
                         <div v-else-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
@@ -184,7 +184,7 @@
                         </p>
                     </template>
                 </Column>
-                <Column field="" header="Action" style="min-width: 12rem" alignFrozen="right" frozen>
+                <Column field="" header="Action" style="min-width: 12rem" alignFrozen="right" frozen v-if="investmentStore.isSubmitted">
                     <template #body="slotProps">
                         <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
                             @click="investmentStore.editHouseProps(slotProps.data)">

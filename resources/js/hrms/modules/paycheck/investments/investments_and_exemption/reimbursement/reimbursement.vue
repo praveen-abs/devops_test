@@ -43,7 +43,7 @@
                 </Column> -->
 
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
-                    <template #body="slotProps">             
+                    <template #body="slotProps">
                         <div v-if="slotProps.data.dec_amount" class="dec_amt">
                             {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                         </div>
@@ -84,7 +84,7 @@
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action">
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action"  v-if="investmentStore.isSubmitted">
                 </Column>
 
             </DataTable>

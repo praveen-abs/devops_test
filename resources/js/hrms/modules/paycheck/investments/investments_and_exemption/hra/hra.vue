@@ -103,8 +103,9 @@
                     <Column field="json_popups_value.city" header="City" style="min-width: 12rem">
                     </Column>
                     <Column field="json_popups_value.total_rent_paid" header="Total Rent" style="min-width: 12rem">
+
                     </Column>
-                    <Column field="" header="Action" style="min-width: 12rem">
+                    <Column field="" header="Action" style="min-width: 12rem" v-if="investmentStore.isSubmitted"  >
                         <template #body="slotProps">
                             <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
                                 @click="investmentStore.editHraNewRental(slotProps.data)">
@@ -261,14 +262,15 @@ import { profilePagesStore } from "../../../../profile_pages/stores/ProfilePages
 
 const investmentStore = investmentMainStore()
 const useEmployeeDetails = profilePagesStore()
-const employeDoj = ref(new Date(moment(investmentStore.employeDoj).format('DD/MM/YYYY')))
+const employeDoj = ref(new Date(investmentStore.employeDoj))
 
 
 
 const dojValidation = (value) => {
     console.log("Current Date"+value);
-    console.log("Employee DOJ"+employeDoj.value);
-    if (employeDoj.value < value) {
+    // console.log("Employee DOJ"+employeDoj.value);
+    console.log("Employee DOJ"+new Date(investmentStore.employeDoj));
+    if (new Date(investmentStore.employeDoj) < value) {
         return true
     } else {
         return false

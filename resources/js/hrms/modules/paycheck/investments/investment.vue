@@ -96,11 +96,7 @@ const service = Service()
 
 onMounted(async () => {
     await investmentStore.getInvestmentSource()
-    await useProfilePageStore.fetchEmployeeDetails()
-
-    setTimeout(() => {
-       investmentStore.employeDoj = useProfilePageStore.employeeDetails.get_employee_details.doj
-    }, 3000);
+    // await useProfilePageStore.fetchEmployeeDetails();
 })
 </script>
 

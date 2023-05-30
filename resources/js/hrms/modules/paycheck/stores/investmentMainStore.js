@@ -98,6 +98,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const hra_fs = reactive([]);
     const AddHraButtonDisabled = ref(false);
     const employeDoj = ref()
+    const isSubmitted = ref(true)
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
@@ -125,10 +126,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
                 // console.log(res.data.data.form_details);
 
+                // Getting IsSubmitted from Disable Editor
+
+                   let result =  res.data.data.is_submitted == 0 ? true : false
+                   isSubmitted.value = result
+                   console.log(result)
+
+                //    Getting Employee Doj For HRA validation
+
+                employeDoj.value =  res.data.data.doj
+                console.log("employee DOJ" + res.data.data.doj);
+
                 res.data.data.form_details["House Properties "].forEach(
                     (data) => {
                         hop.push(data.fs_id);
-                        // console.log(data.fs_id);
                     }
                 );
 
@@ -271,6 +282,9 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .finally(() => {
                 canShowSubmissionStatus.value = true;
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
             });
     };
 
@@ -1063,6 +1077,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         reimbursmentSource,
         previousEmployeerIncomeSource,
         otherIncomeSource,
+        isSubmitted,
 
         // Tax Saving Investments
 
@@ -1136,5 +1151,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         metrocitiesOption,
         lenderTypeOption,
         employeDoj,
+
     };
 });
