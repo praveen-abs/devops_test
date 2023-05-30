@@ -15,6 +15,9 @@ class VmtHolidaysSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::table('vmt_holidays')->truncate();
+
         DB::table('vmt_holidays')->insert([
             ['holiday_name' => 'Pongal', 'holiday_date' => '2022-01-16 00:00:00', 'holiday_description' => 'Government Holiday', 'image' => 'pongal.jpg'],
             ['holiday_name' => 'Republic Day', 'holiday_date' => '2022-01-16 00:00:00', 'holiday_description' => 'Government Holiday', 'image' => 'republic_day_jan_26.jpg'],

@@ -443,21 +443,24 @@ class VmtTestingController extends Controller
         //Get the form template
         $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
             ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
-            ->where('vmt_inv_formsection.form_id', $assigned_form_id)
+             ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+            ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+         //  ->where('vmt_inv_formsection.form_id', $assigned_form_id)
 
             ->get(
-                [
-                    'vmt_inv_formsection.section_id',
-                    'vmt_inv_section.section',
-                    'vmt_inv_section.particular',
-                    'vmt_inv_section.reference',
-                    'vmt_inv_section.max_amount',
-                    'vmt_inv_section_group.section_group',
-                    'vmt_inv_formsection.id as fs_id',
+                // [
+                //     'vmt_inv_formsection.section_id',
+                //     'vmt_inv_section.section',
+                //     'vmt_inv_section.particular',
+                //     'vmt_inv_section.reference',
+                //     'vmt_inv_section.max_amount',
+                //     'vmt_inv_section_group.section_group',
+                //     'vmt_inv_formsection.id as fs_id',
 
-                ]
+                // ]
             )->toArray();
 
+            dd($query_inv_form_template);
     // employee declaration amount
         $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
             ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();

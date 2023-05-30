@@ -14,6 +14,9 @@ class CountriesTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::table('vmt_country')->truncate();
+
         DB::table('vmt_country')->insert([
             ['country_name' => 'Afghanistan', 'country_code' =>	'AF', 'dialing_code' => '+93', 'currency_name' => 'Afghan afghani ', 'currency_code' => 'AFN', 'timezone' => 'UTC+04:30 ', 'status' =>  'A'],
             ['country_name' => 'Aland Islands', 'country_code' =>	'AX', 'dialing_code' => '+358', 'currency_name' => 'Euro ', 'currency_code' => 'EUR', 'timezone' => '', 'status' =>  'A'],
