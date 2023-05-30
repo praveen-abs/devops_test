@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vmt_employee_workshifts', function (Blueprint $table) {
-            $table->integer('flexi_shift_status')->default(0);
+        Schema::table('vmt_employee_payslip_v2', function (Blueprint $table) {
+            $table->renameColumn("pf_wages_arrear_epfr", "pf_wages_arrear");
 
         });
     }
@@ -26,8 +26,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('vmt_employee_workshifts', function (Blueprint $table) {
-            $table->dropColumn('flexi_shift_status');
+        Schema::table('vmt_employee_payslip_v2', function (Blueprint $table) {
+            $table->renameColumn( "pf_wages_arrear", "pf_wages_arrear_epfr");
+
+
         });
     }
 };

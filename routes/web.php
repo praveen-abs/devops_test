@@ -478,7 +478,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Payroll module
     Route::get('payRun', 'App\Http\Controllers\VmtPayrollController@showPayRunPage')->name('showPayRunPage');
-    Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayrollController@uploadPayRunData');
+    Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayCheckController@importBulkEmployeesPayslipExcelData');
 
     Route::get('payroll/claims', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
     Route::get('payroll/analytics', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');

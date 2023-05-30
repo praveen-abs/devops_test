@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
-
+use Illuminate\Support\Facades\Validator;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePayslipStatus;
@@ -89,6 +89,29 @@ class VmtPayCheckController extends Controller
         }
 
 
+    }
+    public function importBulkEmployeesPayslipExcelData(Request $request ,VmtEmployeePayCheckService $VmtEmployeePayCheckService)
+    {
+
+        $validator =    Validator::make(
+            $request->all(),
+            ['file' => 'required|file|mimes:xls,xlsx'],
+            ['required' => 'The :attribute is required.']
+        );
+
+        if ($validator->passes()) {
+            $importDataArry = \Excel::toArray(new VmtPaySlip, request()->file('file'));
+           // dd( $importDataArry);
+            return $response=$VmtEmployeePayCheckService->storeBulkEmployeesPayslips($importDataArry);
+        } else {
+            $data['failed'] = $validator->errors()->all();
+            $responseJSON['status'] = 'failure';
+            $responseJSON['message'] = $data['failed'][0];//"Please fix the below excelsheet data";
+            //$responseJSON['data'] = $validator->errors()->all();
+            return response()->json($responseJSON);
+        }
+        // linking Manager To the employees;
+        // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
     }
 
 
