@@ -10,12 +10,10 @@
 
             <!-- <button class="float-right btn btn-orange " @click="canShowAssignShift = true">click</button> -->
         </div>
-        <div>
-            <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="5"
-                dataKey="emp_code" :rowsPerPageOptions="[5, 10, 25]"
-                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters"
-                filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+        <div class="border">
+            <DataTable class="w-full" style="width:100%" :value="att_emp_details" v-model:selection="selectedEmployees"   paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 100rem"
+        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+        currentPageReportTemplate="{first} to {last} of {totalRecords}" >
                 <template #empty> No Employee found </template>
                 <template #loading> Loading employee data. Please wait. </template>
                 <!-- <Column selectionMode="multiple"></Column> -->

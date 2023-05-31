@@ -26,7 +26,6 @@
         </Dialog>
 
         <div class="flex px-4 pt-6 gap-9">
-
             <div>
                 <span class="text-lg font-semibold">Shift Name</span>
                 <span class="mx-2">
@@ -58,8 +57,8 @@
                     <p class="font-semibold py-auto">Apply Flexible Gross Hours</p>
                 </div>
                 <div class="flex">
-                    <InputText type="text" v-model="txt_shift_start_time" class="w-8 h-10" />
-                    <p class="mx-4 text-lg font-semibold text-gray-600 py-auto">Min</p>
+                    <InputNumber  v-model="useAttendanceStore.shiftDetails.AFGB_Min" v-if="useAttendanceStore.change == 'Apply Flexible Gross Hours'" inputId="minmax" :min="0" :max="100" />
+                    <p class="mx-4 text-lg font-semibold text-gray-600 py-auto" v-if="useAttendanceStore.change == 'Apply Flexible Gross Hours'"  >Min</p>
                 </div>
             </div>
             <div class="p-3 my-5 rounded-lg bg-blue-50 ">
@@ -75,7 +74,8 @@
                                 <p class="text-lg font-semibold py-auto">Shift Start Time</p>
                             </div>
                             <div>
-                                <InputText type="text" v-model="txt_shift_start_time" class="h-10 " />
+                                <Calendar id="calendar-timeonly" v-model="useAttendanceStore.shiftDetails.Shift_start_Time"
+                                    timeOnly class="h-10 " />
                             </div>
                         </div>
                         <div class="flex gap-4 col-6">
@@ -84,7 +84,8 @@
 
                             </div>
                             <div>
-                                <InputText type="text" v-model="txt_shift_start_time" class="h-10 " />
+                                <Calendar id="calendar-timeonly" v-model="useAttendanceStore.shiftDetails.Shift_End_Time"
+                                    timeOnly class="h-10 " />
                             </div>
 
                         </div>
@@ -100,89 +101,85 @@
                                     style="width:180px" />
                             </div>
                         </div>
-                        <div class="flex gap-1 col-6">
+                        <div class="flex gap-1 col-6  d-flex align-items-center">
                             <div>
                                 <p class="text-lg font-semibold py-auto">Grace Time</p>
-
                             </div>
                             <div class="ml-6 col-9">
-                                <InputText type="text" v-model="txt_shift_start_time" class="h-10 " />
-
+                                <!-- <InputText type="text" v-model="useAttendanceStore.shiftDetails.Grace_Time"  /> -->
+                                <InputNumber class="h-10 " v-model="useAttendanceStore.shiftDetails.Grace_Time"
+                                    inputId="minmax" :min="0" :max="59" />
                             </div>
-
                         </div>
 
                     </div>
                 </div>
             </div>
 
+            <div class="d-flex w-full justify-content-start">
+                <DataTable :value="useAttendanceStore.Week_Off_Days" tableStyle="min-width: 95rem">
+                    <Column field="weeks" header="Days">
+                    </Column>
+                    <Column field="week_off_list" header="ALL Weeks">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.AllWeeks" :true-value=1 :false-value=0 >
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="first_week" header="first Week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.first_week" :true-value=1 :false-value=0 :checked="useAttendanceStore.isCheckedOrNot.sunday">
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="sec_week" header="second week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.sec_week"
+                                    :false-value = 0 :checked="useAttendanceStore.isCheckedOrNot.sunday">
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="third_week" header="third week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id="" v-model="slotProps.data.third_week" :true-value=1
+                                    :false-value=0 :checked="useAttendanceStore.isCheckedOrNot.sunday">
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="fourth_week" header="fourth week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.fourth_week" :true-value=1
+                                    :false-value=0>
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="fifth_week" header="fifth week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px; " class="form-check-input" type="checkbox" name=""
+                                    id=""  v-model="slotProps.data.fifth_week"
+                                    :true-value=1 :false-value=0>
+                            </div>
+                        </template>
+                    </Column>
+                </DataTable>
 
-            <DataTable :value="useAttendanceStore.Week_Off_Days" tableStyle="min-width: 50rem">
-                <!-- <Column selectionMode="multiple" headerStyle="width: 3rem"></Column> -->
-                <Column field="weeks" header="Days">
-                </Column>
-                <Column field="week_off_list" header="ALL Weeks">
-                    <template #body="slotProps">
-                        <div>
-                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
-                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                v-model="slotProps.data.AllWeeks"    >
-                        </div>
-                    </template>
-                </Column>
-                <Column field="first_week" header="first Week">
-                    <template #body="slotProps">
-                        <div>
-                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
-                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" aria-checked="slotProps.data.AllWeeks" v-model="slotProps.data.first_week"  :true-value = 1 :false-value = 0  >
-                        </div>
-                    </template>
-                </Column>
-                <Column field="sec_week" header="second week">
-                    <template #body="slotProps">
-                        <div>
-                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
-                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.sec_week"  :true-value = 1 :false-value = 0 >
-                        </div>
-                    </template>
-                </Column>
-                <Column field="third_week" header="third week">
-                    <template #body="slotProps">
-                        <div>
-                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
-                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.third_week" :true-value = 1 :false-value = 0  >
-                        </div>
-                    </template>
-                </Column>
-                <Column field="fourth_week" header="fourth week">
-                    <template #body="slotProps">
-                        <div>
-                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
-                                style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fourth_week"  :true-value = 1 :false-value = 0  >
-                        </div>
-                    </template>
-                </Column>
-                <Column field="fifth_week" header="fifth week">
-                    <template #body="slotProps">
-                        <div>
-                            <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
-                                style="height: 20px;width: 20px; " class="form-check-input" type="checkbox" name="" id=""
-                                :checked="slotProps.data.AllWeeks" v-model="slotProps.data.fifth_week"  :true-value = 1 :false-value = 0  >
-                        </div>
-                    </template>
-                </Column>
-                <Column field="fifth_week" header="5th Week">
-
-                </Column>
-                <!-- <Column field="quantity" header=""></Column> -->
-            </DataTable>
-
-
-
+            </div>
         </div>
 
         <!--  -->
@@ -215,12 +212,12 @@
         <div class="mx-4">
             <InputText type="text" v-model="txt_shift_name" placeholder="Search..." class="my-4" />
             <!-- {{useAttendanceStore.array_shiftDetails}} -->
-            <DataTable :value="useAttendanceStore.array_shiftDetails"
+            <DataTable class="w-full" :value="useAttendanceStore.array_shiftDetails"
                 v-model:selection="useAttendanceStore.selectedEmployees" :paginator="true" :rows="2" dataKey="emp_code"
                 :rowsPerPageOptions="[5, 10, 25]"
                 paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters"
-                filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+                filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']" >
                 <template #empty> No Employee found </template>
                 <template #loading> Loading employee data. Please wait. </template>
                 <Column selectionMode="multiple"></Column>
@@ -291,6 +288,11 @@ const checked = (data) => {
     console.log(data);
 
 }
+
+
+// const isChecked = (ele)=>{
+
+// }
 
 
 
@@ -426,50 +428,6 @@ const css_statusColumn = (data) => {
 
 {
     <!--
-
-
-
-
-<template>
-    <div class="card">
-        <DataTable v-model:selection="selectedProduct" :value="products" dataKey="id" tableStyle="min-width: 50rem">
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="code" header="Code"></Column>
-            <Column field="name" header="Name"></Column>
-            <Column field="category" header="Category"></Column>
-            <Column field="quantity" header="Quantity"></Column>
-        </DataTable>
-    </div>
-</template>
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import { ProductService } from '@/service/ProductService';
-
-onMounted(() => {
-    ProductService.getProductsMini().then((data) => (products.value = data));
-});
-
-const products = ref();
-const selectedProduct = ref();
-const metaKey = ref(true);
-
-</script>
-
-
-
-
-<template>
-    <div class="card flex justify-content-center">
-        <Checkbox v-model="checked" :binary="true" />
-    </div>
-</template>
-
-<script setup>
-import { ref } from "vue";
-
-const checked = ref(false);
-</script>
      -->
 }
 
