@@ -37,6 +37,38 @@
             </div>
 
     </div>
+
+    <DataTable ref="dt" dataKey="fs_id" :paginator="true" :rows="10" :value="employeeDetails"
+    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+    :rowsPerPageOptions="[5, 10, 25]"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+    responsiveLayout="scroll">
+
+    <Column header="Employee Code" field="user_code" style="min-width: 8rem">
+    </Column>
+    <Column header="Employee Name" field="name" style="min-width: 8rem">
+    </Column>
+    <Column header="Reference" field="reference" style="min-width: 16rem">
+    </Column>
+    <Column header="Section" field="section" style="min-width: 16rem">
+    </Column>
+    <Column header="Max Amount" field="max_amount" style="min-width: 16rem">
+    </Column>
+    <Column header="Dec Amount" field="dec_amount" style="min-width: 16rem">
+    </Column>
+
+
+
+    <!-- <Column v-for="details of employeeDetails" :header="`${details.particular}`" :key="details.id">
+                            <template #body="{ data }">
+                                {{ data.dec_amount }}
+                            </template>
+                            </Column>
+                             <Column header="Employee Name" field="name" style="min-width: 8rem">
+    </Column> -->
+
+</DataTable>
+{{ employeeDetails }}
 </template>
 <script setup>
 
@@ -49,12 +81,19 @@
     const form_name = ref();
     const excel_file = ref();
     const fileupload = ref();
+    const employeeDetails= ref()
 
     onMounted(() => {
-
+        getDetails()
 
     });
 
+    const getDetails = () =>{
+        axios.get('/testEmployeeDocumentsJoin').then(res=>{
+            console.log(res.data);
+            employeeDetails.value = res.data
+        })
+    }
 
     async function uploadInvestmentForm(){
 
