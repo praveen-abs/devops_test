@@ -48,13 +48,15 @@
     </Column>
     <Column header="Employee Name" field="name" style="min-width: 8rem">
     </Column>
-    <Column header="Reference" field="reference" style="min-width: 16rem">
-    </Column>
     <Column header="Section" field="section" style="min-width: 16rem">
+    </Column>
+    <Column header="Particular" field="particular" style="min-width: 16rem">
     </Column>
     <Column header="Max Amount" field="max_amount" style="min-width: 16rem">
     </Column>
     <Column header="Dec Amount" field="dec_amount" style="min-width: 16rem">
+    </Column>
+    <Column header="Pops Value" field="json_popups_value" style="min-width: 16rem">
     </Column>
 
 
@@ -68,7 +70,7 @@
     </Column> -->
 
 </DataTable>
-{{ employeeDetails }}
+<!-- {{ employeeDetails }} -->
 </template>
 <script setup>
 

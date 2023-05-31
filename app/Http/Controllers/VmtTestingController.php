@@ -542,60 +542,15 @@ class VmtTestingController extends Controller
 
     public function testEmployeeDocumentsJoin(Request $request)
     {
+        // $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
-
-        $simma = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
-            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
-
-        dd($simma->toArray());
-        //      $sum=0;
-        //    foreach( $simma as $simmas){
-        //         $sum +=  $simmas['dec_amount'];
-        //    }
-        //       dd($sum);
-
-
-
-
-
-        //  dd($simma);
-        // dd($request->all());
-        //    $simma = json_encode($request->all());
-
-        //    $form_id = "1";
-        //    $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
-
-        // $form_data = $request->formDataSource;
-
-        //    $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
-
-
-        //    if ($query_femp->exists()) {
-        //        $query_assign = $query_femp->first();
-
-        //    } else {
-
-        //        $emp_assign_form = new VmtInvFEmpAssigned;
-        //        $emp_assign_form->user_id = $user_id;
-        //        $emp_assign_form->form_id = $form_id;
-        //        $emp_assign_form->save();
-        //        $query_assign = $emp_assign_form;
-        //    }
-
-        //         $Hra_save = new VmtInvEmpFormdata;
-        //         $Hra_save->f_emp_id = $query_assign->id;
-        //         $Hra_save->fs_id = '1';
-        //         $Hra_save->dec_amount ='none';
-        //         $Hra_save->json_popups_value = $simma;
-        //         $Hra_save->save();
-
-
-
-
-        // return 'saved';
-
+        $v_form_template =VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+        ->join('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+         ->join('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+        ->join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+        ->join('users','users.id','=','vmt_inv_f_emp_assigned.user_id')->orderBy('name', 'asc')
+        ->get();
+            return  $v_form_template;
 
     }
 
