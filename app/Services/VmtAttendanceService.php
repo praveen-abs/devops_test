@@ -1556,13 +1556,13 @@ class VmtAttendanceService
         ]);
     }
 
-    public function performAttendanceCheckOut($user_code, $date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
+    public function performAttendanceCheckOut($user_code, $existing_check_in_date, $checkout_time, $selfie_checkout, $work_mode, $attendance_mode_checkout, $checkout_lat_long)
     {
 
         $user_id = User::where('user_code', $user_code)->first()->id;
 
         //Check if user already checked-in
-        $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->whereNull('checkout_time')->orderBy('updated_at', 'DESC')->first();
+        $attendanceCheckout  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $existing_check_in_date)->whereNull('checkout_time')->orderBy('updated_at', 'DESC')->first();
 
         if ($attendanceCheckout) {
 
@@ -1572,6 +1572,7 @@ class VmtAttendanceService
 
             //Update existing record
             $attendanceCheckout->checkout_time = $checkout_time;
+            $attendanceCheckout->checkout_date = date("Y-m-d");
             $attendanceCheckout->checkout_comments = "";
             $attendanceCheckout->attendance_mode_checkout = $attendance_mode_checkout;
             $attendanceCheckout->checkout_lat_long = $checkout_lat_long ?? '';
@@ -1603,8 +1604,8 @@ class VmtAttendanceService
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Check-out success',
-                'data'   => $date
+                'message' => 'Check-out success for the check-in date : '.$existing_check_in_date,
+                'data'   => ''
             ]);
         } else {
             return response()->json([
