@@ -20,11 +20,11 @@ class OrgRolesTableSeeder extends Seeder
 
 
           DB::table('vmt_org_roles')->insert([
-            ['name'=> 'Super Admin', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
-            ['name'=> 'Admin', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
-            ['name'=> 'HR', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
-            ['name'=> 'Manager', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
-            ['name'=> 'Employee', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
+            ['id'=>'1','name'=> 'Super Admin', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
+            ['id'=>'2','name'=> 'Admin', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
+            ['id'=>'3','name'=> 'HR', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
+            ['id'=>'4','name'=> 'Manager', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
+            ['id'=>'5','name'=> 'Employee', 'email'=>'test@gmail.com','is_active' => 1,'created_at' => now(),'updated_at' => now()],
         ]);
     }
 }

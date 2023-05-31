@@ -34,10 +34,10 @@
                         </ul>
                     </div>
                     <!-- <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 d-flex justify-content-end col-xl"> -->
-                    <div class="col d-flex   justify-content-end col-md">
+                    <div class="col d-flex justify-content-end col-md">
                         <div class="row">
                             <div class="col-6 d-flex justify-content-center">
-                                <label for="" class="my-auto  font-semibold " style="width: 120px;">Select Month</label>
+                                <label for="" class="my-auto font-semibold " style="width: 120px;">Select Month</label>
                                 <Calendar v-model="employee_service.selected_date" view="month" dateFormat="mm/yy"
                                     class="mx-4" style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
                             </div>
@@ -53,9 +53,9 @@
                                     severity="success" style="height: 33px;" @click="toggle"><i
                                         class="fas fa-file-download me-2"></i>Download</button>
                             </div>
-                            <div class="col-2 d-flex justify-content-center align-content-center  ">
+                            <div class="col-2 d-flex justify-content-center align-content-center ">
                                 <button @click="employee_service.onclickOpenLocalConverganceDailog"
-                                    class=" my-auto btn btn-orange" style="height: 33px; width: 100px;">
+                                    class="my-auto btn btn-orange" style="height: 33px; width: 100px;">
                                     <i class="fa fa-plus-circle me-1"></i>Add Claim
                                 </button>
 

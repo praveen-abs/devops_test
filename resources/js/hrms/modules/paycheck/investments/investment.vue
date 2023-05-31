@@ -11,7 +11,7 @@
                             Declaration</a>
                     </li> -->
                     <li class=" nav-item ember-view" role="presentation">
-                        <a class="mx-2 nav-link active ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
+                        <a class="mx-2 active nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
@@ -42,14 +42,14 @@
                         <Declaration />
                     </div> -->
 
-                    <div class="tab-pane  active show fade " id="exemptions" role="tabpanel">
+                    <div class="tab-pane fade  active show" id="exemptions" role="tabpanel">
                         <InvestmentAndExemption />
 
                     </div>
-                    <div class="tab-pane fade " id="investmentComputation" role="tabpanel">
+                    <!-- <div class="tab-pane fade " id="investmentComputation" role="tabpanel">
                         <ImvestmentComputation />
 
-                    </div>
+                    </div> -->
                     <!-- <div class="tab-pane fade " id="other_income" role="tabpanel" aria-labelledby="pills-home-tab">
 
                     </div>
@@ -87,12 +87,16 @@ import ImvestmentComputation from './income_tax_computation/incomeTaxComputation
 import { investmentMainStore } from '../stores/investmentMainStore'
 import { Service } from '../../Service/Service';
 import dayjs from 'dayjs'
+import { profilePagesStore } from '../../profile_pages/stores/ProfilePagesStore'
+
 
 const investmentStore = investmentMainStore()
+const useProfilePageStore = profilePagesStore()
 const service = Service()
 
 onMounted(async () => {
     await investmentStore.getInvestmentSource()
+    // await useProfilePageStore.fetchEmployeeDetails();
 })
 </script>
 

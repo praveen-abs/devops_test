@@ -63,7 +63,7 @@
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action">
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action" v-if="investmentStore.isSubmitted" >
                 </Column>
             </DataTable>
 

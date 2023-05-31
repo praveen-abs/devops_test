@@ -100,7 +100,7 @@
                             class="onboard-form form-control textbox"
 
                           /> -->
-                          <Calendar inputId="icon"  :maxDate="dobFormat"  v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
+                          <Calendar inputId="icon" dropzone="true" :manualInput="true"  :maxDate="dobFormat"  v-model="v$.dob.$model" showIcon   editable dateFormat="dd-mm-yy" placeholder="Date of birth"
                             style="width: 350px;"   @date-select="datePicker" class="" />
                             <!-- {{employee_onboarding.dob}} -->
                           <span class="error" id="error_pan_no"></span>
@@ -164,7 +164,7 @@
 
                           /> -->
                           <!-- {{ageLessThanFather}} -->
-                          <Calendar inputId="icon" :minDate="dojFormat" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
+                          <Calendar inputId="icon"  dropzone="true" :manualInput="true" :minDate="dojFormat" v-model="v$.doj.$model" editable dateFormat="dd-mm-yy" placeholder="Date of Joining"
                             style="width: 350px;"   :readonly="is_doj_quick" showIcon   :class="[{
                               'p-invalid': v$.doj.$invalid && submitted,
                             },
@@ -2737,6 +2737,8 @@ onMounted(() => {
   getBloodGroups().then((result) => (bloodGroups.value = result));
 
 
+
+
   //If the URL has hashed param, then it means quick-onboarded user is accessing this page.So, fetch his existing data
 
   let url_param_UID =  new URL(document.location).searchParams.get('uid');
@@ -2746,15 +2748,16 @@ onMounted(() => {
     fetchQuickOnboardedEmployeeDetails(url_param_UID).then((result)=>
     {
         populateQuickOnboardData(result.data);
-
-
-
         console.log("result" + result.data);
     });
   }
   else
   {
     console.log("UID not found in req params");
+     axios.get('/get-client-code').then(res =>{
+    console.log(res.data);
+    employee_onboarding.employee_code =res.data
+   })
   }
 
 
@@ -3319,10 +3322,28 @@ const submit = () => {
       // currentObj.success = response.data.success;
       console.log("response" + response.data);
       console.log(Object(response.data));
-      loading.value = false
-      if (response.data.status == "success") {
-        Swal.fire(response.data.status, response.data.message, "success");
-      }
+      loading.value = false;
+        if (response.data.can_redirect == "0"){
+             Swal.fire({
+                    title: response.data.status = "success",
+                    text: response.data.message,
+                    icon: "success",
+                    showCancelButton: false,
+                }).then((result) => {
+
+                });
+        }
+                    if (response.data.can_redirect == "1") {
+                Swal.fire({
+                    title: response.data.status = "success",
+                    text: response.data.message,
+                    icon: "success",
+                    showCancelButton: false,
+                }).then((result) => {
+                    window.location.reload();
+
+                });
+            }
       employee_onboarding.save_draft_messege = response.data;
 
     })
@@ -4248,14 +4269,14 @@ console.log(emp_data.onboard_type);
 }
 
 const Sampledata = () => {
-  employee_onboarding.employee_code = ref("B090");
-  employee_onboarding.employee_name = ref("George David");
+ // employee_onboarding.employee_code = ref("B090");
+  //employee_onboarding.employee_name = ref("George David");
   employee_onboarding.aadhar_number = ref("3977 8798 6564");
-  employee_onboarding.doj = ref("23-4-2020");
+ // employee_onboarding.doj = ref("23-4-2020");
   employee_onboarding.pan_number = ref("BGAJP6646F");
   employee_onboarding.blood_group_name = ref("B Positive");
   employee_onboarding.dob = ref("23-07-2000");
-  employee_onboarding.email = ref("example@gmail.com");
+ // employee_onboarding.email = ref("example@gmail.com");
   employee_onboarding.dl_no = ref("HR-0619850034761");
   employee_onboarding.passport_number = ref("A2096457");
   employee_onboarding.passport_date = ref("23-5-2030");
@@ -4285,16 +4306,16 @@ const Sampledata = () => {
   employee_onboarding.permanent_pincode = ref("600003");
   employee_onboarding.department = ref("IT");
   employee_onboarding.process = ref("Iti");
-  employee_onboarding.designation = ref("Developer");
+  //employee_onboarding.designation = ref("Developer");
   employee_onboarding.cost_center = ref("Chennai");
-  employee_onboarding.probation_period = ref("11 Month");
+//  employee_onboarding.probation_period = ref("11 Month");
   employee_onboarding.holiday_location = ref("Tamilnadu");
-  employee_onboarding.l1_manager_code = ref("PLIPL076-Muthu Selvan");
+//  employee_onboarding.l1_manager_code = ref("PLIPL076-Muthu Selvan");
   employee_onboarding.work_location = ref("chennai");
   employee_onboarding.officical_mail = ref("voidmax@gmail.com");
   employee_onboarding.official_mobile = ref("4646454547");
-  employee_onboarding.emp_notice = ref(3);
-  employee_onboarding.confirmation_period = ref("10-12-2019");
+ // employee_onboarding.emp_notice = ref(3);
+//  employee_onboarding.confirmation_period = ref("10-12-2019");
   employee_onboarding.father_name = ref("David");
   employee_onboarding.father_age = ref("45");
   employee_onboarding.dob_father = ref("23-09-1968");
@@ -4305,25 +4326,25 @@ const Sampledata = () => {
   employee_onboarding.spouse_gender = ref("female");
   employee_onboarding.dob_spouse = ref("12-8-1995");
   employee_onboarding.spouse_name = ref("priyanka");
-  employee_onboarding.basic = ref(13205);
-  employee_onboarding.hra = ref(6603);
-  employee_onboarding.statutory_bonus = ref(0);
-  employee_onboarding.other_allowance = ref(0);
-  employee_onboarding.child_education_allowance = ref(0);
-  employee_onboarding.food_coupon = ref(0);
-  employee_onboarding.lta = ref(0);
-  employee_onboarding.special_allowance = ref(2200);
+//   employee_onboarding.basic = ref(13205);
+//   employee_onboarding.hra = ref(6603);
+//   employee_onboarding.statutory_bonus = ref(0);
+//   employee_onboarding.other_allowance = ref(0);
+//   employee_onboarding.child_education_allowance = ref(0);
+//   employee_onboarding.food_coupon = ref(0);
+//   employee_onboarding.lta = ref(0);
+//   employee_onboarding.special_allowance = ref(2200);
 //   employee_onboarding.gross = ref(1000);
-  employee_onboarding.epf_employee= ref(1000);
-  employee_onboarding.epf_employer_contribution = ref(1000);
-  employee_onboarding.esic_employee = ref(1000);
-  employee_onboarding.esic_employer_contribution = ref(1000);
-  employee_onboarding.professional_tax = ref(1000);
-  employee_onboarding.labour_welfare_fund = ref(1000);
-  employee_onboarding.net_income = ref(1000);
-  employee_onboarding.total_ctc = ref(1000);
-  employee_onboarding.graduity = ref(1000);
-  employee_onboarding.insurance = ref(1000);
+//   employee_onboarding.epf_employee= ref(1000);
+//   employee_onboarding.epf_employer_contribution = ref(1000);
+//   employee_onboarding.esic_employee = ref(1000);
+//   employee_onboarding.esic_employer_contribution = ref(1000);
+//   employee_onboarding.professional_tax = ref(1000);
+//   employee_onboarding.labour_welfare_fund = ref(1000);
+//   employee_onboarding.net_income = ref(1000);
+//   employee_onboarding.total_ctc = ref(1000);
+//   employee_onboarding.graduity = ref(1000);
+//   employee_onboarding.insurance = ref(1000);
 
 
 

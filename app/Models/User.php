@@ -17,6 +17,7 @@ use App\Models\VmtEmployeePaySlip;
 
 class User extends Authenticatable
 {
+    use HasFactory;
     use HasRoles;
     use HasApiTokens, HasFactory, Notifiable;
 

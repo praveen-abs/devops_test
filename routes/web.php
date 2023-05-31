@@ -417,6 +417,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-marital-details', [App\Http\Controllers\VmtEmployeeController::class, 'fetchMaritalStatus'])->name('fetch-marital-details');
     Route::get('/fetch-blood-groups', [App\Http\Controllers\VmtEmployeeController::class, 'fetchBloodGroups'])->name('fetch-blood-groups');
     Route::get('/get-all-employees', [App\Http\Controllers\VmtEmployeeController::class, 'getAllEmployees'])->name('get-all-employees');
+    Route::get('/get-current-employee', [App\Http\Controllers\VmtEmployeeController::class, 'getCurrentEmployeeDetails'])->name('getCurrentEmployeeDetails');
+    Route::get('/get-client-code', [App\Http\Controllers\VmtEmployeeController::class, 'fetchclientcode'])->name('get-client-code');
 
     // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
@@ -476,7 +478,7 @@ Route::middleware(['auth'])->group(function () {
 
     //Payroll module
     Route::get('payRun', 'App\Http\Controllers\VmtPayrollController@showPayRunPage')->name('showPayRunPage');
-    Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayrollController@uploadPayRunData');
+    Route::post('vmt-payslip', 'App\Http\Controllers\VmtPayCheckController@importBulkEmployeesPayslipExcelData');
 
     Route::get('payroll/claims', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollClaimsPage'])->name('showPayrollClaimsPage');
     Route::get('payroll/analytics', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollAnalyticsPage'])->name('showPayrollAnalyticsPage');
@@ -799,6 +801,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/investments/saveSectionPopups',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
     Route::post('/investments/saveSection80',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
     Route::get('/investments/TaxDeducation',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
+    Route::get('/investments/investment-summary',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
 
 
     //Emp Mail Notifications

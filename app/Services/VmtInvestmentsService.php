@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 
+use App\Models\VmtEmployee;
 use App\Models\VmtInvestmentForm;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\VmtInvFEmpAssigned;
@@ -79,6 +80,11 @@ class VmtInvestmentsService
 
             $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
+            $query_is_sumbitted = VmtInvFEmpAssigned::where('user_id' , $user_id)->first();
+
+            $query_doj = VmtEmployee::where('userid', $user_id)->first();
+
+
             // $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
             // ->where('year', $year)
             //  ->first();
@@ -102,17 +108,18 @@ class VmtInvestmentsService
                         'vmt_inv_formsection.id as fs_id',
                         'vmt_inv_section.section_option_1',
                         'vmt_inv_section.section_option_2',
+                        'vmt_inv_formsection.form_id',
 
                     ]
                 )->toArray();
 
-            //  dd($query_inv_form_template);
+             // dd($query_inv_form_template);
 
             // employee declaration amount
             $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
                 ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get()->toArray();
 
-            //  dd($inv_emp_value);
+            // dd($inv_emp_value);
             // json decode popup value;
             $popdecode = array();
             foreach ($inv_emp_value as $details_tem) {
@@ -124,6 +131,7 @@ class VmtInvestmentsService
                 $rentalDetail['year'] = $details_tem["year"];
                 $rentalDetail['fs_id'] = $details_tem["fs_id"];
                 $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
+                $rentalDetail['is_sumbit'] = $details_tem["is_sumbit"];
                 $rentalDetail['selected_section_options'] = $details_tem["selected_section_options"];
                 $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
                 array_push($popdecode, $rentalDetail);
@@ -144,6 +152,7 @@ class VmtInvestmentsService
                         $single_template['f_emp_id'] = $single_emp_env_value['f_emp_id'];
                         $single_template['dec_amount'] = $single_emp_env_value['dec_amount'];
                         $single_template['json_popups_value'] = $single_emp_env_value['json_popups_value'];
+                        $single_template['is_sumbit'] = $single_emp_env_value['is_sumbit'];
                         $single_template['selected_section_options'] = $single_emp_env_value['selected_section_options'];
                     }
                 }
@@ -175,6 +184,9 @@ class VmtInvestmentsService
 
 
             $response["form_name"] = $query_form_details->form_name;
+            $response["is_submitted"] = $query_is_sumbitted->is_sumbit ?? 0;
+            $response["doj"] = $query_doj->doj;
+
             $response["form_details"] = $query_inv_form_template;
 
             return response()->json([

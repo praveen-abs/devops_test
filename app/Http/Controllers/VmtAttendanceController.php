@@ -148,7 +148,7 @@ class VmtAttendanceController extends Controller
     }
 
     public function getAllEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
-        return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails( $request->filter_month, $request->filter_year, $$request->filter_leave_status );
+        return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails( $request->filter_month, $request->filter_year, $request->filter_leave_status );
     }
 
 

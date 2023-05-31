@@ -14,7 +14,7 @@
                 <Column field="particular" header="Particulars" style="min-width: 20rem;text-align: left !important;">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80DD'">
-                            <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
+                        <p style="font-weight: 501;">{{ slotProps.data.particular }}</p>
                             <div class="flex py-2">
                                 <input type="radio" name="80DD" id="" style="height: 20px;width: 20px;"
                                     class="form-check-input" v-model="slotProps.data.select_option"
@@ -126,7 +126,7 @@
                     <template #body="slotProps">
                         <div v-if="slotProps.data.section == '80EE'">
                             <div v-if="slotProps.data.json_popups_value">
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else class="px-auto">
                                 <button @click="investmentStore.get80EESlotData(slotProps.data)"
@@ -137,7 +137,7 @@
                         <div v-else-if="slotProps.data.section == '80EEA'">
                             <div v-if="slotProps.data.json_popups_value">
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
 
                             </div>
                             <div v-else>
@@ -149,7 +149,7 @@
                         <div v-else-if="slotProps.data.section == '80EEB'">
                             <div v-if="slotProps.data.json_popups_value">
                                 <!-- <p>{{ investmentStore.formatCurrency(slotProps.data.json_popups_value.interest_amount_paid) }}</p> -->
-                                <p>{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
+                                <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else>
                                 <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
@@ -238,7 +238,7 @@
                         </div>
                     </template>
                 </Column>
-                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action">
+                <Column :rowEditor="true" style="width: 10%; min-width: 8rem" bodyStyle="text-align:center" header="Action" v-if="investmentStore.isSubmitted" >
                 </Column>
             </DataTable>
 
@@ -292,7 +292,7 @@
 
                 <Column field="json_popups_value.interest_amount_paid" header="Interest Amount Paid" style="min-width: 12rem">
                 </Column>
-                <Column field="" header="Action" style="min-width: 12rem">
+                <Column field="" header="Action" style="min-width: 12rem"  v-if="investmentStore.isSubmitted">
                     <template #body="slotProps">
                         <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
                             @click="investmentStore.editOtherExe(slotProps.data)">

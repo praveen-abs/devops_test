@@ -74,7 +74,7 @@ class AuthController extends Controller
 
             if($validateUser->fails()){
                 return response()->json([
-                    'status' => false,
+                    'status' => "failure",
                     'message' => 'validation error',
                     'errors' => $validateUser->errors()
                 ], 401);
@@ -82,7 +82,7 @@ class AuthController extends Controller
 
             if(!Auth::attempt($request->only(['user_code', 'password']))){
                 return response()->json([
-                    'status' => false,
+                    'status' => "failure",
                     'message' => 'EmployeeCode & Password does not match with our record.',
                 ], 401);
             }
@@ -90,14 +90,14 @@ class AuthController extends Controller
             $user = User::where('user_code', $request->user_code)->where('is_ssa','0')->first();
 
             return response()->json([
-                'status' => true,
+                'status' => "success",
                 'message' => 'User Logged In Successfully',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([
-                'status' => false,
+                'status' => "failure",
                 'message' => $th->getMessage()
             ], 500);
         }
