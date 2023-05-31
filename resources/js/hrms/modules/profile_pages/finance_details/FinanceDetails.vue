@@ -341,6 +341,18 @@
             </div>
         </div>
 
+
+        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
+
     </div>
 </template>
 <script setup>
@@ -354,6 +366,7 @@ import EmployeePayslips from './EmployeePayslips.vue'
 
 const toast = useToast();
 
+const canShowLoading = ref(false);
 
 
 let form = new FormData();
@@ -433,6 +446,8 @@ const pf_applicable = computed(() => {
 
 const saveBankinfoDetails = () => {
 
+    canShowLoading.value = true;
+
     let id = fetch_data.current_user_id;
     let url = `/update-bank-info/${id}`;
     let form = new FormData()
@@ -461,6 +476,7 @@ const saveBankinfoDetails = () => {
             console.log(err);
         }).finally(() => {
             _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
         })
 
     dialog_Bankvisible.value = false;
@@ -498,6 +514,7 @@ const statutory_information = reactive({
 
 
 const saveinfo_statutoryDetails = () => {
+    canShowLoading.value = true;
 
     let id = fetch_data.current_user_id;
 
@@ -527,6 +544,7 @@ const saveinfo_statutoryDetails = () => {
             console.log(err);
         }).finally(() => {
             _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
         })
 
     dialog_statutory_visible.value = false;
