@@ -84,9 +84,9 @@
                                             <div class="mb-3 form-group">
                                                 <label>Bank Name</label>
 
-                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name" optionValue="id"
-                                                    placeholder="Select Bank Name" class="w-full form-controls"
-                                                    v-model="bank_information.bank_id" />
+                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name"
+                                                    optionValue="id" placeholder="Select Bank Name"
+                                                    class="w-full form-controls" v-model="bank_information.bank_id" />
 
                                             </div>
                                         </div>
@@ -341,6 +341,18 @@
             </div>
         </div>
 
+
+        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
+
     </div>
 </template>
 <script setup>
@@ -354,6 +366,7 @@ import EmployeePayslips from './EmployeePayslips.vue'
 
 const toast = useToast();
 
+const canShowLoading = ref(false);
 
 
 let form = new FormData();
@@ -370,9 +383,6 @@ axios
         console.log("Photo Sent");
         // updateCheckBookPhoto();
     });
-
-
-
 
 const _instance_profilePagesStore = profilePagesStore()
 
@@ -392,14 +402,11 @@ onMounted(() => {
 
 });
 
-
 const dialog_Bankvisible = ref(false);
 const dialog_statutory_visible = ref(false);
 
 const bank_info_data = ref()
 const statutory_info_data = ref()
-
-
 
 const bank_information = reactive({
     bank_id: '',
@@ -408,6 +415,7 @@ const bank_information = reactive({
     pan_no: '',
     PassBook: ''
 })
+
 const updateCheckBookPhoto = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
@@ -416,8 +424,6 @@ const updateCheckBookPhoto = (e) => {
         // Get file size
         // Print to console
         console.log(bank_information.PassBook);
-
-
     }
 }
 
@@ -434,20 +440,16 @@ const pf_applicable = computed(() => {
     else
         if (_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes";
 
-
 })
 
-
-
+// save bankdetails function
 
 const saveBankinfoDetails = () => {
 
+    canShowLoading.value = true;
+
     let id = fetch_data.current_user_id;
-
-
     let url = `/update-bank-info/${id}`;
-
-
     let form = new FormData()
 
     form.append('user_code', _instance_profilePagesStore.employeeDetails.user_code)
@@ -457,28 +459,14 @@ const saveBankinfoDetails = () => {
     form.append('pan_no', bank_information.pan_no)
     form.append('PassBook', bank_information.PassBook)
 
-    // {
-    //     // user_code: _instance_profilePagesStore.employeeDetails.user_code,
-    //     // bank_id: bank_information.bank_id.id,
-    //     // account_no: bank_information.bank_ac_no,
-    //     // bank_ifsc: bank_information.ifsc_code,
-    //     // pan_no: bank_information.pan_no,
-
-    // }
-
-    axios.post(url, form
-    )
+    axios.post(url, form)
         .then((res) => {
-
             if (res.data.status == "success") {
-                //  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Bank information updated', life: 3000 });
-
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.ifsc_code;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
-
 
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
@@ -486,32 +474,27 @@ const saveBankinfoDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
+        })
 
     dialog_Bankvisible.value = false;
 
 }
 
 function onClick_EditButton_BankInfo() {
-    console.log("Opening General Info Dialog");
-
     // Assign json values into dialog elements also
-
-    bank_information.bank_id =  parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.bank_id);
+    bank_information.bank_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.bank_id);
     bank_information.bank_ac_no = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number;
     bank_information.ifsc_code = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
     bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number;
     dialog_Bankvisible.value = true;
-
-
 }
 
 
 function onClick_EditButton_Statutory_Info() {
-    console.log("Opening General Info Dialog");
-
     // Assign json values into dialog elements also
-
     statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable;
     statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number;
     statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number;
@@ -519,15 +502,7 @@ function onClick_EditButton_Statutory_Info() {
     statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number;
 
     dialog_statutory_visible.value = true;
-
 }
-
-
-//
-//
-//
-
-
 
 const statutory_information = reactive({
     pf_applicable: '',
@@ -539,6 +514,7 @@ const statutory_information = reactive({
 
 
 const saveinfo_statutoryDetails = () => {
+    canShowLoading.value = true;
 
     let id = fetch_data.current_user_id;
 
@@ -566,7 +542,10 @@ const saveinfo_statutoryDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
+        })
 
     dialog_statutory_visible.value = false;
 

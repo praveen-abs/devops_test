@@ -47,12 +47,22 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         Shift_Code:"",
         txt_shift_start_time:"",
         Is_Default:"",
-        AFGH_Min:"",
+        AFGH_Min:0,
         Shift_start_Time:"",
         Shift_End_Time:"",
         Week_Off:"",
-        Grace_Time:"",
+        Grace_Time:0,
         AFGB_Min:"",
+        STBD_Morning_Mins:"",
+        STBD_Lunch_Mins:"",
+        STBD_Evening_Mins:"",
+        HDMWHR_hrs:"",
+        FDMWHR_hrs:"",
+        lclp_number_of_late_commings_allowed_Month:"",
+        lclp_Once_Exceed_TheLate_Limit_Days_Lop_Apply:"",
+        eglp_number_of_late_commings_allowed_Month:"",
+        eglp__Once_Exceed_TheEarly_Limit_Days_Lop_Apply:''
+
 
     })
 
@@ -63,7 +73,7 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     });
 
     // const AllWeeks = ref();
-    const update_state = reactive([]);
+    let update_state = reactive([]);
 
 
     const Week_Off_Days = ref([
@@ -102,15 +112,15 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     function fetchShiftDetails() {
         canShowLoading.value = true;
-        let url = window.location.origin + "/attendance_settings/fetch-emp-details";
+        let url = window.location.origin + "/save-work-shift";
 
         console.log("AJAX URL : " + url);
 
-        axios.get(url).then((response) => {
-            array_shiftDetails.value = response.data;
-            console.log("testing fetch-emp-details : ",array_shiftDetails.value);
-            canShowLoading.value = false;
-        });
+        // axios.get(url).then((response) => {
+        //     array_shiftDetails.value = response.data;
+        //     console.log("testing fetch-emp-details : ",array_shiftDetails.value);
+        //     canShowLoading.value = false;
+        // });
     }
 
     function resetVars() {
@@ -142,14 +152,15 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         let array_assignedEmp_ids = getEmployeeIDsArray();
 
         // let url = `/attendance_settings/save-shiftdetails`;
-        let url = `http://localhost:3000/assingWorkShifts`;
+        let url = `/save-work-shift`;
 
         //Shift name
         //Selected employees
         // window.location.origin +
         axios
-            .post( url, {
-                update_state:update_state,
+            .post(url, {
+                shiftDetails:shiftDetails,
+                update_state:Week_Off_Days.value,
             })
             .then((response) => {
                 console.log(response);
@@ -165,31 +176,74 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
             });
     }
 
+    const isCheckedOrNot = reactive({
+        sunday:false,
+        monday:false,
+        tuesday:false,
+        wednesday:false,
+        thursday:false,
+        friday:false,
+        saturday:false,
+    })
+
     async function updateWeekOffState(data){
 
+        console.log(data);
 
-        // AllWeeks.value = data;
+        if(data.weeks == "Sunday"){
+            console.log("sunday");
+            console.log(data.AllWeeks);
 
-        if(data.AllWeeks){
-            data.first_week = 1;
-            data.sec_week = 1;
-            data.third_week = 1;
-            data.fourth_week = 1;
-            data.fifth_week = 1;
+            if(data.AllWeeks==1){
+            console.log("sunday All Week true");
+            isCheckedOrNot.sunday = true
+            }else
+            if(data.first_week == 1){
+                isCheckedOrNot.sunday = false
+            }
+            else{
+                console.log("sunday All Week false");
+                isCheckedOrNot.sunday = false
+            }
+        }else{
+            console.log("sunday All Week false");
+            isCheckedOrNot.sunday = false
         }
-        let val = {
-            AllWeeks:data.AllWeeks,
-            Week_1st:data.first_week,
-            Week_2st:data.sec_week,
-            Week_3st:data.third_week,
-            Week_4st:data.fourth_week,
-            Week_5st:data.fifth_week,
-        }
-        console.log(val.value);
 
-        update_state.push(val)
+
+
+        // if(data.AllWeeks){
+        //     data.first_week = 1;
+        //     data.sec_week = 1;
+        //     data.third_week = 1;
+        //     data.fourth_week = 1;
+        //     data.fifth_week = 1;
+        // }
+        update_state = {
+            // week_off_list:data.AllWeeks,
+            // Week_1st:data.first_week,
+            // Week_2st:data.sec_week,
+            // Week_3st:data.third_week,
+            // Week_4st:data.fourth_week,
+            // Week_5st:data.fifth_week,
+        }
         console.log(update_state);
         // console.log("get update Week_Off State : ", AllWeeks.value);
+
+
+
+
+    }
+
+    const isChecked = (day,allDays,singleDay)=>{
+        console.log(allDays,singleDay);
+        if(allDays){
+            return true
+        }else{
+            return false
+    }
+
+
 
     }
 
@@ -212,7 +266,7 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,Week_Off_Days,update_state,
 
         //
-        fetchShiftDetails, saveWorkShiftDetails,getWeek_Off_Days,updateWeekOffState
+        fetchShiftDetails, saveWorkShiftDetails,getWeek_Off_Days,updateWeekOffState,isChecked,isCheckedOrNot
 
 
     };

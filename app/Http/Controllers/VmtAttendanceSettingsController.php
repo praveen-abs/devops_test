@@ -73,6 +73,7 @@ class VmtAttendanceSettingsController extends Controller
 
     public function saveWorkShiftSettings(Request $request, VmtAttendanceSettingsService $vmtAttendanceSettingsService)
     {
+        dd($request->all());
         $shift_code = 'FS';
         $shift_name = 'First Shift';
         $is_default = 1;

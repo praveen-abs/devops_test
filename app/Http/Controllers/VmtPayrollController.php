@@ -13,6 +13,7 @@ use App\Models\User;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use PDF;
+use App\Services\VmtPayrollService;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
@@ -29,7 +30,10 @@ class VmtPayrollController extends Controller
     }
 
 
-    //
+    public function getCurrentPayrollMonth(Request $request , VmtPayrollService $serviceVmtPayrollService ){
+            dd($request->all());
+        return $serviceVmtPayrollService->getCurrentPayrollMonth;
+    }
 
 
     public function showPayrollClaimsPage(Request $request){

@@ -1,41 +1,39 @@
 <template>
-    <div class="p-5 conainer-fluid main-body">
-        <div class="head-contant d_spc_bt">
-            <h3>Holiday Summary</h3>
 
-            <div class="mb-4 holiday-settings-btns">
-                <ul class="d-flex">
-                    <li><button class="cancel_btn">Cancel</button></li>
-                    <li><button class="view_Lists">View Lists</button></li>
-                    <li><button class="add_new_holiday_btn" @click="visible = true"> Add New Holiday</button></li>
+    <div class="p-5 card main-body">
+        <div class="head-contant d_spc_bt d-flex flex-wrap">
+            <h3 class="fs-4 fw-bold mb-3">Holiday Summary</h3>
+            <div class="holiday-settings-btns">
+                <ul class="d-flex flex-wrap">
+                    <li><button class="cancel_btn w-30 mb-3">Cancel</button></li>
+                    <li><button class="view_Lists w-30 mb-3">View Lists</button></li>
+                    <li><button class="add_new_holiday_btn w-33 mb-3" @click="visible = true"> Add New Holiday</button></li>
                 </ul>
             </div>
         </div>
-
         <!-- row-cols-1 row-cols-md-3 g-4 -->
-      <div v-for="holiday in useStore.holidayData" :key="holiday.id" class="flex-wrap">
-        <div  >
-            <div class="row">
-                <div class="w-3">
-                    <div class="m-0 card-title d_spc_bt">
-                        <h3>{{ holiday.holiday_name }}</h3> 
-                        <span>Jan1 (sunday)</span> 
-                        <span></span> 
+      <div class="d-flex justify-content-center w-full mt-4 ">
+        <div  class="d-flex w-full flex-wrap justify-content-start">
+            <div class="row  d-flex flex-wrap" style="width: 300px;"  v-for="holiday in useStore.holidayData" :key="holiday.id" >
+                <div class="col w-full mx-4" >
+                    <div class="m-0 card-title d_spc_bt align-items-center w-full">
+                        <h3 class="fs-5">{{ holiday.holiday_name }}</h3>
+                        <span class="fs-6">  {{dayjs(holiday.holiday_date ).format('DD-MMM-YYYY') }}</span>
                     </div>
                     <div class="card clr-trans card-w">
-                        {{ holiday.image }}
+                        <!-- {{ holiday.image }} -->
+                        <img src="" alt="">
                         <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top"
                             alt="...">
                         <div class="overlay"></div>
                         <div class="hover_btn_div d-ard">
-                            <button label="Edit" @click="visible = true" >
+                            <button label="Edit" @click="visible = true" class="w-6 fs-6" >
                                 Edit
                             </button>
-                            <button class="mx-4" @click="remove">Remove</button>
+                            <button  @click="remove" class="w-8 fs-6 mx-4" >Remove</button>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
       </div>
@@ -55,7 +53,7 @@
                 </div>
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Date</label>
-                    <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" :minDate="new Date()" />
+                    <Calendar inputId="icon" icon="pi-calendar-times" dateFormat="dd-mm-yy" :showIcon="true" :minDate="new Date()" />
                 </div>
 
             </div>
@@ -67,7 +65,6 @@
 
         <!--  -->
     </div>
-
     <!-- {{ useStore.holidayData }} -->
 </template>
 
@@ -84,6 +81,7 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import dayjs from 'dayjs';
 import { useHolidayStore } from "../attendance_settings/stores/HolidayStore";
 
 const useStore = useHolidayStore()
@@ -213,7 +211,7 @@ li {
     position: absolute;
     top: 45%;
     left: 23%;
-    width: 50%;
+    width: 60%;
     // border: 1px solid white;
 }
 
@@ -231,6 +229,7 @@ li {
     display: flex;
     justify-content: space-around;
     align-content: center;
+    // border: 4px solid yellow;
 }
 
 .card-img-top {
@@ -250,6 +249,7 @@ li {
     position: absolute;
     width: 100%;
     height: 100%;
+    // border: 4px solid yellow;
 }
 
 .card-w:hover .overlay {
@@ -513,5 +513,7 @@ li {
 <!-- <script setup>
 import { useToast } from "primevue/usetoast";
 
-</script> -->
+</script>
+
+-->
 }
