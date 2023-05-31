@@ -34,6 +34,7 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
     public function __construct($data)
     {
           $this->heading_dates=$data[0];
+          $this->total_column = num2alpha(count($data[0])-1);
           $this->reportresponse=$data[1];
     }
 
@@ -71,7 +72,7 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
                         ]
 
                 ];
-                $cellRange = 'A2:AT2'; // All headers
+                $cellRange = 'A2:'.$this->total_column.'2'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
 
 
@@ -84,7 +85,7 @@ class BasicAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,Wit
     {
            $single_employee= array();
 
-       // dd(count($this->reportresponse));
+
         for($i=0;$i<count($this->reportresponse);$i++){
             array_push($single_employee,$this->reportresponse[$i]);
         }
