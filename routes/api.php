@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'performAttendanceCheckIn']);
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'performAttendanceCheckOut']);
     Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
+    Route::post('/attendance/get_last_attendance_status', [VmtAPIAttendanceController::class, 'getLastAttendanceStatus']);
     Route::post('/attendance/getEmployeeWorkShiftTimings', [VmtAPIAttendanceController::class, 'getEmployeeWorkShiftTimings']);
 
     //Leave
