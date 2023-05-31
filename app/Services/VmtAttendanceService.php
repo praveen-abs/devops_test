@@ -1609,7 +1609,7 @@ class VmtAttendanceService
         } else {
             return response()->json([
                 'status' => 'failure',
-                'message' => 'Unable to check-out since Check-in is not done for the given date',
+                'message' => 'Unable to check-out since Check-in is not done for the given date or Check-out is already done',
                 'data'   => ""
             ]);
         }
