@@ -76,6 +76,9 @@
                             {{ dayjs(slotProps.data.end_date).format('DD-MMM-YYYY') }}
                         </template>
                     </Column>
+                    <Column field="total_leave_datetime" header="Total Leave Days">
+
+                    </Column>
                       <Column field="leave_reason" header="Leave Reason">
                         <template #body="slotProps">
                             <div
@@ -129,6 +132,13 @@
                               </template>
                             </Dropdown>
                           </template>
+                    </Column>
+                    <Column field="" header="Action" style="min-width: 15rem">
+                        <template #body="slotProps">
+                            <Button type="button" icon="" class=" text-white Button py-2.5"
+                                label="View" @click="leaveModuleStore.getLeaveDetails(slotProps.data)"
+                                style="height: 2em" />
+                        </template>
                     </Column>
                   </DataTable>
                   </div>

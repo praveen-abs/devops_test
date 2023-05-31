@@ -1928,6 +1928,7 @@ class VmtAttendanceService
                 ->whereMonth('leaverequest_date', $filter_month)
                 ->whereIn('status', $filter_leave_status)
                 ->get([
+                    "vmt_employee_leaves.user_id",
                     "vmt_employee_leaves.leaverequest_date",
                     "vmt_employee_leaves.start_date",
                     "vmt_employee_leaves.end_date",
@@ -1938,7 +1939,7 @@ class VmtAttendanceService
                     "vmt_employee_leaves.reviewer_comments",
                     "vmt_employee_leaves.status",
                     "vmt_employee_leaves.is_revoked",
-                    "name",
+                    "name as employee_name",
                     "user_code",
                     "leave_type",
                 ]);
@@ -1949,8 +1950,9 @@ class VmtAttendanceService
 
                 $manager_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
                 $query_employees_leaves[$i]["manager_name"] = $manager_name;
+                $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
+                $query_employees_leaves[$i]["user_short_name"] = getUserShortName($query_employees_leaves[$i]["user_id"]);
             }
-
 
             return response()->json([
                 'status' => 'success',
