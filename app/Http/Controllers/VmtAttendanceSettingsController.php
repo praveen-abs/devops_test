@@ -114,4 +114,9 @@ class VmtAttendanceSettingsController extends Controller
         );
         dd($response);
     }
+
+    public function jsonFormatForDummyWeekOffDays(Request $request, VmtAttendanceSettingsService $vmtAttendanceSettingsService){
+
+            return  $vmtAttendanceSettingsService->jsonFormatForDummyWeekOffDays();
+    }
 }
