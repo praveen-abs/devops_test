@@ -1,11 +1,8 @@
 import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import axios from "axios";
-import { inject } from "vue";
 
 export const useManagePayslipStore = defineStore("managePayslipStore", () => {
-
-    const swal = inject("$swal");
 
 
     // Variable Declarations
@@ -80,17 +77,6 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month: month,
             year: year,
         }).then((response) => {
-
-            console.log("testing ",response.data);
-            if (response.data.status == "success"){
-                console.log(response.data.status);
-                swal.fire({
-                       title: response.data.status = "success",
-                       text: response.data.message,
-                       icon: "success",
-                       showCancelButton: false,
-                   })
-                }
             console.log(" Response [sendMail_employeePayslip] : " + response.data.data);
         })
             .catch((data) => {
