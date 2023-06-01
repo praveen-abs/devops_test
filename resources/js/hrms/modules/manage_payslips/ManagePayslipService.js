@@ -77,7 +77,10 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month: month,
             year: year,
         }).then((response) => {
+            console.log("testing ",response.data);
+
             if (response.data.status == "success"){
+                console.log(response.data.status);
                 Swal.fire({
                        title: response.data.status = "success",
                        text: response.data.message,
