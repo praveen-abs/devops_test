@@ -77,6 +77,26 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month: month,
             year: year,
         }).then((response) => {
+            if (response.data.status == "success"){
+                Swal.fire({
+                       title: response.data.status = "success",
+                       text: response.data.message,
+                       icon: "success",
+                       showCancelButton: false,
+                   }).then((result) => {
+
+                   });
+                   if (response.data.status == "failure") {
+                    Swal.fire({
+                        title: response.data.status = "failure",
+                        text: response.data.message,
+                        icon: "failure",
+                        showCancelButton: false,
+                    }).then((result) => {
+                    });
+                }
+           }
+
             console.log(" Response [sendMail_employeePayslip] : " + response.data.data);
         })
             .catch((data) => {
