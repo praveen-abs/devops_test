@@ -216,7 +216,7 @@ const saveFamilyDetails = () => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                //  window.location.reload();
+
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Family information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
@@ -228,13 +228,13 @@ const saveFamilyDetails = () => {
                 // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
                 _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
             } else if (res.data.status == "failure") {
-                leave_data.leave_request_error_messege = res.data.message;
+                // leave_data.leave_request_error_messege = res.data.message;
             }
         })
         .catch((err) => {
             console.log(err);
         }).finally(()=>{
-            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.fetchEmployeeDetails();
             _instance_profilePagesStore.loading_screen = false
             });
         // window.location.reload();
@@ -272,7 +272,7 @@ const diolog_DeleteFamilyDetails = (family) => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
+                //  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 

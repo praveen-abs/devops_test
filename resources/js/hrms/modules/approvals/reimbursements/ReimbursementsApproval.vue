@@ -16,14 +16,14 @@
                 style=" border: 1px solid orange; border-radius: 7px;" />
             <Dropdown v-model="selected_status" :options="statuses" placeholder="Status" class="w-full mx-3 md:w-14rem"
                 style=" border: 1px solid orange; border-radius: 7px;" />
-            <button label="Submit" class="btn btn-primary" severity="danger"
+            <button label="Submit" class="btn btn-primary z-0" severity="danger"
                 :disabled="!selected_status == '' ? false : true" @click="generate_ajax"> <i class="fa fa-cog me-2"></i>
                 Generate</button>
         </div>
 
         <Button type="button" icon="pi pi-times-circle" severity="danger" v-if="!selectedAllEmployee == ''"
             label="Reject all" style=" height: 2.5em" @click="showConfirmDialogForBulkApproval(selectedAllEmployee, 'Reject')" />
-        <button class="btn btn-primary" :disabled="data_reimbursements == '' ? true : false" severity="success"
+        <button class="btn btn-primary z-0" :disabled="data_reimbursements == '' ? true : false" severity="success"
             @click="download_ajax"><i class="fas fa-file-download me-2"></i>Download</button>
     </div>
     <div>

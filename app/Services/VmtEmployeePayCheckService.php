@@ -73,6 +73,7 @@ class VmtEmployeePayCheckService {
 
     public function storeBulkEmployeesPayslips($data)
     {
+
        $data = array_filter($data);
 
         ini_set('max_execution_time', 300);
@@ -92,31 +93,39 @@ class VmtEmployeePayCheckService {
         $excelRowdata_row = $data;
 
         $currentRowInExcel = 0;
+$i=array_keys($excelRowdata_row);
 
-
-        foreach ($excelRowdata_row[1] as $key => $excelRowdata) {
+      foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) {
 
             $currentRowInExcel++;
-
+            $excelRowdata['emp_no']=trim($excelRowdata['emp_no']);
             //Validation
             $rules = [
-                            'emp_no' => 'required|exists:users,user_code',
+
+                        'emp_no' => [ function ($attribute, $value, $fail) {
+
+                                $emp_client_code = preg_replace('/\d+/', '', $value );
+                                $result = User::where('user_code', $value)->exists();
+
+                            if (!$result) {
+                                $fail('No matching client exists for the given Employee Code : '.$value);
+                                        }
+                                    },
+                                ],
                             'emp_name' => 'required',
-                            'gender' => 'required',
+                            'gender' => 'nullable',
                             'designation' => 'required',
                             'department' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                            'doj' => 'required',
                             'location' => 'required',
-                            'dob' => 'required',
                             'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                             'pan_number' => 'nullable',
                             'aadhar_number' => 'nullable',
-                            'uan' => 'required',
+                            'uan' => 'nullable',
                             'epf_number' => 'nullable',
-                            'esic_number' => 'required',
-                            'bank_name' => 'required',
-                            'account_number' => 'required',
-                            'bank_ifsc_code' => 'required',
+                            'esic_number' => 'nullable',
+                            'bank_name' => 'nullable',
+                            'account_number' => 'nullable',
+                            'bank_ifsc_code' => 'nullable',
                             'payroll_month' => 'required|date',
                             'basic' => 'required',
                             'hra' => 'required',
@@ -188,7 +197,7 @@ class VmtEmployeePayCheckService {
                 $rowDataValidationResult = [
                     'row_number' => $currentRowInExcel,
                     'status' => 'failure',
-                   // 'message' => 'In Excel Row - '.$excelRowdata['emp_no'].' : ' . $currentRowInExcel . ' has following error(s)',
+                    'message' => 'In Excel Row - '.$excelRowdata['emp_no'].' : ' . $currentRowInExcel . ' has following error(s)',
                     'error_fields' => json_encode($validator->errors()),
                 ];
 
@@ -202,7 +211,7 @@ class VmtEmployeePayCheckService {
 
         //Runs only if all excel records are valid
         if ($isAllRecordsValid) {
-            foreach ($excelRowdata_row[1]  as $key => $excelRowdata) {
+            foreach ($excelRowdata_row[$i[0]]  as $key => $excelRowdata) {
                 $rowdata_response = $this->storeSingleRecord_EmployeePayslip($excelRowdata);
 
                 array_push($data_array, $rowdata_response);
@@ -226,6 +235,7 @@ class VmtEmployeePayCheckService {
 
     private function storeSingleRecord_EmployeePayslip($row)
     {
+        $row['emp_no']=trim($row['emp_no']);
 
         $empNo = $row['emp_no'];
         try {
@@ -236,31 +246,6 @@ class VmtEmployeePayCheckService {
             //update employee's details 'vmt_employee_details'
             $emp_details = VmtEmployee::where('userid', $user_id);
 
-            if($emp_details->exists()){
-                $emp_details = $emp_details->first();
-
-                if(!empty($row['bank_name']) && Bank::where('bank_name',$row['bank_name'])->exists())
-                     $emp_details->bank_id =  Bank::where('bank_name',$row['bank_name'])->first()->id;
-
-                $emp_details->bank_account_number =  $row['account_number'] ?? '---';
-                $emp_details->bank_ifsc_code = $row['bank_ifsc_code'] ?? '---';
-
-                $emp_details->save();
-
-            }
-
-            //update employee's 'vmt_employee_statutory_details'
-            $emp_statutory_details = VmtEmployeeStatutoryDetails::where('user_id', $user_id);
-
-            if($emp_statutory_details->exists()){
-                $emp_statutory_details = $emp_statutory_details->first();
-
-                $emp_statutory_details->uan_number = $row["uan"];
-                $emp_statutory_details->epf_number = $row["epf_number"];
-                $emp_statutory_details->esic_number = $row["esic_number"];
-
-                $emp_statutory_details->save();
-            }
 
             //update employee's ' vmt_employee_details'
                 //BANK NAME
@@ -272,11 +257,7 @@ class VmtEmployeePayCheckService {
             $empPaySlip->gender = $row['gender'];
             $empPaySlip->designation = $row['designation'];
             $empPaySlip->department = $row['department'];
-
-            $empPaySlip->doj = \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
             $empPaySlip->location = $row['location'];
-
-            $empPaySlip->dob =\DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
             $empPaySlip-> father_name  = $row['father_name'];
             $empPaySlip->pan_number = $row['pan_number'];
             $empPaySlip->aadhar_number = $row['aadhar_number'];
@@ -287,7 +268,8 @@ class VmtEmployeePayCheckService {
             $empPaySlip->account_number = $row["account_number"];
             $empPaySlip->bank_ifsc_code = $row["bank_ifsc_code"];
 
-            $client_id=sessionGetSelectedClientid();
+            $client_id=User::where('user_code',$row['emp_no'])->first()->client_id;
+
             $payroll_date=\DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
          //check already exist or not
             $Payroll_data = VmtPayroll::where('client_id', $client_id)->where('payroll_date',$payroll_date)->first();

@@ -48,6 +48,7 @@
     </Column>
     <Column header="Employee Name" field="name" style="min-width: 8rem">
     </Column>
+
     <Column header="Section" field="section" style="min-width: 16rem">
     </Column>
     <Column header="Particular" field="particular" style="min-width: 16rem">
@@ -59,11 +60,21 @@
     <Column header="Pops Value" field="json_popups_value" style="min-width: 16rem">
     </Column>
 
+    <Column v-for="col of employeeDetails" :key="col.id" :header="col.particular">
+        <template #body="{ data }">
+           <div v-if="data.particular == 'Employee contributions to NPS'">
+            {{ data.dec_amount }}
+           </div>
+           <div v-if="data.particular == 'Principal Repayment of Housing Loan'">
+            {{ data.dec_amount }}
+           </div>
+        </template>
+    </Column>
 
-
-    <!-- <Column v-for="details of employeeDetails" :header="`${details.particular}`" :key="details.id">
+<!--
+    <Column v-for="details of employeeDetails" :header="`${details.particular}`" :key="details.id">
                             <template #body="{ data }">
-                                {{ data.dec_amount }}
+                                {{ data.dec_amount['PSC0018'] }}
                             </template>
                             </Column>
                              <Column header="Employee Name" field="name" style="min-width: 8rem">
