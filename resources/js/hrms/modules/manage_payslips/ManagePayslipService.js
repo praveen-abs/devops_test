@@ -77,8 +77,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             month: month,
             year: year,
         }).then((response) => {
-            console.log("testing ",response.data);
 
+            console.log("testing ",response.data);
             if (response.data.status == "success"){
                 console.log(response.data.status);
                 Swal.fire({
@@ -86,20 +86,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
                        text: response.data.message,
                        icon: "success",
                        showCancelButton: false,
-                   }).then((result) => {
-
-                   });
-                   if (response.data.status == "failure") {
-                    Swal.fire({
-                        title: response.data.status = "failure",
-                        text: response.data.message,
-                        icon: "failure",
-                        showCancelButton: false,
-                    }).then((result) => {
-                    });
+                   })
                 }
-           }
-
             console.log(" Response [sendMail_employeePayslip] : " + response.data.data);
         })
             .catch((data) => {
