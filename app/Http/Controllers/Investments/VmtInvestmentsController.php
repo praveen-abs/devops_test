@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Investments;
 
+use App\Models\Compensatory;
+use App\Models\VmtEmployee;
 use App\Models\VmtInvestmentForm;
 use App\Models\VmtInvFormSection;
 use App\Models\VmtInvEmpFormdata;
@@ -17,6 +19,7 @@ use App\Models\VmtEmpInvRentalDetails;
 
 class VmtInvestmentsController extends Controller
 {
+
     public function getInvestmentsFormDetailsTemplate(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
     {
         //  dd($request->all());
@@ -298,10 +301,14 @@ class VmtInvestmentsController extends Controller
         //     ->leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
         //     ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
         //    ->where('vmt_inv_f_emp_assigned.user_id',$user_id)
-        $v_form_template =VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
-        ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
-         ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
-        ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+
+        $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+            ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+            ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+            ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
+            ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
+            ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
+            ->where('vmt_inv_f_emp_assigned.user_id', '1')
             ->get(
                 [
                     'vmt_inv_formsection.section_id',
@@ -315,26 +322,45 @@ class VmtInvestmentsController extends Controller
                     'vmt_inv_section.section_option_2',
                     'vmt_inv_emp_formdata.dec_amount',
                     'vmt_inv_emp_formdata.json_popups_value',
+                    'vmt_employee_compensatory_details.gross',
+                    'vmt_employee_compensatory_details.basic',
+                    'vmt_employee_compensatory_details.hra',
+                    'vmt_employee_compensatory_details.special_allowance',
+                    'vmt_employee_compensatory_details.professional_tax',
+                    'vmt_employee_details.doj',
                 ]
             )->toArray();
-            
-            // dd($v_form_template);
 
-        // $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
+        //  dd( $v_form_template);
+
 
         $res = array();
         $sumOfSec = 0;
         $sumOfHra = 0;
-        $sumOfotherExemption  = 0;
-        $sumOfHouseProperty  = 0;
-        $sumOfReimbersument  = 0;
+        $sumOfotherExemption = 0;
+        $sumOfHouseProperty = 0;
+        $sumOfReimbersument = 0;
         $sumOfPreviousEmployerIncome = 0;
         $sumOfOtherSourceIncome = 0;
-        foreach ($v_form_template as $dec_amt) {      
-    
-             if($dec_amt['section_group'] == "HRA"){
-                $hraTotalRent  = (json_decode($dec_amt["json_popups_value"], true));
+        $totalSumOfExemption = 0;
+
+
+        foreach ($v_form_template as $dec_amt) {
+
+
+            $empGeneralInfo['gross'] = $dec_amt['gross'];
+            $empGeneralInfo['basic'] = $dec_amt['basic'];
+            $empGeneralInfo['hra'] = $dec_amt['hra'];
+            $empGeneralInfo['special_allowance'] = $dec_amt['special_allowance'];
+            $empGeneralInfo['professional_tax'] = $dec_amt['professional_tax'];
+            $empGeneralInfo['doj'] = $dec_amt['doj'];
+
+            // dd($empGeneralInfo);
+
+            if ($dec_amt['section_group'] == "HRA") {
+                $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));
                 $sumOfHra += $hraTotalRent['total_rent_paid'];
+                $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
                 $hra['section_name'] = $dec_amt['section_group'];
                 $hra['dec_amount'] = $sumOfHra;
                 $hra['proof_submitted'] = 0;
@@ -342,72 +368,189 @@ class VmtInvestmentsController extends Controller
                 $hra['amount_accepted'] = 0;
                 // dd($hraTotalRent);
             }
-             if($dec_amt['section_group'] == "Section 80C & 80CC "){
+            if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
 
                 $sumOfSec += $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
                 $section80['section_name'] = $dec_amt['section_group'];
                 $section80['dec_amount'] = $sumOfSec;
                 $section80['proof_submitted'] = 0;
                 $section80['amount_rejected'] = 0;
                 $section80['amount_accepted'] = 0;
             }
-             if($dec_amt['section_group'] == "Other Excemptions "){
-              
+            if ($dec_amt['section_group'] == "Other Excemptions ") {
+
                 $sumOfotherExemption += $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
                 $otherExemption['section_name'] = $dec_amt['section_group'];
                 $otherExemption['dec_amount'] = $sumOfotherExemption;
                 $otherExemption['proof_submitted'] = 0;
                 $otherExemption['amount_rejected'] = 0;
                 $otherExemption['amount_accepted'] = 0;
             }
-            if($dec_amt['section_group'] == "House Properties "){
-                $totalIntersetPaid  = (json_decode($dec_amt["json_popups_value"], true));
+            if ($dec_amt['section_group'] == "House Properties ") {
+                $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
                 // $sumOfHouseProperty += $totalIntersetPaid["income_loss"];
                 $houseProperty['section_name'] = $dec_amt['section_group'];
                 $houseProperty['dec_amount'] = $sumOfHouseProperty;
                 $houseProperty['proof_submitted'] = 0;
                 $houseProperty['amount_rejected'] = 0;
                 $houseProperty['amount_accepted'] = 0;
-                
+
             }
-            if($dec_amt['section_group'] == "Reimbersument "){
+            if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
                 $reimbersument['section_name'] = $dec_amt['section_group'];
                 $reimbersument['dec_amount'] = $sumOfReimbersument;
                 $reimbersument['proof_submitted'] = 0;
                 $reimbersument['amount_rejected'] = 0;
                 $reimbersument['amount_accepted'] = 0;
-                
+
             }
-            if($dec_amt['section_group'] == "Previous Employer Income"){
+            if ($dec_amt['section_group'] == "Previous Employer Income") {
                 $sumOfPreviousEmployerIncome += $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
                 $previousEmployerIncome['section_name'] = $dec_amt['section_group'];
                 $previousEmployerIncome['dec_amount'] = $sumOfPreviousEmployerIncome;
                 $previousEmployerIncome['proof_submitted'] = 0;
                 $previousEmployerIncome['amount_rejected'] = 0;
                 $previousEmployerIncome['amount_accepted'] = 0;
-                
+
             }
 
-            if($dec_amt['section_group'] == "Other Source Of  Income"){
+            if ($dec_amt['section_group'] == "Other Source Of  Income") {
                 $sumOfOtherSourceIncome += $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
                 $otherSourceIncome['section_name'] = $dec_amt['section_group'];
                 $otherSourceIncome['dec_amount'] = $sumOfOtherSourceIncome;
                 $otherSourceIncome['proof_submitted'] = 0;
                 $otherSourceIncome['amount_rejected'] = 0;
                 $otherSourceIncome['amount_accepted'] = 0;
-                
+
             }
-           
-           
+
+            $taxDeduction['section'] = "choose_regime";
+
+            // $taxDeduction['allowance_tax'] = $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] +  $sumOfHra;
+            $taxDeduction['exemption'] = $totalSumOfExemption;
+            // $taxDeduction['Total_taxable'] = $dec_amt['gross'] * 12 + $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra + $totalSumOfExemption;
+
         }
-        
+
         // array_push($res,$section80,$otherExemption,$houseProperty,$reimbersument ,$previousEmployerIncome,$otherSourceIncome);
-        array_push($res,$hra,$section80,$houseProperty,$otherExemption,$reimbersument,$previousEmployerIncome,$otherSourceIncome);
+        array_push(
+            $res,
+            $hra,
+            $section80,
+            $houseProperty,
+            $otherExemption,
+            $reimbersument,
+            $previousEmployerIncome,
+            $otherSourceIncome,
+            $taxDeduction,
+            $empGeneralInfo
+        );
         return $res;
 
     }
 
+    public function taxDeclaration(Request $request)
+    {
+        $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+            ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+            ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+            ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
+            ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
+            ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
+            ->where('vmt_inv_f_emp_assigned.user_id', '1')
+            ->get(
+                [
+                    'vmt_inv_section_group.section_group',
+                    'vmt_inv_emp_formdata.dec_amount',
+                    'vmt_inv_emp_formdata.json_popups_value',
+                    'vmt_employee_compensatory_details.gross',
+                    'vmt_employee_compensatory_details.basic',
+                    'vmt_employee_compensatory_details.hra',
+                    'vmt_employee_compensatory_details.special_allowance',
+                    'vmt_employee_compensatory_details.professional_tax',
+                    'vmt_employee_details.doj',
+                ]
+            )->toArray();
+
+        // dd($v_form_template);
+
+        $res = array();
+        $sumOfHra = 0;
+        $sumOfReimbersument = 0;
+        $standardDeducation = 0;
+        $totalSumOfExemption = 0;
+        $SumOfExemptionInNew = 0;
+
+        foreach ($v_form_template as $dec_amt) {
+
+          
+            $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
+
+            if ($dec_amt['section_group'] == "HRA") { 
+                $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));           
+                $sumOfHra += $hraTotalRent['total_rent_paid'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
+            }
+
+            $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
+
+            if ($dec_amt['section_group'] == "Reimbersument ") {
+                $sumOfReimbersument += $dec_amt['dec_amount'];
+            }
+
+            if ($dec_amt['gross'] >= 50000) {
+                $standardDeducation = 50000;
+            } else {
+                $standardDeducation = intval($dec_amt['gross']);
+            }
+
+            // Calculate Total Sum Of Declaration Amount
+
+            $totalSumOfExemption += $dec_amt['dec_amount'];
+
+            if ($dec_amt['section_group'] == "House Properties ") {
+                if ($totalIntersetPaid['property_type'] == "Let Out Property") {
+                    $SumOfExemptionInNew = $totalIntersetPaid['income_loss'];
+                }                 
+            }
+
+            $total_gross['section'] = "Total Gross Income";
+            $total_gross['old_regime'] = round($dec_amt['gross'] * 12);
+            $total_gross['new_regime'] = round($dec_amt['gross'] * 12);
+
+
+            $allowance_tax['section'] = "Total Tax Allowance";
+            $allowance_tax['old_regime'] = $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra;
+            $allowance_tax['new_regime'] = $sumOfReimbersument + $standardDeducation;
+
+
+            $exemption['section'] = "Excemption 80c & others";
+            $exemption['old_regime'] = round($totalSumOfExemption);
+            $exemption['new_regime'] = round($SumOfExemptionInNew);
+
+            $total_tax_income['section'] = "Total Tax Income";
+            $total_tax_income['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra + $totalSumOfExemption)));
+            $total_tax_income['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $SumOfExemptionInNew)));
+
+            $total_tax_laibilty['section'] = "Total Tax Laibility";
+            $total_tax_laibilty['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra + $totalSumOfExemption)));
+            $total_tax_laibilty['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $SumOfExemptionInNew)));
+        }
+
+        array_push(
+            $res,$total_gross,$allowance_tax, $exemption,$total_tax_income,$total_tax_laibilty
+            
+        );
+        return $res;
+
+
+    }
 
     public function taxDeducationCalculate(Request $request)
     {

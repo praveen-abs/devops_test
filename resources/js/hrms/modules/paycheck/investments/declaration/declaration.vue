@@ -79,10 +79,28 @@
         <DataTable :value="tax_deduction" dataKey="id">
             <template #empty> No Data Found. </template>
             <template #loading> Loading customers data. Please wait. </template>
-            <Column field="particulars" header="Particulars">
+            <Column field="section" header="Particulars">
             </Column>
-            <Column field="new_regime" header="New Tax Regime"></Column>
-            <Column field="old_regime" header="Old Tax Regime"></Column>
+            <Column field="new_regime" header="New Tax Regime">
+                <template #body="slotProps">
+                    <p v-if="slotProps.data.section == 'Total Tax Laibility'">
+                        {{ formula.taxCalculation(300003,'new') }}
+                    </p>
+                    <p v-else>
+                        {{ slotProps.data.new_regime }}
+                    </p>            
+                </template>
+            </Column>
+            <Column field="old_regime" header="Old Tax Regime">
+                <template #body="slotProps">
+                    <p v-if="slotProps.data.section == 'Total Tax Laibility'">
+                        {{ formula.taxCalculation(300002,'old',58) }}
+                    </p>
+                    <p v-else>
+                        {{ slotProps.data.old_regime }}
+                    </p>     
+                </template>
+            </Column>
         </DataTable>
 
         <div class="my-3">
@@ -136,7 +154,7 @@
                     <p class="my-2 font-semibold fs-6"> Below are the declarations done by you under various sections.</p>
                 </div>
                 <div class="my-2 table-responsive">
-                    <DataTable  :rows="7" dataKey="id" :value="data">
+                    <DataTable :rows="7" dataKey="id" :value="data">
                         <template #empty> No Data Found. </template>
                         <template #loading> Loading customers data. Please wait. </template>
                         <Column field="particulars" header="S.No">
@@ -145,10 +163,22 @@
                             </template>
                         </Column>
                         <Column field="section_name" header="Declarations"></Column>
-                        <Column field="dec_amount" header="Amount Declared"></Column>
+                        <Column field="dec_amount" header="Amount Declared">
+                            <template #body="slotProps">
+                                {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
+                            </template>
+                        </Column>
                         <Column field="proof_submitted" header="Proof Submitted"></Column>
-                        <Column field="amount_rejected" header="Amount Rejected "></Column>
-                        <Column field="amount_accepted" header="Amount Accepted "></Column>
+                        <Column field="amount_rejected" header="Amount Rejected ">
+                            <template #body="slotProps">
+                                {{ investmentStore.formatCurrency(slotProps.data.amount_rejected) }}
+                            </template>
+                        </Column>
+                        <Column field="amount_accepted" header="Amount Accepted ">
+                            <template #body="slotProps">
+                                {{ investmentStore.formatCurrency(slotProps.data.amount_accepted) }}
+                            </template>
+                        </Column>
                     </DataTable>
                 </div>
                 <div class="my-6">
@@ -214,8 +244,6 @@
     </div>
 
 
-
-
     <Dialog v-model:visible="switch_regime_dailog" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
             <h6 class="mb-1 text-lg font-semibold modal-title text-primary">Confirm Switching Regime</h6>
@@ -259,16 +287,44 @@
 
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { investmentFormulaStore } from '../../stores/investmentFormulaStore'
+import { investmentMainStore } from '../../stores/investmentMainStore';
 const data = ref()
 onMounted(() => {
     axios.get('/investments/investment-summary').then(res => {
         data.value = res.data
+        // let compensatory = res.data.find(ele => {
+        //     return ele.gross
+        // })
+        // let Reimbersument = res.data.find(ele => {
+        //     return ele.section_name.includes('Reimbersument')
+        // })
+
+        // let hra = res.data.find(ele => {
+        //     return ele.section_name.includes('HRA')
+        // })
+
+        // tax_deduction.push({ id: '1', particulars: 'Total Gross Income', values: compensatory.gross * 12, old_regime: '0', new_regime: '0' })
+        // tax_deduction.push({ id: '2', particulars: 'Allowance Tax Income', values: parseInt(Reimbersument.dec_amount) + parseInt(compensatory.gross) + parseInt(compensatory.professional_tax) + parseInt(hra.dec_amount), old_regime: '0', new_regime: '0' })
+        // tax_deduction.push({ id: '3', particulars: 'Excemption 80c & others ', values: compensatory.Excemption, old_regime: '0', new_regime: '0' })
+        // tax_deduction.push({ id: '4', particulars: 'Total Taxable Income', old_regime: '0', new_regime: '0' })
+        // tax_deduction.push({ id: '5', particulars: 'Total Tax Liability', old_regime: '0', new_regime: '0' })
+
     })
+
+    axios.get('/investments/TaxDeclaration').then(res => {
+        tax_deduction.value = res.data
+    })
+
 })
 
+const investmentStore = investmentMainStore()
 const formula = investmentFormulaStore()
+const compensatoryValues = reactive()
+const reimbursementValues = reactive()
+const hraValues = reactive()
+var tax_deduction = ref()
 
 const amount = ref()
 const regime = ref()
@@ -290,13 +346,7 @@ const regimeOption = ref([
 
 
 
-const tax_deduction = ref([
-    { id: '1', particulars: 'Total Gross Income', old_regime: '0', new_regime: '0' },
-    { id: '2', particulars: 'Allowance Tax Income', old_regime: '0', new_regime: '0' },
-    { id: '3', particulars: 'Excemption 80c & others ', old_regime: '0', new_regime: '0' },
-    { id: '4', particulars: 'Total Taxable Income', old_regime: '0', new_regime: '0' },
-    { id: '5', particulars: 'Total Tax Liability', old_regime: '0', new_regime: '0' },
-])
+
 
 
 
