@@ -291,12 +291,11 @@ const regimeOption = ref([
 
 
 const tax_deduction = ref([
-    { id: '1', particulars: 'Earings', old_regime: '0', new_regime: '0' },
-    { id: '2', particulars: 'Exemption', old_regime: '0', new_regime: '0' },
-    { id: '3', particulars: 'Standard Deduction', old_regime: '50000', new_regime: '50000' },
-    { id: '4', particulars: 'Deduction', old_regime: '0', new_regime: '0' },
-    { id: '5', particulars: 'Taxable Income', old_regime: '0', new_regime: '0' },
-    { id: '6', particulars: 'Total Tax Liability', old_regime: '0', new_regime: '0' },
+    { id: '1', particulars: 'Total Gross Income', old_regime: '0', new_regime: '0' },
+    { id: '2', particulars: 'Allowance Tax Income', old_regime: '0', new_regime: '0' },
+    { id: '3', particulars: 'Excemption 80c & others ', old_regime: '0', new_regime: '0' },
+    { id: '4', particulars: 'Total Taxable Income', old_regime: '0', new_regime: '0' },
+    { id: '5', particulars: 'Total Tax Liability', old_regime: '0', new_regime: '0' },
 ])
 
 
