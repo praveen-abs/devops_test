@@ -171,14 +171,84 @@
                                 </li>
                                 <li>
                                     <div class="title">PAN No</div>
-                                    <div class="text">
+                                    <div class="text w-20">
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number }}
+
+                                        <!-- personal  -->
+
+                                        <span class="personal-edit">
+                                            <a href="#" class="edit-icon"><i class="ri-pencil-fill"
+                                                    @click="onClick_EditButton_PanNo_info"></i>
+                                            </a>
+                                        </span>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <Dialog v-model:visible="dialog_PanNo_visible" modal header="Header"
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                    <template #header>
+                        <div>
+                            <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                class="fw-bold fs-5">
+                                Pancard Information</h5>
+                        </div>
+                    </template>
+                    <div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-group">
+                                        <label>PAN No</label>
+                                        <InputText type="text" name="pan_nos" class="form-controls pl-2"
+                                            v-model="pan_information.pan_no" />
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6">
+                                            <div class="mb-3 form-group">
+                                                <label>PAN No</label>
+                                                <InputText type="text" name="pan_nos" class="form-controls pl-2"
+                                                    v-model="bank_information.pan_no" />
+                                            </div>
+                                        </div> -->
+
+                                <div class="col-md-6 d-flex flex-column ">
+                                    <!-- flex-column -->
+                                    <div class="d-flex justify-items-center  flex-column ml-10">
+                                        <label for="" class="float-label mb-2">Pancard</label>
+                                        <div class="d-flex  justify-items-center align-items-center">
+                                            <Toast />
+                                            <label
+                                                class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                                style="width:135px ; " id="" for="uploadPassBook">
+                                                <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
+                                                <h1 class="text-light">Upload file</h1>
+                                            </label>
+                                            <input type="file" name="" id="uploadPassBook" hidden
+                                                @change="UploadPandcardPhoto($event)" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                        @click="savePancardInfoDetails">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Dialog>
+
+
+
+
+
 
                 <div class="mb-2 card">
                     <div class="card-body">
@@ -368,6 +438,8 @@ const toast = useToast();
 
 const canShowLoading = ref(false);
 
+const dialog_PanNo_visible = ref(false);
+
 
 let form = new FormData();
 form.append("user_code", Service.current_user_code);
@@ -412,8 +484,13 @@ const bank_information = reactive({
     bank_id: '',
     bank_ac_no: '',
     ifsc_code: '',
-    pan_no: '',
     PassBook: ''
+});
+
+const pan_information = reactive({
+    pan_no: '',
+    Pancard: ''
+
 })
 
 const updateCheckBookPhoto = (e) => {
@@ -456,7 +533,6 @@ const saveBankinfoDetails = () => {
     form.append('bank_id', bank_information.bank_id)
     form.append('account_no', bank_information.bank_ac_no)
     form.append('bank_ifsc', bank_information.ifsc_code)
-    form.append('pan_no', bank_information.pan_no)
     form.append('PassBook', bank_information.PassBook)
 
     axios.post(url, form)
@@ -502,6 +578,11 @@ function onClick_EditButton_Statutory_Info() {
     statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number;
 
     dialog_statutory_visible.value = true;
+}
+
+function onClick_EditButton_PanNo_info() {
+    dialog_PanNo_visible.value = true;
+
 }
 
 const statutory_information = reactive({
@@ -550,6 +631,40 @@ const saveinfo_statutoryDetails = () => {
     dialog_statutory_visible.value = false;
 
 }
+
+const UploadPandcardPhoto = (e) => {
+    if (e.target.files && e.target.files[0]) {
+        pan_information.Pancard = e.target.files[0];
+        console.log(pan_information.Pancard);
+    }
+}
+
+
+const savePancardInfoDetails = () => {
+    const url = `http://localhost:3000/PANCARD`;
+    const form = new FormData;
+    form.append('pan_no', pan_information.pan_no);
+    form.append('pancard', pan_information.Pancard);
+    form.append('onboard_document_type', "Pan Card");
+
+    if (pan_information.Pancard == null || pan_information.Pancard == " ") {
+        console.log("TESTING:");
+    }
+    else {
+
+        axios.post(url, form).then(() => {
+
+        }).finally(() => {
+
+            dialog_PanNo_visible.value = false;
+        })
+
+    }
+
+
+}
+
+
 
 </script>
 

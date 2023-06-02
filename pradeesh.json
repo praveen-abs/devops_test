@@ -101,6 +101,11 @@
       "action": 1
     }
   ],
+  "PANCARD": [
+    {
+      "id": 1
+    }
+  ],
   "DeleteOnboardingFormDetails": [],
   "posts": [
     {
@@ -116,7 +121,5 @@
       "postId": 1
     }
   ],
-  "profile": {
-    "selected_Id": 1
-  }
+  "profile": {}
 }
