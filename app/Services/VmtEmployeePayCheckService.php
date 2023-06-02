@@ -1012,18 +1012,20 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
 
             if($isSent){
-                  $payslip_mail_sent = '1';
+                return response()->json([
+                    "status" => "success",
+                    "message" => "Mail sent successfully !",
+                    "data" => $payslip_mail_sent ='1'
+                ]);
             }else{
-                $payslip_mail_sent = '0';
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Mail Not sent !",
+                    "data" => $payslip_mail_sent ='0'
+                ]);
             }
 
 
-
-            return response()->json([
-                "status" => "success",
-                "message" => "Mail sent successfully !",
-                "data" =>$response
-            ]);
 
 
         }
