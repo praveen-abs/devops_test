@@ -3,14 +3,13 @@
         <div class="flex gap-4 pt-4 ">
             <div>
                 <input style="height: 23px;width: 23px;" class="mt-1 form-check-input" type="radio" name="leave">
-
             </div>
             <div>
                 <p class="font-semibold py-auto">Apply Flexible Gross Break</p>
             </div>
             <div class="flex ">
                 <!-- <InputText type="text" v-model="txt_shift_start_time" class="w-8 h-10" /> -->
-                <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.AFGB_Min" inputId="minmax" :min="0" :max="59" />
+                <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.flexible_gross_break" inputId="minmax" :min="0" :max="59" />
                 <p class="mx-4 text-lg font-semibold text-gray-600 py-auto">Min</p>
 
             </div>
@@ -29,7 +28,7 @@
                         <p class="my-auto text-lg font-semibold py-auto">Morning</p>
                     </div>
                     <div class="flex gap-3">
-                        <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.STBD_Morning_Mins" inputId="minmax" :min="0" :max="59" />
+                        <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.breaktime_morning" inputId="minmax" :min="0" :max="59" />
                         <p class="text-lg font-semibold text-gray-600 py-auto">Mins</p>
                     </div>
                 </div>
@@ -38,7 +37,7 @@
                         <p class="my-auto text-lg font-semibold py-auto">Lunch</p>
                     </div>
                     <div class="flex gap-3">
-                        <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.STBD_Lunch_Mins" inputId="minmax" :min="0" :max="59" />
+                        <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.breaktime_lunch" inputId="minmax" :min="0" :max="59" />
                         <p class="text-lg font-semibold text-gray-600 py-auto">Mins</p>
                     </div>
 
@@ -48,7 +47,7 @@
                         <p class="my-auto text-lg font-semibold py-auto">Evening</p>
                     </div>
                     <div class="flex gap-3">
-                        <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.STBD_Evening_Mins" inputId="minmax" :min="0" :max="59" /><p class="text-lg font-semibold text-gray-600 py-auto">Mins</p>
+                        <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.breaktime_evening" inputId="minmax" :min="0" :max="59" /><p class="text-lg font-semibold text-gray-600 py-auto">Mins</p>
                     </div>
 
                 </div>
