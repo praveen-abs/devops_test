@@ -30,7 +30,7 @@
                 <label for="formFile" class="form-label">Investment Form Management</label>
                 <input class="form-control " type="file" id="formFile" @change="getExcelFile($event)">
               </div>
-              <Button label="Upload" @click="uploadInvestmentForm()" class="p-button-text  py-2 btn-primary" autofocus />
+              <Button label="Upload" @click="uploadInvestmentForm()" class="py-2 p-button-text btn-primary" autofocus />
         </div>
             <div class="mt-1">
           {{ fileupload }}
@@ -84,6 +84,7 @@
 <!-- {{ employeeDetails }} -->
 </template>
 <script setup>
+import employeeInvestment from '../employeeInvestment/employeeInvestment.vue';
 
     import { ref, onMounted } from 'vue';
     import axios from 'axios'

@@ -3,6 +3,7 @@ import { ref, reactive, onMounted } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
+import { iteratee } from "lodash";
 
 export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainStore", () => {
     /*
@@ -40,28 +41,29 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     let currentlySelectedRowData = null;
     let selectedEmployees = ref();
 
+    const checkbox = ref([]);
+
     // const selectedWeek_Off = ref();
 
     const shiftDetails = reactive({
-        txt_shift_name:"",
-        Shift_Code:"",
-        txt_shift_start_time:"",
-        Is_Default:"",
-        AFGH_Min:0,
-        Shift_start_Time:"",
-        Shift_End_Time:"",
-        Week_Off:"",
-        Grace_Time:0,
-        AFGB_Min:"",
-        STBD_Morning_Mins:"",
-        STBD_Lunch_Mins:"",
-        STBD_Evening_Mins:"",
-        HDMWHR_hrs:"",
-        FDMWHR_hrs:"",
-        lclp_number_of_late_commings_allowed_Month:"",
-        lclp_Once_Exceed_TheLate_Limit_Days_Lop_Apply:"",
-        eglp_number_of_late_commings_allowed_Month:"",
-        eglp__Once_Exceed_TheEarly_Limit_Days_Lop_Apply:''
+        shift_name: "",
+        Shift_Code: "",
+        txt_shift_start_time: "",
+        Is_Default: "",
+        flexible_gross_hours: 0,
+        Shift_start_Time: "",
+        Shift_End_Time: "",
+        Grace_Time: 0,
+        flexible_gross_break: "",
+        breaktime_morning: "",
+        breaktime_lunch: "",
+        breaktime_evening: "",
+        halfday_min_workhrs: "",
+        fullday_min_workhrs: "",
+        lclp_number_of_late_commings_allowed_Month: "",
+        lclp_Once_Exceed_TheLate_Limit_Days_Lop_Apply: "",
+        eglp_number_of_late_commings_allowed_Month: "",
+        eglp__Once_Exceed_TheEarly_Limit_Days_Lop_Apply: ''
 
 
     })
@@ -88,13 +90,13 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     function getWeek_Off_Days() {
         canShowLoading.value = true;
-        let url = "http://localhost:3000/assingWorkShifts";
+        let url = `/json-format-for-dummy-week-off-days`;
 
         console.log("AJAX URL : " + url);
 
         axios.get(url).then((response) => {
             Week_Off_Days.value = response.data;
-            console.log("testing getWeek_Off_Days data : ",Week_Off_Days.value);
+            console.log("testing getWeek_Off_Days data : ", Week_Off_Days.value);
             canShowLoading.value = false;
         });
     }
@@ -132,12 +134,12 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         const temp = [];
 
         _.flatMap(selectedEmployees.value, function (data) {
-          temp.push(data.user_id);
+            temp.push(data.user_id);
         });
 
         return temp;
         //console.log("Output : "+temp);
-      }
+    }
 
 
 
@@ -159,8 +161,8 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         // window.location.origin +
         axios
             .post(url, {
-                shiftDetails:shiftDetails,
-                update_state:Week_Off_Days.value,
+                shiftDetails: shiftDetails,
+                update_state: Week_Off_Days.value,
             })
             .then((response) => {
                 console.log(response);
@@ -177,55 +179,56 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     }
 
     const isCheckedOrNot = reactive({
-        sunday:false,
-        monday:false,
-        tuesday:false,
-        wednesday:false,
-        thursday:false,
-        friday:false,
-        saturday:false,
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false,
     })
 
-    async function updateWeekOffState(data){
+    async function updateWeekOffState(data) {
 
         console.log(data);
 
-        if(data.weeks == "Sunday"){
-            console.log("sunday");
-            console.log(data.AllWeeks);
-
-            if(data.AllWeeks==1){
-            console.log("sunday All Week true");
-            isCheckedOrNot.sunday = true
-            }else
-            if(data.first_week == 1){
-                isCheckedOrNot.sunday = false
-            }
-            else{
-                console.log("sunday All Week false");
-                isCheckedOrNot.sunday = false
-            }
-        }else{
-            console.log("sunday All Week false");
-            isCheckedOrNot.sunday = false
-        }
-
-
-
-        // if(data.AllWeeks){
-        //     data.first_week = 1;
-        //     data.sec_week = 1;
-        //     data.third_week = 1;
-        //     data.fourth_week = 1;
-        //     data.fifth_week = 1;
+        // this.selected = [];
+        // if(!this.select_all){
+        //     for(let i in this.data){
+        //         this.selected.push(this.data[i].id);
+        //     }
         // }
+
+        // if(data.weeks == "Sunday"){
+        //     console.log("sunday");
+        //     console.log(data.AllWeeks);
+
+        //     if(data.AllWeeks==1){
+        //     console.log("sunday All Week true");
+        //     isCheckedOrNot.sunday = true
+        //     }else
+        //     if(data.first_week == 1){
+        //         isCheckedOrNot.sunday = false
+        //     }
+        //     else{
+        //         console.log("sunday All Week false");
+        //         isCheckedOrNot.sunday = false
+        //     }
+        // }else{
+        //     console.log("sunday All Week false");
+        //     isCheckedOrNot.sunday = false
+        // }
+        console.log("what is this : ", data.AllWeeks);
+        console.log(data.first_week);
+        checkbox.value = data;
+
         update_state = {
-            // week_off_list:data.AllWeeks,
-            // Week_1st:data.first_week,
-            // Week_2st:data.sec_week,
-            // Week_3st:data.third_week,
-            // Week_4st:data.fourth_week,
-            // Week_5st:data.fifth_week,
+            week_off_list: data.AllWeeks,
+            Week_1st: data.first_week,
+            Week_2st: data.sec_week,
+            Week_3st: data.third_week,
+            Week_4st: data.fourth_week,
+            Week_5st: data.fifth_week,
         }
         console.log(update_state);
         // console.log("get update Week_Off State : ", AllWeeks.value);
@@ -235,13 +238,13 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     }
 
-    const isChecked = (day,allDays,singleDay)=>{
-        console.log(allDays,singleDay);
-        if(allDays){
+    const isChecked = (day, allDays, singleDay) => {
+        console.log(allDays, singleDay);
+        if (allDays) {
             return true
-        }else{
+        } else {
             return false
-    }
+        }
 
 
 
@@ -263,10 +266,10 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     return {
 
         // Variable Declaration
-        canShowLoading,array_shiftDetails,shiftDetails,selectedEmployees,manageshift_exemption_steps,change,Week_Off_Days,update_state,
+        canShowLoading, array_shiftDetails, shiftDetails, selectedEmployees, manageshift_exemption_steps, change, Week_Off_Days, update_state,
 
         //
-        fetchShiftDetails, saveWorkShiftDetails,getWeek_Off_Days,updateWeekOffState,isChecked,isCheckedOrNot
+        fetchShiftDetails, saveWorkShiftDetails, getWeek_Off_Days, updateWeekOffState, isChecked, isCheckedOrNot
 
 
     };

@@ -136,7 +136,7 @@ const earlyGoingLop = ref()
 </script>
 
 <style>
-.p-inputtext, .p-component ,.p-inputnumber-input{
+.p-inputnumber-input{
     width: 80px;
 }
 

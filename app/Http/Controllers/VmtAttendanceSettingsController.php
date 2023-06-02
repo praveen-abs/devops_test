@@ -73,7 +73,7 @@ class VmtAttendanceSettingsController extends Controller
 
     public function saveWorkShiftSettings(Request $request, VmtAttendanceSettingsService $vmtAttendanceSettingsService)
     {
-        dd($request->all());
+
         $shift_code = 'FS';
         $shift_name = 'First Shift';
         $is_default = 1;
@@ -113,5 +113,10 @@ class VmtAttendanceSettingsController extends Controller
             $fullday_min_workhrs
         );
         dd($response);
+    }
+
+    public function jsonFormatForDummyWeekOffDays(Request $request, VmtAttendanceSettingsService $vmtAttendanceSettingsService){
+
+            return  $vmtAttendanceSettingsService->jsonFormatForDummyWeekOffDays();
     }
 }

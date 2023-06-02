@@ -66,28 +66,29 @@ class VmtAttendanceSettingsService
             $data = [
                 "shift_code" => $shift_code,
                 "shift_name" => $shift_name,
-                "is_default"=> $is_default,
-                "shift_timerange_type"=>$shift_timerange_type,
-                "flexible_gross_hours"=>$flexible_gross_hours,
+                "is_default" => $is_default,
+                "shift_timerange_type" => $shift_timerange_type,
+                "flexible_gross_hours" => $flexible_gross_hours,
                 "shift_start_time" => $shift_start_time,
                 'shift_end_time' => $shift_end_time,
-                'grace_time'=> $grace_time,
-                'week_off_days'=> $week_off_days,
-                'custom_shift_time_for_specific_days'=>$custom_shift_time_for_specific_days,
-                '$break_timerange_type'=>$break_timerange_type,
-                'flexible_gross_break'=>$flexible_gross_break,
-                'breaktime_morning'=>$breaktime_morning,
-                'breaktime_lunch'=>$breaktime_lunch,
-                'breaktime_evening'=> $breaktime_evening,
-                'halfday_min_workhrs'=> $halfday_min_workhrs,
-                'fullday_min_workhrs'=> $fullday_min_workhrs
+                'grace_time' => $grace_time,
+                'week_off_days' => $week_off_days,
+                'custom_shift_time_for_specific_days' => $custom_shift_time_for_specific_days,
+                '$break_timerange_type' => $break_timerange_type,
+                'flexible_gross_break' => $flexible_gross_break,
+                'breaktime_morning' => $breaktime_morning,
+                'breaktime_lunch' => $breaktime_lunch,
+                'breaktime_evening' => $breaktime_evening,
+                'halfday_min_workhrs' => $halfday_min_workhrs,
+                'fullday_min_workhrs' => $fullday_min_workhrs
+
             ],
             $rules = [
                 "shift_code" => 'required',
                 "shift_name" => 'required',
-                "shift_timerange_type"=>'required',
-                'week_off_days'=>'required',
-                '$break_timerange_type'=>'required',
+                "shift_timerange_type" => 'required',
+                'week_off_days' => 'required',
+                '$break_timerange_type' => 'required',
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -106,6 +107,8 @@ class VmtAttendanceSettingsService
 
         try {
 
+          dd(   $jsonString = json_encode( $this->jsonFormatForDummyWeekOffDays() ));
+
             $response = '';
 
             return response()->json([
@@ -122,6 +125,84 @@ class VmtAttendanceSettingsService
         }
 
 
-        dd($shift_code);
+
+    }
+
+    public function jsonFormatForDummyWeekOffDays(){
+        $data = '[{
+            "day": "Sunday",
+            "all_week": 1,
+            "first_week": 1,
+            "sec_week": 1,
+            "third_week": 1,
+            "fourth_week": 1,
+            "fifth_week": 1,
+            "id": 1
+          },
+          {
+            "day": "Monday",
+            "all_week": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
+            "id": 2
+          },
+          {
+            "day": "Tuesday",
+            "all_week": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
+            "id": 3
+          },
+          {
+            "day": "Wednesday",
+            "all_week": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
+            "id": 4
+          },
+          {
+            "day": "Thursday",
+            "all_week": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
+            "id": 5
+          },
+          {
+            "day": "Friday",
+            "all_week": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
+            "id": 6
+          },
+          {
+            "day": "Saturday",
+            "all_week": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
+            "id": 7
+          }]';
+
+          $data = preg_replace('/\s+/', '',$data);
+          $data = json_decode( $data, true);
+
+        return $data;
     }
 }

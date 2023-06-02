@@ -5,7 +5,7 @@
                 <p class="font-semibold py-auto">Half Day Minimum Working Hours Required</p>
             </div>
             <div  class="flex gap-4 col-4 ">
-                <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.FDMWHR_hrs" inputId="minmax" :min="0" :max="24" />
+                <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.halfday_min_workhrs" inputId="minmax" :min="0" :max="24" />
                 <p class="mt-1 text-lg font-semibold text-gray-600 py-auto ">Hrs</p>
 
 
@@ -19,7 +19,7 @@
             </div>
             <div class="flex gap-4 col-4">
                 <!-- <InputText class="w-8 h-11" type="text" v-model="txt_shift_start_time" /> -->
-                <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.HDMWHR_hrs" inputId="minmax" :min="0" :max="24" />
+                <InputNumber class="w-9 h-10" v-model="useAttendanceStore.shiftDetails.fullday_min_workhrs" inputId="minmax" :min="0" :max="24" />
                 <p class="mt-1 text-lg font-semibold text-gray-600 py-auto">Hrs</p>
 
             </div>
