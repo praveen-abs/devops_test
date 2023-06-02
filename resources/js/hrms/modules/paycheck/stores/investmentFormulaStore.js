@@ -155,6 +155,8 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                     let taxable_amount = total_income * 5 / 100;
                     console.log("taxable_amount :" + Math.floor(taxable_amount));
                     console.log("new regime total income greater than 300001");
+                    return Math.floor(taxable_amount)
+                   
                 } else
                     // Employeer Income Is Greater than 600000 and Less Than  900000
                     if (total_income > 600000 && total_income <= 900000) {
@@ -162,12 +164,15 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                         console.log("taxable_amount :" + Math.floor(15000 + taxable_amount));
                         console.log("new regime total income greater than 600001");
                         tax_amt.value = Math.floor(taxable_amount)
+                        return Math.floor(15000 +taxable_amount)
                     } else
                         // Employeer Income Is Greater than 900000 and Less Than  1200000
                         if (total_income > 900000 && total_income <= 1200000) {
                             let taxable_amount = total_income * 15 / 100;
                             console.log("taxable_amount :" + Math.floor(45000 + taxable_amount));
                             console.log("new regime total income greater than 900001 ");
+                            return Math.floor(45000 +taxable_amount)
+                            
 
                         } else
                             // Employeer Income Is Greater than 1200000 and Less Than  1500000
@@ -176,6 +181,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                                 console.log("taxable_amount :" + Math.floor(90000 + taxable_amount));
                                 console.log("new regime total income greater than 1200001");
                                 tax_amt.value = Math.floor(taxable_amount)
+                                return Math.floor(90000 +taxable_amount)
 
                             } else
                                 // Employeer Income Is Greater than 1500000
