@@ -22,6 +22,33 @@ use Illuminate\Support\Facades\Storage;
 
 class VmtNotificationsService {
 
+    protected $leave_module;
+
+
+    public function __construct(){
+        $this->leave_module = [
+                                "employee_applies_leave" =>
+                                [
+                                    "title" => "Leave Request",
+                                    "body" => "has applied leave. Kindly check."
+                                ],
+                                "manager_approves_leave" => [
+                                    "title" => "Leave Status",
+                                    "body" => "has approved your leave request."
+                                ],
+                                "manager_rejects_leave" => [
+                                    "title" => "Leave Status",
+                                    "body" => "has rejected your leave request."
+                                ],
+                                "manager_withdraw_leave" => [
+                                    "title" => "Leave Status",
+                                    "body" => "has withdrawn his/her leave approval. Kindly check your updated leave status."
+                                ],
+
+        ];
+
+
+    }
 
     public function getNotifications($user_code){
         //Validate
@@ -146,6 +173,74 @@ class VmtNotificationsService {
         }
     }
 
+
+    /*
+        Sends an FCM notification
+
+    */
+    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_users_ids){
+
+
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'manager_user_code' => $manager_user_code,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+            //Get manager FCM Token
+
+            //    echo json_encode($leave_module["employee_applies_leave"]["title"]);
+
+            $notif_title = $this->leave_module["employee_applies_leave"]["title"];
+            $notif_body = $this->leave_module["employee_applies_leave"]["body"];
+
+
+            $fcm_manager = User::where('user_code', $manager_user_code)->first()->fcm_token;
+
+            if(empty($fcm_manager))
+            {
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "FCM Token missing for the user : ".$manager_user_code,
+                    "data" => ''
+                ]);
+            }
+            else{
+
+                //Send Firebase notifications
+
+
+
+            }
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to send FCM notification",
+                "data" => $e,
+            ]);
+        }
+
+
+    }
 
     public function saveNotification($user_code, $notification_title, $notification_body, $redirect_to_module, $recipient_user_code, $is_read){
         //Validate

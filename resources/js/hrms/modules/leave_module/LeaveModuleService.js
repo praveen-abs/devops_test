@@ -90,14 +90,14 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
     }
 
-    async function getAllEmployeesLeaveDetails(filter_month, filter_year, filter_leave_status) {
+    async function getAllEmployeesLeaveHistory(filter_month, filter_year, filter_leave_status) {
         axios.post('/attendance/getAllEmployeesLeaveDetails', {
             filter_month: filter_month,
             filter_year: filter_year,
             filter_leave_status: filter_leave_status
         }).then((response) => {
-            array_orgLeaveHistory.value = response.data;
-            console.log("getOrgLeaveHistory() : " + response.data);
+            array_orgLeaveHistory.value = response.data.data;
+            console.log("getOrgLeaveHistory() : " + response.data.data);
         });
 
     }
@@ -123,7 +123,7 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
 
         // Functions
 
-        getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveDetails, getLeaveInformation, getEmployeeLeaveBalance
+        getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveHistory, getLeaveInformation, getEmployeeLeaveBalance
 
     };
 });

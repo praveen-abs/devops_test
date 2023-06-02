@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('vmt_employee_workshifts', function (Blueprint $table) {
             $table->integer('flexi_shift_status')->default(0);
-            $table->timestamps();
+
         });
     }
 

@@ -197,7 +197,20 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function showNormalOnboardingPage(Request $request)
     {
-        return view('onboarding.vmt_normal_onboarding_v2');
+
+        if(empty($request->all())){
+            return view('onboarding.vmt_normal_onboarding_v2');
+        }else{
+        $user_id = Crypt::decrypt($request->uid);
+        $can_onboard_employee =User::where('id',$user_id)->first()->is_onboarded;
+
+        if($can_onboard_employee == '0'){
+            return view('onboarding.vmt_normal_onboarding_v2');
+        }else{
+            return redirect()->route('index');
+        }
+    }
+
     }
 
     /*

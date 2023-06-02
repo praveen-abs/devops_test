@@ -63,9 +63,12 @@
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
             <span class="mx-4 my-2 mt-2 text-2xl font-semibold text-indigo-950">Rental Property</span>
-            <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange"
+            <div v-if="investmentStore.isSubmitted" >
+                <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange"
                 @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
+            </div>
+
         </div>
 
         <div class="mb-3 col-sm-12 col-md-12 col-xl-12 col-xxl-12 col-lg-12">
@@ -103,8 +106,9 @@
                     <Column field="json_popups_value.city" header="City" style="min-width: 12rem">
                     </Column>
                     <Column field="json_popups_value.total_rent_paid" header="Total Rent" style="min-width: 12rem">
+
                     </Column>
-                    <Column field="" header="Action" style="min-width: 12rem">
+                    <Column field="" header="Action" style="min-width: 12rem" v-if="investmentStore.isSubmitted"  >
                         <template #body="slotProps">
                             <button class="p-2 mx-4 bg-green-200 border-green-500 rounded-xl"
                                 @click="investmentStore.editHraNewRental(slotProps.data)">
@@ -261,14 +265,15 @@ import { profilePagesStore } from "../../../../profile_pages/stores/ProfilePages
 
 const investmentStore = investmentMainStore()
 const useEmployeeDetails = profilePagesStore()
-const employeDoj = ref(new Date(moment(investmentStore.employeDoj).format('DD/MM/YYYY')))
+const employeDoj = ref(new Date(investmentStore.employeDoj))
 
 
 
 const dojValidation = (value) => {
     console.log("Current Date"+value);
-    console.log("Employee DOJ"+employeDoj.value);
-    if (employeDoj.value < value) {
+    // console.log("Employee DOJ"+employeDoj.value);
+    console.log("Employee DOJ"+new Date(investmentStore.employeDoj));
+    if (new Date(investmentStore.employeDoj) < value) {
         return true
     } else {
         return false

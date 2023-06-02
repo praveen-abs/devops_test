@@ -74,6 +74,8 @@ class VmtEmployeePayCheckService {
     public function storeBulkEmployeesPayslips($data)
     {
 
+       $data = array_filter($data);
+
         ini_set('max_execution_time', 300);
         //For output jsonresponse
         $data_array = [];
@@ -91,31 +93,39 @@ class VmtEmployeePayCheckService {
         $excelRowdata_row = $data;
 
         $currentRowInExcel = 0;
+$i=array_keys($excelRowdata_row);
 
-
-        foreach ($excelRowdata_row[0] as $key => $excelRowdata) {
+      foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) {
 
             $currentRowInExcel++;
-
+            $excelRowdata['emp_no']=trim($excelRowdata['emp_no']);
             //Validation
             $rules = [
-                            'emp_no' => 'required|exists:users,user_code',
+
+                        'emp_no' => [ function ($attribute, $value, $fail) {
+
+                                $emp_client_code = preg_replace('/\d+/', '', $value );
+                                $result = User::where('user_code', $value)->exists();
+
+                            if (!$result) {
+                                $fail('No matching client exists for the given Employee Code : '.$value);
+                                        }
+                                    },
+                                ],
                             'emp_name' => 'required',
-                            'gender' => 'required',
+                            'gender' => 'nullable',
                             'designation' => 'required',
                             'department' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                            'doj' => 'required',
                             'location' => 'required',
-                            'dob' => 'required',
                             'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                            'pan_number' => 'required',
-                            'aadhar_number' => 'required',
-                            'uan' => 'required',
-                            'epf_number' => 'required',
-                            'esic_number' => 'required',
-                            'bank_name' => 'required',
-                            'account_number' => 'required',
-                            'bank_ifsc_code' => 'required',
+                            'pan_number' => 'nullable',
+                            'aadhar_number' => 'nullable',
+                            'uan' => 'nullable',
+                            'epf_number' => 'nullable',
+                            'esic_number' => 'nullable',
+                            'bank_name' => 'nullable',
+                            'account_number' => 'nullable',
+                            'bank_ifsc_code' => 'nullable',
                             'payroll_month' => 'required|date',
                             'basic' => 'required',
                             'hra' => 'required',
@@ -187,7 +197,7 @@ class VmtEmployeePayCheckService {
                 $rowDataValidationResult = [
                     'row_number' => $currentRowInExcel,
                     'status' => 'failure',
-                   // 'message' => 'In Excel Row - '.$excelRowdata['emp_no'].' : ' . $currentRowInExcel . ' has following error(s)',
+                    'message' => 'In Excel Row - '.$excelRowdata['emp_no'].' : ' . $currentRowInExcel . ' has following error(s)',
                     'error_fields' => json_encode($validator->errors()),
                 ];
 
@@ -201,7 +211,7 @@ class VmtEmployeePayCheckService {
 
         //Runs only if all excel records are valid
         if ($isAllRecordsValid) {
-            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
+            foreach ($excelRowdata_row[$i[0]]  as $key => $excelRowdata) {
                 $rowdata_response = $this->storeSingleRecord_EmployeePayslip($excelRowdata);
 
                 array_push($data_array, $rowdata_response);
@@ -225,6 +235,7 @@ class VmtEmployeePayCheckService {
 
     private function storeSingleRecord_EmployeePayslip($row)
     {
+        $row['emp_no']=trim($row['emp_no']);
 
         $empNo = $row['emp_no'];
         try {
@@ -235,31 +246,6 @@ class VmtEmployeePayCheckService {
             //update employee's details 'vmt_employee_details'
             $emp_details = VmtEmployee::where('userid', $user_id);
 
-            if($emp_details->exists()){
-                $emp_details = $emp_details->first();
-
-                if(!empty($row['bank_name']) && Bank::where('bank_name',$row['bank_name'])->exists())
-                     $emp_details->bank_id =  Bank::where('bank_name',$row['bank_name'])->first()->id;
-
-                $emp_details->bank_account_number =  $row['account_number'] ?? '---';
-                $emp_details->bank_ifsc_code = $row['bank_ifsc_code'] ?? '---';
-
-                $emp_details->save();
-
-            }
-
-            //update employee's 'vmt_employee_statutory_details'
-            $emp_statutory_details = VmtEmployeeStatutoryDetails::where('user_id', $user_id);
-
-            if($emp_statutory_details->exists()){
-                $emp_statutory_details = $emp_statutory_details->first();
-
-                $emp_statutory_details->uan_number = $row["uan"];
-                $emp_statutory_details->epf_number = $row["epf_number"];
-                $emp_statutory_details->esic_number = $row["esic_number"];
-
-                $emp_statutory_details->save();
-            }
 
             //update employee's ' vmt_employee_details'
                 //BANK NAME
@@ -268,37 +254,48 @@ class VmtEmployeePayCheckService {
 
             //Store the data into vmt_employee_payslip table
             $empPaySlip= new VmtEmployeePayslipV2;
-            // $empPaySlip->Gender = $row['gender'];
-            // $empPaySlip->DESIGNATION = $row['designation'];
-            // $empPaySlip->DEPARTMENT = $row['department'];
-            // $empPaySlip->DOJ = \DateTime::createFromFormat('d-m-Y', $row['doj'])->format('Y-m-d');
+            $empPaySlip->gender = $row['gender'];
+            $empPaySlip->designation = $row['designation'];
+            $empPaySlip->department = $row['department'];
+            $empPaySlip->location = $row['location'];
+            $empPaySlip-> father_name  = $row['father_name'];
+            $empPaySlip->pan_number = $row['pan_number'];
+            $empPaySlip->aadhar_number = $row['aadhar_number'];
+            $empPaySlip->uan = $row['uan'];
+            $empPaySlip->epf_number = $row["epf_number"]; // => "EPF123"
+            $empPaySlip->esic_number = $row["esic_number"]; // => "Not Applicable",
+            $empPaySlip->Bank_Name = $row["bank_name"];
+            $empPaySlip->account_number = $row["account_number"];
+            $empPaySlip->bank_ifsc_code = $row["bank_ifsc_code"];
 
-            // $empPaySlip->LOCATION = $row['location'];
+            $client_id=User::where('user_code',$row['emp_no'])->first()->client_id;
 
-            // $empPaySlip->DOB =\DateTime::createFromFormat('d-m-Y', $row['dob'])->format('Y-m-d');
-            // $empPaySlip->Father_Name = $row['father_name'];
-            // $empPaySlip->PAN_Number = $row['pan_number'];
-            // $empPaySlip->Aadhar_Number = $row['aadhar_number'];
-            // $empPaySlip->UAN = $row['uan'];
-            // $empPaySlip->EPF_Number = $row["epf_number"]; // => "EPF123"
-            // $empPaySlip->ESIC_Number = $row["esic_number"]; // => "Not Applicable",
-            // $empPaySlip->Bank_Name = $row["bank_name"];
-            // $empPaySlip->Account_Number = $row["account_number"];
-            // $empPaySlip->Bank_IFSC_Code = $row["bank_ifsc_code"];
-
+            $payroll_date=\DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
+         //check already exist or not
+            $Payroll_data = VmtPayroll::where('client_id', $client_id)->where('payroll_date',$payroll_date)->first();
+            if(empty($Payroll_data)){
             $empPaySlipmonth=new VmtPayroll;
-            $empPaySlipmonth->client_id=sessionGetSelectedClientid();
-            $empPaySlipmonth->payroll_date=\DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
+            $empPaySlipmonth->client_id=$client_id;
+            $empPaySlipmonth->payroll_date=$payroll_date;
             $empPaySlipmonth->save();
 
+            }
+
+            $payroll_id = VmtPayroll::where('payroll_date', $payroll_date)->where('client_id',$client_id)->first()->id;
+            $emp_payroll_data = VmtEmployeePayroll::where('payroll_id', $payroll_id)->where('user_id',$user_id)->first();
+            if(empty( $emp_payroll_data)){
             $query_payroll_data= new VmtEmployeePayroll;
             $query_payroll_data->user_id=$user_id;
-            $PAYROLL_MONTH=\DateTime::createFromFormat('d-m-Y', $row["payroll_month"])->format('Y-m-d');
-            $payroll_id =VmtPayroll::where('payroll_date', $PAYROLL_MONTH)
-                                        ->where('client_id',$user->client_id)->first()->id;
+            $payroll_id =VmtPayroll::where('payroll_date', $payroll_date)->where('client_id',$client_id)->first()->id;
             $query_payroll_data->payroll_id=$payroll_id;
             $query_payroll_data->save();
+            }
 
+            $emp_payroll_id = VmtEmployeePayroll::where('user_id', $user_id)->where('payroll_id', $payroll_id)->first()->id;
+            $emp_payslip_data = VmtEmployeePayslipV2::where('emp_payroll_id', $emp_payroll_id)->first();
+
+
+            if(empty($emp_payslip_data)){
             $emp_payroll_id=VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_id)->first()->id;
             $empPaySlip->emp_payroll_id= $emp_payroll_id;
             $empPaySlip->basic = $row["basic"];
@@ -357,8 +354,8 @@ class VmtEmployeePayCheckService {
             $empPaySlip->greetings = $row['greetings'];
             $empPaySlip->travel_conveyance = $row['travel_conveyance'];
             $empPaySlip->other_earnings = $row['other_earnings'];
-
             $empPaySlip->save();
+            }
             //]);
 
             //dd($empPaySlip );
@@ -1004,7 +1001,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
             $pdf = new Dompdf($options);
             $pdf->loadhtml($html);
-           
+
             $pdf->setPaper('A4', 'portrait');
             $pdf->render();
 
@@ -1015,18 +1012,20 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
 
             if($isSent){
-                  $payslip_mail_sent = '1';
+                return response()->json([
+                    "status" => "success",
+                    "message" => "Mail sent successfully !",
+                    "data" => $payslip_mail_sent ='1'
+                ]);
             }else{
-                $payslip_mail_sent = '0';
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Mail Not sent !",
+                    "data" => $payslip_mail_sent ='0'
+                ]);
             }
 
 
-
-            return response()->json([
-                "status" => "success",
-                "message" => "Mail sent successfully !",
-                "data" =>$response
-            ]);
 
 
         }
