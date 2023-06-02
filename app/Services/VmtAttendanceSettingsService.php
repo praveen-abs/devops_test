@@ -139,9 +139,9 @@ class VmtAttendanceSettingsService
           {
             "weeks": "Monday",
             "week_off_list": 0,
-            "first_week": 1,
-            "sec_week": 1,
-            "third_week": 1,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
             "fourth_week": 1,
             "fifth_week": 0,
             "id": 2
@@ -151,19 +151,19 @@ class VmtAttendanceSettingsService
             "week_off_list": 0,
             "first_week": 0,
             "sec_week": 0,
-            "third_week": 1,
-            "fourth_week": 1,
+            "third_week": 0,
+            "fourth_week": 0,
             "fifth_week": 0,
             "id": 3
           },
           {
             "weeks": "Wednesday",
-            "week_off_list": 1,
-            "first_week": 1,
-            "sec_week": 1,
-            "third_week": 1,
-            "fourth_week": 1,
-            "fifth_week": 1,
+            "week_off_list": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
             "id": 4
           },
           {
@@ -171,9 +171,9 @@ class VmtAttendanceSettingsService
             "week_off_list": 0,
             "first_week": 0,
             "sec_week": 0,
-            "third_week": 1,
-            "fourth_week": 1,
-            "fifth_week": 1,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
             "id": 5
           },
           {
@@ -181,19 +181,19 @@ class VmtAttendanceSettingsService
             "week_off_list": 0,
             "first_week": 0,
             "sec_week": 0,
-            "third_week": 1,
-            "fourth_week": 1,
-            "fifth_week": 1,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
             "id": 6
           },
           {
             "weeks": "Saturday",
             "week_off_list": 0,
-            "first_week": 1,
-            "sec_week": 1,
-            "third_week": 1,
-            "fourth_week": 1,
-            "fifth_week": 1,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 0,
+            "fifth_week": 0,
             "id": 7
           }]';
 
