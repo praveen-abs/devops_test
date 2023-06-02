@@ -641,7 +641,8 @@ const UploadPandcardPhoto = (e) => {
 
 
 const savePancardInfoDetails = () => {
-    const url = `http://localhost:3000/PANCARD`;
+    let id = fetch_data.current_user_id;
+    const url = `/update-Pancard-info/${id}`;
     const form = new FormData;
     form.append('pan_no', pan_information.pan_no);
     form.append('pancard', pan_information.Pancard);
