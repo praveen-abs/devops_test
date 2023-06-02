@@ -270,6 +270,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
     Route::post('/delete-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'deleteExperienceInfo'])->name('deleteExperienceInfo');
     Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateBankInfo'])->name('updateBankInfo');
+    Route::post('/update-Pancard-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatePancardInfo'])->name('updatePancardInfo');
+    Route::post('/update-EmplpoyeeName-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateEmplpoyeeName'])->name('updateEmplpoyeeName');
     Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateStatutoryInfo'])->name('updateStatutoryInfo');
     Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
     Route::get('/profile-page/employee_payslip/{user_id?}', [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
@@ -802,6 +804,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/investments/saveSectionPopups',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
     Route::post('/investments/saveSection80',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
     Route::get('/investments/TaxDeducation',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
+    Route::get('/investments/TaxDeclaration',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
     Route::get('/investments/investment-summary',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
 
 
