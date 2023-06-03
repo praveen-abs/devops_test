@@ -69,6 +69,30 @@ class VmtAttendanceReportsService
         }
     }
 
+
+
+    public function checkWeekOffStatus($date, $weekOffJson, $checkin_time, $checkout_time)
+    {
+        $days_for_per_week = array('Sunday' => 0, 'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6);
+        $date =  Carbon::parse($date);
+        $given_date_day = $date->format('l');
+        $day_in_number = number_format($date->format('d'));
+
+        $weekOffJson = json_decode($weekOffJson, true);
+        if ($weekOffJson[$days_for_per_week[$given_date_day]]['all_week'] == 1) {
+
+            return   $checkin_time == null && $checkout_time == null ? true : false;
+        } else {
+            //logic for nth week of day week off
+            $week_of_month = (int)(ceil($day_in_number / 7));
+            $week_of_month_in_string = 'week_' . $week_of_month;
+            if ($weekOffJson[$days_for_per_week[$given_date_day]][$week_of_month_in_string] == 1) {
+                return   $checkin_time == null && $checkout_time == null ? true : false;
+            } else {
+                return false;
+            }
+        }
+    }
     public function attendanceSettingsinfos($work_shift_id)
     {
         $lc_enable = false;
@@ -156,61 +180,59 @@ class VmtAttendanceReportsService
                 // code...
 
                 $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
-                // dd($dayStr);
-                if ($dayStr != 'Sunday') {
-
-                    $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-                    //dd($dateString);
 
 
-                    if (
-                        sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                        || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA'
-                    ) {
-                        $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('user_Id', $singleUser->user_code)
-                            ->first(['check_out_time']);
+                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                //dd($dateString);
 
-                        $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('user_Id',  $singleUser->user_code)
-                            ->first(['check_in_time']);
-                    } else {
-                        $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('direction', 'out')
-                            ->where('user_Id', $singleUser->user_code)
-                            ->first(['check_out_time']);
 
-                        $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                            ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                            ->whereDate('date', $dateString)
-                            ->where('direction', 'in')
-                            ->where('user_Id', $singleUser->user_code)
-                            ->first(['check_in_time']);
-                    }
-                    //dd($attendanceCheckIn);
+                if (
+                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA'
+                ) {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id', $singleUser->user_code)
+                        ->first(['check_out_time']);
 
-                    $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
-                    $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
-                    //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
-                    if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
-                        $deviceData[] = array(
-                            'date' => $dateString,
-                            'checkin_time' => $deviceCheckInTime,
-                            'checkout_time' => $deviceCheckOutTime,
-                            'attendance_mode_checkin' => 'biometric',
-                            'attendance_mode_checkout' => 'biometric'
-                        );
-                    }
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id',  $singleUser->user_code)
+                        ->first(['check_in_time']);
+                } else {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'out')
+                        ->where('user_Id', $singleUser->user_code)
+                        ->first(['check_out_time']);
+
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'in')
+                        ->where('user_Id', $singleUser->user_code)
+                        ->first(['check_in_time']);
+                }
+                //dd($attendanceCheckIn);
+
+                $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
+                $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
+                //    dd($deviceCheckOutTime.'-----------'.$deviceCheckInTime);
+                if ($deviceCheckOutTime  != null || $deviceCheckInTime != null) {
+                    $deviceData[] = array(
+                        'date' => $dateString,
+                        'checkin_time' => $deviceCheckInTime,
+                        'checkout_time' => $deviceCheckOutTime,
+                        'attendance_mode_checkin' => 'biometric',
+                        'attendance_mode_checkout' => 'biometric'
+                    );
                 }
             }
 
-            //dd($deviceData);
+
 
             // attendance details from vmt_employee_attenndance table
             $attendance_WebMobile = VmtEmployeeAttendance::
@@ -364,6 +386,7 @@ class VmtAttendanceReportsService
                 $shift_settings = $this->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
                 $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
+                $weekOffDays =  $shift_settings->week_off_days;
 
 
 
@@ -374,13 +397,14 @@ class VmtAttendanceReportsService
                 if (!array_key_exists('date', $attendanceResponseArray[$key]))
                     dd("Missing for : " . $key);
 
-                if (
-                    Carbon::parse($attendanceResponseArray[$key]['date'])->format('l') == "Sunday"
-                    && $attendanceResponseArray[$key]['checkin_time'] == null &&
-                    $attendanceResponseArray[$key]["checkout_time"] == null
-                ) {
-                    $attendanceResponseArray[$key]['is_weekoff'] = true;
-                }
+                // if (
+                //     Carbon::parse($attendanceResponseArray[$key]['date'])->format('l') == "Sunday"
+                //     && $attendanceResponseArray[$key]['checkin_time'] == null &&
+                //     $attendanceResponseArray[$key]["checkout_time"] == null
+                // ) {
+                //     $attendanceResponseArray[$key]['is_weekoff'] = true;
+                // }
+                $attendanceResponseArray[$key]['is_weekoff'] = $this->checkWeekOffStatus($attendanceResponseArray[$key]['date'], $weekOffDays, $attendanceResponseArray[$key]['checkin_time'], $attendanceResponseArray[$key]["checkout_time"]);
 
                 //Logic For Check Holiday Or Not
                 foreach ($holidays as $holiday) {
