@@ -43,6 +43,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
             // If the Employeer Age is Less than 60 Years
             if (age < 60) {
                 if (total_income <= 250000) {
+                    console.log("taxable income is zero");
                     let taxable_amount = 0;
                     console.log("taxable_amount :" + Math.floor(taxable_amount));
                     return taxable_amount;
@@ -67,21 +68,33 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                             console.log("child Eduction :" + heath_and_education);
                             console.log("taxable_amount :" + Math.round(total_amount + heath_and_education));
                             let final_value = total_amount + heath_and_education;
-                            return final_value ;
+                            return final_value;
                         } else
                             if (total_income > 1000000) {
+                                let subcharge = '';
+                                let heath_and_education = 0;
                                 let deduction = total_income - 1000000
                                 let taxable_amount = deduction * 30 / 100;
                                 console.log("Tax On Income" + taxable_amount);
-                                let total_amount = Math.floor(taxable_amount + 112500)
-                                let subcharge = subChargeCalculation(total_income)
-                                let heath_and_education = (taxable_amount + subcharge) * 4 / 100;
-                                console.log("child Eduction :" + heath_and_education);
-                                let final_value = total_amount + subcharge + heath_and_education
-                                console.log("taxable_amount :" + Math.round(final_value));
-                                return final_value;
+                                let total_amount = Math.round(taxable_amount + 112500)
+                                subcharge = subChargeCalculation(total_income)
+                                if (subcharge) {
+                                    heath_and_education = (taxable_amount + subcharge) * 4 / 100;
+                                    console.log("child Eduction :" + Math.round(heath_and_education));
+                                    let final_value = parseInt(total_amount) + parseInt(subcharge) + parseInt(heath_and_education)
+                                    console.log("taxable_amount :" + Math.round(final_value));
+                                    return final_value;
+                                } else {
+                                    heath_and_education = total_amount * 4 / 100;
+                                    console.log("child Eduction :" + Math.round(heath_and_education));
+                                    let final_value = total_amount + heath_and_education;
+                                    return final_value;
+                                }
+
+
                             } else {
                                 console.log("Salary Is Less Than 250000");
+                                return total_income;
                             }
 
             } else
@@ -94,7 +107,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                         let heath_and_education = taxable_amount * 4 / 100;
                         console.log("child Eduction :" + heath_and_education);
                         let final_value = Math.round(taxable_amount + heath_and_education)
-                        console.log("taxable_amount :" + final_value);   
+                        console.log("taxable_amount :" + final_value);
                         return final_value;
                     } else
                         if (total_income > 500000 && total_income < 1000000) {
@@ -109,6 +122,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                             return final_value;
                         } else
                             if (total_income > 1000000) {
+                                console.log("working");
                                 let deduction = total_income - 1000000
                                 let taxable_amount = deduction * 30 / 100;
                                 console.log("Tax On Income" + taxable_amount);
@@ -122,6 +136,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                             }
                             else {
                                 console.log("Salary Is Less Than 300000");
+                                return total_income;
                             }
                 } else
                     // If the Employeer Age is Greater than 80 Years
@@ -145,6 +160,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                             }
                             else {
                                 console.log("Salary Is Less Than 500000");
+                                return total_income;
                             }
                     }
         }
@@ -156,7 +172,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                     console.log("taxable_amount :" + Math.floor(taxable_amount));
                     console.log("new regime total income greater than 300001");
                     return Math.floor(taxable_amount)
-                   
+
                 } else
                     // Employeer Income Is Greater than 600000 and Less Than  900000
                     if (total_income > 600000 && total_income <= 900000) {
@@ -164,15 +180,15 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                         console.log("taxable_amount :" + Math.floor(15000 + taxable_amount));
                         console.log("new regime total income greater than 600001");
                         tax_amt.value = Math.floor(taxable_amount)
-                        return Math.floor(15000 +taxable_amount)
+                        return Math.floor(15000 + taxable_amount)
                     } else
                         // Employeer Income Is Greater than 900000 and Less Than  1200000
                         if (total_income > 900000 && total_income <= 1200000) {
                             let taxable_amount = total_income * 15 / 100;
                             console.log("taxable_amount :" + Math.floor(45000 + taxable_amount));
                             console.log("new regime total income greater than 900001 ");
-                            return Math.floor(45000 +taxable_amount)
-                            
+                            return Math.floor(45000 + taxable_amount)
+
 
                         } else
                             // Employeer Income Is Greater than 1200000 and Less Than  1500000
@@ -181,7 +197,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                                 console.log("taxable_amount :" + Math.floor(90000 + taxable_amount));
                                 console.log("new regime total income greater than 1200001");
                                 tax_amt.value = Math.floor(taxable_amount)
-                                return Math.floor(90000 +taxable_amount)
+                                return Math.floor(90000 + taxable_amount)
 
                             } else
                                 // Employeer Income Is Greater than 1500000
@@ -194,7 +210,9 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
                                     console.log("taxable_amount :" + final_value);
                                     return final_value;
                                 } else {
+                                    let taxable_amount = 0;
                                     console.log("less than 300000 ");
+                                    return taxable_amount;
                                 }
             }
             else {
