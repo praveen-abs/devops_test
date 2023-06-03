@@ -33,6 +33,7 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     const change = ref();
 
+
     // Shift Details Begins
 
     const array_shiftDetails = ref();
@@ -191,6 +192,19 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
     async function updateWeekOffState(data) {
 
         console.log(data);
+        if(data.AllWeeks){
+            for(const property  in data ){
+                data[property]= 1 ;
+                console.log(`testing for in :${data[property]}`);
+            }
+        }
+        else{
+            for(const property  in data ){
+                data[property]=0;
+            }
+
+        }
+
 
         // this.selected = [];
         // if(!this.select_all){

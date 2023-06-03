@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\VmtEmployeeWorkShifts;
 use App\Services\VmtEmployeeLeaveModel;
 use App\Services\VmtAttendanceService;
 use App\Mail\ApproveRejectLeaveMail;
@@ -555,7 +556,7 @@ class VmtAttendanceController extends Controller
         $user = User::find($request->user_id);
         $userCode = $user->user_code;
 
-        $regularTime  = VmtWorkShifts::where('shift_name', 'First Shift')->first();
+
 
         $requestedDate = $request->year . '-' . $request->month . '-01';
         $currentDate = Carbon::now();
@@ -673,10 +674,11 @@ class VmtAttendanceController extends Controller
                                                         "selfie_checkin"=>null, "selfie_checkout"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
                                                         "isEG"=>false, "eg_status"=>null, "eg_reason"=>null,"eg_reason_custom"=>null,
-                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null
+                                                        "isMIP"=>false, "mip_status"=>null, "isMOP"=>false, "mop_status"=>null,
                                                         );
 
            //echo "Date is ".$fulldate."\n";
+
            ///$month_array[""]
          }
 
@@ -772,15 +774,30 @@ class VmtAttendanceController extends Controller
         }
         //dd($attendanceResponseArray);
 
+           $query_workshift = VmtEmployeeWorkShifts::where('user_id',$request->user_id)->first();
+
+           $regularTime = VmtWorkShifts::where('id',$query_workshift->work_shift_id)->first();
+
+        //  dd($regularTime);
+
+       // $regularTime  = VmtWorkShifts::where('shift_name',$query_shiftid->shift_name)->first();
+
+
+
         $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
         $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
 
+
+
+        //dd($shift_code);
         //dd($regularTime);
         ////Logic to check LC,EG,MIP,MOP,Leave status
         foreach ($attendanceResponseArray as $key => $value) {
 
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
             $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
+
+
 
 
             //LC Check
@@ -811,6 +828,8 @@ class VmtAttendanceController extends Controller
                     //check regularization status
                     $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
 
+
+
                 }
 
             }
@@ -838,6 +857,8 @@ class VmtAttendanceController extends Controller
 
                     //check regularization status
                     $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
+
+
                 }
                 else
                 {
