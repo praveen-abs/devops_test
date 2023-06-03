@@ -134,7 +134,7 @@
                             <div>
                                 <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                     style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
-                                    v-model="slotProps.data.first_week" :true-value=1 :false-value = 0 :checked="slotProps.data.AllWeeks?slotProps.data.first_week = 1:slotProps.data.first_week" >
+                                    v-model="slotProps.data.first_week" :true-value=1 :false-value = 0 >
                             </div>
                         </template>
                     </Column>
@@ -144,7 +144,7 @@
                                 <input @click="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                     style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
                                     v-model="slotProps.data.sec_week"
-                                    :false-value = 0 :true-value=1  :checked="slotProps.data.AllWeeks?slotProps.data.sec_week =1:slotProps.data.sec_week" >
+                                    :false-value = 0 :true-value=1 >
                             </div>
                         </template>
                     </Column>
@@ -153,7 +153,7 @@
                             <div>
                                 <input @click="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                     style="height: 20px; width: 20px;" class="form-check-input" type="checkbox" name="" id="" v-model="slotProps.data.third_week" :true-value=1
-                                    :false-value=0 :checked="slotProps.data.AllWeeks?slotProps.data.third_week =1:slotProps.data.third_week" >
+                                    :false-value=0 >
                             </div>
                         </template>
                     </Column>
@@ -163,7 +163,8 @@
                                 <input @click="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                     style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
                                     v-model="slotProps.data.fourth_week" :true-value=1
-                                    :false-value=0 :checked="slotProps.data.AllWeeks?slotProps.data.fourth_week = 1 : slotProps.data.fourth_week" >
+                                    :false-value=0  >
+                                    <!-- :checked="slotProps.data.AllWeeks?slotProps.data.fourth_week = 1 : slotProps.data.fourth_week" -->
                             </div>
                         </template>
                     </Column>
@@ -172,7 +173,7 @@
                             <div>
                                 <input @click="useAttendanceStore.updateWeekOffState(slotProps.data)"
                                     style="height: 20px;width: 20px; " class="form-check-input" type="checkbox"  v-model="slotProps.data.fifth_week"
-                                    :true-value=1 :false-value=0  :checked="slotProps.data.AllWeeks?slotProps.data.fifth_week =1:slotProps.data.fifth_week" >
+                                    :true-value=1 :false-value=0   >
                             </div>
                         </template>
                     </Column>

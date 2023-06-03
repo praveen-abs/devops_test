@@ -50,7 +50,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                        <!-- <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
                                 <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
@@ -60,7 +60,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">

@@ -82,6 +82,7 @@ class HRMSBaseAPIController extends Controller
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
+                "fcm_token"  =>'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
