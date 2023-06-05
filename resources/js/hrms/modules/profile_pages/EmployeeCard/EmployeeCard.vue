@@ -91,8 +91,7 @@
                                             <div class="col-md-6 d-flex flex-column ">
                                                 <!-- flex-column -->
                                                 <div class="d-flex justify-items-center  flex-column ">
-                                                    <label for="" class="float-label mb-2 font-semibold text-lg">Birth
-                                                        Certificate or Aadhar Card </label>
+                                                    <label for="" class="float-label mb-2 font-semibold text-lg">Upload Documents</label>
                                                     <div class="d-flex  justify-items-center align-items-center">
                                                         <Toast />
                                                         <label
@@ -103,7 +102,7 @@
                                                         </label>
 
                                                         <div v-if="employee_info.emp_upload_doc"
-                                                            class="p-2 bg-orange-100 rounded-lg font-semibold text-lg mx-4">
+                                                            class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
                                                             {{ employee_info.emp_upload_doc.name }}</div>
 
                                                         <input type="file" name="" id="uploadPassBook" hidden
@@ -557,9 +556,9 @@ const saveEmpChangeInfoDetails = () => {
     form.append('onboard_document_type', employee_info.emp_doc_name.name);
     form.append('emp_doc', employee_info.emp_upload_doc);
 
-    canShowCompletionScreen.value = false;
+
     axios.post(url, form).finally(() => {
-        canShowCompletionScreen.value = false;
+
         canShowLoading.value =false;
     })
 
