@@ -402,6 +402,7 @@
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text">
+                                    {{   _instance_profilePagesStore.employeeDetails.get_employee_details.account_no }}
 
                                     {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number }}
 
@@ -552,8 +553,8 @@ const saveBankinfoDetails = () => {
             if (res.data.status == "success") {
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Bank information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
-                _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;
-                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.ifsc_code;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number = bank_information.bank_ac_no;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code = bank_information.ifsc_code;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
 
             } else if (res.data.status == "failure") {
@@ -666,8 +667,7 @@ const savePancardInfoDetails = () => {
     if (pan_information.Pancard) {
         axios.post(url, form).finally(() => {
             canShowLoading.value = false;
-            pan_information.Pancard = "";
-            pan_information.pan_no = "";
+
         })
     }
 
