@@ -20,10 +20,6 @@
                         </button>
                     </template>
                 </Column>
-
-                <!-- <Column field="max_amount" header="Max Limit" style="min-width: 12rem">
-                </Column> -->
-
                 <Column field="dec_amount" header="Declaration Amount" style="min-width: 15rem">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.dec_amount" class="dec_amt">
@@ -49,7 +45,6 @@
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Completed</span>
                         </div>
                         <div v-else>
-                            <!-- <Tag value="Pending" severity="warning" /> -->
                             <span
                                 class="inline-flex items-center px-3 py-1 text-sm font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
                         </div>
@@ -94,8 +89,8 @@
                 <p class="text-lg font-semibold">
                     Please be note, the updated investment will be considered for your upcoming payroll <span
                         class="text-lg text-red-400"> i.e [ open pay
-                        period like - {{ dayjs(new Date().getUTCMonth()).format('MMMM') }} {{ new Date().getFullYear()
-                        }}]</span>
+                        period like - {{ new Date().toLocaleString('default', {month: 'long',}) }} ,{{new Date().getFullYear()}}.]
+                        </span>
 
                 </p>
                 <p class="py-3 text-lg font-semibold">

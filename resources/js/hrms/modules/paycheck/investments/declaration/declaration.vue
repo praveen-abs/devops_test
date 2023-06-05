@@ -3,7 +3,7 @@
         <div class=" justify-content-center align-items-center">
             <div class="mx-2 ">
                 <div class="my-3">
-                    <p class="font-semibold text-black fs-2">Tax Deductions FY 2022-2023</p>
+                    <p class="font-semibold text-black fs-2">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new Date().getFullYear()+1 }}</p>
                 </div>
                 <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400 w-7 ">
                     <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
@@ -13,31 +13,34 @@
                 </div>
                 <div class="my-4 rounded-lg card ">
                     <div class="card-body">
-                        <!-- <p class="text-black font-meduim fs-6">You have the option of either using a new
-                            regime(with no tax deducations), or
-                            using the same regime as FY 2019-20.To help you make an informed decision., we are displaying
-                            your
-                            tax
-                            liability in both these regimes,and you can choose the option that you prefer.For us to
-                            accurately
-                            calculated your tax liabilities , please ensure you full in all the information requested
-                            below,irrespective of the regime that you pick</p> -->
                         <p class="text-lg font-semibold text-black" style="line-height: 25px;">
                             Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
-                            investment amount till last day of every month until the cutoff date of Feb 27, 2024. Last date
-                            for submitting your investment proofs is Feb 27, 2024. '$' - Not considered for exemption if
+                            investment amount till last day of every month until the cutoff date of {{ new
+                                Date().toLocaleString('default', { month: 'long', }) }} 27, {{ new Date().getFullYear() }}. Last
+                            date
+                            for submitting your investment proofs is {{ new Date().toLocaleString('default', {
+                                month:
+                                    'long',
+                            }) }} 27, {{ new Date().getFullYear() }}. '$' - Not considered for exemption if
                             opted for New tax regime (Section 115BAC). You can declare your investment amount till last day
-                            of every month until the cutoff date of Feb 27, 2024.Last date for submitting your investment
-                            proofs is Feb 27, 2024.
+                            of every month until the cutoff date of {{ new Date().toLocaleString('default', {
+                                month:
+                                    'long',
+                            }) }} 27, {{ new Date().getFullYear() }}.Last date for submitting your investment
+                            proofs is {{ new Date().toLocaleString('default', { month: 'long', }) }} 27, {{ new
+                                Date().getFullYear() }}.
                         </p>
                     </div>
                 </div>
                 <div class="flex justify-between gap-6 my-4">
                     <div class="w-7">
                         <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
-                                class="text-blue-500 underline fs-4"
-                                style="font-family: Verdana, Geneva, Tahoma, sans-serif;" v-tooltip.bottom="`Last Updated Date  ${dayjs(lastUpdated).format('dddd, MMMM D, YYYY h:mm A')}`">{{ findRegime(regime) }}
-                                </strong> <span class="text-sm text-green-600" v-if="regime == 'old'">Maximum benefit</span> </div>
+                                class="text-blue-500 underline cursor-pointer fs-4"
+                                style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
+                                v-tooltip.bottom="`Last Updated Date  ${dayjs(lastUpdated).format('dddd, MMMM D, YYYY h:mm A')}`">{{
+                                    findRegime(regime) }}
+                            </strong> <span class="text-sm text-green-600" v-if="regime == 'old'">Maximum benefit</span>
+                        </div>
 
                         <!-- text-sm -->
                         <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
@@ -47,21 +50,19 @@
                         </div>
                     </div>
                     <div>
-                        <!-- <button @click="switch_regime_dailo = true" type="button" class="px-2 btn btn-primary">
-                            Old Tax Regime</button> -->
-
                     </div>
                     <div class="text-end">
-
-                        <button @click="switch_regime_dailog = true" type="button"
+                        <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true" :disabled="!disableRegime(lastUpdated)">Switch Regime</button>
+                        <!-- <button @click="switch_regime_dailog = true" type="button"  :class="[!disableRegime(lastUpdated) ? 'cursor-pointer bg-orange-100 hover:bg-orange-100 ' : '']"
                             class="p-2 text-lg text-end text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg  px-5 py-2.5  ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
                             Switch Regime
-                        </button>
+                        </button> -->
                     </div>
                 </div>
-                <div v-if="!isRegimeSwitched" class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
+                <div v-if="disableRegime(lastUpdated)"
+                    class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
                     <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
-                    <p class="ml-2 font-semibold text-black fs-5">
+                    <p class="ml-2 font-semibold text-black fs-5 ">
                         Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
                         investment amount till last day of every month.
                     </p>
@@ -69,7 +70,8 @@
                 <div v-else class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
                     <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
                     <p class="ml-2 font-semibold text-black fs-5">
-                        The tax regime cannot be changed until the financial year {{new Date().getFullYear()}} - {{new Date().getFullYear()+1}} ends. (April {{new Date().getFullYear()}}-March {{new Date().getFullYear()+1}})
+                        The tax regime cannot be changed until the financial year 
+                        {{ new Date().getFullYear() }} - {{ new Date().getFullYear() + 1 }} ends. (April {{ new Date().getFullYear() }}-March {{ new Date().getFullYear() + 1 }} )
                     </p>
                 </div>
             </div>
@@ -78,34 +80,36 @@
         <DataTable :value="tax_deduction" dataKey="id">
             <template #empty> No Data Found. </template>
             <template #loading> Loading customers data. Please wait. </template>
-            <Column  header="S.No">
-                            <template #body="slotProps">
-                                {{ slotProps.index + 1 }}
-                            </template>
-                        </Column>
+            <Column header="S.No">
+                <template #body="slotProps">
+                    {{ slotProps.index + 1 }}
+                </template>
+            </Column>
             <Column field="section" header="Particulars" style="width: 16rem;text-align: left !important;">
             </Column>
             <Column field="old_regime" header="Old Tax Regime">
                 <template #body="slotProps">
                     <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
-                        {{ investmentStore.formatCurrency( formula.taxCalculation(slotProps.data.old_regime ,'old',slotProps.data.age) )}}
+                        {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.old_regime
+                            , 'old', slotProps.data.age)) }}
                     </p>
                     <p style="font-weight: 501;" v-else>
-                        {{ investmentStore.formatCurrency( slotProps.data.old_regime ) }}
-                    </p>     
+                        {{ investmentStore.formatCurrency(slotProps.data.old_regime) }}
+                    </p>
                 </template>
             </Column>
             <Column field="new_regime" header="New Tax Regime">
                 <template #body="slotProps">
-                    <p  style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
-                        {{investmentStore.formatCurrency( formula.taxCalculation(slotProps.data.new_regime ,'new',slotProps.data.age) )}}
+                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                        {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.new_regime
+                            , 'new', slotProps.data.age)) }}
                     </p>
                     <p style="font-weight: 501;" v-else>
-                        {{investmentStore.formatCurrency( slotProps.data.new_regime ) }}
-                    </p>            
+                        {{ investmentStore.formatCurrency(slotProps.data.new_regime) }}
+                    </p>
                 </template>
             </Column>
-     
+
         </DataTable>
 
         <div class="my-3">
@@ -116,21 +120,24 @@
             <div class="grid gap-4 my-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body">
                 <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
                     <p class="font-semibold fs-6 ">Net Taxable Income</p>
-                    <div class="flex gap-8">
-                        <h6 v-if="regime == 'old'"  class="text-lg font-bold w-7" >INR {{investmentStore.formatCurrency(total_gross)}}</h6>
-                        <h6 v-else class="text-lg font-bold w-7" >INR {{investmentStore.formatCurrency(total_gross)}}</h6>
-                        <p class="text-orange-400 underline"> Income Tax Computation</p>
+                    <div class="flex ">
+                        <h6 v-if="regime == 'old'" class="text-lg font-bold w-7">
+                            {{ investmentStore.formatCurrency(total_gross) }}</h6>
+                        <h6 v-else class="text-lg font-bold w-7"> {{ investmentStore.formatCurrency(total_gross) }}</h6>
+                        <p class="pl-3 text-orange-400 underline"> Income Tax Computation</p>
                     </div>
                 </div>
                 <div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400">
                     <p class="font-semibold fs-6 ">Total Tax Payable</p>
-                    <h6 v-if="regime == 'old'" class="text-lg font-bold"  >INR {{ investmentStore.formatCurrency( formula.taxCalculation(total_gross,'old',age) )}}</h6>
-                    <h6 v-else class="text-lg font-bold"  >INR {{ investmentStore.formatCurrency( formula.taxCalculation(total_gross,'new',age) )}}</h6>
+                    <h6 v-if="regime == 'old'" class="text-lg font-bold"> {{ investmentStore.formatCurrency(
+                        formula.taxCalculation(total_gross, 'old', age)) }}</h6>
+                    <h6 v-else class="text-lg font-bold"> {{ investmentStore.formatCurrency(
+                        formula.taxCalculation(total_gross, 'new', age)) }}</h6>
                 </div>
 
                 <div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400 ">
                     <p class="font-semibold fs-6 ">Tax Paid Till Now</p>
-                    <h6 class="text-lg font-bold">INR 0</h6>
+                    <h6 class="text-lg font-bold">{{ investmentStore.formatCurrency(0) }}</h6>
                 </div>
             </div>
         </div>
@@ -144,11 +151,13 @@
                             '$' - Not considered for exemption if opted for New tax regime (Section 115BAC).
                         </li>
                         <li class="my-2 text-lg font-semibold">
-                            You can declare your investment amount till last day of every month until the cutoff date of Feb
-                            27, 2024.
+                            You can declare your investment amount till last day of every month until the cutoff date of {{
+                                new Date().toLocaleString('default', { month: 'long', }) }}
+                            27, {{ new Date().getFullYear() }}.
                         </li>
                         <li class="my-2 text-lg font-semibold">
-                            Last date for submitting your investment proofs is Feb 27, 2024.
+                            Last date for submitting your investment proofs is {{ new Date().toLocaleString('default',
+                                { month: 'long', }) }} 27, {{ new Date().getFullYear() }}.
                         </li>
                     </ul>
                 </div>
@@ -169,7 +178,7 @@
                                 {{ slotProps.index + 1 }}
                             </template>
                         </Column>
-                        <Column field="section_name" header="Declarations"></Column>
+                        <Column field="section_name" header="Declarations" style="width: 16rem;text-align: left !important;"></Column>
                         <Column field="dec_amount" header="Amount Declared">
                             <template #body="slotProps">
                                 {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
@@ -256,12 +265,10 @@
 
         </template>
 
-        <p class="">Your current switching regime is 
-            <!-- <span class="text-lg font-semibold text-primary">New Tax
-                Regime</span> -->
-                <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'" >{{ findRegime('old') }}</strong>
-                <strong class="text-lg font-semibold text-primary" v-else>{{ findRegime('new') }}</strong>
-                 </p>
+        <p class="">Your current switching regime is
+            <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'">{{ findRegime('old') }}</strong>
+            <strong class="text-lg font-semibold text-primary" v-else>{{ findRegime('new') }}</strong>
+        </p>
 
         <p class="my-3 text-justify text-gray-700">
             Are you sure you want to switch your regime? You cannot change your regime selection once you
@@ -274,8 +281,8 @@
 
 
         <div class="mt-5 text-end">
-            <button id="confirm_switchRegime"
-                class="px-4 py-2 text-lg text-center text-white bg-orange-700 rounded-md" @click="saveRegime">Confirm</button>
+            <button id="confirm_switchRegime" class="px-4 py-2 text-lg text-center text-white bg-orange-700 rounded-md"
+                @click="saveRegime">Confirm</button>
         </div>
 
     </Dialog>
@@ -294,13 +301,12 @@ onMounted(() => {
     investmentStore.canShowLoading = true
     axios.get('/investments/investment-summary').then(res => {
         data.value = res.data
-    }).finally(()=>{
+    }).finally(() => {
         investmentStore.canShowLoading = false
     })
 
     fetchTaxableIncomeInfo()
-
-    console.log(new Date().getFullYear()-1);
+    console.log(new Date().getFullYear() - 1);
 
 
 })
@@ -327,18 +333,18 @@ const regimeOption = ref([
 
 const switch_regime_dailog = ref(false);
 
-const saveRegime = () =>{
+const saveRegime = () => {
     switch_regime_dailog.value = false
     investmentStore.canShowLoading = true
     let selectedRegime = '';
-    if(regime.value == 'old'){
+    if (regime.value == 'old') {
         selectedRegime = 'new'
-    }else{
+    } else {
         selectedRegime = 'old'
     }
-    axios.post('/investments/saveRegime',{
-        regime:selectedRegime
-    }).finally(()=>{
+    axios.post('/investments/saveRegime', {
+        regime: selectedRegime
+    }).finally(() => {
         investmentStore.canShowLoading = false
         fetchTaxableIncomeInfo()
         isRegimeSwitched.value = true
@@ -346,28 +352,53 @@ const saveRegime = () =>{
     })
 }
 
-const findRegime = (regime) =>{
-    switch(regime){
-      case "old":
-        return "OLD TAX REGIME"
-       case "new":
-         return "NEW TAX REGIME"
+const findRegime = (regime) => {
+    switch (regime) {
+        case "old":
+            return "OLD TAX REGIME"
+        case "new":
+            return "NEW TAX REGIME"
         default:
-            return "NEW TAX REGIME"  
+            return "NEW TAX REGIME"
     }
 }
 
-const fetchTaxableIncomeInfo = async() =>{
-   await axios.get('/investments/TaxDeclaration').then(res => {
-        tax_deduction.value = res.data 
-        total_gross.value = res.data[6].old_regime
+const fetchTaxableIncomeInfo = async () => {
+    await axios.get('/investments/TaxDeclaration').then(res => {
+        tax_deduction.value = res.data
+        if(res.data[7].regime == 'old'){
+            total_gross.value = res.data[6].old_regime
+        }else{
+            total_gross.value = res.data[6].new_regime
+        }
+
         total_taxable.value = res.data[7].old_regime
         age.value = res.data[7].age
         regime.value = res.data[7].regime
         lastUpdated.value = res.data[7].last_updated
-    }).finally(()=>{
+    }).finally(() => {
         investmentStore.canShowLoading = false
+        disableRegime(lastUpdated.value)
     })
+}
+
+const disableRegime = (value) =>{
+
+    let currentDate = new Date();
+    let updatedDate = '';
+
+    if(value){
+        updatedDate = new Date(value);   
+    }else{
+        updatedDate = new Date(); 
+    }
+   
+    if(updatedDate >= currentDate){
+        return true
+    }else{
+        return false
+    }
+ 
 }
 
 </script>
@@ -458,6 +489,5 @@ Dialog {
     font-weight: 700;
     font-size: 1.25rem;
     color: #002f56;
-}
-</style>
+}</style>
 
