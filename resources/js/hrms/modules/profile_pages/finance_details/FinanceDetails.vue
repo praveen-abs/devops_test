@@ -177,8 +177,8 @@
                                         <!-- personal  -->
 
                                         <span class="personal-edit">
-                                            <a href="#" class="edit-icon"><i class="ri-pencil-fill"
-                                                    @click="dialog_PanNo_visible = true"></i>
+                                            <a href="#" class="edit-icon" style="color:#e63b1f;">
+                                                <i class="ri-pencil-fill" @click="dialog_PanNo_visible = true"></i>
                                             </a>
                                         </span>
                                     </div>
@@ -228,7 +228,9 @@
                                                 <h1 class="text-light">Upload</h1>
                                             </label>
 
-                                            <div v-if="pan_information.Pancard" class="p-2 bg-orange-100 rounded-lg font-semibold text-lg mx-4">{{ pan_information.Pancard.name }}</div>
+                                            <div v-if="pan_information.Pancard"
+                                                class="p-2 bg-blue-100 rounded-lg font-semibold fs-11 mx-4">{{
+                                                    pan_information.Pancard.name }}</div>
 
                                             <input type="file" name="" id="uploadPassBook" hidden
                                                 @change="UploadPandcardPhoto($event)" :class="[
@@ -663,7 +665,9 @@ const savePancardInfoDetails = () => {
 
     if (pan_information.Pancard) {
         axios.post(url, form).finally(() => {
-          canShowLoading.value = false
+            canShowLoading.value = false;
+            pan_information.Pancard = "";
+            pan_information.pan_no = "";
         })
     }
 
