@@ -646,9 +646,10 @@ const savePancardInfoDetails = () => {
     const form = new FormData;
     form.append('pan_no', pan_information.pan_no);
     form.append('pancard', pan_information.Pancard);
+    form.append('user_code',_instance_profilePagesStore.employeeDetails.user_code)
     form.append('onboard_document_type', "Pan Card");
 
-    if (pan_information.Pancard == null || pan_information.Pancard == " ") {
+    if (pan_information.Pancard == null || pan_information.Pancard == "") {
         console.log("TESTING:");
     }
     else {
@@ -661,8 +662,6 @@ const savePancardInfoDetails = () => {
         })
 
     }
-
-
 }
 
 
