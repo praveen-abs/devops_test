@@ -74,5 +74,11 @@ class VmtEmployeeAttendanceController extends Controller
           //return $attendance_report_service->basicAttendanceReport($year);
          return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year,$month,$client_domain)), 'Test.xlsx');
         }
+
+     public function detailedAttendanceReport(Request $request,VmtAttendanceReportsService $attendance_report_service){
+        $year='2023';
+        $month='5';
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($year,$month)));
+     }
     }
 
