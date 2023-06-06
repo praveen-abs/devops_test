@@ -1,6 +1,6 @@
 <template>
     <div class="mb-4 tw-card bg-gray-50">
-        <!-- {{ investmentStore.hraSource }} -->
+        <!-- {{ investmentStore.sumOfTotalRentPaid }} -->
         <div class="table-responsive">
             <DataTable ref="dt" dataKey="fs_id" :paginator="true" :rows="10" :value="investmentStore.hraSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -25,7 +25,7 @@
                     <template #body="slotProps">
                         <!-- {{ slotProps.data }} -->
                         <div v-if="slotProps.data.json_popups_value" class="dec_amt">
-                            {{ investmentStore.formatCurrency(slotProps.data.json_popups_value.total_rent_paid) }}
+                            {{ investmentStore.formatCurrency(investmentStore.sumOfTotalRentPaid) }}
                         </div>
                         <div v-else>
                             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
