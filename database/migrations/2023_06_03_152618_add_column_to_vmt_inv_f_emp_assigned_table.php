@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('vmt_inv_f_emp_assigned', function (Blueprint $table) {
-            //
+            dropColumnIfExists('vmt_inv_f_emp_assigned',"regime");
         });
     }
 };
