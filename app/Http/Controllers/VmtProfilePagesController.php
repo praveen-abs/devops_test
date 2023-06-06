@@ -78,6 +78,8 @@ class VmtProfilePagesController extends Controller
     }
     public function updateEmplpoyeeName(Request $request){
 
+        // dd($request->all());
+
         $user_id = User::where('user_code',$request->user_code)->first()->id;
         $details = VmtEmployee::where('userid', $user_id)->first();
         $details->name = $request->name;
@@ -334,11 +336,12 @@ public function addExperienceInfo(Request $request)
     public function updateBankInfo(Request $request ,VmtEmployeeService $employeeService)
     {
         try{
+            // dd($request->all());
             $user_id = user::where('user_code', $request->user_code)->first()->id;
             $details = VmtEmployee::where('userid', $user_id)->first();
             $details->bank_id = $request->bank_id;
-            $details->bank_ifsc_code = $request->account_no;
-            $details->bank_account_number = $request->bank_ifsc;
+            $details->bank_account_number  = $request->account_no;
+            $details->bank_ifsc_code = $request->bank_ifsc;
             $details->save();
             $emp_file =$employeeService->uploadDocument($user_id, $request->PassBook,$request->onboard_document_type );
             $response = [

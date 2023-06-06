@@ -547,6 +547,7 @@ const saveBankinfoDetails = () => {
     form.append('account_no', bank_information.bank_ac_no)
     form.append('bank_ifsc', bank_information.ifsc_code)
     form.append('PassBook', bank_information.PassBook)
+    form.append('onboard_document_type',"Cheque leaf/Bank Passbook")
 
     axios.post(url, form)
         .then((res) => {
