@@ -19,9 +19,12 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
+use App\Models\VmtTempEmployeeProofDocuments;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Services\VmtApprovalsService;
+use App\Http\Controllers\VmtProfilePagesController;
 
 class VmtProfilePagesService
 {
@@ -189,6 +192,32 @@ class VmtProfilePagesService
            $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
            ->where('vmt_employee_documents.user_id', $response->id)
            ->get();
+// check wheather employee proof documents approved or not .
+           $emp_proof_docs = VmtTempEmployeeProofDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_temp_employee_proof_documents.doc_id')
+                                                            ->where('vmt_temp_employee_proof_documents.user_id', $response->id)
+                                                            ->get();
+
+          $employee_proof_doc_list = array('Pan Card'=>'updatePancardInfo', 'Cheque leaf/Bank Passbook'=>'updateBankInfo',
+                                            'Aadhar Card Front'=>'updateEmplpoyeeName','Birth Certificate' => 'updateEmplpoyeeName');
+
+           $update_user_data = array();
+           if(!empty($emp_proof_docs)){
+          foreach($employee_proof_doc_list  as $singledoc => $updateuserdata){
+
+               $emp_doc_status =$emp_proof_docs->Where('document_name',$singledoc)->first();
+
+                if(!empty($emp_doc_status))
+                {
+                    if($emp_doc_status->status == 'Approved'){
+
+                      $update_user_data =(new VmtProfilePagesController)->$updateuserdata($user_id,$emp_doc_status->doc_id);
+                    }
+
+                }
+             }
+          }
+
+
 
            $general_info = \DB::table('vmt_general_info')->first();
            $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
@@ -198,6 +227,7 @@ class VmtProfilePagesService
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
+        $response['employee_documents_proof'] = $update_user_data;
 
         //Add the documents details
 
@@ -541,4 +571,63 @@ class VmtProfilePagesService
 
          return $response;
 }
+public function uploadProofDocument($emp_id,$fileObject, $onboard_document_type){
+
+    try{
+        $emp_code = User::find($emp_id)->user_code;
+
+        if(empty($fileObject))
+            return null;
+
+        $onboard_doc_id = VmtDocuments::where('document_name',$onboard_document_type)->first();
+
+
+        if($onboard_doc_id->exists()){
+            $onboard_doc_id = $onboard_doc_id->id;
+
+        }
+        else
+            return null;
+
+        $employee_documents = VmtTempEmployeeProofDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
+
+        //check if document already uploaded
+        if( $employee_documents->exists()){
+
+            $employee_documents = $employee_documents->first();
+
+            $file_path = '/'.$emp_code.'/onboarding_documents'.'/'.$employee_documents->doc_url;
+
+            //fetch the existing document and delete its file from STORAGE folder
+            $file_exists_status = Storage::disk('private')->exists($file_path);
+            if($file_exists_status){
+
+                //delete the file
+                Storage::disk('private')->delete($file_path);
+            }
+        }
+        else
+        {
+            $employee_documents = new VmtTempEmployeeProofDocuments;
+            $employee_documents->user_id = $emp_id;
+            $employee_documents->doc_id = $onboard_doc_id;
+        }
+
+
+        $date = date('d-m-Y_H-i-s');
+        $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+        $path = $emp_code.'/onboarding_documents';
+        $filePath = $fileObject->storeAs($path,$fileName, 'private');
+        $employee_documents->doc_url = $fileName;
+        $employee_documents->status ='Pending';
+        $employee_documents->save();
+    }
+    catch(\Exception $e){
+        dd("Error :: uploadDocument() ".$e);
+    }
+
+    return "success";
 }
+
+}
+

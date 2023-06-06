@@ -3,6 +3,7 @@
 use App\Http\Controllers\PMS\VmtPMSModuleController;
 use App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\HRMSBaseAPIController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -269,9 +270,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'addExperienceInfo'])->name('addExperienceInfo');
     Route::post('/update-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateExperienceInfo'])->name('updateExperienceInfo');
     Route::post('/delete-experience-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'deleteExperienceInfo'])->name('deleteExperienceInfo');
-    Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateBankInfo'])->name('updateBankInfo');
-    Route::post('/update-Pancard-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatePancardInfo'])->name('updatePancardInfo');
-    Route::post('/update-EmplpoyeeName-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateEmplpoyeeName'])->name('updateEmplpoyeeName');
+    Route::post('/update-bank-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatetempBankInfo'])->name('updatetempBankInfo');
+    Route::post('/update-Pancard-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatetempPancardInfo'])->name('updatetempPancardInfo');
+    Route::post('/update-EmplpoyeeName-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updatetempEmplpoyeeName'])->name('updatetempEmplpoyeeName');
     Route::post('/update-statutory-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'updateStatutoryInfo'])->name('updateStatutoryInfo');
     Route::post('/store-personal-info/{id}', [App\Http\Controllers\VmtProfilePagesController::class, 'storePersonalInfo'])->name('updatePersonalInformation');
     Route::get('/profile-page/employee_payslip/{user_id?}', [App\Http\Controllers\VmtProfilePagesController::class, 'showPaySlip_HTMLView'])->name('vmt_employee_payslip_htmlview');
@@ -298,6 +299,15 @@ Route::middleware(['auth'])->group(function () {
 
         dd('done');
     });
+
+//update user details with proof
+
+    Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
+    Route::get('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
+    Route::post('/approvals/EmployeeProof-bulkdocs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'BulkDocumentProofApprovals'])->name('BulkDocumentProofApprovals');
+
+
+
     // notifications
     Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
