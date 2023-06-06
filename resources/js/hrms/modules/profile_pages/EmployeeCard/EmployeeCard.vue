@@ -146,12 +146,12 @@
                                 </div> -->
                             <ProgressBar :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
                             </ProgressBar>
-                            <!-- <ProgressBar  :value="60"></ProgressBar> -->
+
                             <p class="mb-2 text-muted f-10 text-start fw-bold">
                                 Your profile is completed
                             </p>
                         </div>
-                        <!-- <ProgressBar class="bg-red-600" :value="10"></ProgressBar> -->
+
 
                         <div class="mb-4 text-center profile-mid-right-content">
                             <div class="py-2 border-bottom-liteAsh">
@@ -371,11 +371,11 @@ const employee_info = reactive({
     emp_upload_doc: ""
 });
 
-const selectedCities = ref();
+
 const doc_name = ref([
     { name: 'Birth Certificate', code: 1 },
     { name: 'Aadhar Card Front', code: 2 },
-    { name: 'Aadhar Card Back', code: 3 },
+    { name: 'Pan Card', code: 3 },
 ]);
 
 
