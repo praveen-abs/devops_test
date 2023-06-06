@@ -126,7 +126,11 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
                 // Onboarding From management
-               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
+               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js',
+
+              // Employee details approvals
+
+              'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js'
 
             ],
 
