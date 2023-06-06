@@ -135,8 +135,6 @@ class VmtInvestmentsController extends Controller
         // dd($fs_id);
         $user_id = User::where('user_code', $request->user_code)->first()->id;
 
-        // $form_data = $request->formDataSource;
-
         $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
 
 
@@ -390,7 +388,7 @@ class VmtInvestmentsController extends Controller
             }
             if ($dec_amt['section_group'] == "House Properties ") {
                 $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
-                // $sumOfHouseProperty += $totalIntersetPaid["income_loss"];
+                $sumOfHouseProperty += $totalIntersetPaid["income_loss"];
                 $houseProperty['section_name'] = $dec_amt['section_group'];
                 $houseProperty['dec_amount'] = $sumOfHouseProperty;
                 $houseProperty['proof_submitted'] = 0;
@@ -430,11 +428,6 @@ class VmtInvestmentsController extends Controller
 
             }
 
-            $taxDeduction['section'] = "choose_regime";
-
-            // $taxDeduction['allowance_tax'] = $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] +  $sumOfHra;
-            $taxDeduction['exemption'] = $totalSumOfExemption;
-            // $taxDeduction['Total_taxable'] = $dec_amt['gross'] * 12 + $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra + $totalSumOfExemption;
 
         }
 
@@ -448,8 +441,6 @@ class VmtInvestmentsController extends Controller
             $reimbersument,
             $previousEmployerIncome,
             $otherSourceIncome,
-            $taxDeduction,
-            $empGeneralInfo
         );
         return $res;
 
@@ -471,37 +462,73 @@ class VmtInvestmentsController extends Controller
                     'vmt_inv_emp_formdata.json_popups_value',
                     'vmt_employee_compensatory_details.gross',
                     'vmt_employee_compensatory_details.basic',
+                    'vmt_inv_f_emp_assigned.regime',
+                    'vmt_inv_f_emp_assigned.updated_at',
                     'vmt_employee_compensatory_details.hra',
                     'vmt_employee_compensatory_details.special_allowance',
                     'vmt_employee_compensatory_details.professional_tax',
+                    'vmt_employee_compensatory_details.child_education_allowance',
+                    'vmt_employee_compensatory_details.lta',
                     'vmt_employee_details.doj',
+                    'vmt_employee_details.dob',
                 ]
             )->toArray();
 
         // dd($v_form_template);
 
+       
+
         $res = array();
         $sumOfHra = 0;
         $sumOfReimbersument = 0;
+        $sumOfOtherSourceOfIncome = 0;
         $standardDeducation = 0;
         $totalSumOfExemption = 0;
-        $SumOfExemptionInNew = 0;
+        $SumOfHousPropsInNew = 0;
+        $SumOfHousPropsInOld = 0;
 
         foreach ($v_form_template as $dec_amt) {
 
-          
-            $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
+            $current_year = date('Y'); // Get Current Year
+            $dob = date_parse($dec_amt['dob']); // Employeer Dob
+            $year = $dob["year"]; 
+            $empAge = ($current_year - $year); 
+     
+            $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));   
+            $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));    
+            $empHra = $dec_amt['hra'] * 12 ;
+            $empBasic = $dec_amt['basic'] * 12;
 
-            if ($dec_amt['section_group'] == "HRA") { 
-                $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));           
+            $otherAllowance =  intval($totalIntersetPaid ) - intval($empBasic * 10 / 100);
+            // dd($otherAllowance);
+
+            // $totalHra = ($hraTotalRent['total_rent_paid'] * 10 ) - ($empBasic * 10/100);
+
+            // dd($totalHra);
+
+            if ($dec_amt['section_group'] == "HRA") {          
                 $sumOfHra += $hraTotalRent['total_rent_paid'];
+                $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
+            }
+
+            if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
+                $totalSumOfExemption += $dec_amt['dec_amount'];
+            }
+            if ($dec_amt['section_group'] == "Other Excemptions ") {
+                $totalSumOfExemption += $dec_amt['dec_amount'];
+            }
+            if ($dec_amt['section_group'] == "Previous Employer Income") {
                 $totalSumOfExemption += $dec_amt['dec_amount'];
             }
 
-            $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
-
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
+            }
+
+            if ($dec_amt['section_group'] == "Other Source Of  Income") {
+                $sumOfOtherSourceOfIncome = $dec_amt['dec_amount'];
+                $totalSumOfExemption += $dec_amt['dec_amount'];
             }
 
             if ($dec_amt['gross'] >= 50000) {
@@ -515,8 +542,9 @@ class VmtInvestmentsController extends Controller
             $totalSumOfExemption += $dec_amt['dec_amount'];
 
             if ($dec_amt['section_group'] == "House Properties ") {
+                $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
                 if ($totalIntersetPaid['property_type'] == "Let Out Property") {
-                    $SumOfExemptionInNew = $totalIntersetPaid['income_loss'];
+                    $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
                 }                 
             }
 
@@ -524,32 +552,63 @@ class VmtInvestmentsController extends Controller
             $total_gross['old_regime'] = round($dec_amt['gross'] * 12);
             $total_gross['new_regime'] = round($dec_amt['gross'] * 12);
 
+            $Other_Source['section'] = "Other Source of Income";
+            $Other_Source['old_regime'] = $SumOfHousPropsInOld + $sumOfOtherSourceOfIncome;
+            $Other_Source['new_regime'] = $SumOfHousPropsInNew + $sumOfOtherSourceOfIncome;
 
-            $allowance_tax['section'] = "Total Tax Allowance";
-            $allowance_tax['old_regime'] = $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra;
-            $allowance_tax['new_regime'] = $sumOfReimbersument + $standardDeducation;
+            $Reimbursement['section'] = "Reimbursement Exemptions";
+            $Reimbursement['old_regime'] = $sumOfReimbersument;
+            $Reimbursement['new_regime'] =  $sumOfReimbersument;
 
 
-            $exemption['section'] = "Excemption 80c & others";
+            $allowance_tax['section'] = "Allowance Exemptions (Sec 10)";
+            $allowance_tax['old_regime'] = $otherAllowance  + $dec_amt['child_education_allowance']+ $dec_amt['lta'];
+            $allowance_tax['new_regime'] = 0;
+
+            $tax_on_emp['section'] = "Tax on Employment (Sec 16)";
+            $tax_on_emp['old_regime'] = $standardDeducation + $dec_amt['professional_tax'] * 12 ;
+            $tax_on_emp['new_regime'] = $standardDeducation ;
+
+
+            $exemption['section'] = "Exemptions under Sec 80";
             $exemption['old_regime'] = round($totalSumOfExemption);
-            $exemption['new_regime'] = round($SumOfExemptionInNew);
+            $exemption['new_regime'] = round($totalSumOfExemption);
 
-            $total_tax_income['section'] = "Total Tax Income";
-            $total_tax_income['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra + $totalSumOfExemption)));
-            $total_tax_income['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $SumOfExemptionInNew)));
+            $total_tax_income['section'] = "Total Taxable Income";
+            $total_tax_income['old_regime'] = round(abs(($dec_amt['gross'] * 12  ) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome +$sumOfReimbersument + $standardDeducation  + $dec_amt['professional_tax'] * 12 + $sumOfHra + $dec_amt['child_education_allowance']+ $dec_amt['lta'] + $totalSumOfExemption)));
+            $total_tax_income['new_regime'] = round(abs(($dec_amt['gross'] * 12  ) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation  + $totalSumOfExemption)));
 
             $total_tax_laibilty['section'] = "Total Tax Laibility";
-            $total_tax_laibilty['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] + $sumOfHra + $totalSumOfExemption)));
-            $total_tax_laibilty['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($sumOfReimbersument + $standardDeducation + $SumOfExemptionInNew)));
+            $total_tax_laibilty['old_regime'] = round(abs(($dec_amt['gross'] * 12  ) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome +$sumOfReimbersument + $standardDeducation  + $dec_amt['professional_tax'] * 12 + $sumOfHra + $dec_amt['child_education_allowance']+ $dec_amt['lta'] + $totalSumOfExemption)));
+            $total_tax_laibilty['new_regime'] = round(abs(($dec_amt['gross'] * 12  ) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation  + $totalSumOfExemption)));
+            $total_tax_laibilty['age'] = $empAge;
+            $total_tax_laibilty['regime'] = $dec_amt['regime'];
+            $total_tax_laibilty['last_updated'] = $dec_amt['updated_at'];
         }
 
         array_push(
-            $res,$total_gross,$allowance_tax, $exemption,$total_tax_income,$total_tax_laibilty
+            $res,$total_gross,$Other_Source,$Reimbursement,$allowance_tax, $tax_on_emp, $exemption,$total_tax_income,$total_tax_laibilty
             
         );
         return $res;
 
 
+    }
+
+    public function saveEmpTaxRegime(Request $request){
+       
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+           
+        if ($query_femp->exists()) {
+            $query_assign = $query_femp->first();
+           $query_assign->regime = $request->regime;
+           $query_assign->save();
+        }
+        return "Saved";
+    
     }
 
     public function taxDeducationCalculate(Request $request)
@@ -566,6 +625,7 @@ class VmtInvestmentsController extends Controller
         dd($sumOfDeclarationAmount);
 
     }
+
 
 
 

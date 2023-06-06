@@ -296,7 +296,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             currency: "INR",
         }).format(value);
 
-       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length)}`
+       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length )}`
 
        return format
 
@@ -764,9 +764,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         );
         lop.maintenance = lop_maintenance;
         dlop.maintenance = dlop_maintenance;
-        // console.log("lop:" + lop_maintenance);
-        // console.log("dlop:" + dlop_maintenance);
-        setTimeout(() => {
             const lop_net = formula.net_value_cal(
                 lop.rent_received,
                 lop.municipal_tax,
@@ -781,7 +778,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             );
             // console.log(dlop_net);
             dlop.net_value = dlop_net;
-        }, 100);
         lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value);
         dlop.income_loss = formula.income_loss_cal(
             dlop.interest,

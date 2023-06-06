@@ -186,6 +186,8 @@ class VmtInvestmentsService
             $response["form_name"] = $query_form_details->form_name;
             $response["is_submitted"] = $query_is_sumbitted->is_sumbit ?? 0;
             $response["doj"] = $query_doj->doj;
+            // $response["regime"] = $query_doj->regime;
+            // $response["last_updated"] = $query_doj->updated_at;
 
             $response["form_details"] = $query_inv_form_template;
 
@@ -360,10 +362,24 @@ class VmtInvestmentsService
             ->where('fs_id', $fs_id)
             ->where('f_emp_id', $form_assignrd_id);
 
+        $sumOfHra = 0;    
+        $res = array();
+
+        // foreach($rentalDetails as $item){    
+        //     $hraDecAmt = (json_decode($item["json_popups_value"], true)); 
+        //     $sumOfHra += $hraDecAmt['total_rent_paid'];
+        //     $rentalDetail['id'] = $item->id;
+        //      $rentalDetail['f_emp_id'] = $item->f_emp_id;
+        //      $rentalDetail['fs_id'] = $item->fs_id;
+        //      $rentalDetail['dec_amount'] = $item->dec_amount;
+        //      $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
+
+        //      array_push(
+        //         $res,$sumOfHra,$rentalDetail);
+
+        // }
 
         $popupjson = $rentalDetails->map(function ($item, $key) {
-
-
             $rentalDetail['id'] = $item->id;
             $rentalDetail['f_emp_id'] = $item->f_emp_id;
             $rentalDetail['fs_id'] = $item->fs_id;
@@ -372,14 +388,10 @@ class VmtInvestmentsService
 
 
             return $rentalDetail;
-
-
-
         });
 
-        // dd($popupjson);
-
         return $popupjson;
+
     }
 
     public function fetchHousePropertyDetails($user_code, $fs_id)
