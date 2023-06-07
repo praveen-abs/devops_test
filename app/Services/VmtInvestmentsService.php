@@ -358,26 +358,19 @@ class VmtInvestmentsService
 
         $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-        $rentalDetails = VmtInvEmpFormdata::all()
-            ->where('fs_id', $fs_id)
-            ->where('f_emp_id', $form_assignrd_id);
+        $rentalDetails = VmtInvEmpFormdata::where('fs_id', $fs_id)->where('f_emp_id', $form_assignrd_id)->get();
 
-        $sumOfHra = 0;    
+        $sumOfHra = 0;
         $res = array();
 
-        // foreach($rentalDetails as $item){    
-        //     $hraDecAmt = (json_decode($item["json_popups_value"], true)); 
-        //     $sumOfHra += $hraDecAmt['total_rent_paid'];
-        //     $rentalDetail['id'] = $item->id;
-        //      $rentalDetail['f_emp_id'] = $item->f_emp_id;
-        //      $rentalDetail['fs_id'] = $item->fs_id;
-        //      $rentalDetail['dec_amount'] = $item->dec_amount;
-        //      $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
+        foreach($rentalDetails as $item){
 
-        //      array_push(
-        //         $res,$sumOfHra,$rentalDetail);
+            $hraDecAmt = (json_decode($item->json_popups_value, true));
+            $sumOfHra += $hraDecAmt['total_rent_paid'];
+            $sumosRentPaid['sumofRentPaid'] = $sumOfHra;
+        }
+        array_push($res,$sumosRentPaid);
 
-        // }
 
         $popupjson = $rentalDetails->map(function ($item, $key) {
             $rentalDetail['id'] = $item->id;
@@ -390,7 +383,8 @@ class VmtInvestmentsService
             return $rentalDetail;
         });
 
-        return $popupjson;
+        return ["rent_details" =>$popupjson,
+                "dec_amt"=>$res];
 
     }
 
