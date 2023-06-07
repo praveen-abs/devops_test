@@ -639,9 +639,10 @@ class VmtAttendanceController extends Controller
 
         // attendance details from vmt_employee_attenndance table
         $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
+            ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_attendance.vmt_employee_workshift_id')
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['vmt_employee_workshift_id','date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
+            ->get(['vmt_work_shifts.shift_code as workshift_code','vmt_work_shifts.shift_name as workshift_name','vmt_employee_workshift_id','date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
 
         //dd($attendance_WebMobile);
 
@@ -669,7 +670,8 @@ class VmtAttendanceController extends Controller
            $fulldate = $year."-".$month."-".$date;
 
 
-           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null, "vmt_employee_workshift_id"=>null,
+           $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
+                                                        "vmt_employee_workshift_id"=>null,"workshift_code"=>null,"workshift_name"=>null,
                                                         "absent_status"=>null,"leave_type"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                         "selfie_checkin"=>null, "selfie_checkout"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
@@ -732,8 +734,12 @@ class VmtAttendanceController extends Controller
 
                 //If we found 'vmt_employee_workshift_id', then store it. Else store NULL. In future, we have get shift details from biometric attendance
                 if(!empty($singleValue["vmt_employee_workshift_id"]))
+                {
                    $attendanceResponseArray[$key]["vmt_employee_workshift_id"] = $singleValue["vmt_employee_workshift_id"];
+                   $attendanceResponseArray[$key]["workshift_code"] = $singleValue["workshift_code"];
+                   $attendanceResponseArray[$key]["workshift_name"] = $singleValue["workshift_name"];
 
+                }
 
                 //Find the min of checkin
                 if ($checkin_min == null) {
