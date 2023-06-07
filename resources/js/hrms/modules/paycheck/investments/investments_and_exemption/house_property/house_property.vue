@@ -101,52 +101,50 @@
 
                 <Column header="Property Type" field="json_popups_value.property_type" style="min-width: 15rem" frozen>
                     <template #body="slotProps">
-                        {{ slotProps.data.json_popups_value.property_type }}
+                        <p style="font-weight: 501;">{{ slotProps.data.json_popups_value.property_type }}</p>
+                        
                     </template>
                 </Column>
 
                 <Column header="Lender Name" field="lender_name" style="min-width: 12rem">
                     <template #body="slotProps">
-                        {{ slotProps.data['json_popups_value'].lender_name }}
-                        <!-- {{ slotProps.data.json_popups_value.lender_name }} -->
+                        <p style="font-weight: 501;">{{ slotProps.data['json_popups_value'].lender_name }}</p>                    
                     </template>
                 </Column>
 
                 <Column field="lender_pan" header="Lender PAN" style="min-width: 12rem">
                     <template #body="slotProps">
-                        {{ slotProps.data['json_popups_value'].lender_pan }}
-                        <!-- {{ slotProps.data.json_popups_value.lender_pan }} -->
+                        <p style="font-weight: 501;"> {{ slotProps.data['json_popups_value'].lender_pan.toUpperCase() }}</p>
+                       
                     </template>
                 </Column>
 
                 <Column field="lender_type" header="Lender Type " style="min-width: 12rem">
                     <template #body="slotProps">
-                        <!-- {{ slotProps.data.json_popups_value.lender_type }} -->
-
-                        <p v-if="slotProps.data['json_popups_value'].lender_type">
+                        <p style="font-weight: 501;" v-if="slotProps.data['json_popups_value'].lender_type">
                             {{ slotProps.data['json_popups_value'].lender_type }}
                         </p>
-                        <p v-else>
+                        <p style="font-weight: 501;" v-else>
                             NA
                         </p>
                     </template>
                 </Column>
                 <Column field="rent_received" header="Rent Received" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <p v-if="slotProps.data['json_popups_value'].rent_received">
-                            {{ slotProps.data['json_popups_value'].rent_received }}
+                        <p style="font-weight: 501;" v-if="slotProps.data['json_popups_value'].rent_received">
+                            {{ investmentStore.formatCurrency(slotProps.data['json_popups_value'].rent_received) }}
                         </p>
-                        <p v-else>
+                        <p style="font-weight: 501;" v-else>
                             NA
                         </p>
                     </template>
                 </Column>
                 <Column field="maintenance" header="Maintenace" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <p v-if="slotProps.data['json_popups_value'].maintenance">
-                            {{ slotProps.data['json_popups_value'].maintenance }}
+                        <p style="font-weight: 501;" v-if="slotProps.data['json_popups_value'].maintenance">
+                            {{ investmentStore.formatCurrency(slotProps.data['json_popups_value'].maintenance) }}
                         </p>
-                        <p v-else>
+                        <p style="font-weight: 501;" v-else>
                             NA
                         </p>
                     </template>
@@ -154,32 +152,30 @@
 
                 <Column field="net_value" header="Net Value" style="min-width: 12rem">
                     <template #body="slotProps">
-
-                        <p v-if="slotProps.data['json_popups_value'].net_value">
-                            {{ slotProps.data['json_popups_value'].net_value }}
+                        <p style="font-weight: 501;" v-if="slotProps.data['json_popups_value'].net_value">
+                            {{ investmentStore.formatCurrency(slotProps.data['json_popups_value'].net_value) }}
                         </p>
-                        <p v-else>
+                        <p style="font-weight: 501;" v-else>
                             NA
                         </p>
                     </template>
                 </Column>
                 <Column field="interest" header="Interest" style="min-width: 12rem">
                     <template #body="slotProps">
-
-                        <p v-if="slotProps.data['json_popups_value'].interest">
-                            {{ slotProps.data['json_popups_value'].interest }}
+                        <p style="font-weight: 501;" v-if="slotProps.data['json_popups_value'].interest">
+                            {{ investmentStore.formatCurrency(slotProps.data['json_popups_value'].interest) }}
                         </p>
-                        <p v-else>
+                        <p style="font-weight: 501;" v-else>
                             NA
                         </p>
                     </template>
                 </Column>
                 <Column field="income_loss" header="Income/Loss" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <p v-if="slotProps.data['json_popups_value'].income_loss">
-                            {{ slotProps.data['json_popups_value'].income_loss }}
+                        <p style="font-weight: 501;" v-if="slotProps.data['json_popups_value'].income_loss">
+                            {{ investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss) }}
                         </p>
-                        <p v-else>
+                        <p style="font-weight: 501;" v-else>
                             NA
                         </p>
                     </template>
@@ -369,7 +365,7 @@
                     Tax</label>
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.lop.municipal_tax" required :class="[
                     v$.municipal_tax.$error ? 'p-invalid' : '',
-                ]" @input="investmentStore.income_loss_calculation" />
+                ]" @focusout="investmentStore.income_loss_calculation" />
                 <span v-if="v$.municipal_tax.$error" class="font-semibold text-red-400 fs-6">
                     <!-- {{ v$.municipal_tax.$errors[0].$message }} -->
                     {{ v$.municipal_tax.required.$message.replace( "Value","Municipal tax"  ) }}
@@ -390,7 +386,7 @@
                 <label for="Interest" class="block mb-2 font-medium text-gray-900 ">Interest</label>
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.lop.interest" required :class="[
                     v$.interest.$error ? 'p-invalid' : '',
-                ]" @input="investmentStore.income_loss_calculation" />
+                ]" @focusout="investmentStore.income_loss_calculation" />
                 <span v-if="v$.interest.$error" class="font-semibold text-red-400 fs-6">
                     <!-- {{ v$.interest.$errors[0].$message }} -->
                     {{ v$.interest.required.$message.replace( "Value","Interest"  ) }}
@@ -480,7 +476,7 @@
 
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.dlop.municipal_tax" required :class="[
                     p$.municipal_tax.$error ? 'p-invalid' : '',
-                ]" @input="investmentStore.income_loss_calculation" />
+                ]" @focusout="investmentStore.income_loss_calculation" />
                 <span v-if="p$.municipal_tax.$error" class="font-semibold text-red-400 fs-6">
                     <!-- {{ p$.municipal_tax.$errors[0].$message }} -->
                     {{ p$.municipal_tax.required.$message.replace( "Value","Municipal Tax"  ) }}
@@ -501,7 +497,7 @@
                 <label for="Interest" class="block mb-2 font-medium text-gray-900 ">Interest</label>
                 <InputNumber id="rendPaid_inp" class="w-full " v-model="investmentStore.dlop.interest" required :class="[
                     p$.interest.$error ? 'p-invalid' : '',
-                ]" @input="investmentStore.income_loss_calculation" />
+                ]" @focusout="investmentStore.income_loss_calculation" />
                 <span v-if="p$.interest.$error" class="font-semibold text-red-400 fs-6">
                     <!-- {{ p$.interest.$errors[0].$message }} -->
                     {{ p$.interest.required.$message.replace( "Value","Interest"  ) }}

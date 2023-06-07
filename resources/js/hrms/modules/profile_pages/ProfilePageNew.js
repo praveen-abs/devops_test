@@ -33,6 +33,7 @@ import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
 import InputNumber from 'primevue/inputnumber';
+import InputMask from 'primevue/inputmask';
 import ProgressBar from 'primevue/progressbar';
 
 import profilePage from './profilePageNew.vue'
@@ -70,6 +71,7 @@ app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('ProgressBar', ProgressBar)
+app.component('InputMask', InputMask)
 
 app.mount("#profilePage");
 

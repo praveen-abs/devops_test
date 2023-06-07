@@ -99,6 +99,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const AddHraButtonDisabled = ref(false);
     const employeDoj = ref()
     const isSubmitted = ref(true)
+    const sumOfTotalRentPaid = ref()
 
     const getInvestmentSource = async () => {
         let url = `/investments/investments-form-details-template`;
@@ -296,7 +297,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             currency: "INR",
         }).format(value);
 
-       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length)}`
+       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length )}`
 
        return format
 
@@ -335,7 +336,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .then((res) => {
                 console.log(Object.values(res.data));
-                hra_data.value = Object.values(res.data);
+                hra_data.value = Object.values(res.data.rent_details);
+                sumOfTotalRentPaid.value = res.data.dec_amt[0].sumofRentPaid
                 if (Object.values(res.data).length == 0) {
                     AddHraButtonDisabled.value = false;
                 } else {
@@ -764,9 +766,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         );
         lop.maintenance = lop_maintenance;
         dlop.maintenance = dlop_maintenance;
-        // console.log("lop:" + lop_maintenance);
-        // console.log("dlop:" + dlop_maintenance);
-        setTimeout(() => {
             const lop_net = formula.net_value_cal(
                 lop.rent_received,
                 lop.municipal_tax,
@@ -781,7 +780,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             );
             // console.log(dlop_net);
             dlop.net_value = dlop_net;
-        }, 100);
         lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value);
         dlop.income_loss = formula.income_loss_cal(
             dlop.interest,
@@ -1151,6 +1149,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         metrocitiesOption,
         lenderTypeOption,
         employeDoj,
+        sumOfTotalRentPaid
 
     };
 });

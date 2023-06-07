@@ -259,6 +259,7 @@ const diolog_EditFamilyDetails = (family) => {
 };
 
 const diolog_DeleteFamilyDetails = (family) => {
+    _instance_profilePagesStore.loading_screen = true
 
 
     current_table_id.value = family.id
@@ -289,12 +290,16 @@ const diolog_DeleteFamilyDetails = (family) => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            _instance_profilePagesStore.loading_screen = false;
+            _instance_profilePagesStore.fetchEmployeeDetails();
+        })
 
 
 }
 
  const EditFamilyDetails = (user)=>{
+    _instance_profilePagesStore.loading_screen = true
             // console.log(id);
             let id = fetch_data.current_user_id
     let url =`/update-family-info/${id}`;
@@ -309,7 +314,7 @@ const diolog_DeleteFamilyDetails = (family) => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
+
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(Editfamilydetails.dob,'YYYY-MM-DD' );
 
@@ -326,7 +331,10 @@ const diolog_DeleteFamilyDetails = (family) => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            _instance_profilePagesStore.loading_screen = false
+        })
         // window.location.reload();
         DialogEditInfovisible.value = false;
     }

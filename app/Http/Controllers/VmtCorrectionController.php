@@ -171,7 +171,7 @@ class VmtCorrectionController extends Controller
                 $emppayslip->overtime = $singlepayslipdetails->Overtime;
                 $emppayslip->total_earned_gross = $singlepayslipdetails->TOTAL_EARNED_GROSS;
                 $emppayslip->pf_wages = $singlepayslipdetails->PF_WAGES;
-                $emppayslip->pf_wages_arrear_epfr = $singlepayslipdetails->PF_WAGES_ARREAR_EPFR;
+                $emppayslip->pf_wages_arrear = $singlepayslipdetails->PF_WAGES_ARREAR_EPFR;
                 $emppayslip->epfr = $singlepayslipdetails->EPFR;
                 $emppayslip->epfr_arrear = $singlepayslipdetails->EPFR_ARREAR;
                 $emppayslip->edli_charges = $singlepayslipdetails->EDLI_CHARGES;

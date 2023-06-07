@@ -47,8 +47,8 @@ class WelcomeMail extends Mailable
                     ->with('image_view', $this->image_view);
 
         //Only for Employee Onboarding
-        if($this->filename != "")
-            $output->attach($this->filename);
+        //if($this->filename != "")
+           // $output->attach($this->filename);
 
         return $output;
     }

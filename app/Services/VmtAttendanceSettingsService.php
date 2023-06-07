@@ -147,6 +147,16 @@ class VmtAttendanceSettingsService
             "third_week": 0,
             "fourth_week": 0,
             "fifth_week": 0,
+            "id": 1
+          },
+          {
+            "weeks": "Monday",
+            "week_off_list": 0,
+            "first_week": 0,
+            "sec_week": 0,
+            "third_week": 0,
+            "fourth_week": 1,
+            "fifth_week": 0,
             "id": 2
           },
           {
@@ -160,8 +170,8 @@ class VmtAttendanceSettingsService
             "id": 3
           },
           {
-            "day": "Wednesday",
-            "all_week": 0,
+            "weeks": "Wednesday",
+            "week_off_list": 0,
             "first_week": 0,
             "sec_week": 0,
             "third_week": 0,
@@ -190,8 +200,8 @@ class VmtAttendanceSettingsService
             "id": 6
           },
           {
-            "day": "Saturday",
-            "all_week": 0,
+            "weeks": "Saturday",
+            "week_off_list": 0,
             "first_week": 0,
             "sec_week": 0,
             "third_week": 0,
