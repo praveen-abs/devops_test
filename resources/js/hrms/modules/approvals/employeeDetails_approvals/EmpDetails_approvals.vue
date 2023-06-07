@@ -104,9 +104,9 @@
 
         </DataTable>
 
-        <Dialog v-model:visible="dialog_visible" modal header="Documents" :style="{ width: '40vw' }">
+        <Dialog v-model:visible="dialog_visible" class="z-0" modal header="Documents" v-if="canShowLoadingScreen == false"   :style="{ width: '40vw' }">
 
-            <img :src="`data:image/png;base64,${documentPath}`" :alt="doc_url" class="block pb-3 m-auto" />
+            <img  :src="`data:image/png;base64,${documentPath}`" :alt="doc_url" class="block pb-3 m-auto" />
 
         </Dialog>
 
@@ -130,9 +130,13 @@ const canShowConfirmation = ref(false);
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
+const canShowLoadingScreen =ref(false);
+
 const dialog_visible = ref(false)
 
 const documentPath = ref()
+
+const view_document =ref({});
 
 onMounted(async () => {
     await EmpDetailStore.getEmpDetails_list();
@@ -151,7 +155,8 @@ const filters = ref({
 });
 
 const showDocDialog = (record_id) => {
-
+    view_document.value = { ...document }
+    canShowLoadingScreen.value =true;
     dialog_visible.value = true
 
     axios.post('/view-profile-private-file', {
@@ -160,7 +165,9 @@ const showDocDialog = (record_id) => {
         console.log(res.data.data);
         documentPath.value = res.data.data
         console.log("data sent", documentPath.value);
-    });
+    }).finally(()=>{
+        canShowLoadingScreen.value = false;
+    })
 
 
 }
