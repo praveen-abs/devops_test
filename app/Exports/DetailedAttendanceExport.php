@@ -20,90 +20,104 @@ use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-
-
-class DetailedAttendanceExport implements FromArray,WithHeadings,ShouldAutoSize,WithEvents,WithCustomStartCell,WithStrictNullComparison
+class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSize, WithCustomStartCell, WithStrictNullComparison, WithStyles
 {
-     /**
-    * @return \Illuminate\Support\Collection
-    */
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     use Exportable;
 
     private $heading_dates;
     private $reportresponse;
-    private $dates_1;
+    private $total_column;
+    private $header_2;
+    private $heading_dates_2;
+
     public function __construct($data)
     {
-          $this->dates_1=$data[0];
-          $this->heading_dates=$data[1];
-          $this->reportresponse=$data[2];
-
+        $this->heading_dates = $data[0];
+        $this->total_column = num2alpha(count($data[1]) - 1);
+        $this->header_2 = $data[1];
+        $this->reportresponse = $data[2];
+        $this->heading_dates_2 = $data[3];
     }
 
-    public function headings():array
+    public function headings(): array
     {
-        return[
-            $this->dates_1,
-            $this->heading_dates
-        ];
-     }
-
-     public function startCell(): string
-     {
-         return 'A3';
-     }
-     public function registerEvents(): array {
         return [
-            AfterSheet::class => function(AfterSheet $event) {
-                /** @var Sheet $sheet */
-                $sheet = $event->sheet;
-                $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
-                $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
-                $styleArray = [
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    ],
-                    'borders' => [
-                        'outline' => [
-                            'borderStyle' => Border::BORDER_THICK,
-                            'color' => array('argb' => '00000000'),
-                        ],
-                    ],
-                    'fill' => [
-                        'fillType' => Fill::FILL_SOLID,
-                        'startColor' => array('argb' => 'ffff31')
-                        ]
-
-                ];
-                $cellRange = 'A2:AT2'; // All headers
-                $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
-
-
-            },
+            $this->heading_dates,
+            $this->header_2
         ];
+    }
+
+    public function startCell(): string
+    {
+        return 'A1';
+    }
+    // public function registerEvents(): array
+    // {
+    //     return [
+    //         AfterSheet::class => function (AfterSheet $event) {
+    //             /** @var Sheet $sheet */
+    //             $sheet = $event->sheet;
+    //             // $sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
+    //             // $sheet->getParent()->getActiveSheet()->getProtection()->setPassword('Abs@123');
+    //             $styleArray = [
+    //                 'alignment' => [
+    //                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    //                 ],
+
+    //                 'fill' => [
+    //                     'fillType' => Fill::FILL_SOLID,
+    //                     'startColor' => array('argb' => 'ffff31')
+
+    //                 ]
+
+    //             ];
+    //             $cellRange = 'A2:' . $this->total_column . '2'; // All headers
+    //             $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+    //         },
+    //     ];
+    // }
+
+    public function styles(Worksheet $sheet)
+    {
+
+        // For First Four Column Headers
+        for ($i = 0; $i < 4; $i++) {
+            $sheet->mergeCells(num2alpha($i) . '1:' . num2alpha($i) . '2');
+            $sheet->getStyle(num2alpha($i) . '1:' . num2alpha($i) . '2')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setRGB('554488');
+            $sheet->getStyle(num2alpha($i) . '1')->getFont()->setBold(true);
+
+            // $sheet->getStyle(num2alpha($i).'2:'.num2alpha($i).'3')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+        }
+        //$sheet->getStyle('A1:EI54')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
+
+        // Date Headings
+        $i = 4;
+        foreach ($this->heading_dates_2 as $single_date) {
+            $sheet->mergeCells(num2alpha($i) . '1:' . num2alpha($i + 3) . '1')->setCellValue(num2alpha($i) . '1', $single_date);
+            $i = $i + 4;
+        }
+
+
+
+        $sheet->setShowGridlines(false);
     }
 
 
     public function array(): array
     {
-           $single_employee= array();
+        $single_employee = array();
 
-       // dd(count($this->reportresponse));
-        for($i=0;$i<count($this->reportresponse);$i++){
-            array_push($single_employee,$this->reportresponse[$i]);
+
+        for ($i = 0; $i < count($this->reportresponse); $i++) {
+            array_push($single_employee, $this->reportresponse[$i]);
         }
 
         return  $single_employee;
-
     }
-
-
-    // public function collection()
-    // {
-    //    //dd($this->attendanceResponseArray);
-
-    //    return new Collection([
-    //     [1, 2, 3]
-    //     ]);
-    // }
 }

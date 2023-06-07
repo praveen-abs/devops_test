@@ -764,6 +764,8 @@ class VmtAttendanceReportsService
             //dd($totalDays );
             //For Excel Sheet Headers
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
+            $header_2 = array('', '', '', '');
+            $heading_dates_2 = array();
             for ($i = 1; $i <= $totalDays; $i++) {
                 $date = "";
 
@@ -777,7 +779,8 @@ class VmtAttendanceReportsService
                 //  $date_day=$i.'  '.substr(Carbon::parse($fulldate)->format('l'),0,1);
                 $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
                 array_push($heading_dates, $date_day);
-
+                array_push($heading_dates_2, $date_day);
+                array_push($header_2, 'InPunch', 'OutPunch', 'OT', 'Staus');
                 $attendanceResponseArray[$fulldate] = array(
                     //"user_id"=>$request->user_id,
                     "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
@@ -789,16 +792,17 @@ class VmtAttendanceReportsService
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
             }
-            array_push($heading_dates, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
+            array_push($heading_dates, 'Total Calculation');
+            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
 
             if ($attendance_setting_details['lc_status'] == 1) {
-                array_push($heading_dates, 'Total LC');
+                array_push($header_2, 'Total LC');
             }
             if ($attendance_setting_details['eg_status'] == 1) {
-                array_push($heading_dates, 'Total EG');
+                array_push($header_2, 'Total EG');
             }
-            array_push($heading_dates, "Total Payable Days");
+            array_push($header_2, "Total Payable Days");
 
 
 
@@ -1035,7 +1039,112 @@ class VmtAttendanceReportsService
                     }
                 }
             }
+
+
+            // dd($attendanceResponseArray);
+
+            foreach ($attendanceResponseArray as $key => $value) {
+                array_push($arrayReport,  $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : $attendanceResponseArray[$key]['checkin_time'],
+                $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : $attendanceResponseArray[$key]['checkout_time'], 0);
+                $current_date = Carbon::parse($attendanceResponseArray[$key]['date']);
+                $doj = Carbon::parse($attendanceResponseArray[$key]['DOJ']);
+
+                if ($doj->gt($current_date)) {
+                    array_push($arrayReport, 'N');
+                } else if ($attendanceResponseArray[$key]['is_weekoff']) {
+                    array_push($arrayReport, 'WO');
+                    $total_weekoff++;
+                } else if ($attendanceResponseArray[$key]['is_holiday']) {
+                    array_push($arrayReport, 'HO');
+                    $total_holidays++;
+                } else if (
+                    $attendanceResponseArray[$key]['isAbsent'] && !$attendanceResponseArray[$key]['isLeave']
+                    && !$attendanceResponseArray[$key]['is_holiday'] && $attendanceResponseArray[$key]['half_day_status'] == null
+                ) {
+                    array_push($arrayReport, 'A');
+                    $total_absent++;
+                } else if ($attendanceResponseArray[$key]['half_day_status'] == 'Approved') {
+                    if ($attendanceResponseArray[$key]['half_day_type'] == 'FN') {
+                        array_push($arrayReport, 'HD/P');
+                    } else if ($attendanceResponseArray[$key]['half_day_type'] == 'AN') {
+                        array_push($arrayReport, 'P/HD');
+                    }
+                    $total_present = $total_present + 0.5;
+                    $total_halfday = $total_halfday + 0.5;
+                } else if ($attendanceResponseArray[$key]['half_day_status'] == 'Pending' || $attendanceResponseArray[$key]['half_day_status'] == 'Rejected') {
+                    if ($attendanceResponseArray[$key]['half_day_type'] == 'AN') {
+                        array_push($arrayReport, 'A/P');
+                    } else if ($attendanceResponseArray[$key]['half_day_type'] == 'FN') {
+                        array_push($arrayReport, 'P/A');
+                    }
+                    $total_present = $total_present + 0.5;
+                    $total_absent = $total_absent + 0.5;
+                } else if ($attendanceResponseArray[$key]['isLeave']) {
+                    // dd($attendanceResponseArray[$key]);
+                    if ($attendanceResponseArray[$key]['leave_type'] == 'OD') {
+                        array_push($arrayReport, $attendanceResponseArray[$key]['leave_type']);
+                        $total_OD++;
+                    } else {
+                        array_push($arrayReport, $attendanceResponseArray[$key]['leave_type']);
+                        $total_leave++;
+                    }
+                } else if ($attendanceResponseArray[$key]['checkin_time'] != null || $attendanceResponseArray[$key]['checkout_time'] != null) {
+
+
+                    if ($shift_settings->is_lc_applicable == 1 ||  $shift_settings->is_eg_applicable == 1) {
+                        $lc_eg_day_att = 'P';
+                        if ($attendanceResponseArray[$key]['isLC'] == 'Rejected' || $attendanceResponseArray[$key]['isLC'] == 'Not Applied') {
+                            if ($shift_settings->is_lc_applicable == 1) {
+                                $lc_eg_day_att = $lc_eg_day_att . '/LC';
+                                if ($total_LC >= $shift_settings->lc_limit_permonth && $shift_settings->lc_limit_permonth != null) {
+                                    $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
+                                }
+                            }
+                        }
+                        if ($attendanceResponseArray[$key]['isEG'] == 'Rejected' || $attendanceResponseArray[$key]['isEG'] == 'Not Applied') {
+                            if ($shift_settings->is_eg_applicable == 1) {
+                                $lc_eg_day_att = $lc_eg_day_att . '/EG';
+                                if ($total_EG >= $shift_settings->eg_limit_permonth && $shift_settings->eg_limit_permonth != null) {
+                                    $total_lop =  $total_lop + $shift_settings->lc_exceed_lop_day;
+                                }
+                            }
+                        }
+                        array_push($arrayReport,  $lc_eg_day_att);
+                        $total_present++;
+                    } else {
+                        array_push($arrayReport, 'P');
+                        $total_present++;
+                    }
+
+
+                    //Count For LG AND EG
+                    if ($attendanceResponseArray[$key]['isLC'] != null) {
+                        $total_LC++;
+                    }
+
+                    if ($attendanceResponseArray[$key]['isEG'] != null) {
+                        $total_EG++;
+                    }
+                } else {
+                    array_push($arrayReport, ' ');
+                }
+            }
+
+            array_push($arrayReport, $total_weekoff, $total_holidays, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
+            if ($attendance_setting_details['lc_status'] == 1) {
+                array_push($arrayReport, $total_LC);
+            }
+            if ($attendance_setting_details['eg_status'] == 1) {
+                array_push($arrayReport, $total_EG);
+            }
+            $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD) - $total_lop;
+            array_push($arrayReport,  $total_payable_days);
+            array_push($reportresponse, $arrayReport);
+            unset($arrayReport);
         }
-        dd( $attendanceResponseArray);
+
+        $data = array($heading_dates, $header_2, $reportresponse, $heading_dates_2);
+
+        return $data;
     }
 }
