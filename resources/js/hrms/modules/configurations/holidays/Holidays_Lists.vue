@@ -1,5 +1,4 @@
 <template>
-
     <div class="p-5 card main-body">
         <div class="head-contant d_spc_bt d-flex flex-wrap">
             <h3 class="fs-4 fw-bold mb-3">Holiday Summary</h3>
@@ -11,55 +10,62 @@
                 </ul>
             </div>
         </div>
-        <!-- row-cols-1 row-cols-md-3 g-4 -->
-      <div class="d-flex justify-content-center w-full mt-4 ">
-        <div  class="d-flex w-full flex-wrap justify-content-start">
-            <div class="row  d-flex flex-wrap" style="width: 300px;"  v-for="holiday in useStore.holidayData" :key="holiday.id" >
-                <div class="col w-full mx-4" >
+        <!-- Pradeesh Don't Take This -->
+        <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
+            style="display: grid;">
+            <div v-for="holiday in useStore.holidayData" :key="holiday.id">
+                <div class="col w-full mx-4">
                     <div class="m-0 card-title d_spc_bt align-items-center w-full">
                         <h3 class="fs-5">{{ holiday.holiday_name }}</h3>
-                        <span class="fs-6">  {{dayjs(holiday.holiday_date ).format('DD-MMM-YYYY') }}</span>
+                        <span class="fs-6"> {{ dayjs(holiday.holiday_date).format('DD-MMM-YYYY') }}</span>
                     </div>
-                    <div class="card clr-trans card-w">
-                        <!-- {{ holiday.image }} -->
-                        <img src="" alt="">
-                        <img src="../../../../../images/holiday/photo_2023-03-22_11-14-58.jpg" class="card-img-top"
-                            alt="...">
+                    <div class="card clr-trans card-w h-48 w-full">
+                        <img :src="`assets/images/holiday/${holiday.image}`" class="card-img-top" alt="...">
                         <div class="overlay"></div>
                         <div class="hover_btn_div d-ard">
-                            <button label="Edit" @click="visible = true" class="w-6 fs-6" >
+                            <button label="Edit" @click="visible = true" class="w-6 fs-6">
                                 Edit
                             </button>
-                            <button  @click="remove" class="w-8 fs-6 mx-4" >Remove</button>
+                            <button @click="remove" class="w-8 fs-6 mx-4">Remove</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
 
         <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }" class="popup_card">
-            <div class="img_container">
-                <!-- <img src=".//../../../../../images/holiday/Holi.jpg" alt="" class="card-img"> -->
+            <div class="img_container border position-relative rounded" style="height: 150px;min-width: 200px; ">
+                <label
+                    class="cursor-pointer position-absolute bottom-0 end-0 d-flex justify-items-center align-items-center fs-5 btn rounded-circle w-1"
+                    id="" for="uploadFestivalPhoto">
+                    <!-- <a href="#" class="edit-icon"> -->
+                    <i class="ri-pencil-fill text-blue-900"></i>
+                    <!-- </a> -->
+
+                </label>
+                <input type="file" name="" id="uploadFestivalPhoto" hidden @change="useStore.uploadFestivalPhoto($event)" />
+                <!-- <img :src="`assets/images/holiday/${holiday.image}`"   alt="" class="card-img w-48"> -->
             </div>
+
             <div class="card-title">
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Festival Title</label>
-                    <InputText id="username" v-model="value" aria-describedby="username-help" />
+                    <InputText id="username" class="h-10" v-model="useStore.AddNewHoliday.FestivalTitle" aria-describedby="username-help" />
                 </div>
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Description</label>
-                    <InputText id="username" v-model="value" aria-describedby="username-help" />
+                    <InputText id="username" class="h-10" v-model="useStore.AddNewHoliday.Description" aria-describedby="username-help" />
                 </div>
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Date</label>
-                    <Calendar inputId="icon" icon="pi-calendar-times" dateFormat="dd-mm-yy" :showIcon="true" :minDate="new Date()" />
+                    <Calendar v-model="useStore.AddNewHoliday.date" showIcon class="h-10" />
+                    <!-- <Calendar class="h-10"  icon="pi-calendar" dateFormat="dd-mm-yy" :showIcon="true" :minDate="new Date()" /> -->
                 </div>
 
             </div>
             <template #footer>
-                <Button label="Close" @click="visible = false" text />
-                <Button label="Submit" icon="pi pi-check" @click="visible = false" autofocus />
+                <Button label="Close" class="bg-white-100 border-none" @click="visible = false" text />
+                <Button label="Submit" class="bg-orange-500 border-none" icon="pi pi-check" @click="useStore.sumbitAddNewHoliday" autofocus />
             </template>
         </Dialog>
 
@@ -67,10 +73,6 @@
     </div>
     <!-- {{ useStore.holidayData }} -->
 </template>
-
-
-
-
 
 
 <script setup>
@@ -100,9 +102,13 @@ const onAdvancedUpload = () => {
     toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
 };
 
-onMounted(async ()=>{
+onMounted(async () => {
     await useStore.getHolidays()
 })
+
+
+
+
 
 
 </script>
@@ -311,209 +317,20 @@ li {
     letter-spacing: 2px;
     line-height: 20px;
 }
-
-@media screen {}
 </style>
-
-<!-- <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
-
-.p-datatable .p-datatable-thead>tr>th {
-    text-align: center;
-    padding: 1.3rem 1rem;
-    border: 1px solid #dee2e6;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-width: 0 0 1px 0;
-    font-weight: 600;
-    color: #fff;
-    background: #003056;
-    transition: box-shadow 0.2s;
-    font-size: 13px;
-
-    .p-column-title {
-        font-size: 13px;
-    }
-
-    .p-column-filter {
-        width: 100%;
-    }
-
-    #pv_id_2 {
-        height: 30px;
-    }
-
-    .p-fluid .p-dropdown .p-dropdown-label {
-        margin-top: -10px;
-    }
-
-    .p-dropdown .p-dropdown-label.p-placeholder {
-        margin-top: -12px;
-    }
-
-    .p-column-filter-menu-button {
-        color: white;
-        margin-left: 10px;
-    }
-
-    .p-column-filter-menu-button:hover {
-        color: white;
-        border-color: transparent;
-        background: #023e70;
-    }
-}
-
-.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
-    margin-bottom: 0.5rem;
-    visibility: hidden;
-    position: absolute;
-}
-
-.p-button .p-component .p-button-sm {
-    background-color: #003056;
-}
-
-.p-datatable .p-datatable-tbody>tr {
-    font-size: 13px;
-
-    .employee_name {
-        font-weight: bold;
-        font-size: 13.5px;
-    }
-}
-
-.p-datatable .p-datatable-tbody>tr>td {
-    text-align: left;
-    border: 1px solid #dee2e6;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-width: 0 0 1px 0;
-    padding: 1rem 0.6rem;
-}
-
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-    width: 200px;
-}
-
-.p-datatable .p-datatable-tbody>tr>td:nth-child(3) {
-    width: 150px;
-}
-
-.p-datatable .p-datatable-tbody>tr>td:nth-child(6) {
-    width: 200px;
-}
-
-
-.pending {
-    font-weight: 700;
-}
-
-.approved {
-    font-weight: 700;
-}
-
-.p-button.p-component.p-button-success.Button {
-    padding: 8px;
-}
-
-.rejected {
-    font-weight: 700;
-    color: #ff2634;
-}
-
-.p-button.p-component.p-button-danger.Button {
-    padding: 8px;
-}
-
-.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
-    color: red;
-}
-
-.p-button.p-component.p-confirm-dialog-accept {
-    background-color: #003056;
-}
-
-.p-button.p-component.p-confirm-dialog-reject.p-button-text {
-    color: #003056;
-}
-
-.p-column-filter-overlay-menu .p-column-filter-buttonbar {
-    padding: 1.25rem;
-    position: absolute;
-    visibility: hidden;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter {
-    width: 44%;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
-    color: white;
-    border-color: transparent;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-open {
-    background: none;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-active {
-    background: none;
-}
-
-/* For Sort */
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
-    background: #003056;
-    color: white;
-}
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-    color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight {
-    background: #003056;
-    color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight:hover {
-    background: #003056;
-    color: white;
-}
-
-.p-datatable .p-sortable-column:focus {
-    box-shadow: none;
-    outline: none;
-    color: white;
-}
-
-.p-datatable .p-sortable-column .p-sortable-column-icon {
-    color: white;
-}
-
-.pi-sort-amount-down::before {
-    content: "\e9a0";
-    color: white;
-}
-
-.pi-sort-amount-up-alt::before {
-    content: "\e9a2";
-    color: white;
-}
-</style> -->
 
 {
 
+<!-- <template>
+    <div class="card flex justify-content-center">
+        <Calendar v-model="date" />
+    </div>
+</template>
 
+<script setup>
+import { ref } from "vue";
 
-<!-- <script setup>
-import { useToast } from "primevue/usetoast";
-
-</script>
-
--->
+const date = ref();
+</script> -->
 }
+
