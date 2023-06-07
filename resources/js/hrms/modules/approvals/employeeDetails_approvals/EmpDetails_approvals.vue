@@ -79,6 +79,13 @@
                                 <Tag :value="data.doc_status" :severity="getSeverity(data.doc_status)" />
                             </template> -->
                         </Column>
+                        <Column field="" header="View">
+                            <template #body="slotProps">
+                                <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                                    @click="showDocDialog(slotProps.data.record_id)" style="height: 2em" />
+                            </template>
+                        </Column>
+
                         <Column field="" header="Action">
                             <template #body="slotProps">
                                 <span>
@@ -96,6 +103,12 @@
             </template>
 
         </DataTable>
+
+        <Dialog v-model:visible="dialog_visible" modal header="Documents" :style="{ width: '40vw' }">
+
+            <img :src="`data:image/png;base64,${documentPath}`" :alt="doc_url" class="block pb-3 m-auto" />
+
+        </Dialog>
 
 
     </div>
@@ -117,6 +130,10 @@ const canShowConfirmation = ref(false);
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
+const dialog_visible = ref(false)
+
+const documentPath = ref()
+
 onMounted(async () => {
     await EmpDetailStore.getEmpDetails_list();
     // console.log(EmpDetailStore.getEmpDetails_list());
@@ -133,6 +150,21 @@ const filters = ref({
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
+const showDocDialog = (record_id) => {
+
+    dialog_visible.value = true
+
+    axios.post('/view-profile-private-file', {
+        emp_doc_record_id: record_id,
+    }).then(res => {
+        console.log(res.data.data);
+        documentPath.value = res.data.data
+        console.log("data sent", documentPath.value);
+    });
+
+
+}
+
 function showConfirmDialog(selectedRowData, status) {
     canShowConfirmation.value = true;
     currentlySelectedStatus = status;
@@ -146,6 +178,9 @@ function showAllConfirmDialog(selectedRowData, status) {
     console.log("Selected Bulk Row Data : " + JSON.stringify(selectedRowData));
 
 }
+
+
+
 function resetVars() {
     currentlySelectedStatus = "";
     currentlySelectedRowData = null;
@@ -182,8 +217,8 @@ const processBulkDocumentsApproveReject = () => {
     console.log("Processed doc record ids : " + processed_doc_ids);
 
 
-    axios.post("http://localhost:3000/saveEmpDetails", {
-        record_id:processed_doc_ids,
+    axios.post("/approvals/EmployeeProof-bulkdocs-approve-reject", {
+        record_id: processed_doc_ids,
         status:
             currentlySelectedStatus == "Approve"
                 ? "Approved"
@@ -232,7 +267,7 @@ const processBulkDocumentsApproveReject = () => {
 function empDetailsDocumentApproveReject() {
     hideConfirmDialog();
 
-    axios.post("http://localhost:3000/saveEmpDetails", {
+    axios.post("/approvals/EmployeeProof-docs-approve-reject", {
         record_id: currentlySelectedRowData.record_id,
         status:
             currentlySelectedStatus == "Approve"
@@ -249,11 +284,6 @@ function empDetailsDocumentApproveReject() {
         resetVars();
 
     })
-
-
-
-
-
 }
 
 
