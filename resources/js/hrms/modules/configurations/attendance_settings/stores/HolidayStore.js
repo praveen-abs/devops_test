@@ -10,9 +10,16 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     const toast = useToast();
 
     // Variable Declarations
+    const holidayData = ref();
+    const AddNewHoliday = reactive({
+        Holiday_Photo:"",
+        FestivalTitle:"",
+        Description:"",
+        date:""
+    });
 
-    const holidayData = ref()
 
+    // events
 
     const getHolidays = async() =>{
         await axios.get('/holiday/master-page').then(res=>{
@@ -21,13 +28,33 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         })
     }
 
+    const uploadFestivalPhoto = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            AddNewHoliday.Holiday_Photo = e.target.files[0];
+            console.log(AddNewHoliday.Holiday_Photo);
+        }
+    }
+
+    const sumbitAddNewHoliday = (data) =>{
+        console.log(data);
+        axios.post().then((res)=>{
+            console.log(res.data);
+        }).finally(()=>{
+
+        });
+    }
+
+
 
 
 
     return {
 
         // Variable Declaration
-        holidayData,getHolidays
+        holidayData,AddNewHoliday
+
+        // function
+        ,getHolidays,uploadFestivalPhoto,sumbitAddNewHoliday
 
     };
 });

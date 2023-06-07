@@ -10,7 +10,7 @@ export const UseEmpDetailApprovalsStore = defineStore("EmpDetailApprovalsStore",
       // Events
 
       async function getEmpDetails_list(){
-        await axios.get("http://localhost:3000/employeeDetails_approvals").then((res)=>{
+        await axios.get("/fetch-proof-doc").then((res)=>{
             console.log(res.data);
             array_EmpDetails_list.value = res.data;
             console.log(array_EmpDetails_list.value);
