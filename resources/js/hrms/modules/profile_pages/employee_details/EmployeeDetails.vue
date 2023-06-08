@@ -34,36 +34,40 @@
                                 <label :style="{ marginLeft: '10px' }">Birth Date<span class="text-danger">*</span>
                                 </label>
                                 <div class="cal-icon">
-                                    <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
-                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
+                                    <!-- <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
+                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" /> -->
+                                        <Calendar class="mb-3 form-selects" v-model="dialog_general_information.dob" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
+                            <div class="mb-1 form-group">
                                 <label>Gender<span class="text-danger">*</span></label>
-
                                 <Dropdown v-model="dialog_general_information.gender" :options="options_gender"
                                     optionLabel="name" optionValue="value" placeholder="Choose Gender"
                                     class="form-selects" />
-
                             </div>
                         </div>
 
-                        <!-- <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
-                                <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
+                            <div class="mb-1 form-group">
+                                <!-- <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.doj"
                                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
-                                </div>
+                                </div> -->
+
+                                <label :style="{ marginLeft: '10px' ,marginRight:'10px' }">Marital status <span class="text-danger">*</span></label>
+                                <Dropdown v-model="dialog_general_information.marital_status_id"
+                                    :options="option_maritals_status" optionLabel="name" optionValue="id"
+                                    placeholder="Select Marital Status" class="form-selects" :style="{ marginLeft: '10px' ,marginRight:'10px' }" />
 
                             </div>
-                        </div> -->
+                        </div>
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
+                            <div class="mb-2 form-group">
                                 <label>Blood Group<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     <Dropdown v-model="dialog_general_information.blood_group_id"
@@ -76,20 +80,21 @@
                         </div>
 
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
-                                <label>Marital status <span class="text-danger">*</span></label>
-                                <Dropdown v-model="dialog_general_information.marital_status_id"
-                                    :options="option_maritals_status" optionLabel="name" optionValue="id"
-                                    placeholder="Select Marital Status" class="form-selects" />
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
+                            <div class=" form-group w-full" :style="{ marginLeft: '10px' }">
+                                <label class="my-1" >Physically Handicapped</label>
+                                <Dropdown v-model="dialog_general_information.physically_challenged"
+                                    :options="options_phy_challenged" optionLabel="name" optionValue="value"
+                                    placeholder="Select" class="form-selects"  />
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
-                                <label>Physically Handicapped</label>
+                                <!-- <label>Physically Handicapped</label>
                                 <Dropdown v-model="dialog_general_information.physically_challenged"
                                     :options="options_phy_challenged" optionLabel="name" optionValue="value"
-                                    placeholder="Select" class="form-selects" />
+                                    placeholder="Select" class="form-selects" /> -->
+
                             </div>
                         </div>
                     </div>
@@ -496,6 +501,7 @@ function onClick_EditButton_GeneralInfo() {
 
 
 function saveGeneralInformationDetails() {
+    console.log(dialog_general_information.dob);
 
     canShowLoading.value = true;
 
@@ -757,22 +763,6 @@ Dialog {
 </style>
 
 
-{
 
-
-<!--
-<template>
-    <div class="card">
-        <Message :closable="false">Message Content</Message>
-    </div>
-</template>
-
-<script setup>
-</script>
-
-
--->
-
-}
 
 
