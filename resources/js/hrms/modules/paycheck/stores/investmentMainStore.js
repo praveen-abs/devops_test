@@ -402,7 +402,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             accept: () => {
                 canShowLoading.value = true;
                 axios
-                    .post("/investments/deleteEmpRentalDetails", {
+                    .post("/investments/deleteHousePropertyDetails", {
                         current_table_id: currentRowData.id,
                     })
                     .finally(() => {
@@ -594,7 +594,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             accept: () => {
                 canShowLoading.value = true;
                 axios
-                    .post("/investments/deleteEmpRentalDetails", {
+                    .post("/investments/deleteHousePropertyDetails", {
                         current_table_id: currentRowData.id,
                     })
                     .finally(() => {

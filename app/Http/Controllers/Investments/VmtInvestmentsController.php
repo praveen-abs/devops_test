@@ -191,12 +191,6 @@ class VmtInvestmentsController extends Controller
         return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code, $fs_id);
     }
 
-    public function deleteRentalDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
-    {
-
-        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
-    }
-
     // Get And Delete for House Property in Investment's Forms
     public function fetchHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
     {
@@ -215,12 +209,12 @@ class VmtInvestmentsController extends Controller
     public function deleteHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
     {
 
-        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
+        return $serviceVmtInvestmentsService->deleteHousePropertyDetails($request->current_table_id);
     }
 
     public function saveSection80(Request $request)
     {
-
+           // dd($request->all());
         $json_decodeHra = json_encode($request->all());
         $current_date = date("Y-m-d");
         // dd($json_decodeHra);
@@ -344,7 +338,6 @@ class VmtInvestmentsController extends Controller
 
 
         foreach ($v_form_template as $dec_amt) {
-
 
             $empGeneralInfo['gross'] = $dec_amt['gross'];
             $empGeneralInfo['basic'] = $dec_amt['basic'];
@@ -476,7 +469,7 @@ class VmtInvestmentsController extends Controller
 
         // dd($v_form_template);
 
-       
+
 
         $res = array();
         $sumOfHra = 0;
@@ -491,11 +484,11 @@ class VmtInvestmentsController extends Controller
 
             $current_year = date('Y'); // Get Current Year
             $dob = date_parse($dec_amt['dob']); // Employeer Dob
-            $year = $dob["year"]; 
-            $empAge = ($current_year - $year); 
-     
-            $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));   
-            $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));    
+            $year = $dob["year"];
+            $empAge = ($current_year - $year);
+
+            $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
+            $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));
             $empHra = $dec_amt['hra'] * 12 ;
             $empBasic = $dec_amt['basic'] * 12;
 
@@ -506,7 +499,7 @@ class VmtInvestmentsController extends Controller
 
             // dd($totalHra);
 
-            if ($dec_amt['section_group'] == "HRA") {          
+            if ($dec_amt['section_group'] == "HRA") {
                 $sumOfHra += $hraTotalRent['total_rent_paid'];
                 $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
             }
@@ -545,7 +538,7 @@ class VmtInvestmentsController extends Controller
                 $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
                 if ($totalIntersetPaid['property_type'] == "Let Out Property") {
                     $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
-                }                 
+                }
             }
 
             $total_gross['section'] = "Total Gross Income";
@@ -588,7 +581,7 @@ class VmtInvestmentsController extends Controller
 
         array_push(
             $res,$total_gross,$Other_Source,$Reimbursement,$allowance_tax, $tax_on_emp, $exemption,$total_tax_income,$total_tax_laibilty
-            
+
         );
         return $res;
 
@@ -596,19 +589,19 @@ class VmtInvestmentsController extends Controller
     }
 
     public function saveEmpTaxRegime(Request $request){
-       
+
         $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
         $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
 
-           
+
         if ($query_femp->exists()) {
             $query_assign = $query_femp->first();
            $query_assign->regime = $request->regime;
            $query_assign->save();
         }
         return "Saved";
-    
+
     }
 
     public function taxDeducationCalculate(Request $request)

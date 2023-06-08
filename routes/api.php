@@ -124,10 +124,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     //Investments
-    Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
-    Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
-    Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetailsTemplate']);
-    Route::post('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
+     Route::post('/investments/saveSection80', [VmtAPIInvestmentsController::class,'saveSection80']);
+     Route::post('/investments/saveSectionPopups', [VmtAPIInvestmentsController::class,'saveSectionPopups']);
+     Route::post('/investments/SaveInvDetails', [VmtAPIInvestmentsController::class,'SaveInvDetails']);
+     Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetailsTemplate']);
+     Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class,'fetchHousePropertyDetails']);
+     Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class,'fetchEmpRentalDetails']);
+     Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class,'deleteHousePropertyDetails']);
 
     //Notifications
     Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);

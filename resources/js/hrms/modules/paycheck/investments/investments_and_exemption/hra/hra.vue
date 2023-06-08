@@ -324,6 +324,7 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.saveHraNewRental()
+        v$.value.$reset()
     } else {
         console.log('Form failed validation')
     }
