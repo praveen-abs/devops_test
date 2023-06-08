@@ -900,7 +900,10 @@ class VmtAttendanceReportsService
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
 
-
+              //Calculate OT
+              dd(  $shiftEndTime->diffInMinutes(Carbon::parse( $value['checkin_time'])));
+            dd($shiftEndTime->format('H:i:s')->diffInMinutes(Carbon::parse( $value['checkin_time'])->format('H:i:s')));
+             dd( Carbon::parse( $value['checkin_time'])->format('H:i:s'));
 
 
 
