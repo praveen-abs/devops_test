@@ -639,9 +639,10 @@ class VmtAttendanceController extends Controller
 
         // attendance details from vmt_employee_attenndance table
         $attendance_WebMobile = VmtEmployeeAttendance::where('user_id', $request->user_id)
+            ->join('vmt_work_shifts','vmt_work_shifts.id','=','vmt_employee_attendance.vmt_employee_workshift_id')
             ->whereMonth('date', $request->month)
             ->orderBy('checkin_time', 'asc')
-            ->get(['date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
+            ->get(['vmt_work_shifts.shift_code as workshift_code','vmt_work_shifts.shift_name as workshift_name','vmt_employee_workshift_id','date', 'checkin_time', 'checkout_time','attendance_mode_checkin','attendance_mode_checkout','selfie_checkin','selfie_checkout']);
 
         //dd($attendance_WebMobile);
 
@@ -670,6 +671,7 @@ class VmtAttendanceController extends Controller
 
 
            $attendanceResponseArray[$fulldate] = array( "user_id"=>$request->user_id,"isAbsent"=>false, "attendance_mode_checkin"=>null, "attendance_mode_checkout"=>null,
+                                                        "vmt_employee_workshift_id"=>null,"workshift_code"=>null,"workshift_name"=>null,
                                                         "absent_status"=>null,"leave_type"=>null,"checkin_time"=>null, "checkout_time"=>null,
                                                         "selfie_checkin"=>null, "selfie_checkout"=>null,
                                                         "isLC"=>false, "lc_status"=>null, "lc_reason"=>null,"lc_reason_custom"=>null,
@@ -695,7 +697,7 @@ class VmtAttendanceController extends Controller
         //dd($merged_attendanceData);
         //dd($dateWiseData);
         foreach ($dateWiseData  as $key => $value) {
-
+           // dd($dateWiseData);
            // dd($value[0]);
 
             /*
@@ -708,6 +710,7 @@ class VmtAttendanceController extends Controller
                         checkin_time=18:06:00
                         checkout_time=18:06:00
                         attendance_mode="web"
+                        vmt_employee_workshift_id ="1" //Employee shift
                     ],
                     [
                         ....
@@ -726,6 +729,18 @@ class VmtAttendanceController extends Controller
             //dd($value);
             foreach($value as $singleValue)
             {
+                //Find the employee_workshift. Right now, we are getting from web/mobile checkin only.
+                //For Biometric, we cant know which shift since the biometric table has no column for storing it
+
+                //If we found 'vmt_employee_workshift_id', then store it. Else store NULL. In future, we have get shift details from biometric attendance
+                if(!empty($singleValue["vmt_employee_workshift_id"]))
+                {
+                   $attendanceResponseArray[$key]["vmt_employee_workshift_id"] = $singleValue["vmt_employee_workshift_id"];
+                   $attendanceResponseArray[$key]["workshift_code"] = $singleValue["workshift_code"];
+                   $attendanceResponseArray[$key]["workshift_name"] = $singleValue["workshift_name"];
+
+                }
+
                 //Find the min of checkin
                 if ($checkin_min == null) {
                     $checkin_min = $singleValue["checkin_time"];
@@ -771,103 +786,104 @@ class VmtAttendanceController extends Controller
             if($singleValue["checkout_time"] && !empty($singleValue["selfie_checkout"]))
                 $attendanceResponseArray[$key]["selfie_checkout"] = 'employees/'.$user->user_code.'/selfies/'.$singleValue["selfie_checkout"];
 
+
         }
-        //dd($attendanceResponseArray);
 
-           $query_workshift = VmtEmployeeWorkShifts::where('user_id',$request->user_id)->first();
+        //Get all the shift details
+        $query_workShifts = VmtWorkShifts::all()->keyBy('id');
+        //dd($query_workShifts->toArray()['2']);
 
-           $regularTime = VmtWorkShifts::where('id',$query_workshift->work_shift_id)->first();
-
-        //  dd($regularTime);
-
-       // $regularTime  = VmtWorkShifts::where('shift_name',$query_shiftid->shift_name)->first();
-
-
-
-        $shiftStartTime  = Carbon::parse($regularTime->shift_start_time);
-        $shiftEndTime  = Carbon::parse($regularTime->shift_end_time);
-
-
-
-        //dd($shift_code);
-        //dd($regularTime);
         ////Logic to check LC,EG,MIP,MOP,Leave status
         foreach ($attendanceResponseArray as $key => $value) {
 
+            //dd($attendanceResponseArray[$key]['vmt_employee_workshift_id']);
+
+            //dd($query_workShifts[$currentdate_workshift]->shift_start_time);
+
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
             $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
+            //dd($checkin_time);
 
 
-
-
-            //LC Check
-            if(!empty($checkin_time))
+            //Calculate LC, EG only if the current day shifttype is found. If no shifttype found, dont calculate LC, EG. NEED TO CORRECT IT MANUALLY
+            if(!empty($attendanceResponseArray[$key]['vmt_employee_workshift_id']))
             {
 
-                $parsedCheckIn_time  = Carbon::parse($checkin_time);
+                //Get the workshift for the current day
+                $currentdate_workshift = $attendanceResponseArray[$key]['vmt_employee_workshift_id'];
 
-                //Check whether checkin done on-time
-                $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+                $shiftStartTime  = Carbon::parse($query_workShifts[$currentdate_workshift]->shift_start_time);
+                $shiftEndTime  = Carbon::parse($query_workShifts[$currentdate_workshift]->shift_end_time);
 
-                if($isCheckin_done_ontime)
+
+                //LC Check
+                if(!empty($checkin_time))
                 {
-                    //employee came on time....
+
+                    $parsedCheckIn_time  = Carbon::parse($checkin_time);
+
+                    //Check whether checkin done on-time
+                    $isCheckin_done_ontime = $parsedCheckIn_time->lte($shiftStartTime);
+
+                    if($isCheckin_done_ontime)
+                    {
+                        //employee came on time....
+
+                    }
+                    else
+                    {
+                        //employee came on time....
+                        //dd("Checkin NOT on-time");
+
+                        //then LC
+                        $attendanceResponseArray[$key]["isLC"] = true;
+
+                        //check whether regularization applied.
+                        $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
+
+                        //check regularization status
+                        $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
+
+
+
+                    }
 
                 }
-                else
+
+
+                //EG Check
+                //check if its EG
+                if(!empty($checkout_time))
                 {
-                    //employee came on time....
-                    //dd("Checkin NOT on-time");
 
-                    //then LC
-                    $attendanceResponseArray[$key]["isLC"] = true;
+                    $parsedCheckOut_time  = Carbon::parse($checkout_time);
 
-                    //check whether regularization applied.
-                    $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
+                    //Check whether checkin done on-time
+                    $isCheckOut_doneEarly = $parsedCheckOut_time->lte($shiftEndTime);
 
-                    //check regularization status
-                    $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
+                    if($isCheckOut_doneEarly)
+                    {
+                        //employee left early on time....
+
+                        //then EG
+                        $attendanceResponseArray[$key]["isEG"] = true;
+
+                        //check whether regularization applied.
+                        $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
+
+                        //check regularization status
+                        $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
 
 
+                    }
+                    else
+                    {
+                        //employee left late
+
+                    }
 
                 }
-
             }
-
-
-            //EG Check
-            //check if its EG
-            if(!empty($checkout_time))
-            {
-
-                $parsedCheckOut_time  = Carbon::parse($checkout_time);
-
-                //Check whether checkin done on-time
-                $isCheckOut_doneEarly = $parsedCheckOut_time->lte($shiftEndTime);
-
-                if($isCheckOut_doneEarly)
-                {
-                    //employee left early on time....
-
-                    //then EG
-                    $attendanceResponseArray[$key]["isEG"] = true;
-
-                    //check whether regularization applied.
-                    $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
-
-                    //check regularization status
-                    $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
-
-
-                }
-                else
-                {
-                    //employee left late
-
-                }
-
-            }
-
 
             //for absent
             if($checkin_time == null && $checkout_time == null){

@@ -83,6 +83,11 @@ export default defineConfig({
                 'resources/js/hrms/modules/paycheck/investments/declaration/declaration.js',
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js',
 
+                // Salary Advance
+
+                    // Employee Salary Advance
+                    'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
+
 
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
