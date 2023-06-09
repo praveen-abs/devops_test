@@ -818,6 +818,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/investments/saveRegime',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
     Route::get('/investments/investment-summary',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
 
+    //Salary Advance
+
+    Route::get('/AssignEmpSalaryAdv',  [App\Http\Controllers\VmtSalaryAdvanceController::class, 'AssignEmpSalaryAdv']);
+
+
+
 
     //Emp Mail Notifications
     Route::get('/getAllEmployees_WelcomeMailStatus_Details', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'getAllEmployees_WelcomeMailStatus_Details'])->name('getAllEmployees_WelcomeMailStatus_Details');
