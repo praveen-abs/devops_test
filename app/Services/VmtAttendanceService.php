@@ -539,16 +539,22 @@ class VmtAttendanceService
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
 
         //Save in notifications table
-        $serviceNotificationsService->saveNotification(
-            user_code: $query_user->user_code,
-            notification_title: "Leave request applied",
-            notification_body: "Kindly take action",
-            redirect_to_module: "Leave Approvals",
-            recipient_user_code: $manager_emp_code,
-            is_read: 0
+        // $serviceNotificationsService->saveNotification(
+        //     user_code: $query_user->user_code,
+        //     notification_title: "Leave request applied",
+        //     notification_body: "Kindly take action",
+        //     redirect_to_module: "Leave Approvals",
+        //     recipient_user_code: $manager_emp_code,
+        //     is_read: 0
 
 
+       // );
+       $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
+            notif_users_ids: $query_user->user_code,
+            leave_module_type:'employee_applies_leave',
+            manager_user_code: $manager_emp_code,
         );
+
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
             uEmployeeName: $query_user->name,
@@ -567,15 +573,16 @@ class VmtAttendanceService
         ));
 
         if ($isSent) {
-            $mail_status = "Mail sent successfully";
+            $mail_status = "success";
         } else {
-            $mail_status = "There was one or more failures.";
+            $mail_status = "failure";
         }
 
         $response = [
             'status' => 'success',
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
+            'notification' => $res_notification ,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -583,7 +590,7 @@ class VmtAttendanceService
         return $response;
     }
 
-    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment)
+    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment,VmtNotificationsService $serviceNotificationsService)
     {
 
         $validator = Validator::make(
@@ -667,25 +674,37 @@ class VmtAttendanceService
         );
 
         if ($isSent) {
-            $mail_status = "Mail sent successfully";
+            $mail_status = "success";
         } else {
-            $mail_status = "There was one or more failures.";
+            $mail_status = "failure";
         }
 
-        if ($status == "Approved")
+        if ($status == "Approved"){
             $text_status = "approved";
+           $leave_module_type ='manager_approves_leave';
+        }
         else
-        if ($status == "Rejected")
+        if ($status == "Rejected"){
             $text_status = "rejected";
+            $leave_module_type ='manager_rejects_leave';
+        }
         else
-        if ($status == "Revoked")
+        if ($status == "Revoked"){
             $text_status = "revoked";
+           $leave_module_type ='manager_withdraw_leave';
+        }
+         $users_id=VmtEmployeeOfficeDetails::where('l1_manager_code',$approver_user_code)->first()->user_id;
 
-
+        $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
+                notif_users_ids:User::where('id',$users_id)->first()->user_code,
+                leave_module_type:$leave_module_type,
+                manager_user_code: $approver_user_code,
+            );
         $response = [
             'status' => 'success',
             'message' => 'Leave Request ' . $text_status . ' successfully',
             'mail_status' => $mail_status,
+            'notification' => $res_notification ,
             'error' => '',
             'error_verbose' => ''
         ];
