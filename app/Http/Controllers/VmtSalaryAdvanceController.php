@@ -38,7 +38,10 @@ public function showAssignEmp(Request $request){
 
         // dd($request->all());
 
-       $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')->where('name','<>','S2 Admin')
+       $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                    ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.vmt_department_id')
+                    ->join('vmt_client_master','vmt_client_master.id','=','users.')
+       ->where('name','<>','S2 Admin')
         ->where('department_id','10')
         ->orwhere('designation','Collection officer')
         ->orwhere('work_location','')
@@ -51,17 +54,21 @@ public function showAssignEmp(Request $request){
 
 }
 
+public function assignEmpSalaryAdvSetting(Request $request){
+
+        // dd($request->all());
 
 
 
 
 
-
-public function AssignEmpSalaryAdv(Request $request , VmtSalaryAdvanceService $useSalaryAdvance){
-        dd($request->all());
-    return $useSalaryAdvance->AssignEmpSalaryAdv($request->all() );
 
 }
+
+
+
+
+
 
 
 }
