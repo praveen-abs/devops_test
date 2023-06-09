@@ -822,7 +822,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/AssignEmpSalaryAdv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'AssignEmpSalaryAdv']);
     Route::get('/getAllDropdownFilter', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getAllDropdownFilter']);
-    Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showAssignEmp']);
+    Route::get('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showAssignEmp']);
     Route::post('/assignEmpSalaryAdvSetting', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'assignEmpSalaryAdvSetting']);
 
 
