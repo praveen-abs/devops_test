@@ -1,16 +1,25 @@
 <template>
-    <div class="p-5 card main-body">
+    <div v-if="useStore.activeHolidaysPage === 2" class="p-5 card main-body">
+
+        <div v-if="useStore.activeHolidaysPage === 1">
+            <Holidays_Master />
+        </div>
+        <div v-if="useStore.activeHolidaysPage === 3">
+            <CreateNewHolidaysList />
+        </div>
         <div class="head-contant d_spc_bt d-flex flex-wrap">
             <h3 class="fs-4 fw-bold mb-3">Holiday Summary</h3>
             <div class="holiday-settings-btns">
+
                 <ul class="d-flex flex-wrap">
-                    <li><button class="cancel_btn w-30 mb-3">Cancel</button></li>
-                    <li><button class="view_Lists w-30 mb-3">View Lists</button></li>
+                    <li><button class="cancel_btn w-30 mb-3" @click="useStore.activeHolidaysPage = 1">Cancel</button></li>
+                    <li><button class="view_Lists w-30 mb-3" @click="useStore.activeHolidaysPage = 3">View Lists </button>
+                    </li>
                     <li><button class="add_new_holiday_btn w-33 mb-3" @click="visible = true"> Add New Holiday</button></li>
                 </ul>
             </div>
         </div>
-        <!-- Pradeesh Don't Take This -->
+
         <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
             style="display: grid;">
             <div v-for="holiday in useStore.holidayData" :key="holiday.id">
@@ -20,10 +29,12 @@
                         <span class="fs-6"> {{ dayjs(holiday.holiday_date).format('DD-MMM-YYYY') }}</span>
                     </div>
                     <div class="card clr-trans card-w h-48 w-full">
-                        <img :src="`assets/images/holiday/${holiday.image}`" class="card-img-top" alt="...">
+                        <img v-if="holiday.image" :src="`assets/images/holiday/${holiday.image}`" class="card-img-top"
+                            alt="...">
+                        <img v-else src="../../../assests/images/no-image.png" class="card-img-top" alt="...">
                         <div class="overlay"></div>
                         <div class="hover_btn_div d-ard">
-                            <button label="Edit" @click="visible = true" class="w-6 fs-6">
+                            <button label="Edit" @click="editdialog = true" class="w-6 fs-6">
                                 Edit
                             </button>
                             <button @click="remove" class="w-8 fs-6 mx-4">Remove</button>
@@ -32,68 +43,112 @@
                 </div>
             </div>
         </div>
-
         <Dialog v-model:visible="visible" modal header="Holiday " :style="{ width: '25vw' }" class="popup_card">
-            <div class="img_container border position-relative rounded" style="height: 150px;min-width: 200px; ">
+            <div class="img_container border position-relative rounded-lg" style="height: 150px;min-width: 200px; ">
+                <img  class="rounded-lg z-0" :src="useStore.avatar" alt="" style="height: 150px;min-width: 100%; ">
                 <label
-                    class="cursor-pointer position-absolute bottom-0 end-0 d-flex justify-items-center align-items-center fs-5 btn rounded-circle w-1"
+                    class="position-absolute bottom-0 end-0 d-flex justify-items-center align-items-center fs-5 btn rounded-circle w-1 h-8 z-10"
                     id="" for="uploadFestivalPhoto">
-                    <!-- <a href="#" class="edit-icon"> -->
                     <i class="ri-pencil-fill text-blue-900"></i>
-                    <!-- </a> -->
-
                 </label>
-                <input type="file" name="" id="uploadFestivalPhoto" hidden @change="useStore.uploadFestivalPhoto($event)" />
-                <!-- <img :src="`assets/images/holiday/${holiday.image}`"   alt="" class="card-img w-48"> -->
+                <input type="file" name="" id="uploadFestivalPhoto" hidden @change="useStore.FestivalPhoto($event)" />
             </div>
-
             <div class="card-title">
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Festival Title</label>
-                    <InputText id="username" class="h-10" v-model="useStore.AddNewHoliday.FestivalTitle" aria-describedby="username-help" />
+                    <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.FestivalTitle"
+                        aria-describedby="username-help" />
                 </div>
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Description</label>
-                    <InputText id="username" class="h-10" v-model="useStore.AddNewHoliday.Description" aria-describedby="username-help" />
+                    <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.Description"
+                        aria-describedby="username-help" />
                 </div>
                 <div class="flex gap-2 mt-5 flex-column">
                     <label for="username">Date</label>
-                    <Calendar v-model="useStore.AddNewHoliday.date" showIcon class="h-10" />
-                    <!-- <Calendar class="h-10"  icon="pi-calendar" dateFormat="dd-mm-yy" :showIcon="true" :minDate="new Date()" /> -->
+                    <Calendar v-model="useStore.addNewHoliday.date" showIcon class="h-10" />
                 </div>
 
             </div>
             <template #footer>
-                <Button label="Close" class="bg-white-100 border-none" @click="visible = false" text />
-                <Button label="Submit" class="bg-orange-500 border-none" icon="pi pi-check" @click="useStore.sumbitAddNewHoliday" autofocus />
+                <Button label="Close" class="bg-white border-orange-400 text-orange-500" @click="visible = false" text />
+                <Button label="Submit" class="bg-orange-500 border-none" icon="pi pi-check"
+                    @click="useStore.sumbitAddNewHoliday" autofocus />
+            </template>
+        </Dialog>
+
+        <Dialog v-model:visible="editdialog" modal header="Holiday " :style="{ width: '25vw' }" class="popup_card">
+            <div class="img_container border position-relative rounded-lg" style="height: 150px;min-width: 200px; ">
+                <img  class="rounded-lg z-0" :src="useStore.avatar" alt="" style="height: 150px;min-width: 100%; ">
+                <label
+                    class="position-absolute bottom-0 end-0 d-flex justify-items-center align-items-center fs-5 btn rounded-circle w-1 h-8 z-10"
+                    id="" for="uploadFestivalPhoto">
+                    <i class="ri-pencil-fill text-orange-500"></i>
+                </label>
+                <input type="file" name="" id="uploadFestivalPhoto" hidden @change="useStore.FestivalPhoto($event)" />
+            </div>
+            <div class="card-title">
+                <div class="flex gap-2 mt-5 flex-column">
+                    <label for="username">Festival Title</label>
+                    <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.FestivalTitle"
+                        aria-describedby="username-help" />
+                </div>
+                <div class="flex gap-2 mt-5 flex-column">
+                    <label for="username">Description</label>
+                    <InputText id="username" class="h-10" v-model="useStore.addNewHoliday.Description"
+                        aria-describedby="username-help" />
+                </div>
+                <div class="flex gap-2 mt-5 flex-column">
+                    <label for="username">Date</label>
+                    <Calendar v-model="useStore.addNewHoliday.date" showIcon class="h-10" />
+                </div>
+
+            </div>
+            <template #footer>
+                <Button label="Close" class="bg-white border-orange-400 text-orange-500" @click="visible = false" text />
+                <Button label="Submit" class="bg-orange-500 border-none" icon="pi pi-check"
+                    @click="useStore.sumbitAddNewHoliday" autofocus />
+            </template>
+        </Dialog>
+
+        <Dialog header="Header" v-model:visible="useStore.canShowLoading"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+            :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
             </template>
         </Dialog>
 
         <!--  -->
     </div>
+    <CreateNewHolidaysList />
     <!-- {{ useStore.holidayData }} -->
 </template>
 
 
 <script setup>
-
-import { ref, onMounted } from "vue";
-import dateFormat, { masks } from "dateformat";
-import axios from "axios";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { useConfirm } from "primevue/useconfirm";
+import { ref, onMounted, reactive, computed } from 'vue';
+import axios from 'axios'
 import { useToast } from "primevue/usetoast";
 import dayjs from 'dayjs';
 import { useHolidayStore } from "../attendance_settings/stores/HolidayStore";
+import Holidays_Master from "./Holidays_Master.vue";
+import CreateNewHolidaysList from "./CreateNewHolidaysList.vue";
 
 const useStore = useHolidayStore()
 
 //
 const visible = ref(false);
-
+const editdialog = ref(false);
 
 const value = ref(null);
 const date = ref();
+
+
 
 
 const toast = useToast();
@@ -105,6 +160,27 @@ const onAdvancedUpload = () => {
 onMounted(async () => {
     await useStore.getHolidays()
 })
+
+
+// const uploadFestivalPhoto = (e) => {
+//     if (e.target.files && e.target.files[0]) {
+//         addNewHoliday.Holiday_Photo = e.target.files[0];
+//         console.log(addNewHoliday.Holiday_Photo);
+//     }
+// }
+
+
+
+  // form.append('FestivalTitle', )
+    // form.append('Description', addNewHoliday.Description)
+    // form.append('date', addNewHoliday.date)
+    // form.append('Holiday_Photo', addNewHoliday.Holiday_Photo)
+    // {
+    //     FestivalTitle:addNewHoliday.FestivalTitle,
+    //     Description :addNewHoliday.Description,
+    //     date: addNewHoliday.date,
+    //     Holiday_Photo: addNewHoliday.Holiday_Photo
+    // }
 
 
 

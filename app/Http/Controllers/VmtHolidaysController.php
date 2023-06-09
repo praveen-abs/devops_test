@@ -75,17 +75,17 @@ class VmtHolidaysController extends Controller
 //fetch the holidays
     public function fetchHolidays(Request $request){
          $holidays_data= vmtHolidays::all();
-         return view('holidays.test_ui2.add_holidayslist',compact('holidays_data'));
+         return response()->json($holidays_data);
     }
 
 
 //Holidays list
 //show holidayslist
-    public function showHolidaysListPage(Request $request){
-         $holidays_list=vmtHolidayslist::all();
-         return view('holidays.test_ui2.view_all_holidays',compact('holidays_list'));
+    // public function showHolidaysListPage(Request $request){
+    //      $holidays_list=vmtHolidayslist::all();
+    //      return view('holidays.test_ui2.view_all_holidays',compact('holidays_list'));
 
-    }
+    // }
 
 //createholidays list
     public function createHolidayList(Request $request){
@@ -93,7 +93,7 @@ class VmtHolidaysController extends Controller
         $vmt_holidays_list_data= new vmtHolidayslist;
         $holiday_name= $vmt_holidays_list_data->name=$request['name'];
         $vmt_holidays_list_data->save();
-        $holiday_id = DB::table('vmt_Holidayslist')->where('name',  $holiday_name)->value('id');
+        $holiday_id = DB::table('vmt_Holidayslist')->where('name',  $holiday_name)->first('id');
 
     // store the holiday list id
         $holiday_list_id=$request['holiday_list_id'];
@@ -103,7 +103,12 @@ class VmtHolidaysController extends Controller
             $vmt_holidayslist_holidays->holiday_list_id=$holiday_id;
             $vmt_holidayslist_holidays->save();
         }
-        return redirect()->action([VmtHolidaysController::class, 'showHolidaysListPage']);
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Holidaylist created successfully',
+            'data' => ''
+         ];
     }
 
 //edit holidayslist
@@ -144,7 +149,7 @@ class VmtHolidaysController extends Controller
 //fetch the location
     public function fetchlocation(Request $request){
         $holidays_list= vmtHolidayslist::all();
-        return view('holidays.test_ui3.add_holidayslist_3',compact('holidays_list'));
+        return response()->json($holidays_list);
     }
 
 // create location

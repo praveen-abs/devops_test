@@ -65,6 +65,9 @@ export default defineConfig({
 
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
+                // Holidays_Master
+                'resources/js/hrms/modules/configurations/holidays/Holidays_Master.js',
+                'resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js',
 
                 // Investment Setting
 

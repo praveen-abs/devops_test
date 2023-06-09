@@ -27,8 +27,8 @@
     {{-- <!-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
    <div id="Investments"></div> -->--}}
 
-   {{-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js') --}}
-   {{-- <div id="SalaryAdvanceLoan"></div> --}}
+   @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+    {{-- <div id="SalaryAdvanceLoan"></div> --}}
 
      {{-- @vite('resources\js\hrms\modules\leave_policy_Settings\Leave_Policy_Setting_Master\Leave_Policy_Setting_Master.js') --}}
      {{-- <div id="Leave_Policy_Setting_Master"></div> --}}
@@ -47,13 +47,16 @@
             <div id="OnboardingFromMgmt"></div> --}}
 
             @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
-            {{-- <div id="vjs_attendance_master"></div> --}}
+            <div id="vjs_attendance_master"></div>
 
             {{-- @vite('resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js')
             <div id="General_Shift"></div> --}}
 
             @vite('resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js')
-            <div id="EmpDetails_approvals"></div>
+            {{-- <div id="EmpDetails_approvals"></div> --}}
+
+            @vite('resources/js/hrms/modules/configurations/holidays/Holidays_Master.js')
+            {{-- <div id="Holidays_Master"></div> --}}
 
 
 
