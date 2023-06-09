@@ -1284,7 +1284,11 @@ class VmtEmployeeOnboardingController extends Controller
                         function ($attribute, $value, $fail) {
 
                             $emp_client_code = preg_replace('/\d+/', '', $value );
+                            if($emp_client_code =='PLIPL'){
+                                $result = VmtClientMaster::where('client_code','PA')->exists();
+                            }else{
                             $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
+                            }
 
                             if (!$result) {
                                 $fail('No matching client exists for the given Employee Code : '.$value);
