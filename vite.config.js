@@ -84,6 +84,11 @@ export default defineConfig({
                 'resources/js/hrms/modules/paycheck/investments/declaration/declaration.js',
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js',
 
+                // Salary Advance
+
+                    // Employee Salary Advance
+                    'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
+
 
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
@@ -131,7 +136,11 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
                 // Onboarding From management
-               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js'
+               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js',
+
+              // Employee details approvals
+
+              'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js'
 
             ],
 

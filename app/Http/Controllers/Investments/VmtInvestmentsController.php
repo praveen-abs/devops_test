@@ -191,12 +191,6 @@ class VmtInvestmentsController extends Controller
         return $serviceVmtInvestmentsService->fetchEmpRentalDetails($user_code, $fs_id);
     }
 
-    public function deleteRentalDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
-    {
-
-        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
-    }
-
     // Get And Delete for House Property in Investment's Forms
     public function fetchHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
     {
@@ -215,12 +209,12 @@ class VmtInvestmentsController extends Controller
     public function deleteHousePropertyDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
     {
 
-        return $serviceVmtInvestmentsService->deleteEmpRentalDetails($request->current_table_id);
+        return $serviceVmtInvestmentsService->deleteHousePropertyDetails($request->current_table_id);
     }
 
     public function saveSection80(Request $request)
     {
-
+           // dd($request->all());
         $json_decodeHra = json_encode($request->all());
         $current_date = date("Y-m-d");
         // dd($json_decodeHra);
@@ -345,7 +339,6 @@ class VmtInvestmentsController extends Controller
 
 
         foreach ($v_form_template as $dec_amt) {
-
 
             $empGeneralInfo['gross'] = $dec_amt['gross'];
             $empGeneralInfo['basic'] = $dec_amt['basic'];
@@ -520,7 +513,7 @@ class VmtInvestmentsController extends Controller
 
             $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
             $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));
-            $empHra = $dec_amt['hra'] * 12;
+            $empHra = $dec_amt['hra'] * 12 ;
             $empBasic = $dec_amt['basic'] * 12;
 
             $otherAllowance = intval($sumOfHra) - intval($empBasic * 10 / 100);
