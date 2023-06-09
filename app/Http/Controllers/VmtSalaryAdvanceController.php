@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\State;
+use App\Models\User;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Http\Request;
@@ -30,6 +31,23 @@ public function getAllDropdownFilter(Request $request){
 
 
   return  response()->json($getsalary);
+
+}
+
+public function showAssignEmp(Request $request){
+
+        // dd($request->all());
+
+       $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')->where('name','<>','S2 Admin')
+        ->where('department_id','10')
+        ->orwhere('designation','Collection officer')
+        ->orwhere('work_location','')
+       // ->orwhere('state','')
+        ->orwhere('client_id','')
+
+                     ->get()->toarray();
+
+    return($simma);
 
 }
 
