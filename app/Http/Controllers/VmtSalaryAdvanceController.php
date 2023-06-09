@@ -66,6 +66,19 @@ public function assignEmpSalaryAdvSetting(Request $request){
 
         // dd($request->all());
 
+       $saveSettingSALaryAdv = new VmtSalaryAdvSettings;
+       $saveSettingSALaryAdv->percent_salary_adv = $request->simma ;
+       $saveSettingSALaryAdv->deduction_period_of_months = $request->simma ;
+       $saveSettingSALaryAdv->approver_flow = $request->simma ;
+       $saveSettingSALaryAdv->save();
+
+         $SalaryAdvSettings = $saveSettingSALaryAdv;
+
+             $vmtEmpAssignSalaryAdvSettings = new VmtEmpAssignSalaryAdvSettings;
+             $vmtEmpAssignSalaryAdvSettings->user_id = $request->simma ;
+             $vmtEmpAssignSalaryAdvSettings->salary_adv_id = $SalaryAdvSettings->id;
+             $vmtEmpAssignSalaryAdvSettings->save();
+
 
 
 
