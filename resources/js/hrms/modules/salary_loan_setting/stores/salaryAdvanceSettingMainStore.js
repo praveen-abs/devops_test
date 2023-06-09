@@ -40,6 +40,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Eligible Employees
 
+    const eligbleEmployeeSource = ref()
+
     // Get filter 
 
     const getDropdownFilterDetails = async() =>{
@@ -80,8 +82,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     const getElibigleEmployees = () =>{
 
-        let url = ''
+        let url = '/showAssignEmp'
         axios.post(url,selectedFilterOptions).then(res=>{
+            eligbleEmployeeSource.value = res.data
             console.log(res.data);
         })
     }
@@ -197,7 +200,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     return {
 
         //
-    dropdownFilter, getDropdownFilterDetails,getSelectoption,
+    dropdownFilter, getDropdownFilterDetails,getSelectoption,getElibigleEmployees,eligbleEmployeeSource,
 
     // SalaryAdvanceFeature
 

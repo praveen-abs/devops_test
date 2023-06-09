@@ -9,13 +9,14 @@
 
           <button class="orange_btn "
             :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
-            @click="salaryStore.isSalaryAdvanceFeatureEnabled  = 1">Disabled</button>
-          <button class="Enable_btn" :class="[salaryStore.isSalaryAdvanceFeatureEnabled  === 2 ? 'bg-green-700 text-white' : '']"
-            @click="salaryStore.isSalaryAdvanceFeatureEnabled  = 2">Enable</button>
+            @click="salaryStore.isSalaryAdvanceFeatureEnabled = 1">Disabled</button>
+          <button class="Enable_btn"
+            :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-green-700 text-white' : '']"
+            @click="salaryStore.isSalaryAdvanceFeatureEnabled = 2">Enable</button>
 
         </div>
       </div>
-      <div class="col" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '1'">
+      <div class="col" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '1'">
         <div>
           <p class="fs-5">Please click the "Enable" button to activate the salary advance feature for use within your
             organization.</p>
@@ -41,28 +42,35 @@
                     <InputText placeholder="Search" class="h-15 " />
                   </span>
                   <span class="float-right pl-10">
-                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
-                        @click="showDocument(slotProps.data)" style="height: 2em" />
+                    <Button type="button" icon="pi pi-send" class="p-button-success Button" label="Generate"
+                      @click="salaryStore.getElibigleEmployees" style="height: 2em" />
                   </span>
                 </div>
                 <div class="col-12">
 
                   <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-5 lg:grid-cols-5">
                     <div class="col">
-                        <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department" optionLabel="name" optionValue="id" @change="salaryStore.getSelectoption('department',opt)"
-                          placeholder="Department" class="w-full text-red-500 md: border-color" />
+                      <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department" optionLabel="name"
+                        optionValue="id" @change="salaryStore.getSelectoption('department', opt)" placeholder="Department"
+                        class="w-full text-red-500 md: border-color" />
                     </div>
                     <div class="col">
-                        <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation" optionLabel="designation" optionValue="designation"
-                          placeholder="Designation" class="w-full text-red-500 md: border-color" @change="salaryStore.getSelectoption('designation',opt1)" />
+                      <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation"
+                        optionLabel="designation" optionValue="designation" placeholder="Designation"
+                        class="w-full text-red-500 md: border-color"
+                        @change="salaryStore.getSelectoption('designation', opt1)" />
                     </div>
                     <div class="col">
-                        <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location" optionLabel="work_location" optionValue="work_location"
-                          placeholder="Location" class="w-full text-red-500 md: border-color" @change="salaryStore.getSelectoption('work_location',opt2)" />
+                      <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location"
+                        optionLabel="work_location" optionValue="work_location" placeholder="Location"
+                        class="w-full text-red-500 md: border-color"
+                        @change="salaryStore.getSelectoption('work_location', opt2)" />
                     </div>
                     <div class="col">
-                        <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state " optionLabel="state_name" optionValue="id"
-                          placeholder="State" class="w-full text-red-500 md: border-color"  @change="salaryStore.getSelectoption('state',opt3)"/>
+                      <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state"
+                        optionLabel="state_name" optionValue="id" placeholder="State"
+                        class="w-full text-red-500 md: border-color"
+                        @change="salaryStore.getSelectoption('state', opt3)" />
                     </div>
                     <!-- <div class="col">
 
@@ -71,18 +79,38 @@
 
                     </div> -->
                     <div class="col">
-                        <Dropdown v-model="opt5" editable :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
-                          placeholder="Legal Entity" class="w-full text-red-500 md: border-color"  @change="salaryStore.getSelectoption('client_name',opt5)"/>
+                      <Dropdown v-model="opt5" editable :options="salaryStore.dropdownFilter.legalEntity"
+                        optionLabel="client_name" optionValue="id" placeholder="Legal Entity"
+                        class="w-full text-red-500 md: border-color"
+                        @change="salaryStore.getSelectoption('client_name', opt5)" />
                     </div>
 
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col">
-                  <!-- table components  -->
-                </div>
-              </div>
+
+              <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="salaryStore.eligbleEmployeeSource"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="[5, 10, 25]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+
+                <Column field="user_code" header="Employee Name" style="min-width: 8rem">
+                </Column>
+
+                <Column field="process" header="Employee Name" style="min-width: 12rem"></Column>
+                <Column field="name" header="Department " style="min-width: 12rem"></Column>
+                <Column field="designation" header="Designation " style="min-width: 12rem"></Column>
+                <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
+                <Column field="client_name" header="Legal Entity" style="min-width: 12rem"></Column>
+
+                <!-- <Column field="" header="View " style="min-width: 12rem">
+                  <template #body="slotProps">
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                      @click="showDocument(slotProps.data)" style="height: 2em" />
+                  </template>
+                </Column> -->
+
+              </DataTable>
             </div>
           </div>
         </div>
@@ -93,37 +121,42 @@
 
           <div class="shadow-sm card border-L rounded-top">
             <div class="card-body">
-              <div  class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center p-2">
-                <div >
+              <div
+                class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center p-2">
+                <div>
 
                   <div class="flex flex-wrap gap-3">
                     <div class="flex justify-content-center align-items-center">
-                      <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1" name="percofsaladvance" value="100%OfNetsalary" />
+                      <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1" name="percofsaladvance"
+                        value="100%OfNetsalary" />
                       <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
                     </div>
                   </div>
 
 
                 </div>
-                <div >
+                <div>
                   <div class="flex align-items-center">
-                    <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2" name="percofsaladvance" value="50%OfNetsalary" />
+                    <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2" name="percofsaladvance"
+                      value="50%OfNetsalary" />
                     <label for="ingredient2" class="ml-2 fs-5">50% Of Net salary</label>
                   </div>
                 </div>
-                <div class="flex" >
+                <div class="flex">
                   <div class="flex align-items-center">
-                    <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3" name="percofsaladvance" value="custom" />
+                    <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3" name="percofsaladvance"
+                      value="custom" />
                     <label for="ingredient3" class="ml-2 fs-5">Custom</label>
                   </div>
                   <div v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
-                  <div class="flex align-items-center">
-                    <InputText type="text"  v-model="salaryStore.sa.cusPerOfSalAdvance" name="percofsaladvance" style="max-width: 100px;" />
-                    <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
+                    <div class="flex align-items-center">
+                      <InputText type="text" v-model="salaryStore.sa.cusPerOfSalAdvance" name="percofsaladvance"
+                        style="max-width: 100px;" />
+                      <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
+                    </div>
                   </div>
                 </div>
-                </div>
-               
+
 
                 <!--  -->
               </div>
@@ -137,14 +170,16 @@
               <div class="row">
                 <div class="col-7 d-flex justify-content-start align-items-center">
                   <!-- <input type="radio" name="Dedution_method" checked> -->
-                  <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt" value="upcomingPayroll" />
+                  <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt"
+                    value="upcomingPayroll" />
                   <label for="" class="mx-3 fs-5" style="line-height: 25px;">Deduct the amount in the upcoming
                     payroll.</label>
                 </div>
               </div>
               <div class="my-3 row">
                 <div class="col-7 d-flex justify-content-start align-items-center">
-                  <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt" value="upcomingPayroll" />
+                  <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt"
+                    value="upcomingPayroll" />
                   <label for="" class="mx-3 fs-5">The deduction can be made over a period of
                     <InputText type="text" class="mx-3" v-model="value" style="max-width: 100px;" /> months.
                   </label>
@@ -152,7 +187,8 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <p class="text-gray-600 fs-5">(Note: Within the declared period of time, employees can choose the month in which the
+                  <p class="text-gray-600 fs-5">(Note: Within the declared period of time, employees can choose the month
+                    in which the
                     amount will be deducted.)</p>
                 </div>
               </div>
@@ -237,12 +273,12 @@
 
     </div>
     <div class="row">
-                <div class="col">
-                    <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '2'">
-                        <button class="btn btn-border-primary">Cancel</button>
-                        <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
-                    </div>
-                </div>
+      <div class="col">
+        <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '2'">
+          <button class="btn btn-border-primary">Cancel</button>
+          <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
+        </div>
+      </div>
     </div>
 
 
@@ -252,7 +288,7 @@
 
 import { ref, reactive, onMounted } from 'vue';
 
-import {salaryAdvanceSettingMainStore} from '../stores/salaryAdvanceSettingMainStore'
+import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore'
 
 const salaryStore = salaryAdvanceSettingMainStore()
 
@@ -278,12 +314,12 @@ const ingredient = ref('');
 
 
 const opt = ref()
-const opt1 =ref()
-const opt2 =ref();
-const opt3 =ref();
-const opt4 =ref();
-const opt5 =ref();
-const opt6 =ref();
+const opt1 = ref()
+const opt2 = ref();
+const opt3 = ref();
+const opt4 = ref();
+const opt5 = ref();
+const opt6 = ref();
 
 
 
@@ -300,52 +336,52 @@ const selection = ref({});
 
 
 const data = ref({
-    key: '0',
-    type: 'person',
-    data: {
+  key: '0',
+  type: 'person',
+  data: {
 
-        name: 'Amy Elsner',
-        title: 'CEO'
-    },
-    children: [
+    name: 'Amy Elsner',
+    title: 'CEO'
+  },
+  children: [
+    {
+      key: '0_0',
+      type: 'person',
+      data: {
+
+        name: 'Anna Fali',
+        title: 'CMO'
+      },
+      children: [
         {
-            key: '0_0',
-            type: 'person',
-            data: {
-
-                name: 'Anna Fali',
-                title: 'CMO'
-            },
-            children: [
-                {
-                    key: '0_0_0',
-                    label: 'Sales'
-                },
-                {
-                    key: '0_0_"1',
-                    label: 'Marketing'
-                }
-            ]
+          key: '0_0_0',
+          label: 'Sales'
         },
         {
-            key: '0_1',
-            type: 'person',
-            data: {
-                name: 'Stephen Shaw',
-                title: 'CTO'
-            },
-            children: [
-                {
-                    key: '0_1_0',
-                    label: 'Development'
-                },
-                {
-                    key: '0_1_1',
-                    label: 'UI/UX Design'
-                }
-            ]
+          key: '0_0_"1',
+          label: 'Marketing'
         }
-    ]
+      ]
+    },
+    {
+      key: '0_1',
+      type: 'person',
+      data: {
+        name: 'Stephen Shaw',
+        title: 'CTO'
+      },
+      children: [
+        {
+          key: '0_1_0',
+          label: 'Development'
+        },
+        {
+          key: '0_1_1',
+          label: 'UI/UX Design'
+        }
+      ]
+    }
+  ]
 });
 
 
@@ -385,7 +421,7 @@ const data = ref({
 .border-color {
   color: #003154;
   /* border: 2px solid #3B82F6 !important; */
-   border: 2px solid #003487 !important;
+  border: 2px solid #003487 !important;
 }
 
 .border-color::placeholder {
