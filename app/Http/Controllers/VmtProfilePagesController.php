@@ -23,6 +23,7 @@ use App\Models\VmtEmployeeDocuments;
 use App\Services\VmtEmployeePayCheckService;
 use App\Services\VmtProfilePagesService;
 use App\Services\VmtEmployeeService;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 
@@ -166,6 +167,30 @@ try{
     }
 
     public function updateGeneralInfo(Request $request) {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "dob" => 'required',
+                "gender"  => 'required',
+                "marital_status_id"  => 'required|integer',
+                "blood_group_id"  => 'required|integer',
+                "physically_challenged" => 'required',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
 
     try {
 
@@ -408,6 +433,30 @@ public function addExperienceInfo(Request $request)
 
     public function updatetempBankInfo(Request $request ,VmtProfilePagesService $serviceVmtProfilePagesService)
     {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code', //not used now
+                "bank_id" => 'required|integer',
+                "account_no" => 'required',
+                "bank_ifsc" =>'required',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "email" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
         try{
 
             $user_id = user::where('user_code', $request->user_code)->first()->id;
@@ -759,6 +808,9 @@ public function addExperienceInfo(Request $request)
 
                try
                {
+                    $record_id =$request->record_id;
+                    $status =$request->status;
+
                    $query = VmtTempEmployeeProofDocuments::find($record_id);
                    $query->status = $status;
                    $query->save();
@@ -798,6 +850,8 @@ public function addExperienceInfo(Request $request)
 
            try
                {
+                    $record_ids =$request->record_id;
+                    $status =$request->status;
                    $query_docs = VmtTempEmployeeProofDocuments::whereIn('id',$record_ids)->get();
 
                    foreach($query_docs as $singleDoc)

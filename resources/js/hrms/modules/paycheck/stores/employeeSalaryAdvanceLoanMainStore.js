@@ -48,7 +48,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const fetchSalaryAdvance = () => {
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
         console.log(sa);
         console.log("fetching SA");
 
@@ -63,7 +63,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const saveSalaryAdvance = () => {
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
         console.log(sa);
         console.log("Saving SA");
 
@@ -106,7 +106,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const fetchInterestfreeLoan = () => {
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
 
         console.log("fetching SA");
 
@@ -123,7 +123,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const saveInterestfreeLoan = () => {
 
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
         console.log("Saving SA");
 
         axios.post('http://localhost:3000/Interst_free_loan',ifl).finally(()=>{
@@ -164,7 +164,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const fetchTraveladvance = ()=>{
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
 
         console.log("fetching SA");
 
@@ -228,7 +228,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
         console.log(lwif);
 
-        canShowLoading.value = true;
+        // canShowLoading.value = true;
 
         axios.get('http://localhost:3000/InterestWithLoan').then(res=>{
 
@@ -245,7 +245,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const saveinterestWithLoan = ()=>{
 
-        canShowLoading.value = true;
+        // canShowLoading.value = true;
 
         axios.post(' http://localhost:3000/InterestWithLoan',lwif).finally(()=>{
             canShowLoading.value = false
