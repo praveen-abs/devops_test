@@ -320,7 +320,7 @@ class VmtReportsController extends Controller
 
     public function filterPmsReport(Request $request)
     {
-        //dd($request->reviewed_status);
+        // dd($request->all());
         $query_pms_data = VmtPMS_KPIFormReviewsModel::leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
             ->leftJoin('vmt_pms_kpiform_assigned', 'vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
             ->where('vmt_pms_kpiform_assigned.year', '=', $request->year)
@@ -351,6 +351,16 @@ class VmtReportsController extends Controller
         } else if ($request->reviewed_status == "") {
             $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_submitted', 'not like', '%"1"}');
         }
+        if ($request->emp_accepted_status == "1") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_assignee_accepted', '=', 1);
+        } else if ($request->emp_accepted_status == "") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_assignee_accepted', '=', null);
+        }
+        if ($request->mangr_accepted_status == "1") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_accepted', 'like', '%"1"}');
+        } else if ($request->mangr_accepted_status == "") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_accepted', 'not like', '%"1"}');
+        }
 
         if (session('client_id') != '1') {
             $query_pms_data = $query_pms_data->where('users.client_id', session('client_id'));
@@ -370,7 +380,7 @@ class VmtReportsController extends Controller
             $request->year,
             $request->assignment_period,
             $request->is_assignee_submitted,
-            $request->is_reviewer_accepted,
+            $request->is_reviewer_submitted,
             $request->getHttpHost()
         ), 'Pms Reports.xlsx');
     }
