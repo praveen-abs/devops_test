@@ -33,264 +33,238 @@
           <div class="rounded-lg shadow-sm card">
             <div class="card-body " style="border-top:4px solid var(--navy) ; border-radius: 4px 4px 0 0 ;">
               <div class="row ">
-                <div class="col-10">
+                <div class="col-9">
                   <h1 style="border-left:4px solid var(--orange); padding-left: 15px; font-size: 18px;">Employees</h1>
                 </div>
-                <div class="col-10 ">
+                <div class="col-3">
                   <span class="p-input-icon-left">
                     <i class="pi pi-search" />
-                    <InputText placeholder="Search" class="h-15 " />
+                    <InputText placeholder="Search" v-model="filters['global'].value" class="border-color "
+                      style="height: 3em" />
                   </span>
-                  <span class="float-right pl-10">
+
+                </div>
+                <!-- <span class="float-right pl-10">
                     <Button type="button" icon="pi pi-send" class="p-button-success Button" label="Generate"
                       @click="salaryStore.getElibigleEmployees" style="height: 2em" />
-                  </span>
-                </div>
+                  </span> -->
                 <div class="col-12">
 
-                  <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-5 lg:grid-cols-5">
-                    <div class="col">
-                      <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department" optionLabel="name"
-                        optionValue="id" @change="salaryStore.getSelectoption('department', opt)" placeholder="Department"
-                        class="w-full text-red-500 md: border-color" />
+                  <div class="col-12">
+                    <div class="px-2 row">
+                      <div class="col">
+                        <div style="padding: 10px"
+                          class="border rounded d-flex justify-content-start align-items-center border-color">
+                          <input type="checkbox" class="mr-3" style="width: 20px; height: 20px" @change="salaryStore.resetFilters" />
+                          <h1>Clear Filters</h1>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department"
+                          optionLabel="name" optionValue="id" @change="salaryStore.getSelectoption('department', opt)"
+                          placeholder="Department" class="w-full text-red-500 md: border-color" />
+                      </div>
+                      <div class="col">
+                        <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation"
+                          optionLabel="designation" optionValue="designation" placeholder="Designation"
+                          class="w-full text-red-500 md: border-color"
+                          @change="salaryStore.getSelectoption('designation', opt1)" />
+                      </div>
+                      <div class="col">
+                        <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location"
+                          optionLabel="work_location" optionValue="work_location" placeholder="Location"
+                          class="w-full text-red-500 md: border-color"
+                          @change="salaryStore.getSelectoption('work_location', opt2)" />
+                      </div>
+                      <div class="col">
+                        <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state"
+                          optionLabel="state_name" optionValue="id" placeholder="State"
+                          class="w-full text-red-500 md: border-color"
+                          @change="salaryStore.getSelectoption('state', opt3)" />
+                      </div>
+                      <div class="col">
+                        <Dropdown v-model="opt5" editable :options="salaryStore.dropdownFilter.legalEntity"
+                          optionLabel="client_name" optionValue="id" placeholder="Legal Entity"
+                          class="w-full text-red-500 md: border-color"
+                          @change="salaryStore.getSelectoption('client_name', opt5)" />
+                      </div>
                     </div>
-                    <div class="col">
-                      <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation"
-                        optionLabel="designation" optionValue="designation" placeholder="Designation"
-                        class="w-full text-red-500 md: border-color"
-                        @change="salaryStore.getSelectoption('designation', opt1)" />
                     </div>
-                    <div class="col">
-                      <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location"
-                        optionLabel="work_location" optionValue="work_location" placeholder="Location"
-                        class="w-full text-red-500 md: border-color"
-                        @change="salaryStore.getSelectoption('work_location', opt2)" />
-                    </div>
-                    <div class="col">
-                      <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state"
-                        optionLabel="state_name" optionValue="id" placeholder="State"
-                        class="w-full text-red-500 md: border-color"
-                        @change="salaryStore.getSelectoption('state', opt3)" />
-                    </div>
-                    <!-- <div class="col">
-
-                        <Dropdown v-model="opt4" editable :options="op" optionLabel="name" optionValue="name"
-                          placeholder="Branch" class="w-full text-red-500 md: border-color" />
-
-                    </div> -->
-                    <div class="col">
-                      <Dropdown v-model="opt5" editable :options="salaryStore.dropdownFilter.legalEntity"
-                        optionLabel="client_name" optionValue="id" placeholder="Legal Entity"
-                        class="w-full text-red-500 md: border-color"
-                        @change="salaryStore.getSelectoption('client_name', opt5)" />
-                    </div>
-
                   </div>
                 </div>
+
+                <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
+                  :value="salaryStore.eligbleEmployeeSource"
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  :rowsPerPageOptions="[5, 10, 25]" :filters="filters" v-model:selection="salaryStore.sa.eligibleEmployee"
+                  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                  responsiveLayout="scroll">
+                  <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column>
+                  <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
+                  <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
+                  <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
+                  <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
+                  <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
+                  <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
+                </DataTable>
               </div>
-
-              <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="salaryStore.eligbleEmployeeSource"
-                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
-                <Column field="user_code" header="Employee Name" style="min-width: 8rem">
-                </Column>
-
-                <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
-                <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
-                <Column field="designation" header="Designation " style="min-width: 12rem"></Column>
-                <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
-                <Column field="client_name" header="Legal Entity" style="min-width: 12rem"></Column>
-
-                <!-- <Column field="" header="View " style="min-width: 12rem">
-                  <template #body="slotProps">
-                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
-                      @click="showDocument(slotProps.data)" style="height: 2em" />
-                  </template>
-                </Column> -->
-
-              </DataTable>
             </div>
           </div>
-        </div>
 
-        <div class="col mt-4">
-          <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
-          <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
+          <div class="col mt-4">
+            <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
+            <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
-          <div class="shadow-sm card border-L rounded-top">
-            <div class="card-body">
-              <div
-                class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center p-2">
-                <div>
+            <div class="shadow-sm card border-L rounded-top">
+              <div class="card-body">
+                <div
+                  class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center p-2">
+                  <div>
 
-                  <div class="flex flex-wrap gap-3">
-                    <div class="flex justify-content-center align-items-center">
-                      <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1" name="percofsaladvance"
-                        value="100%OfNetsalary" />
-                      <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
+                    <div class="flex flex-wrap gap-3">
+                      <div class="flex justify-content-center align-items-center">
+                        <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1"
+                          name="percofsaladvance" value="100" />
+                        <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
+                      </div>
                     </div>
                   </div>
-
-
-                </div>
-                <div>
-                  <div class="flex align-items-center">
-                    <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2" name="percofsaladvance"
-                      value="50%OfNetsalary" />
-                    <label for="ingredient2" class="ml-2 fs-5">50% Of Net salary</label>
-                  </div>
-                </div>
-                <div class="flex">
-                  <div class="flex align-items-center">
-                    <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3" name="percofsaladvance"
-                      value="custom" />
-                    <label for="ingredient3" class="ml-2 fs-5">Custom</label>
-                  </div>
-                  <div v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
+                  <div>
                     <div class="flex align-items-center">
-                      <InputText type="text" v-model="salaryStore.sa.cusPerOfSalAdvance" name="percofsaladvance"
-                        style="max-width: 100px;" />
-                      <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
+                      <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2" name="percofsaladvance"
+                        value="50" />
+                      <label for="ingredient2" class="ml-2 fs-5">50% Of Net salary</label>
+                    </div>
+                  </div>
+                  <div class="flex">
+                    <div class="flex align-items-center">
+                      <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3" name="percofsaladvance"
+                        value="custom" />
+                      <label for="ingredient3" class="ml-2 fs-5">Custom</label>
+                    </div>
+                    <div v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
+                      <div class="flex align-items-center">
+                        <InputText type="text" v-model="salaryStore.sa.cusPerOfSalAdvance" name="percofsaladvance"
+                          style="max-width: 100px;" />
+                        <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
 
+            <h1 class="my-3 fs-4 mt-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
+            <p class="my-2 fs-5">Please choose the method of deduction.</p>
+            <div class="card border-L">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <!-- <input type="radio" name="Dedution_method" checked> -->
+                    <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt"
+                      value="1" />
+                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Deduct the amount in the upcoming
+                      payroll.</label>
+                  </div>
+                </div>
+                <div class="my-3 row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt"
+                      value="afterPayroll" />
+                    <label for="" class="mx-3 fs-5">The deduction can be made over a period of
+                      <InputText type="text" class="mx-3" v-model="salaryStore.sa.cusDeductMethod" style="max-width: 100px;" /> months.
+                    </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p class="text-gray-600 fs-5">(Note: Within the declared period of time, employees can choose the
+                      month
+                      in which the
+                      amount will be deducted.)</p>
+                  </div>
+                </div>
 
-                <!--  -->
+              </div>
+            </div>
+
+            <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+            <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
+
+            <div class="card border-L">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <input type="radio" name="Dedution_method" checked>
+                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      Line Manager
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      HR
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      Finance Admin
+                    </label>
+                  </div>
+                </div>
+                <div class="my-3 row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <input type="radio" name="Dedution_method" checked>
+                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      HR
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      Finance Admin
+                    </label>
+                  </div>
+                </div>
+                <div class="my-3 row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <input type="radio" name="Dedution_method" checked>
+                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      HR
+                    </label>
+                  </div>
+                </div>
+                <div class="my-3 row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <input type="radio" name="Dedution_method" checked>
+                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
+                      <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
+                      Finance Admin
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          <h1 class="my-3 fs-4 mt-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
-          <p class="my-2 fs-5">Please choose the method of deduction.</p>
-          <div class="card border-L">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-7 d-flex justify-content-start align-items-center">
-                  <!-- <input type="radio" name="Dedution_method" checked> -->
-                  <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt"
-                    value="upcomingPayroll" />
-                  <label for="" class="mx-3 fs-5" style="line-height: 25px;">Deduct the amount in the upcoming
-                    payroll.</label>
-                </div>
-              </div>
-              <div class="my-3 row">
-                <div class="col-7 d-flex justify-content-start align-items-center">
-                  <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1" name="deductiomAmt"
-                    value="upcomingPayroll" />
-                  <label for="" class="mx-3 fs-5">The deduction can be made over a period of
-                    <InputText type="text" class="mx-3" v-model="value" style="max-width: 100px;" /> months.
-                  </label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <p class="text-gray-600 fs-5">(Note: Within the declared period of time, employees can choose the month
-                    in which the
-                    amount will be deducted.)</p>
-                </div>
-              </div>
-
-            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '2'">
+            <button class="btn btn-border-primary">Cancel</button>
+            <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
           </div>
-
-          <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
-          <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
-
-          <div class="card border-L">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-7 d-flex justify-content-start align-items-center">
-                  <input type="radio" name="Dedution_method" checked>
-                  <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    Line Manager
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    HR
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    Finance Admin
-                  </label>
-                </div>
-              </div>
-              <div class="my-3 row">
-                <div class="col-7 d-flex justify-content-start align-items-center">
-                  <input type="radio" name="Dedution_method" checked>
-                  <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    HR
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    Finance Admin
-                  </label>
-                </div>
-              </div>
-              <div class="my-3 row">
-                <div class="col-7 d-flex justify-content-start align-items-center">
-                  <input type="radio" name="Dedution_method" checked>
-                  <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                    HR
-                  </label>
-                </div>
-              </div>
-              <div class="my-3 row">
-                <div class="col-7 d-flex justify-content-start align-items-center">
-                  <input type="radio" name="Dedution_method" checked>
-                  <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                    <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-
-                    Finance Admin
-                  </label>
-                </div>
-              </div>
-
-
-
-            </div>
-          </div>
-
         </div>
       </div>
 
-      <!--Next screen  -->
-
-      <!-- <OrganizationChart v-model:selectionKeys="selection" :value="data" collapsible selectionMode="multiple">
-        <template #person="slotProps">
-            <div class="flex flex-column">
-                <div class="flex flex-column align-items-center">
-                    <span class="mb-2 font-bold">{{ slotProps.node.data.name }}</span>
-                    <span>{{ slotProps.node.data.title }}</span>
-                </div>
-            </div>
-        </template>
-        <template #default="slotProps">
-            <span>{{ slotProps.node.label }}</span>
-        </template>
-    </OrganizationChart>
-{{ selection }} -->
-
 
     </div>
-    <div class="row">
-      <div class="col">
-        <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '2'">
-          <button class="btn btn-border-primary">Cancel</button>
-          <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
 </template>
 <script setup>
 
 import { ref, reactive, onMounted } from 'vue';
-
+import { FilterMatchMode } from 'primevue/api';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore'
 
 const salaryStore = salaryAdvanceSettingMainStore()
+
+const filters = ref({
+  'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+
 
 
 onMounted(() => {
@@ -311,8 +285,6 @@ const activetab = ref(1)
 
 const ingredient = ref('');
 
-
-
 const opt = ref()
 const opt1 = ref()
 const opt2 = ref();
@@ -320,70 +292,6 @@ const opt3 = ref();
 const opt4 = ref();
 const opt5 = ref();
 const opt6 = ref();
-
-
-
-const op = ref([
-  { id: 1, dep: "res" }
-])
-
-
-
-
-
-
-const selection = ref({});
-
-
-const data = ref({
-  key: '0',
-  type: 'person',
-  data: {
-
-    name: 'Amy Elsner',
-    title: 'CEO'
-  },
-  children: [
-    {
-      key: '0_0',
-      type: 'person',
-      data: {
-
-        name: 'Anna Fali',
-        title: 'CMO'
-      },
-      children: [
-        {
-          key: '0_0_0',
-          label: 'Sales'
-        },
-        {
-          key: '0_0_"1',
-          label: 'Marketing'
-        }
-      ]
-    },
-    {
-      key: '0_1',
-      type: 'person',
-      data: {
-        name: 'Stephen Shaw',
-        title: 'CTO'
-      },
-      children: [
-        {
-          key: '0_1_0',
-          label: 'Development'
-        },
-        {
-          key: '0_1_1',
-          label: 'UI/UX Design'
-        }
-      ]
-    }
-  ]
-});
-
 
 </script>
 <style>
@@ -438,7 +346,8 @@ input[type=radio] {
 
 .p-dropdown-label.p-inputtext {
   color: var(--navy);
-}</style>
+}
+</style>
 
 {
 

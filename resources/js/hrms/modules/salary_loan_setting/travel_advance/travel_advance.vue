@@ -70,11 +70,6 @@
                                                 <input type="checkbox" class="mr-3" style="width: 20px; height: 20px" />
                                                 <h1>Clear Filters</h1>
                                             </div>
-
-                                            <!-- <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
-                            placeholder="Department" class="w-full text-red-500 md: border-color" /> -->
-
-                                            <!-- {{ opt }} -->
                                         </div>
                                         <div class="col">
                                             <Dropdown v-model="opt" editable :options="op" optionLabel="dep"
