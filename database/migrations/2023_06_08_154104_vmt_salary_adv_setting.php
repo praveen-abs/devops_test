@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('percent_salary_adv');
             $table->integer('deduction_period_of_months');
-            $table->json('approver_flow');
+            $table->text('approver_flow');
             $table->timestamps();
 
 
