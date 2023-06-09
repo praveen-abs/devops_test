@@ -47,9 +47,18 @@ public function showAssignEmp(Request $request){
         ->orwhere('work_location',$request->work_location)
        // ->orwhere('state','')
         ->orwhere('client_id',$request->client_name)
-         ->get()->toarray();
+         ->get(
+            [
+                'users.name',
+                'users.user_code',
+                'vmt_department.name as department_name',
+                'vmt_employee_office_details.designation',
+                'vmt_employee_office_details.work_location',
+               'vmt_client_master.client_name',
+            ]
+         )->toarray();
 
-    return($simma);
+    return ($simma);
 
 }
 

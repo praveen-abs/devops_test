@@ -97,8 +97,8 @@
                 <Column field="user_code" header="Employee Name" style="min-width: 8rem">
                 </Column>
 
-                <Column field="process" header="Employee Name" style="min-width: 12rem"></Column>
-                <Column field="name" header="Department " style="min-width: 12rem"></Column>
+                <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
+                <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
                 <Column field="designation" header="Designation " style="min-width: 12rem"></Column>
                 <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
                 <Column field="client_name" header="Legal Entity" style="min-width: 12rem"></Column>
