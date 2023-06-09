@@ -14,7 +14,7 @@ use App\Services\VmtSalaryAdvanceService;
 class VmtSalaryAdvanceController extends Controller
 {
 
-public function getAllDropdownFilter(Request $request){
+public function getAllDropdownFilterSetting(Request $request){
 
     $queryGetDept = Department::select('id','name')->get();
 
@@ -26,7 +26,7 @@ public function getAllDropdownFilter(Request $request){
 
     $queryGetlegalentity = VmtClientMaster::select('id','client_name')->distinct()->get();
 
-   $getsalary  = ["depatment"=>$queryGetDept,"designation"=>$queryGetDesignation,"location"=>$queryGetLocation,"state"=>$queryGetstate,"legalEntity"=>$queryGetlegalentity];
+   $getsalary  = ["department"=>$queryGetDept,"designation"=>$queryGetDesignation,"location"=>$queryGetLocation,"state"=>$queryGetstate,"legalEntity"=>$queryGetlegalentity];
 
 
   return  response()->json($getsalary);

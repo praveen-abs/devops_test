@@ -73,11 +73,15 @@ import SalaryAdvance from './salary_advance/salary_advance.vue';
 import LoanWithInterest from './loan_with_interest/loan_with_interest.vue';
 import InterestFreeLoan from './interest_free_loan/interest_free_loan.vue';
 import TravelAdvance from './travel_advance/travel_advance.vue';
-
-
-
+import { salaryAdvanceSettingMainStore } from './stores/salaryAdvanceSettingMainStore';
 
 const activetab = ref(1);
+
+const  useSalaryStore = salaryAdvanceSettingMainStore()
+
+onMounted(()=>{
+    useSalaryStore.getDropdownFilterDetails()
+})
 
 
 

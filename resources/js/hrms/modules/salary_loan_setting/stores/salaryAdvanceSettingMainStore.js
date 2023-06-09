@@ -29,8 +29,62 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Initially Disabled
 
     const isSalaryAdvanceFeatureEnabled = ref(1)
+    const dropdownFilter = ref()
+    const selectedFilterOptions = reactive({
+        department_id:'',
+        designation:'',
+        work_location:'',
+        state:'',
+        client_name:'',
+    })
 
     // Eligible Employees
+
+    // Get filter 
+
+    const getDropdownFilterDetails = async() =>{
+        let url = '/getAllDropdownFilter'
+        await axios.get(url).then(res=>{
+            dropdownFilter.value = res.data
+        })
+    }
+
+    const getSelectoption = (key,filter) =>{
+        console.log(filter);
+    
+        if(key == "department"){
+            console.log(filter);
+            selectedFilterOptions.department_id = filter
+            console.log(selectedFilterOptions);
+        }else
+        if(key == "designation"){
+            selectedFilterOptions.designation = filter
+            console.log(selectedFilterOptions);
+        }else
+        if(key == "state"){
+            selectedFilterOptions.state = filter
+            console.log(selectedFilterOptions);
+        }else
+        if(key == "work_location"){
+            selectedFilterOptions.work_location = filter
+            console.log(selectedFilterOptions);
+        }else
+        if(key == "client_name"){
+            selectedFilterOptions.client_name = filter
+            console.log(selectedFilterOptions);
+        }
+        else{
+            console.log("nope");
+        }
+    }
+
+    const getElibigleEmployees = () =>{
+
+        let url = ''
+        axios.post(url,selectedFilterOptions).then(res=>{
+            console.log(res.data);
+        })
+    }
 
     const eligibleSalaryAdvanceEmployeeData = ref()
 
@@ -141,6 +195,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
     return {
+
+        //
+    dropdownFilter, getDropdownFilterDetails,getSelectoption,
 
     // SalaryAdvanceFeature
 

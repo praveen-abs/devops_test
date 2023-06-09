@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">
+  <div class="px-1">
     <div class="row d-flex justify-content-start align-items-center mt-4">
       <div class="d-flex mt-4">
         <div class="col-3 fs-4" style="position: relative; left: -8px;">
@@ -14,13 +14,7 @@
             @click="salaryStore.isSalaryAdvanceFeatureEnabled  = 2">Enable</button>
 
         </div>
-
-        <!-- <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '2'">
-          <button class="btn btn-border-primary">Cancel</button>
-          <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
-        </div> -->
       </div>
-
       <div class="col" v-if="salaryStore.isSalaryAdvanceFeatureEnabled  == '1'">
         <div>
           <p class="fs-5">Please click the "Enable" button to activate the salary advance feature for use within your
@@ -46,47 +40,39 @@
                     <i class="pi pi-search" />
                     <InputText placeholder="Search" class="h-15 " />
                   </span>
+                  <span class="float-right pl-10">
+                    <Button type="button" icon="pi pi-eye" class="p-button-success Button" label="View"
+                        @click="showDocument(slotProps.data)" style="height: 2em" />
+                  </span>
                 </div>
                 <div class="col-12">
-                  <div class="px-2 row">
 
+                  <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-5 lg:grid-cols-5">
                     <div class="col">
-
-                        <div style="padding: 10px ;" class="border rounded d-flex justify-content-start align-items-center border-color" >
-                            <input type="checkbox" class="mr-3" style="width:20px ; height: 20px; ">
-                            <h1>Clear Filters</h1>
-                        </div>
-
-                      <!-- <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
-                        placeholder="Department" class="w-full text-red-500 md: border-color" /> -->
-
-                      <!-- {{ opt }} -->
-                    </div>
-                    <div class="col">
-                        <Dropdown v-model="opt" editable :options="op" optionLabel="dep" optionValue="dep"
+                        <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department" optionLabel="name" optionValue="id" @change="salaryStore.getSelectoption('department',opt)"
                           placeholder="Department" class="w-full text-red-500 md: border-color" />
                     </div>
                     <div class="col">
-                        <Dropdown v-model="opt1" editable :options="op" optionLabel="dep" optionValue="dep"
-                          placeholder="Designation" class="w-full text-red-500 md: border-color" />
+                        <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation" optionLabel="designation" optionValue="designation"
+                          placeholder="Designation" class="w-full text-red-500 md: border-color" @change="salaryStore.getSelectoption('designation',opt1)" />
                     </div>
                     <div class="col">
-                        <Dropdown v-model="opt2" editable :options="op" optionLabel="dep" optionValue="dep"
-                          placeholder="Location" class="w-full text-red-500 md: border-color" />
+                        <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location" optionLabel="work_location" optionValue="work_location"
+                          placeholder="Location" class="w-full text-red-500 md: border-color" @change="salaryStore.getSelectoption('work_location',opt2)" />
                     </div>
                     <div class="col">
-                        <Dropdown v-model="opt3" editable :options="op" optionLabel="dep" optionValue="dep"
-                          placeholder="State" class="w-full text-red-500 md: border-color" />
+                        <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state " optionLabel="state_name" optionValue="id"
+                          placeholder="State" class="w-full text-red-500 md: border-color"  @change="salaryStore.getSelectoption('state',opt3)"/>
                     </div>
-                    <div class="col">
+                    <!-- <div class="col">
 
-                        <Dropdown v-model="opt4" editable :options="op" optionLabel="dep" optionValue="dep"
+                        <Dropdown v-model="opt4" editable :options="op" optionLabel="name" optionValue="name"
                           placeholder="Branch" class="w-full text-red-500 md: border-color" />
 
-                    </div>
+                    </div> -->
                     <div class="col">
-                        <Dropdown v-model="opt5" editable :options="op" optionLabel="dep" optionValue="dep"
-                          placeholder="Legal Entity" class="w-full text-red-500 md: border-color" />
+                        <Dropdown v-model="opt5" editable :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
+                          placeholder="Legal Entity" class="w-full text-red-500 md: border-color"  @change="salaryStore.getSelectoption('client_name',opt5)"/>
                     </div>
 
                   </div>
@@ -107,8 +93,8 @@
 
           <div class="shadow-sm card border-L rounded-top">
             <div class="card-body">
-              <div class="row justify-content-start align-items-center">
-                <div class="col-2">
+              <div  class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center p-2">
+                <div >
 
                   <div class="flex flex-wrap gap-3">
                     <div class="flex justify-content-center align-items-center">
@@ -119,24 +105,25 @@
 
 
                 </div>
-                <div class="col-2 ">
+                <div >
                   <div class="flex align-items-center">
                     <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2" name="percofsaladvance" value="50%OfNetsalary" />
                     <label for="ingredient2" class="ml-2 fs-5">50% Of Net salary</label>
                   </div>
                 </div>
-                <div class="col-1 ">
+                <div class="flex" >
                   <div class="flex align-items-center">
                     <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3" name="percofsaladvance" value="custom" />
                     <label for="ingredient3" class="ml-2 fs-5">Custom</label>
                   </div>
-                </div>
-                <div class="col-3" v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
+                  <div v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
                   <div class="flex align-items-center">
                     <InputText type="text"  v-model="salaryStore.sa.cusPerOfSalAdvance" name="percofsaladvance" style="max-width: 100px;" />
                     <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
                   </div>
                 </div>
+                </div>
+               
 
                 <!--  -->
               </div>
