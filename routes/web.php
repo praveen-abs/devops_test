@@ -307,7 +307,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/approvals/EmployeeProof-bulkdocs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'BulkDocumentProofApprovals'])->name('BulkDocumentProofApprovals');
 
 
-
     // notifications
     Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -445,7 +444,7 @@ Route::middleware(['auth'])->group(function () {
     // Bulk upload employees for quick Onboarding
     Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
     Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importQuickOnboardEmployeesExcelData');
-    Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showEmployeeOnboardingPage');
+    //Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showEmployeeOnboardingPage');
     Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
 
 
@@ -865,6 +864,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::view('/investmenttest', 'testing.excellimport');
     Route::post('/sendhratesting', [App\Http\Controllers\VmtTestingController::class, 'testinginvest']);
+
+
+    //notification
+
+        // Route::get('/home', [App\Http\Controllers\WebNotificationController::class, 'index'])->name('home');
+        // Route::post('/save-token', [App\Http\Controllers\WebNotificationController::class, 'saveToken'])->name('save-token');
+        // Route::post('/send-notification', [App\Http\Controllers\WebNotificationController::class, 'sendNotification'])->name('send.notification');
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');

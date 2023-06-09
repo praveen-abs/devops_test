@@ -3,7 +3,8 @@
         <div class=" justify-content-center align-items-center">
             <div class="mx-2 ">
                 <div class="my-3">
-                    <p class="font-semibold text-black fs-2">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new Date().getFullYear()+1 }}</p>
+                    <p class="font-semibold text-black fs-2">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
+                        Date().getFullYear() + 1 }}</p>
                 </div>
                 <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400 w-7 ">
                     <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
@@ -39,7 +40,17 @@
                                 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
                                 v-tooltip.bottom="`Last Updated Date  ${dayjs(lastUpdated).format('dddd, MMMM D, YYYY h:mm A')}`">{{
                                     findRegime(regime) }}
-                            </strong> <span class="text-sm text-green-600" v-if="regime == 'old'">Maximum benefit</span>
+                            </strong>
+                            <span v-if="regime == 'old'">
+                                <span class="text-sm text-green-600"
+                                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                                    benefit</span>
+                            </span>
+                            <span v-else>
+                                <span class="text-sm text-green-600"
+                                    v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
+                                    benefit</span>
+                            </span>
                         </div>
 
                         <!-- text-sm -->
@@ -52,7 +63,8 @@
                     <div>
                     </div>
                     <div class="text-end">
-                        <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true" :disabled="!disableRegime(lastUpdated)">Switch Regime</button>
+                        <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true"
+                            :disabled="!disableRegime(lastUpdated)">Switch Regime</button>
                         <!-- <button @click="switch_regime_dailog = true" type="button"  :class="[!disableRegime(lastUpdated) ? 'cursor-pointer bg-orange-100 hover:bg-orange-100 ' : '']"
                             class="p-2 text-lg text-end text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg  px-5 py-2.5  ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
                             Switch Regime
@@ -70,8 +82,9 @@
                 <div v-else class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
                     <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
                     <p class="ml-2 font-semibold text-black fs-5">
-                        The tax regime cannot be changed until the financial year 
-                        {{ new Date().getFullYear() }} - {{ new Date().getFullYear() + 1 }} ends. (April {{ new Date().getFullYear() }}-March {{ new Date().getFullYear() + 1 }} )
+                        The tax regime cannot be changed until the financial year
+                        {{ new Date().getFullYear() }} - {{ new Date().getFullYear() + 1 }} ends. (April {{ new
+                            Date().getFullYear() }} -March {{ new Date().getFullYear() + 1 }} )
                     </p>
                 </div>
             </div>
@@ -80,14 +93,32 @@
         <DataTable :value="tax_deduction" dataKey="id">
             <template #empty> No Data Found. </template>
             <template #loading> Loading customers data. Please wait. </template>
-            <Column header="S.No">
+            <Column header="#">
                 <template #body="slotProps">
-                    {{ slotProps.index + 1 }}
+                    {{ slotProps.data.sno }}.
                 </template>
             </Column>
-            <Column field="section" header="Particulars" style="width: 16rem;text-align: left !important;">
+            <Column field="section" header="" style=" width: 26rem; text-align: left !important;">
+                <template #header>
+                    <p style="font-weight: 501;">
+                        Particulars
+                    </p>
+                </template>
+                <template #body="slotProps">
+                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Taxable Income'">
+                        {{ slotProps.data.section }} <strong>(a + b + c + d + e + f)</strong>
+                    </p>
+                    <p style="font-weight: 501;" v-else>
+                        {{ slotProps.data.section }}
+                    </p>
+                </template>
             </Column>
-            <Column field="old_regime" header="Old Tax Regime">
+            <Column field="old_regime" header="" style="text-align: right !important;">
+                <template #header>
+                    <p style="font-weight: 501;">
+                        Old Tax Regime
+                    </p>
+                </template>
                 <template #body="slotProps">
                     <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
                         {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.old_regime
@@ -98,7 +129,12 @@
                     </p>
                 </template>
             </Column>
-            <Column field="new_regime" header="New Tax Regime">
+            <Column field="new_regime" header="" style="text-align: right !important;">
+                <template #header>
+                    <p style="font-weight: 501;">
+                        New Tax Regime
+                    </p>
+                </template>
                 <template #body="slotProps">
                     <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
                         {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.new_regime
@@ -178,7 +214,8 @@
                                 {{ slotProps.index + 1 }}
                             </template>
                         </Column>
-                        <Column field="section_name" header="Declarations" style="width: 16rem;text-align: left !important;"></Column>
+                        <Column field="section_name" header="Declarations"
+                            style="width: 16rem;text-align: left !important;"></Column>
                         <Column field="dec_amount" header="Amount Declared">
                             <template #body="slotProps">
                                 {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
@@ -192,7 +229,7 @@
                         </Column>
                         <Column field="amount_accepted" header="Amount Accepted ">
                             <template #body="slotProps">
-                                {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
+                                {{ investmentStore.formatCurrency(slotProps.data.amount_accepted) }}
                             </template>
                         </Column>
                     </DataTable>
@@ -266,10 +303,24 @@
         </template>
 
         <p class="">Your current switching regime is
-            <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'">{{ findRegime('old') }}</strong>
-            <strong class="text-lg font-semibold text-primary" v-else>{{ findRegime('new') }}</strong>
+            <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'">{{ findRegime('old') }} 
+                 <span class="text-sm text-green-600"
+                v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                benefit</span>
+                </strong>
+            <strong class="text-lg font-semibold text-primary" v-else-if="regime == 'old'">
+                {{ findRegime('new') }}
+                <span class="text-sm text-green-600"
+                v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
+                benefit</span>
+            </strong>
+            <strong class="text-lg font-semibold text-primary" v-else>
+                {{ findRegime('old') }}
+                <span class="text-sm text-green-600"
+                v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                benefit</span>
+            </strong>
         </p>
-
         <p class="my-3 text-justify text-gray-700">
             Are you sure you want to switch your regime? You cannot change your regime selection once you
             have confirmed your selection.
@@ -366,9 +417,9 @@ const findRegime = (regime) => {
 const fetchTaxableIncomeInfo = async () => {
     await axios.get('/investments/TaxDeclaration').then(res => {
         tax_deduction.value = res.data
-        if(res.data[7].regime == 'old'){
+        if (res.data[7].regime == 'old') {
             total_gross.value = res.data[6].old_regime
-        }else{
+        } else {
             total_gross.value = res.data[6].new_regime
         }
 
@@ -382,23 +433,23 @@ const fetchTaxableIncomeInfo = async () => {
     })
 }
 
-const disableRegime = (value) =>{
+const disableRegime = (value) => {
 
     let currentDate = new Date();
     let updatedDate = '';
 
-    if(value){
-        updatedDate = new Date(value);   
-    }else{
-        updatedDate = new Date(); 
+    if (value) {
+        updatedDate = new Date(value);
+    } else {
+        updatedDate = new Date();
     }
-   
-    if(updatedDate >= currentDate){
+
+    if (updatedDate >= currentDate) {
         return true
-    }else{
+    } else {
         return false
     }
- 
+
 }
 
 </script>

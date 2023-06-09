@@ -262,14 +262,15 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                                                                     serviceNotificationsService: $serviceVmtNotificationsService
                                                 );
 
+
         return $response;
     }
 
-    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
 
 
         //Fetch the data
-        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment);
+        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
 
     }
 
