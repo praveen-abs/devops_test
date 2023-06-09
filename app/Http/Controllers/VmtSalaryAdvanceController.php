@@ -64,11 +64,7 @@ public function showAssignEmp(Request $request){
 
 public function assignEmpSalaryAdvSetting(Request $request){
 
-        // dd($request->all());
-
-
-
-
+        dd($request->all());
 
 
 }

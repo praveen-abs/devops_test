@@ -13,14 +13,14 @@ import { reactive, ref } from "vue";
 
 export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMainStore", () => {
 
-     /*
+    /*
 
-      Salary Advance - sa
-      Loan with Interest - lwi
-      Interest free Loan  - ifl
-      Travel Advance - ta
+     Salary Advance - sa
+     Loan with Interest - lwi
+     Interest free Loan  - ifl
+     Travel Advance - ta
 
-     */
+    */
 
 
     //   Salary Advance Begins
@@ -31,11 +31,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const isSalaryAdvanceFeatureEnabled = ref(1)
     const dropdownFilter = ref()
     const selectedFilterOptions = reactive({
-        department_id:'',
-        designation:'',
-        work_location:'',
-        state:'',
-        client_name:'',
+        department_id: '',
+        designation: '',
+        work_location: '',
+        state: '',
+        client_name: '',
     })
 
     // Eligible Employees
@@ -44,51 +44,51 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Get filter 
 
-    const getDropdownFilterDetails = async() =>{
+    const getDropdownFilterDetails = async () => {
         let url = '/getAllDropdownFilter'
-        await axios.get(url).then(res=>{
+        await axios.get(url).then(res => {
             dropdownFilter.value = res.data
         })
     }
 
-    const getSelectoption = (key,filter) =>{
+    const getSelectoption = (key, filter) => {
         console.log(filter);
-    
-        if(key == "department"){
+
+        if (key == "department") {
             console.log(filter);
             selectedFilterOptions.department_id = filter
             console.log(selectedFilterOptions);
-        }else
-        if(key == "designation"){
-            selectedFilterOptions.designation = filter
-            console.log(selectedFilterOptions);
-        }else
-        if(key == "state"){
-            selectedFilterOptions.state = filter
-            console.log(selectedFilterOptions);
-        }else
-        if(key == "work_location"){
-            selectedFilterOptions.work_location = filter
-            console.log(selectedFilterOptions);
-        }else
-        if(key == "client_name"){
-            selectedFilterOptions.client_name = filter
-            console.log(selectedFilterOptions);
-        }
-        else{
-            console.log("nope");
-        }
+        } else
+            if (key == "designation") {
+                selectedFilterOptions.designation = filter
+                console.log(selectedFilterOptions);
+            } else
+                if (key == "state") {
+                    selectedFilterOptions.state = filter
+                    console.log(selectedFilterOptions);
+                } else
+                    if (key == "work_location") {
+                        selectedFilterOptions.work_location = filter
+                        console.log(selectedFilterOptions);
+                    } else
+                        if (key == "client_name") {
+                            selectedFilterOptions.client_name = filter
+                            console.log(selectedFilterOptions);
+                        }
+                        else {
+                            console.log("nope");
+                        }
         let url = '/showAssignEmp'
-        axios.post(url,selectedFilterOptions).then(res=>{
+        axios.post(url, selectedFilterOptions).then(res => {
             eligbleEmployeeSource.value = res.data
             console.log(res.data);
         })
     }
 
-    const getElibigleEmployees = () =>{
+    const getElibigleEmployees = () => {
 
         let url = '/showAssignEmp'
-        axios.post(url,selectedFilterOptions).then(res=>{
+        axios.post(url, selectedFilterOptions).then(res => {
             eligbleEmployeeSource.value = res.data
             console.log(res.data);
         })
@@ -100,10 +100,12 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Deduction Method
 
     const sa = reactive({
-        perOfSalAdvance:'',
-        cusPerOfSalAdvance:'',
-        deductMethod:'',
-        cusDeductMethod:''
+        isSalaryAdvanceEnabled: 0,
+        eligibleEmployee: '',
+        perOfSalAdvance: '',
+        cusPerOfSalAdvance: '',
+        deductMethod: '',
+        cusDeductMethod: ''
     })
 
     // Approval Flow
@@ -111,12 +113,29 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const SalaryAdvanceFeatureApprovalFlow = ref({})
 
 
-    const saveSalaryAdvanceFeature = () =>{
-        if(isSalaryAdvanceFeatureEnabled.value == '1'){
-            console.log("salary Advance Disabled");
-        }{
-            console.log("salary Advance Enabled");
+    const saveSalaryAdvanceFeature = () => {
+
+        if (sa.perOfSalAdvance == 'custom') {
+            sa.perOfSalAdvance = sa.cusPerOfSalAdvance
+        } else {
+            console.log("same of percent");
         }
+
+        if (sa.deductMethod == 'afterPayroll') {
+            sa.deductMethod = sa.cusDeductMethod
+        } else {
+            console.log("same of percent");
+        }
+
+        let url = '/saveSalaryAdvanceSetting'
+        if (isSalaryAdvanceFeatureEnabled.value == '1') {
+            console.log("salary Advance Disabled");
+
+        } {
+            console.log("salary Advance Enabled");
+            sa.isSalaryAdvanceEnabled = 1
+        }
+        axios.post(url, sa)
         console.log(sa);
     }
 
@@ -133,21 +152,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Eligible Employees and Amount
     // Deduction Method
     const ifl = reactive({
-        minEligibile:'',
-        availPerInCtc:'',
-        deductMethod:'',
-        cusDeductMethod:'',
-        maxTenure:''
+        minEligibile: '',
+        availPerInCtc: '',
+        deductMethod: '',
+        cusDeductMethod: '',
+        maxTenure: ''
 
     })
 
-    const saveInterestfreeLoan = () =>{
-        if(isInterestFreeLoaneature.value == '1'){
-             console.log("disabled");
-        }else{
+    const saveInterestfreeLoan = () => {
+        if (isInterestFreeLoaneature.value == '1') {
+            console.log("disabled");
+        } else {
             console.log(ifl);
         }
-        
+
     }
 
     // Interest Free Loan Feature Ends
@@ -157,7 +176,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     const isTravelAdvanceFeatureEnabled = ref(1)
 
-    
+
     // Eligible Employees
 
     const eligibleTravelAdvanceEmployeeData = ref(1)
@@ -167,10 +186,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Claim Settings
 
     const ta = reactive({
-        tdl:'',
-        deductMethod:'',
-        sumbitWithIn:'',
-        isDeductedInsubsequentpayroll:''
+        tdl: '',
+        deductMethod: '',
+        sumbitWithIn: '',
+        isDeductedInsubsequentpayroll: ''
     })
 
 
@@ -182,11 +201,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const isLoanWithInterestFeature = ref(1)
 
     const lwif = reactive({
-        minEligibile:'',
-        availPerInCtc:'',
-        deductMethod:'',
-        cusDeductMethod:'',
-        maxTenure:''
+        minEligibile: '',
+        availPerInCtc: '',
+        deductMethod: '',
+        cusDeductMethod: '',
+        maxTenure: ''
 
     })
 
@@ -195,6 +214,20 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
 
+    const resetFilters = () => {
+        selectedFilterOptions.client_name = ''
+        selectedFilterOptions.department_id = ''
+        selectedFilterOptions.designation = ''
+        selectedFilterOptions.state = ''
+        selectedFilterOptions.work_location = ''
+
+        let url = '/showAssignEmp'
+        axios.post(url, selectedFilterOptions).then(res => {
+            eligbleEmployeeSource.value = res.data
+            console.log(res.data);
+        })
+
+    }
 
 
 
@@ -205,23 +238,23 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     return {
 
         //
-    dropdownFilter, getDropdownFilterDetails,getSelectoption,getElibigleEmployees,eligbleEmployeeSource,
+        dropdownFilter, getDropdownFilterDetails, getSelectoption, getElibigleEmployees, eligbleEmployeeSource, resetFilters,
 
-    // SalaryAdvanceFeature
+        // SalaryAdvanceFeature
 
-    isSalaryAdvanceFeatureEnabled,eligibleSalaryAdvanceEmployeeData,sa,SalaryAdvanceFeatureApprovalFlow,saveSalaryAdvanceFeature,
+        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature,
 
-    // Interest Free Loan
+        // Interest Free Loan
 
-    isInterestFreeLoaneature,ifl,saveInterestfreeLoan,
+        isInterestFreeLoaneature, ifl, saveInterestfreeLoan,
 
-    // Travel Advance Feature 
+        // Travel Advance Feature 
 
-    isTravelAdvanceFeatureEnabled,eligibleTravelAdvanceEmployeeData,ta,
-    
+        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,
 
-    // Loan With interest Feature
-    isLoanWithInterestFeature,lwif
+
+        // Loan With interest Feature
+        isLoanWithInterestFeature, lwif
 
 
 
