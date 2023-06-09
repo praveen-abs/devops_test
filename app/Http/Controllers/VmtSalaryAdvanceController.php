@@ -64,27 +64,35 @@ public function showAssignEmp(Request $request){
 
 public function assignEmpSalaryAdvSetting(Request $request){
 
-        // dd($request->all());
+       // dd($request->all());
 
        $saveSettingSALaryAdv = new VmtSalaryAdvSettings;
-       $saveSettingSALaryAdv->percent_salary_adv = $request->simma ;
-       $saveSettingSALaryAdv->deduction_period_of_months = $request->simma ;
-       $saveSettingSALaryAdv->approver_flow = $request->simma ;
+       $saveSettingSALaryAdv->percent_salary_adv = $request->perOfSalAdvance ?? $request->cusPerOfSalAdvance ;
+       $saveSettingSALaryAdv->deduction_period_of_months = $request->deductMethod ?? $request->cusDeductMethod ;
+       $saveSettingSALaryAdv->approver_flow = $request->simma ?? "0" ;
        $saveSettingSALaryAdv->save();
 
          $SalaryAdvSettings = $saveSettingSALaryAdv;
 
+         foreach($request->eligibleEmployee as $employee){
+
+              $user_id =  User::where('user_code', $employee['user_code'])->first();
+
              $vmtEmpAssignSalaryAdvSettings = new VmtEmpAssignSalaryAdvSettings;
-             $vmtEmpAssignSalaryAdvSettings->user_id = $request->simma ;
-             $vmtEmpAssignSalaryAdvSettings->salary_adv_id = $SalaryAdvSettings->id;
+             $vmtEmpAssignSalaryAdvSettings->user_id = $user_id->id ;
+             $vmtEmpAssignSalaryAdvSettings->salary_adv_id = $SalaryAdvSettings->id ;
+             $vmtEmpAssignSalaryAdvSettings->active = "0";
              $vmtEmpAssignSalaryAdvSettings->save();
+         }
+
+         return response()->json([
+            'status' => 'save successfully',
+            'message' => 'Done',
+
+         ]);
 
 
-
-
-
-
-}
+         }
 
 
 
