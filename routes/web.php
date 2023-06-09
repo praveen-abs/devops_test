@@ -820,7 +820,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Salary Advance
 
-    Route::post('/AssignEmpSalaryAdv',  [App\Http\Controllers\VmtSalaryAdvanceController::class, 'AssignEmpSalaryAdv']);
+    Route::get('/AssignEmpSalaryAdv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'AssignEmpSalaryAdv']);
+    Route::get('/getAllDropdownFilter', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getAllDropdownFilter']);
+
 
 
 
