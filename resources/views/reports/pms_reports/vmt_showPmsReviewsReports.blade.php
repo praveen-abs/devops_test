@@ -386,10 +386,13 @@
                 let year = $('#year').val();
                 let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
                 let selectedReviewedDropdown = $('#dropdownReviewedStatus').find(":selected").val();
+                let selectedEmpAcpDropdown = $('#dropdownEmpAcpStatus').find(":selected").val();
+                let selectedEmpMangrDropdown = $('#dropdownMangrAcpStatus').find(":selected").val();
                 console.log(selectedAssingementPeriod + ' ' + selectedSubmittedDropdown);
                 let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '&year=' +
                     year + '&assignment_period=' + selectedAssingementPeriod + '&is_assignee_submitted=' +
                     selectedSubmittedDropdown + '&is_reviewer_submitted=' + selectedReviewedDropdown +
+                    '&is_reviewer_accepted=' + selectedEmpMangrDropdown +  '&is_emp_accepted=' + selectedEmpAcpDropdown +
                     '&_token={{ csrf_token() }}';
                 console.log("Generated URL : " + URL);
 
