@@ -102,20 +102,20 @@
                 <Column header="Property Type" field="json_popups_value.property_type" style="min-width: 15rem" frozen>
                     <template #body="slotProps">
                         <p style="font-weight: 501;">{{ slotProps.data.json_popups_value.property_type }}</p>
-                        
+
                     </template>
                 </Column>
 
                 <Column header="Lender Name" field="lender_name" style="min-width: 12rem">
                     <template #body="slotProps">
-                        <p style="font-weight: 501;">{{ slotProps.data['json_popups_value'].lender_name }}</p>                    
+                        <p style="font-weight: 501;">{{ slotProps.data['json_popups_value'].lender_name }}</p>
                     </template>
                 </Column>
 
                 <Column field="lender_pan" header="Lender PAN" style="min-width: 12rem">
                     <template #body="slotProps">
                         <p style="font-weight: 501;"> {{ slotProps.data['json_popups_value'].lender_pan.toUpperCase() }}</p>
-                       
+
                     </template>
                 </Column>
 
@@ -546,6 +546,7 @@ const submitSOP = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.saveSelfOccupiedProperty()
+        s$.value.$reset()
     } else {
         console.log('Form failed validation')
     }
@@ -576,6 +577,7 @@ const submitLop = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.saveLetOutProperty()
+        v$.value.$reset()
     } else {
         console.log('Form failed validation')
     }
@@ -605,6 +607,7 @@ const submitDlop = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.saveDeemedLetOutProperty()
+        p$.value.$reset()
     } else {
         console.log('Form failed validation')
     }

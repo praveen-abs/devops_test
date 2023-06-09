@@ -617,6 +617,7 @@ const submitForm80EE = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.save80EE()
+        v$.value.$reset()
     } else {
         console.log('Form failed validation')
     }
@@ -641,6 +642,7 @@ const submitForm80EEA = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.save80EEA()
+        s$.value.$reset()
     } else {
         console.log('Form failed validation')
     }
@@ -663,6 +665,7 @@ const submitForm80EEB = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         investmentStore.save80EEB()
+        p$.value.$reset()
     } else {
         console.log('Form failed validation')
     }

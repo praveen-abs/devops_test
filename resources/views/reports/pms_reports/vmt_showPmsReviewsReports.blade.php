@@ -103,6 +103,32 @@
                         </select>
 
                     </div>
+
+                    <div class="col-3">
+
+                        <label class="fw-bold pe-2">Employee Accepted Status </label>
+                        <select id="dropdownEmpAcpStatus" class="form-select " style=""
+                            aria-label=".form-select-sm example">
+                            <option value="All" class="text-ash"  selected>------ Select All------
+                            </option>
+                            <option value="1">Accepted</option>
+                            <option value="">Not Yet Accepted</option>
+                        </select>
+
+                    </div>
+
+                    <div class="col-3">
+
+                        <label class="fw-bold pe-2">Manager Accepted Status </label>
+                        <select id="dropdownMangrAcpStatus" class="form-select " style=""
+                            aria-label=".form-select-sm example">
+                            <option value="All" class="text-ash"  selected>------ Select All------
+                            </option>
+                            <option value="1">Accepted</option>
+                            <option value="">Not Yet Accepted</option>
+                        </select>
+
+                    </div>
                 </div>
                 <div class="row mb-3">
                     {{-- <div class="col-3">
@@ -202,6 +228,9 @@
                 var assignment_period = $('#dropdownAssignment_period').val();
                 let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
                 let selectedReviewedDropdown = $('#dropdownReviewedStatus').find(":selected").val();
+                let selectedEmpAcpDropdown = $('#dropdownEmpAcpStatus').find(":selected").val();
+                let selectedEmpMangrDropdown = $('#dropdownMangrAcpStatus').find(":selected").val();
+
                 console.log(year);
                 $.ajax({
                     url: "{{ route('pms-filter-info') }}",
@@ -211,6 +240,8 @@
                         assignment_period: assignment_period,
                         submission_status: selectedSubmittedDropdown,
                         reviewed_status: selectedReviewedDropdown,
+                        emp_accepted_status:selectedEmpAcpDropdown,
+                        mangr_accepted_status:selectedEmpMangrDropdown,
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(res) {
@@ -355,10 +386,13 @@
                 let year = $('#year').val();
                 let selectedSubmittedDropdown = $('#dropdownSubmittedStatus').find(":selected").val();
                 let selectedReviewedDropdown = $('#dropdownReviewedStatus').find(":selected").val();
+                let selectedEmpAcpDropdown = $('#dropdownEmpAcpStatus').find(":selected").val();
+                let selectedEmpMangrDropdown = $('#dropdownMangrAcpStatus').find(":selected").val();
                 console.log(selectedAssingementPeriod + ' ' + selectedSubmittedDropdown);
                 let URL = '/reports/generatePmsReviewsReports?calender_type=' + calenderType + '&year=' +
                     year + '&assignment_period=' + selectedAssingementPeriod + '&is_assignee_submitted=' +
-                    selectedSubmittedDropdown + '&is_reviewer_accepted=' + selectedReviewedDropdown +
+                    selectedSubmittedDropdown + '&is_reviewer_submitted=' + selectedReviewedDropdown +
+                    '&is_reviewer_accepted=' + selectedEmpMangrDropdown +  '&is_emp_accepted=' + selectedEmpAcpDropdown +
                     '&_token={{ csrf_token() }}';
                 console.log("Generated URL : " + URL);
 

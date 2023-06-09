@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     plugins: [
+        { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
@@ -83,6 +84,11 @@ export default defineConfig({
                 'resources/js/hrms/modules/paycheck/investments/declaration/declaration.js',
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js',
 
+                // Salary Advance
+
+                    // Employee Salary Advance
+                    'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
+
 
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
@@ -104,6 +110,10 @@ export default defineConfig({
 
                 //Payroll
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+
+                // Payslip Template
+
+                'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
 
                 // Roles and permission
 

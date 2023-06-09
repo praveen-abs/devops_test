@@ -14,7 +14,7 @@ use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployee;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\WebNotificationController;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtNotifications;
 use Illuminate\Support\Facades\Validator;
@@ -178,7 +178,7 @@ class VmtNotificationsService {
         Sends an FCM notification
 
     */
-    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_users_ids){
+    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_users_ids,$leave_module_type){
 
 
         //Validate
@@ -187,7 +187,7 @@ class VmtNotificationsService {
                 'manager_user_code' => $manager_user_code,
             ],
             $rules = [
-                'user_code' => 'required|exists:users,user_code',
+                'manager_user_code' => 'required|exists:users,user_code',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -208,13 +208,13 @@ class VmtNotificationsService {
 
             //    echo json_encode($leave_module["employee_applies_leave"]["title"]);
 
-            $notif_title = $this->leave_module["employee_applies_leave"]["title"];
-            $notif_body = $this->leave_module["employee_applies_leave"]["body"];
+            $notif_title = $this->leave_module[$leave_module_type]["title"];
+            $notif_body = $this->leave_module[$leave_module_type]["body"];
+            $employee_data= User::where('user_code', $notif_users_ids)->first();
+            $manager_data= User::where('user_code', $manager_user_code)->first();
 
 
-            $fcm_manager = User::where('user_code', $manager_user_code)->first()->fcm_token;
-
-            if(empty($fcm_manager))
+            if(empty($manager_data->fcm_token))
             {
                 return response()->json([
                     "status" => "failure",
@@ -225,6 +225,23 @@ class VmtNotificationsService {
             else{
 
                 //Send Firebase notifications
+          if($leave_module_type =='employee_applies_leave'){
+
+
+            $notif_body=$employee_data->name.' '.$notif_body;
+            $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$manager_data->fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
+            return $response;
+
+          }else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_withdraw_leave' ||$leave_module_type =='manager_rejects_leave')
+          {
+            $notif_body=$manager_data->name.' '.$notif_body;
+            $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$employee_data->fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
+            return $response;
+          }
 
 
 
