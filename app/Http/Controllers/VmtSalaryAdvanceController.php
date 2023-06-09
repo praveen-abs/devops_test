@@ -15,7 +15,7 @@ use App\Services\VmtSalaryAdvanceService;
 class VmtSalaryAdvanceController extends Controller
 {
 
-public function getAllDropdownFilter(Request $request){
+public function getAllDropdownFilterSetting(Request $request){
 
     $queryGetDept = Department::select('id','name')->get();
 
@@ -27,7 +27,7 @@ public function getAllDropdownFilter(Request $request){
 
     $queryGetlegalentity = VmtClientMaster::select('id','client_name')->distinct()->get();
 
-   $getsalary  = ["depatment"=>$queryGetDept,"designation"=>$queryGetDesignation,"location"=>$queryGetLocation,"state"=>$queryGetstate,"legalEntity"=>$queryGetlegalentity];
+   $getsalary  = ["department"=>$queryGetDept,"designation"=>$queryGetDesignation,"location"=>$queryGetLocation,"state"=>$queryGetstate,"legalEntity"=>$queryGetlegalentity];
 
 
   return  response()->json($getsalary);
@@ -39,16 +39,15 @@ public function showAssignEmp(Request $request){
         // dd($request->all());
 
        $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                    ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.vmt_department_id')
-                    ->join('vmt_client_master','vmt_client_master.id','=','users.')
-       ->where('name','<>','S2 Admin')
-        ->where('department_id','10')
-        ->orwhere('designation','Collection officer')
-        ->orwhere('work_location','')
+       ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
+        ->join('vmt_client_master','vmt_client_master.id','=','users.client_id')
+        ->where('process','<>','S2 Admin')
+        ->where('department_id', $request->department_id)
+        ->orwhere('designation',$request->designation)
+        ->orwhere('work_location',$request->work_location)
        // ->orwhere('state','')
-        ->orwhere('client_id','')
-
-                     ->get()->toarray();
+        ->orwhere('client_id',$request->client_name)
+         ->get()->toarray();
 
     return($simma);
 
