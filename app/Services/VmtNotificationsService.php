@@ -178,8 +178,8 @@ class VmtNotificationsService {
         Sends an FCM notification
 
     */
-    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_users_ids,$leave_module_type){
-
+    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_users_ids,$leave_module_type,$notifications_users_id =null)
+    {
 
         //Validate
         $validator = Validator::make(
@@ -214,38 +214,43 @@ class VmtNotificationsService {
             $manager_data= User::where('user_code', $manager_user_code)->first();
 
 
-            if(empty($manager_data->fcm_token))
-            {
-                return response()->json([
-                    "status" => "failure",
-                    "message" => "FCM Token missing for the user : ".$manager_user_code,
-                    "data" => ''
-                ]);
-            }
-            else{
 
                 //Send Firebase notifications
           if($leave_module_type =='employee_applies_leave'){
 
+              $notify_users_fcm_token=array();
 
-            $notif_body=$employee_data->name.' '.$notif_body;
-            $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$manager_data->fcm_token);
+            foreach ($notifications_users_id as $single_user_id) {
 
-            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
-            return $response;
+                $notify_users_data= User::where('id', $single_user_id)->first();
 
-          }else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_withdraw_leave' ||$leave_module_type =='manager_rejects_leave')
-          {
-            $notif_body=$manager_data->name.' '.$notif_body;
-            $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$employee_data->fcm_token);
+                    if( !empty($notify_users_data)){
 
-            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
-            return $response;
-          }
-
-
+                        $notify_users_fcm_token[]=$notify_users_data->fcm_token;
+                    }
 
             }
+           $notify_users_fcm_token[]=$manager_data->fcm_token;
+
+            $notif_body=$employee_data->name.' '.$notif_body;
+
+                    $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$notify_users_fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
+
+                   return $response;
+
+          }
+          else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_withdraw_leave' ||$leave_module_type =='manager_rejects_leave')
+           {
+            $notif_body=$manager_data->name.' '.$notif_body;
+
+                 $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$employee_data->fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
+
+                  return $response;
+          }
 
         }
         catch(\Exception $e){

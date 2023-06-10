@@ -31,14 +31,30 @@ class WebNotificationController extends Controller
 
     {
 
+
        // $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
 
        $SERVER_API_KEY = 'AAAAkEKAYyM:APA91bG-5Vq5zchwAdUL4wb0NU2AlmL8LwNOieh0BBDfC_NpK9WMGfpDfuTyOC_OgvcrHiJfnIob_cDfuL8SZBBoikk7tfbtwx3Kaz3cMr49yZZM4nhQYz9QTjIDjST-GCCu6AeYZTt_';
+if($title  <> 'Leave Request'){
+    $user_fcm_token =array($fcm_token);
+    $data = [
 
-      $user_fcm_token=array($fcm_token);
+        "registration_ids" => $user_fcm_token,
+
+        "notification" => [
+
+            "title" => $title,
+
+            "body" => $body,
+
+        ]
+
+    ];
+}else{
+
        $data = [
 
-           "registration_ids" => $user_fcm_token,
+           "registration_ids" => $fcm_token,
 
            "notification" => [
 
@@ -49,6 +65,7 @@ class WebNotificationController extends Controller
            ]
 
        ];
+    }
 
        $dataString = json_encode($data);
        $headers = [
@@ -75,5 +92,6 @@ class WebNotificationController extends Controller
 
         return response()->json($response);
     }
+
 
 }
