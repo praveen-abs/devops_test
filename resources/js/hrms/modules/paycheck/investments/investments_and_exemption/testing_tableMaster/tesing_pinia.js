@@ -40,6 +40,11 @@ export const UseDatatable = defineStore("Datatable", () => {
 
     }
 
+    function getPmsJsonStructure(){
+        
+        axios.post("",)
+    }
+
     return {
         save_sec_80C_80ccc,fetchDataTabledata,showDatatable,DataTabledata
     }

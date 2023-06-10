@@ -10,6 +10,8 @@ use App\Models\vmtHolidayslist;
 use App\Models\vmtHolidayslistHolidays;
 use App\Models\vmtLocations;
 use App\Models\vmtLocationsHoliday;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 
 class VmtHolidaysController extends Controller
@@ -18,27 +20,82 @@ class VmtHolidaysController extends Controller
 //show holidays
     public function showHolidaysMasterPage(Request $request){
         $master_holidays = vmtHolidays::all();
+        $i=0;
+        foreach ($master_holidays as $key => $Singleholiday) {
+
+           $master_holidays[$i]['image'] = $this->getHolidaysPicture($Singleholiday->id);
+           $i++;
+        }
         // return ('holidays.test_ui.view_all_holidays',compact('master_holidays'));
         return $master_holidays;
     }
 
 //create holidays
     public function createHoliday(Request $request){
-    //for image upload
-        $uploadedFile = $request->file('image');
-        if($uploadedFile) {
-            $fileName =  $request->image->getClientOriginalName();
-            $filePath = $uploadedFile->storeAs('images',$fileName, 'public');
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "holiday_name" => 'required',
+                "holiday_date" => 'required',
+                "holiday_description"  => 'required',
+                "holiday_image"  => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+           ],500);
+        }
+    try{
+
+
     //create object
+    $vmt_holidays =vmtHolidays::where('holiday_name',$request->holiday_name)->first();
+    if(!empty($vmt_holidays)){
+        return response()->json([
+            'status' => 'failure',
+            'message' => "The holiday is already created"
+       ],500);
+    }
+
+ $uploadedFile = $request->file('holiday_image');
+        if(empty($uploadedFile)) {
+            $response ='Please upload the file';
+            return $response;
+        }else{
+            $fileName =  $uploadedFile->getClientOriginalName();
+            $path = '/images/holiday';
+            $filePath = $uploadedFile->storeAs($path,$fileName, 'private');
+        }
+
          $vmt_holidays_data= new vmtHolidays;
          $vmt_holidays_data->holiday_name=$request['holiday_name'];
          $vmt_holidays_data->holiday_date=$request['holiday_date'];
          $vmt_holidays_data->holiday_description=$request['holiday_description'];
          $vmt_holidays_data->image= $fileName;
          $vmt_holidays_data->save();
-         $result ="saved";
-        return redirect()->action([VmtHolidaysController::class, 'showHolidaysMasterPage']);
-        }
+
+         $response = [
+            'status' => 'success',
+            'message' => "Holiday created successfully",
+        ];
+    } catch (\Exception $e) {
+          $response = [
+            'status' => 'failure',
+            'message' => 'Error while creating  Holiday ',
+            'error_message' => $e->getMessage()
+        ];
+    }
+       return response()->json($response);
+
+
     }
 
 
@@ -75,36 +132,115 @@ class VmtHolidaysController extends Controller
 //fetch the holidays
     public function fetchHolidays(Request $request){
          $holidays_data= vmtHolidays::all();
-         return view('holidays.test_ui2.add_holidayslist',compact('holidays_data'));
+         return response()->json($holidays_data);
     }
 
 
 //Holidays list
 //show holidayslist
-    public function showHolidaysListPage(Request $request){
+    public function showHolidaysList(Request $request){
+
          $holidays_list=vmtHolidayslist::all();
-         return view('holidays.test_ui2.view_all_holidays',compact('holidays_list'));
+
+         return response()->json($holidays_list);
+    }
+
+    public function getHolidaysListImages(Request $request){
+
+        $holidays_list = vmtHolidayslistHolidays:: where('holiday_list_id',$request->id)->pluck('holiday_id');
+
+        $holidayslist_data=array();
+
+        foreach ($holidays_list as $key => $singleholidays) {
+
+            $holidayslist_data[] =vmtHolidays::where('id',$singleholidays)->first();
+
+        }
+
+        $i=0;
+        foreach ($holidayslist_data as $key => $Singlelist) {
+
+            $holidayslist_data[$i]['image'] = $this->getHolidaysPicture($Singlelist->id);
+            $i++;
+         }
+
+        return response()->json($holidayslist_data);
+}
+
+
+    public function holidaysListDetails(Request $request){
+        $holidays_list_name =array();
+        $holidays_list=vmtHolidayslist::all();
+        $i =0;
+        foreach ($holidays_list as $key => $singlelist) {
+            $holidayslist_data=vmtHolidayslistHolidays::where('holiday_list_id', $singlelist['id'])->pluck('holiday_id');
+            $holidays_list_name[$i]['id'] =$singlelist['id'];
+            $holidays_list_name[$i]['name'] =$singlelist['name'];
+            $holidays_list_name[$i]['no_of_holidays']=Count($holidayslist_data);
+            $i++;
+        }
+         return response()->json($holidays_list_name);
 
     }
 
 //createholidays list
     public function createHolidayList(Request $request){
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "name" => 'required',
+                "holiday_list_id"  => 'required',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+           ],500);
+        }
+try{
+
     //store the holiday list name
         $vmt_holidays_list_data= new vmtHolidayslist;
         $holiday_name= $vmt_holidays_list_data->name=$request['name'];
         $vmt_holidays_list_data->save();
-        $holiday_id = DB::table('vmt_Holidayslist')->where('name',  $holiday_name)->value('id');
+        $holiday_id = vmtHolidayslist::where('name', $holiday_name)->first()->id;
+
 
     // store the holiday list id
         $holiday_list_id=$request['holiday_list_id'];
+        // dd($holiday_list_id);
         foreach( $holiday_list_id as $single_id){
             $vmt_holidayslist_holidays= new vmtHolidayslistHolidays;
-            $vmt_holidayslist_holidays->holiday_id= $single_id;
+            $vmt_holidayslist_holidays->holiday_id= $single_id['id'];
             $vmt_holidayslist_holidays->holiday_list_id=$holiday_id;
             $vmt_holidayslist_holidays->save();
         }
-        return redirect()->action([VmtHolidaysController::class, 'showHolidaysListPage']);
-    }
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Holidaylist created successfully',
+            'data' => ''
+         ];
+
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while creating  Holidaylist ',
+                'error_message' => $e->getMessage()
+            ];
+}
+   return response()->json($response);
+
+
+}
 
 //edit holidayslist
     public function editHolidayList($id){
@@ -144,11 +280,14 @@ class VmtHolidaysController extends Controller
 //fetch the location
     public function fetchlocation(Request $request){
         $holidays_list= vmtHolidayslist::all();
-        return view('holidays.test_ui3.add_holidayslist_3',compact('holidays_list'));
+        return response()->json($holidays_list);
     }
 
 // create location
     public function createHolidayLocation(Request $request){
+
+        //  dd($request->all());
+        try{
 //store the holiday list name
          $vmt_holidays_location= new vmtLocations;
          $location_name= $vmt_holidays_location->name=$request['name'];
@@ -160,8 +299,77 @@ class VmtHolidaysController extends Controller
          $vmt_holidayslist_holidays->vmt_locations_id= $locations_id ;
          $vmt_holidayslist_holidays->vmt_holidays_list_id=$request['vmt_holidays_list_id'];
          $vmt_holidayslist_holidays->save();
-         return redirect()->action([VmtHolidaysController::class, 'showHolidaysListPage']);
+         $response = [
+            'status' => 'success',
+            'message' => 'Holidaylist created successfully',
+            'data' => ''
+         ];
+
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while creating  Holidaylist ',
+                'error_message' => $e->getMessage()
+            ];
+}
+   return response()->json($response);
+
      }
+
+     public function getHolidaysPicture($holiday_id){
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $holiday_id,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:vmt_holidays,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            //Get the user record and update avatar column
+            $holiday_image = vmtHolidays::where('id',$holiday_id)->first()->image;
+
+            //Get the image from PRIVATE disk and send as BASE64
+            $response = Storage::disk('private1')->get('/holidays/'.$holiday_image);
+
+            if($response)
+            {
+                $response = base64_encode($response);
+            }
+
+
+             return $response;
+
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch profile picture",
+                "data" => $e,
+            ]);
+
+        }
+    }
 
     //Assign holiday list to a location. Handles both assign/unassign logic
     public function assignUnAssign_HolidayList(Request $request){
