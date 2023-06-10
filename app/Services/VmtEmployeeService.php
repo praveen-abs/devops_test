@@ -197,11 +197,8 @@ class VmtEmployeeService {
             $newUser->user_code = strtoupper($data['employee_code']);
 
             $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-            if($emp_client_code =='PLIPL'){
-                $newUser->client_id = VmtClientMaster::where('client_code', 'PA')->first()->id;
-            }else{
+            
                 $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
-            }
 
 
             $newUser->active = '0';

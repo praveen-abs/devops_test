@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeEmergencyContactDetails;
+use App\Models\VmtEmployeeWorkShifts;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 
@@ -461,6 +462,16 @@ class HomeController extends Controller
     }
 
     public function updateCheckin(Request $request) {
+
+        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', auth()->user()->id)->where('is_active','1')->first();
+
+        if(empty( $vmt_employee_workshift->work_shift_id)){
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'No work-shift has been assigned.Please contact Admin.',
+                'data'   => ""
+            ]);
+        }
 
         $checked = $request->input('checkin');
         if ($checked == 'true') {

@@ -15,11 +15,33 @@ use App\Models\VmtPMS_KPIFormModel;
 class VmtPMSFormsMgmtService
 {
 
+    /*
+        Get all PMS forms for all the users.
+
+        It also needs to contains the following data:
+        1. Who created the form ( vmt_pms_kpiform : author_id)
+        2. To whom it is assigned (vmt_pms_kpiform_assigned :assignee_id )
+        3. Which org_time_period assigned and assignment period (vmt_pms_kpiform_assigned: vmt_org_time_period_id , assignment_period)
+
+    */
     public function getAllPMSFormTemplates(){
 
         try{
-            $all_pms_forms = VmtPMS_KPIFormModel::get(['id As pms_form_id','form_name']);
+            $all_pms_forms = VmtPMS_KPIFormModel::leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform.id')
+                            ->orderBy('vmt_pms_kpiform.form_name', 'asc')
+                            ->get([
+                                'vmt_pms_kpiform.id as pms_form_id',
+                                'vmt_pms_kpiform.form_name as form_name',
+                                'vmt_pms_kpiform.author_id',
+                                'vmt_pms_kpiform_assigned.id as vmt_pms_kpiform_assigned_id',
+                                'vmt_pms_kpiform_assigned.assignee_id',
+                                'vmt_pms_kpiform_assigned.assignment_period'
+                            ])->groupBy('form_name');
 
+
+           // $all_pms_forms = User::get(['name','client_id'])->groupBy('client_id');
+
+            //dd($all_pms_forms);
             return response()->json([
                 "status" => "success",
                 "message" => "PMS form templates fetched successfully",
@@ -33,7 +55,7 @@ class VmtPMSFormsMgmtService
                 "data" => $e,
             ]);
             }
-}
+    }
 
 
     public function getAssignedPMSFormTemplates($user_code){
@@ -89,6 +111,7 @@ class VmtPMSFormsMgmtService
 
         }
     }
+
     public function getPMSFormforGivenPMSFormID($pms_form_id){
 
         $validator = Validator::make(
@@ -192,6 +215,33 @@ class VmtPMSFormsMgmtService
         }
     }
 
+
+
+    /*
+        Get the PMS forms for the given team manager.
+
+    */
+    public function getPMSFormsList_ForTeamLevel($manager_code)
+    {
+
+    }
+
+    /*
+        Get the given PMS form based on ID
+
+    */
+    public function getPMSFormDetails($pms_form_id){
+
+    }
+
+    /*
+        Save the entire PMS form details
+
+
+    */
+    public function savePMSFormDetails($pms_form_id){
+
+    }
 
 
 
