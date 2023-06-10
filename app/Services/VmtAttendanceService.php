@@ -532,6 +532,8 @@ class VmtAttendanceService
             //Create array from CSV value
             $array_notif_ids = explode(',',$notifications_users_id);
 
+
+
            // dd($array_notif_ids);
             $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id', $array_notif_ids)->pluck('officical_mail');
         }
@@ -553,6 +555,7 @@ class VmtAttendanceService
             notif_users_ids: $query_user->user_code,
             leave_module_type:'employee_applies_leave',
             manager_user_code: $manager_emp_code,
+            notifications_users_id: $array_notif_ids,
         );
 
 
@@ -1520,6 +1523,11 @@ class VmtAttendanceService
 
         $user_id = User::where('user_code', $user_code)->first()->id;
 
+        /*
+        1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
+        2,then check wheather the user have workshiftid or not.
+        */
+
         //Check if user already checked-in
         $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
 
@@ -1530,6 +1538,16 @@ class VmtAttendanceService
                 'data'   => ""
             ]);
         }
+
+        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active','1')->first();
+
+        if(empty( $vmt_employee_workshift->work_shift_id)){
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'No shift has been assigned',
+                'data'   => ""
+            ]);
+    }
 
 
         //If check-in not done already , then create new record
@@ -1542,10 +1560,9 @@ class VmtAttendanceService
         $attendanceCheckin->work_mode = $work_mode; //office, home
         $attendanceCheckin->checkin_comments = "";
         $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
-        $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
+        $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
         $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
         $attendanceCheckin->save();
-
         // processing and storing base64 files in public/selfies folder
         if (!empty('selfie_checkin')) {
 

@@ -7,11 +7,8 @@
                     <i class="fa fa-plus-circle me-2"></i>Add Shift
                 </button>
             </div>
-
-            <!-- <button class="float-right btn btn-orange " @click="canShowAssignShift = true">click</button> -->
         </div>
-        <div class="border">
-            <DataTable class="w-full" style="width:100%" :value="att_emp_details" v-model:selection="selectedEmployees"   paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 100rem"
+    <DataTable class="w-full"  :value="att_emp_details" v-model:selection="selectedEmployees"   paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}" >
                 <template #empty> No Employee found </template>
@@ -44,7 +41,7 @@
                 </Column>
             </DataTable>
 
-            <Dialog v-model:visible="canShowAssignShift" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            <Dialog visible="canShowAssignShift" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
                 :style="{ width: '90vw', borderTop: '5px solid #002f56',background:'navy' }" class="bg-primary-900"
                 :modal="true" :closable="true" :closeOnEscape="false" >
                 <template #header>
@@ -56,7 +53,6 @@
                     </div>
             </Dialog>
         </div>
-    </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";

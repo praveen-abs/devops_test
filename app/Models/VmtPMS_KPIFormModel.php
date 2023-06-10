@@ -12,7 +12,7 @@ class VmtPMS_KPIFormModel extends Model
     protected $table = 'vmt_pms_kpiform';
 
     function getPmsKpiFormAssignedDetails(){
-        return $this->hasMany(VmtPMS_KPIFormModel::class);
+        return $this->hasMany(VmtPMS_KPIFormAssignedModel::class);
     }
 
     function getPmsKpiFormDetails(){

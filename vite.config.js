@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     plugins: [
+        { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
@@ -112,6 +113,10 @@ export default defineConfig({
 
                 //Payroll
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+
+                // Payslip Template
+
+                'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
 
                 // Roles and permission
 

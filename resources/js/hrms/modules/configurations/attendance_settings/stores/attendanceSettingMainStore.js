@@ -91,7 +91,8 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
 
     function getWeek_Off_Days() {
         canShowLoading.value = true;
-        let url = `/json-format-for-dummy-week-off-days`;
+        // let url = `/json-format-for-dummy-week-off-days`;
+        let url = `http://localhost:3000/assingWorkShifts`;
 
         console.log("AJAX URL : " + url);
 
@@ -189,52 +190,12 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         saturday: false,
     })
 
+    
+
+
     async function updateWeekOffState(data) {
-
-        console.log(data);
-        if(data.AllWeeks){
-            for(const property  in data ){
-                data[property]= 1 ;
-                console.log(`testing for in :${data[property]}`);
-            }
-        }
-        else{
-            for(const property  in data ){
-                data[property]=0;
-            }
-
-        }
-
-
-        // this.selected = [];
-        // if(!this.select_all){
-        //     for(let i in this.data){
-        //         this.selected.push(this.data[i].id);
-        //     }
-        // }
-
-        // if(data.weeks == "Sunday"){
-        //     console.log("sunday");
-        //     console.log(data.AllWeeks);
-
-        //     if(data.AllWeeks==1){
-        //     console.log("sunday All Week true");
-        //     isCheckedOrNot.sunday = true
-        //     }else
-        //     if(data.first_week == 1){
-        //         isCheckedOrNot.sunday = false
-        //     }
-        //     else{
-        //         console.log("sunday All Week false");
-        //         isCheckedOrNot.sunday = false
-        //     }
-        // }else{
-        //     console.log("sunday All Week false");
-        //     isCheckedOrNot.sunday = false
-        // }
-        console.log("what is this : ", data.AllWeeks);
-        console.log(data.first_week);
-        checkbox.value = data;
+        console.log("all weeks" +data.AllWeeks);
+        console.log("all weeks" +data.first_week);
 
         update_state = {
             week_off_list: data.AllWeeks,
@@ -245,24 +206,11 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
             Week_5st: data.fifth_week,
         }
         console.log(update_state);
-        // console.log("get update Week_Off State : ", AllWeeks.value);
-
-
 
 
     }
 
-    const isChecked = (day, allDays, singleDay) => {
-        console.log(allDays, singleDay);
-        if (allDays) {
-            return true
-        } else {
-            return false
-        }
 
-
-
-    }
 
 
 
@@ -283,7 +231,7 @@ export const useAttendanceSettingMainStore = defineStore("AttendanceSettingMainS
         canShowLoading, array_shiftDetails, shiftDetails, selectedEmployees, manageshift_exemption_steps, change, Week_Off_Days, update_state,
 
         //
-        fetchShiftDetails, saveWorkShiftDetails, getWeek_Off_Days, updateWeekOffState, isChecked, isCheckedOrNot
+        fetchShiftDetails, saveWorkShiftDetails, getWeek_Off_Days, updateWeekOffState, isCheckedOrNot
 
 
     };

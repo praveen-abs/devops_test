@@ -1786,6 +1786,12 @@
       "action": 1
     }
   ],
+  "PANCARD": [
+    {
+      "id": 1
+    }
+  ],
+  "DeleteOnboardingFormDetails": [],
   "posts": [
     {
       "id": 1,
