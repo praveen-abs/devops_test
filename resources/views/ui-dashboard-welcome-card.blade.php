@@ -184,6 +184,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal_shift_not_assigned" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center p-1">
+
+                {{-- <div class="check-in-animate">
+                    <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"
+                        colors="primary:#ff3300,secondary:#ff3300"  class="gliters">
+                    </lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/twopqjaj.json" trigger="loop" delay="2000"
+                    class="entry-man"
+                        colors="primary:#121331,secondary:#ebe6ef,tertiary:#f9c9c0,quaternary:#ffffff,quinary:#3a3347,senary:#b26836,septenary:#e62e00"
+                        >
+                    </lord-icon>
+
+                </div> --}}
+                <div class="mt-4">
+                    <h4 class="mb-3">Hi {{ auth()->user()->name }}</h4>
+                    <p class="text-muted mb-4">No work-shift has been assigned.Please contact Admin.</p>
+                    <div class="hstack gap-2 justify-content-center">
+                        <a href="javascript:void(0);" class="btn btn-link link-success fw-medium"
+                            data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-primary">
+                                Close
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 @section('welcome-script')
@@ -308,8 +343,18 @@
                         else
                         if(data.status == "failure")
                         {
-                            //If user already checked-out for the day
-                            $('#modal_already_checkout_confirm').modal('show');
+
+                            if(data.message.includes("work-shift"))
+                            {
+                                //Show "Shift not assigned modal box"
+                                $('#modal_shift_not_assigned').modal('show');
+
+                            }
+                            else
+                            {
+                                //If user already checked-out for the day
+                                $('#modal_already_checkout_confirm').modal('show');
+                            }
 
                             //reset checkin button state to off
                             $('#checkin_function').prop('checked', false);
