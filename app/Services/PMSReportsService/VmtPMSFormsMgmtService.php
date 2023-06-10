@@ -36,8 +36,11 @@ class VmtPMSFormsMgmtService
                                 'vmt_pms_kpiform_assigned.id as vmt_pms_kpiform_assigned_id',
                                 'vmt_pms_kpiform_assigned.assignee_id',
                                 'vmt_pms_kpiform_assigned.assignment_period'
-                            ])->groupBy('form_name');
+                           // ])->groupBy(['form_name','pms_form_id']);
+                            ])->groupBy( function($data){
 
+                               return $data->form_name;
+                             });
 
            // $all_pms_forms = User::get(['name','client_id'])->groupBy('client_id');
 
@@ -54,9 +57,43 @@ class VmtPMSFormsMgmtService
                 "message" => "Unable to getAllPMSFormTemplates",
                 "data" => $e,
             ]);
-            }
+        }
     }
 
+
+    /*
+        Get all the authors of all PMS forms.
+
+
+    */
+    public function getAllPMSFormAuthors(){
+        try{
+            $all_pms_forms = VmtPMS_KPIFormModel::leftJoin('users','users.id','=','vmt_pms_kpiform.author_id')
+                            ->orderBy('vmt_pms_kpiform.form_name', 'asc')
+                            ->get([
+                                'vmt_pms_kpiform.author_id',
+                                'users.name as author_name',
+                                'vmt_pms_kpiform.id as pms_form_id',
+                                'vmt_pms_kpiform.form_name as form_name',
+                            ])->groupBy('author_name');
+
+           // $all_pms_forms = User::get(['name','client_id'])->groupBy('client_id');
+
+            //dd($all_pms_forms);
+            return response()->json([
+                "status" => "success",
+                "message" => "PMS form authors fetched successfully",
+                "data" =>   $all_pms_forms
+            ]);
+        } catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error in getAllPMSFormAuthors()",
+                "data" => $e,
+            ]);
+        }
+    }
 
     public function getAssignedPMSFormTemplates($user_code){
         //Get all forms for a given user_code

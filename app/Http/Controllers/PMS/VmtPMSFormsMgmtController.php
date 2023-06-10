@@ -21,6 +21,13 @@ class VmtPMSFormsMgmtController extends Controller
 
 
     }
+    public function getAllPMSFormAuthors(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
+
+
+      return  $response = $PMSFormsMgmtService->getAllPMSFormAuthors();
+
+
+    }
 
     public function getEmployeePMSFormTemplate_AsExcel(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
         $pms_form_id=40;
@@ -68,6 +75,10 @@ class VmtPMSFormsMgmtController extends Controller
 
     public function showPMSFormsMgmtPage_HRView(Request $request){
         return view('pms.vmt_pms_forms_mgmt_hr_view');
+    }
+
+    public function showPMSFormsMgmtPage(Request $request){
+        return view('pms.vmt_pms_forms_mgmt_main_view');
     }
 
 }
