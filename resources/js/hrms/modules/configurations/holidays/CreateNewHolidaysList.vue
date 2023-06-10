@@ -16,21 +16,21 @@
         </div>
 
         <div class="card">
+            {{ useStore.arrayCreateNewList }}
 
-            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
+            <DataTable :value="useStore.arrayCreateNewList" ref="dt" dataKey="id" :paginator="true" :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
-                <Column header="Holiday List" field="" style="min-width: 8rem">
+                <Column header="Holiday List" field="name" style="min-width: 8rem">
                 </Column>
 
-                <Column field="json_popups_value.landlord_PAN" header="No of Holidays" style="min-width: 12rem">
+                <Column field="no_of_holidays" header="No of Holidays" style="min-width: 12rem">
 
                 </Column>
 
-                <Column field="json_popups_value.from_month" header="Location" style="min-width: 12rem">
-
+                <Column field="location" header="Location" style="min-width: 12rem">
                 </Column>
 
                 <Column field="json_popups_value.to_month" header="Actions" style="min-width: 12rem">
@@ -113,6 +113,7 @@ const useStore = useHolidayStore();
 
 
 onMounted(async () => {
+    await useStore.getCreateNewList();
     await useStore.getHolidaylist();
 })
 

@@ -49,45 +49,6 @@
 
             </DataTable>
 
-            <Dialog v-model:visible="canshowAddNewLocation" modal header="Holiday " :style="{ width: '38vw' }"
-                style="border-top:5px solid #002f56" class="popup_card">
-                <template #header>
-                    <div>
-                        <h1 class="border-l-4 border-orange-400 fs-5 fw-bold pl-3">Assign To Location</h1>
-                    </div>
-                </template>
-                <div class="flex-column my-3 mx-5">
-                    <div style="" class="w-full border h-48 "></div>
-                    <!-- d-flex justify-content-between align-content-center -->
-                    <div class="row d-flex align-items-center mt-4">
-                        <div class="col-5">
-                            <h1 class="text-gray-700 fs-5 font-semibold">Location</h1>
-                        </div>
-
-                        <div class="col">
-                            <InputText type="text" class="w-full h-12" v-model="useStore.AssignToLocation.location" />
-                            <!-- <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"
-                                placeholder="Choose the location to assign" class="w-full" /> -->
-                        </div>
-                        <!-- <input type="text" name="" id=""> -->
-                    </div>
-                    <div class="row my-2 mb-4 d-flex align-items-center">
-                        <div class="col-5 ">
-                            <h1 class="text-gray-700 fs-5 font-semibold">Choose Holidays List</h1>
-                        </div>
-                        <div class="col ">
-                            <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="cities" optionLabel="name"
-                                placeholder="" :maxSelectedLabels="3" class="w-full h-12 "/>
-                        </div>
-                    </div>
-                </div>
-                <template #footer>
-                    <Button label="Cancel" class=" border-orange-400 text-orange-500 mr-4 bg-white"
-                        @click="canshowDialog = false" text />
-                    <Button label="Create" class="bg-orange-500 border-none" icon="pi pi-plus-circle"
-                        @click="useStore.SubmitAddNewLocation" autofocus />
-                </template>
-            </Dialog>
                 <Dialog v-model:visible="canshowAddNewLocation" modal header="Holiday " :style="{ width: '38vw' }"
                 style="border-top:5px solid #002f56" class="popup_card">
                 <template #header>
@@ -115,8 +76,13 @@
                             <h1 class="text-gray-700 fs-5 font-semibold">Choose Holidays List</h1>
                         </div>
                         <div class="col ">
-                            <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="cities" optionLabel="name"
-                                placeholder="" :maxSelectedLabels="3" class="w-full h-12 "/>
+                            <!-- <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="useStore.arrayHolidaysList"  optionLabel="holiday_name"
+                                placeholder="Select Cities" :maxSelectedLabels="3" class="w-full h-12" style="width: 230px !important;" @change="useStore.getHolidayName()" /> -->
+                                <!-- {{ useStore.AssignToLocation.ChooseTheHolidays }} -->
+                                <Dropdown v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="useStore.arrayCreateNewList" optionLabel="name" placeholder="" class="w-full"  />
+                                <!-- @change="useStore.getHolidayName()" -->
+                            <!-- <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="cities" optionLabel="name"
+                                placeholder="" :maxSelectedLabels="3" class="w-full h-12 "/> -->
                         </div>
                     </div>
                 </div>
@@ -180,13 +146,16 @@ const cities = ref([
         { name: 'TN_202', code: 3 },
         { name: 'TN_203', code: 4 },
         { name: 'TN_204', code: 5 }
-
 ]);
 
 const ViewHolidaysList = (val) => {
-    selectedRowdata.value = val
+    selectedRowdata.value = val;
+    useStore.activeHolidaysPage =2;
+    console.log(useStore.activeHolidaysPage);
+
     console.log(selectedRowdata.value);
     console.log("ViewHolidaysList");
+
 
 }
 
@@ -219,5 +188,70 @@ const DeleteHolidayList = (val) => {
         { name: 'Istanbul', code: 'IST' },
         { name: 'Paris', code: 'PRS' }
     ]);
-    </script> -->
+    </script>
+
+
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
+    </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const selectedCity = ref();
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
+</script>
+
+
+          <Dialog v-model:visible="canshowAddNewLocation" modal header="Holiday " :style="{ width: '38vw' }"
+                style="border-top:5px solid #002f56" class="popup_card">
+                <template #header>
+                    <div>
+                        <h1 class="border-l-4 border-orange-400 fs-5 fw-bold pl-3">Assign To Location</h1>
+                    </div>
+                </template>
+                <div class="flex-column my-3 mx-5">
+                    <div style="" class="w-full border h-48 "></div>
+                     d-flex justify-content-between align-content-center
+                    <div class="row d-flex align-items-center mt-4">
+                        <div class="col-5">
+                            <h1 class="text-gray-700 fs-5 font-semibold">Location</h1>
+                        </div>
+
+                        <div class="col">
+                            <InputText type="text" class="w-full h-12" v-model="useStore.AssignToLocation.location" />
+                             <Dropdown v-model="selectedCity" :options="cities" optionLabel="name"
+                                placeholder="Choose the location to assign" class="w-full" />
+                        </div>
+                         <input type="text" name="" id="">
+                    </div>
+                    <div class="row my-2 mb-4 d-flex align-items-center">
+                        <div class="col-5 ">
+                            <h1 class="text-gray-700 fs-5 font-semibold">Choose Holidays List</h1>
+                        </div>
+                        <div class="col ">
+                            <MultiSelect v-model="useStore.AssignToLocation.ChooseTheHolidays" :options="cities" optionLabel="name"
+                                placeholder="" :maxSelectedLabels="3" class="w-full h-12 "/>
+                        </div>
+                    </div>
+                </div>
+                <template #footer>
+                    <Button label="Cancel" class=" border-orange-400 text-orange-500 mr-4 bg-white"
+                        @click="canshowDialog = false" text />
+                    <Button label="Create" class="bg-orange-500 border-none" icon="pi pi-plus-circle"
+                        @click="useStore.SubmitAddNewLocation" autofocus />
+                </template>
+            </Dialog>
+
+-->
 }

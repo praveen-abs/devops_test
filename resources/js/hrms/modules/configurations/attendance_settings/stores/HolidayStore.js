@@ -13,9 +13,12 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     const canShowLoading = ref(false);
     const holidayData = ref();
     const arrayholidayMaster =ref();
+    const arrayCreateNewList = ref();
     const activeHolidaysPage = ref(1);
     const arrayHolidaysList = ref();
     const CreateNewListDialog = ref(false);
+    const editHoliday = ref(false);
+    const storeeditID= ref();
 
     const addNewHoliday = reactive({
         FestivalTitle: "",
@@ -35,7 +38,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         location:"",
         ChooseTheHolidays:""
     });
-
+    const chooseHolidaylist = reactive([]);
     const ChooseTheHolidays = ref()
     const selectedHolidays = reactive([]);
 
@@ -73,13 +76,13 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
 
     const sumbitAddNewHoliday = () => {
 
-        let url =`http://localhost:3000/SubmitCreateNewList`;
+        let url =`holiday/create_holiday`;
 
         let form = new FormData();
-        form.append('festivalTitle', addNewHoliday.FestivalTitle)
-        form.append('description', addNewHoliday.Description);
-        form.append('date', addNewHoliday.date);
-        form.append('holiday_Photo',addNewHoliday.Holiday_Photo);
+        form.append('holiday_name', addNewHoliday.FestivalTitle)
+        form.append('holiday_description', addNewHoliday.Description);
+        form.append('holiday_date', addNewHoliday.date);
+        form.append('holiday_image',addNewHoliday.Holiday_Photo);
         axios.post(url,form).then(()=>{
 
         }).finally(() => {
@@ -90,7 +93,6 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         await axios.get('http://localhost:3000/HolidayMaster').then(res=>{
             console.log(res.data);
             arrayholidayMaster.value = res.data;
-
         })
     };
 
@@ -101,17 +103,14 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         })
     }
 
+
     const getCreateNewList =async()=>{
-        await axios.get('http://localhost:3000/HolidayMaster').then(res=>{
+        await axios.get('/holidays/show_holidaysListDetails').then(res=>{
             console.log(res.data);
-            arrayholidayMaster.value = res.data;
+            arrayCreateNewList.value = res.data;
 
         })
     }
-
-
-
-
 
     const SubmitCreateNewList = ()=>{
 
@@ -124,36 +123,79 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         }
         console.log(selectedHolidays);
 
-        axios.post('http://localhost:3000/SubmitCreateNewList',{
-            List_Name:CreateNewList.List_Name,
-            HolidaysName:selectedHolidays
+        axios.post('holiday/create_holidaylist',{
+            name:CreateNewList.List_Name,
+            holiday_list_id:selectedHolidays
         }).then((res)=>{
             res.data;
         }).finally(()=>{
             CreateNewListDialog.value = false;
-
         })
     }
 
     const SubmitAddNewLocation = ()=>{
-        axios.post('http://localhost:3000/SubmitAddNewLocation',{
-            location:AssignToLocation.location,
-            ChooseTheHolidays:AssignToLocation.ChooseTheHolidays
+        axios.post('holiday/create_holidaylocation',{
+            name:AssignToLocation.location,
+            vmt_holidays_list_id:AssignToLocation.ChooseTheHolidays.id
         }).finally(()=>{
         })
     }
 
     const getHolidayName = () =>{
-        // console.log(Object.values(holiday.value.holiday_yname));
         console.log(ChooseTheHolidays.value);
+    }
+
+
+    async function RemoveHolidayList (data){
+
+        let holiday ={
+            id:data.id,
+            image_url:data.image
+
+        }
+        let url = `http://localhost:3000/SubmitAddNewLocation`;
+        axios.post(url,
+            holiday
+        ).then(()=>{}).finally(()=>{
+        });
+    }
+
+     function editHolidaylist(data){
+        editHoliday.value = true
+        console.log(data);
+
+        storeeditID.value = data.id
+        addNewHoliday.FestivalTitle = data.holiday_name
+        addNewHoliday.Description = data.holiday_description
+        addNewHoliday.date= data.holiday_date
+        addNewHoliday.Holiday_Photo = data.image
+
+        // console.log(addNewHoliday.FestivalTitle);
+        // let url  = `http://localhost:3000/SubmitAddNewLocation`
+    }
+
+    function sumbiteditHoliday(){
+          let url  = `http://localhost:3000/SubmitAddNewLocation`;
+
+          let form = new FormData();
+        form.append('id',storeeditID.value)
+        form.append('holiday_name',addNewHoliday.FestivalTitle)
+        form.append('holiday_description',addNewHoliday.Description)
+        form.append('holiday_date',addNewHoliday.date)
+        form.append('holiday_image',addNewHoliday.Holiday_Photo)
+          axios.post(url,form).then(()=>{
+
+          })
+
 
     }
 
-    async function RemoveHolidayList (){
+    // function sumbit(){
+
+    // }
 
 
-    }
-
+//
 
 
 
@@ -161,12 +203,15 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     return {
 
         // Variable Declaration
-        holidayData,activeHolidaysPage,CreateNewList,AssignToLocation,arrayholidayMaster,canShowLoading,arrayHolidaysList,CreateNewListDialog,addNewHoliday
+        holidayData,activeHolidaysPage,CreateNewList,AssignToLocation,arrayholidayMaster,canShowLoading,arrayHolidaysList,CreateNewListDialog,addNewHoliday,arrayCreateNewList,chooseHolidaylist
 
         // function
         ,getHolidays,SubmitCreateNewList,SubmitAddNewLocation,
 
-        getHolidaysMaster,getHolidaylist,getHolidayName,ChooseTheHolidays,FestivalPhoto,sumbitAddNewHoliday,avatar
+        getHolidaysMaster,getHolidaylist,getHolidayName,
+        ChooseTheHolidays,FestivalPhoto,sumbitAddNewHoliday,
+        avatar,getCreateNewList,editHolidaylist,editHoliday,
+        sumbiteditHoliday,RemoveHolidayList
 
     };
 });

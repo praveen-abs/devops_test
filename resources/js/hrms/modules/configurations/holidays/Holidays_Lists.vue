@@ -19,7 +19,7 @@
                 </ul>
             </div>
         </div>
-
+        <!-- {{useStore.holidayData}} -->
         <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
             style="display: grid;">
             <div v-for="holiday in useStore.holidayData" :key="holiday.id">
@@ -28,16 +28,21 @@
                         <h3 class="fs-5">{{ holiday.holiday_name }}</h3>
                         <span class="fs-6"> {{ dayjs(holiday.holiday_date).format('DD-MMM-YYYY') }}</span>
                     </div>
+
                     <div class="card clr-trans card-w h-48 w-full">
-                        <img v-if="holiday.image" :src="`assets/images/holiday/${holiday.image}`" class="card-img-top"
-                            alt="...">
-                        <img v-else src="../../../assests/images/no-image.png" class="card-img-top" alt="...">
-                        <div class="overlay"></div>
+
+                        <img v-if="holiday.image"
+                            class="card-img-top"
+                            :src="`data:image/png;base64,${holiday.image}`" srcset="" alt="" />
+                        <!-- <img v-if="holiday.image" :src="`assets/images/holiday/${holiday.image}`" class="card-img-top"
+                            alt="..."> -->
+                        <!-- <img v-else src="../../../assests/images/no-image.png" class="card-img-top" alt="...">
+                        <div class="overlay"></div> -->
                         <div class="hover_btn_div d-ard">
-                            <button label="Edit" @click="editdialog = true" class="w-6 fs-6">
+                            <button label="Edit" @click="useStore.editHolidaylist(holiday)" class="w-6 fs-6">
                                 Edit
                             </button>
-                            <button @click="remove" class="w-8 fs-6 mx-4">Remove</button>
+                            <button @click="useStore.RemoveHolidayList(holiday)" class="w-8 fs-6 mx-4">Remove</button>
                         </div>
                     </div>
                 </div>
@@ -77,9 +82,16 @@
             </template>
         </Dialog>
 
-        <Dialog v-model:visible="editdialog" modal header="Holiday " :style="{ width: '25vw' }" class="popup_card">
+        <Dialog v-model:visible="useStore.editHoliday" modal header="Holiday " :style="{ width: '25vw' }" class="popup_card">
             <div class="img_container border position-relative rounded-lg" style="height: 150px;min-width: 200px; ">
-                <img  class="rounded-lg z-0" :src="useStore.avatar" alt="" style="height: 150px;min-width: 100%; ">
+
+                <img v-if="useStore.addNewHoliday.Holiday_Photo"
+                            class="card-img-top"
+                            :src="`data:image/png;base64,${useStore.addNewHoliday.Holiday_Photo}`" srcset="" alt="" />
+
+                <!-- <img v-if="useStore.addNewHoliday.Holiday_Photo" class="rounded-lg z-0" :src="`assets/images/holiday/${useStore.addNewHoliday.Holiday_Photo}`" alt="" style="height: 150px;min-width: 100%; "> -->
+                <img v-if="useStore.avatar" class="rounded-lg z-0 position-absolute top-0 left-0" :src="useStore.avatar" alt="" style="height: 150px;min-width: 100%; ">
+
                 <label
                     class="position-absolute bottom-0 end-0 d-flex justify-items-center align-items-center fs-5 btn rounded-circle w-1 h-8 z-10"
                     id="" for="uploadFestivalPhoto">
@@ -107,7 +119,7 @@
             <template #footer>
                 <Button label="Close" class="bg-white border-orange-400 text-orange-500" @click="visible = false" text />
                 <Button label="Submit" class="bg-orange-500 border-none" icon="pi pi-check"
-                    @click="useStore.sumbitAddNewHoliday" autofocus />
+                    @click="useStore.sumbiteditHoliday(useStore.holidayData)" autofocus />
             </template>
         </Dialog>
 
@@ -127,6 +139,7 @@
     </div>
     <CreateNewHolidaysList />
     <!-- {{ useStore.holidayData }} -->
+    <!-- editHolidaylist -->
 </template>
 
 
@@ -160,6 +173,13 @@ const onAdvancedUpload = () => {
 onMounted(async () => {
     await useStore.getHolidays()
 })
+
+
+// function sendimageURL(){
+
+//     axios.post('',form).then(()=>{});
+// }
+// sendimageURL();
 
 
 // const uploadFestivalPhoto = (e) => {

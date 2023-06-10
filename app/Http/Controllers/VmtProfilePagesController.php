@@ -194,7 +194,7 @@ try{
 
     try {
 
-        dd($request->all());
+
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $details = VmtEmployee::where('userid', $user_id)->first();
         $details->dob = $request->dob;
