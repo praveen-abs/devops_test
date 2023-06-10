@@ -61,7 +61,8 @@
             <div class="tab-pane fade " id="pills-offer-holidays" role="tabpanel" aria-labelledby="pills-offer-holidays-tab">
                 <div class="card-body">
                     <div class="offer-pending-content">
-                        <Holidays_Lists />
+                        <!-- <Holidays_Lists /> -->
+                        <Holidays_Master/>
                     </div>
                 </div>
             </div>
@@ -88,6 +89,7 @@ import ManageShift from './ManageShift/ManageShift.vue';
 import RotationalShift from './RotationalShift/RotationalShift.vue';
 import FlexibleShift from './FlexibleShift/FlexibleShift.vue'
 import Holidays_Lists from '../holidays/Holidays_Lists.vue';
+import Holidays_Master from '../holidays/Holidays_Master.vue';
 import { useAttendanceSettingMainStore } from './stores/attendanceSettingMainStore';
 
 const useAttendanceStore = useAttendanceSettingMainStore()
