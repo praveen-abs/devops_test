@@ -17,6 +17,7 @@ use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
 use \Datetime;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
@@ -656,6 +657,7 @@ class VmtAttendanceReportsService
             $total_leave = 0;
             $total_halfday = 0;
             $total_OD = 0;
+            $total_OT = 0;
             $total_LC = 0;
             $total_EG = 0;
             $total_lop = 0;
@@ -786,14 +788,15 @@ class VmtAttendanceReportsService
                     "user_id" => $singleUser->id, "DOJ" => $singleUser->doj, "isAbsent" => false, "isLeave" => false,
                     "is_weekoff" => false, "isLC" => null, "isEG" => null, "date" => $fulldate, "is_holiday" => false,
                     "attendance_mode_checkin" => null, "attendance_mode_checkout" => null, "absent_status" => null,
-                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null, "half_day_type" => null
+                    "checkin_time" => null, "checkout_time" => null, "leave_type" => null, "half_day_status" => null,
+                    "half_day_type" => null, "OT" => 0
                 );
 
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
             }
             array_push($heading_dates, 'Total Calculation');
-            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
+            array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
 
             if ($attendance_setting_details['lc_status'] == 1) {
@@ -890,7 +893,7 @@ class VmtAttendanceReportsService
                 $attendanceResponseArray[$key]["attendance_mode_checkout"] = $attendance_mode_checkout;
             }
 
-            // dd($attendanceResponseArray );
+            //dd($attendanceResponseArray );
             foreach ($attendanceResponseArray as $key => $value) {
 
                 //get Shift Time for day
@@ -900,10 +903,14 @@ class VmtAttendanceReportsService
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
 
-              //Calculate OT
-              dd(  $shiftEndTime->diffInMinutes(Carbon::parse( $value['checkin_time'])));
-            dd($shiftEndTime->format('H:i:s')->diffInMinutes(Carbon::parse( $value['checkin_time'])->format('H:i:s')));
-             dd( Carbon::parse( $value['checkin_time'])->format('H:i:s'));
+                //Calculate OT
+
+                if ($shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time'])) > 30 && $value['checkout_time'] != null && $shiftStartTime->diffInMinutes($shiftEndTime) > 270) {
+
+                    $attendanceResponseArray[$key]['OT'] = $shiftEndTime->diffInMinutes(Carbon::parse($value['checkout_time']));
+                    $total_OT =  $total_OT + $attendanceResponseArray[$key]['OT'];
+                }
+
 
 
 
@@ -1044,11 +1051,15 @@ class VmtAttendanceReportsService
             }
 
 
-            // dd($attendanceResponseArray);
+            //dd($attendanceResponseArray);
 
             foreach ($attendanceResponseArray as $key => $value) {
-                array_push($arrayReport,  $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : $attendanceResponseArray[$key]['checkin_time'],
-                $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : $attendanceResponseArray[$key]['checkout_time'], 0);
+                array_push(
+                    $arrayReport,
+                    $attendanceResponseArray[$key]['checkin_time'] == null ? 0 : $attendanceResponseArray[$key]['checkin_time'],
+                    $attendanceResponseArray[$key]['checkout_time'] == null ? 0 : $attendanceResponseArray[$key]['checkout_time'],
+                    $attendanceResponseArray[$key]['OT']
+                );
                 $current_date = Carbon::parse($attendanceResponseArray[$key]['date']);
                 $doj = Carbon::parse($attendanceResponseArray[$key]['DOJ']);
 
@@ -1133,14 +1144,19 @@ class VmtAttendanceReportsService
                 }
             }
 
-            array_push($arrayReport, $total_weekoff, $total_holidays, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
+            if ($total_OT > 0) {
+                $total_OT = CarbonInterval::minutes($total_OT)->cascade()->forHumans();
+            }
+
+
+            array_push($arrayReport, $total_weekoff, $total_holidays, $total_OT, $total_present, $total_absent, $total_lop, $total_leave, $total_halfday, $total_OD,);
             if ($attendance_setting_details['lc_status'] == 1) {
                 array_push($arrayReport, $total_LC);
             }
             if ($attendance_setting_details['eg_status'] == 1) {
                 array_push($arrayReport, $total_EG);
             }
-            $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday + $total_OD) - $total_lop;
+            $total_payable_days = ($total_weekoff + $total_holidays + $total_present + $total_leave + $total_halfday) - $total_lop;
             array_push($arrayReport,  $total_payable_days);
             array_push($reportresponse, $arrayReport);
             unset($arrayReport);
