@@ -26,6 +26,10 @@ class VmtPMSFormsMgmtController extends Controller
         return $pmsFormsMgmtService->getPMSFormUsageDetails($request->pms_form_id);
     }
 
+    public function getPMSFormTemplateDetails(Request $request, VmtPMSFormsMgmtService $pmsFormsMgmtService){
+        return $pmsFormsMgmtService->getPMSFormTemplateDetails($request->pms_form_id);
+    }
+
     public function getEmployeePMSFormTemplate_AsExcel(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
         $pms_form_id=40;
 

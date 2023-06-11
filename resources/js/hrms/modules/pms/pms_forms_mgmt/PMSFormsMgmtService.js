@@ -7,6 +7,7 @@ export const usePMSFormsMgmtStore = defineStore("pmsFormsMgmtStore", () => {
     //variable declaration
     const array_pms_forms_authors_list = ref([]);
     const array_pms_forms_usage_details = ref();
+    const pms_form_template_details = ref();
 
     // async function getAllEmployeesList() {
     //     loading.value = true;
@@ -91,45 +92,48 @@ export const usePMSFormsMgmtStore = defineStore("pmsFormsMgmtStore", () => {
 
         await axios.post('/pms-forms-mgmt/getPMSFormUsageDetails',{
                         "pms_form_id" : pms_form_id
-                    })
-                    .then(function (response){
-                        array_pms_forms_usage_details.value = response.data;
-                    })
-                    .catch((error)=>{
-                        console.log("Error getPMSFormUsageDetails() : "+error);
-                        array_pms_forms_usage_details.value = null;
-                    })
-                    .finally(()=>{
+                })
+                .then(function (response){
+                    array_pms_forms_usage_details.value = response.data;
+                })
+                .catch((error)=>{
+                    console.log("Error getPMSFormUsageDetails() : "+error);
+                    array_pms_forms_usage_details.value = null;
+                })
+                .finally(()=>{
 
-                    });
+                });
     }
 
-    async function getPMSFormTemplateData() {
-        console.log(
-            "Getting PMS form for the user : " +
-                selectedEmployee.value.user_code
-        );
+    async function getPMSFormTemplateDetails(pms_form_id) {
+        console.log("Getting PMS form for the form_id : " +pms_form_id);
+
+        await axios.post('/pms-forms-mgmt/getPMSFormTemplateDetails',{
+                    "pms_form_id" : pms_form_id
+                })
+                .then( (response)=>{
+                    console.log("getPMSFormTemplateDetails() : "+response.data)
+                    pms_form_template_details.value = response.data;
+                })
+                .catch( (error)=>{
+                    console.log(error);
+                    pms_form_template_details.value = null;
+
+                })
+                .finally( ()=>{
 
 
-        // axios.post('http://127.0.0.1:8000/getAssignedPMSFormTemplates',{
-        //     user_code:selectedEmployee.value.user_code
-        // })
-        // .then((res)=>{
-        //    console.log(res.data.data);
-        // //    array_pms_forms_list.push(res.data.data)
-        // array_pms_forms_list.value = res.data.data
-        //     loading.value= false
-        // })
-        // console.log(`${selectedEmployee.value.user_code} - ${selectedEmployee.value.name}`);
+        });
+
     }
 
     return {
 
 
-        array_pms_forms_authors_list, array_pms_forms_usage_details,
+        array_pms_forms_authors_list, array_pms_forms_usage_details, pms_form_template_details,
 
-        getAllPMSFormAuthors,getPMSFormUsageDetails,
-        getPMSFormTemplateData,
+        getAllPMSFormAuthors,getPMSFormUsageDetails,getPMSFormTemplateDetails
+
 
     };
 });

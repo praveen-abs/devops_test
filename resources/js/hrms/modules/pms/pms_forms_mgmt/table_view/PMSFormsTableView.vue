@@ -57,6 +57,28 @@
             </template>
         </Dialog>
 
+        <Dialog header="PMS Form Template details" maximizable  modal :contentStyle="{ height: '600px' }" v-model:visible="canShowPMSFormTemplate_Dialog"
+            :breakpoints="{ '1000px': '25vw', '800px': '90vw' }" :style="{ width: '1200px' }" :modal="true">
+
+            <!-- <div v-if="pmsFormsMgmtStore.array_pms_forms_usage_details" -->
+
+            <div class="confirmation-content d-flex justify-content-center align-items-center mt-3 ml-3">
+                <DataTable :value="pmsFormsMgmtStore.pms_form_template_details.data"
+                    scrollable scrollHeight="400px" tableStyle="min-width: 90rem">
+                    <template #header>
+                        <span><b>Form Name  :  </b>   {{ pmsFormsMgmtStore.pms_form_template_details.data[0].form_name }}</span>
+                    </template>
+                    <Column v-for="col of availableTableColumns_PMSTemplateDetails" :key="col.field" :field="col.field"  style="width: 25%" :header="col.header"></Column>
+
+                </DataTable>
+            </div>
+            <template #footer>
+                <div>
+                    <Button  severity="success" label="Download as Excel" class="btn btn-orange " style="height: 2em" raised />
+                </div>
+            </template>
+        </Dialog>
+
         <div>
 
             <DataTable
@@ -86,7 +108,7 @@
                 </Column>
                 <template #expansion="slotProps">
                     <div>
-                        <DataTable :value="slotProps.data[1]" responsiveLayout="scroll">
+                        <DataTable :value="slotProps.data[1]" responsiveLayout="scroll" scrollable scrollHeight="400px">
                             <Column header="Form Name" sortable>
                                 <template #body="slotProps">
                                     <p style="white-space: nowrap;"> {{ slotProps.data.form_name }} </p>
@@ -104,9 +126,8 @@
                             </Column>
                             <Column header="Actions" sortable>
                                 <template #body="slotProps">
-                                    <Button  severity="success" label="View Form" @click="openProfilePage(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
-                                    &nbsp;&nbsp;
-                                    <Button  severity="success" label="Download as Excel" @click="openProfilePage(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
+                                    <Button  severity="success" label="View Form" @click="showPMSFormTemplateDetails(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
+                                    <!-- <Button  severity="success" label="Download as Excel" class="btn btn-orange " style="height: 2em" raised /> -->
                                 </template>
                             </Column>
                             <!-- </div> -->
@@ -155,8 +176,8 @@ const toast = useToast();
 
 let canShowLoadingScreen = ref(true);
 let canShowPMSFormUsage_Dialog = ref(false);
-// let canShowErrorResponseScreen = ref(false);
-// let responseErrorMessage = ref();
+let canShowPMSFormTemplate_Dialog = ref(false);
+let availableTableColumns_PMSTemplateDetails = ref();
 
 onMounted(async () => {
     await pmsFormsMgmtStore.getAllPMSFormAuthors();
@@ -182,10 +203,35 @@ async function getPMSFormUsageDetails(row_data){
     //canShowLoadingScreen.value = false;
 }
 
+
 /*
     Show the selected PMS form in popup view
  */
-async function showPMSFormTemplate(pms_form_id) {}
+async function showPMSFormTemplateDetails(row_data){
+    console.log("Getting PMS Form Template details for ID : "+row_data.pms_form_id);
+
+    await pmsFormsMgmtStore.getPMSFormTemplateDetails(row_data.pms_form_id);
+
+    //console.log("Test response : "+JSON.stringify(pmsFormsMgmtStore.array_pms_forms_usage_details));
+    if(pmsFormsMgmtStore.pms_form_template_details != null && pmsFormsMgmtStore.pms_form_template_details.status == "success")
+    {
+
+        //Get the columns that are to be shown
+        availableTableColumns_PMSTemplateDetails.value = pmsFormsMgmtStore.pms_form_template_details.data.available_columns_primevue;
+
+        canShowPMSFormTemplate_Dialog.value = true;
+    }
+    else
+    {
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Unable to fetch the requested details', life: 3000 });
+    }
+
+}
+
+function canHideColumn(){
+    return false;
+}
+
 </script>
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");

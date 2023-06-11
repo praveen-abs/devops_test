@@ -180,6 +180,7 @@ Route::middleware(['auth'])->group(function () {
     //Route::get('/pms-forms-mgmt/get-all-PMS-form-Templates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormTemplates'])->name('getAllPMSFormTemplates');
     Route::get('/pms-forms-mgmt/get-all-PMS-form-Authors', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormAuthors'])->name('getAllPMSFormAuthors');
     Route::post('/pms-forms-mgmt/getPMSFormUsageDetails', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSFormUsageDetails'])->name('getPMSFormUsageDetails');
+    Route::post('/pms-forms-mgmt/getPMSFormTemplateDetails', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSFormTemplateDetails'])->name('getPMSFormTemplateDetails');
     // Route::get('/pms-forms-mgmt/self-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_SelfView'])->name('showPMSFormsMgmtPage_SelfView');
     // Route::get('/pms-forms-mgmt/team-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_TeamView'])->name('showPMSFormsMgmtPage_TeamView');
     // Route::get('/pms-forms-mgmt/hr-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_HRView'])->name('showPMSFormsMgmtPage_HRView');
