@@ -4,10 +4,9 @@ import axios from "axios";
 import { Service } from "../../Service/Service";
 
 export const usePMSFormsMgmtStore = defineStore("pmsFormsMgmtStore", () => {
-
     //variable declaration
     const array_pms_forms_authors_list = ref([]);
-
+    const array_pms_forms_usage_details = ref();
 
     // async function getAllEmployeesList() {
     //     loading.value = true;
@@ -52,48 +51,57 @@ export const usePMSFormsMgmtStore = defineStore("pmsFormsMgmtStore", () => {
     //         });
     // };
 
-    async function getAllPMSFormsList() {
+    // async function getAllPMSFormsList() {
 
-        await axios
-            .get("/pms-forms-mgmt/get-all-PMS-form-Templates")
-            .then(function (response) {
+    //     await axios
+    //         .get("/pms-forms-mgmt/get-all-PMS-form-Templates")
+    //         .then(function (response) {
 
-                if (response.data.status == "success") {
-                    //array_pms_forms_list.value = Object.entries(response.data.data);
-                  //  array_pms_forms_list.value = Object.entries(response.data.data);
-                    //console.log("getPMSFormsList() Data : "+response.data.data);
-                } else if (response.data.status == "failure") {
+    //             if (response.data.status == "success") {
+    //                 //array_pms_forms_list.value = Object.entries(response.data.data);
+    //               //  array_pms_forms_list.value = Object.entries(response.data.data);
+    //                 //console.log("getPMSFormsList() Data : "+response.data.data);
+    //             } else if (response.data.status == "failure") {
 
-                }
+    //             }
 
-                console.log("getPMSFormsList() status : " + response.data.status);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(function () {
+    //             console.log("getPMSFormsList() status : " + response.data.status);
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         })
+    //         .finally(function () {
 
-            });
-    }
+    //         });
+    // }
 
     async function getAllPMSFormAuthors(){
 
         await axios.get('/pms-forms-mgmt/get-all-PMS-form-Authors')
                 .then(function (response){
-                    if (response.data.status == "success") {
-                        array_pms_forms_authors_list.value  = Object.entries(response.data.data);
-                        //console.log("PMS Authors : "+JSON.stringify( array_pms_forms_authors_list.value));
-                    }
-                    else
-                    if (response.data.status == "failure") {
-                        console.log("Failure status returned");
-                    }
-
+                    array_pms_forms_authors_list.value  = Object.entries(response.data.data);
                 }).catch(function (error){
                     console.log("Error : "+error);
                 }).finally(function (){
 
                 });
+    }
+
+    async function getPMSFormUsageDetails(pms_form_id){
+
+        await axios.post('/pms-forms-mgmt/getPMSFormUsageDetails',{
+                        "pms_form_id" : pms_form_id
+                    })
+                    .then(function (response){
+                        array_pms_forms_usage_details.value = response.data;
+                    })
+                    .catch((error)=>{
+                        console.log("Error getPMSFormUsageDetails() : "+error);
+                        array_pms_forms_usage_details.value = null;
+                    })
+                    .finally(()=>{
+
+                    });
     }
 
     async function getPMSFormTemplateData() {
@@ -118,9 +126,9 @@ export const usePMSFormsMgmtStore = defineStore("pmsFormsMgmtStore", () => {
     return {
 
 
-        array_pms_forms_authors_list,
+        array_pms_forms_authors_list, array_pms_forms_usage_details,
 
-        getAllPMSFormsList, getAllPMSFormAuthors,
+        getAllPMSFormAuthors,getPMSFormUsageDetails,
         getPMSFormTemplateData,
 
     };

@@ -16,6 +16,8 @@ class VmtPMSFormsMgmtService
 {
 
     /*
+        UNUSED FOR NOW !
+
         Get all PMS forms for all the users.
 
         It also needs to contains the following data:
@@ -75,9 +77,27 @@ class VmtPMSFormsMgmtService
                                 'users.name as author_name',
                                 'vmt_pms_kpiform.id as pms_form_id',
                                 'vmt_pms_kpiform.form_name as form_name',
+                                //'vmt_pms_kpiform_assigned.id as vmt_pms_kpiform_assigned_id'
                             ])->groupBy('author_name');
 
            // $all_pms_forms = User::get(['name','client_id'])->groupBy('client_id');
+
+            //for each form , check whether its assigned to any user or not
+            foreach($all_pms_forms as $singleAuthorRecord){
+                foreach($singleAuthorRecord as $singleFormDetail){
+
+                    //This is used in UI to state whether the form is used in PMS review or not
+                    $singleFormDetail["is_pmsform_used"] = 0 ;
+
+                    if(! empty($singleFormDetail['pms_form_id']))
+                        $singleFormDetail["is_pmsform_used"] = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_id', $singleFormDetail['pms_form_id'])->exists() ? 1 : 0;
+
+                }
+
+
+            }
+
+
 
             //dd($all_pms_forms);
             return response()->json([
@@ -94,6 +114,91 @@ class VmtPMSFormsMgmtService
             ]);
         }
     }
+
+    /*
+        Get the PMS form usage details such as to whom it was
+        assigned ,etc
+
+
+    */
+    public function getPMSFormUsageDetails($pms_form_id){
+
+        $validator = Validator::make(
+            $data = [
+                "pms_form_id" => $pms_form_id
+            ],
+            $rules = [
+                "pms_form_id" => 'required|exists:vmt_pms_kpiform,id'
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "failure",
+                "message" => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+
+            //Get the assigned details of the given pms_form_id
+
+            $query_pms_form_usage = VmtPMS_KPIFormModel::join('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id','=','vmt_pms_kpiform.id')
+                                    ->join('vmt_org_time_period','vmt_org_time_period.id','=','vmt_pms_kpiform_assigned.vmt_org_time_period_id')
+                                    ->where('vmt_pms_kpiform.id',$pms_form_id)
+                                    ->get([
+                                        'vmt_pms_kpiform_assigned.assignee_id',
+                                        'vmt_pms_kpiform_assigned.reviewer_id',
+                                        'vmt_pms_kpiform_assigned.assigner_id',
+                                        'vmt_pms_kpiform_assigned.assignment_period',
+                                        'vmt_pms_kpiform_assigned.vmt_org_time_period_id',
+
+                                        'vmt_org_time_period.abbrevation',
+                                        'vmt_org_time_period.start_date',
+                                        'vmt_org_time_period.end_date',
+                                    ]);
+
+                                    //dd($query_pms_form_usage);
+            //Set the employees names
+           foreach($query_pms_form_usage as $singleRecord){
+
+                $singleRecord["assignee_name"] = User::find($singleRecord->assignee_id)->name;
+                $singleRecord["reviewer_name"] = User::find($singleRecord->reviewer_id)->name;
+                $singleRecord["assigner_name"] = User::find($singleRecord->assigner_id)->name;
+
+                //remove the unwanted attribs as it not used in UI
+                unset($singleRecord->assignee_id);
+                unset($singleRecord->reviewer_id);
+                unset($singleRecord->assigner_id);
+                unset($singleRecord->vmt_org_time_period_id);
+
+           }
+
+           return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" => $query_pms_form_usage,
+           ]);
+
+
+        }catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching PMS form usage details",
+                "data" => $e
+            ]);
+        }
+
+
+    }
+
+    /*
+        Unused for now
 
     public function getAssignedPMSFormTemplates($user_code){
         //Get all forms for a given user_code
@@ -148,7 +253,7 @@ class VmtPMSFormsMgmtService
 
         }
     }
-
+    */
     public function getPMSFormforGivenPMSFormID($pms_form_id){
 
         $validator = Validator::make(

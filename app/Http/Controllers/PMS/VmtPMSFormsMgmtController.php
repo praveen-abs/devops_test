@@ -14,19 +14,16 @@ use Maatwebsite\Excel\Excel as ExcelExcel;
 class VmtPMSFormsMgmtController extends Controller
 {
 
-    public function getAllPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
-
-
-      return  $response = $PMSFormsMgmtService->getAllPMSFormTemplates();
-
-
-    }
     public function getAllPMSFormAuthors(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
 
       return  $response = $PMSFormsMgmtService->getAllPMSFormAuthors();
 
 
+    }
+
+    public function getPMSFormUsageDetails(Request $request, VmtPMSFormsMgmtService $pmsFormsMgmtService){
+        return $pmsFormsMgmtService->getPMSFormUsageDetails($request->pms_form_id);
     }
 
     public function getEmployeePMSFormTemplate_AsExcel(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){

@@ -1,5 +1,7 @@
 <template>
     <div>
+        <Toast />
+
         <Dialog
             header="Header"
             v-model:visible="canShowLoadingScreen"
@@ -20,6 +22,38 @@
             </template>
             <template #footer>
                 <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
+
+        <Dialog header="PMS Form Usage details" v-model:visible="canShowPMSFormUsage_Dialog"
+            :breakpoints="{ '960px': '75vw', '800px': '90vw' }" :style="{ width: '980px' }" :modal="true">
+
+            <!-- <div v-if="pmsFormsMgmtStore.array_pms_forms_usage_details" -->
+            <div class="confirmation-content d-flex justify-content-start align-items-center mt-3 ml-3">
+                <DataTable :value="pmsFormsMgmtStore.array_pms_forms_usage_details.data" tableStyle="min-width: 70rem">
+                    <Column header="Calendar Type/Year" style="width: 20%">
+                        <template #body="slotProps">
+                            <span><b>{{ slotProps.data.abbrevation }} : {{ dayjs(slotProps.data.start_date).format('YYYY') }} - {{ dayjs(slotProps.data.end_date).format('YYYY') }}</b></span>
+                        </template>
+                    </Column>
+                    <Column field="assignment_period" header="Period" style="width: 5%">
+                        <template #body="slotProps">
+                            <div>
+                                <span><b>{{  slotProps.data.assignment_period.toUpperCase()  }}</b></span>
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="assignee_name" header="Assignee Name"></Column>
+                    <Column field="reviewer_name" header="Reviewer Name"></Column>
+                    <Column field="assigner_name" header="Assigner Name"></Column>
+                    <!-- "assignment_period": "q3",
+                    "abbrevation": "FY","start_date": "2022-04-01", "end_date": "2023-03-31",
+                    "assignee_name": "SUJATHA ALAGUSELVAM",
+                    "reviewer_name": "S.AMIRTHAVALLI",
+                    "assigner_name": "S2 Admin" -->
+                </DataTable>
+            </div>
+            <template #footer>
             </template>
         </Dialog>
 
@@ -60,7 +94,12 @@
                             </Column>
                             <Column header="Form Assignment Details" sortable>
                                 <template #body="slotProps">
-                                    <Button  severity="success" label="View" @click="openProfilePage(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
+                                    <div  v-if="slotProps.data.is_pmsform_used == 1">
+                                        <Button  label="View" @click="getPMSFormUsageDetails(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
+                                    </div>
+                                    <div v-else>
+                                        {{ "Not Assigned" }}
+                                    </div>
                                 </template>
                             </Column>
                             <Column header="Actions" sortable>
@@ -108,16 +147,40 @@ import { ref, onMounted } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 
 import { usePMSFormsMgmtStore } from "../PMSFormsMgmtService";
+import { useToast } from "primevue/usetoast";
 
 const pmsFormsMgmtStore = usePMSFormsMgmtStore();
 const expandedRows = ref([]);
+const toast = useToast();
 
 let canShowLoadingScreen = ref(true);
+let canShowPMSFormUsage_Dialog = ref(false);
+// let canShowErrorResponseScreen = ref(false);
+// let responseErrorMessage = ref();
 
 onMounted(async () => {
     await pmsFormsMgmtStore.getAllPMSFormAuthors();
     canShowLoadingScreen.value = false;
 });
+
+async function getPMSFormUsageDetails(row_data){
+    console.log("Getting PMS Form Usage details for ID : "+row_data.pms_form_id);
+    //canShowLoadingScreen.value = true;
+
+    await pmsFormsMgmtStore.getPMSFormUsageDetails(row_data.pms_form_id);
+
+    //console.log("Test response : "+JSON.stringify(pmsFormsMgmtStore.array_pms_forms_usage_details));
+    if(pmsFormsMgmtStore.array_pms_forms_usage_details != null && pmsFormsMgmtStore.array_pms_forms_usage_details.status == "success")
+    {
+        canShowPMSFormUsage_Dialog.value = true;
+    }
+    else
+    {
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Unable to fetch the requested details', life: 3000 });
+    }
+
+    //canShowLoadingScreen.value = false;
+}
 
 /*
     Show the selected PMS form in popup view
