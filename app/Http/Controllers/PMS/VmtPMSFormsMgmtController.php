@@ -14,12 +14,20 @@ use Maatwebsite\Excel\Excel as ExcelExcel;
 class VmtPMSFormsMgmtController extends Controller
 {
 
-    public function getAllPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
+    public function getAllPMSFormAuthors(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
 
-      return  $response = $PMSFormsMgmtService->getAllPMSFormTemplates();
+      return  $response = $PMSFormsMgmtService->getAllPMSFormAuthors();
 
 
+    }
+
+    public function getPMSFormUsageDetails(Request $request, VmtPMSFormsMgmtService $pmsFormsMgmtService){
+        return $pmsFormsMgmtService->getPMSFormUsageDetails($request->pms_form_id);
+    }
+
+    public function getPMSFormTemplateDetails(Request $request, VmtPMSFormsMgmtService $pmsFormsMgmtService){
+        return $pmsFormsMgmtService->getPMSFormTemplateDetails($request->pms_form_id);
     }
 
     public function getEmployeePMSFormTemplate_AsExcel(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
@@ -68,6 +76,10 @@ class VmtPMSFormsMgmtController extends Controller
 
     public function showPMSFormsMgmtPage_HRView(Request $request){
         return view('pms.vmt_pms_forms_mgmt_hr_view');
+    }
+
+    public function showPMSFormsMgmtPage(Request $request){
+        return view('pms.vmt_pms_forms_mgmt_main_view');
     }
 
 }
