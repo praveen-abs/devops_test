@@ -297,6 +297,78 @@ class VmtPMSFormsMgmtService
         }
     }
 
+    public function getPMSTemplateDetails_AsExcel($pms_form_id){
+
+        $validator = Validator::make(
+            $data = [
+                "pms_form_id" => $pms_form_id
+            ],
+            $rules = [
+                "pms_form_id" => 'required|exists:vmt_pms_kpiform,id'
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "failure",
+                "message" => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+            $primevue_datatable_columns = array();
+            $query_available_cols = VmtPMS_KPIFormModel::find($pms_form_id)->available_columns;
+            $temp_available_cols_array = explode(',',$query_available_cols);
+
+            //Generate JSON which is used for display reqd columns in PrimeVue datatable
+            foreach($temp_available_cols_array as $singleColumn){
+                array_push($primevue_datatable_columns,[
+                    "field" => $singleColumn,
+                    "header" => $this->getPMSTemplateColumnName($singleColumn)
+                ]);
+            }
+
+            // dd($primevue_datatable_columns);
+
+            //Add other required columns that has to be fetched from DB
+            array_push($temp_available_cols_array,'form_name','vmt_pms_kpiform.id');
+
+            $response = VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform.id')
+                                        ->where('vmt_pms_kpiform.id',$pms_form_id)
+                                        ->get($temp_available_cols_array)->toArray();
+
+
+
+            //Add column data for primevue table
+            $response['available_columns_primevue'] = $primevue_datatable_columns;
+
+            //Excel creation logic goes here
+
+
+            return response()->json([
+                "status" => "success",
+                "message" => "",
+                "data" => $response,
+            ]);
+
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while downloading PMS form template details",
+                "data" => $e
+            ]);
+        }
+
+
+    }
+
     /*
         Unused for now
 
