@@ -153,7 +153,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
             image_url:data.image
 
         }
-        let url = `http://localhost:3000/SubmitAddNewLocation`;
+        let url = `holidays/delete_holiday`;
         axios.post(url,
             holiday
         ).then(()=>{}).finally(()=>{
@@ -175,7 +175,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     }
 
     function sumbiteditHoliday(){
-          let url  = `http://localhost:3000/SubmitAddNewLocation`;
+          let url  = `holidays/update_holiday`;
 
           let form = new FormData();
         form.append('id',storeeditID.value)
