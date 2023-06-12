@@ -765,12 +765,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/documents/update_employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'updateEmployeeDocumentsSettings'])->name('updateEmployeeDocumentsSettings');
 
     //Holidays
+
+    //get holidays images
+
+    Route::get('/holiday/getHolidaysPicture', [App\Http\Controllers\VmtHolidaysController::class, 'getHolidaysPicture'])->name('getHolidaysPicture');
+    Route::get('/holiday/getHolidayslistPicture', [App\Http\Controllers\VmtHolidaysController::class, 'getHolidaysListImages'])->name('getHolidayslistPicture');
+
     ////Holidays creation
     Route::get('/holiday/master-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holiday-masterpage');
     Route::post('holiday/create_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('holiday-create-holiday');
     Route::get('/holiday/edit_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHoliday'])->name('edit-holiday');
-    Route::post('holidays/update_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
-    Route::get('holidays/delete_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
+    Route::post('holidays/update_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
+    Route::post('holidays/delete_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
 
     Route::get('/holidays/add_holidays', function () {
         return view('holidays.test_ui.add_holidays');

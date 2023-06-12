@@ -54,8 +54,6 @@ class VmtHolidaysController extends Controller
            ],500);
         }
     try{
-
-
     //create object
     $vmt_holidays =vmtHolidays::where('holiday_name',$request->holiday_name)->first();
     if(!empty($vmt_holidays)){
@@ -65,14 +63,21 @@ class VmtHolidaysController extends Controller
        ],500);
     }
 
- $uploadedFile = $request->file('holiday_image');
+      $uploadedFile = $request->file('holiday_image');
         if(empty($uploadedFile)) {
             $response ='Please upload the file';
             return $response;
         }else{
             $fileName =  $uploadedFile->getClientOriginalName();
-            $path = '/images/holiday';
-            $filePath = $uploadedFile->storeAs($path,$fileName, 'private');
+            $path = '/holidays/'.$fileName;
+            $file_path = '/holidays/';
+            $file_exists_status = Storage::disk('private1')->exists($path);
+
+            if(empty($file_exists_status)){
+
+                $filePath = $uploadedFile->storeAs($file_path,$fileName,'private1');
+            }
+
         }
 
          $vmt_holidays_data= new vmtHolidays;
@@ -99,34 +104,80 @@ class VmtHolidaysController extends Controller
     }
 
 
-//edit holidays
-    public function editHoliday($id){
-         $vmt_holiday_edit=vmtHolidays::find($id);
-         return view('holidays.test_ui.edit_holidays',['vmt_holiday_edit'=>$vmt_holiday_edit]);
+//update holidays
+    public function updateHoliday(Request $request){
+
+        try{
+            $vmt_holiday_edit=vmtHolidays::find($request->id);
+            $holidays_iamge_url=$vmt_holiday_edit->image;
+            $uploadedFile = $request->file('holiday_image');
+
+            if(empty($uploadedFile))
+             {
+                $response ='Please upload the file';
+                return $response;
+
+            }else
+            {
+                $fileName =  $uploadedFile->getClientOriginalName();
+                $path = '/holidays/';
+                $file_path = '/holidays/'.$vmt_holiday_edit->image;
+                $file_exists_status = Storage::disk('private1')->exists($file_path);
+                if($file_exists_status){
+                    //delete the file
+                    Storage::disk('private1')->delete($file_path);
+                }
+
+                $filePath = $uploadedFile->storeAs($path,$fileName,'private1');
+            }
+
+
+            $vmt_holiday_edit->holiday_name=$request['holiday_name'];
+            $vmt_holiday_edit->holiday_date=$request['holiday_date'];
+            $vmt_holiday_edit->holiday_description=$request['holiday_description'];
+            $vmt_holiday_edit->image=$fileName;
+            $vmt_holiday_edit->save();
+
+         $response = [
+            'status' => 'success',
+            'message' => "Holiday updated successfully",
+        ];
+    } catch (\Exception $e) {
+          $response = [
+            'status' => 'failure',
+            'message' => 'Error while updating  Holiday ',
+            'error_message' => $e->getMessage()
+        ];
+    }
+       return response()->json($response);
+
 
     }
 
-//update holidays
-    public function updateHoliday(Request $request,$id ){
-        $uploadedFile = $request->file('image');
-        if($uploadedFile) {
-            $fileName =  $request->image->getClientOriginalName();
-            $filePath = $uploadedFile->storeAs('images',$fileName, 'public');
-         $vmt_holiday_edit=vmtHolidays::find($request->id);
-         $vmt_holiday_edit->holiday_name=$request['holiday_name'];
-         $vmt_holiday_edit->holiday_date=$request['holiday_date'];
-         $vmt_holiday_edit->holiday_description=$request['holiday_description'];
-         $vmt_holiday_edit->image=$fileName;
-         $vmt_holiday_edit->save();
-        return redirect()->action([VmtHolidaysController::class, 'showHolidaysMasterPage']);
-        }
-}
+
 
 //delete holidays
-    public function deleteHoliday(Request $request,$id){
+    public function deleteHoliday(Request $request){
+    try{
          $vmt_holiday_delete=vmtHolidays::find($request->id);
+         $vmt_holiday_url =$vmt_holiday_delete->image;
          $vmt_holiday_delete->delete();
-         return redirect()-> back();
+         $file_path = '/holidays/'.$vmt_holiday_url;
+         Storage::disk('private1')->delete($file_path);
+
+         $response = [
+            'status' => 'success',
+            'message' => "Holiday deleted successfully",
+        ];
+    } catch (\Exception $e) {
+          $response = [
+            'status' => 'failure',
+            'message' => 'Error while deleting Holiday ',
+            'error_message' => $e->getMessage()
+        ];
+    }
+       return response()->json($response);
+
     }
 
 //fetch the holidays
@@ -242,40 +293,40 @@ try{
 
 }
 
-//edit holidayslist
-    public function editHolidayList($id){
-         $vmt_holiday_edit=vmtHolidayslist::find($id);
-         $holidays_list=vmtHolidays::all();
-         return view('holidays.test_ui2.edit_holidays_2',['vmt_holiday_edit'=>$vmt_holiday_edit,'holidays_list'=>$holidays_list]);
-    }
+// //edit holidayslist
+//     public function editHolidayList($id){
+//          $vmt_holiday_edit=vmtHolidayslist::find($id);
+//          $holidays_list=vmtHolidays::all();
+//          return view('holidays.test_ui2.edit_holidays_2',['vmt_holiday_edit'=>$vmt_holiday_edit,'holidays_list'=>$holidays_list]);
+//     }
 
-//updateholidayslist
-    public function updateHolidayList(Request $request,$id){
-    //store the holiday list name
-        $vmt_holidays_list_data=vmtHolidayslist::find($request->id);
-        $holiday_name= $vmt_holidays_list_data->name=$request['name'];
-        $vmt_holidays_list_data->save();
-    // store the holidayist id and holidays id in vmtHolidayslistHolidays table
-        $holidayslist_holidays= DB::table('vmt_holidayslist_holidays')->where('holiday_list_id',$id )->delete();
-        $holiday_id=$request['holiday_id'];
-        foreach( $holiday_id as $single_id){
-            $vmt_holidayslist_holidays= new vmtHolidayslistHolidays;
-            $vmt_holidayslist_holidays->holiday_id= $single_id;
-            $vmt_holidayslist_holidays->holiday_list_id=$id;
-            $vmt_holidayslist_holidays->save();
-        }
-        return redirect()->action([VmtHolidaysController::class, 'showHolidaysListPage']);
-    }
+// //updateholidayslist
+//     public function updateHolidayList(Request $request,$id){
+//     //store the holiday list name
+//         $vmt_holidays_list_data=vmtHolidayslist::find($request->id);
+//         $holiday_name= $vmt_holidays_list_data->name=$request['name'];
+//         $vmt_holidays_list_data->save();
+//     // store the holidayist id and holidays id in vmtHolidayslistHolidays table
+//         $holidayslist_holidays= DB::table('vmt_holidayslist_holidays')->where('holiday_list_id',$id )->delete();
+//         $holiday_id=$request['holiday_id'];
+//         foreach( $holiday_id as $single_id){
+//             $vmt_holidayslist_holidays= new vmtHolidayslistHolidays;
+//             $vmt_holidayslist_holidays->holiday_id= $single_id;
+//             $vmt_holidayslist_holidays->holiday_list_id=$id;
+//             $vmt_holidayslist_holidays->save();
+//         }
+//         return redirect()->action([VmtHolidaysController::class, 'showHolidaysListPage']);
+//     }
 
- //delete holidayslist
-    public function deleteHolidayList(Request $request,$id){
-        $vmt_holiday_delete=vmtHolidayslist::find($request->id);
-        $vmt_holidayslist_holidays= DB::table('vmt_holidayslist_holidays')->where('holiday_list_id',$id );
-        $vmt_holiday_delete->delete();
-        $vmt_holidayslist_holidays->delete();
-        return redirect()-> back();
+//  //delete holidayslist
+//     public function deleteHolidayList(Request $request,$id){
+//         $vmt_holiday_delete=vmtHolidayslist::find($request->id);
+//         $vmt_holidayslist_holidays= DB::table('vmt_holidayslist_holidays')->where('holiday_list_id',$id );
+//         $vmt_holiday_delete->delete();
+//         $vmt_holidayslist_holidays->delete();
+//         return redirect()-> back();
 
-    }
+//     }
 
 //fetch the location
     public function fetchlocation(Request $request){
@@ -352,10 +403,7 @@ try{
                 $response = base64_encode($response);
             }
 
-
              return $response;
-
-
 
         }
         catch(\Exception $e){
