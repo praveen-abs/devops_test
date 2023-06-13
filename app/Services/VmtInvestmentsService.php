@@ -113,7 +113,7 @@ class VmtInvestmentsService
                 $rentalDetail['year'] = $details_tem["year"];
                 $rentalDetail['fs_id'] = $details_tem["fs_id"];
                 $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
-                $rentalDetail['is_sumbit'] = $details_tem["is_sumbit"];
+                $rentalDetail['is_submit'] = $details_tem["is_sumbit"];
                 $rentalDetail['selected_section_options'] = $details_tem["selected_section_options"];
                 $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
                 array_push($popdecode, $rentalDetail);
@@ -133,7 +133,7 @@ class VmtInvestmentsService
                         $single_template['f_emp_id'] = $single_emp_env_value['f_emp_id'];
                         $single_template['dec_amount'] = $single_emp_env_value['dec_amount'];
                         $single_template['json_popups_value'] = $single_emp_env_value['json_popups_value'];
-                        $single_template['is_sumbit'] = $single_emp_env_value['is_sumbit'];
+                        $single_template['is_submit'] = $single_emp_env_value['is_submit'];
                         $single_template['selected_section_options'] = $single_emp_env_value['selected_section_options'];
                     }
                 }
@@ -301,7 +301,7 @@ class VmtInvestmentsService
             return response()->json([
                 "status" => "success",
                 "message" => "",
-                "data" =>"sumbit successfully",
+                "data" =>"submit successfully",
             ]);
 
         }
@@ -416,7 +416,7 @@ class VmtInvestmentsService
 
          return response()->json([
             'status' => 'success',
-            'message' =>"sumbited successfully",
+            'message' =>"submit successfully",
             'data' => "",
         ]);
 
@@ -557,7 +557,7 @@ class VmtInvestmentsService
 
             return response()->json([
                 'status' => 'success',
-                'message' =>"save  successfully",
+                'message' =>"save successfully",
                 'data' => "",
             ]);
         }
