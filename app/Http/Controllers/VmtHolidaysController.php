@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Models\vmtHolidays;
-use App\Models\vmtHolidayslist;
-use App\Models\vmtHolidayslistHolidays;
+use App\Models\VmtHolidayList;
+use App\Models\VmtAssingedHolidays;
+use App\Models\VmtEmployeeAssingedHolidaysList;
 use App\Models\vmtLocations;
-use App\Models\vmtLocationsHoliday;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +22,6 @@ class VmtHolidaysController extends Controller
         $master_holidays = vmtHolidays::all();
         $i=0;
         foreach ($master_holidays as $key => $Singleholiday) {
-
            $master_holidays[$i]['image'] = $this->getHolidaysPicture($Singleholiday->id);
            $i++;
         }
@@ -191,14 +190,14 @@ class VmtHolidaysController extends Controller
 //show holidayslist
     public function showHolidaysList(Request $request){
 
-         $holidays_list=vmtHolidayslist::all();
+         $holidays_list=VmtHolidayList::all();
 
          return response()->json($holidays_list);
     }
 
     public function getHolidaysListImages(Request $request){
 
-        $holidays_list = vmtHolidayslistHolidays:: where('holiday_list_id',$request->id)->pluck('holiday_id');
+        $holidays_list = VmtAssetInventoryController::where('holiday_list_id',$request->id)->pluck('holiday_id');
 
         $holidayslist_data=array();
 

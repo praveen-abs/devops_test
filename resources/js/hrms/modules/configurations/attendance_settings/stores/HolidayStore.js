@@ -11,6 +11,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
 
     // Variable Declarations
     const canShowLoading = ref(false);
+    const DialogAddNewHoliday = ref(false);
     const holidayData = ref();
     const arrayholidayMaster =ref();
     const arrayCreateNewList = ref();
@@ -74,9 +75,22 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         })
     }
 
+    // function convert(str) {
+    //     var date = new Date(str),
+    //       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+    //       day = ("0" + date.getDate()).slice(-2);
+    //     return [date.getFullYear(), mnth, day].join("-");
+    //   }
+
+    //   console.log(convert(addNewHoliday.date));
+
     const sumbitAddNewHoliday = () => {
+        // console.log("date",addNewHoliday.date);
+
+        DialogAddNewHoliday.value = false;
 
         let url =`holiday/create_holiday`;
+
 
         let form = new FormData();
         form.append('holiday_name', addNewHoliday.FestivalTitle)
@@ -86,6 +100,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         axios.post(url,form).then(()=>{
 
         }).finally(() => {
+            getHolidays();
         });
     }
 
@@ -129,6 +144,7 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         }).then((res)=>{
             res.data;
         }).finally(()=>{
+            getHolidays();
             CreateNewListDialog.value = false;
         })
     }
@@ -150,13 +166,15 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
 
         let holiday ={
             id:data.id,
-            image_url:data.image
-
+            image_url:data.holiday_name
         }
+        console.log(holiday.id);
+
         let url = `holidays/delete_holiday`;
         axios.post(url,
             holiday
         ).then(()=>{}).finally(()=>{
+            getHolidays();
         });
     }
 
@@ -185,6 +203,8 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
         form.append('holiday_image',addNewHoliday.Holiday_Photo)
           axios.post(url,form).then(()=>{
 
+          }).finally(()=>{
+            getHolidays();
           })
 
 
@@ -203,10 +223,18 @@ export const useHolidayStore = defineStore("useHolidayStore", () => {
     return {
 
         // Variable Declaration
-        holidayData,activeHolidaysPage,CreateNewList,AssignToLocation,arrayholidayMaster,canShowLoading,arrayHolidaysList,CreateNewListDialog,addNewHoliday,arrayCreateNewList,chooseHolidaylist
+        holidayData,activeHolidaysPage,CreateNewList,
+        AssignToLocation,arrayholidayMaster,canShowLoading,
+        addNewHoliday,chooseHolidaylist,
+
+        arrayCreateNewList,
+        arrayHolidaysList,
+
+        CreateNewListDialog,
+        DialogAddNewHoliday,
 
         // function
-        ,getHolidays,SubmitCreateNewList,SubmitAddNewLocation,
+        getHolidays,SubmitCreateNewList,SubmitAddNewLocation,
 
         getHolidaysMaster,getHolidaylist,getHolidayName,
         ChooseTheHolidays,FestivalPhoto,sumbitAddNewHoliday,
