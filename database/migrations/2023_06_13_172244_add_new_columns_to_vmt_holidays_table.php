@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vmt_holidays', function (Blueprint $table) {
-            $table->integer('can_delete_holiday')->default(0)->after('image');
+            $table->integer('author_id');
+            $table->integer('client_id');
         });
     }
 

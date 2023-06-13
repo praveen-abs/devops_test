@@ -190,14 +190,14 @@ class VmtHolidaysController extends Controller
 //show holidayslist
     public function showHolidaysList(Request $request){
 
-         $holidays_list=vmtHolidayslist::all();
+         $holidays_list=VmtHolidayList::all();
 
          return response()->json($holidays_list);
     }
 
     public function getHolidaysListImages(Request $request){
 
-        $holidays_list = vmtHolidayslistHolidays:: where('holiday_list_id',$request->id)->pluck('holiday_id');
+        $holidays_list = VmtAssetInventoryController::where('holiday_list_id',$request->id)->pluck('holiday_id');
 
         $holidayslist_data=array();
 
