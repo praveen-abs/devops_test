@@ -1,5 +1,6 @@
 <template>
-    <div class="card px-3" v-if="useStore.activeHolidaysPage === 3">
+    <!-- v-if="useStore.activeHolidaysPage === 1" -->
+    <div class="card px-3" >
         <!-- <div v-if="useStore.activeHolidaysPage  === 1">
          <Holidays_Master/>
     </div>
@@ -16,7 +17,7 @@
         </div>
 
         <div class="card">
-            {{ useStore.arrayCreateNewList }}
+            <!-- {{ useStore.arrayCreateNewList }} -->
 
             <DataTable :value="useStore.arrayCreateNewList" ref="dt" dataKey="id" :paginator="true" :rows="10"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -52,7 +53,7 @@
                             <h1 class="text-gray-700 fs-4 font-semibold">Holiday List</h1>
                         </div>
 
-                        <div class="col">
+                        <div class="col ">
                             <InputText type="text" class="w-full h-12" v-model="useStore.CreateNewList.List_Name" />
                         </div>
                         <!-- <input type="text" name="" id=""> -->
@@ -61,17 +62,19 @@
                         <div class="col">
                             <h1 class="text-gray-700 fs-4 font-semibold">Choose The Holidays</h1>
                         </div>
-                        <div class="col">
+                        <div class="col ">
                             <!-- {{ useStore.arrayHolidaysList }} -->
                             <!-- {{ useStore.CreateNewList.ChooseTheHolidays }} -->
                             <MultiSelect v-model="useStore.ChooseTheHolidays" :options="useStore.arrayHolidaysList"  optionLabel="holiday_name"
-                                placeholder="Select Cities" :maxSelectedLabels="3" class="w-full h-12" style="width: 230px !important;" @change="useStore.getHolidayName()" />
+                                placeholder="Select Cities" :maxSelectedLabels="3" class="w-full h-12" style="width: 245px !important;" @change="useStore.getHolidayName()" />
                         </div>
                     </div>
                 </div>
                 <template #footer>
-                    <Button label="Cancel" class=" bg-white border-orange-400 text-orange-500  mr-4"
-                        @click="useStore.CreateNewListDialog = false" text />
+                    <button class="btn border-orange-400 text-orange-500 fw-semibold py-2 px-5" style="padding:9px 20px !important ;" @click="useStore.CreateNewListDialog = false" > Close</button>
+                    <!-- <Button label="Cancel" class=" bg-white border-orange-400 text-orange-500  mr-4"
+                        @click="useStore.CreateNewListDialog = false" text /> -->
+                        <!-- <button class="bg-white border-orange-400 text-orange-500  mr-4" @click="useStore.CreateNewListDialog = false" >Cancel</button> -->
                     <Button label="Create" class="bg-orange-500 border-none" icon="pi pi-plus-circle"
                         @click="useStore.SubmitCreateNewList" autofocus />
                 </template>

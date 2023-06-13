@@ -1,9 +1,9 @@
 <template>
-    <div v-if="useStore.activeHolidaysPage === 2">
+    <!-- <div v-if="useStore.activeHolidaysPage === 3">
         <Holidays_Lists />
-    </div>
+    </div> -->
 
-    <div class="card" v-if="useStore.activeHolidaysPage === 1">
+    <div class="card" v-if="useStore.activeHolidaysPage === 2">
         <div class="px-3">
             <div class="w-full  d-flex justify-between my-4">
                 <Calendar v-model="date" />
