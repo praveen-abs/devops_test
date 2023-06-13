@@ -31,7 +31,7 @@ class WebNotificationController extends Controller
 
     {
 
-
+try{
        // $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
 
        $SERVER_API_KEY = 'AAAAkEKAYyM:APA91bG-5Vq5zchwAdUL4wb0NU2AlmL8LwNOieh0BBDfC_NpK9WMGfpDfuTyOC_OgvcrHiJfnIob_cDfuL8SZBBoikk7tfbtwx3Kaz3cMr49yZZM4nhQYz9QTjIDjST-GCCu6AeYZTt_';
@@ -91,6 +91,14 @@ if($title  <> 'Leave Request'){
        $response = curl_exec($ch);
 
         return response()->json($response);
+    }
+    catch(\Exception $e){
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to send FCM notification",
+            "data" => $e,
+        ]);
+    }
     }
 
 

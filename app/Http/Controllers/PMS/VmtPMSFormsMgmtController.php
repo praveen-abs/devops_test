@@ -34,10 +34,11 @@ class VmtPMSFormsMgmtController extends Controller
         $pms_form_id=40;
 
         //$response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $request->pms_form_id);
-        $response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $pms_form_id);
+        $response = $PMSFormsMgmtService->getPMSTemplateDetails_AsExcel($pms_form_id);
+       // dd( $response);
         $form_name = $response['form_name'];
-        $headings = $response['columns'];
-        $form  = $response['pms_form_details'];
+        $headings = $response['headings'];
+        $form  = $response['form_details'];
         $end_column = num2alpha(count($headings)-1);
         return Excel::download(new PMSFormsExport( $form_name,$headings,$form,$end_column),$form_name, ExcelExcel::XLSX);
 
