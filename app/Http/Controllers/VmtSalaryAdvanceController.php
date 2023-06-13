@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compensatory;
 use App\Models\Department;
 use App\Models\State;
 use App\Models\User;
 use App\Models\VmtClientMaster;
+use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Http\Request;
 use App\Models\VmtSalaryAdvSettings;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
 use App\Services\VmtSalaryAdvanceService;
+use Carbon\Carbon;
 
 class VmtSalaryAdvanceController extends Controller
 {
@@ -38,27 +41,33 @@ public function showAssignEmp(Request $request){
 
         // dd($request->all());
 
-       $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+       $select_employee = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
        ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
         ->join('vmt_client_master','vmt_client_master.id','=','users.client_id')
         ->where('process','<>','S2 Admin')
-        ->where('department_id', $request->department_id)
-        ->orwhere('designation',$request->designation)
-        ->orwhere('work_location',$request->work_location)
-       // ->orwhere('state','')
-        ->orwhere('client_id',$request->client_name)
-         ->get(
-            [
+         ->select(
                 'users.name',
                 'users.user_code',
                 'vmt_department.name as department_name',
                 'vmt_employee_office_details.designation',
                 'vmt_employee_office_details.work_location',
                'vmt_client_master.client_name',
-            ]
-         )->toarray();
+         );
 
-    return ($simma);
+         if(!empty($request->department_id)){
+            $select_employee = $select_employee->where('department_id', $request->department_id);
+         }
+         if(!empty($request->designation)){
+            $select_employee = $select_employee->where('designation',$request->designation);
+         }
+         if(!empty($request->work_location)){
+            $select_employee = $select_employee->where('work_location',$request->work_location);
+         }
+         if(!empty($request->client_name)){
+            $select_employee = $select_employee->where('client_id',$request->client_name);
+         }
+
+    return $select_employee->get();
 
 }
 
@@ -93,6 +102,48 @@ public function assignEmpSalaryAdvSetting(Request $request){
 
 
          }
+
+public function showEmployeeview(Request $request){
+
+     $current_user_id = auth()->user()->id;
+    // dd($current_user_id);
+
+     $employee_user_id = VmtEmpAssignSalaryAdvSettings::where('user_id',$current_user_id)->first();
+
+
+     if(isset($employee_user_id)){
+
+          $emp_compensatory = Compensatory::where('user_id',$current_user_id)->first();
+
+          $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.salary_adv_id','=','vmt_salary_adv_setting.id')
+                                                    ->where('vmt_emp_assign_salary_adv_setting.user_id',$current_user_id)->first();
+
+           // dd($employee_salary_adv);
+
+            $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100 ;
+
+            // dd($calculatevalue);
+
+            $repayment_months = Carbon::now()->addMonths($employee_salary_adv->deduction_period_of_months)->format('F-d-Y');
+
+
+          $salary_adv['your_monthly_income'] =$emp_compensatory->net_income;
+          $salary_adv['max_eligible_amount'] =$calculatevalue;
+          $salary_adv['Repayment_date'] =$repayment_months;
+
+         return response()->json($salary_adv);
+
+     }else{
+
+          return response()->json("not eligible in salary advance");
+     }
+
+}
+
+
+
+
+
 
 
 
