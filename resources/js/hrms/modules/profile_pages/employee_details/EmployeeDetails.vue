@@ -407,16 +407,9 @@ const computedGenderValue = computed(() => {
 
 })
 const computedMarital_StatusValue = computed(() => {
-    if (_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 1) return "Unmarried";
 
-    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 2) return "Married";
+    return _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status;
 
-    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 3) return "Separated";
-
-    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 4) return "Widowed";
-
-    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 5) return "Divorced";
-    // "Widowed Divorced"
 })
 const cmpBldGrp = computed(() => {
     if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 1) return "A Positive";

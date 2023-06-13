@@ -324,37 +324,30 @@ class VmtPMSFormsMgmtService
             $primevue_datatable_columns = array();
             $query_available_cols = VmtPMS_KPIFormModel::find($pms_form_id)->available_columns;
             $temp_available_cols_array = explode(',',$query_available_cols);
-
+            $headings=array();
             //Generate JSON which is used for display reqd columns in PrimeVue datatable
             foreach($temp_available_cols_array as $singleColumn){
-                array_push($primevue_datatable_columns,[
-                    "field" => $singleColumn,
-                    "header" => $this->getPMSTemplateColumnName($singleColumn)
-                ]);
+                array_push($headings,$this->getPMSTemplateColumnName($singleColumn));
             }
 
             // dd($primevue_datatable_columns);
 
-            //Add other required columns that has to be fetched from DB
-            array_push($temp_available_cols_array,'form_name','vmt_pms_kpiform.id');
 
-            $response = VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform.id')
+
+            $form_details= VmtPMS_KPIFormModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform.id')
                                         ->where('vmt_pms_kpiform.id',$pms_form_id)
                                         ->get($temp_available_cols_array)->toArray();
+            $form_name= VmtPMS_KPIFormModel::where('id',$pms_form_id)->first()->form_name;
 
 
-
-            //Add column data for primevue table
-            $response['available_columns_primevue'] = $primevue_datatable_columns;
+            $response['form_name'] =$form_name;
+            $response['headings']=$headings;
+            $response['form_details']= $form_details;
 
             //Excel creation logic goes here
+          // dd($response);
 
-
-            return response()->json([
-                "status" => "success",
-                "message" => "",
-                "data" => $response,
-            ]);
+            return $response;
 
 
         }
@@ -454,7 +447,7 @@ class VmtPMSFormsMgmtService
             $pms_form_details = array();
             $pms_form = VmtPMS_KPIFormModel::where('id',$pms_form_id)->first();
             $available_columns =  explode(",",$pms_form['available_columns']);
-            $pms_from_details_query = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_form_id)->get(['kpi','frequency','target','kpi_weightage']);
+            $pms_from_details_query = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id',$pms_form_id)->get(['dimension','kpi','frequency','target','kpi_weightage']);
             // foreach($pms_from_details_query as $single_record){
             //    foreach($available_columns as $single_columns ){
             //     dd($single_record['kpi_weightage']);
@@ -465,7 +458,7 @@ class VmtPMSFormsMgmtService
             //    unset($pms_single_form);
             // }
             $response=array('form_name'=>$pms_form['form_name'],'columns'=>$available_columns,'pms_form_details'=>$pms_from_details_query);
-          //  dd(  $response);
+          //dd(  $response);
             return $response;
 
         }
@@ -562,5 +555,3 @@ class VmtPMSFormsMgmtService
 
 
 }
-
-?>
