@@ -577,7 +577,7 @@ class VmtAttendanceService
         }
         //send notification
         $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
-            notif_users_id: $query_user->user_code,
+            notif_user_id: $query_user->user_code,
             leave_module_type:'employee_applies_leave',
             manager_user_code: $manager_emp_code,
             notifications_users_id: $array_notif_ids,
