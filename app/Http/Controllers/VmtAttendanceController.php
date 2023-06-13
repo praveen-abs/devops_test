@@ -25,12 +25,14 @@ use App\Mail\WelcomeMail;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\VmtOrgTimePeriod;
+use App\Services\VmtNotificationsService;
 use App\Models\VmtTimePeriod;
 use \Datetime;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
+
 
 class VmtAttendanceController extends Controller
 {
@@ -132,11 +134,11 @@ class VmtAttendanceController extends Controller
     }
 
 
-    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceNotificationsService)
     {
 
        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code,
-                                                                    $request->status, $request->review_comment );
+                                                                    $request->status, $request->review_comment, serviceNotificationsService: $serviceNotificationsService);
     }
 
     public function getEmployeeLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
@@ -219,7 +221,7 @@ class VmtAttendanceController extends Controller
         return $daterange;
     }
 
-    public function applyLeaveRequest(Request $request){
+    public function applyLeaveRequest(Request $request, VmtNotificationsService $serviceNotificationsService){
 
 
         // dd($request ->all());
@@ -412,11 +414,20 @@ class VmtAttendanceController extends Controller
         } else {
             $mail_status = "There was one or more failures.";
         }
+        //send mobile notification
+        $user_code =auth::user()->user_code;
+        $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
+            notif_user_id:$user_code,
+            leave_module_type:'employee_applies_leave',
+            manager_user_code: $manager_emp_code,
+            notifications_users_id: $request->notifications_users_id,
+        );
 
         $response = [
             'status' => 'success',
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
+            'notification_status '=> $res_notification,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -1170,7 +1181,7 @@ class VmtAttendanceController extends Controller
         Employee send request to HR for attendance regularization
 
     */
-    public function applyRequestAttendanceRegularization(Request $request)
+    public function applyRequestAttendanceRegularization(Request $request ,VmtNotificationsService $serviceVmtNotificationsService)
     {
         //dd($request->all());
 
@@ -1243,6 +1254,30 @@ class VmtAttendanceController extends Controller
             $request->custom_reason,
             "Pending"
         ));
+        if($request->regularization_type == 'LC'){
+
+            $attendance_regularization_type='employee_applies_lc';
+
+        }else if($request->regularization_type == 'EG'){
+
+            $attendance_regularization_type='employee_applies_eg';
+
+        }else if($request->regularization_type == 'MOP'){
+
+            $attendance_regularization_type='employee_applies_mop';
+
+        }else if($request->regularization_type == 'MIP'){
+
+            $attendance_regularization_type='employee_applies_mip';
+
+        }
+
+        $res_notification =$serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+            notif_user_id:$request->attendance_user,
+            attendance_regularization_type:$attendance_regularization_type,
+            manager_user_code: $manager_usercode,
+        );
+
 
         if ($isSent) {
             $mail_status = "Mail sent successfully";
@@ -1253,12 +1288,13 @@ class VmtAttendanceController extends Controller
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Request sent successfully!',
+            'notification_status'=> $res_notification ,
             'mail_status' => $mail_status,
             'data' => [],
         ];
     }
 
-    public function approveRejectAttendanceRegularization(Request $request)
+    public function approveRejectAttendanceRegularization(Request $request ,VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         //dd($request->all());
@@ -1307,6 +1343,20 @@ class VmtAttendanceController extends Controller
             $request->status_text,
             $request->status
         ));
+        if($request->status == 'Approved'){
+
+            $attendance_regularization_type='manager_approves_attendance_reg';
+
+        }else if($request->status == 'Rejected'){
+
+            $attendance_regularization_type='manager_rejects_attendance_reg';
+
+        }
+        $res_notification =$serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+            notif_user_id:$data->user_id,
+            attendance_regularization_type:$attendance_regularization_type,
+            manager_user_code: auth::user()->user_code,
+        );
 
         if ($isSent) {
             $mail_status = "Mail sent successfully";
@@ -1319,6 +1369,7 @@ class VmtAttendanceController extends Controller
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Regularization done successfully!',
+            'notification_status'=> $res_notification ,
             'mail_status' => $mail_status,
             'data' => [],
         ];
