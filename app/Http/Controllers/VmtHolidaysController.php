@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\Models\vmtHolidays;
-use App\Models\vmtHolidayslist;
-use App\Models\vmtHolidayslistHolidays;
+use App\Models\VmtHolidayList;
+use App\Models\VmtAssingedHolidays;
+use App\Models\VmtEmployeeAssingedHolidaysList;
 use App\Models\vmtLocations;
-use App\Models\vmtLocationsHoliday;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +22,6 @@ class VmtHolidaysController extends Controller
         $master_holidays = vmtHolidays::all();
         $i=0;
         foreach ($master_holidays as $key => $Singleholiday) {
-
            $master_holidays[$i]['image'] = $this->getHolidaysPicture($Singleholiday->id);
            $i++;
         }
