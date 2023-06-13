@@ -14,7 +14,7 @@ use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployee;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\WebNotificationController;
+use App\Http\Controllers\MobileNotificationController;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtNotifications;
 use Illuminate\Support\Facades\Validator;
@@ -75,7 +75,7 @@ class VmtNotificationsService {
                         ],
 
         ];
-       
+
 
     }
 
@@ -266,7 +266,7 @@ class VmtNotificationsService {
 
             $notif_body=$employee_data->name.' '.$notif_body;
 
-                    $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$notify_users_fcm_token);
+                    $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$notify_users_fcm_token);
 
             $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
 
@@ -277,7 +277,7 @@ class VmtNotificationsService {
            {
             $notif_body=$manager_data->name.' '.$notif_body;
 
-                 $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$employee_data->fcm_token);
+                 $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$employee_data->fcm_token);
 
             $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
 
@@ -354,7 +354,7 @@ class VmtNotificationsService {
 
             $notif_body=$employee_data->name.' '.$notif_body;
 
-                    $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$notify_users_fcm_token);
+                    $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$notify_users_fcm_token);
 
             $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='attendance_regularization', $manager_data->user_code, $is_read='0');
 
@@ -366,7 +366,7 @@ class VmtNotificationsService {
             $notif_body=$manager_data->name.' '.$notif_body;
 
 
-                 $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$employee_data->fcm_token);
+                 $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$employee_data->fcm_token);
 
             $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='attendance_regularization', $manager_data->user_code, $is_read='0');
 

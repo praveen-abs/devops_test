@@ -873,9 +873,9 @@ Route::middleware(['auth'])->group(function () {
 
     //notification
 
-        // Route::get('/home', [App\Http\Controllers\WebNotificationController::class, 'index'])->name('home');
-        // Route::post('/save-token', [App\Http\Controllers\WebNotificationController::class, 'saveToken'])->name('save-token');
-        // Route::post('/send-notification', [App\Http\Controllers\WebNotificationController::class, 'sendNotification'])->name('send.notification');
+        // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
+        // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
+        // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');

@@ -1382,7 +1382,7 @@ class VmtAttendanceService
 
         }
 
-        $res_notification =$serviceNotificationsService->send_attendance_regularization_FCMNotification(
+        $res_notification =$serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
             notif_user_id:$user_id,
             attendance_regularization_type:$attendance_regularization_type,
             manager_user_code: $manager_usercode,
