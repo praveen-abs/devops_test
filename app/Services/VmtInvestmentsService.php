@@ -557,7 +557,7 @@ class VmtInvestmentsService
 
             return response()->json([
                 'status' => 'success',
-                'message' =>"save  successfully",
+                'message' =>"save successfully",
                 'data' => "",
             ]);
         }
