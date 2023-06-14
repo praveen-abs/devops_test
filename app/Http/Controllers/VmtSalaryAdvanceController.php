@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\VmtSalaryAdvSettings;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
 use App\Services\VmtSalaryAdvanceService;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
 class VmtSalaryAdvanceController extends Controller
@@ -154,8 +155,39 @@ class VmtSalaryAdvanceController extends Controller
 
     }
 
-    public function saveLoanWithInterestSettings(Request $request){
+        public function saveLoanWithInterestSettings(Request $request,VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService)
+        {
+           
+            $validator = Validator::make(
+                $request->all(),
+                $rules = [
+                    "max_loan_amount" => 'required',
+                    "loan_amt_interest" => "required",
+                    "deduction_starting_months" => "required",
+                    "max_tenure_months" => "required",
+                    "approver_flow" => "required",
 
-    }
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                    "exists" => "Field :attribute is invalid"
+                ]
+            );
+
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
+
+            $response =$ServiceVmtSalaryAdvanceService->saveLoanWithInterestSettings($request->max_loan_amount,
+                                                                                        $request->loan_amt_interest,
+                                                                                        $request->deduction_starting_months,
+                                                                                        $request->max_tenure_months,
+                                                                                        $request->approver_flow);
+        }
+
 
 }

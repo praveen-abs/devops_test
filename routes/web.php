@@ -35,7 +35,6 @@ Route::get('/offer-letter', function () {
 
 
 
-
 Route::get('/roles', function () {
     return view('rolesAndPermission');
 })->name('roles');
@@ -829,8 +828,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
-
+//loan with intrest
+    Route::post('/saveLoanWithIntrest', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveLoanWithInterestSettings'])->name('save-LoanWithIntrestSettings');
 
     //Emp Mail Notifications
     Route::get('/getAllEmployees_WelcomeMailStatus_Details', [App\Http\Controllers\Admin\VmtEmployeeMailNotifManagementController::class, 'getAllEmployees_WelcomeMailStatus_Details'])->name('getAllEmployees_WelcomeMailStatus_Details');
