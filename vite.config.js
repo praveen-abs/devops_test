@@ -66,6 +66,9 @@ export default defineConfig({
 
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
+                // Holidays_Master
+                'resources/js/hrms/modules/configurations/holidays/Holidays_Master.js',
+                'resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js',
 
                 // Investment Setting
 
@@ -121,8 +124,9 @@ export default defineConfig({
 
 
                 //PMS forms management
-                'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
-                'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
+                'resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.js',
+                //'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
+                //'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
                 //manage welcome mail status
                'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
@@ -132,6 +136,7 @@ export default defineConfig({
 
                 // testing_pradeesh
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
+                // 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
                 'resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js',
                 'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
@@ -140,7 +145,7 @@ export default defineConfig({
 
               // Employee details approvals
 
-              'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js'
+              'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js',
 
             ],
 

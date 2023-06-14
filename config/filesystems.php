@@ -48,6 +48,12 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'private',
         ],
+        'private1' => [
+            'driver' => 'local',
+            'root' => storage_path('core'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
 
         's3' => [
             'driver' => 's3',

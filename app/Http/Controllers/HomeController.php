@@ -496,6 +496,7 @@ class HomeController extends Controller
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkin_time = $currentTime;
+            $attendance->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
             $attendance->attendance_mode_checkin = "web";
             $attendance->save();
 

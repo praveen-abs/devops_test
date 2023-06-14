@@ -429,8 +429,8 @@
 
                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                                     <li class="nav-item">
-                                        <a href="{{ route('showPMSFormsMgmtPage_HRView') }}" class="nav-link">
-                                            <span>PMS Forms Management : HR</span>
+                                        <a href="{{ route('showPMSFormsMgmtPage') }}" class="nav-link">
+                                            <span>PMS Forms Management</span>
                                         </a>
                                     </li>
                                 @endif
@@ -605,7 +605,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('vmt_investments_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Investments</span></a>
-                            </li> 
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('vmt_form16_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>

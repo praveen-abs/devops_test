@@ -131,6 +131,9 @@
                                                     </label>
                                                     <input type="file" name="" id="uploadPassBook" hidden
                                                         @change="updateCheckBookPhoto($event)" />
+                                                        <div v-if="bank_information.PassBook"
+                                                            class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
+                                                            {{ bank_information.PassBook.name }}</div>
                                                 </div>
                                             </div>
                                         </div>
