@@ -3,7 +3,7 @@ import {ref, reactive} from "vue";
 import axios from "axios";
 import {Service} from  '../../Service/Service';
 
-export const usePMSFormsDownloadStore = defineStore("pmsFormsDownloadStore", () => {
+export const usePMSFormsMgmtStore = defineStore("pmsFormsMgmtStore", () => {
 
     const loading = ref(false)
 
