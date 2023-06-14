@@ -63,6 +63,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     }
 
     const saveSalaryAdvance = () => {
+        dailogSalaryAdvance.value = false
         canShowLoading.value = true
         axios.post('/EmpSaveSalaryAmt',sa).finally(()=>{
             canShowLoading.value = false
