@@ -1,6 +1,7 @@
 <template>
     <div style="position: relative; top:-15px ">
-        <h1 class="mb-4 fs-3 d-flex  align-items-center fw-bolder"  style="color: #003056; " ><i class='fas fa-cog fs-3 mr-3 '></i> Salary Advance & Loan Settings</h1>
+        <h1 class="mb-4 fs-3 d-flex  align-items-center fw-bolder" style="color: #003056; "><i
+                class='fas fa-cog fs-3 mr-3 '></i> Salary Advance & Loan Settings</h1>
 
         <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -31,16 +32,10 @@
                     </a>
                 </li>
             </ul>
-
         </div>
-
-
         <!-- Tab Content -->
-
-
         <div class="tab-content " id="">
-            <div class="mr-4 ">
-
+            <div>
                 <div class="card-body">
                     <div v-if="activetab === 1">
                         <SalaryAdvance />
@@ -55,11 +50,7 @@
                         <LoanWithInterest />
                     </div>
                 </div>
-
-
             </div>
-
-
         </div>
     </div>
 </template>
@@ -73,11 +64,15 @@ import SalaryAdvance from './salary_advance/salary_advance.vue';
 import LoanWithInterest from './loan_with_interest/loan_with_interest.vue';
 import InterestFreeLoan from './interest_free_loan/interest_free_loan.vue';
 import TravelAdvance from './travel_advance/travel_advance.vue';
-
-
-
+import { salaryAdvanceSettingMainStore } from './stores/salaryAdvanceSettingMainStore';
 
 const activetab = ref(1);
+
+const useSalaryStore = salaryAdvanceSettingMainStore()
+
+onMounted(() => {
+    useSalaryStore.getDropdownFilterDetails()
+})
 
 
 

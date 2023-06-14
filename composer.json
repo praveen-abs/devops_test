@@ -57,7 +57,8 @@
             "app/Services/PMSReportsService/VmtPMSFormsMgmtService.php",
             "app/Services/VmtEmployeeDocumentsService.php",
             "app/Services/VmtAttendanceSettingsService.php",
-            "app/Services/VmtPayrollService.php"
+            "app/Services/VmtPayrollService.php",
+            "app/Services/VmtSalaryAdvanceService.php"
         ]
     },
     "autoload-dev": {

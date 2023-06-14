@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('salary_adv_id')->constrained('vmt_salary_adv_setting');
-            $table->integer('active');
+            $table->integer('active')->nullable();
             $table->timestamps();
         });
     }
