@@ -113,41 +113,38 @@ public function showEmployeeview(Request $request){
 
      if(isset($employee_user_id)){
 
-          $emp_compensatory = Compensatory::where('user_id',$current_user_id)->first();
+            $emp_compensatory = Compensatory::where('user_id',$current_user_id)->first();
 
-          $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.salary_adv_id','=','vmt_salary_adv_setting.id')
+            $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.salary_adv_id','=','vmt_salary_adv_setting.id')
                                                     ->where('vmt_emp_assign_salary_adv_setting.user_id',$current_user_id)->first();
 
-           // dd($employee_salary_adv);
 
             $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100 ;
 
-            // dd($calculatevalue);
 
-            $repayment_months = Carbon::now()->addMonths($employee_salary_adv->deduction_period_of_months)->format('F-d-Y');
+            $repayment_months = Carbon::now()->addMonths($employee_salary_adv->deduction_period_of_months)->format('Y-m-d');
 
 
-          $salary_adv['your_monthly_income'] =$emp_compensatory->net_income;
-          $salary_adv['max_eligible_amount'] =$calculatevalue;
-          $salary_adv['Repayment_date'] =$repayment_months;
+            $salary_adv['your_monthly_income'] =$emp_compensatory->net_income;
+            $salary_adv['max_eligible_amount'] =$calculatevalue;
+            $salary_adv['Repayment_date'] =$repayment_months;
+            $salary_adv['eligible'] ="0";
 
-         return response()->json($salary_adv);
+        return response()->json($salary_adv);
 
-     }else{
+    }else{
 
-          return response()->json("not eligible in salary advance");
+        $salary_adv['eligible'] ="1";
+        return response()->json($salary_adv);
      }
 
 }
 
+public function EmpSaveSalaryAmt(Request $request){
 
+  dd($request->all());
 
-
-
-
-
-
-
+}
 
 
 
