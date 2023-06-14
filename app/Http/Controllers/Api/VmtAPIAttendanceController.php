@@ -361,7 +361,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     }
 
 
-    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
 
         //Validate the request
         $validator = Validator::make(
@@ -387,7 +387,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text);
+        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text, $serviceVmtNotificationsService = $serviceVmtNotificationsService);
 
         return $response;
 
