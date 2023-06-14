@@ -44,10 +44,6 @@
                   </span>
 
                 </div>
-                <!-- <span class="float-right pl-10">
-                    <Button type="button" icon="pi pi-send" class="p-button-success Button" label="Generate"
-                      @click="salaryStore.getElibigleEmployees" style="height: 2em" />
-                  </span> -->
                 <div class="col-12">
 
                   <div class="col-12">
@@ -110,6 +106,9 @@
               </div>
             </div>
           </div>
+
+
+
 
           <div class="col mt-4">
             <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>

@@ -11,6 +11,7 @@ use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtEmployeeOfficeDetails;
 use Illuminate\Http\Request;
 use App\Models\VmtSalaryAdvSettings;
+use App\Models\VmtEmpSalAdvDetails;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
 use App\Services\VmtSalaryAdvanceService;
 use Carbon\Carbon;
@@ -110,7 +111,31 @@ class VmtSalaryAdvanceController extends Controller
 
     public function EmpSaveSalaryAmt(Request $request){
 
-    dd($request->all());
+   // dd($request->all());
+
+    $current_user_id = auth()->user()->id;
+
+    $employee_user_id = VmtEmpAssignSalaryAdvSettings::where('user_id',$current_user_id)->first();
+
+    $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
+    $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_user_id->id;
+    $EmpApplySalaryAmt->eligible_amount = $request->mxe;
+    $EmpApplySalaryAmt->borrowed_amount = $request->ra;
+    $EmpApplySalaryAmt->requested_date  = date('Y-m-d');
+    $EmpApplySalaryAmt->dedction_date  = $request->repdate;
+    $EmpApplySalaryAmt->reason  = $request->reason;
+    $EmpApplySalaryAmt->approver_flow  = "0";
+    $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
+    $EmpApplySalaryAmt->save();
+
+    return response()->json([
+        'status' => 'save successfully',
+        'message' => 'Done',
+
+     ]);
+
+
+
 
     }
 
