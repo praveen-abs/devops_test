@@ -102,6 +102,7 @@ class VmtSalaryAdvanceController extends Controller
             $salary_adv['max_eligible_amount'] = $calculatevalue;
             $salary_adv['Repayment_date'] = $repayment_months;
             $salary_adv['eligible'] = "0";
+            $salary_adv['percent_salary_amt'] = $employee_salary_adv->percent_salary_adv;
 
             return response()->json($salary_adv);
         } else {
@@ -136,9 +137,6 @@ class VmtSalaryAdvanceController extends Controller
         'message' => 'Done',
 
      ]);
-
-
-
 
     }
 
