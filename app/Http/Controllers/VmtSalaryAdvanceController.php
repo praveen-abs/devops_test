@@ -157,7 +157,7 @@ class VmtSalaryAdvanceController extends Controller
 
         public function saveLoanWithInterestSettings(Request $request,VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService)
         {
-           
+
             $validator = Validator::make(
                 $request->all(),
                 $rules = [
@@ -187,6 +187,11 @@ class VmtSalaryAdvanceController extends Controller
                                                                                         $request->deduction_starting_months,
                                                                                         $request->max_tenure_months,
                                                                                         $request->approver_flow);
+        }
+        public function getLoanWithInterestSettingDetails(Request $request,VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService){
+
+            
+
         }
 
 
