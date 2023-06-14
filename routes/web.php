@@ -823,6 +823,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showAssignEmp']);
     Route::post('/saveSalaryAdvanceSetting', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveSalaryAdvanceSettings']);
     Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEmployeeview']);
+    Route::get('/show-interest-free-loan-employeeinfo',[App\Http\Controllers\VmtSalaryAdvanceController::class,'']);
     Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'EmpSaveSalaryAmt']);
 
 

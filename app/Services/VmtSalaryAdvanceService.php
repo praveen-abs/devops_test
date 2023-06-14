@@ -12,7 +12,10 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployee;
 use App\Models\VmtLoanInterestSettings;
 use App\Models\VmtSalaryAdvSettings;
+use Carbon\Carbon;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
+use App\Models\VmtInterestFreeLoanSettings;
+use App\Models\VmtEmployeeInterestFreeLoanDetails;
 
 class VmtSalaryAdvanceService
 {
@@ -53,5 +56,9 @@ class VmtSalaryAdvanceService
 
 
 
+    }
+
+    public function  showInterestFreeLoanEmployeeinfo(){
+         dd('working');
     }
 }
