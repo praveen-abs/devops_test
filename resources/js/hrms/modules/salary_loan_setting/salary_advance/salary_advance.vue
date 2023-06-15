@@ -1,11 +1,11 @@
 <template>
-  <div class="px-1">
-    <div class="row d-flex justify-content-start align-items-center mt-4">
-      <div class="d-flex mt-4">
-        <div class="col-3 fs-4" style="position: relative; left: -8px;">
-          <h1 class="fw-bolder">Salary Advance Feature</h1>
-        </div>
-        <div class="col">
+    <div class="px-1">
+        <div class="row d-flex justify-content-start align-items-center mt-4">
+            <div class="d-flex mt-4">
+                <div class="col-3 fs-4" style="position: relative; left: -8px;">
+                    <h1 class="fw-bolder">Salary Advance Feature</h1>
+                </div>
+                <div class="col">
 
                     <button class="orange_btn "
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
@@ -94,7 +94,7 @@
                                                     @change="salaryStore.getSelectoption('client_name', opt5)" />
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
 
@@ -204,92 +204,52 @@
                     <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
                     <div class="card border-L">
-                        <!-- <div class="card-body">
-                            <div class="row">
-                                <div class="col-7 d-flex justify-content-start align-items-center">
-                                    <input type="radio" name="Dedution_method" checked>
-                                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        Line Manager
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        HR
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        Finance Admin
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="my-3 row">
-                                <div class="col-7 d-flex justify-content-start align-items-center">
-                                    <input type="radio" name="Dedution_method" checked>
-                                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        HR
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        Finance Admin
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="my-3 row">
-                                <div class="col-7 d-flex justify-content-start align-items-center">
-                                    <input type="radio" name="Dedution_method" checked>
-                                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        HR
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="my-3 row">
-                                <div class="col-7 d-flex justify-content-start align-items-center">
-                                    <input type="radio" name="Dedution_method" checked>
-                                    <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                                        <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                                        Finance Admin
-                                    </label>
-                                </div>
-                            </div>
-                        </div> -->
-
-
                         <div class="row d-flex py-3">
                             <div class="col col-3 my-3" style="width: 220px;">
-                                <P class="fs-4 mx-2">Employee Request <i
-                                        class="pi pi-arrow-right fs-4  text-red-400 mx-1"></i></P>
+                                <P class="fs-5 mx-1">Employee Request <i
+                                        class="pi pi-arrow-right fs-6  text-green-400 mx-1"></i></P>
                             </div>
-                            <!-- <button class=" text-blue-900" style="width: 30px;" @click="deletedrop" v-if="option == 1"><i
-                                    class="pi pi-minus-circle fs-4"></i> </button>
-
-                            <button @click="option = 1" class=" text-green-400" style="width: 40px;" v-if="option == 0" > <i
-                                    class="pi pi-plus-circle fs-4"></i></button> -->
-                            <div class="col col-3 " style=" width: 250px;">
-                                <div class="bg-slate-200 p-2 d-flex align-items-center rounded">
-                                    <Dropdown v-model="selectedCity1" editable :options="filteredApprovalFlow" optionLabel="name" 
-                                        placeholder="Select" class="w-full md:w-14rem pl-3"
+                            <div class="col col-3 ">
+                                <div class="bg-slate-200 p-1 d-flex align-items-center rounded w-10">
+                                    <Dropdown v-model="selectedCity1" editable :options="filteredApprovalFlow"
+                                        optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-2"
                                         @change="test(1, selectedCity1)" />
-                                </div>
-                            </div>
-                            <button @click="option1 = 1" class=" text-green-400 " style="width: 40px;">
-                                <i class="pi pi-plus-circle fs-4"></i></button>
-
-                            <div class="col col-3 " v-if="option1 == 1" style=" width: 250px;">
-                                <div class="bg-slate-200 p-2 ml-4 d-flex align-items-center rounded">
-                                    <Dropdown v-model="selectedCity2" editable :options="filteredApprovalFlow" optionLabel="name"
-                                        placeholder="Select" class="w-full md:w-14rem pl-3"
-                                        @change="test(2, selectedCity2)" />
-                                    <button @click="option1 = 0, test(4, selectedCity2)" v-if="option1 == 1">
+                                    <button @click="option1 = 0, test(4, selectedCity1)" v-if="selectedCity1" class="mx-2">
                                         <i class="pi pi-times fs-4  text-red-400 mx-1"></i>
                                     </button>
                                 </div>
+                                <button @click="option1 = 1" class=" text-green-400 " style="width: 40px;"
+                                    v-if="option1 == 0 && option == 1">
+                                    <i class="pi pi-plus-circle fs-4"></i></button>
+                                <button class=" text-green-400 " style="width: 40px;" v-if="option1 == 1">
+                                    <i class="pi pi-arrow-right fs-4"></i></button>
                             </div>
-                            <button @click="option2 = 1" class=" text-green-400 " v-if="option2 == 0 && option1 == 1"
-                                style="width: 40px;">
-                                <i class="pi pi-plus-circle fs-4"></i></button>
 
-                            <div class="col col-3 " v-if="option2 == 1" style=" width: 250px;">
-                                <div class="bg-slate-200 p-2 ml-4 d-flex align-items-center rounded">
-                                    <Dropdown v-model="selectedCity3" editable :options="filteredApprovalFlow" optionLabel="name"
-                                        placeholder="Select" class="w-full md:w-14rem pl-3"
+
+                            <div class="col col-3 " v-if="option1 == 1">
+                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10 col-8">
+                                    <Dropdown v-model="selectedCity2" editable :options="filteredApprovalFlow"
+                                        optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-0.5"
+                                        @change="test(2, selectedCity2)" />
+                                    <button @click="option1 = 0, test(5, selectedCity2)" v-if="option1 == 1">
+                                        <i class="pi pi-times fs-4  text-red-400 mx-1"></i>
+                                    </button>
+                                </div>
+                                <button @click="option2 = 1" class=" text-green-400 col-4" v-if="option2 == 0 && option1 == 1"
+                                    style="width: 40px;">
+                                    <i class="pi pi-plus-circle fs-4"></i></button>
+
+                                <button class=" text-green-400 " style="width: 40px;" v-if="option2 == 1">
+                                    <i class="pi pi-arrow-right fs-4"></i></button>
+                            </div>
+
+
+                            <div class="col col-3 " v-if="option2 == 1">
+                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10">
+                                    <Dropdown v-model="selectedCity3" editable :options="filteredApprovalFlow"
+                                        optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-2"
                                         @change="test(3, selectedCity3)" />
-                                    <button @click="option2 = 0 ,test(5, selectedCity3)" v-if="option2 == 1">
+                                    <button @click="option2 = 0, test(6, selectedCity3)" v-if="option2 == 1">
                                         <i class="pi pi-times fs-4  text-red-400 mx-1"></i>
                                     </button>
                                 </div>
@@ -339,18 +299,19 @@ const tet = (value) => {
 const test = (flow, value) => {
     console.log(value);
     if (flow == 1) {
+        option.value = 1
         selectedCity1.value = value.name
         let approvalflow = {
-            approver:value.name,
-            order:flow
+            approver: value.name,
+            order: flow
         }
         approvalFormat.push(approvalflow)
     }
     if (flow == 2) {
         selectedCity2.value = value.name
         let approvalflow = {
-            approver:value.name,
-            order:flow
+            approver: value.name,
+            order: flow
         }
         approvalFormat.push(approvalflow)
 
@@ -358,8 +319,8 @@ const test = (flow, value) => {
     if (flow == 3) {
         selectedCity3.value = value.name
         let approvalflow = {
-            approver:value.name,
-            order:flow
+            approver: value.name,
+            order: flow
         }
         approvalFormat.push(approvalflow)
     } else {
@@ -369,28 +330,39 @@ const test = (flow, value) => {
         console.log(value);
         var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
         console.log(itemsWithoutCurrent);
-        let removedOption = {name:itemsWithoutCurrent[0].name,val:itemsWithoutCurrent[0].val};
+        let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
+        console.log(removedOption);
+        filteredApprovalFlow.value.push(removedOption)
+        selectedCity1.value = ''
+        approvalFormat.pop()
+
+    }
+    if (flow == 5) {
+        console.log(value);
+        var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
+        console.log(itemsWithoutCurrent);
+        let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
         console.log(removedOption);
         filteredApprovalFlow.value.push(removedOption)
         selectedCity2.value = ''
         approvalFormat.pop()
 
-    } 
+    }
 
-    if(flow == 5){
+    if (flow == 6) {
         console.log(value);
         var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
         console.log(itemsWithoutCurrent);
-        let removedOption = {name:itemsWithoutCurrent[0].name,val:itemsWithoutCurrent[0].val};
+        let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
         console.log(removedOption);
         filteredApprovalFlow.value.push(removedOption)
         selectedCity3.value = ''
         approvalFormat.pop()
 
     }
-    
-        var itemsWithoutCurrent = filteredApprovalFlow.value.filter(function (x) { return x.val !== value.val; });
-        filteredApprovalFlow.value = itemsWithoutCurrent
+
+    var itemsWithoutCurrent = filteredApprovalFlow.value.filter(function (x) { return x.val !== value.val; });
+    filteredApprovalFlow.value = itemsWithoutCurrent
 
 }
 
