@@ -217,6 +217,29 @@ class VmtSalaryAdvanceService
 
     public function saveLoanWithInterestSettings($max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
     {
+        $validator = Validator::make(
+            $rules = [
+                "max_loan_amount" => 'required',
+                "loan_amt_interest" => "required",
+                "deduction_starting_months" => "required",
+                "max_tenure_months" => "required",
+                "approver_flow" => "required",
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
         try {
 
             $save_loan_setting_data = new VmtLoanInterestSettings;
