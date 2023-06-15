@@ -2537,12 +2537,12 @@
 
                   <div class="row">
                     <div class="text-right col-12">
-                     <input
+                     <!-- <input
                         type="button"
                         value="sample"
                         @click="Sampledata"
                         class="mr-4 text-center btn btn-orange processOnboardForm"
-                      />
+                      /> -->
 
                       <!-- <input class="btn btn-orange" type="button" value="check" @click="compensatoryCalWhileQuick"> -->
 
@@ -3330,32 +3330,15 @@ const submit = () => {
                     showCancelButton: false,
                 }).then((result) => {
                     if(checkIsQuickOrNormal.value == 'quick'){
-window.location.reload();
-        }
+
+                if (response.data.can_redirect == "1") {
+                 window.location.reload();
+              }
+          }
 
                 });
 
-        // if (response.data.can_redirect == "0"){
-        //      Swal.fire({
-        //             title: response.data.status = "success",
-        //             text: response.data.message,
-        //             icon: "success",
-        //             showCancelButton: false,
-        //         }).then((result) => {
 
-        //         });
-        // }
-        //         if (response.data.can_redirect == "1") {
-        //         Swal.fire({
-        //             title: response.data.status = "success",
-        //             text: response.data.message,
-        //             icon: "success",
-        //             showCancelButton: false,
-        //         }).then((result) => {
-        //             window.location.reload();
-
-        //         });
-        //     }
       employee_onboarding.save_draft_messege = response.data;
 
     })

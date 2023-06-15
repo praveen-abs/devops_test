@@ -285,8 +285,8 @@ class VmtInvestmentsController extends Controller
 
     public function declarationSummaryCalculation(Request $request)
     {
-
         $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
 
         // $v_form_template = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
         //     ->leftjoin('vmt_inv_formsection', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
@@ -300,7 +300,7 @@ class VmtInvestmentsController extends Controller
             ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
             ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
             ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
-            ->where('vmt_inv_f_emp_assigned.user_id', '1')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
             ->get(
                 [
                     'vmt_inv_formsection.section_id',
@@ -320,6 +320,8 @@ class VmtInvestmentsController extends Controller
                     'vmt_employee_compensatory_details.special_allowance',
                     'vmt_employee_compensatory_details.professional_tax',
                     'vmt_employee_details.doj',
+                    'vmt_inv_f_emp_assigned.is_sumbit'
+
                 ]
             )->toArray();
 
@@ -340,6 +342,8 @@ class VmtInvestmentsController extends Controller
 
         foreach ($v_form_template as $dec_amt) {
 
+            $isSubmitted['is_submitted'] = $dec_amt['is_sumbit'];
+          
             $empGeneralInfo['gross'] = $dec_amt['gross'];
             $empGeneralInfo['basic'] = $dec_amt['basic'];
             $empGeneralInfo['hra'] = $dec_amt['hra'];

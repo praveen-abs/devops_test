@@ -14,22 +14,31 @@ use Maatwebsite\Excel\Excel as ExcelExcel;
 class VmtPMSFormsMgmtController extends Controller
 {
 
-    public function getAllPMSFormTemplates(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
+    public function getAllPMSFormAuthors(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
 
 
-      return  $response = $PMSFormsMgmtService->getAllPMSFormTemplates();
+      return  $response = $PMSFormsMgmtService->getAllPMSFormAuthors();
 
 
+    }
+
+    public function getPMSFormUsageDetails(Request $request, VmtPMSFormsMgmtService $pmsFormsMgmtService){
+        return $pmsFormsMgmtService->getPMSFormUsageDetails($request->pms_form_id);
+    }
+
+    public function getPMSFormTemplateDetails(Request $request, VmtPMSFormsMgmtService $pmsFormsMgmtService){
+        return $pmsFormsMgmtService->getPMSFormTemplateDetails($request->pms_form_id);
     }
 
     public function getEmployeePMSFormTemplate_AsExcel(Request $request,VmtPMSFormsMgmtService $PMSFormsMgmtService){
         $pms_form_id=40;
 
         //$response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $request->pms_form_id);
-        $response = $PMSFormsMgmtService->getPMSFormforGivenPMSFormID( $pms_form_id);
+        $response = $PMSFormsMgmtService->getPMSTemplateDetails_AsExcel($pms_form_id);
+       // dd( $response);
         $form_name = $response['form_name'];
-        $headings = $response['columns'];
-        $form  = $response['pms_form_details'];
+        $headings = $response['headings'];
+        $form  = $response['form_details'];
         $end_column = num2alpha(count($headings)-1);
         return Excel::download(new PMSFormsExport( $form_name,$headings,$form,$end_column),$form_name, ExcelExcel::XLSX);
 
@@ -68,6 +77,10 @@ class VmtPMSFormsMgmtController extends Controller
 
     public function showPMSFormsMgmtPage_HRView(Request $request){
         return view('pms.vmt_pms_forms_mgmt_hr_view');
+    }
+
+    public function showPMSFormsMgmtPage(Request $request){
+        return view('pms.vmt_pms_forms_mgmt_main_view');
     }
 
 }

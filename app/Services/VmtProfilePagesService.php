@@ -253,10 +253,20 @@ class VmtProfilePagesService
 
         if(!empty($response['getEmployeeDetails']['marital_status_id']))
         {
-            $response['getEmployeeDetails']['marital_status'] = VmtMaritalStatus::where('id',$response['getEmployeeDetails']['marital_status_id'])->first()->name;
+            $query = VmtMaritalStatus::where('id',$response['getEmployeeDetails']['marital_status_id']);
+
+            // $response['getEmployeeDetails']['marital_status'] = VmtMaritalStatus::where('id',$response['getEmployeeDetails']['marital_status_id'])->first()->name;
+
+            if($query->exists())
+            {
+                $response['getEmployeeDetails']['marital_status'] = $query->first()->name;
+            }
+            else
+            {
+                $response['getEmployeeDetails']['marital_status'] = 'Undefined';
+            }
 
         }
-
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);
 

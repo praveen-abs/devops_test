@@ -75,6 +75,22 @@ class VmtReimbursementsService {
             ]);
         }
 
+        //check if reimbursements already applied for the given date by the user..
+        $query_reimbursements_exists = VmtEmployeeReimbursements::where('user_id', User::where('user_code', $user_code)->first()->id)
+                                        ->where('date', $date);
+
+
+        if($query_reimbursements_exists->exists())
+        {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Reimbursement data already applied for the given date",
+                "data"=> ""
+            ]);
+        }
+
+
+
         $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();
 
         //Save the reimbursement data
