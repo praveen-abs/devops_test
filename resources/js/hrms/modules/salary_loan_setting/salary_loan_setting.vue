@@ -74,6 +74,10 @@ onMounted(() => {
     useSalaryStore.getDropdownFilterDetails()
 })
 
-
-
 </script>
+
+<style>
+.page-content {
+    padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+}
+</style>

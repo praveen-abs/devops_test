@@ -31,6 +31,8 @@ class VmtSalaryAdvanceService
     public function getAllDropdownFilterSetting()
     {
 
+        $current_client_id = auth()->user()->client_id;
+
         try {
 
             $queryGetDept = Department::select('id', 'name')->get();
@@ -41,7 +43,32 @@ class VmtSalaryAdvanceService
 
             $queryGetstate = State::select('id', 'state_name')->distinct()->get();
 
-            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+            if($current_client_id == 1){
+
+                $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+            }
+               else if($current_client_id == 0){
+
+                $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+            }
+            elseif($current_client_id == 2){
+
+                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+
+            }
+            elseif($current_client_id == 3){
+
+                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+
+            }
+            elseif($current_client_id == 4){
+
+                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+
+            }
+
 
             $getsalary  = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
 
@@ -56,7 +83,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function showAssignEmp($department_id, $designation, $work_location, $client_name)
+    public function SalAdvSettingsTable($department_id,$designation,$work_location,$client_name)
     {
 
         try {
@@ -98,8 +125,7 @@ class VmtSalaryAdvanceService
     }
 
 
-    public function showEmployeeview()
-    {
+    public function SalAdvShowEmployeeView(){
 
         try {
 
@@ -120,14 +146,24 @@ class VmtSalaryAdvanceService
                 $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100;
 
 
-                $repayment_months = Carbon::now()->addMonths($employee_salary_adv->deduction_period_of_months)->format('Y-m-d');
+                $multiple_months=array();
+                for($i=1; $i<=$employee_salary_adv->deduction_period_of_months; $i++){
 
+                  $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
+
+                  array_push($multiple_months,$repayment_months);
+
+                }
+
+                // dd( $repayment_months);
 
                 $salary_adv['your_monthly_income'] = $emp_compensatory->net_income;
                 $salary_adv['max_eligible_amount'] = $calculatevalue;
-                $salary_adv['Repayment_date'] = $repayment_months;
+                $salary_adv['Repayment_date'] = $multiple_months;
                 $salary_adv['eligible'] = "0";
                 $salary_adv['percent_salary_amt'] = $employee_salary_adv->percent_salary_adv;
+
+                // dd($salary_adv);
 
                 return response()->json($salary_adv);
             } else {
@@ -144,7 +180,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function EmpSaveSalaryAmt($mxe, $ra, $repdate, $reason)
+    public function SalAdvEmpSaveSalaryAmt($mxe,$ra,$repdate,$reason)
     {
 
         try {
@@ -218,6 +254,29 @@ class VmtSalaryAdvanceService
 
     public function saveLoanWithInterestSettings($max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
     {
+        $validator = Validator::make(
+            $rules = [
+                "max_loan_amount" => 'required',
+                "loan_amt_interest" => "required",
+                "deduction_starting_months" => "required",
+                "max_tenure_months" => "required",
+                "approver_flow" => "required",
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
         try {
 
             $save_loan_setting_data = new VmtLoanInterestSettings;

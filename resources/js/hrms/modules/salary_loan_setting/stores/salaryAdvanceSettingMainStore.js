@@ -167,6 +167,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ifl);
         }
 
+        let url = '/saveSalaryAdvanceSetting' 
+        axios.post(url,ifl)
     }
 
     // Interest Free Loan Feature Ends
@@ -192,6 +194,17 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         isDeductedInsubsequentpayroll: ''
     })
 
+    const saveTravelAdvance  = () => {
+        if (isTravelAdvanceFeatureEnabled.value == '1') {
+            console.log("disabled");
+        } else {
+            console.log(ta);
+        }
+
+        let url = '/saveSalaryAdvanceSetting' 
+        axios.post(url,ta)
+    }
+
 
     // Travel Advance Feature Ends
 
@@ -208,6 +221,17 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         maxTenure: ''
 
     })
+
+    const saveLoanWithInterest  = () => {
+        if (isLoanWithInterestFeature.value == '1') {
+            console.log("disabled");
+        } else {
+            console.log(ta);
+        }
+
+        let url = '/saveSalaryAdvanceSetting' 
+        axios.post(url,lwif)
+    }
 
 
     // Loan With interest Feature Ends
@@ -250,11 +274,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Travel Advance Feature 
 
-        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,
+        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,saveTravelAdvance,
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif
+        isLoanWithInterestFeature, lwif,saveLoanWithInterest
 
 
 
