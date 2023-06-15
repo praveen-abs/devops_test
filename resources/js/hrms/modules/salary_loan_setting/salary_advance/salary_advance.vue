@@ -1,11 +1,11 @@
 <template>
-    <div class="px-1">
-        <div class="row d-flex justify-content-start align-items-center mt-4">
-            <div class="d-flex mt-4">
-                <div class="col-3 fs-4" style="position: relative; left: -8px;">
-                    <h1 class="fw-bolder">Salary Advance Feature</h1>
-                </div>
-                <div class="col">
+  <div class="px-1">
+    <div class="row d-flex justify-content-start align-items-center mt-4">
+      <div class="d-flex mt-4">
+        <div class="col-3 fs-4" style="position: relative; left: -8px;">
+          <h1 class="fw-bolder">Salary Advance Feature</h1>
+        </div>
+        <div class="col">
 
                     <button class="orange_btn "
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
@@ -309,6 +309,7 @@
         </div>
 
 
+    </div>
     </div>
 </template>
 <script setup>

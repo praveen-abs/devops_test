@@ -172,14 +172,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/process-employee-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'processEmployeeLeaveBalance'])->name('processEmployeeLeaveBalance');
 
     //PMS forms management
-    Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
+    //Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
     Route::get('/pms-forms-mgmt/get-PMS-score-averge-for-given-assingement-period', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSScoreAvergeForGivenAssingementPeriod'])->name('getPMSScoreAvergeForGivenAssingementPeriod');
     Route::get('/pms-forms-mgmt/get-employee-PMS-form-template-excel', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getEmployeePMSFormTemplate_AsExcel'])->name('getEmployeePMSFormTemplate_AsExcel');
     Route::get('/pms-forms-mgmt/fetch-PMS-form-details', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'fetchPMSFormDetails'])->name('fetchPMSFormDetails');
-    Route::get('/pms-forms-mgmt/get-all-PMS-form-Templates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormTemplates'])->name('getAllPMSFormTemplates');
-    Route::get('/pms-forms-mgmt/self-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_SelfView'])->name('showPMSFormsMgmtPage_SelfView');
-    Route::get('/pms-forms-mgmt/team-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_TeamView'])->name('showPMSFormsMgmtPage_TeamView');
-    Route::get('/pms-forms-mgmt/hr-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_HRView'])->name('showPMSFormsMgmtPage_HRView');
+    //Route::get('/pms-forms-mgmt/get-all-PMS-form-Templates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormTemplates'])->name('getAllPMSFormTemplates');
+    Route::get('/pms-forms-mgmt/get-all-PMS-form-Authors', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormAuthors'])->name('getAllPMSFormAuthors');
+    Route::post('/pms-forms-mgmt/getPMSFormUsageDetails', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSFormUsageDetails'])->name('getPMSFormUsageDetails');
+    Route::post('/pms-forms-mgmt/getPMSFormTemplateDetails', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSFormTemplateDetails'])->name('getPMSFormTemplateDetails');
+    // Route::get('/pms-forms-mgmt/self-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_SelfView'])->name('showPMSFormsMgmtPage_SelfView');
+    // Route::get('/pms-forms-mgmt/team-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_TeamView'])->name('showPMSFormsMgmtPage_TeamView');
+    // Route::get('/pms-forms-mgmt/hr-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_HRView'])->name('showPMSFormsMgmtPage_HRView');
+    Route::get('/pms-forms-mgmt', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage'])->name('showPMSFormsMgmtPage');
 
     //Attendance - AJAX
     Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
@@ -299,7 +303,7 @@ Route::middleware(['auth'])->group(function () {
         dd('done');
     });
 
-//update user details with proof
+    //update user details with proof
 
     Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
     Route::get('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
@@ -750,7 +754,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/configurations/attendance_settings', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
     Route::get('/attendance_settings/fetch-emp-details', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'fetchEmployeeDetails'])->name('attendance_settings-fetchEmployeeDetails');
     Route::post('/attendance_settings/save-shiftdetails', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
-    Route::get('/json-format-for-dummy-week-off-days',[App\Http\Controllers\VmtAttendanceSettingsController::class,'jsonFormatForDummyWeekOffDays'])->name('jsonFormatForDummyWeekOffDays');
+    Route::get('/json-format-for-dummy-week-off-days', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'jsonFormatForDummyWeekOffDays'])->name('jsonFormatForDummyWeekOffDays');
     // Document Setting
     Route::get('/documents_settings', function () {
         return view('configurations.vmt_documents_settings');
@@ -764,20 +768,27 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/documents/update_employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'updateEmployeeDocumentsSettings'])->name('updateEmployeeDocumentsSettings');
 
     //Holidays
+
+    //get holidays images
+
+    Route::get('/holiday/getHolidaysPicture', [App\Http\Controllers\VmtHolidaysController::class, 'getHolidaysPicture'])->name('getHolidaysPicture');
+    Route::get('/holiday/getHolidayslistPicture', [App\Http\Controllers\VmtHolidaysController::class, 'getHolidaysListImages'])->name('getHolidayslistPicture');
+
     ////Holidays creation
     Route::get('/holiday/master-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holiday-masterpage');
     Route::post('holiday/create_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('holiday-create-holiday');
     Route::get('/holiday/edit_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHoliday'])->name('edit-holiday');
-    Route::post('holidays/update_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
-    Route::get('holidays/delete_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
+    Route::post('holidays/update_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
+    Route::post('holidays/delete_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
 
     Route::get('/holidays/add_holidays', function () {
         return view('holidays.test_ui.add_holidays');
     })->name('add-holidays');
 
     //holiday list
-    Route::get('/holiday/visit-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysListPage'])->name('holiday-masterpage');
+    Route::get('/holiday/visit-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysList'])->name('holiday-masterpage');
     Route::post('holiday/create_holidaylist', [App\Http\Controllers\VmtHolidaysController::class, 'createHolidayList'])->name('holiday-create-holidaylist');
+    Route::get('/holidays/show_holidaysListDetails', [App\Http\Controllers\VmtHolidaysController::class, 'holidaysListDetails'])->name('show-holidaysListDetails');
     Route::get('/holidays/add_holidayslist', [App\Http\Controllers\VmtHolidaysController::class, 'fetchHolidays'])->name('add-holidayslist');
     Route::get('/holiday/edit_holiday_list/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHolidayList'])->name('edit-holiday-list');
     Route::post('holidays/update_holiday_list/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'updateHolidayList'])->name('update_holiday-list');
@@ -802,7 +813,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
     Route::post('/investments/fetchEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchEmpRentalDetails'])->name('fetchEmpRentalDetails');
-   // Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
+    // Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
     Route::post('/investments/fetchHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchHousePropertyDetails'])->name('fetchHousePropertyDetails');
     Route::post('/investments/fetchOtherExemption', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchOtherExemptionDetails'])->name('fetchOtherExemptionDetails');
     Route::post('/investments/deleteHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteHousePropertyDetails'])->name('deleteHousePropertyDetails');
@@ -820,15 +831,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/AssignEmpSalaryAdv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'AssignEmpSalaryAdv']);
     Route::get('/getAllDropdownFilter', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getAllDropdownFilterSetting']);
-    Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showAssignEmp']);
+    Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvSettingsTable']);
     Route::post('/saveSalaryAdvanceSetting', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveSalaryAdvanceSettings']);
-    Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEmployeeview']);
+    Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvShowEmployeeView']);
     Route::get('/show-interest-free-loan-employeeinfo',[App\Http\Controllers\VmtSalaryAdvanceController::class,'']);
-    Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'EmpSaveSalaryAmt']);
+    Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvEmpSaveSalaryAmt']);
 
 
+    //interest free loan saveIntersetFreeLoanSettings
+    Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
+    Route::get('/save-interset-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetFreeLoanSettings']);
 
-//loan with intrest
+
+    //loan with intrest
     Route::post('/saveLoanWithIntrest', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveLoanWithInterestSettings'])->name('save-LoanWithIntrestSettings');
 
     //Emp Mail Notifications
@@ -875,9 +890,9 @@ Route::middleware(['auth'])->group(function () {
 
     //notification
 
-        // Route::get('/home', [App\Http\Controllers\WebNotificationController::class, 'index'])->name('home');
-        // Route::post('/save-token', [App\Http\Controllers\WebNotificationController::class, 'saveToken'])->name('save-token');
-        // Route::post('/send-notification', [App\Http\Controllers\WebNotificationController::class, 'sendNotification'])->name('send.notification');
+    // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
+    // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
+    // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');

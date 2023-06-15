@@ -14,7 +14,7 @@ use \stdClass;
 use App\Models\User;
 use App\Models\VmtEmployee;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\WebNotificationController;
+use App\Http\Controllers\MobileNotificationController;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtNotifications;
 use Illuminate\Support\Facades\Validator;
@@ -27,23 +27,52 @@ class VmtNotificationsService {
 
     public function __construct(){
         $this->leave_module = [
-                                "employee_applies_leave" =>
-                                [
-                                    "title" => "Leave Request",
-                                    "body" => "has applied leave. Kindly check."
-                                ],
-                                "manager_approves_leave" => [
-                                    "title" => "Leave Status",
-                                    "body" => "has approved your leave request."
-                                ],
-                                "manager_rejects_leave" => [
-                                    "title" => "Leave Status",
-                                    "body" => "has rejected your leave request."
-                                ],
-                                "manager_withdraw_leave" => [
-                                    "title" => "Leave Status",
-                                    "body" => "has withdrawn his/her leave approval. Kindly check your updated leave status."
-                                ],
+                        "employee_applies_leave" =>
+                        [
+                            "title" => "Leave Request",
+                            "body" => "has applied leave. Kindly check."
+                        ],
+                        "manager_approves_leave" => [
+                            "title" => "Leave Status",
+                            "body" => "has approved your leave request. Kindly check."
+                        ],
+                        "manager_rejects_leave" => [
+                            "title" => "Leave Status",
+                            "body" => "has rejected your leave request. Kindly check."
+                        ],
+                        "manager_withdraw_leave" => [
+                            "title" => "Leave Status",
+                            "body" => "has withdrawn his/her leave approval. Kindly check your updated leave status."
+                        ],
+
+        ];
+
+        $this->attendance_regularization = [
+                        "employee_applies_lc" =>
+                        [
+                            "title" => "Attendance Regularization Request",
+                            "body" => "has applied LC attendance regularization. Kindly check."
+                        ],
+                        "employee_applies_eg" => [
+                            "title" => "Attendance Regularization Request",
+                            "body" => "has applied EG attendance regularization. Kindly check."
+                        ],
+                        "employee_applies_mip" => [
+                            "title" => "Attendance Regularization Request",
+                            "body" => "has applied MIP attendance regularization. Kindly check."
+                        ],
+                        "employee_applies_mop" => [
+                            "title" => "Attendance Regularization Request",
+                            "body" => "has applied MOP attendance regularization. Kindly check."
+                        ],
+                        "manager_approves_attendance_reg" => [
+                            "title" => "Attendance Regularization Approved",
+                            "body" => "has approved your attendance regularization. Kindly check."
+                        ],
+                        "manager_rejects_attendance_reg" => [
+                            "title" => "Attendance Regularization Rejected",
+                            "body" => "has rejected your attendance regularization. Kindly check."
+                        ],
 
         ];
 
@@ -178,8 +207,8 @@ class VmtNotificationsService {
         Sends an FCM notification
 
     */
-    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_users_ids,$leave_module_type){
-
+    public function sendLeaveApplied_FCMNotification($manager_user_code, $notif_user_id,$leave_module_type,$notifications_users_id =null)
+    {
 
         //Validate
         $validator = Validator::make(
@@ -210,42 +239,139 @@ class VmtNotificationsService {
 
             $notif_title = $this->leave_module[$leave_module_type]["title"];
             $notif_body = $this->leave_module[$leave_module_type]["body"];
-            $employee_data= User::where('user_code', $notif_users_ids)->first();
+            $employee_data= User::where('user_code', $notif_user_id)->first();
             $manager_data= User::where('user_code', $manager_user_code)->first();
 
 
-            if(empty($manager_data->fcm_token))
-            {
-                return response()->json([
-                    "status" => "failure",
-                    "message" => "FCM Token missing for the user : ".$manager_user_code,
-                    "data" => ''
-                ]);
-            }
-            else{
 
                 //Send Firebase notifications
           if($leave_module_type =='employee_applies_leave'){
 
+                  $notify_users_fcm_token=array();
+             if(!empty($notifications_users_id)){
 
-            $notif_body=$employee_data->name.' '.$notif_body;
-            $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$manager_data->fcm_token);
+            foreach ($notifications_users_id as $single_user_id) {
 
-            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
-            return $response;
+                $notify_users_data= User::where('id', $single_user_id)->first();
 
-          }else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_withdraw_leave' ||$leave_module_type =='manager_rejects_leave')
-          {
-            $notif_body=$manager_data->name.' '.$notif_body;
-            $response =(new WebNotificationController)->sendWebNotification($notif_title,$notif_body,$employee_data->fcm_token);
+                    if( !empty($notify_users_data)){
 
-            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
-            return $response;
-          }
-
-
+                        $notify_users_fcm_token[]=$notify_users_data->fcm_token;
+                    }
 
             }
+        }
+           $notify_users_fcm_token[]=$manager_data->fcm_token;
+
+
+            $notif_body=$employee_data->name.' '.$notif_body;
+
+                    $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$notify_users_fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
+
+                   return $response;
+
+          }
+          else if($leave_module_type =='manager_approves_leave' || $leave_module_type =='manager_withdraw_leave' ||$leave_module_type =='manager_rejects_leave')
+           {
+            $notif_body=$manager_data->name.' '.$notif_body;
+
+                 $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$employee_data->fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='Leave Module', $manager_data->user_code, $is_read='0');
+
+                  return $response;
+          }
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to send FCM notification",
+                "data" => $e,
+            ]);
+        }
+
+
+    }
+    public function send_attendance_regularization_FCMNotification($manager_user_code, $notif_user_id,$attendance_regularization_type)
+    {
+
+        //Validate
+        $validator = Validator::make(
+            $data = [
+                'manager_user_code' => $manager_user_code,
+            ],
+            $rules = [
+                'manager_user_code' => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+            //Get manager FCM Token
+
+            //    echo json_encode($leave_module["employee_applies_leave"]["title"]);
+
+            $notif_title = $this->attendance_regularization[$attendance_regularization_type]["title"];
+            $notif_body = $this->attendance_regularization[$attendance_regularization_type]["body"];
+            $employee_data= User::where('id', $notif_user_id)->first();
+            $manager_data= User::where('user_code', $manager_user_code)->first();
+
+
+
+                //Send Firebase notifications
+          if($attendance_regularization_type =='employee_applies_lc' ||$attendance_regularization_type =='employee_applies_eg'||$attendance_regularization_type =='employee_applies_mop'||$attendance_regularization_type =='employee_applies_mip'){
+
+            //       $notify_users_fcm_token=array();
+            //  if(!empty($notifications_users_id)){
+
+            // foreach ($notifications_users_id as $single_user_id) {
+
+            //     $notify_users_data= User::where('id', $single_user_id)->first();
+
+            //         if( !empty($notify_users_data)){
+
+            //             $notify_users_fcm_token[]=$notify_users_data->fcm_token;
+            //         }
+
+           //  }
+       // }
+           $notify_users_fcm_token=$manager_data->fcm_token;
+
+
+            $notif_body=$employee_data->name.' '.$notif_body;
+
+                    $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$notify_users_fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='attendance_regularization', $manager_data->user_code, $is_read='0');
+
+                   return $response;
+
+          }
+          else if($attendance_regularization_type =='manager_approves_attendance_reg' || $attendance_regularization_type =='manager_rejects_attendance_reg')
+           {
+            $notif_body=$manager_data->name.' '.$notif_body;
+
+
+                 $response =(new MobileNotificationController)->sendMobNotification($notif_title,$notif_body,$employee_data->fcm_token);
+
+            $savenotification =$this->saveNotification($employee_data->user_code, $notif_title, $notif_body, $redirect_to_module ='attendance_regularization', $manager_data->user_code, $is_read='0');
+
+                  return $response;
+          }
 
         }
         catch(\Exception $e){

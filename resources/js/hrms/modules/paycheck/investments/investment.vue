@@ -15,11 +15,11 @@
                             data-bs-target="#exemptions" role="tab" aria-controls="pills-home" aria-selected="true">
                             Investments and Exemptions</a>
                     </li>
-                    <li class=" nav-item ember-view" role="presentation">
+                    <!-- <li class=" nav-item ember-view" role="presentation">
                         <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#investmentComputation" role="tab" aria-controls="pills-home" aria-selected="true">
                             Income Tax Computations</a>
-                    </li>
+                    </li> -->
                     <!-- <li class="mx-4 nav-item ember-view" role="presentation">
                         <a class="mx-4 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill" href=""
                             data-bs-target="#form_12bb" role="tab" aria-controls="pills-home" aria-selected="true">
