@@ -605,7 +605,7 @@ $i=array_keys($excelRowdata_row);
             $query_payslip= VmtPayroll::where('client_id',$user->client_id)->whereMonth('payroll_date', $month)
                                         ->whereYear('payroll_date', $year)->first();
 
-            if(!$query_payslip->exists())
+            if(empty($query_payslip))
             {
                 return response()->json([
                     'status' => 'failure',

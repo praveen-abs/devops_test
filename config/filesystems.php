@@ -77,4 +77,7 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'authentication_key' =>[ env('FIREBASE_SERVER_KEY')
+],
+
 ];

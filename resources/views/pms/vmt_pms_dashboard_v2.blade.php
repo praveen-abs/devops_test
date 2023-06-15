@@ -922,21 +922,24 @@
                                 <div class="col-sm-12 col-md-5 col-lg-5 col-xxl-5 col-xl-5">
                                     <label class="form-label">Select existing form from the Dropdown</label>
                                 </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6">
+                                <div class="col-sm-8 col-md-6 col-lg-6 col-xl-6 col-xl-6 w-80">
                                     {{-- <form id="kpiTableForm"> --}}
                                     @csrf
 
-                                    <select name="selected_kpi_form_id"
+                                    <select name="selected_kpi_form_id" id="selected_kpi_form_id"
                                         class="ms-2 selectedKpiFormClass form-select form-control mb-2">
 
                                     </select>
 
                                 </div>
                                 <div
-                                    class="col-sm-12 col-md-1 col-lg-1 col-xxl-1 col-xl-1 d-flex align-items-center text-start">
+                                    class="col-sm-8 col-md-1 col-lg-1 col-xxl-1 col-xl-1 d-flex align-items-center text-start ">
                                     <i class="fa fa-refresh	refreshKPIFormDetails" aria-hidden="true"></i>
                                 </div>
-
+                                <div
+                                    class="col-sm-12 col-md-1 col-lg-1 col-xxl-1 col-xl-1 d-flex align-items-center text-start w-40">
+                                    <button class="btn btn-orange mt-2 w-40" id="view-form">View Form</button>
+                                </div>
                                 </form>
                                 <div
                                     class="col-sm-12 col-md-6 col-lg-6 col-xxl-6 col-xl-6 d-flex align-items-center text-start">
@@ -1929,6 +1932,14 @@
                 // $('.avatar-group-item').html(imgHtml);
             @endif
         }
+
+        $("#view-form").click(function(e) {
+            e.preventDefault();
+
+            console.log("hi")
+            let selected_kpi_form_id = $('#selected_kpi_form_id').val();
+            console.log("Viewing PMS form of "+selected_kpi_form_id);
+        });
 
         //
         $("#publish-goal").click(function(e) {

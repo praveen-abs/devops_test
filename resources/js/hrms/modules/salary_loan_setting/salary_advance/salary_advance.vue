@@ -45,9 +45,8 @@
                                             class="border-color " style="height: 3em" />
                                     </span>
 
-                                </div>
-
-                                <div class="col-12">
+                </div>
+                <div class="col-12">
 
                                     <div class="col-12">
                                         <div class="px-2 row">
@@ -118,9 +117,12 @@
                     </div>
                 </div>
 
-                <div class="col mt-4">
-                    <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
-                    <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
+
+
+
+          <div class="col mt-4">
+            <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
+            <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
                     <div class="shadow-sm card border-L rounded-top">
                         <div class="card-body">

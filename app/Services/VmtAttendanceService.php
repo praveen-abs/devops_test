@@ -532,6 +532,8 @@ class VmtAttendanceService
             //Create array from CSV value
             $array_notif_ids = explode(',',$notifications_users_id);
 
+
+
            // dd($array_notif_ids);
             $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id', $array_notif_ids)->pluck('officical_mail');
         }
@@ -539,16 +541,23 @@ class VmtAttendanceService
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
 
         //Save in notifications table
-        $serviceNotificationsService->saveNotification(
-            user_code: $query_user->user_code,
-            notification_title: "Leave request applied",
-            notification_body: "Kindly take action",
-            redirect_to_module: "Leave Approvals",
-            recipient_user_code: $manager_emp_code,
-            is_read: 0
+        // $serviceNotificationsService->saveNotification(
+        //     user_code: $query_user->user_code,
+        //     notification_title: "Leave request applied",
+        //     notification_body: "Kindly take action",
+        //     redirect_to_module: "Leave Approvals",
+        //     recipient_user_code: $manager_emp_code,
+        //     is_read: 0
 
 
+       // );
+       $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
+            notif_users_ids: $query_user->user_code,
+            leave_module_type:'employee_applies_leave',
+            manager_user_code: $manager_emp_code,
+            notifications_users_id: $array_notif_ids,
         );
+
 
         $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
             uEmployeeName: $query_user->name,
@@ -567,15 +576,16 @@ class VmtAttendanceService
         ));
 
         if ($isSent) {
-            $mail_status = "Mail sent successfully";
+            $mail_status = "success";
         } else {
-            $mail_status = "There was one or more failures.";
+            $mail_status = "failure";
         }
 
         $response = [
             'status' => 'success',
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
+            'notification' => $res_notification ,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -583,7 +593,7 @@ class VmtAttendanceService
         return $response;
     }
 
-    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment)
+    public function approveRejectRevokeLeaveRequest($record_id, $approver_user_code, $status, $review_comment,VmtNotificationsService $serviceNotificationsService)
     {
 
         $validator = Validator::make(
@@ -667,25 +677,37 @@ class VmtAttendanceService
         );
 
         if ($isSent) {
-            $mail_status = "Mail sent successfully";
+            $mail_status = "success";
         } else {
-            $mail_status = "There was one or more failures.";
+            $mail_status = "failure";
         }
 
-        if ($status == "Approved")
+        if ($status == "Approved"){
             $text_status = "approved";
+           $leave_module_type ='manager_approves_leave';
+        }
         else
-        if ($status == "Rejected")
+        if ($status == "Rejected"){
             $text_status = "rejected";
+            $leave_module_type ='manager_rejects_leave';
+        }
         else
-        if ($status == "Revoked")
+        if ($status == "Revoked"){
             $text_status = "revoked";
+           $leave_module_type ='manager_withdraw_leave';
+        }
+         $users_id=VmtEmployeeOfficeDetails::where('l1_manager_code',$approver_user_code)->first()->user_id;
 
-
+        $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
+                notif_users_ids:User::where('id',$users_id)->first()->user_code,
+                leave_module_type:$leave_module_type,
+                manager_user_code: $approver_user_code,
+            );
         $response = [
             'status' => 'success',
             'message' => 'Leave Request ' . $text_status . ' successfully',
             'mail_status' => $mail_status,
+            'notification' => $res_notification ,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -1501,6 +1523,11 @@ class VmtAttendanceService
 
         $user_id = User::where('user_code', $user_code)->first()->id;
 
+        /*
+        1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
+        2,then check wheather the user have workshiftid or not.
+        */
+
         //Check if user already checked-in
         $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
 
@@ -1511,6 +1538,16 @@ class VmtAttendanceService
                 'data'   => ""
             ]);
         }
+
+        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active','1')->first();
+
+        if(empty( $vmt_employee_workshift->work_shift_id)){
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'No shift has been assigned',
+                'data'   => ""
+            ]);
+    }
 
 
         //If check-in not done already , then create new record
@@ -1523,10 +1560,9 @@ class VmtAttendanceService
         $attendanceCheckin->work_mode = $work_mode; //office, home
         $attendanceCheckin->checkin_comments = "";
         $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
-        $attendanceCheckin->vmt_employee_workshift_id = "1"; //TODO : Need to fetch from 'vmt_employee_workshifts'
+        $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
         $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
         $attendanceCheckin->save();
-
         // processing and storing base64 files in public/selfies folder
         if (!empty('selfie_checkin')) {
 
