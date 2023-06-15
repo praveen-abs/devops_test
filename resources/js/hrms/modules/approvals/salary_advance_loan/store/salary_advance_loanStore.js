@@ -7,6 +7,7 @@ export const UseSalaryAdvanceApprovals =defineStore('SalaryAdvanceApprovals',()=
 
     // variables
     const arraySalaryAdvance =ref();
+    const currentlySelectedStatus =ref();
 
     // functions
 
@@ -20,14 +21,32 @@ export const UseSalaryAdvanceApprovals =defineStore('SalaryAdvanceApprovals',()=
 
     }
 
-    async function submit(){
+    async function submitSalaryAdvanceApproveAndRejectALL(Status,val){
+        currentlySelectedStatus.value = Status;
+        console.log(Status);
+        let data = val;
+        await axios.post('http://localhost:3000/submitApproveAndReject',{
+            record_id: data ,
+            status:
+                currentlySelectedStatus == "Approve"
+                    ? "Approved"
+                    : currentlySelectedStatus == "Reject"
+                        ? "Rejected"
+                        : currentlySelectedStatus,
+            reviewer_comments: "",
+        }).then(()=>{
+
+
+        });
 
     }
 
 
     return{
-         arraySalaryAdvance
-        ,getEmpDetails
+         arraySalaryAdvance,currentlySelectedStatus
+
+        ,getEmpDetails,
+        submitApproveAndRejectALL
 
     }
 

@@ -9,7 +9,7 @@
 
                 <div class="float-right ">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button @click="openPosition('top')" class="mx-4 btn btn-orange">
+                    <button @click="ShowDialogApprovalAll" class="mx-4 btn btn-orange">
                         <!-- <i class="mx-2 fa fa-plus"
                             aria-hidden="true"></i> -->
                             Approval All</button>
@@ -69,7 +69,20 @@
             <Column field="Date" header="Date" >
 
             </Column>
-            <Column field="Status" header="Status" ></Column>
+            <Column field="Status" header="Status"  >
+                <template #body="slotProps">
+                    <!-- {{ slotProps.data.Status }} -->
+                    <h6 v-if="slotProps.data.Status == 'Pending'" class="text-orange-500">
+                        {{slotProps.data.Status}}
+                    </h6>
+                    <h6 v-if="slotProps.data.Status == 'Approved'" class=" text-green-500" >
+                    {{slotProps.data.Status }}
+                    </h6>
+                    <h6 v-if="slotProps.data.Status=='Rejected'" class="text-red-500">
+                        {{slotProps.data.Status }}
+                    </h6>
+                </template>
+            </Column>
             <template #expansion="slotProps">
                 <div>
                     <DataTable :value="slotProps.data.emp_details" responsiveLayout="scroll"
@@ -85,16 +98,6 @@
                         </Column>
 
                         <Column field="" header="Action">
-                            <!-- <template #body="slotProps">
-                                <span>
-                                    <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"
-                                        label="Approve" @click="showConfirmDialog(slotProps.data, 'Approve')"
-                                        style="height: 2.5em" />
-                                    <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button"
-                                        label="Reject" style="margin-left: 8px; height: 2.5em"
-                                        @click="showConfirmDialog(slotProps.data, 'Reject')" />
-                                </span>
-                            </template> -->
                             <template #body="slotProps">
                                 <div>
                                     <Button type="button" icon="pi pi-eye" class="p-button-success Button"
@@ -114,7 +117,19 @@
         </div>
     </div>
 
-
+    <Dialog header="Confirmation" v-model:visible="canShowConfirmationAll"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '400px' }" :modal="true">
+            <div class="confirmation-content">
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of this employee?</span>
+            </div>
+            <template #footer>
+                <Button label="Yes" icon="pi pi-check" @click="processBulkApproveReject('Approve')" class="p-button-text"
+                    autofocus />
+                    <!-- <button class="btn"></button> -->
+                <Button label="No" icon="pi pi-times" @click="hideBulkConfirmDialog(true)" class="p-button-text" />
+            </template>
+        </Dialog>
 
 
 
@@ -172,7 +187,7 @@
       <h5 style="text-align: center">Please wait...</h5>
     </template>
   </Dialog>
-  {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
+  <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
 </template>
 
 
@@ -190,7 +205,7 @@ const selectedAllEmployee =  ref();
 const currentlySelectedStatus = ref();
 const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
-
+const canShowConfirmationAll = ref(false);
 const required_Amount = reactive({
     required_Amount:""
 })
@@ -219,13 +234,27 @@ function showConfirmDialog(selectedRowData, status){
     currentlySelectedRowData.value = selectedRowData;
     required_Amount.required_Amount = selectedRowData.Advance_Amount
     console.log( required_Amount.required_Amount);
-//    console.log(required_Amount.required_Amount.value);
-
 }
 
 async function approveAndReject(data){
-    console.log(currentlySelectedRowData.value,data);
+    currentlySelectedStatus.value = data;
 }
+
+function ShowDialogApprovalAll(){
+    canShowConfirmationAll.value = true;
+}
+
+function hideBulkConfirmDialog(){
+    canShowConfirmationAll.value = false;
+}
+
+async function processBulkApproveReject(status){
+    hideBulkConfirmDialog();
+    currentlySelectedStatus.value= status;
+    await SalaryAdvanceApprovals.submitApproveAndRejectALL(currentlySelectedStatus.value,SalaryAdvanceApprovals.arraySalaryAdvance);
+}
+
+
 
 
 </script>
