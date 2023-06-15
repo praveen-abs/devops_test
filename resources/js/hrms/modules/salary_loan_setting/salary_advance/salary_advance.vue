@@ -1,7 +1,7 @@
 <template>
     <div class="px-1">
-        <div class="row d-flex justify-content-start align-items-center mt-4">
-            <div class="d-flex mt-4">
+        <div class="row d-flex justify-content-start align-items-center">
+            <div class="d-flex ">
                 <div class="col-3 fs-4" style="position: relative; left: -8px;">
                     <h1 class="fw-bolder">Salary Advance Feature</h1>
                 </div>
@@ -236,7 +236,7 @@
                                         <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
                                     </button>
                                 </div>
-                                <button @click="option2 = 1" class=" text-green-400 col-4" v-if="option2 == 0 && option1 == 1"
+                                <button @click="option2 = 1" class=" text-green-400 " v-if="option2 == 0 && option1 == 1"
                                     style="width: 40px;">
                                     <i class="pi pi-plus-circle fs-4"></i></button>
 
