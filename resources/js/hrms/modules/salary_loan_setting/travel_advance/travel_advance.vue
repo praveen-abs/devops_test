@@ -14,10 +14,10 @@
                         Disabled
                     </button>
                     <button class="Enable_btn" :class="[
-                            salaryStore.isTravelAdvanceFeatureEnabled === 2
-                                ? 'bg-green-700 text-white'
-                                : '',
-                        ]" @click="salaryStore.isTravelAdvanceFeatureEnabled = 2">
+                        salaryStore.isTravelAdvanceFeatureEnabled === 2
+                            ? 'bg-green-700 text-white'
+                            : '',
+                    ]" @click="salaryStore.isTravelAdvanceFeatureEnabled = 2">
                         Enable
                     </button>
                 </div>
@@ -45,54 +45,61 @@
                 </div>
                 <div class=" col-12">
                     <div class="rounded-lg shadow-sm card">
-                      <div class="card-body " style="border-top:4px solid var(--navy) ; border-radius: 4px 4px 0 0 ;">
-                        <div class="row ">
-                          <div class="col-9">
-                            <h1 style="border-left:4px solid var(--orange); padding-left: 15px; font-size: 18px;">Employees</h1>
-                          </div>
-                          <div class="col-3">
-                            <span class="p-input-icon-left">
-                              <i class="pi pi-search" />
-                              <InputText placeholder="Search" v-model="filters['global'].value" class="border-color "
-                                style="height: 3em" />
-                            </span>
+                        <div class="card-body " style="border-top:4px solid var(--navy) ; border-radius: 4px 4px 0 0 ;">
+                            <div class="row ">
+                                <div class="col-9">
+                                    <h1 style="border-left:4px solid var(--orange); padding-left: 15px; font-size: 18px;">
+                                        Employees</h1>
+                                </div>
+                                <div class="col-3">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search" />
+                                        <InputText placeholder="Search" v-model="filters['global'].value"
+                                            class="border-color " style="height: 3em" />
+                                    </span>
 
-                          </div>
-                          <div class="col-12">
+                                </div>
+                                <div class="col-12">
 
-                            <div class="col-12">
-                              <div class="px-2 row">
-                                <div class="col">
-                                  <div style="padding: 10px"
-                                    class="border rounded d-flex justify-content-start align-items-center border-color">
-                                    <input type="checkbox" class="mr-3" style="width: 20px; height: 20px" @change="salaryStore.resetFilters" />
-                                    <h1>Clear Filters</h1>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department"
-                                    optionLabel="name" optionValue="id" @change="salaryStore.getSelectoption('department', opt)"
-                                    placeholder="Department" class="w-full text-red-500 md: border-color" />
-                                </div>
-                                <div class="col">
-                                  <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation"
-                                    optionLabel="designation" optionValue="designation" placeholder="Designation"
-                                    class="w-full text-red-500 md: border-color"
-                                    @change="salaryStore.getSelectoption('designation', opt1)" />
-                                </div>
-                                <div class="col">
-                                  <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location"
-                                    optionLabel="work_location" optionValue="work_location" placeholder="Location"
-                                    class="w-full text-red-500 md: border-color"
-                                    @change="salaryStore.getSelectoption('work_location', opt2)" />
-                                </div>
-                                <div class="col">
-                                  <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state"
-                                    optionLabel="state_name" optionValue="id" placeholder="State"
-                                    class="w-full text-red-500 md: border-color"
-                                    @change="salaryStore.getSelectoption('state', opt3)" />
-                                </div>
-                                <div class="col">
+                                    <div class="col-12">
+                                        <div class="px-2 row">
+                                            <div class="col">
+                                                <div style="padding: 10px"
+                                                    class="border rounded d-flex justify-content-start align-items-center border-color">
+                                                    <input type="checkbox" class="mr-3" style="width: 20px; height: 20px"
+                                                        @change="salaryStore.resetFilters" />
+                                                    <h1>Clear Filters</h1>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <Dropdown v-model="opt" editable
+                                                    :options="salaryStore.dropdownFilter.department" optionLabel="name"
+                                                    optionValue="id"
+                                                    @change="salaryStore.getSelectoption('department', opt)"
+                                                    placeholder="Department" class="w-full text-red-500 md: border-color" />
+                                            </div>
+                                            <div class="col">
+                                                <Dropdown v-model="opt1" editable
+                                                    :options="salaryStore.dropdownFilter.designation"
+                                                    optionLabel="designation" optionValue="designation"
+                                                    placeholder="Designation" class="w-full text-red-500 md: border-color"
+                                                    @change="salaryStore.getSelectoption('designation', opt1)" />
+                                            </div>
+                                            <div class="col">
+                                                <Dropdown v-model="opt2" editable
+                                                    :options="salaryStore.dropdownFilter.location"
+                                                    optionLabel="work_location" optionValue="work_location"
+                                                    placeholder="Location" class="w-full text-red-500 md: border-color"
+                                                    @change="salaryStore.getSelectoption('work_location', opt2)" />
+                                            </div>
+                                            <div class="col">
+                                                <Dropdown v-model="opt3" editable
+                                                    :options="salaryStore.dropdownFilter.state" optionLabel="state_name"
+                                                    optionValue="id" placeholder="State"
+                                                    class="w-full text-red-500 md: border-color"
+                                                    @change="salaryStore.getSelectoption('state', opt3)" />
+                                            </div>
+                                            <div class="col">
 
 
                                     <!-- table components  -->
@@ -102,23 +109,24 @@
                             </div>
                           </div>
 
-                          <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
-                            :value="salaryStore.eligbleEmployeeSource"
-                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                            :rowsPerPageOptions="[5, 10, 25]" :filters="filters" v-model:selection="salaryStore.sa.eligibleEmployee"
-                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                            responsiveLayout="scroll">
-                            <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column>
-                            <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
-                            <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
-                            <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
-                            <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
-                            <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
-                            <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
-                          </DataTable>
+                            <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
+                                :value="salaryStore.eligbleEmployeeSource"
+                                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
+                                v-model:selection="salaryStore.sa.eligibleEmployee"
+                                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                                responsiveLayout="scroll">
+                                <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column>
+                                <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
+                                <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
+                                <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
+                                <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
+                                <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
+                                <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
+                            </DataTable>
                         </div>
-                      </div>
                     </div>
+                </div>
 
 
 
@@ -194,7 +202,7 @@
                                 </div>
 
                                 <div class="col d-flex align-items-center fs-5 txt_underline">
-                                    <h1 class="text-primary" @click="dialog_ViewExample_Visible = true" >
+                                    <h1 class="text-primary" @click="dialog_ViewExample_Visible = true">
                                         View Example
                                     </h1>
                                 </div>
@@ -206,67 +214,66 @@
                                             :style="{ width: '60vw' }">
                                             <template #header>
                                                 <div>
-                                                    <h1 style="border-left: 3px solid var(--orange); padding-left: 8px;" class="fs-4 ">Travel Advance Deduction Example</h1>
+                                                    <h1 style="border-left: 3px solid var(--orange); padding-left: 8px;"
+                                                        class="fs-4 ">Travel Advance Deduction Example</h1>
                                                 </div>
                                             </template>
                                             <div class="card">
-                                                    <DataTable :value="sample" rowGroupMode="rowspan"
-                                                        groupRowsBy="selected"
-                                                        sortField="selected"
-                                                      showGridlines>
+                                                <DataTable :value="sample" rowGroupMode="rowspan" groupRowsBy="selected"
+                                                    sortField="selected" showGridlines>
 
-                                                        <Column field="selected" header="if Selected" class="bg-light"></Column>
-                                                        <Column field="ta" header="Travel Advance ">
-                                                        </Column>
-                                                        <Column field="bs" header="Bills Submited"> </Column>
-                                                        <Column field="epa" header="Payable Amount to the Employee">
-                                                            <template #body="slotprops">
-                                                                <div v-if="slotprops.data.epa == '56,000'">
+                                                    <Column field="selected" header="if Selected" class="bg-light"></Column>
+                                                    <Column field="ta" header="Travel Advance ">
+                                                    </Column>
+                                                    <Column field="bs" header="Bills Submited"> </Column>
+                                                    <Column field="epa" header="Payable Amount to the Employee">
+                                                        <template #body="slotprops">
+                                                            <div v-if="slotprops.data.epa == '56,000'">
 
-                                                                    {{ slotprops.data.epa }}  <br>
-                                                                    <span>(Note: The Total amount be will Deducted in FNF)</span>
-
-                                                                </div>
-
-                                                                <div v-if="slotprops.data.epa == '6,000'">
-                                                                    {{ slotprops.data.epa }}
-                                                                    <br>
-                                                                    <span>(Note: Total amount be will refunded in subsequent payroll)</span>
-                                                                </div>
-                                                                <div v-if="slotprops.data.epa == '-2000'">
-                                                                    {{ slotprops.data.epa }}
-                                                                    <br>
-                                                                    <span>(Note: The Total amount be will Deducted in subsequent Payroll)</span>
-
-                                                                </div>
-
-                                                            </template>
-                                                        </Column>
-
-                                                        <template #body>
-                                                            <div >
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-
-
-                                                                        </td>
-                                                                    </tr>
-
-                                                                </tbody>
+                                                                {{ slotprops.data.epa }} <br>
+                                                                <span>(Note: The Total amount be will Deducted in
+                                                                    FNF)</span>
 
                                                             </div>
-                                                        </template>
 
-                                                    </DataTable>
-                                                </div>
+                                                            <div v-if="slotprops.data.epa == '6,000'">
+                                                                {{ slotprops.data.epa }}
+                                                                <br>
+                                                                <span>(Note: Total amount be will refunded in subsequent
+                                                                    payroll)</span>
+                                                            </div>
+                                                            <div v-if="slotprops.data.epa == '-2000'">
+                                                                {{ slotprops.data.epa }}
+                                                                <br>
+                                                                <span>(Note: The Total amount be will Deducted in subsequent
+                                                                    Payroll)</span>
+
+                                                            </div>
+
+                                                        </template>
+                                                    </Column>
+
+                                                    <template #body>
+                                                        <div>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+
+
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+
+                                                        </div>
+                                                    </template>
+
+                                                </DataTable>
+                                            </div>
 
                                         </Dialog>
                                     </div>
                                 </template>
-                                <!-- <template> -->
-
-                                            <!-- </template> -->
                             </div>
                         </div>
                     </div>
@@ -377,7 +384,7 @@
             <div class="col">
                 <div class="float-right" v-if="salaryStore.isTravelAdvanceFeatureEnabled == '2'">
                     <button class="btn btn-border-primary">Cancel</button>
-                    <button class="mx-4 btn btn-primary" @click="salaryStore.saveInterestfreeLoan">
+                    <button class="mx-4 btn btn-primary" @click="salaryStore.saveTravelAdvance">
                         Save Changes
                     </button>
                 </div>
@@ -394,7 +401,7 @@ import { FilterMatchMode } from 'primevue/api';
 const salaryStore = salaryAdvanceSettingMainStore();
 
 const filters = ref({
-  'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+    'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const value = ref();
@@ -422,9 +429,9 @@ onMounted(() => {
 });
 
 const sample = ref([
-    {id:1,selected:"Yes",ta:"50,000","bs":'56,000',epa:'6,000'},
-    {id:2,selected:"Yes",ta:"50,000","bs":'48,000',epa:'-2000'},
-    {id:3,selected:"No",ta:"50,000","bs":'56,000',epa:'56,000'}
+    { id: 1, selected: "Yes", ta: "50,000", "bs": '56,000', epa: '6,000' },
+    { id: 2, selected: "Yes", ta: "50,000", "bs": '48,000', epa: '-2000' },
+    { id: 3, selected: "No", ta: "50,000", "bs": '56,000', epa: '56,000' }
 
 ]
 )
@@ -442,13 +449,14 @@ const opt6 = ref();
     --white: #fff;
     --navy: #002f56;
 }
-.p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td:last-child {
-  border-width: none !important;
+
+.p-datatable.p-datatable-gridlines .p-datatable-tbody>tr>td:last-child {
+    border-width: none !important;
 }
 
-.p-datatable .p-datatable-tbody > tr > td {
-  text-align: left;
-  border: none !important;
+.p-datatable .p-datatable-tbody>tr>td {
+    text-align: left;
+    border: none !important;
     /* border-top-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 1px;
