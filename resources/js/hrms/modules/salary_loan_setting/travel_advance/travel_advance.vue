@@ -101,44 +101,13 @@
                                             </div>
                                             <div class="col">
 
-                                                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
-                                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                                    :rowsPerPageOptions="[5, 10, 25]"
-                                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                                                    responsiveLayout="scroll">
 
-
-                                                    <Column field="Location" header="Employee ID" style="min-width: 12rem">
-
-                                                    </Column>
-
-                                                    <Column header="Employee Name" field="Holidays_List"
-                                                        style="min-width: 8rem">
-                                                    </Column>
-
-                                                    <Column field="NoOfHolidays" header="Designation"
-                                                        style="min-width: 12rem">
-
-                                                    </Column>
-
-                                                    <Column header="Department" field="Employees" style="min-width: 8rem">
-                                                    </Column>
-                                                    <Column header="Location" field="Employees" style="min-width: 8rem">
-                                                    </Column>
-                                                    <Column header="State" field="Employees" style="min-width: 8rem">
-                                                    </Column>
-                                                    <Column header="Branch" field="Employees" style="min-width: 8rem">
-                                                    </Column>
-                                                    <Column field="Action" header="Legal Entity" style="min-width: 12rem">
-                                                    </Column>
-
-                                                </DataTable>
-                                                <!-- table components  -->
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- table components  -->
                                 </div>
+                              </div>
+                              </div>
                             </div>
+                          </div>
 
                             <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 :value="salaryStore.eligbleEmployeeSource"

@@ -31,6 +31,8 @@ class VmtSalaryAdvanceService
     public function getAllDropdownFilterSetting()
     {
 
+        $current_client_id = auth()->user()->client_id;
+
         try {
 
             $queryGetDept = Department::select('id', 'name')->get();
@@ -41,7 +43,32 @@ class VmtSalaryAdvanceService
 
             $queryGetstate = State::select('id', 'state_name')->distinct()->get();
 
-            $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+            if($current_client_id == 1){
+
+                $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+            }
+               else if($current_client_id == 0){
+
+                $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+
+            }
+            elseif($current_client_id == 2){
+
+                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+
+            }
+            elseif($current_client_id == 3){
+
+                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+
+            }
+            elseif($current_client_id == 4){
+
+                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+
+            }
+
 
             $getsalary  = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
 
@@ -309,5 +336,16 @@ class VmtSalaryAdvanceService
 
     public function  showInterestFreeLoanEmployeeinfo()
     {
+    }
+
+    public function showEligibleInterestFreeLoanDetails(){
+        $user_id=auth()->user()->id;
+        $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
+        $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
+        dd(  $avaliable_int_loans);
+        foreach( $avaliable_int_loans as $single_recxord){
+                dd($single_recxord);
+        }
+        dd();
     }
 }
