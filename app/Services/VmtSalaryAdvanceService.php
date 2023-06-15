@@ -56,7 +56,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function showAssignEmp($department_id, $designation, $work_location, $client_name)
+    public function SalAdvSettingsTable($department_id,$designation,$work_location,$client_name)
     {
 
         try {
@@ -98,8 +98,7 @@ class VmtSalaryAdvanceService
     }
 
 
-    public function showEmployeeview()
-    {
+    public function SalAdvShowEmployeeView(){
 
         try {
 
@@ -144,7 +143,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function EmpSaveSalaryAmt($mxe, $ra, $repdate, $reason)
+    public function SalAdvEmpSaveSalaryAmt($mxe,$ra,$repdate,$reason)
     {
 
         try {

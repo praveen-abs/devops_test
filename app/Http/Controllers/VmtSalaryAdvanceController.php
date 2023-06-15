@@ -22,34 +22,29 @@ use Carbon\Carbon;
 class VmtSalaryAdvanceController extends Controller
 {
 
-    public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
-        // dd($request->all());
+    public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+
 
         return $vmtSalaryAdvanceService->getAllDropdownFilterSetting();
     }
 
-    public function showAssignEmp(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
+    public function SalAdvSettingsTable(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
         // dd($request->all());
 
-        return $vmtSalaryAdvanceService->showAssignEmp($request->department_id, $request->designation, $request->work_location, $request->client_name);
-    }
+        return $vmtSalaryAdvanceService->SalAdvSettingsTable($request->department_id, $request->designation,$request->work_location, $request->client_name);
+   }
 
-    public function showEmployeeview(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
+    public function SalAdvShowEmployeeView(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
 
-        return $vmtSalaryAdvanceService->showEmployeeview();
-    }
+        return $vmtSalaryAdvanceService->SalAdvShowEmployeeView();
+   }
 
-    public function EmpSaveSalaryAmt(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
+    public function SalAdvEmpSaveSalaryAmt(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
 
-        // dd($request->all());
-        return $vmtSalaryAdvanceService->EmpSaveSalaryAmt($request->mxe, $request->ra, $request->repdate, $request->reason);
-    }
-    public function saveSalaryAdvanceSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
+        //   dd($request->all());
+        return $vmtSalaryAdvanceService->SalAdvEmpSaveSalaryAmt( $request->mxe, $request->ra, $request->repdate, $request->reason);
+   }
+    public function saveSalaryAdvanceSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
 
         //   dd($request->all());
         return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod);
