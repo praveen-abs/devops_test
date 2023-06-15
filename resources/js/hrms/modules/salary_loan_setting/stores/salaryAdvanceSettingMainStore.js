@@ -42,7 +42,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     const eligbleEmployeeSource = ref()
 
-    // Get filter 
+    // Get filter
 
     const getDropdownFilterDetails = async () => {
         let url = '/getAllDropdownFilter'
@@ -167,7 +167,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ifl);
         }
 
-        let url = '/saveSalaryAdvanceSetting' 
+        let url = '/save-interset-free-loan-settings'
         axios.post(url,ifl)
     }
 
@@ -184,7 +184,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const eligibleTravelAdvanceEmployeeData = ref(1)
 
     // Travel Advance Limit
-    // Deduction 
+    // Deduction
     // Claim Settings
 
     const ta = reactive({
@@ -201,7 +201,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ta);
         }
 
-        let url = '/saveSalaryAdvanceSetting' 
+        let url = '/saveTravelAdvanceSettings'
         axios.post(url,ta)
     }
 
@@ -229,7 +229,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ta);
         }
 
-        let url = '/saveSalaryAdvanceSetting' 
+        let url = '/saveLoanWithIntrest'
         axios.post(url,lwif)
     }
 
@@ -272,7 +272,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         isInterestFreeLoaneature, ifl, saveInterestfreeLoan,
 
-        // Travel Advance Feature 
+        // Travel Advance Feature
 
         isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,saveTravelAdvance,
 

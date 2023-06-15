@@ -48,7 +48,7 @@ class VmtSalaryAdvanceService
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
 
             }
-               else if($current_client_id == 0){
+               elseif($current_client_id == 0){
 
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
 

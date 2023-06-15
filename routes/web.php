@@ -834,13 +834,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvSettingsTable']);
     Route::post('/saveSalaryAdvanceSetting', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveSalaryAdvanceSettings']);
     Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvShowEmployeeView']);
-    Route::get('/show-interest-free-loan-employeeinfo',[App\Http\Controllers\VmtSalaryAdvanceController::class,'']);
     Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvEmpSaveSalaryAmt']);
+
+    //Travel Advance
+
+    Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
+
+
 
 
     //interest free loan saveIntersetFreeLoanSettings
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
-    Route::get('/save-interset-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetFreeLoanSettings']);
+    Route::post('/save-interset-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetFreeLoanSettings']);
 
 
     //loan with intrest

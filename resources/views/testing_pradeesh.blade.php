@@ -62,7 +62,7 @@
 
 
            @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')
-           <div id="approvals_salary_advance"></div>
+           {{-- <div id="approvals_salary_advance"></div> --}}
 
 </body>
 </html>

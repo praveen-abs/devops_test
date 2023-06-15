@@ -174,7 +174,7 @@
                 <div class="col">
                     <div class="float-right" v-if="salaryStore.isInterestFreeLoaneature == '2'">
                         <button class="btn btn-border-primary">Cancel</button>
-                        <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
+                        <button class="mx-4 btn btn-primary" @click="salaryStore.saveInterestfreeLoan">Save Changes</button>
                         <!-- <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, autem.</h1> -->
                     </div>
                 </div>
