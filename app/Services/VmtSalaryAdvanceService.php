@@ -119,14 +119,24 @@ class VmtSalaryAdvanceService
                 $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100;
 
 
-                $repayment_months = Carbon::now()->addMonths($employee_salary_adv->deduction_period_of_months)->format('Y-m-d');
+                $multiple_months=array();
+                for($i=1; $i<=$employee_salary_adv->deduction_period_of_months; $i++){
 
+                  $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
+
+                  array_push($multiple_months,$repayment_months);
+
+                }
+
+                // dd( $repayment_months);
 
                 $salary_adv['your_monthly_income'] = $emp_compensatory->net_income;
                 $salary_adv['max_eligible_amount'] = $calculatevalue;
-                $salary_adv['Repayment_date'] = $repayment_months;
+                $salary_adv['Repayment_date'] = $multiple_months;
                 $salary_adv['eligible'] = "0";
                 $salary_adv['percent_salary_amt'] = $employee_salary_adv->percent_salary_adv;
+
+                // dd($salary_adv);
 
                 return response()->json($salary_adv);
             } else {
