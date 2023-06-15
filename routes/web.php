@@ -303,7 +303,7 @@ Route::middleware(['auth'])->group(function () {
         dd('done');
     });
 
-//update user details with proof
+    //update user details with proof
 
     Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
     Route::get('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
@@ -754,7 +754,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/configurations/attendance_settings', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
     Route::get('/attendance_settings/fetch-emp-details', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'fetchEmployeeDetails'])->name('attendance_settings-fetchEmployeeDetails');
     Route::post('/attendance_settings/save-shiftdetails', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
-    Route::get('/json-format-for-dummy-week-off-days',[App\Http\Controllers\VmtAttendanceSettingsController::class,'jsonFormatForDummyWeekOffDays'])->name('jsonFormatForDummyWeekOffDays');
+    Route::get('/json-format-for-dummy-week-off-days', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'jsonFormatForDummyWeekOffDays'])->name('jsonFormatForDummyWeekOffDays');
     // Document Setting
     Route::get('/documents_settings', function () {
         return view('configurations.vmt_documents_settings');
@@ -813,7 +813,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
     Route::post('/investments/fetchEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchEmpRentalDetails'])->name('fetchEmpRentalDetails');
-   // Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
+    // Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
     Route::post('/investments/fetchHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchHousePropertyDetails'])->name('fetchHousePropertyDetails');
     Route::post('/investments/fetchOtherExemption', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchOtherExemptionDetails'])->name('fetchOtherExemptionDetails');
     Route::post('/investments/deleteHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteHousePropertyDetails'])->name('deleteHousePropertyDetails');
@@ -834,12 +834,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showAssignEmp']);
     Route::post('/saveSalaryAdvanceSetting', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveSalaryAdvanceSettings']);
     Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEmployeeview']);
-    Route::get('/show-interest-free-loan-employeeinfo',[App\Http\Controllers\VmtSalaryAdvanceController::class,'']);
+    Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, '']);
     Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'EmpSaveSalaryAmt']);
 
 
+    //interest free loan saveIntersetFreeLoanSettings
+    Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
+    Route::get('/save-interset-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetFreeLoanSettings']);
 
-//loan with intrest
+
+    //loan with intrest
     Route::post('/saveLoanWithIntrest', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveLoanWithInterestSettings'])->name('save-LoanWithIntrestSettings');
 
     //Emp Mail Notifications
@@ -886,9 +890,9 @@ Route::middleware(['auth'])->group(function () {
 
     //notification
 
-        // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
-        // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
-        // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
+    // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
+    // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
+    // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');
