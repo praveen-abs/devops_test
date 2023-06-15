@@ -192,7 +192,7 @@
                 <div class="col">
                     <div class="float-right" v-if="salaryStore.isLoanWithInterestFeature == '2'">
                         <button class="btn btn-border-primary">Cancel</button>
-                        <button class="mx-4 btn btn-primary">Save Changes</button>
+                        <button class="mx-4 btn btn-primary" @click="salaryStore.saveLoanWithInterest">Save Changes</button>
                     </div>
                 </div>
         </div>
