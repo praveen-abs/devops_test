@@ -136,7 +136,7 @@ const dialog_visible = ref(false)
 
 const documentPath = ref()
 
-const view_document =ref({});
+// const view_document =ref({});
 
 onMounted(async () => {
     await EmpDetailStore.getEmpDetails_list();
@@ -155,7 +155,7 @@ const filters = ref({
 });
 
 const showDocDialog = (record_id) => {
-    view_document.value = { ...document }
+    // view_document.value = { ...document }
     canShowLoadingScreen.value =true;
     dialog_visible.value = true
 

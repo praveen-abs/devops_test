@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="flex justify-between gap-6 my-4">
-                    <div class="w-7">
+                    <div class="w-9">
                         <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
                                 class="text-blue-500 underline cursor-pointer fs-4"
                                 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
@@ -65,10 +65,6 @@
                     <div class="text-end">
                         <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true"
                             :disabled="!disableRegime(lastUpdated)">Switch Regime</button>
-                        <!-- <button @click="switch_regime_dailog = true" type="button"  :class="[!disableRegime(lastUpdated) ? 'cursor-pointer bg-orange-100 hover:bg-orange-100 ' : '']"
-                            class="p-2 text-lg text-end text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400  rounded-lg  px-5 py-2.5  ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
-                            Switch Regime
-                        </button> -->
                     </div>
                 </div>
                 <div v-if="disableRegime(lastUpdated)"
@@ -156,11 +152,11 @@
             <div class="grid gap-4 my-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body">
                 <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
                     <p class="font-semibold fs-6 ">Net Taxable Income</p>
-                    <div class="flex ">
-                        <h6 v-if="regime == 'old'" class="text-lg font-bold w-7">
+                    <div class="grid  my-1 md:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2">
+                        <h6 v-if="regime == 'old'" class="text-lg font-bold">
                             {{ investmentStore.formatCurrency(total_gross) }}</h6>
-                        <h6 v-else class="text-lg font-bold w-7"> {{ investmentStore.formatCurrency(total_gross) }}</h6>
-                        <p class="pl-3 text-orange-400 underline"> Income Tax Computation</p>
+                        <h6 v-else class="text-lg font-bold "> {{ investmentStore.formatCurrency(total_gross) }}</h6>
+                        <p class="pl-3 text-orange-400 underline lg:text-base"> Income Tax Computation</p>
                     </div>
                 </div>
                 <div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400">
@@ -206,7 +202,7 @@
                     <p class="my-2 font-semibold fs-6"> Below are the declarations done by you under various sections.</p>
                 </div>
                 <div class="my-2 table-responsive">
-                    <DataTable :rows="7" dataKey="id" :value="data">
+                    <DataTable :rows="7" dataKey="id" :value="investmentStore.investmentSummarySource">
                         <template #empty> No Data Found. </template>
                         <template #loading> Loading customers data. Please wait. </template>
                         <Column field="particulars" header="S.No">
@@ -214,27 +210,48 @@
                                 {{ slotProps.index + 1 }}
                             </template>
                         </Column>
-                        <Column field="section_name" header="Declarations"
-                            style="width: 16rem;text-align: left !important;"></Column>
-                        <Column field="dec_amount" header="Amount Declared">
+                        <Column field="section_name" header="Declaration" style="width: 16rem;text-align: left !important;">
+                        </Column>
+                        <Column field="dec_amount" style="width: 18rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Amount Declared
+                                </p>
+                            </template>
                             <template #body="slotProps">
                                 {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
                             </template>
                         </Column>
-                        <Column field="proof_submitted" header="Proof Submitted"></Column>
-                        <Column field="amount_rejected" header="Amount Rejected ">
+                        <Column field="proof_submitted" style="width: 16rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Proof Submitted
+                                </p>
+                            </template>
+                        </Column>
+                        <Column field="amount_rejected" style="width: 16rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Amount Rejected
+                                </p>
+                            </template>
                             <template #body="slotProps">
                                 {{ investmentStore.formatCurrency(slotProps.data.amount_rejected) }}
                             </template>
                         </Column>
-                        <Column field="amount_accepted" header="Amount Accepted ">
+                        <Column field="amount_accepted" style="width: 16rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Amount Accepted
+                                </p>
+                            </template>
                             <template #body="slotProps">
                                 {{ investmentStore.formatCurrency(slotProps.data.amount_accepted) }}
                             </template>
                         </Column>
                     </DataTable>
                 </div>
-                <div class="my-6">
+                <!-- <div class="my-6">
                     <div>
                         <p class="my-2 font-semibold fs-5">Month- Month Tax Deduction Details</p>
                         <p class="my-2 font-semibold fs-6">Below deductions are based on your declared amount. Tax amount
@@ -291,7 +308,7 @@
                             payments other than salary.
                         </p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -303,22 +320,22 @@
         </template>
 
         <p class="">Your current switching regime is
-            <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'">{{ findRegime('old') }} 
-                 <span class="text-sm text-green-600"
-                v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
-                benefit</span>
-                </strong>
+            <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'">{{ findRegime('old') }}
+                <span class="text-sm text-green-600"
+                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                    benefit</span>
+            </strong>
             <strong class="text-lg font-semibold text-primary" v-else-if="regime == 'old'">
                 {{ findRegime('new') }}
                 <span class="text-sm text-green-600"
-                v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
-                benefit</span>
+                    v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
+                    benefit</span>
             </strong>
             <strong class="text-lg font-semibold text-primary" v-else>
                 {{ findRegime('old') }}
                 <span class="text-sm text-green-600"
-                v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
-                benefit</span>
+                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                    benefit</span>
             </strong>
         </p>
         <p class="my-3 text-justify text-gray-700">
@@ -350,17 +367,16 @@ import { investmentMainStore } from '../../stores/investmentMainStore';
 const data = ref()
 onMounted(() => {
     investmentStore.canShowLoading = true
-    axios.get('/investments/investment-summary').then(res => {
-        data.value = res.data
-    }).finally(() => {
-        investmentStore.canShowLoading = false
-    })
-
+    investmentStore.fetchInvestmentSummary()
     fetchTaxableIncomeInfo()
     console.log(new Date().getFullYear() - 1);
 
 
 })
+
+// investmentStore.taxSavingInvestments.declared_amt += parseInt(ele.dec_amount)
+// investmentStore.taxSavingInvestments.max_limit += ele.amount_rejected
+// investmentStore.taxSavingInvestments.status = ele.is_submitted
 
 const investmentStore = investmentMainStore()
 const formula = investmentFormulaStore()
@@ -540,5 +556,6 @@ Dialog {
     font-weight: 700;
     font-size: 1.25rem;
     color: #002f56;
-}</style>
+}
+</style>
 

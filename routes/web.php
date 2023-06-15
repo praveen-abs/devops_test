@@ -172,14 +172,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/process-employee-leave-balance', [App\Http\Controllers\VmtEmployeeLeaveController::class, 'processEmployeeLeaveBalance'])->name('processEmployeeLeaveBalance');
 
     //PMS forms management
-    Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
+    //Route::get('/pms-forms-mgmt/getAssignedPMSFormTemplates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAssignedPMSFormTemplates'])->name('getAssignedPMSFormTemplates');
     Route::get('/pms-forms-mgmt/get-PMS-score-averge-for-given-assingement-period', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSScoreAvergeForGivenAssingementPeriod'])->name('getPMSScoreAvergeForGivenAssingementPeriod');
     Route::get('/pms-forms-mgmt/get-employee-PMS-form-template-excel', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getEmployeePMSFormTemplate_AsExcel'])->name('getEmployeePMSFormTemplate_AsExcel');
     Route::get('/pms-forms-mgmt/fetch-PMS-form-details', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'fetchPMSFormDetails'])->name('fetchPMSFormDetails');
-    Route::get('/pms-forms-mgmt/get-all-PMS-form-Templates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormTemplates'])->name('getAllPMSFormTemplates');
-    Route::get('/pms-forms-mgmt/self-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_SelfView'])->name('showPMSFormsMgmtPage_SelfView');
-    Route::get('/pms-forms-mgmt/team-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_TeamView'])->name('showPMSFormsMgmtPage_TeamView');
-    Route::get('/pms-forms-mgmt/hr-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_HRView'])->name('showPMSFormsMgmtPage_HRView');
+    //Route::get('/pms-forms-mgmt/get-all-PMS-form-Templates', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormTemplates'])->name('getAllPMSFormTemplates');
+    Route::get('/pms-forms-mgmt/get-all-PMS-form-Authors', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getAllPMSFormAuthors'])->name('getAllPMSFormAuthors');
+    Route::post('/pms-forms-mgmt/getPMSFormUsageDetails', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSFormUsageDetails'])->name('getPMSFormUsageDetails');
+    Route::post('/pms-forms-mgmt/getPMSFormTemplateDetails', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'getPMSFormTemplateDetails'])->name('getPMSFormTemplateDetails');
+    // Route::get('/pms-forms-mgmt/self-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_SelfView'])->name('showPMSFormsMgmtPage_SelfView');
+    // Route::get('/pms-forms-mgmt/team-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_TeamView'])->name('showPMSFormsMgmtPage_TeamView');
+    // Route::get('/pms-forms-mgmt/hr-view', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage_HRView'])->name('showPMSFormsMgmtPage_HRView');
+    Route::get('/pms-forms-mgmt', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage'])->name('showPMSFormsMgmtPage');
 
     //Attendance - AJAX
     Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
@@ -764,20 +768,27 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/documents/update_employee_doc_settings', [App\Http\Controllers\VmtEmployeeDocumentsController::class, 'updateEmployeeDocumentsSettings'])->name('updateEmployeeDocumentsSettings');
 
     //Holidays
+
+    //get holidays images
+
+    Route::get('/holiday/getHolidaysPicture', [App\Http\Controllers\VmtHolidaysController::class, 'getHolidaysPicture'])->name('getHolidaysPicture');
+    Route::get('/holiday/getHolidayslistPicture', [App\Http\Controllers\VmtHolidaysController::class, 'getHolidaysListImages'])->name('getHolidayslistPicture');
+
     ////Holidays creation
     Route::get('/holiday/master-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysMasterPage'])->name('holiday-masterpage');
     Route::post('holiday/create_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'createHoliday'])->name('holiday-create-holiday');
     Route::get('/holiday/edit_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHoliday'])->name('edit-holiday');
-    Route::post('holidays/update_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
-    Route::get('holidays/delete_holiday/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
+    Route::post('holidays/update_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'updateHoliday'])->name('update_holiday');
+    Route::post('holidays/delete_holiday', [App\Http\Controllers\VmtHolidaysController::class, 'deleteHoliday'])->name('delete_holiday');
 
     Route::get('/holidays/add_holidays', function () {
         return view('holidays.test_ui.add_holidays');
     })->name('add-holidays');
 
     //holiday list
-    Route::get('/holiday/visit-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysListPage'])->name('holiday-masterpage');
+    Route::get('/holiday/visit-page', [App\Http\Controllers\VmtHolidaysController::class, 'showHolidaysList'])->name('holiday-masterpage');
     Route::post('holiday/create_holidaylist', [App\Http\Controllers\VmtHolidaysController::class, 'createHolidayList'])->name('holiday-create-holidaylist');
+    Route::get('/holidays/show_holidaysListDetails', [App\Http\Controllers\VmtHolidaysController::class, 'holidaysListDetails'])->name('show-holidaysListDetails');
     Route::get('/holidays/add_holidayslist', [App\Http\Controllers\VmtHolidaysController::class, 'fetchHolidays'])->name('add-holidayslist');
     Route::get('/holiday/edit_holiday_list/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'editHolidayList'])->name('edit-holiday-list');
     Route::post('holidays/update_holiday_list/{id}/', [App\Http\Controllers\VmtHolidaysController::class, 'updateHolidayList'])->name('update_holiday-list');
@@ -875,9 +886,9 @@ Route::middleware(['auth'])->group(function () {
 
     //notification
 
-        // Route::get('/home', [App\Http\Controllers\WebNotificationController::class, 'index'])->name('home');
-        // Route::post('/save-token', [App\Http\Controllers\WebNotificationController::class, 'saveToken'])->name('save-token');
-        // Route::post('/send-notification', [App\Http\Controllers\WebNotificationController::class, 'sendNotification'])->name('send.notification');
+        // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
+        // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
+        // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');

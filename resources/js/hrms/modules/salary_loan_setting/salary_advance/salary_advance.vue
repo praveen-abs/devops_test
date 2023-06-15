@@ -1,4 +1,11 @@
 <template>
+    <div class="px-5">
+        <div class="row d-flex justify-content-start align-items-center mt-4">
+            <div class="d-flex mt-4">
+                <div class="col-3 fs-4" style="position: relative; left: -8px;">
+                    <h1 class="fw-bolder">Salary Advance Feature</h1>
+                </div>
+                <div class="col">
   <div class="px-1">
     <div class="row d-flex justify-content-start align-items-center mt-4">
       <div class="d-flex mt-4">
@@ -7,6 +14,12 @@
         </div>
         <div class="col">
 
+                    <button class="orange_btn "
+                        :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
+                        @click="salaryStore.isSalaryAdvanceFeatureEnabled = 1">Disabled</button>
+                    <button class="Enable_btn"
+                        :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-green-700 text-white' : '']"
+                        @click="salaryStore.isSalaryAdvanceFeatureEnabled = 2">Enable</button>
           <button class="orange_btn "
             :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
             @click="salaryStore.isSalaryAdvanceFeatureEnabled = 1">Disabled</button>
@@ -250,6 +263,7 @@
 
 
     </div>
+    </div>
 </template>
 <script setup>
 
@@ -267,12 +281,12 @@ const filters = ref({
 
 
 onMounted(() => {
-  opt.value = "Department"
-  opt1.value = "Designation"
-  opt2.value = "Location"
-  opt3.value = "State"
-  opt4.value = "Branch"
-  opt5.value = "Legal Entity"
+    opt.value = "Department"
+    opt1.value = "Designation"
+    opt2.value = "Location"
+    opt3.value = "State"
+    opt4.value = "Branch"
+    opt5.value = "Legal Entity"
 })
 
 
@@ -295,34 +309,34 @@ const opt6 = ref();
 </script>
 <style>
 :root {
-  --orange: #FF4D00;
-  --white: #fff;
-  --navy: #002f56;
+    --orange: #FF4D00;
+    --white: #fff;
+    --navy: #002f56;
 }
 
 .orange_btn {
-  background-color: var(--orange);
-  padding: 7px 30px;
-  border-radius: 4px 0 0 4px;
-  color: var(--white);
+    background-color: var(--orange);
+    padding: 7px 30px;
+    border-radius: 4px 0 0 4px;
+    color: var(--white);
 }
 
 .Enable_btn {
-  border: 1px solid var(--navy);
-  padding: 7px 30px;
-  border-radius: 0 4px 4px 0;
+    border: 1px solid var(--navy);
+    padding: 7px 30px;
+    border-radius: 0 4px 4px 0;
 
 }
 
 .cancel_btn {
-  border: 1px solid var(--navy);
-  padding: 7px 30px;
-  border-radius: 4px 0 0 4px;
+    border: 1px solid var(--navy);
+    padding: 7px 30px;
+    border-radius: 4px 0 0 4px;
 
 }
 
 .border-L {
-  border-left: 4px solid var(--navy) !important;
+    border-left: 4px solid var(--navy) !important;
 }
 
 .border-color {
@@ -332,15 +346,15 @@ const opt6 = ref();
 }
 
 .border-color::placeholder {
-  color: #002f56 !important;
+    color: #002f56 !important;
 }
 
 input[type=radio] {
-  border: 0px;
-  width: 20px;
-  height: 20px;
-  color: var(--orange) !important;
-  background-color: var(--orange) !important;
+    border: 0px;
+    width: 20px;
+    height: 20px;
+    color: var(--orange) !important;
+    background-color: var(--orange) !important;
 }
 
 .p-dropdown-label.p-inputtext {
