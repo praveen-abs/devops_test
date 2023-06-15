@@ -38,7 +38,7 @@
                                     <h1 style="border-left:4px solid var(--orange); padding-left: 15px; font-size: 18px;">
                                         Employees</h1>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-3 mx-2">
                                     <span class="p-input-icon-left">
                                         <i class="pi pi-search" />
                                         <InputText placeholder="Search" v-model="filters['global'].value"
@@ -205,34 +205,35 @@
 
                     <div class="card border-L">
                         <div class="row d-flex py-3">
-                            <div class="col col-3 my-3" style="width: 220px;">
-                                <P class="fs-5 mx-1">Employee Request <i
-                                        class="pi pi-arrow-right fs-6  text-green-400 mx-1"></i></P>
+                            <div class="col col-2 my-3 d-flex align-items-center" style="width: 200px;" >
+                                <P class="fs-5 mx-3">Employee Request
+                                  </P>
+                                  <i class="pi pi-angle-double-right fs-4  text-green-400"></i>
                             </div>
-                            <div class="col col-3 ">
-                                <div class="bg-slate-200 p-1 d-flex align-items-center rounded w-10">
+                            <div class="col col-3  d-flex" style="width: 280px;">
+                                <div class="bg-slate-200 p-1 d-flex align-items-center rounded w-10 " style="width: 225px !important;"  >
                                     <Dropdown v-model="selectedCity1" editable :options="filteredApprovalFlow"
                                         optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-2"
                                         @change="test(1, selectedCity1)" />
                                     <button @click="option1 = 0, test(4, selectedCity1)" v-if="selectedCity1" class="mx-2">
-                                        <i class="pi pi-times fs-4  text-red-400 mx-1"></i>
+                                        <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
                                     </button>
                                 </div>
                                 <button @click="option1 = 1" class=" text-green-400 " style="width: 40px;"
                                     v-if="option1 == 0 && option == 1">
                                     <i class="pi pi-plus-circle fs-4"></i></button>
-                                <button class=" text-green-400 " style="width: 40px;" v-if="option1 == 1">
-                                    <i class="pi pi-arrow-right fs-4"></i></button>
+                                <button class=" text-green-400 ml-4" style="width: 40px;" v-if="option1 == 1">
+                                    <i class="pi pi-angle-double-right fs-4"></i></button>
                             </div>
 
 
-                            <div class="col col-3 " v-if="option1 == 1">
-                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10 col-8">
+                            <div class="col col-3  d-flex" v-if="option1 == 1" style="width: 280px;" >
+                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10 col-8"  style="width: 225px !important;" >
                                     <Dropdown v-model="selectedCity2" editable :options="filteredApprovalFlow"
                                         optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-0.5"
                                         @change="test(2, selectedCity2)" />
                                     <button @click="option1 = 0, test(5, selectedCity2)" v-if="option1 == 1">
-                                        <i class="pi pi-times fs-4  text-red-400 mx-1"></i>
+                                        <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
                                     </button>
                                 </div>
                                 <button @click="option2 = 1" class=" text-green-400 col-4" v-if="option2 == 0 && option1 == 1"
@@ -240,17 +241,17 @@
                                     <i class="pi pi-plus-circle fs-4"></i></button>
 
                                 <button class=" text-green-400 " style="width: 40px;" v-if="option2 == 1">
-                                    <i class="pi pi-arrow-right fs-4"></i></button>
+                                    <i class="pi pi-angle-double-right fs-4 ml-4"></i></button>
                             </div>
 
 
-                            <div class="col col-3 " v-if="option2 == 1">
-                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10">
+                            <div class="col col-3  d-flex" v-if="option2 == 1"  style="width: 280px;" >
+                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10" style="width: 225px !important;">
                                     <Dropdown v-model="selectedCity3" editable :options="filteredApprovalFlow"
                                         optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-2"
                                         @change="test(3, selectedCity3)" />
                                     <button @click="option2 = 0, test(6, selectedCity3)" v-if="option2 == 1">
-                                        <i class="pi pi-times fs-4  text-red-400 mx-1"></i>
+                                        <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
                                     </button>
                                 </div>
                             </div>
