@@ -109,7 +109,7 @@ class VmtSalaryAdvanceController extends Controller
             $requets->percent_of_ctc,
             $requets->deduction_starting_months,
             $requets->max_tenure_months,
-            $approver_flow
+            $requets->approver_flow
         );
 
         return $response;
@@ -117,5 +117,10 @@ class VmtSalaryAdvanceController extends Controller
     public function showInterestFreeLoanEmployeeinfo(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         return $vmtSalaryAdvanceService->showInterestFreeLoanEmployeeinfo();
+    }
+
+    public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails();
+        return $response;
     }
 }

@@ -278,4 +278,15 @@ class VmtSalaryAdvanceService
     public function  showInterestFreeLoanEmployeeinfo()
     {
     }
+
+    public function showEligibleInterestFreeLoanDetails(){
+        $user_id=auth()->user()->id;
+        $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
+        $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
+        dd(  $avaliable_int_loans);
+        foreach( $avaliable_int_loans as $single_recxord){
+                dd($single_recxord);
+        }
+        dd();
+    }
 }
