@@ -51,17 +51,14 @@ class VmtSalaryAdvanceController extends Controller
     }
 
 
-
-    public function saveInterestFreeLoanSettings(Request $request)
-    {
-    }
-
     public function saveTravelAdvanceSettings(Request $request)
     {
+        dd($request->all());
     }
 
     public function saveLoanWithInterestSettings(Request $request, VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService)
     {
+        dd($request->all());
 
         $response = $ServiceVmtSalaryAdvanceService->saveLoanWithInterestSettings(
             $request->min_month_served,
@@ -75,15 +72,16 @@ class VmtSalaryAdvanceController extends Controller
         );
     }
 
-    public function saveIntersetFreeLoanSettings(Request $requets, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    public function saveIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
+        dd($request->all());
 
         $response = $vmtSalaryAdvanceService->saveIntersetFreeLoanSettings(
             $requets->min_month_served,
             $requets->percent_of_ctc,
             $requets->deduction_starting_months,
             $requets->max_tenure_months,
-            $approver_flow
+            $requets->approver_flow
         );
 
         return $response;
@@ -91,5 +89,10 @@ class VmtSalaryAdvanceController extends Controller
     public function showInterestFreeLoanEmployeeinfo(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         return $vmtSalaryAdvanceService->showInterestFreeLoanEmployeeinfo();
+    }
+
+    public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails();
+        return $response;
     }
 }

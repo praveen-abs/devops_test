@@ -46,8 +46,8 @@
        {{-- @vite('resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js')
             <div id="OnboardingFromMgmt"></div> --}}
 
-            @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
-            <div id="vjs_attendance_master"></div>
+            <!-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
+            <div id="vjs_attendance_master"></div> -->
 
             {{-- @vite('resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js')
             <div id="General_Shift"></div> --}}
@@ -58,7 +58,11 @@
             @vite('resources/js/hrms/modules/configurations/holidays/Holidays_Master.js')
             {{-- <div id="Holidays_Master"></div> --}}
             @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-           {{-- <div class="mt-6" id="SalaryAdvanceLoan"></div> --}}
+           <div class="mt-6" id="SalaryAdvanceLoan"></div>
+
+
+           @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')
+           {{-- <div id="approvals_salary_advance"></div> --}}
 
 </body>
 </html>

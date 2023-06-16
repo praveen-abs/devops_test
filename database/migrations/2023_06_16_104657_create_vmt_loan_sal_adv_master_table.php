@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_int_free_loan_settings', function (Blueprint $table) {
+        Schema::create('vmt_loan_sal_adv_master', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('vmt_client_master');
-            $table->integer('min_month_served');
-            $table->text('loan_applicable_type');
-            $table->text('max_loan_month');
-            $table->integer('percent_of_ctc');
-            $table->integer('deduction_starting_months');
-            $table->integer('max_tenure_months');
-            $table->text('approver_flow');
+            $table->integer('sal_adv');
+            $table->integer('int_free_loan');
+            $table->integer('loan_with_int');
+            $table->integer('travel_adv');
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_loan_free_interest_settings');
+        Schema::dropIfExists('vmt_loan_sal_adv_master');
     }
 };

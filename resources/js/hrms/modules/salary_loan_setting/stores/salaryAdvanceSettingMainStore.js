@@ -42,7 +42,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     const eligbleEmployeeSource = ref()
 
-    // Get filter 
+    // Get filter
 
     const getDropdownFilterDetails = async () => {
         let url = '/getAllDropdownFilter'
@@ -167,6 +167,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ifl);
         }
 
+        let url = '/save-interset-free-loan-settings'
+        axios.post(url,ifl)
     }
 
     // Interest Free Loan Feature Ends
@@ -182,7 +184,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const eligibleTravelAdvanceEmployeeData = ref(1)
 
     // Travel Advance Limit
-    // Deduction 
+    // Deduction
     // Claim Settings
 
     const ta = reactive({
@@ -191,6 +193,17 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         sumbitWithIn: '',
         isDeductedInsubsequentpayroll: ''
     })
+
+    const saveTravelAdvance  = () => {
+        if (isTravelAdvanceFeatureEnabled.value == '1') {
+            console.log("disabled");
+        } else {
+            console.log(ta);
+        }
+
+        let url = '/saveTravelAdvanceSettings'
+        axios.post(url,ta)
+    }
 
 
     // Travel Advance Feature Ends
@@ -208,6 +221,17 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         maxTenure: ''
 
     })
+
+    const saveLoanWithInterest  = () => {
+        if (isLoanWithInterestFeature.value == '1') {
+            console.log("disabled");
+        } else {
+            console.log(ta);
+        }
+
+        let url = '/saveLoanWithIntrest'
+        axios.post(url,lwif)
+    }
 
 
     // Loan With interest Feature Ends
@@ -248,13 +272,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         isInterestFreeLoaneature, ifl, saveInterestfreeLoan,
 
-        // Travel Advance Feature 
+        // Travel Advance Feature
 
-        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,
+        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,saveTravelAdvance,
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif
+        isLoanWithInterestFeature, lwif,saveLoanWithInterest
 
 
 
