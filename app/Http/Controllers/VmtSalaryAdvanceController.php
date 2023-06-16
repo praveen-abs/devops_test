@@ -64,6 +64,9 @@ class VmtSalaryAdvanceController extends Controller
     {
 
         $response = $ServiceVmtSalaryAdvanceService->saveLoanWithInterestSettings(
+            $request->min_month_served,
+            $request->loan_applicable_type,
+            $request->percent_of_ctc,
             $request->max_loan_amount,
             $request->loan_amt_interest,
             $request->deduction_starting_months,
