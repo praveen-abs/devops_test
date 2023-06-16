@@ -54,21 +54,12 @@ class VmtSalaryAdvanceService
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
 
             }
-            elseif($current_client_id == 2){
+            else{
 
                 $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
 
             }
-            elseif($current_client_id == 3){
 
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
-
-            }
-            elseif($current_client_id == 4){
-
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
-
-            }
 
 
             $getsalary  = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
