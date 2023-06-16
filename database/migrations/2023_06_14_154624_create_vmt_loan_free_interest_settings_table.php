@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('vmt_client_master');
             $table->integer('min_month_served');
             $table->text('loan_applicable_type');
-            $table->text('max_loan_limit');
-            $table->integer('percent_of_ctc');
+            $table->text('max_loan_limit')->nullable();
+            $table->integer('percent_of_ctc')->nullable();
             $table->integer('deduction_starting_months');
             $table->integer('max_tenure_months');
             $table->text('approver_flow');
