@@ -167,7 +167,8 @@
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">your Comments</span>
-            <Textarea class="my-3 capitalize form-control textbox"  autoResize type="text" rows="3" style="border:none; outline-: none;"  />
+            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments"  autoResize type="text" rows="3" style="border:none; outline-: none;"  />
+            <!-- {{ SA_Request_comments }} -->
         </div>
 
         <div class="float-right ">
@@ -177,16 +178,16 @@
 
     </Dialog>
 
-    <Dialog header="Header" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
-    :modal="true" :closable="false" :closeOnEscape="false">
-    <template #header>
-      <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-        animationDuration="2s" aria-label="Custom ProgressSpinner" />
-    </template>
-    <template #footer>
-      <h5 style="text-align: center">Please wait...</h5>
-    </template>
-  </Dialog>
+    <Dialog header="Header" v-model:visible="SalaryAdvanceApprovals.canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
   <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
 </template>
 
@@ -203,16 +204,19 @@ const SalaryAdvanceApprovals  = UseSalaryAdvanceApprovals();
 const expandedRows = ref([]);
 const selectedAllEmployee =  ref();
 const currentlySelectedStatus = ref();
+
 const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
+const reviewer_comments = ref();
 const required_Amount = reactive({
     required_Amount:""
-})
-
+});
 
 onMounted(()=>{
-    SalaryAdvanceApprovals.getEmpDetails();
+
+SalaryAdvanceApprovals.getEmpDetails();
+
 })
 
 const filters = ref({
@@ -236,8 +240,11 @@ function showConfirmDialog(selectedRowData, status){
     console.log( required_Amount.required_Amount);
 }
 
-async function approveAndReject(data){
-    currentlySelectedStatus.value = data;
+async function approveAndReject(status){
+    showAppoverDialog.value = false;
+    console.log(currentlySelectedRowData.value,status);
+   await  SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value,status,reviewer_comments.value)
+    currentlySelectedStatus.value = status;
 }
 
 function ShowDialogApprovalAll(){
@@ -251,7 +258,7 @@ function hideBulkConfirmDialog(){
 async function processBulkApproveReject(status){
     hideBulkConfirmDialog();
     currentlySelectedStatus.value= status;
-    await SalaryAdvanceApprovals.submitApproveAndRejectALL(currentlySelectedStatus.value,SalaryAdvanceApprovals.arraySalaryAdvance);
+    await SalaryAdvanceApprovals.SAbulkApproveAndReject(currentlySelectedStatus.value,SalaryAdvanceApprovals.arraySalaryAdvance);
 }
 
 
