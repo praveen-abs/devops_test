@@ -1756,11 +1756,11 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                         "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span style='width: 60px;'class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button class='mx-1' style='border: none;background: none;'><a style='color: black;' target='_blank'  href="+selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button class='mx-1' style='border: none;background: none;'><a style='color: black;' target='_blank'  href="+selfie_checkin+">"+getSelfieImage(ajax_data_currentdate.attendance_mode_checkin)+
                                         final_checkin_button_code +
                                         "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 60px;' class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span class='mr-5' ><button  style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o '></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span class='mr-5' ><button  style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+getSelfieImage(ajax_data_currentdate.attendance_mode_checkout) +
                                         "</span> " +
                                         final_checkout_button_code +
                                         "</div></div></div>"
@@ -1853,6 +1853,15 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             else
             {
                 return ''; // when attendance_mode column is empty.
+            }
+
+        }
+
+        function getSelfieImage(mode){
+            if(mode=='mobile'){
+                return "<i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>";
+            }else{
+                return '';
             }
 
         }
