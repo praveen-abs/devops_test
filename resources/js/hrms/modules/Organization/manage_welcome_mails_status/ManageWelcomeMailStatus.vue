@@ -16,12 +16,14 @@
                 <div>
                     <Button @click="showConfirmationDialog(slotProps.data.empcode)" label="Send mail"
                         class="btn btn-primary" />
+                    <br/>
+                    <h4 v-if="slotProps.data.value == null">Mail Not Sent</h4>
                 </div>
             </template>
         </Column>
         <Column field="onboard_docs_approval_mail_status" header="Onboard Document Approval Mail Status">
             <template #body="slotProps">
-                <h1 v-if="slotProps.data.value == null || slotProps.data == 0">Mail Not Send</h1>
+                <h1 v-if="slotProps.data.value == null || slotProps.data == 0" v-tooltip="'Normally, mail is sent when docs are reviewed'">Mail Not Sent</h1>
                 <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
             </template>
 
@@ -29,9 +31,9 @@
             <!-- onboard_docs_approval_mail_status -->
         </Column>
         <!-- <Column field="" header="Mail Status">  </Column> -->
-        <Column field="acc_activation_mail_status" header="Activation Mail Status">
+        <Column field="acc_activation_mail_status" header="Activation Mail Status" >
             <template #body="slotProps">
-                <h1 v-if="slotProps.data.value == null || slotProps.data == 0">Mail Not Send</h1>
+                <h1 v-if="slotProps.data.value == null || slotProps.data == 0"  v-tooltip="'Normally, mail is sent once onboarding is done'">Mail Not Sent</h1>
                 <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
             </template>
         </Column>
