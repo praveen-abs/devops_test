@@ -43,7 +43,7 @@
         <div class="confirmation-content">
 
             <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-            <span>Are you sure you want to welcome mail?</span>
+            <span>Are you sure you want to send Welcome Mail?</span>
         </div>
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
