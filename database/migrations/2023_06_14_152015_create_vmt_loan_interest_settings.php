@@ -15,11 +15,16 @@ return new class extends Migration
     {
         Schema::create('vmt_loan_interest_settings', function (Blueprint $table) {
             $table->id();
-            $table->integer('max_loan_amount');
-            $table->integer('loan_amt_interest');
+            $table->integer('client_id');
+            $table->text('loan_applicable_type');
+            $table->integer('min_month_served')->nullable();
+            $table->integer('percent_of_ctc')->nullable();
+            $table->text('max_loan_amount')->nullable();
+            $table->text('loan_amt_interest');
             $table->integer('deduction_starting_months');
             $table->integer('max_tenure_months');
             $table->text('approver_flow');
+            $table->text('active');
             $table->timestamps();
         });
     }
