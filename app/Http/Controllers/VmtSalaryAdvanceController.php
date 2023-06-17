@@ -87,9 +87,10 @@ class VmtSalaryAdvanceController extends Controller
             $request->loan_type,
             $request->client_id,
             $request->loan_applicable_type,
-            $request->max_loan_limit,
             $request->min_month_served,
+            $request->max_loan_limit,
             $request->percent_of_ctc,
+            $request->loan_amt_interest,
             $request->deduction_starting_months,
             $request->max_tenure_months,
             $request->approver_flow
