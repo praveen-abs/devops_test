@@ -79,11 +79,12 @@ class VmtSalaryAdvanceController extends Controller
         );
     }
 
-    public function saveIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    public function saveIntersetAndIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         dd($request->all());
 
-        $response = $vmtSalaryAdvanceService->saveIntersetFreeLoanSettings(
+        $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
+            $request->loan_type,
             $request->client_id,
             $request->loan_applicable_type,
             $request->max_loan_limit,
@@ -147,4 +148,6 @@ class VmtSalaryAdvanceController extends Controller
             }
         }
     }
+
+
 }
