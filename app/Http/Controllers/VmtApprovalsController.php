@@ -53,6 +53,11 @@ class VmtApprovalsController extends Controller
         //dd($vmtEmployees_InActive->toArray());
         return view('vmt_approval_documents', compact('vmtEmployees_InActive'));
     }
+    public function showEmployeeDetailsDocApprovalPage(Request $request)
+    {
+
+        return view('vmt_employee_details_approvals');
+    }
 
     /*
         Page to approve a single employee's documents.

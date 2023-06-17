@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- {{ EmpDetailStore.array_EmpDetails_list }} -->
+
         <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
@@ -15,8 +15,8 @@
         <Dialog header="Confirmation" v-model:visible="canShowConfirmationAll"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '580px' }" :modal="true">
             <div class="confirmation-content">
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of this employee?</span>
+                Documents Approvals <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of this
+                    employee?</span>
             </div>
             <template #footer>
                 <Button label="Yes" icon="pi pi-check" @click="processBulkDocumentsApproveReject()" class="p-button-text"
@@ -46,6 +46,7 @@
             @row-select="onRowSelect" @row-unselect="onRowUnselect" :rowsPerPageOptions="[5, 10, 25]"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+            <template #empty> No Employee Details documents for the selected status filter </template>
 
             <Column :expander="true" />
             <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
@@ -75,9 +76,7 @@
                         @select-all-change="onSelectAllChange">
                         <Column field="doc_name" header="Document Name">{{ slotProps.data.doc_name }}</Column>
                         <Column field="doc_status" header="Status">
-                            <!-- <template #body="{ data }">
-                                <Tag :value="data.doc_status" :severity="getSeverity(data.doc_status)" />
-                            </template> -->
+
                         </Column>
                         <Column field="" header="View">
                             <template #body="slotProps">
@@ -104,9 +103,10 @@
 
         </DataTable>
 
-        <Dialog v-model:visible="dialog_visible" class="z-0" modal header="Documents" v-if="canShowLoadingScreen == false"   :style="{ width: '40vw' }">
+        <Dialog v-model:visible="dialog_visible" class="z-0" modal header="Documents" v-if="canShowLoadingScreen == false"
+            :style="{ width: '40vw' }">
 
-            <img  :src="`data:image/png;base64,${documentPath}`" :alt="doc_url" class="block pb-3 m-auto" />
+            <img :src="`data:image/png;base64,${documentPath}`" :alt="doc_url" class="block pb-3 m-auto" />
 
         </Dialog>
 
@@ -130,7 +130,7 @@ const canShowConfirmation = ref(false);
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
-const canShowLoadingScreen =ref(false);
+const canShowLoadingScreen = ref(false);
 
 const dialog_visible = ref(false)
 
@@ -156,7 +156,7 @@ const filters = ref({
 
 const showDocDialog = (record_id) => {
     // view_document.value = { ...document }
-    canShowLoadingScreen.value =true;
+    canShowLoadingScreen.value = true;
     dialog_visible.value = true
 
     axios.post('/view-profile-private-file', {
@@ -165,7 +165,7 @@ const showDocDialog = (record_id) => {
         console.log(res.data.data);
         documentPath.value = res.data.data
         console.log("data sent", documentPath.value);
-    }).finally(()=>{
+    }).finally(() => {
         canShowLoadingScreen.value = false;
     })
 

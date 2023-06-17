@@ -16,6 +16,11 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
     const array_employeeLeaveHistory = ref();
     const array_teamLeaveHistory = ref();
     const array_orgLeaveHistory = ref();
+    const array_orgLeaveBalance = ref();
+    const selectedStartDate = ref();
+    const selectedEndDate = ref();
+    const canshowloadingsrceen = ref();
+    const arrayTermLeaveBalance = ref();
 
     const selected_LeaveInformation = ref();
     const canShowLeaveDetails = ref(false);
@@ -115,15 +120,55 @@ export const useLeaveModuleStore = defineStore("useLeaveModuleStore", () => {
         });
     }
 
+    // Get Org Leave Balance details
+
+     async function getOrgLeaveBalance(start_date,end_date){
+        canshowloadingsrceen.value = true;
+
+        await axios.post('/fetch-org-leaves-balance',{
+            start_date:start_date,
+            end_date:end_date
+        }).then((res)=>{
+            array_orgLeaveBalance.value = res.data;
+        }).finally(()=>{
+            canshowloadingsrceen.value = false;
+        });
+     }
+
+     async function getTermLeaveBalance(start_date,end_date){
+        canshowloadingsrceen.value = true;
+        console.log(start_date,end_date);
+        axios.post('/fetch-team-leave-balance',{
+            start_date:start_date,
+            end_date:end_date
+        }).then((res)=>{
+            arrayTermLeaveBalance.value = res.data;
+
+        }).finally(()=>{
+            canshowloadingsrceen.value = false;
+        })
+     }
+
     return {
 
         canShowLoading,canShowLeaveDetails,setLeaveDetails,getLeaveDetails,
 
-        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance,
+        array_employeeLeaveHistory, array_teamLeaveHistory, array_orgLeaveHistory, array_employeeLeaveBalance, array_employeeAvailedLeaveBalance,array_orgLeaveBalance,
+        selectedStartDate,selectedEndDate,
+        canshowloadingsrceen,
+
+        arrayTermLeaveBalance,
+
+        //
 
         // Functions
 
-        getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveHistory, getLeaveInformation, getEmployeeLeaveBalance
+        getEmployeeLeaveHistory, getTeamLeaveHistory, getAllEmployeesLeaveHistory, getLeaveInformation, getEmployeeLeaveBalance,
+        // org leave Balance functions
+        getOrgLeaveBalance,
+
+        // TermLeaveBalance
+        getTermLeaveBalance
 
     };
 });
