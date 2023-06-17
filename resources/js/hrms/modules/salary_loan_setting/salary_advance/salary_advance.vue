@@ -38,7 +38,7 @@
                                     <h1 style="border-left:4px solid var(--orange); padding-left: 15px; font-size: 18px;">
                                         Employees</h1>
                                 </div>
-                                <div class="col-3 mx-2">
+                                <div class="mx-2 col-3">
                                     <span class="p-input-icon-left">
                                         <i class="pi pi-search" />
                                         <InputText placeholder="Search" v-model="filters['global'].value"
@@ -120,20 +120,22 @@
 
 
 
-                <div class="col mt-4">
+                <div class="mt-4 col">
                     <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
                     <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
                     <div class="shadow-sm card border-L rounded-top">
                         <div class="card-body">
                             <div
-                                class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center p-2">
+                                class="grid gap-4 p-2 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center">
                                 <div>
 
                                     <div class="flex flex-wrap gap-3">
                                         <div class="flex justify-content-center align-items-center">
                                             <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1"
-                                                name="percofsaladvance" value="100" />
+                                                name="percofsaladvance" value="100" :class="[
+                                                    v$.perOfSalAdvance.$error ? 'p-invalid' : '',
+                                                ]" />
                                             <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
                                         </div>
                                     </div>
@@ -141,29 +143,42 @@
                                 <div>
                                     <div class="flex align-items-center">
                                         <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2"
-                                            name="percofsaladvance" value="50" />
+                                            name="percofsaladvance" value="50" :class="[
+                                                v$.perOfSalAdvance.$error ? 'p-invalid' : '',
+                                            ]" />
+
                                         <label for="ingredient2" class="ml-2 fs-5">50% Of Net salary</label>
                                     </div>
                                 </div>
                                 <div class="flex">
                                     <div class="flex align-items-center">
                                         <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3"
-                                            name="percofsaladvance" value="custom" />
+                                            name="percofsaladvance" value="custom" :class="[
+                                                v$.perOfSalAdvance.$error ? 'p-invalid' : '',
+                                            ]" />
                                         <label for="ingredient3" class="ml-2 fs-5">Custom</label>
                                     </div>
-                                    <div v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
+                                    <div class="flex" v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
                                         <div class="flex align-items-center">
-                                            <InputText type="text" v-model="salaryStore.sa.cusPerOfSalAdvance"
-                                                name="percofsaladvance" style="max-width: 100px;" />
-                                            <label for="ingredient4" class="ml-2 fs-5">% Of Net salary</label>
+                                            <InputNumber v-model="salaryStore.sa.cusPerOfSalAdvance"
+                                                name="percofsaladvance" class="w-1 mx-2" style="  width: 80px;"  :class="[
+                                                    v$.cusPerOfSalAdvance.$error ? 'p-invalid' : '',
+                                                ]" />
                                         </div>
+                                        <label for="ingredient4" class="my-auto ml-2 fs-5">% Of Net salary</label>
                                     </div>
                                 </div>
                             </div>
+                            <span v-if="v$.perOfSalAdvance.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.perOfSalAdvance.$errors[0].$message }}
+                            </span>
+                            <span v-if="v$.cusPerOfSalAdvance.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.cusPerOfSalAdvance.$errors[0].$message }}
+                            </span>
                         </div>
                     </div>
 
-                    <h1 class="my-3 fs-4 mt-3 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
+                    <h1 class="my-3 mt-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
                     <p class="my-2 fs-5">Please choose the method of deduction.</p>
                     <div class="card border-L">
                         <div class="card-body">
@@ -171,7 +186,9 @@
                                 <div class="col-7 d-flex justify-content-start align-items-center">
 
                                     <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1"
-                                        name="deductiomAmt" value="1" />
+                                        name="deductiomAmt" value="1" :class="[
+                                            v$.deductMethod.$error ? 'p-invalid' : '',
+                                        ]" />
                                     <label for="" class="mx-3 fs-5" style="line-height: 25px;">Deduct the amount in the
                                         upcoming
                                         payroll.</label>
@@ -180,10 +197,14 @@
                             <div class="my-3 row">
                                 <div class="col-7 d-flex justify-content-start align-items-center">
                                     <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1"
-                                        name="deductiomAmt" value="afterPayroll" />
+                                        name="deductiomAmt" value="afterPayroll" :class="[
+                                            v$.deductMethod.$error ? 'p-invalid' : '',
+                                        ]" />
                                     <label for="" class="mx-3 fs-5">The deduction can be made over a period of
-                                        <InputText type="text" class="mx-3" v-model="salaryStore.sa.cusDeductMethod"
-                                            style="max-width: 100px;" /> months.
+                                        <InputNumber type="text" class="mx-3" v-model="salaryStore.sa.cusDeductMethod"
+                                            style="max-width: 100px;" :class="[
+                                                v$.cusDeductMethod.$error ? 'p-invalid' : '',
+                                            ]" /> months.
                                     </label>
                                 </div>
                             </div>
@@ -196,66 +217,88 @@
                                         amount will be deducted.)</p>
                                 </div>
                             </div>
-
+                            <span v-if="v$.deductMethod.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.deductMethod.$errors[0].$message }}
+                            </span>
+                            <span v-if="v$.cusDeductMethod.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.cusDeductMethod.$errors[0].$message }}
+                            </span>
                         </div>
+
                     </div>
 
                     <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
                     <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
                     <div class="card border-L">
-                        <div class="row d-flex py-3">
-                            <div class="col col-2 my-3 d-flex align-items-center" style="width: 200px;" >
-                                <P class="fs-5 mx-3">Employee Request
-                                  </P>
-                                  <i class="pi pi-angle-double-right fs-4  text-green-400"></i>
+                        <div class="py-3 row d-flex">
+                            <div class="my-3 col col-2 d-flex align-items-center" style="width: 200px;">
+                                <P class="mx-3 fs-5">Employee Request
+                                </P>
+                                <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
                             </div>
-                            <div class="col col-3  d-flex" style="width: 280px;">
-                                <div class="bg-slate-200 p-1 d-flex align-items-center rounded w-10 " style="width: 225px !important;"  >
-                                    <Dropdown v-model="selectedCity1" editable :options="filteredApprovalFlow"
-                                        optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-2"
-                                        @change="test(1, selectedCity1)" />
-                                    <button @click="option1 = 0, test(4, selectedCity1)" v-if="selectedCity1" class="mx-2">
-                                        <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
+                            <div class="col col-3 d-flex" style="width: 280px;">
+                                <div class="w-10 p-1 rounded bg-slate-200 d-flex align-items-center "
+                                    style="width: 225px !important;">
+                                    <Dropdown v-model="salaryStore.selectedOption1" editable
+                                        :options="salaryStore.filteredApprovalFlow" optionLabel="name" placeholder="Select"
+                                        class="w-full pl-2 md:w-14rem"
+                                        @change="salaryStore.toSelectoption(1, salaryStore.selectedOption1)" />
+                                    <button
+                                        @click="salaryStore.option1 = 0, salaryStore.toSelectoption(4, salaryStore.selectedOption1)"
+                                        v-if="salaryStore.selectedOption1" class="mx-2">
+                                        <i class="ml-2 text-red-400 pi pi-times-circle fs-4"></i>
                                     </button>
                                 </div>
-                                <button @click="option1 = 1" class=" text-green-400 " style="width: 40px;"
-                                    v-if="option1 == 0 && option == 1">
+                                <button @click="salaryStore.option1 = 1" class="text-green-400 " style="width: 40px;"
+                                    v-if="salaryStore.option1 == 0 && salaryStore.option == 1">
                                     <i class="pi pi-plus-circle fs-4"></i></button>
-                                <button class=" text-green-400 ml-4" style="width: 40px;" v-if="option1 == 1">
+                                <button class="ml-4 text-green-400 " style="width: 40px;" v-if="salaryStore.option1 == 1">
                                     <i class="pi pi-angle-double-right fs-4"></i></button>
                             </div>
 
 
-                            <div class="col col-3  d-flex" v-if="option1 == 1" style="width: 280px;" >
-                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10 col-8"  style="width: 225px !important;" >
-                                    <Dropdown v-model="selectedCity2" editable :options="filteredApprovalFlow"
-                                        optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-0.5"
-                                        @change="test(2, selectedCity2)" />
-                                    <button @click="option1 = 0, test(5, selectedCity2)" v-if="option1 == 1">
-                                        <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
+                            <div class="col col-3 d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
+                                <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center col-8"
+                                    style="width: 225px !important;">
+                                    <Dropdown v-model="salaryStore.selectedOption2" editable
+                                        :options="salaryStore.filteredApprovalFlow" optionLabel="name" placeholder="Select"
+                                        class="w-full md:w-14rem pl-0.5"
+                                        @change="salaryStore.toSelectoption(2, salaryStore.selectedOption2)" />
+                                    <button
+                                        @click="salaryStore.option1 = 0, salaryStore.toSelectoption(5, salaryStore.selectedOption2)"
+                                        v-if="salaryStore.option1 == 1">
+                                        <i class="ml-2 text-red-400 pi pi-times-circle fs-4"></i>
                                     </button>
                                 </div>
-                                <button @click="option2 = 1" class=" text-green-400 " v-if="option2 == 0 && option1 == 1"
-                                    style="width: 40px;">
+                                <button @click="salaryStore.option2 = 1" class="text-green-400 "
+                                    v-if="salaryStore.option2 == 0 && salaryStore.option1 == 1" style="width: 40px;">
                                     <i class="pi pi-plus-circle fs-4"></i></button>
 
-                                <button class=" text-green-400 " style="width: 40px;" v-if="option2 == 1">
-                                    <i class="pi pi-angle-double-right fs-4 ml-4"></i></button>
+                                <button class="text-green-400 " style="width: 40px;" v-if="salaryStore.option2 == 1">
+                                    <i class="ml-4 pi pi-angle-double-right fs-4"></i></button>
                             </div>
 
 
-                            <div class="col col-3  d-flex" v-if="option2 == 1"  style="width: 280px;" >
-                                <div class="bg-slate-200 p-2 ml-2 d-flex align-items-center rounded w-10" style="width: 225px !important;">
-                                    <Dropdown v-model="selectedCity3" editable :options="filteredApprovalFlow"
-                                        optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-2"
-                                        @change="test(3, selectedCity3)" />
-                                    <button @click="option2 = 0, test(6, selectedCity3)" v-if="option2 == 1">
-                                        <i class="pi pi-times-circle fs-4  text-red-400 ml-2"></i>
+                            <div class="col col-3 d-flex" v-if="salaryStore.option2 == 1" style="width: 280px;">
+                                <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center"
+                                    style="width: 225px !important;">
+                                    <Dropdown v-model="salaryStore.selectedOption3" editable
+                                        :options="salaryStore.filteredApprovalFlow" optionLabel="name" placeholder="Select"
+                                        class="w-full pl-2 md:w-14rem"
+                                        @change="salaryStore.toSelectoption(3, salaryStore.selectedOption3)" />
+                                    <button
+                                        @click="salaryStore.option2 = 0, salaryStore.toSelectoption(6, salaryStore.selectedOption3)"
+                                        v-if="salaryStore.option2 == 1">
+                                        <i class="ml-2 text-red-400 pi pi-times-circle fs-4"></i>
                                     </button>
                                 </div>
                             </div>
+                            <span v-if="v$.approvalflow.$error" class="mx-2 font-semibold text-red-400 fs-6">
+                                {{ v$.approvalflow.$errors[0].$message }}
+                            </span>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -264,7 +307,7 @@
             <div class="col">
                 <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '2'">
                     <button class="btn btn-border-primary">Cancel</button>
-                    <button class="mx-4 btn btn-primary" @click="salaryStore.saveSalaryAdvanceFeature">Save Changes</button>
+                    <button class="mx-4 btn btn-primary" @click="submitForm">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -274,9 +317,11 @@
 </template>
 <script setup>
 
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore'
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 
 const salaryStore = salaryAdvanceSettingMainStore()
 
@@ -284,132 +329,65 @@ const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-
-const approvalFormat = reactive([])
-const selectedCity = ref();
-const selectedCity1 = ref();
-const selectedCity2 = ref();
-const selectedCity3 = ref();
+const opt = ref()
+const opt1 = ref()
+const opt2 = ref();
+const opt3 = ref();
+const opt4 = ref();
+const opt5 = ref();
+const opt6 = ref();
 
 const show = ref(false);
 
-const tet = (value) => {
-    console.log(value);
-}
-
-const test = (flow, value) => {
-    console.log(value);
-    if (flow == 1) {
-        option.value = 1
-        selectedCity1.value = value.name
-        let approvalflow = {
-            approver: value.name,
-            order: flow
+const custPercent = (value) => {
+    if (salaryStore.sa.perOfSalAdvance == 'custom') {
+        if (value) {
+            return true
+        } else {
+            false
         }
-        approvalFormat.push(approvalflow)
-    }
-    if (flow == 2) {
-        selectedCity2.value = value.name
-        let approvalflow = {
-            approver: value.name,
-            order: flow
-        }
-        approvalFormat.push(approvalflow)
-
-    }
-    if (flow == 3) {
-        selectedCity3.value = value.name
-        let approvalflow = {
-            approver: value.name,
-            order: flow
-        }
-        approvalFormat.push(approvalflow)
     } else {
-        console.log("No More Options");
+        return true
     }
-    if (flow == 4) {
-        console.log(value);
-        var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
-        console.log(itemsWithoutCurrent);
-        let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
-        console.log(removedOption);
-        filteredApprovalFlow.value.push(removedOption)
-        selectedCity1.value = ''
-        approvalFormat.pop()
-
+}
+const custDeduct = (value) => {
+    if (salaryStore.sa.deductMethod == 'afterPayroll') {
+        if (value) {
+            return true
+        } else {
+            false
+        }
+    } else {
+        return true
     }
-    if (flow == 5) {
-        console.log(value);
-        var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
-        console.log(itemsWithoutCurrent);
-        let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
-        console.log(removedOption);
-        filteredApprovalFlow.value.push(removedOption)
-        selectedCity2.value = ''
-        approvalFormat.pop()
-
-    }
-
-    if (flow == 6) {
-        console.log(value);
-        var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
-        console.log(itemsWithoutCurrent);
-        let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
-        console.log(removedOption);
-        filteredApprovalFlow.value.push(removedOption)
-        selectedCity3.value = ''
-        approvalFormat.pop()
-
-    }
-
-    var itemsWithoutCurrent = filteredApprovalFlow.value.filter(function (x) { return x.val !== value.val; });
-    filteredApprovalFlow.value = itemsWithoutCurrent
-
 }
 
+const rules = computed(() => {
+    return {
+        perOfSalAdvance: { required: helpers.withMessage('Percentage of salary advance is required', required) },
+        cusPerOfSalAdvance: { custPercent: helpers.withMessage('Custom percentage of salary advance is required', custPercent) },
+        deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
+        cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
+        approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
 
-
-const dropdownlist = ref([
-    {
-        name: "Line Manager", val: 1
-    },
-    {
-        name: "HR", val: 2
     }
-    , {
-        name: "Finance Admin", val: 3
+})
+
+
+
+const v$ = useValidate(rules, salaryStore.sa)
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        v$.value.$reset()
+    } else {
+        console.log('Form failed validation')
     }
-])
-
-const filteredApprovalFlow = ref([
-    {
-        name: "Line Manager", val: 1
-    },
-    {
-        name: "HR", val: 2
-    }
-    , {
-        name: "Finance Admin", val: 3
-    }
-])
-
-
-
-const option = ref(0)
-const option1 = ref(0)
-const option2 = ref(0)
-const option3 = ref(0)
-
-function deletedrop() {
-    option.value = 0;
-    option1.value = 0;
-    option2.value = 0;
 }
-function deletedrop1() {
-    // option.value = 0;
-    option1.value = 0;
-    option2.value = 0;
-}
+
 
 
 onMounted(() => {
@@ -421,23 +399,6 @@ onMounted(() => {
     opt5.value = "Legal Entity"
 })
 
-
-
-const value = ref();
-
-
-const activetab = ref(1)
-
-
-const ingredient = ref('');
-
-const opt = ref()
-const opt1 = ref()
-const opt2 = ref();
-const opt3 = ref();
-const opt4 = ref();
-const opt5 = ref();
-const opt6 = ref();
 
 </script>
 <style>
@@ -510,6 +471,8 @@ input[type=radio] {
     border-radius: 6px;
     ;
 
+}
+.p-inputtext.p-component.p-inputnumber-input{    width: 75px;
 }
 </style>
 

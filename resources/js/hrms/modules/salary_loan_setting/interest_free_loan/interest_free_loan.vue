@@ -2,8 +2,8 @@
   <div class="px-4">
 
     <div class="row d-flex justify-content-start align-items-center ">
-      <div class="d-flex mt-5">
-        <div class="col-3 fs-4 fw-bolder" >
+      <div class="mt-5 d-flex">
+        <div class="col-3 fs-4 fw-bolder">
           <h1 style="position: relative; left:-8px">Interest Free Loan Feature</h1>
         </div>
 
@@ -18,173 +18,185 @@
         </div>
       </div>
       <div class="col" v-if="salaryStore.isInterestFreeLoaneature == '1'">
-            <p  class="fs-5" >Please click the "Enable" button to activate the Interest Free Loan feature for use within your organization.</p>
+        <p class="fs-5">Please click the "Enable" button to activate the Interest Free Loan feature for use within your
+          organization.</p>
       </div>
 
       <div class="col" v-if="salaryStore.isInterestFreeLoaneature == '2'">
-          <div class="col-10">
-            <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
+        <div class="col-10">
+          <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
 
-            <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees and Amount</h1>
-            <p class=" fs-5 mt-3">The employee's eligibility for the loan amount can be determined based on the number of years they have served in the organization.</p>
-          </div>
-          <div class=" col-12">
-            <div class="card rounded-lg shadow-sm  border-L ">
-              <div class="card-body ">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="fs-5">The employee must have served for a minimum of
-                            <InputText type="text" v-model="value" style="max-width: 100px; " class="mx-2" />
-                             years to avail the loan amount of
-                             <InputText type="text" v-model="value" style="max-width: 100px;" class="mx-2" />
-                              % of their CTC.</h1>
-                    </div>
-                    <div class="col-10">
-                        <p class="fs-6 clr-gray ">(Note: This will be calculated based on the employee's date of joining.)</p>
-                    </div>
+          <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees and Amount</h1>
+          <p class="mt-3 fs-5">The employee's eligibility for the loan amount can be determined based on the number of
+            years they have served in the organization.</p>
+        </div>
+        <div class=" col-12">
+          <div class="rounded-lg shadow-sm card border-L ">
+            <div class="card-body ">
+              <div class="row">
+                <div class="col-12">
+                  <h1 class="fs-5">The employee must have served for a minimum of
+                    <InputText type="text" v-model="salaryStore.ifl.minEligibile" style="max-width: 100px; " class="mx-2" />
+                    years to avail the loan amount of
+                    <InputText type="text" v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" />
+                    % of their CTC.
+                  </h1>
+                </div>
+                <div class="col-10">
+                  <p class="fs-6 clr-gray ">(Note: This will be calculated based on the employee's date of joining.)</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="col">
-            <h1 class="fs-4 fw-bolder mt-2">Deduction Method</h1>
-            <p class="fs-5 my-2">In the case of an interest-free loan, the EMI would only consist of repayment of the principal amount borrowed, and no interest would be charged.</p>
+        <div class="col">
+          <h1 class="mt-2 fs-4 fw-bolder">Deduction Method</h1>
+          <p class="my-2 fs-5">In the case of an interest-free loan, the EMI would only consist of repayment of the
+            principal amount borrowed, and no interest would be charged.</p>
 
-                    <div class="row">
-                        <div class="shadow-sm card border-L rounded-top">
-                            <div class="card-body">
-                            <div class="row">
-                                <div class="col-7 d-flex justify-content-start align-items-center">
-                                <RadioButton v-model="salaryStore.ifl.deductMethod" inputId="ingredient1" name="percofsaladvance"
-                                    value="upcomingPayroll" />
-
-                                <!-- <input type="radio" name="Dedution_method" checked> -->
-                                <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin deducting the EMI in the
-                                    upcoming payroll.</label>
-                                </div>
-                            </div>
-
-
-                            <div class="my-1 row">
-                                <div class="col-7 d-flex justify-content-start align-items-center">
-                                <!-- <input type="radio" name="Dedution_method" checked> -->
-                                <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1" name="percofsaladvance"
-                                    value="emi" />
-                                <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when they would like their EMI
-                                    payments to begin
-                                </label>
-                                </div>
-                            </div>
-                            <div class="ml-1 row" v-if="salaryStore.lwif.deductMethod == 'emi'">
-                                <div class="ml-4 col">
-                                <h2 class="fs-5 clr-dark">The EMI deductions should begin within
-                                    <InputText type="text" v-model="salaryStore.ifl.cusDeductMethod" style="max-width: 100px;"
-                                    class="mx-2" />months from the date
-                                    the loan is taken.
-                                </h2>
-                                </div>
-                            </div>
-                            <div class="ml-1 row" v-if="salaryStore.lwif.deductMethod == 'emi'">
-                                <div class="ml-4 col">
-                                <p class="fs-6 clr-gray" style="line-height: 14px;">
-                                    (Note: During the specified period, employees have the option to select the month in which they would
-                                    like the EMI deductions to begin.)</p>
-                                </div>
-                            </div>
-                            <div class="row" v-if="salaryStore.lwif.deductMethod == 'emi'">
-                                <div class="col">
-                                <p class="fs-5 clr-dark">Please specify the maximum duration or tenure for the employee to repay the
-                                    loan amount
-                                    <InputText type="text" v-model="salaryStore.ifl.maxTenure" style="max-width: 100px;" class="mx-2" />
-                                    years
-                                </p>
-                                </div>
-                            </div>
-
-                            </div>
-                        </div>
-                    </div>
-          </div>
-          <div class="col">
-            <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
-            <p class="my-2 fs-5">Please choose the approval flow for Interest Free Loan Feature.</p>
-
-                <div class="card border-L">
-                    <div class="card-body">
-                    <div class="row">
-                        <div class="col-7 d-flex justify-content-start align-items-center">
-                        <input type="radio" name="Dedution_method" checked>
-                        <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                            Line Manager
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                            HR
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                            Finance Admin
-                        </label>
-                        </div>
-                    </div>
-                    <div class="my-3 row">
-                        <div class="col-7 d-flex justify-content-start align-items-center">
-                        <input type="radio" name="Dedution_method" checked>
-                        <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                            HR
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                            Finance Admin
-                        </label>
-                        </div>
-                    </div>
-                    <div class="my-3 row">
-                        <div class="col-7 d-flex justify-content-start align-items-center">
-                        <input type="radio" name="Dedution_method" checked>
-                        <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-                            HR
-                        </label>
-                        </div>
-                    </div>
-                    <div class="my-3 row">
-                        <div class="col-7 d-flex justify-content-start align-items-center">
-                        <input type="radio" name="Dedution_method" checked>
-                        <label for="" class="mx-3 fs-5" style="line-height: 25px;">Employee Request
-                            <i class="pi pi-arrow-right" style="font-size: 1rem"></i>
-
-                            Finance Admin
-                        </label>
-                        </div>
-                    </div>
-
-
-
-                    </div>
+          <div class="row">
+            <div class="shadow-sm card border-L rounded-top">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <RadioButton v-model="salaryStore.ifl.deductMethod" inputId="ingredient1" name="dectmeth"
+                      value="1" />
+                    <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin deducting the EMI in the
+                      upcoming payroll.</label>
+                  </div>
                 </div>
-          </div>
 
-          <div class="col" v-if="salaryStore.isInterestFreeLoaneature == '1'">
-                <div>
-                <p class="fs-5">Please click the "Enable" button to activate the Interest Free Loan Feature for use within your
-                    organization.</p>
+
+                <div class="my-1 row">
+                  <div class="col-7 d-flex justify-content-start align-items-center">
+                    <RadioButton v-model="salaryStore.ifl.deductMethod" inputId="ingredient1" name="dectmeth"
+                      value="emi" />
+                    <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when they would like their EMI
+                      payments to begin
+                    </label>
+                  </div>
                 </div>
+                <div class="ml-1 row" v-if="salaryStore.ifl.deductMethod == 'emi'">
+                  <div class="ml-4 col">
+                    <h2 class="fs-5 clr-dark">The EMI deductions should begin within
+                      <InputText type="text" v-model="salaryStore.ifl.cusDeductMethod" style="max-width: 100px;"
+                        class="mx-2" />months from the date
+                      the loan is taken.
+                    </h2>
+                  </div>
+                </div>
+                <div class="ml-1 row" v-if="salaryStore.ifl.deductMethod == 'emi'">
+                  <div class="ml-4 col">
+                    <p class="fs-6 clr-gray" style="line-height: 14px;">
+                      (Note: During the specified period, employees have the option to select the month in which they
+                      would
+                      like the EMI deductions to begin.)</p>
+                  </div>
+                </div>
+                <div class="row" v-if="salaryStore.ifl.deductMethod == 'emi'">
+                  <div class="col">
+                    <p class="fs-5 clr-dark">Please specify the maximum duration or tenure for the employee to repay the
+                      loan amount
+                      <InputText type="text" v-model="salaryStore.ifl.maxTenure" style="max-width: 100px;" class="mx-2" />
+                      years
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="col">
+          <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+          <p class="my-2 fs-5">Please choose the approval flow for Interest Free Loan Feature.</p>
+
+          <div class="card border-L">
+            <div class="py-3 row d-flex">
+              <div class="my-3 col col-2 d-flex align-items-center" style="width: 200px;">
+                <P class="mx-3 fs-5">Employee Request
+                </P>
+                <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
+              </div>
+              <div class="col col-3 d-flex" style="width: 280px;">
+                <div class="w-10 p-1 rounded bg-slate-200 d-flex align-items-center " style="width: 225px !important;">
+                  <Dropdown v-model="salaryStore.selectedOption1" editable :options="salaryStore.filteredApprovalFlow"
+                    optionLabel="name" placeholder="Select" class="w-full pl-2 md:w-14rem"
+                    @change="salaryStore.toSelectoption(1, salaryStore.selectedOption1)" />
+                  <button @click="salaryStore.option1 = 0, salaryStore.toSelectoption(4, salaryStore.selectedOption1)"
+                    v-if="salaryStore.selectedOption1" class="mx-2">
+                    <i class="ml-2 text-red-400 pi pi-times-circle fs-4"></i>
+                  </button>
+                </div>
+                <button @click="salaryStore.option1 = 1" class="text-green-400 " style="width: 40px;"
+                  v-if="salaryStore.option1 == 0 && salaryStore.option == 1">
+                  <i class="pi pi-plus-circle fs-4"></i></button>
+                <button class="ml-4 text-green-400 " style="width: 40px;" v-if="salaryStore.option1 == 1">
+                  <i class="pi pi-angle-double-right fs-4"></i></button>
+              </div>
+
+
+              <div class="col col-3 d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
+                <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center col-8"
+                  style="width: 225px !important;">
+                  <Dropdown v-model="salaryStore.selectedOption2" editable :options="salaryStore.filteredApprovalFlow"
+                    optionLabel="name" placeholder="Select" class="w-full md:w-14rem pl-0.5"
+                    @change="salaryStore.toSelectoption(2, salaryStore.selectedOption2)" />
+                  <button @click="salaryStore.option1 = 0, salaryStore.toSelectoption(5, salaryStore.selectedOption2)"
+                    v-if="salaryStore.option1 == 1">
+                    <i class="ml-2 text-red-400 pi pi-times-circle fs-4"></i>
+                  </button>
+                </div>
+                <button @click="salaryStore.option2 = 1" class="text-green-400 "
+                  v-if="salaryStore.option2 == 0 && salaryStore.option1 == 1" style="width: 40px;">
+                  <i class="pi pi-plus-circle fs-4"></i></button>
+
+                <button class="text-green-400 " style="width: 40px;" v-if="salaryStore.option2 == 1">
+                  <i class="ml-4 pi pi-angle-double-right fs-4"></i></button>
+              </div>
+
+
+              <div class="col col-3 d-flex" v-if="salaryStore.option2 == 1" style="width: 280px;">
+                <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center"
+                  style="width: 225px !important;">
+                  <Dropdown v-model="salaryStore.selectedOption3" editable :options="salaryStore.filteredApprovalFlow"
+                    optionLabel="name" placeholder="Select" class="w-full pl-2 md:w-14rem"
+                    @change="salaryStore.toSelectoption(3, salaryStore.selectedOption3)" />
+                  <button @click="salaryStore.option2 = 0, salaryStore.toSelectoption(6, salaryStore.selectedOption3)"
+                    v-if="salaryStore.option2 == 1">
+                    <i class="ml-2 text-red-400 pi pi-times-circle fs-4"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col" v-if="salaryStore.isInterestFreeLoaneature == '1'">
+          <div>
+            <p class="fs-5">Please click the "Enable" button to activate the Interest Free Loan Feature for use within
+              your
+              organization.</p>
+          </div>
+        </div>
 
       </div>
       <div class="row">
-                <div class="col">
-                    <div class="float-right" v-if="salaryStore.isInterestFreeLoaneature == '2'">
-                        <button class="btn btn-border-primary">Cancel</button>
-                        <button class="mx-4 btn btn-primary" @click="salaryStore.saveInterestfreeLoan">Save Changes</button>
-                        <!-- <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, autem.</h1> -->
-                    </div>
-                </div>
-    </div>
+        <div class="col">
+          <div class="float-right" v-if="salaryStore.isInterestFreeLoaneature == '2'">
+            <button class="btn btn-border-primary">Cancel</button>
+            <button class="mx-4 btn btn-primary" @click="salaryStore.saveInterestfreeLoan">Save Changes</button>
+            <!-- <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, autem.</h1> -->
+          </div>
+        </div>
+      </div>
 
     </div>
 
 
 
-</div>
+  </div>
 </template>
 <script setup>
 
@@ -277,22 +289,22 @@ input[type=radio] {
   color: var(--orange) !important;
   background-color: var(--orange) !important;
 }
+
 input[type='radio']:after {
-        width: 20px;
-        height: 20px;
-        /* border-radius: 15px; */
-        top: -2px;
-        left: -1px;
-        position: relative;
-        background-color: var(--orange);
-        content: '';
-        display: inline-block;
-        visibility: visible;
-        /* border: 2px solid white; */
-    }
+  width: 20px;
+  height: 20px;
+  /* border-radius: 15px; */
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: var(--orange);
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  /* border: 2px solid white; */
+}
 
 .p-dropdown-label.p-inputtext {
   color: var(--navy);
-}
-</style>
+}</style>
 

@@ -1,7 +1,7 @@
 <template>
     <div style="position: relative; top:-15px ">
-        <h1 class="mb-4 fs-3 d-flex  align-items-center fw-bolder" style="color: #003056; "><i
-                class='fas fa-cog fs-3 mr-3 '></i> Salary Advance & Loan Settings</h1>
+        <h1 class="mb-4 fs-3 d-flex align-items-center fw-bolder" style="color: #003056; "><i
+                class='mr-3 fas fa-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
 
         <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -53,6 +53,17 @@
             </div>
         </div>
     </div>
+    <Dialog header="Header" v-model:visible="useSalaryStore.canShowLoading"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 
 

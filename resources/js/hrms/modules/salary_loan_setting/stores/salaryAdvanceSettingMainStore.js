@@ -25,9 +25,12 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     //   Salary Advance Begins
 
+    // Loading Service
+
+    const canShowLoading = ref(false)
+
 
     // Initially Disabled
-
     const isSalaryAdvanceFeatureEnabled = ref(1)
     const dropdownFilter = ref()
     const selectedFilterOptions = reactive({
@@ -37,6 +40,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         state: '',
         client_name: '',
     })
+    const approvalFormat = reactive([])
+
 
     // Eligible Employees
 
@@ -45,9 +50,12 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Get filter
 
     const getDropdownFilterDetails = async () => {
+        // canShowLoading.value = true
         let url = '/getAllDropdownFilter'
         await axios.get(url).then(res => {
             dropdownFilter.value = res.data
+        }).finally(() => {
+            // canShowLoading.value = false
         })
     }
 
@@ -78,19 +86,17 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                         else {
                             console.log("nope");
                         }
-        let url = '/showAssignEmp'
-        axios.post(url, selectedFilterOptions).then(res => {
-            eligbleEmployeeSource.value = res.data
-            console.log(res.data);
-        })
+       getElibigleEmployees()
     }
 
     const getElibigleEmployees = () => {
-
+        canShowLoading.value = true
         let url = '/showAssignEmp'
         axios.post(url, selectedFilterOptions).then(res => {
             eligbleEmployeeSource.value = res.data
             console.log(res.data);
+        }).finally(()=>{
+            canShowLoading.value = false
         })
     }
 
@@ -105,7 +111,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         perOfSalAdvance: '',
         cusPerOfSalAdvance: '',
         deductMethod: '',
-        cusDeductMethod: ''
+        cusDeductMethod: '',
+        approvalflow: approvalFormat
     })
 
     // Approval Flow
@@ -114,7 +121,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
     const saveSalaryAdvanceFeature = () => {
-
+        canShowLoading.value = true
         if (sa.perOfSalAdvance == 'custom') {
             sa.perOfSalAdvance = sa.cusPerOfSalAdvance
         } else {
@@ -135,7 +142,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log("salary Advance Enabled");
             sa.isSalaryAdvanceEnabled = 1
         }
-        axios.post(url, sa)
+        axios.post(url, sa).finally(() => {
+            canShowLoading.value = false
+            approvalFormat.splice(0, approvalFormat.length)
+        })
         console.log(sa);
     }
 
@@ -152,23 +162,35 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Eligible Employees and Amount
     // Deduction Method
     const ifl = reactive({
+        isInterestFreeLoanIsEnabled: 0,
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
-        maxTenure: ''
+        maxTenure: '',
+        approvalflow: approvalFormat
 
     })
 
     const saveInterestfreeLoan = () => {
+        canShowLoading.value = true
+        if (ifl.deductMethod == 'emi') {
+            ifl.deductMethod = ifl.cusDeductMethod
+        } else {
+            console.log("same of percent");
+        }
         if (isInterestFreeLoaneature.value == '1') {
             console.log("disabled");
         } else {
             console.log(ifl);
+            ifl.isInterestFreeLoanIsEnabled = 1
         }
 
         let url = '/save-interset-free-loan-settings'
-        axios.post(url,ifl)
+        axios.post(url, ifl).finally(() => {
+            canShowLoading.value = false
+            approvalFormat.splice(0, approvalFormat.length)
+        })
     }
 
     // Interest Free Loan Feature Ends
@@ -191,10 +213,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         tdl: '',
         deductMethod: '',
         sumbitWithIn: '',
-        isDeductedInsubsequentpayroll: ''
+        isDeductedInsubsequentpayroll: '',
+        claimBill: '',
+        approvalflow: approvalFormat
     })
 
-    const saveTravelAdvance  = () => {
+    const saveTravelAdvance = () => {
+        canShowLoading.value = true
         if (isTravelAdvanceFeatureEnabled.value == '1') {
             console.log("disabled");
         } else {
@@ -202,7 +227,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
 
         let url = '/saveTravelAdvanceSettings'
-        axios.post(url,ta)
+        axios.post(url, ta).finally(() => {
+            canShowLoading.value = false
+            approvalFormat.splice(0, approvalFormat.length)
+        })
     }
 
 
@@ -218,11 +246,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
-        maxTenure: ''
+        maxTenure: '',
+        approvalflow: approvalFormat
 
     })
 
-    const saveLoanWithInterest  = () => {
+    const saveLoanWithInterest = () => {
+        canShowLoading.value = true
         if (isLoanWithInterestFeature.value == '1') {
             console.log("disabled");
         } else {
@@ -230,7 +260,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
 
         let url = '/saveLoanWithIntrest'
-        axios.post(url,lwif)
+        axios.post(url, lwif).finally(() => {
+            canShowLoading.value = false
+            approvalFormat.splice(0, approvalFormat.length)
+        })
     }
 
 
@@ -253,6 +286,101 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     }
 
+    const selectedOption1 = ref();
+    const selectedOption2 = ref();
+    const selectedOption3 = ref();
+
+
+    const toSelectoption = (flow, value) => {
+        console.log(value);
+        if (flow == 1) {
+            option.value = 1
+            selectedOption1.value = value.name
+            let approvalflow = {
+                approver: value.name,
+                order: flow
+            }
+            approvalFormat.push(approvalflow)
+        }
+        if (flow == 2) {
+            selectedOption2.value = value.name
+            let approvalflow = {
+                approver: value.name,
+                order: flow
+            }
+            approvalFormat.push(approvalflow)
+
+        }
+        if (flow == 3) {
+            selectedOption3.value = value.name
+            let approvalflow = {
+                approver: value.name,
+                order: flow
+            }
+            approvalFormat.push(approvalflow)
+        } else {
+            console.log("No More Options");
+        }
+        if (flow == 4) {
+            console.log(value);
+            var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
+            console.log(itemsWithoutCurrent);
+            let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
+            console.log(removedOption);
+            filteredApprovalFlow.value.push(removedOption)
+            selectedOption1.value = ''
+            approvalFormat.pop()
+
+        }
+        if (flow == 5) {
+            console.log(value);
+            var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
+            console.log(itemsWithoutCurrent);
+            let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
+            console.log(removedOption);
+            filteredApprovalFlow.value.push(removedOption)
+            selectedOption2.value = ''
+            approvalFormat.pop()
+
+        }
+
+        if (flow == 6) {
+            console.log(value);
+            var itemsWithoutCurrent = dropdownlist.value.filter(function (x) { return x.name == value; });
+            console.log(itemsWithoutCurrent);
+            let removedOption = { name: itemsWithoutCurrent[0].name, val: itemsWithoutCurrent[0].val };
+            console.log(removedOption);
+            filteredApprovalFlow.value.push(removedOption)
+            selectedOption3.value = ''
+            approvalFormat.pop()
+
+        }
+
+        var itemsWithoutCurrent = filteredApprovalFlow.value.filter(function (x) { return x.val !== value.val; });
+        filteredApprovalFlow.value = itemsWithoutCurrent
+
+    }
+
+
+
+    const dropdownlist = ref([
+        { name: "Line Manager", val: 1 },
+        { name: "HR", val: 2 },
+        { name: "Finance Admin", val: 3 }
+    ])
+
+    const filteredApprovalFlow = ref([
+        { name: "Line Manager", val: 1 },
+        { name: "HR", val: 2 },
+        { name: "Finance Admin", val: 3 }
+    ])
+
+
+
+    const option = ref(0)
+    const option1 = ref(0)
+    const option2 = ref(0)
+
 
 
 
@@ -262,7 +390,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     return {
 
         //
-        dropdownFilter, getDropdownFilterDetails, getSelectoption, getElibigleEmployees, eligbleEmployeeSource, resetFilters,
+        dropdownFilter, getDropdownFilterDetails, getSelectoption, getElibigleEmployees, eligbleEmployeeSource, resetFilters, canShowLoading,
+
+        // Approver Flow
+
+        approvalFormat, selectedOption1, selectedOption2, selectedOption3, option, option1, option2, dropdownlist, filteredApprovalFlow, toSelectoption,
 
         // SalaryAdvanceFeature
 
@@ -274,11 +406,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Travel Advance Feature
 
-        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta,saveTravelAdvance,
+        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta, saveTravelAdvance,
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif,saveLoanWithInterest
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest
 
 
 
