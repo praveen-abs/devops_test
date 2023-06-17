@@ -192,8 +192,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
     //Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgEmployeesPendingLeaves'])->name('fetch-org-leaves');
     Route::post('/fetch-team-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamEmployeesPendingLeaves'])->name('fetch-team-leaves');
-    Route::post('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgLeaveBalance'])->name('fetchOrgLeaveBalance');
-    Route::post('/fetch-team-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamLeaveBalance'])->name('fetchTeamLeaveBalance');
+    Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgLeaveBalance'])->name('fetchOrgLeaveBalance');
+    Route::get('/fetch-team-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamLeaveBalance'])->name('fetchTeamLeaveBalance');
 
 
 
@@ -555,6 +555,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
     //Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
 
+    //Employee Details Documents Approvals
+    Route::get('Employee-Details-approvals', 'App\Http\Controllers\VmtApprovalsController@showEmployeeDetailsDocApprovalPage')->name('Employee-Details-approvals');
 
     //PMS Approvals
     Route::post('/approvals-pms', 'App\Http\Controllers\VmtApprovalsController@approveRejectPMSForm')->name('vmt-approvals-pms');
