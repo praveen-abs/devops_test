@@ -534,6 +534,7 @@ class VmtMainDashboardController extends Controller
     public function getNotifications(Request $request, VmtDashboardService $serviceVmtDashboardService ){
 
         //Fetch the data
+        $request->user_code = "LAL0013";
        return $serviceVmtDashboardService->getNotifications($request->user_code);
     }
     public function performAttendanceCheckIn(Request $request, VmtDashboardService $serviceVmtDashboardService ){
@@ -575,9 +576,21 @@ class VmtMainDashboardController extends Controller
         return  $leave_balance_details;
     }
 
-    public function getAllNewDasboardDetails(Request $request, VmtDashboardService $serviceVmtDashboardService){
+    public function getAllNewDashboardDetails(Request $request, VmtDashboardService $serviceVmtDashboardService){
 
-        return $serviceVmtDashboardService->getAllNewDasboardDetails();
+        if (empty($request->all())) {
+            $time_periods_of_year_query = VmtOrgTimePeriod::where('status', 1)->first();
+        } else {
+            $time_periods_of_year_query = VmtOrgTimePeriod::whereYear('start_date',)->whereMonth('start_date',)
+                ->whereYear('end_date',)->whereMonth('end_date',)->first();
+        }
+        $start_date =  $time_periods_of_year_query->start_date;
+        $end_date   = $time_periods_of_year_query->end_date;
+        $calender_type = $time_periods_of_year_query->abbrevation;
+        // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+        $time_frame = $calender_type . ' ' . substr($start_date, 0, 4) . '-' . substr($end_date, 0, 4);
+
+        return $serviceVmtDashboardService->getAllNewDashboardDetails(auth::user()->id, $start_date, $end_date);
     }
 
 

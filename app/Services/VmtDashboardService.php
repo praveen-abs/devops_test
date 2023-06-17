@@ -569,7 +569,7 @@ class VmtDashboardService{
 
                 //Check whether leave is applied or not.
                 $t_leaveRequestDetails = $this->isLeaveRequestApplied($user_id, $key, $year, $month);
-                dd($t_leaveRequestDetails);
+                // dd($t_leaveRequestDetails);
                 if (empty($t_leaveRequestDetails)) {
 
                     $attendanceResponseArray[$key]["absent_status"] = "Not Applied";
@@ -615,29 +615,27 @@ class VmtDashboardService{
 
         return ($attendanceResponseArray);
 
-        $res= array();
-        $count =0;
-        $count1=0;
-        $count2 = 0;
-        foreach($attendanceResponseArray as $attendancedash){
+    //     $res= array();
+    //     $count =0;
+    //     $count1=0;
+    //     $count2 = 0;
+    //     foreach($attendanceResponseArray as $attendancedash){
 
-             if($attendancedash['isAbsent']){
+    //          if($attendancedash['isAbsent']){
+    //           $count++;
+    //          }
+    //          if(!$attendancedash['isAbsent']){
+    //             $count1++;
+    //          }
+    //          if($attendancedash['absent_status'] == "Not Applied"){
+    //             $count2++;
+    //          }
+    //     }
+    //    $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
 
-              $count++;
-             }
-             if(!$attendancedash['isAbsent']){
+    //     array_push($res, $current_mnth);
 
-                $count1++;
-             }
-             if($attendancedash['absent_status'] == "Not Applied"){
-                $count2++;
-             }
-        }
-       $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
-
-        array_push($res, $current_mnth);
-
-         return $res;
+    //      return $res;
 
 
 
@@ -679,7 +677,7 @@ class VmtDashboardService{
                 echo $currentDate;
                 // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
                 if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
-                    // dd($single_leave_details);
+
                     return $single_leave_details;
                 } else {
                     $single_leave_details = null;
@@ -687,7 +685,7 @@ class VmtDashboardService{
             }
             return $single_leave_details;
         }
-        dd();
+
 
 
         //check whether leave applied.If yes, check leave status
@@ -943,10 +941,68 @@ class VmtDashboardService{
         return $query_emp_attendanceDetails;
     }
 
-    public function getAllNewDashboardDetails($user_code){
+    public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period){
+        try{
+        $simma = $this->getAllEventsDashboard();
+        }
+        catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to fetch notifications",
+                "data" => $e,
+            ]);
+
+        }
+
+     try{
+         $user_code = auth()->user()->user_code;
+         $simma1 =  $this->getNotifications($user_code);
+       }
+        catch(\Exception $e){
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch notifications",
+            "data" => $e,
+        ]);
+    }
+
+    try{
+        $simma2 =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
+    }
+    catch(\Exception $e){
 
         return response()->json([
-            ["All-Events"=>$this->getAllEventsDashboard() ,"All-Notification" => $this->getNotifications($user_code)]
+            "status" => "failure",
+            "message" => "Unable to fetch notifications",
+            "data" => $e,
+        ]);
+    }
+    // try{
+    //     $user_code = auth()->user()->user_code;
+    //     $year = date("Y");
+    //     $month = date("m");
+
+    //     $simma3 = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
+
+    // }
+    //  catch(\Exception $e){
+
+    //     return response()->json([
+    //         "status" => "failure",
+    //         "message" => "Unable to fetch notifications",
+    //         "data" => $e,
+    //     ]);
+    // }
+
+
+        return response()->json([
+            [
+                "All-Events"=>$simma ,
+                "All-Notification" => $simma1,
+                "Leave-Balance"=>$simma2,
+                // "Leave-report"=>$simma3
+            ]
         ]);
     }
 
