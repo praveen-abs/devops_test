@@ -205,6 +205,8 @@ const columns = ref();
 const url = ref();
 const loading = ref(true);
 const teamleavehistory = ref();
+const expandedRows = ref([]);
+const selectedAllEmployee = ref();
 const ManagerselectedLeaveDate = ref();
 
 const filters = ref({
