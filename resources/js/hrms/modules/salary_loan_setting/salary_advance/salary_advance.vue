@@ -382,6 +382,7 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
+        salaryStore.saveSalaryAdvanceFeature()
         v$.value.$reset()
     } else {
         console.log('Form failed validation')
@@ -472,7 +473,8 @@ input[type=radio] {
     ;
 
 }
-.p-inputtext.p-component.p-inputnumber-input{    width: 75px;
+.p-inputtext.p-component.p-inputnumber-input{
+    width: 75px;
 }
 </style>
 

@@ -229,13 +229,6 @@ import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMai
 
 const salaryStore = salaryAdvanceSettingMainStore()
 
-const value = ref();
-const options = ref(['Off', 'On']);
-
-
-
-const ingredient = ref('');
-
 const opt = ref()
 const op = ref([
   { id: 1, dep: "res" }

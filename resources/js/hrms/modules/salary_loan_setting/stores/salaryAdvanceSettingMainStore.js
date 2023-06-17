@@ -86,7 +86,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                         else {
                             console.log("nope");
                         }
-       getElibigleEmployees()
+        let url = '/showAssignEmp'
+        axios.post(url, selectedFilterOptions).then(res => {
+            eligbleEmployeeSource.value = res.data
+            console.log(res.data);
+        })
     }
 
     const getElibigleEmployees = () => {
