@@ -20,6 +20,7 @@ use App\Models\VmtInterestFreeLoanSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Models\Department;
 use App\Models\State;
+use Exception;
 use App\Models\VmtClientMaster;
 
 
@@ -53,21 +54,12 @@ class VmtSalaryAdvanceService
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
 
             }
-            elseif($current_client_id == 2){
+            else{
 
                 $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
 
             }
-            elseif($current_client_id == 3){
 
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
-
-            }
-            elseif($current_client_id == 4){
-
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
-
-            }
 
 
             $getsalary  = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
@@ -252,10 +244,24 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function saveLoanWithInterestSettings($max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
+    public function saveLoanWithInterestSettings($min_month_served, $loan_applicable_type, $percent_of_ctc,$max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
     {
+       // dd($min_month_served, $loan_applicable_type, $percent_of_ctc,$max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow);
         $validator = Validator::make(
+            $data=[
+                "min_month_served" => $min_month_served,
+                "loan_applicable_type" => $loan_applicable_type,
+                 "percent_of_ctc" =>  $percent_of_ctc,
+                "max_loan_amount" => $max_loan_amount,
+                "loan_amt_interest" => $loan_amt_interest,
+                "deduction_starting_months" => $deduction_starting_months,
+                "max_tenure_months" =>$max_tenure_months,
+                "approver_flow" =>$approver_flow,
+            ],
             $rules = [
+                "min_month_served" =>'required',
+                "loan_applicable_type" => 'required',
+                 "percent_of_ctc" =>  'required',
                 "max_loan_amount" => 'required',
                 "loan_amt_interest" => "required",
                 "deduction_starting_months" => "required",
@@ -280,7 +286,14 @@ class VmtSalaryAdvanceService
         try {
 
             $save_loan_setting_data = new VmtLoanInterestSettings;
-            $save_loan_setting_data->max_loan_amount = $max_loan_amount;
+            $save_loan_setting_data->client_id = auth()->user()->client_id;
+            $save_loan_setting_data->loan_applicable_type = $loan_applicable_type;
+            if($loan_applicable_type == 'fixed'){
+                $save_loan_setting_data->percent_of_ctc = $percent_of_ctc;
+                $save_loan_setting_data->min_month_served = $min_month_served;
+            }else if($loan_applicable_type == 'percent'){
+                $save_loan_setting_data->max_loan_amount = $max_loan_amount;
+            }
             $save_loan_setting_data->loan_amt_interest = $loan_amt_interest;
             $save_loan_setting_data->deduction_starting_months = $deduction_starting_months;
             $save_loan_setting_data->max_tenure_months = $max_tenure_months;
@@ -305,6 +318,9 @@ class VmtSalaryAdvanceService
     }
 
     public function saveIntersetFreeLoanSettings(
+        $client_id,
+        $loan_applicable_type,
+        $max_loan_limit,
         $min_month_served,
         $percent_of_ctc,
         $deduction_starting_months,
@@ -313,9 +329,19 @@ class VmtSalaryAdvanceService
     ) {
 
         $validator = Validator::make(
+            $data= [
+                "client_id"=>$client_id,
+                'loan_applicable_type'=>$loan_applicable_type,
+                "min_month_served" => $min_month_served,
+                "percent_of_ctc" => $percent_of_ctc,
+                "deduction_starting_months" => $deduction_starting_months,
+                "max_tenure_months" => $max_tenure_months,
+                "approver_flow" => $approver_flow
+            ],
             $rules = [
+                "client_id"=>"required",
+                'loan_applicable_type'=>"required",
                 "min_month_served" => "required",
-                "percent_of_ctc" => "required",
                 "deduction_starting_months" => "required",
                 "max_tenure_months" => "required",
                 "approver_flow" => "required"
@@ -332,6 +358,28 @@ class VmtSalaryAdvanceService
                 'message' => $validator->errors()->all()
             ]);
         }
+        foreach($client_id as $single_cl_id){
+            try{
+                $setting_for_int_free_loan = new VmtInterestFreeLoanSettings;
+                $setting_for_int_free_loan->client_id=$single_cl_id->client_id;
+                $setting_for_int_free_loan->loan_applicable_type=$single_cl_id->loan_applicable_type;
+                $setting_for_int_free_loan->min_month_served=$single_cl_id->min_month_served;
+                $setting_for_int_free_loan->max_loan_month=$single_cl_id->max_loan_month;
+                $setting_for_int_free_loan->percent_of_ctc=$single_cl_id->percent_of_ctc;
+                $setting_for_int_free_loan->deduction_starting_months=$single_cl_id->deduction_starting_months;
+                $setting_for_int_free_loan->max_tenure_months=$single_cl_id->max_tenure_months;
+                $setting_for_int_free_loan->approver_flow=$single_cl_id->approver_flow;
+
+
+            }catch(Exception $e){
+                dd($e->getMessage());
+            }
+
+        }
+        return response()->json([
+            'status' => 'failure',
+            'message' =>"Interest free loan setiings Saved Sucessfully"
+        ]);
     }
 
     public function  showInterestFreeLoanEmployeeinfo()

@@ -9,11 +9,12 @@
     use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
-
+    use Carbon\Carbon;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
     use App\Models\VmtEmployeePayslipV2;
     use App\Models\VmtPMS_KPIFormModel;
+    use App\Models\VmtLoanInterestSettings;
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;
@@ -202,16 +203,33 @@
 //                                             ->where('users.is_ssa','0')
 //                                             ->where('users.active','1')
 //                                             ->get(['payroll_date','users.name','users.id']);
-$payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
-        for($i=0; $i < count($payroll_month); $i++)
-        {
 
-            $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
-        }
-        $payroll_available_months = array_unique($payroll_month->toArray());
 
-dd($payroll_available_months);
-    ?>
+
+        //     $loan_withinteres_setting_data =VmtLoanInterestSettings::get(["max_loan_amount as max_eligible_amount",
+        //                                                                 "loan_amt_interest as interest_rate",
+        //                                                                 "deduction_starting_months",
+        //                                                                 "max_tenure_months",
+        // ]);
+        // foreach ($loan_withinteres_setting_data as $key => $SingleDtata) {
+        //     # code...
+        // }
+        //          $multiple_months=array();
+        //         for($i=1; $i<=$SingleDtata->deduction_period_of_months; $i++){
+
+        //           $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
+
+        //           array_push($multiple_months,$repayment_months);
+
+
+        //         }
+
+        //         dd($multiple_months);
+
+        dd(auth()->user()->client_id);
+
+           ?>
 
 
 @endsection
+

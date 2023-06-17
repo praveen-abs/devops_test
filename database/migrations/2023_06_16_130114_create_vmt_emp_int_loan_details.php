@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('vmt_emp_int_loan_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('vmt_int_loan_id')->constrained('vmt_loan_interest_settings');
+            $table->integer('eligible_amount');
             $table->text('borrowed_amount');
             $table->text('emi_per_month');
             $table->date('deduction_starting_month');
             $table->date('deduction_ending_month');
-            $table->integer('tenure_months');
+            $table->text('tenure_months');
             $table->date('requested_date');
             $table->text('reason');
             $table->text('approver_flow');
