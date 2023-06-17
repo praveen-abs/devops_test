@@ -253,7 +253,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function saveLoanWithInterestSettings($min_month_served, $loan_applicable_type, $percent_of_ctc,$max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
+    public function saveLoanWithInterestSettings($min_month_served, $loan_applicable_type, $percent_of_ctc,$max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow,$active)
     {
        // dd($min_month_served, $loan_applicable_type, $percent_of_ctc,$max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow);
         $validator = Validator::make(
@@ -266,6 +266,7 @@ class VmtSalaryAdvanceService
                 "deduction_starting_months" => $deduction_starting_months,
                 "max_tenure_months" =>$max_tenure_months,
                 "approver_flow" =>$approver_flow,
+                "active" =>$active,
             ],
             $rules = [
                 "min_month_served" =>'required',
@@ -276,6 +277,7 @@ class VmtSalaryAdvanceService
                 "deduction_starting_months" => "required",
                 "max_tenure_months" => "required",
                 "approver_flow" => "required",
+                "active" => "required",
 
             ],
             $messages = [
@@ -297,16 +299,17 @@ class VmtSalaryAdvanceService
             $save_loan_setting_data = new VmtLoanInterestSettings;
             $save_loan_setting_data->client_id = auth()->user()->client_id;
             $save_loan_setting_data->loan_applicable_type = $loan_applicable_type;
-            if($loan_applicable_type == 'fixed'){
+            if($loan_applicable_type == 'percent'){
                 $save_loan_setting_data->percent_of_ctc = $percent_of_ctc;
                 $save_loan_setting_data->min_month_served = $min_month_served;
-            }else if($loan_applicable_type == 'percent'){
+            }else if($loan_applicable_type == 'fixed'){
                 $save_loan_setting_data->max_loan_amount = $max_loan_amount;
             }
             $save_loan_setting_data->loan_amt_interest = $loan_amt_interest;
             $save_loan_setting_data->deduction_starting_months = $deduction_starting_months;
             $save_loan_setting_data->max_tenure_months = $max_tenure_months;
             $save_loan_setting_data->approver_flow = $approver_flow;
+            $save_loan_setting_data->active = $active;
             $save_loan_setting_data->save();
 
             return response()->json([
