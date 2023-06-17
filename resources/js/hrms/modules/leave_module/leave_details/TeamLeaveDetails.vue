@@ -2,31 +2,71 @@
   <div class="card top-line">
       <div class="card-body">
           <div class="row">
-              <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
+              <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12 d-flex justify-content-between align-items-center">
                   <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Team Leave Balance</h6>
+                  <div class=" my-2 d-flex justify-content-between align-items-center">
+                        <div></div>
+                        <div class=" d-flex ">
+
+                                <div class="">
+                                    <label for=" " class=" text-blue-900 mx-2" >Start Date</label>
+                                    <Calendar v-model="leaveModuleStore.selectedStartDate" dateFormat="dd-mm-yy"   class="p-l3" style=" border: 1px solid orange; border-radius: 7px; height: 38px; width: 100px;" :maxDate="new Date()"/>
+                                </div>
+                                <div class="">
+                                    <label for=" " class=" text-blue-900 mx-2 " >End Date</label>
+                                    <Calendar class="mr-3" v-model="leaveModuleStore.selectedEndDate" dateFormat="dd-mm-yy" style=" border: 1px solid orange; border-radius: 7px; height: 38px;width: 100px;" :maxDate="new Date()" />
+
+                                </div>
+
+                                <button class=" btn-orange py-1  px-4 rounded" @click="leaveModuleStore.getTermLeaveBalance(dayjs(leaveModuleStore.selectedStartDate).format('YYYY-MM-DD') ,dayjs(leaveModuleStore.selectedEndDate).format('YYYY-MM-DD') )">submit</button>
+                        </div>
+
+                    </div>
               </div>
+
               <div>
-                  <DataTable :value="leave_data" responsiveLayout="scroll" :paginator="true"
-                      :rowsPerPageOptions="[5, 10, 25]"
-                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" :rows="5"
-                      v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name']"
-                      style="white-space: nowrap;">
-                      <Column class="font-bold" field="employee_name" header="Employee Name">
-                          <template #body="slotProps">
-                              {{ slotProps.data.employee_name }}
-                          </template>
-                          <template #filter="{ filterModel, filterCallback }">
-                              <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
-                                  class="p-column-filter" :showClear="true" />
-                          </template>
-                      </Column>
-                      <Column v-for="leave_type of leave_types" :header="leave_type" :key="leave_type.id"
-                          field="array_leave_details">
-                          <template #body="{ data }">
-                              {{ data.array_leave_details[leave_type] }}
-                          </template>
-                      </Column>
-                  </DataTable>
+                <!-- <h1>hello</h1> -->
+                <!-- {{leaveModuleStore.arrayTermLeaveBalance}} -->
+                <DataTable :value="leaveModuleStore.arrayTermLeaveBalance" :paginator="true" :rows="10" class=""
+                        dataKey="user_code" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                        v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                        @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+
+                        <Column :expander="true" />
+                        <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
+                        <Column field="user_code" header="Employee Id" sortable></Column>
+                        <Column field="name" header="Employee Name">
+                        </Column>
+                        <Column field="location" header="Location" :sortable="false">
+                        </Column>
+                        <Column field="department" header="Department">
+
+                        </Column>
+                        <Column field="total_leave_balance" header="Total Leave Balance"></Column>
+                        <template #expansion="slotProps">
+                            <div>
+                                <DataTable :value="slotProps.data.leave_balance_details" responsiveLayout="scroll"
+                                    v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                                    @select-all-change="onSelectAllChange">
+                                    <Column field="leave_type" header="Leave Type">{{ slotProps.data.leave_type }}</Column>
+                                    <Column field="opening_balance" header="Opening Balance">
+
+                                    </Column>
+                                    <Column field="avalied" header="Avalied">
+
+                                    </Column>
+
+                                    <Column field="closing_balance" header="Closing Balance">
+
+                                    </Column>
+                                </DataTable>
+                            </div>
+                        </template>
+
+                    </DataTable>
               </div>
           </div>
 
@@ -181,6 +221,8 @@ const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 onMounted(async () => {
  // console.log( "Fetching leave details for current user : " +   leaveModuleStore.baseService.current_user_code );
+
+   await leaveModuleStore.getTermLeaveBalance();
 
    await leaveModuleStore.getTeamLeaveHistory(dayjs().month()+1 , dayjs().year() , ["Approved", "Pending", "Rejected"]);
 //    isLoading.value = false;

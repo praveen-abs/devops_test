@@ -1529,18 +1529,39 @@ class VmtAttendanceController extends Controller
 
     public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        $start_date = '2023-04-01';
-        $end_date = '2023-05-31';
-        $month = 05;
+        //dd($request->all());
+        if(!empty($request->all())){
+            $start_date=$request->start_date;
+            $end_date=$request->end_date;
+            $end_date_ar = explode("-", $end_date);
+            $month = $end_date_ar[1];
+        }else{
+            $org_time= VmtOrgTimePeriod::where('status',1)->first();
+           $today=Carbon::now();
+           $start_date=$org_time->start_date;
+           $end_date=$today->format('Y-m-d');
+           $month=$today->format('m');
+        }
+
         $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
         return $response;
     }
 
     public function fetchTeamLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-        $start_date = '2023-04-01';
-        $end_date = '2023-05-31';
-        $month = 05;
+
+        if(!empty($request->all())){
+            $start_date=$request->start_date;
+            $end_date=$request->end_date;
+            $end_date_ar = explode("-", $end_date);
+            $month = $end_date_ar[1];
+        }else{
+            $org_time= VmtOrgTimePeriod::where('status',1)->first();
+           $today=Carbon::now();
+           $start_date=$org_time->start_date;
+           $end_date=$today->format('Y-m-d');
+           $month=$today->format('m');
+        }
         $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
         return $response;
     }
