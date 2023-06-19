@@ -411,7 +411,8 @@ class VmtSalaryAdvanceService
           foreach($approver_flow as $approver_order){
             // dd($approver_order['order']);
 
-            if($approver_order['order'] == 1){
+
+            if($approver_order['order'] == 1 ){
                 if($approver_order['approver'] == "HR"){
 
                     $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -421,12 +422,18 @@ class VmtSalaryAdvanceService
                     $res = array();
                    foreach($simma as $simma1){
                         if($simma1['hr_id'] == $user_id){
-                            array_push($res,$simma1);
+
+                             if($simma1['approv_hr'] == "0" ){
+
+
+                                 array_push($res,$simma1);
+                                 dd ($res);
+                             }
+                        };
+
                         }
                    }
-                   return ($res);
 
-                }
                 if($approver_order['approver'] == "Finance Admin"){
 
                     $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -436,15 +443,20 @@ class VmtSalaryAdvanceService
                     $res = array();
                     foreach($simma as $simma1){
                          if($simma1['finance_admin_id'] == $user_id){
-                             array_push($res,$simma1);
+                            if($simma1['approv_finance_admin'] == "0" ){
+
+                                array_push($res,$simma1);
+                                dd ($res);
+                            }
                          }
                     }
-                    return ($res);
+                    // dd ($res);
                 }
                 if($approver_order['approver'] == "Line Manager"){
                     dd("line manager");
                 }
             }
+
             if($approver_order['order'] == 2 ){
                 if($approver_order['approver'] == "HR"){
                     $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -454,20 +466,39 @@ class VmtSalaryAdvanceService
                     $res = array();
                 foreach($simma as $simma1){
                         if($simma1['hr_id'] == $user_id){
-                            array_push($res,$simma1);
+                            if($simma1['approv_hr'] == "0" ){
+
+
+                                array_push($res,$simma1);
+                            }
                         }
                  }
-                     return ($res);
+
                 }
 
                 if($approver_order['approver'] == "Finance Admin"){
-                    dd("admin finace");
+                    $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                    ->join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.user_id','=','users.id')
+                    ->join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')->get();
+
+                    $res = array();
+                    foreach($simma as $simma1){
+                         if($simma1['finance_admin_id'] == $user_id){
+                            if($simma1['approv_finance_admin'] == "0" ){
+
+
+                                array_push($res,$simma1);
+                            }
+                         }
+                    }
+
                 }
                 if($approver_order['approver'] == "Line Manager"){
                     dd("line manager");
                 }
 
             }
+            dd($res);
             if($approver_order['order'] == 3){
                 if($approver_order['approver'] == "HR"){
                     $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -477,18 +508,36 @@ class VmtSalaryAdvanceService
                     $res = array();
                 foreach($simma as $simma1){
                         if($simma1['hr_id'] == $user_id){
-                            array_push($res,$simma1);
+                            if($simma1['approv_hr'] == "0" ){
+
+                                array_push($res,$simma1);
+                            }
                         }
                  }
-                     return ($res);
+
                 }
                 if($approver_order['approver'] == "Finance Admin"){
-                    dd("admin finace");
+                    $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                    ->join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.user_id','=','users.id')
+                    ->join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')->get();
+
+                    $res = array();
+                    foreach($simma as $simma1){
+                         if($simma1['finance_admin_id'] == $user_id){
+                            if($simma1['approv_finance_admin'] == "0" ){
+
+
+                                array_push($res,$simma1);
+                            }
+                         }
+                    }
+
                 }
                 if($approver_order['approver'] == "Line Manager"){
                     dd("line manager");
                 }
             }
+            dd($res);
 
 
 
