@@ -943,13 +943,13 @@ class VmtDashboardService{
 
     public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period){
         try{
-        $simma = $this->getAllEventsDashboard();
+        $getAllEvent = $this->getAllEventsDashboard();
         }
         catch(\Exception $e){
 
             return response()->json([
                 "status" => "failure",
-                "message" => "Unable to fetch notifications",
+                "message" => "Unable to fetch Allevent",
                 "data" => $e,
             ]);
 
@@ -957,24 +957,24 @@ class VmtDashboardService{
 
      try{
          $user_code = auth()->user()->user_code;
-         $simma1 =  $this->getNotifications($user_code);
+         $getAllNotification =  $this->getNotifications($user_code);
        }
         catch(\Exception $e){
         return response()->json([
             "status" => "failure",
-            "message" => "Unable to fetch notifications",
+            "message" => "Unable to fetch AllNotifications",
             "data" => $e,
         ]);
     }
 
     try{
-        $simma2 =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
+        $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
     }
     catch(\Exception $e){
 
         return response()->json([
             "status" => "failure",
-            "message" => "Unable to fetch notifications",
+            "message" => "Unable to fetch LeaveBalance",
             "data" => $e,
         ]);
     }
@@ -998,9 +998,9 @@ class VmtDashboardService{
 
         return response()->json([
             [
-                "All-Events"=>$simma ,
-                "All-Notification" => $simma1,
-                "Leave-Balance"=>$simma2,
+                "All-Events"=>$getAllEvent ,
+                "All-Notification" => $getAllNotification,
+                "Leave-Balance"=>$getEmpLeaveBalance,
                 // "Leave-report"=>$simma3
             ]
         ]);
