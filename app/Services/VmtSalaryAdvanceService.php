@@ -44,30 +44,21 @@ class VmtSalaryAdvanceService
 
             $queryGetstate = State::select('id', 'state_name')->distinct()->get();
 
-            if($current_client_id == 1){
+            if ($current_client_id == 1) {
 
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
-
-            }
-               elseif($current_client_id == 0){
+            } elseif ($current_client_id == 0) {
 
                 $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+            } elseif ($current_client_id == 2) {
 
-            }
-            elseif($current_client_id == 2){
+                $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+            } elseif ($current_client_id == 3) {
 
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
+                $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+            } elseif ($current_client_id == 4) {
 
-            }
-            elseif($current_client_id == 3){
-
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
-
-            }
-            elseif($current_client_id == 4){
-
-                $queryGetlegalentity = VmtClientMaster::where('id',$current_client_id)->distinct()->get(['id', 'client_name']);
-
+                $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
             }
 
 
@@ -84,7 +75,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function SalAdvSettingsTable($department_id,$designation,$work_location,$client_name)
+    public function SalAdvSettingsTable($department_id, $designation, $work_location, $client_name)
     {
 
         try {
@@ -126,7 +117,8 @@ class VmtSalaryAdvanceService
     }
 
 
-    public function SalAdvShowEmployeeView(){
+    public function SalAdvShowEmployeeView()
+    {
 
         try {
 
@@ -147,13 +139,12 @@ class VmtSalaryAdvanceService
                 $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100;
 
 
-                $multiple_months=array();
-                for($i=1; $i<=$employee_salary_adv->deduction_period_of_months; $i++){
+                $multiple_months = array();
+                for ($i = 1; $i <= $employee_salary_adv->deduction_period_of_months; $i++) {
 
-                  $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
+                    $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
 
-                  array_push($multiple_months,$repayment_months);
-
+                    array_push($multiple_months, $repayment_months);
                 }
 
                 // dd( $repayment_months);
@@ -181,7 +172,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function SalAdvEmpSaveSalaryAmt($mxe,$ra,$repdate,$reason)
+    public function SalAdvEmpSaveSalaryAmt($mxe, $ra, $repdate, $reason)
     {
 
         try {
@@ -217,13 +208,13 @@ class VmtSalaryAdvanceService
 
     public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow)
     {
-               $json_approvalflow = json_encode($approvalflow);
+        $json_approvalflow = json_encode($approvalflow);
         try {
 
             $saveSettingSALaryAdv = new VmtSalaryAdvSettings;
             $saveSettingSALaryAdv->percent_salary_adv = $perOfSalAdvance ?? $cusPerOfSalAdvance;
             $saveSettingSALaryAdv->deduction_period_of_months = $deductMethod ?? $cusDeductMethod;
-            $saveSettingSALaryAdv->approver_flow = $json_approvalflow ;
+            $saveSettingSALaryAdv->approver_flow = $json_approvalflow;
             $saveSettingSALaryAdv->save();
 
             $SalaryAdvSettings = $saveSettingSALaryAdv;
@@ -253,82 +244,110 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function saveLoanWithInterestSettings($max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
-    {
-        $validator = Validator::make(
-            $rules = [
-                "max_loan_amount" => 'required',
-                "loan_amt_interest" => "required",
-                "deduction_starting_months" => "required",
-                "max_tenure_months" => "required",
-                "approver_flow" => "required",
+    // public function saveLoanWithInterestSettings($min_month_served, $loan_applicable_type, $percent_of_ctc, $max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
+    // {
 
-            ],
-            $messages = [
-                "required" => "Field :attribute is missing",
-                "exists" => "Field :attribute is invalid"
-            ]
-        );
+    //     $validator = Validator::make(
+    //         $data = [
+    //             'min_month_served' => $min_month_served,
+    //             'loan_applicable_type' => $loan_applicable_type,
+    //             'percent_of_ctc' => $percent_of_ctc,
+    //             "max_loan_amount" => $max_loan_amount,
+    //             "loan_amt_interest" => $loan_amt_interest,
+    //             "deduction_starting_months" => $deduction_starting_months,
+    //             "max_tenure_months" => $max_tenure_months,
+    //             "approver_flow" => $approver_flow,
+    //         ],
+    //         $rules = [
+
+    //             'min_month_served' => 'required',
+    //             'loan_applicable_type' => 'required',
+    //             'percent_of_ctc' => 'required',
+    //             "max_loan_amount" => 'required',
+    //             "loan_amt_interest" => "required",
+    //             "deduction_starting_months" => "required",
+    //             "max_tenure_months" => "required",
+    //             "approver_flow" => "required",
+
+    //         ],
+    //         $messages = [
+    //             "required" => "Field :attribute is missing",
+    //             "exists" => "Field :attribute is invalid"
+    //         ]
+    //     );
 
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'status' => 'failure',
+    //             'message' => $validator->errors()->all()
+    //         ]);
+    //     }
 
-        try {
+    //     try {
 
-            $save_loan_setting_data = new VmtLoanInterestSettings;
-            $save_loan_setting_data->max_loan_amount = $max_loan_amount;
-            $save_loan_setting_data->loan_amt_interest = $loan_amt_interest;
-            $save_loan_setting_data->deduction_starting_months = $deduction_starting_months;
-            $save_loan_setting_data->max_tenure_months = $max_tenure_months;
-            $save_loan_setting_data->approver_flow = $approver_flow;
-            $save_loan_setting_data->save();
+    //         $save_loan_setting_data = new VmtLoanInterestSettings;
+    //         $save_loan_setting_data->client_id = auth()->user()->client_id;
+    //         $save_loan_setting_data->loan_applicable_type = $loan_applicable_type;
+    //         if ($loan_applicable_type == 'fixed') {
+    //             $save_loan_setting_data->min_month_served = $min_month_served;
+    //             $save_loan_setting_data->percent_of_ctc = $percent_of_ctc;
+    //         } else if ($loan_applicable_type == 'percent') {
+    //             $save_loan_setting_data->max_loan_amount = $max_loan_amount;
+    //         }
+    //         $save_loan_setting_data->loan_amt_interest = $loan_amt_interest;
+    //         $save_loan_setting_data->deduction_starting_months = $deduction_starting_months;
+    //         $save_loan_setting_data->max_tenure_months = $max_tenure_months;
+    //         $save_loan_setting_data->approver_flow = $approver_flow;
+    //         $save_loan_setting_data->save();
 
-            return response()->json([
-                "status" => "success",
-                "message" => "loan setting data saved successfully",
-                "data" => '',
-            ]);
-        } catch (\Exception $e) {
+    //         return response()->json([
+    //             "status" => "success",
+    //             "message" => "loan setting data saved successfully",
+    //             "data" => '',
+    //         ]);
+    //     } catch (\Exception $e) {
 
-            //dd("Error :: uploadDocument() ".$e);
+    //         //dd("Error :: uploadDocument() ".$e);
 
-            return response()->json([
-                "status" => "failure",
-                "message" => "Failed to save loan setting",
-                "data" => $e->getMessage(),
-            ]);
-        }
-    }
+    //         return response()->json([
+    //             "status" => "failure",
+    //             "message" => "Failed to save loan setting",
+    //             "data" => $e->getMessage(),
+    //         ]);
+    //     }
+    // }
 
     public function saveIntersetAndIntersetFreeLoanSettings(
+        $loan_type,
         $client_id,
         $loan_applicable_type,
-        $max_loan_limit,
         $min_month_served,
+        $max_loan_limit,
         $percent_of_ctc,
+        $loan_amt_interest,
         $deduction_starting_months,
         $max_tenure_months,
         $approver_flow
     ) {
 
         $validator = Validator::make(
-            $data= [
-                "client_id"=>$client_id,
-                'loan_applicable_type'=>$loan_applicable_type,
+            $data = [
+                "loan_type" => $loan_type,
+                "client_id" => $client_id,
+                'loan_applicable_type' => $loan_applicable_type,
                 "min_month_served" => $min_month_served,
+                "max_loan_limit" => $max_loan_limit,
                 "percent_of_ctc" => $percent_of_ctc,
+                "loan_amt_interest" => $loan_amt_interest,
                 "deduction_starting_months" => $deduction_starting_months,
                 "max_tenure_months" => $max_tenure_months,
                 "approver_flow" => $approver_flow
             ],
             $rules = [
-                "client_id"=>"required",
-                'loan_applicable_type'=>"required",
+                "loan_type" => "required",
+                "client_id" => "required",
+                'loan_applicable_type' => "required",
                 "min_month_served" => "required",
                 "deduction_starting_months" => "required",
                 "max_tenure_months" => "required",
@@ -346,31 +365,38 @@ class VmtSalaryAdvanceService
                 'message' => $validator->errors()->all()
             ]);
         }
-        foreach($client_id as $single_cl_id){
-            try{
-                $setting_for_int_free_loan = new VmtInterestFreeLoanSettings;
-                $setting_for_int_free_loan->client_id=$single_cl_id->client_id;
-                $setting_for_int_free_loan->loan_applicable_type=$single_cl_id->loan_applicable_type;
-                $setting_for_int_free_loan->min_month_served=$single_cl_id->min_month_served;
-                $setting_for_int_free_loan->max_loan_month=$single_cl_id->max_loan_month;
-                $setting_for_int_free_loan->percent_of_ctc=$single_cl_id->percent_of_ctc;
-                $setting_for_int_free_loan->deduction_starting_months=$single_cl_id->deduction_starting_months;
-                $setting_for_int_free_loan->max_tenure_months=$single_cl_id->max_tenure_months;
-                $setting_for_int_free_loan->approver_flow=$single_cl_id->approver_flow;
+        $approver_flow = json_encode($approver_flow);
+        foreach ($client_id as $single_cl_id) {
+            try {
+                if ($loan_type == 'InterestFreeLoan') {
+                    $setting_for_loan = new VmtInterestFreeLoanSettings;
+                } else {
+                    $setting_for_loan = new VmtLoanInterestSettings;
+                    $setting_for_loan->loan_amt_interest = $loan_amt_interest;
+                }
 
-
-            }catch(Exception $e){
+                $setting_for_loan->client_id = $single_cl_id->client_id;
+                $setting_for_loan->loan_applicable_type = $loan_applicable_type;
+                if ($loan_applicable_type == 'percnt') {
+                    $setting_for_loan->percent_of_ctc = $percent_of_ctc;
+                } else if ($single_cl_id->loan_applicable_type == 'fixed') {
+                    $setting_for_loan->max_loan_amount = $max_loan_limit;
+                }
+                $setting_for_loan->min_month_served = $min_month_served;
+                $setting_for_loan->deduction_starting_months = $deduction_starting_months;
+                $setting_for_loan->max_tenure_months = $max_tenure_months;
+                $setting_for_loan->approver_flow = $approver_flow;
+            } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
                     "message" => "Failed to save interest Free loan setting",
                     "data" => $e->getMessage(),
                 ]);
             }
-
         }
         return response()->json([
             'status' => 'failure',
-            'message' =>"Interest free loan setiings Saved Sucessfully"
+            'message' => "Interest free loan setiings Saved Sucessfully"
         ]);
     }
 
@@ -378,46 +404,48 @@ class VmtSalaryAdvanceService
     {
     }
 
-    public function showEligibleInterestFreeLoanDetails(){
-        $client_id=sessionGetSelectedClientid();
-        $user_id=auth()->user()->id;
-        $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
-        $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
-        dd(  $avaliable_int_loans);
-        foreach( $avaliable_int_loans as $single_recxord){
-                dd($single_recxord);
+    public function showEligibleInterestFreeLoanDetails()
+    {
+        $client_id = sessionGetSelectedClientid();
+        $user_id = auth()->user()->id;
+        $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
+        $avaliable_int_loans = VmtInterestFreeLoanSettings::orderBy('min_month_served', 'DESC')->get();
+        dd($avaliable_int_loans);
+        foreach ($avaliable_int_loans as $single_recxord) {
+            dd($single_recxord);
         }
         dd();
     }
 
-    public function SalAdvApproverFlow(){
+    public function SalAdvApproverFlow()
+    {
 
-        $user_id=auth()->user()->id;
+        $user_id = auth()->user()->id;
 
         $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
-                                                        // ->leftjoin('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
+            // ->leftjoin('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
 
-                                                        ->get()->toArray();
+            ->get()->toArray();
 
         // dd($employee_salary_adv);
 
 
 
-        foreach($employee_salary_adv as $single_apprflow ){
+        foreach ($employee_salary_adv as $single_apprflow) {
 
-        //    echo $single_apprflow['approver_flow'] ."<br>";
-          $approver_flow  = json_decode(($single_apprflow['approver_flow']),true);
+            //    echo $single_apprflow['approver_flow'] ."<br>";
+            $approver_flow  = json_decode(($single_apprflow['approver_flow']), true);
 
-          foreach($approver_flow as $approver_order){
-            // dd($approver_order['order']);
+            foreach ($approver_flow as $approver_order) {
+                // dd($approver_order['order']);
 
 
             if($approver_order['order'] == 1 ){
                 if($approver_order['approver'] == "HR"){
 
-                    $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                                    ->join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.user_id','=','users.id')
-                                    ->join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')->get();
+                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
+                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
 
                     $res = array();
                    foreach($simma as $simma1){
@@ -436,9 +464,9 @@ class VmtSalaryAdvanceService
 
                 if($approver_order['approver'] == "Finance Admin"){
 
-                    $simma = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                    ->join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.user_id','=','users.id')
-                    ->join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')->get();
+                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
+                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
 
                     $res = array();
                     foreach($simma as $simma1){
@@ -547,11 +575,5 @@ class VmtSalaryAdvanceService
 
 
         }
-
-
     }
-
-
-
-
 }

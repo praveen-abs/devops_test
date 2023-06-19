@@ -71,7 +71,6 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveLoanWithInterestSettings(Request $request, VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService)
     {
-        dd($request->all());
 
         $response = $ServiceVmtSalaryAdvanceService->saveLoanWithInterestSettings(
             $request->min_month_served,
@@ -119,12 +118,12 @@ class VmtSalaryAdvanceController extends Controller
     public function getClientForLoanAndAdv(Request $request)
     {
         if (VmtClientMaster::count() == 1) {
-            return  sessionGetSelectedClientid();
+            return VmtClientMaster::where('id', sessionGetSelectedClientid())->get();
         } else {
             if (sessionGetSelectedClientid() == 1) {
                 return VmtClientMaster::all();
             } else {
-                return sessionGetSelectedClientid();
+                return VmtClientMaster::where('id', sessionGetSelectedClientid())->get();
             }
         }
     }

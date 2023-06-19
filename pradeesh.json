@@ -1,79 +1,110 @@
 {
-    "InterestFreeloan":[
-        {
-            "request_Id": "req_12345",
-            "Emp_Id": "ABS1001",
-            "Employee_Name": "Pradeesh",
-            "Advance_Amount": "200000",
-            "Date": "15/04/2023",
-            "Status": "Pending",
-            "emp_details": [
-              {
-                "request_Id": "req_12345",
-                "Advance_Amount": 10000,
-                "paid_on": "",
-                "Expected_return": "",
-                "Status": "Completed",
-                "Monthly_EMI":"2000",
-                "Term_year":3,
-                "EMI_start_month":1,
-                "EMI_End_month":6,
-                "Total_Months":5
-              }
-
-            ],"id":1,
-            "emp_details": [
-                {
-                  "request_Id": "req_12345",
-                  "Advance_Amount": 20000,
-                  "paid_on": "",
-                  "Expected_return": "",
-                  "Status": "Completed",
-                  "Monthly_EMI":"2000",
-                  "Term_year":3,
-                  "EMI_start_month":1,
-                  "EMI_End_month":6,
-                  "Total_Months":5
-                }
-              ]
-          },
-          {
-            "request_Id": "req_12345",
-            "Emp_Id": "ABS1001",
-            "Employee_Name": "Pradeesh",
-            "Advance_Amount": "200000",
-            "Date": "15/04/2023",
-            "Status": "Pending",
-            "emp_details": [
-              {
-                "request_Id": "req_12345",
-                "Advance_Amount": 20000,
-                "paid_on": "",
-                "Expected_return": "",
-                "Status": "Completed"
-              }
-            ],"id":2
-          }
-    ],
-  "submitApproveAndReject": [
+  "InterestWithLoan": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
+    },
+    {
+      "id": 10
+    },
+    {
+      "id": 11
+    },
+    {
+      "id": 12
+    },
+    {
+      "id": 13
+    },
+    {
+      "id": 14
+    }
+  ],
+  "InterestFreeloan": [
+    {
+      "request_Id": "req_12345",
+      "Emp_Id": "ABS1001",
+      "Employee_Name": "Pradeesh",
+      "Advance_Amount": "200000",
+      "Date": "15/04/2023",
+      "Status": "Pending",
+      "emp_details": [
         {
           "request_Id": "req_12345",
-          "Emp_Id": "ABS1001",
-          "Employee_Name": "Pradeesh",
-          "Advance_Amount": "200000",
-          "Date": "15/04/2023",
-          "Status": "Pending",
-          "emp_details": [
-            {
-              "request_Id": "req_12345",
-              "Advance_Amount": 20000,
-              "paid_on": "",
-              "Expected_return": "",
-              "Status": "Completed"
-            }
-          ]
+          "Advance_Amount": 20000,
+          "paid_on": "",
+          "Expected_return": "",
+          "Status": "Completed",
+          "Monthly_EMI": "2000",
+          "Term_year": 3,
+          "EMI_start_month": 1,
+          "EMI_End_month": 6,
+          "Total_Months": 5
         }
       ],
+      "id": 1
+    },
+    {
+      "request_Id": "req_12345",
+      "Emp_Id": "ABS1001",
+      "Employee_Name": "Pradeesh",
+      "Advance_Amount": "200000",
+      "Date": "15/04/2023",
+      "Status": "Pending",
+      "emp_details": [
+        {
+          "request_Id": "req_12345",
+          "Advance_Amount": 20000,
+          "paid_on": "",
+          "Expected_return": "",
+          "Status": "Completed"
+        }
+      ],
+      "id": 2
+    }
+  ],
+  "submitApproveAndReject": [
+    {
+      "request_Id": "req_12345",
+      "Emp_Id": "ABS1001",
+      "Employee_Name": "Pradeesh",
+      "Advance_Amount": "200000",
+      "Date": "15/04/2023",
+      "Status": "Pending",
+      "emp_details": [
+        {
+          "request_Id": "req_12345",
+          "Advance_Amount": 20000,
+          "paid_on": "",
+          "Expected_return": "",
+          "Status": "Completed"
+        }
+      ]
+    }
+  ],
   "salary_advance": [
     {
       "id": 0,

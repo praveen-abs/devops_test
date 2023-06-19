@@ -33,7 +33,8 @@
                     <div class="space-between M-T">
                         <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" v-model="familydetails.dob">
+                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" :minDate="minDate" :maxDate="maxDate" />
+                            <!-- <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" > -->
                         </div>
 
                         <div class="flex-col input_text">
@@ -163,7 +164,7 @@
 </template>
 <script setup>
 import dayjs from 'dayjs';
-
+import { useNow, useDateFormat } from '@vueuse/core'
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
@@ -210,7 +211,7 @@ const saveFamilyDetails = () => {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
             name: familydetails.name,
             relationship: familydetails.relationship,
-            dob: familydetails.dob,
+            dob: dayjs( familydetails.dob ).format('YYYY-MM-DD'),
             phone_number: familydetails.phone_number
         })
         .then((res) => {
@@ -308,7 +309,7 @@ const diolog_DeleteFamilyDetails = (family) => {
             current_table_id: current_table_id.value,
             name: Editfamilydetails.name,
             relationship: Editfamilydetails.relationship,
-            dob: Editfamilydetails.dob,
+            dob:  dayjs( Editfamilydetails.dob ).format('YYYY-MM-DD'),
             phone_number: Editfamilydetails.phone_number
         })
         .then((res) => {

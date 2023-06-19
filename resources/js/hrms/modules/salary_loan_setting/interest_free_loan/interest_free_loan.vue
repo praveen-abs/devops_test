@@ -37,11 +37,28 @@
                 <div class="col-12">
                   <h1 class="fs-5">The employee must have served for a minimum of
                     <InputText type="text" v-model="salaryStore.ifl.minEligibile" style="max-width: 100px; " class="mx-2" />
-                    years to avail the loan amount of
-                    <InputText type="text" v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" />
-                    % of their CTC.
+
                   </h1>
                 </div>
+                <div class="col-12">
+                    <h1 class="fs-5 d-flex align-items-center">
+                        <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1" name="dectmeth"
+                      value="percnt" class="mx-3" />
+                    years to avail the loan amount of
+
+                    <!-- <InputText type="text"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" /> -->
+                    <InputText type="text"  v-if="salaryStore.ifl.precent_Or_Amt == 'percnt'"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" />
+                    <InputText type="text"  v-else  disabled   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" />
+                    % of their CTC. </h1>
+                </div>
+                <div class="col-12 d-flex align-items-center">
+                    <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1" name="dectmeth"
+                      value="fixed" class="mx-3" />
+                      <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the employees
+                        <InputText   v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'" type="text" v-model="salaryStore.lwif.max_loan_limit" style="width: 150px;" />
+                        <InputText   v-else disabled  type="text" v-model="salaryStore.ifl.max_loan_limit" style="width: 150px;" />
+                      </h1>
+                    </div>
                 <div class="col-10">
                   <p class="fs-6 clr-gray ">(Note: This will be calculated based on the employee's date of joining.)</p>
                 </div>
@@ -80,7 +97,7 @@
                 <div class="ml-1 row" v-if="salaryStore.ifl.deductMethod == 'emi'">
                   <div class="ml-4 col">
                     <h2 class="fs-5 clr-dark">The EMI deductions should begin within
-                      <InputText type="text" v-model="salaryStore.ifl.cusDeductMethod" style="max-width: 100px;"
+                      <InputText type="text" v-model="salaryStore.ifl.deduction_starting_months" style="max-width: 100px;"
                         class="mx-2" />months from the date
                       the loan is taken.
                     </h2>
