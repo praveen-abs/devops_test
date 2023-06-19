@@ -353,6 +353,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Permission Roles Routing
     Route::get('/roles_permissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'showRolesPermissionsPage'])->name('showRolesPermissionsPage');
+    Route::get('/getAllRoles', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAllRoles'])->name('getAllRoles');
+
 
     //360 Review Module Routing
     Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
