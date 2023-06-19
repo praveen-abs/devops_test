@@ -35,22 +35,9 @@ Route::get('/offer-letter', function () {
 
 
 
-
-Route::get('/roles', function () {
-    return view('rolesAndPermission');
-})->name('roles');
-
 Route::get('/integrations', function () {
     return view('Integrations_Auth');
 })->name('integrations');
-
-Route::get('/addPermission', function () {
-    return view('addPermissionTo_role');
-})->name('addPermission');
-
-Route::get('/Add-New', function () {
-    return view('addNew_role');
-})->name('Add-New');
 
 Route::get('/paycheckDashboard', function () {
     return view('paycheckDashboard');
@@ -365,17 +352,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
     // Permission Roles Routing
-    Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
-
-    Route::get('vmt-role-list', 'App\Http\Controllers\RolesController@index');
-    Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
-    Route::get('vmt-role-permissions/{id}', 'App\Http\Controllers\RolesController@permissionListForRoles');
-
-    Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermissionToRoles');
-    Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
-    Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
-
-    Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRoles');
+    Route::get('/roles_permissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'showRolesPermissionsPage'])->name('showRolesPermissionsPage');
 
     //360 Review Module Routing
     Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
