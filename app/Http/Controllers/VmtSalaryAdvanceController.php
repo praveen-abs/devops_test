@@ -54,7 +54,13 @@ class VmtSalaryAdvanceController extends Controller
     {
 
         //   dd($request->all());
-        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod);
+        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod ,$request->approvalflow);
+    }
+
+    public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->SalAdvApproverFlow();
     }
 
 
@@ -65,8 +71,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveLoanWithInterestSettings(Request $request, VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService)
     {
-        dd($request->all());
-
+      
         $response = $ServiceVmtSalaryAdvanceService->saveLoanWithInterestSettings(
             $request->min_month_served,
             $request->loan_applicable_type,
