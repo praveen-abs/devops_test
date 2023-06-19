@@ -538,17 +538,17 @@ class VmtMainDashboardController extends Controller
        return $serviceVmtDashboardService->getNotifications($request->user_code);
     }
     public function performAttendanceCheckIn(Request $request, VmtDashboardService $serviceVmtDashboardService ){
-
+        //  dd($request->all());
         //Fetch the data
-        $request->user_code="SA100";
+        // $request->user_code="SA100";
         $request->date = date("Y-m-d");
-        $request->checkin_time = date("h:i:sa");
+        // $request->checkin_time = date("h:i:sa");
         $request->selfie_checkin = "";
         $request->work_mode = "home";
         $request->attendance_mode_checkin = "web";
         $request->checkin_lat_long = "";
 
-       return $serviceVmtDashboardService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin, $request->checkin_lat_long);
+       return $serviceVmtDashboardService->performAttendanceCheckIn($request->user_code, $request->date, $request->check_in, $request->check_out, $request->work_mode, $request->attendance_mode,$request->selfie_checkin ,$request->unknown);
     }
 
 
