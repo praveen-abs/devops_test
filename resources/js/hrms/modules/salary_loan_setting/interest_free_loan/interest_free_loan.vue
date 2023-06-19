@@ -97,7 +97,7 @@
                 <div class="ml-1 row" v-if="salaryStore.ifl.deductMethod == 'emi'">
                   <div class="ml-4 col">
                     <h2 class="fs-5 clr-dark">The EMI deductions should begin within
-                      <InputText type="text" v-model="salaryStore.ifl.cusDeductMethod" style="max-width: 100px;"
+                      <InputText type="text" v-model="salaryStore.ifl.deduction_starting_months" style="max-width: 100px;"
                         class="mx-2" />months from the date
                       the loan is taken.
                     </h2>

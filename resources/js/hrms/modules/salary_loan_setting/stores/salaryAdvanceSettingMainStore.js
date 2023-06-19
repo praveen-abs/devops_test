@@ -171,6 +171,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         availPerInCtc: '',
         deductMethod: '',
         precent_Or_Amt:'',
+        deduction_starting_months:"",
         max_loan_limit:'',
         cusDeductMethod: '',
         maxTenure: '',
@@ -201,8 +202,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         form.append('percent_of_ctc',ifl.availPerInCtc);
         form.append('deductMethod',ifl.deductMethod);
         form.append('loan_applicable_type',ifl.precent_Or_Amt)
-        form.append('loan_amt_interest',ifl.max_loan_limit)
-        form.append('deduction_starting_months',ifl.cusDeductMethod);
+        form.append('max_loan_limit',ifl.max_loan_limit)
+        form.append('deduction_starting_months',ifl.deduction_starting_months);
         form.append('max_tenure_months',ifl.maxTenure);
         form.append('approver_flow',JSON.stringify( ifl.approvalflow));
         form.append('loan_type','InterestFreeLoan');
