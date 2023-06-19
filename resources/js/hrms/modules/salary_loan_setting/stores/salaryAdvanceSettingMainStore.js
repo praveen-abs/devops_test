@@ -170,11 +170,15 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
+        precent_Or_Amt:'',
+        max_loan_limit:'',
         cusDeductMethod: '',
         maxTenure: '',
         approvalflow: approvalFormat
-
     })
+    // deduction_starting_months
+    // max_loan_limit
+
 
     const saveInterestfreeLoan = () => {
         canShowLoading.value = true
@@ -190,9 +194,24 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             ifl.isInterestFreeLoanIsEnabled = 1
         }
 
-        let url = '/save-interset-free-loan-settings'
-        axios.post(url, ifl).finally(() => {
-            canShowLoading.value = false
+        let form  = new FormData();
+
+        form.append('isInterestFreeLoanIsEnabled',ifl.isInterestFreeLoanIsEnabled)
+        form.append('min_month_served',ifl.minEligibile);
+        form.append('percent_of_ctc',ifl.availPerInCtc);
+        form.append('deductMethod',ifl.deductMethod);
+        form.append('loan_applicable_type',ifl.precent_Or_Amt)
+        form.append('loan_amt_interest',ifl.max_loan_limit)
+        form.append('deduction_starting_months',ifl.cusDeductMethod);
+        form.append('max_tenure_months',ifl.maxTenure);
+        form.append('approver_flow',JSON.stringify( ifl.approvalflow));
+        form.append('loan_type','InterestFreeLoan');
+
+        // let url = '/save-interset-free-loan-settings';
+        let url = '/save-int-and-int-free-loan-settings';
+        // let url = 'http://localhost:3000/InterestWithLoan';
+        axios.post(url, form).finally(() => {
+            canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
         })
     }
@@ -263,8 +282,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ta);
         }
 
-        let url = '/saveLoanWithIntrest'
-        axios.post(url, lwif).finally(() => {
+        let form = new FormData();
+        form.append('minEligibile',lwif.minEligibile);
+        form.append('availPerInCtc',lwif.availPerInCtc);
+        form.append('deductMethod',lwif.deductMethod);
+        form.append('cusDeductMethod',lwif.cusDeductMethod);
+        form.append('maxTenure',lwif.maxTenure);
+        form.append('approvalflow', JSON.stringify(approvalFormat));
+        form.append('Loan_type','LoanWithInterest');
+        // let form = formData.append("username", "Chris")
+
+        // let url = '/saveLoanWithIntrest'
+        // let url = '/save-int-and-int-free-loan-settings';
+        let url = 'http://localhost:3000/InterestWithLoan';
+
+        axios.post(url, form).finally(() => {
             canShowLoading.value = false
             approvalFormat.splice(0, approvalFormat.length)
         })

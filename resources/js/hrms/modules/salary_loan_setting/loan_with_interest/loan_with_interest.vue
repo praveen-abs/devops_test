@@ -40,7 +40,7 @@
                   <div class="row">
                     <div class="col-12 ">
                       <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the employees
-                        <InputText type="text" v-model="salaryStore.ifl.minEligibile" style="width: 150px;" />
+                        <InputText type="text" v-model="salaryStore.lwif.minEligibile" style="width: 150px;" />
                       </h1>
                     </div>
                     <div class="col-10">
@@ -60,7 +60,7 @@
                   <div class="row">
                     <div class="col-12">
                       <h1 class="fs-5">Enter the percentage of interest for the loan
-                        <InputText type="text" v-model="salaryStore.ifl.availPerInCtc" style="width: 150px;" /> of the loan amount.
+                        <InputText type="text" v-model="salaryStore.lwif.availPerInCtc" style="width: 150px;" /> of the loan amount.
                       </h1>
                     </div>
                     <div class="col-12">
@@ -82,7 +82,7 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-7 d-flex justify-content-start align-items-center">
-                        <RadioButton v-model="salaryStore.ifl.deductMethod" inputId="ingredient1" name="percofsaladvance"
+                        <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1" name="percofsaladvance"
                           value="1" />
 
                         <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin deducting the EMI in the
@@ -104,7 +104,7 @@
                     <div class="ml-1 row" v-if="salaryStore.lwif.deductMethod == 'emi'">
                       <div class="ml-4 col">
                         <h2 class="fs-5 clr-dark">The EMI deductions should begin within
-                          <InputText type="text" v-model="salaryStore.ifl.cusDeductMethod" style="max-width: 100px;"
+                          <InputText type="text" v-model="salaryStore.lwif.cusDeductMethod" style="max-width: 100px;"
                             class="mx-2" />months from the date
                           the loan is taken.
                         </h2>
@@ -123,7 +123,7 @@
                         <p class="fs-5 clr-dark">Please specify the maximum duration or tenure for the employee to repay
                           the
                           loan amount
-                          <InputText type="text" v-model="salaryStore.ifl.maxTenure" style="max-width: 100px;"
+                          <InputText type="text" v-model="salaryStore.lwif.maxTenure" style="max-width: 100px;"
                             class="mx-2" />
                           years
                         </p>
