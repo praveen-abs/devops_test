@@ -192,8 +192,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
     //Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgEmployeesPendingLeaves'])->name('fetch-org-leaves');
     Route::post('/fetch-team-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamEmployeesPendingLeaves'])->name('fetch-team-leaves');
-    Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgLeaveBalance'])->name('fetchOrgLeaveBalance');
-    Route::get('/fetch-team-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamLeaveBalance'])->name('fetchTeamLeaveBalance');
+    Route::post('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgLeaveBalance'])->name('fetchOrgLeaveBalance');
+    Route::post('/fetch-team-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamLeaveBalance'])->name('fetchTeamLeaveBalance');
 
 
 
