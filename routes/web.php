@@ -845,7 +845,7 @@ Route::middleware(['auth'])->group(function () {
 
     //interest free loan
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
-    Route::post('/save-interset-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetFreeLoanSettings']);
+    Route::post('/save-int-and-int-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetAndIntersetFreeLoanSettings']);
     Route::get('/show-eligible-interest-free-loan-details', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEligibleInterestFreeLoanDetails']);
 
 
