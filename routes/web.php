@@ -451,6 +451,11 @@ Route::middleware(['auth'])->group(function () {
     //Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showEmployeeOnboardingPage');
     Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
 
+    //upload Financial components
+    Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
+    Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class,'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
+
+
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
     Route::get('showManageEmployeePage_v2', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage_v2')->name('showManageEmployeePage_v2');
