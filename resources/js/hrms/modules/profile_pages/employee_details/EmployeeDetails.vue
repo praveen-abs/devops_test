@@ -503,7 +503,7 @@ function saveGeneralInformationDetails() {
 
     axios.post(url, {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        dob: dialog_general_information.dob,
+        dob:  dayjs(dialog_general_information.dob).format('YYYY-MM-DD') ,
         gender: dialog_general_information.gender,
         marital_status_id: dialog_general_information.marital_status_id,
         doj: dialog_general_information.doj,

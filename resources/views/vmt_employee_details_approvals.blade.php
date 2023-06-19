@@ -12,16 +12,11 @@
 @endcomponent --}}
 
 
-<div class=" approval_documents-wrapper card mt-30">
+<div class=" approval_employee_details-wrapper card mt-30">
     <div class="card-body">
 
-
-
-               @vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')
-               <div id="ReviewDocuments"></div>
-
-
-
+               @vite('resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js')
+               <div id="EmpDetails_approvals"></div>
     </div>
 </div>
 
@@ -69,7 +64,3 @@
 
     });
 </script>
-
-
-
-@endsection

@@ -255,7 +255,7 @@ class VmtSalaryAdvanceService
 
     public function saveLoanWithInterestSettings($min_month_served, $loan_applicable_type, $percent_of_ctc,$max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
     {
-        
+
         $validator = Validator::make(
             $data = [
                 'min_month_served' => $min_month_served,
@@ -328,11 +328,13 @@ class VmtSalaryAdvanceService
     }
 
     public function saveIntersetAndIntersetFreeLoanSettings(
+        $loan_type,
         $client_id,
         $loan_applicable_type,
-        $max_loan_limit,
         $min_month_served,
+        $max_loan_limit,
         $percent_of_ctc,
+        $loan_amt_interest,
         $deduction_starting_months,
         $max_tenure_months,
         $approver_flow
@@ -340,10 +342,13 @@ class VmtSalaryAdvanceService
 
         $validator = Validator::make(
             $data= [
+                "loan_type"=>$loan_type,
                 "client_id"=>$client_id,
                 'loan_applicable_type'=>$loan_applicable_type,
                 "min_month_served" => $min_month_served,
+                "max_loan_limit"=>$max_loan_limit,
                 "percent_of_ctc" => $percent_of_ctc,
+               "loan_amt_interest"=>$loan_amt_interest,
                 "deduction_starting_months" => $deduction_starting_months,
                 "max_tenure_months" => $max_tenure_months,
                 "approver_flow" => $approver_flow
