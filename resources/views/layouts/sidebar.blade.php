@@ -371,6 +371,20 @@
                                             </span>
                                         </a>
                                     </li>
+                                    {{-- ('Employee-Details-approvals') --}}
+                                    <li class="nav-item">
+                                        <a href="{{ route('page-not-found') }}" id=""
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Taxations<span
+                                                    class="text-white badge bg-danger rounded-circle">4</span>
+                                            </span> --}}
+                                            <span>
+                                                Employee Details
+                                            </span>
+                                        </a>
+                                    </li>
                                     {{-- @endif --}}
                                 @endif
                             </ul>

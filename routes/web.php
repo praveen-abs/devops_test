@@ -554,6 +554,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
     //Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
 
+    //Employee Details Documents Approvals
+    Route::get('Employee-Details-approvals', 'App\Http\Controllers\VmtApprovalsController@showEmployeeDetailsDocApprovalPage')->name('Employee-Details-approvals');
 
     //PMS Approvals
     Route::post('/approvals-pms', 'App\Http\Controllers\VmtApprovalsController@approveRejectPMSForm')->name('vmt-approvals-pms');
@@ -871,6 +873,13 @@ Route::middleware(['auth'])->group(function () {
 
     //New Dashboard URL
     Route::post('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
+    Route::get('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
+    Route::get('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
+    Route::get('/getAllEventsDashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllEventsDashboard']);
+    Route::get('/getEmployeeLeaveBalanceDashboards', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeeLeaveBalanceDashboards']);
+    Route::get('/getAllNewDashboardDetails', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllNewDashboardDetails']);
+    Route::get('/fetchAttendanceDailyReport_PerMonth', [App\Http\Controllers\VmtMainDashboardController::class, 'fetchAttendanceDailyReport_PerMonth']);
+
 
 
 

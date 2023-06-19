@@ -7,6 +7,7 @@ import "primeicons/primeicons.css";
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
@@ -36,11 +37,13 @@ import Tag from 'primevue/tag'
 import EmpDetails_approvals from './EmpDetails_approvals.vue'
 
 const app = createApp(EmpDetails_approvals);
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia)
 
 
 app.directive('tooltip', Tooltip);
