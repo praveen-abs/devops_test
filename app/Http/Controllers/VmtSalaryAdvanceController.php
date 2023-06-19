@@ -71,8 +71,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveLoanWithInterestSettings(Request $request, VmtSalaryAdvanceService $ServiceVmtSalaryAdvanceService)
     {
-        dd($request->all());
-
+      
         $response = $ServiceVmtSalaryAdvanceService->saveLoanWithInterestSettings(
             $request->min_month_served,
             $request->loan_applicable_type,
