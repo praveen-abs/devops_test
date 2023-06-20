@@ -24,33 +24,44 @@ class VmtRolesPermissionsController extends Controller
         Get all permissions for the given role
 
     */
-    public function getAllPermissions(Request $request){
+    public function getAllPermissions(Request $request , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        return $serviceVmtRolesPermissionsService->getAllPermissions();
     }
 
 
 
-    public function getAssignedUsers_ForGivenRole(Request $request){
+    public function getAssignedUsers_ForGivenRole(Request $request  , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
+
+        return $serviceVmtRolesPermissionsService->getAssignedUsers_ForGivenRole();
 
     }
 
-    public function createRole(Request $request){
+    public function createRole(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        // $request->role_name = "CEO";
+        // $request->role_description = "all access of the company";
+
+        return $serviceVmtRolesPermissionsService->createRole($request->role_name ,$request->role_description);
     }
 
 
     /*
         Get the Role details such as description, title, permissions
     */
-    public function getRoleDetails(Request $request){
+    public function getRoleDetails(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        // $request->role_name = "superadmin";
+        return $serviceVmtRolesPermissionsService->getRoleDetails($request->role_name);
     }
 
     /*
         Updates the Role details such as description, title
     */
-    public function updateRoleDetails(Request $request){
+    public function updateRoleDetails(Request $request , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        $request->role_id = "1";
+        return $serviceVmtRolesPermissionsService->updateRoleDetails($request->role_id, $request->updated_role_name, $request->updated_role_description, $request->updated_permissions_array);
     }
 
     /*
