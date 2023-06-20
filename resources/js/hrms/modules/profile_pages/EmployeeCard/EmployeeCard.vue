@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-12 text-end">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn" @click="dialogIdCard = true">
-                        <i class="fa fa-id-card text-success" aria-hidden="true"></i>
+                        <i class="pi pi-id-card text-success fs-4" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="text-center col-12">
@@ -28,12 +28,12 @@
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
                             <div
-                                class="mb-1 text-center px-auto d-flex align-items-center justify-content-between pl-5 ml-20">
-                                <h6 class="text-center fw-bold">
+                                class="mb-1  px-auto d-flex align-items-center justify-content-center pl-5">
+                                <h6 class="text-center fw-bold ">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
-                                <span class="personal-edit">
-                                    <a href="#" class="edit-icon"><i class="ri-pencil-fill"
+                                <span class="personal-edit position-absolute" style="right: -9px;">
+                                    <a href="#" class="edit-icon "><i class="ri-pencil-fill"
                                             @click="dialog_emp_name_visible = true"></i>
                                     </a>
                                 </span>
