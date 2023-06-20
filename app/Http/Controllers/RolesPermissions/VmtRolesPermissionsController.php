@@ -16,6 +16,8 @@ class VmtRolesPermissionsController extends Controller
 
     public function getAllRoles(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
         //serviceVmtRolesPermissionsService
+
+        return $serviceVmtRolesPermissionsService->getAllRoles();
     }
 
     /*
