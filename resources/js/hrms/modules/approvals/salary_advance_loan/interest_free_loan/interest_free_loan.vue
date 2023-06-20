@@ -13,9 +13,23 @@
 
                     <div class="float-right ">
                         <button class="btn btn-border-orange">View Report</button>
-                        <button class="mx-2 btn btn-orange" @click="openPosition('top')">
+                        <button class="mx-2 btn btn-orange" @click="ShowDialogApprovalAll">
                             Approval All
                         </button>
+
+                        <Dialog header="Confirmation" v-model:visible="canShowConfirmationAll"
+                            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '400px' }" :modal="true">
+                            <div class="confirmation-content">
+                                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                            </div>
+                            <template #footer>
+                                <Button label="Yes" icon="pi pi-check" @click="processBulkApproveReject('Approve')"
+                                    class="p-button-text" autofocus />
+                                <!-- <button class="btn"></button> -->
+                                <Button label="No" icon="pi pi-times" @click="hideBulkConfirmDialog(true)"
+                                    class="p-button-text" />
+                            </template>
+                        </Dialog>
 
                         <Dialog v-model:visible="canshowInterestFLR" header="Header" :style="{ width: '58vw' }" modal
                             :position="position">
@@ -30,18 +44,22 @@
                                     <div class="row mx-2">
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Required Amount</h1>
-                                            <InputText type="text" placeholder="&#8377; Enter The Required Amount" />
+                                            <InputText type="text" v-model="interestWithLoan.Advance_Amount"
+                                                placeholder="&#8377; Enter The Required Amount" />
                                             <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000
                                             </p>
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                            <InputText type="text" placeholder="&#8377; " />
+                                            <InputText type="text" v-model="interestWithLoan.Monthly_EMI"
+                                                placeholder="&#8377; " />
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Term</h1>
-                                            <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
-                                                class="w-full md:w-10rem" />
+                                            <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
+                                                class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
+                                            <InputText class="w-full md:w-10rem" type="text"
+                                                v-model="interestWithLoan.Term_year" placeholder="&#8377; " />
                                             <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                                         </div>
                                     </div>
@@ -55,21 +73,24 @@
                                 <div class="card-body mx-4">
                                     <div class="row">
                                         <!-- fw-bolder -->
-                                        <h1 class="fs-4 my-2  ">EMI Dedution</h1>
+                                        <h1 class="fs-4 my-2 ">EMI Dedution</h1>
                                         <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming
                                             Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon />
+                                            <Calendar showIcon v-model="interestWithLoan.EMI_start_month"
+                                                dateFormat="dd/mm/yy" />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                            <Calendar showIcon />
+                                            <Calendar showIcon v-model="interestWithLoan.EMI_End_month"
+                                                dateFormat="dd/mm/yy" />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                                            <InputText type="text" style="width: 150px !important;" />
+                                            <InputText type="text" v-model="interestWithLoan.Total_Months"
+                                                style="width: 150px !important;" />
                                         </div>
                                     </div>
                                 </div>
@@ -77,7 +98,8 @@
 
                             <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
                                 <span class="font-semibold ">Reason</span>
-                                <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+                                <Textarea v-model="interestWithLoan.reviewer_comments"
+                                    class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
                             </div>
                             <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
                                 <span class="font-semibold ">your Comments</span>
@@ -221,6 +243,7 @@
 import { onMounted, ref, reactive } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/salary_advance_loanStore';
+import dayjs from 'dayjs';
 
 const UseInterestFreeLoan = UseSalaryAdvanceApprovals();
 
@@ -235,19 +258,35 @@ const reviewer_comments = ref();
 const canshowInterestFLR = ref(false);
 const currentlySelectedRowData = ref();
 const currentlySelectedStatus = ref();
+const canShowConfirmationAll = ref(false);
 // const
+
+
+const interestWithLoan = ref();
+// EMI_start_month:"",
+// EMI_End_month:"",
+// Monthly_EMI:"",
+// Term_year:"",
+// Advance_Amount:"",
+// Total_Months:"",
+// reason:""
+
 
 function showConfirmDialog(selectedRowData, status) {
     console.log(selectedRowData);
     canshowInterestFLR.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
+    interestWithLoan.value = selectedRowData;
     // required_Amount.required_Amount = selectedRowData.Advance_Amount
-
 }
+
 function hideBulkConfirmDialog() {
+    canShowConfirmationAll.value = false;
     canshowInterestFLR.value = false;
 }
+
+
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -260,10 +299,24 @@ const filters = ref({
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
-
 function ShowDialogApprovalAll() {
     canShowConfirmationAll.value = true;
 }
+
+async function approveAndReject(status) {
+    hideBulkConfirmDialog()
+    // showAppoverDialog.value = false;
+    console.log(currentlySelectedRowData.value, status);
+    await UseInterestFreeLoan.IFLapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    currentlySelectedStatus.value = status;
+}
+
+async function processBulkApproveReject(status){
+
+    currentlySelectedStatus.value= status;
+    await UseInterestFreeLoan.IFLbulkApproveAndReject(currentlySelectedStatus.value,UseInterestFreeLoan.arrayIFL_List);
+}
+
 
 
 
