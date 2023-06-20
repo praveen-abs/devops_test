@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <Button label="Apply Leave" class="px-2 py-2 border-0 outline-none btn btn-orange" @click="visible = true" />
+    <Button label="Apply Leave" class="px-2 py-2 border-0 outline-none btn btn-orange" @click="service.leaveApplyDailog = true" />
     <!-- <Transition name="modal" >
         <ABS_loading_spinner v-if="service.data_checking" />
     </Transition> -->
@@ -45,7 +45,7 @@
     <!-- Leave apply dailog -->
 
 
-    <Dialog v-model:visible="visible" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
+    <Dialog v-model:visible="service.leaveApplyDailog" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
         <template #header>
             <h6 class="mb-4 modal-title fs-21">
                 Leave Request</h6>
@@ -67,7 +67,7 @@
                                 optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" :class="[
                                     v$.selected_leave.$error ? 'p-invalid' : '',
                                 ]" />
-                            <span v-if="v$.selected_leave.$error" class="text-red-400 fs-6 font-semibold">
+                            <span v-if="v$.selected_leave.$error" class="font-semibold text-red-400 fs-6">
                                 {{ v$.selected_leave.required.$message.replace( "Value", "Leave Type"  )}}
                             </span>
 
@@ -121,7 +121,7 @@
                             :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
                                 f$.full_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
-                        <span v-if="f$.full_day_leave_date.$error" class="text-red-400 fs-6 font-semibold">
+                        <span v-if="f$.full_day_leave_date.$error" class="font-semibold text-red-400 fs-6">
                             {{ f$.full_day_leave_date.required.$message.replace( "Value", "Date"  ) }}
                         </span>
                     </div>
@@ -141,7 +141,7 @@
                             :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
                                 h$.half_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
-                        <span v-if="h$.half_day_leave_date.$error" class="text-red-400 fs-6 font-semibold">
+                        <span v-if="h$.half_day_leave_date.$error" class="font-semibold text-red-400 fs-6">
                             {{ h$.half_day_leave_date.required.$message.replace( "Value", "Date"  )}}
 
                         </span>
@@ -176,7 +176,7 @@
                                     ]" />
                                 <label class="form-check-label leave_type ms-3" for="afternoon">Afternoon</label>
                             </div>
-                            <div v-if="h$.half_day_leave_session.$error" class="text-red-400 fs-6 font-semibold">
+                            <div v-if="h$.half_day_leave_session.$error" class="font-semibold text-red-400 fs-6">
                                 {{ h$.half_day_leave_session.required.$message.replace( "Value", "Session "  )}}
                             </div>
 
@@ -202,7 +202,7 @@
                                     :manualInput="true" :class="[
                                         c$.custom_start_date.$error ? 'p-invalid' : '',
                                     ]" />
-                                <span v-if="c$.custom_start_date.$error" class="text-red-400 fs-6 font-semibold">
+                                <span v-if="c$.custom_start_date.$error" class="font-semibold text-red-400 fs-6">
                                     {{ c$.custom_start_date.required.$message.replace( "Value", "Start Date "  ) }}
                                 </span>
 
@@ -234,7 +234,7 @@
                                     :minDate="first_day_of_the_month" :class="[
                                         c$.custom_end_date.$error ? 'p-invalid' : '',
                                     ]" />
-                                <span v-if="c$.custom_end_date.$error" class="text-red-400 fs-6 font-semibold">
+                                <span v-if="c$.custom_end_date.$error" class="font-semibold text-red-400 fs-6">
                                     {{ c$.custom_end_date.required.$message.replace( "Value", "End Date "  ) }}
                                 </span>
 
@@ -324,7 +324,7 @@
                         </template>
                         </MultiSelect>
                         <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
-                        <span v-if="cp$.compensatory_leaves_date.$error" class="text-red-400 fs-6 font-semibold">
+                        <span v-if="cp$.compensatory_leaves_date.$error" class="font-semibold text-red-400 fs-6">
                             {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "Compensatory Working Date's "  )}}
                         </span>
                     </div>
@@ -337,7 +337,7 @@
                                 v-model="service.leave_data.compensatory_start_date" :minDate="first_day_of_the_month" :class="[
                                         cp$.compensatory_start_date.$error ? 'p-invalid' : '',
                                     ]" />
-                                <span v-if="cp$.compensatory_start_date.$error" class="text-red-400 fs-6 font-semibold">
+                                <span v-if="cp$.compensatory_start_date.$error" class="font-semibold text-red-400 fs-6">
                                     {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "Start Date "  )}}
                                 </span>
                         </div>
@@ -366,7 +366,7 @@
                                 :minDate="first_day_of_the_month" :class="[
                                         cp$.compensatory_end_date.$error ? 'p-invalid' : '',
                                     ]" />
-                                <span v-if="cp$.compensatory_end_date.$error" class="text-red-400 fs-6 font-semibold">
+                                <span v-if="cp$.compensatory_end_date.$error" class="font-semibold text-red-400 fs-6">
                                     {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "End Date "  )}}
                                 </span>
                         </div>
@@ -401,7 +401,7 @@
                                 v-model="service.leave_data.leave_reason" class="form-control" :class="[
                                     r$.leave_reason.$error ? 'p-invalid' : '',
                                 ]" />
-                            <span v-if="r$.leave_reason.$error" class="text-red-400 fs-6 font-semibold">
+                            <span v-if="r$.leave_reason.$error" class="font-semibold text-red-400 fs-6">
                                 {{ r$.leave_reason.required.$message.replace( "Value", "Leave Reason"  )}}
                             </span>
                         </div>
@@ -413,7 +413,7 @@
                     <Calendar :inline="true" :showWeek="true" style="min-width:100%" />
                 </div>
                 <div class="mt-6 text-center ">
-                    <button type="button" class="btn btn-border-primary" @click="visible = false">Cancel</button>
+                    <button type="button" class="btn btn-border-primary" @click="service.leaveApplyDailog = false">Cancel</button>
                     <button type="button" id="btn_request_leave" class="btn btn-primary ms-4" @click="submitForm">
                         Request Leave</button>
                 </div>

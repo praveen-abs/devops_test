@@ -353,7 +353,7 @@ $bank_names = \DB::table('vmt_banks')->get();
             <td colspan="2" class="">
                 <p class="txt-right"><img height="8.5" width="12"
                         src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                        style="padding-right:0px;">{{ number_format(round($employee_payslip->earned_hra), 2) }}</p>
+                        style="padding-right:0px;">{{ number_format(round($employee_payslip->earned_basic), 2) }}</p>
             </td>
             <td colspan="2" class="">
                 <p class="txt-left text-strong navy-blue">EPF</p>

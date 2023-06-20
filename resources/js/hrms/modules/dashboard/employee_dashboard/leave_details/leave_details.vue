@@ -53,7 +53,7 @@
 <script setup>
 
 import { onMounted, ref ,reactive } from "vue";
-import { useMainDashboardStore } from "../../dashboard_service";
+import { useMainDashboardStore } from "../../stores/dashboard_service";
 
 const mainDashboardStore = useMainDashboardStore();
 

@@ -36,7 +36,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         leave_request_error_messege:""
     });
 
-
+   const leaveApplyDailog = ref(false)
     const TotalNoOfDays = ref(true);
     const full_day_format = ref(true);
     const half_day_format = ref(false);
@@ -419,6 +419,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     return {
 
         // Variable Declaration
+        leaveApplyDailog,
         leave_data,
         invalidDate,
         today,

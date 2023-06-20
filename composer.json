@@ -58,6 +58,7 @@
             "app/Services/VmtEmployeeDocumentsService.php",
             "app/Services/VmtAttendanceSettingsService.php",
             "app/Services/VmtPayrollService.php",
+            "app/Services/RolesPermissions/VmtRolesPermissionsService.php",
             "app/Services/VmtSalaryAdvanceService.php"
         ]
     },

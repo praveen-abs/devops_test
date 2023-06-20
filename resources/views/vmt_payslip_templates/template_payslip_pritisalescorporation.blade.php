@@ -496,7 +496,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <td colspan="2" class="bg-ash">
                         <p class="txt-right"><img height="8.5" width="12"
                                 src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                                style="padding-right:0px;">{{ number_format(round($employee_payslip->total_earned_gross), 2) }}
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->total_fixed_gross), 2) }}
                         </p>
                     </td>
                     <td colspan="2" class="bg-ash">
