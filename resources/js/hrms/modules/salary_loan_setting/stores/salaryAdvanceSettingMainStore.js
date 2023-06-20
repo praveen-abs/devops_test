@@ -165,13 +165,14 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Eligible Employees and Amount
     // Deduction Method
+    const  deduction_starting_months =  ref();
     const ifl = reactive({
         isInterestFreeLoanIsEnabled: 0,
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
         precent_Or_Amt:'',
-        deduction_starting_months:"",
+        deductMethod:"",
         max_loan_limit:'',
         cusDeductMethod: '',
         maxTenure: '',
@@ -194,6 +195,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ifl);
             ifl.isInterestFreeLoanIsEnabled = 1
         }
+        if(ifl.precent_Or_Amt == 'fixed'){
+            ifl.availPerInCtc ="";
+        }
+        else if(ifl.precent_Or_Amt == 'percnt'){
+            ifl.max_loan_limit = "";
+        }
+        // if()
 
         let form  = new FormData();
 
@@ -203,7 +211,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         form.append('deductMethod',ifl.deductMethod);
         form.append('loan_applicable_type',ifl.precent_Or_Amt)
         form.append('max_loan_limit',ifl.max_loan_limit)
-        form.append('deduction_starting_months',ifl.deduction_starting_months);
+        form.append('deduction_starting_months',ifl.deductMethod);
         form.append('max_tenure_months',ifl.maxTenure);
         form.append('approver_flow',JSON.stringify( ifl.approvalflow));
         form.append('loan_type','InterestFreeLoan');
@@ -439,7 +447,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Interest Free Loan
 
-        isInterestFreeLoaneature, ifl, saveInterestfreeLoan,
+        isInterestFreeLoaneature, ifl, saveInterestfreeLoan,deduction_starting_months,
 
         // Travel Advance Feature
 

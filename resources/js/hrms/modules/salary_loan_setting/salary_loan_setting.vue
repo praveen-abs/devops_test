@@ -1,5 +1,5 @@
 <template>
-    <div style="position: relative; top:-15px ">
+    <div style="position: relative;">
         <h1 class="mb-4 fs-3 d-flex align-items-center fw-bolder" style="color: #003056; "><i
                 class='mr-3 fas fa-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
 

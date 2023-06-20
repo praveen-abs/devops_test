@@ -38,7 +38,9 @@
                             <div class="rounded-lg shadow-sm card border-L ">
                                 <div class="card-body ">
                                     <div class="row">
-                                        <div class="col-12 ">
+                                        <div class="col-12 d-flex align-items-center">
+                                            <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1"
+                                                    name="dectmeth" value="percnt" class="mx-3" />
 
                                             <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the
                                                 employees
@@ -47,10 +49,18 @@
                                             </h1>
                                         </div>
 
+                                        <div class="col-12 d-flex align-items-center">
+                                            <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1"
+                                                name="dectmeth" value="fixed" class="mx-3" />
+                                            <h1 class="fs-5">The employee must have served for a minimum of
+                                                <InputText type="text" v-model="salaryStore.ifl.minEligibile"
+                                                    style="max-width: 100px; " class="mx-2" />
+                                            </h1>
+                                        </div>
+
                                         <div class="col-12">
-                                            <h1 class="fs-5 d-flex align-items-center">
-                                                <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1"
-                                                    name="dectmeth" value="percnt" class="mx-3" />
+                                            <h1 class="fs-5 d-flex align-items-center ml-3">
+
                                                 years to avail the loan amount of
 
                                                 <!-- <InputText type="text"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" /> -->
@@ -64,14 +74,7 @@
                                             </h1>
                                         </div>
 
-                                        <div class="col-12 d-flex align-items-center">
-                                            <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1"
-                                                name="dectmeth" value="fixed" class="mx-3" />
-                                            <h1 class="fs-5">The employee must have served for a minimum of
-                                                <InputText type="text" v-model="salaryStore.ifl.minEligibile"
-                                                    style="max-width: 100px; " class="mx-2" />
-                                            </h1>
-                                        </div>
+
                                         <div class="col-10">
                                             <p class="fs-6 clr-gray ">(Note: This will be calculated based on the employee's
                                                 date of joining.)
