@@ -386,6 +386,7 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->deduction_starting_months = $deduction_starting_months;
                 $setting_for_loan->max_tenure_months = $max_tenure_months;
                 $setting_for_loan->approver_flow = $approver_flow;
+                $setting_for_loan->active=1;
             } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
@@ -406,13 +407,13 @@ class VmtSalaryAdvanceService
 
     public function showEligibleInterestFreeLoanDetails()
     {
-        $client_id = sessionGetSelectedClientid();
         $user_id = auth()->user()->id;
         $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
-        $avaliable_int_loans = VmtInterestFreeLoanSettings::orderBy('min_month_served', 'DESC')->get();
-        dd($avaliable_int_loans);
-        foreach ($avaliable_int_loans as $single_recxord) {
-            dd($single_recxord);
+        $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id',sessionGetSelectedClientid())
+                               ->where('active',1)->orderBy('min_month_served', 'DESC')->get();
+       // dd($avaliable_int_loans);
+        foreach ($avaliable_int_loans as $single_record) {
+            dd($single_record);
         }
         dd();
     }
