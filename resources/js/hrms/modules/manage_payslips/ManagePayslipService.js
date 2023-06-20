@@ -144,7 +144,7 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             status: status
         }).then((response) => {
             console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
-            window.open(`data:application/pdf;base64,${response.data.data}`);
+            window.location.assign(`data:application/pdf;base64,${response.data.data}`);
 
         })
             .catch((data) => {
