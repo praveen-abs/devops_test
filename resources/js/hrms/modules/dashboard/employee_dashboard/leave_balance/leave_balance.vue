@@ -5,7 +5,7 @@
   <div class="border-0 leave-balance-wrapper card w-100 box-shadow-md h-100">
     <div class="card-body">
       <div class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary" id="">
-        <span>Leave Balance</span>
+        <span class="text-primary font-semibold fs-6">Leave Balance</span>
       </div>
 
       <div class="contents">
