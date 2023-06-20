@@ -23,12 +23,39 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class VmtRolesPermissionsService {
 
 
     public function getAllRoles(){
 
+        try{
+          $getAllroles = Role::join('model_has_roles','model_has_roles.role_id','=','roles.id')
+                                ->join('users','users.id','=','model_has_roles.model_id')
+                                ->get([
+                                        'users.id',
+                                        'users.name',
+                                        'users.user_code',
+                                        'roles.name as role_name',
+                                        'roles.guard_name',
+                                        'model_has_roles.model_type'
+                                      ]);
+
+
+          return response()->json([
+                            "status" => "success",
+                            "message" => "",
+                            "data" =>$getAllroles,
+                     ]);
+          }
+           catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching employee roles",
+                "data" => $e,
+            ]);
+        }
     }
 
     /*

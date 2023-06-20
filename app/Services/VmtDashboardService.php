@@ -244,7 +244,7 @@ class VmtDashboardService{
     }
 
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $checkout_time , $work_mode, $attendance_mode_checkin, $checkin_lat_long,$selfie_checkin)
     {
 
 
@@ -307,17 +307,51 @@ class VmtDashboardService{
             \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
 
             $attendanceCheckin->selfie_checkin = $fileName;
+
+            $attendanceCheckin->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Check-in success',
+                'data'   => ''
+            ]);
+        } else {
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                            ->where('date', date('Y-m-d'))
+                            ->first();
+
+            //dd($attendance);
+            //$attendance->date = date('Y-m-d');
+            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+            $attendance->checkout_time = $currentTime;
+            $attendance->attendance_mode_checkout = "web";
+            $attendance->save();
+
+            //Get the time diff
+            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'))
+                        ->first();
+
+            $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
+
+            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
+
+            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+
+               // dd($effective_hours);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'You have successfully checked out!',
+                'time' => $attendance->checkout_time,
+                'effective_hours' => $effective_hours,
+            ]);
         }
 
-        $attendanceCheckin->save();
+        }
 
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Check-in success',
-            'data'   => ''
-        ]);
-    }
+     
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
     {

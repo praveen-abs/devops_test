@@ -353,6 +353,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Permission Roles Routing
     Route::get('/roles_permissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'showRolesPermissionsPage'])->name('showRolesPermissionsPage');
+    Route::get('/getAllRoles', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAllRoles'])->name('getAllRoles');
+
 
     //360 Review Module Routing
     Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
@@ -821,7 +823,7 @@ Route::middleware(['auth'])->group(function () {
     //New Dashboard URL
     Route::post('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
     Route::get('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
-    Route::get('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
+    Route::post('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
     Route::get('/getAllEventsDashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllEventsDashboard']);
     Route::get('/getEmployeeLeaveBalanceDashboards', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeeLeaveBalanceDashboards']);
     Route::get('/getAllNewDashboardDetails', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllNewDashboardDetails']);
