@@ -29,6 +29,23 @@
 
                     <div class="col-10 ">
                         <p class="fs-5 ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
+
+                        <div class="d-flex justify-content-between align-items-center mt-5 " style="width: 480px;">
+                            <h1 class="fs-4 fw-bolder">Select organization</h1>
+                            <div class="d-flex flex-col position-relative">
+                                <MultiSelect v-model="salaryStore.lwif.selectClientID" :options="salaryStore.ClientsName"
+                                    optionLabel="client_name" optionValue="id" placeholder="Select Branches"
+                                    :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
+                                        v$.selectClientID.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="v$.selectClientID.$error"
+                                    class="text-red-400 fs-6 font-semibold position-absolute top-14">
+                                    {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
+                                </span>
+                            </div>
+
+                        </div>
+
                         <h1 class="mt-10 fs-4 fw-bolder">Eligible Amount</h1>
                         <p class="my-2 fs-5 ">The employees not eligible for Interest Free Loan can also claim the Loan with
                             Interest
@@ -38,44 +55,43 @@
                             <div class="rounded-lg shadow-sm card border-L ">
                                 <div class="card-body ">
                                     <div class="row">
-                                        <div class="col-12 ">
-
-                                            <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the
-                                                employees
+                                        <div class="col-12">
+                                            <h1 class="fs-5">The employee must have served for a minimum of
                                                 <InputText type="text" v-model="salaryStore.lwif.minEligibile"
-                                                    style="width: 150px;" />
+                                                    style="max-width: 100px; " class="mx-2" />
                                             </h1>
                                         </div>
-
                                         <div class="col-12">
                                             <h1 class="fs-5 d-flex align-items-center">
-                                                <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1"
+                                                <RadioButton v-model="salaryStore.lwif.precent_Or_Amt" inputId="ingredient1"
                                                     name="dectmeth" value="percnt" class="mx-3" />
                                                 years to avail the loan amount of
 
                                                 <!-- <InputText type="text"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" /> -->
-                                                <InputText type="text" v-if="salaryStore.ifl.precent_Or_Amt == 'percnt'"
-                                                    v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;"
+                                                <InputText type="text" v-if="salaryStore.lwif.precent_Or_Amt == 'percnt'"
+                                                    v-model="salaryStore.lwif.availPerInCtc" style="max-width: 100px;"
                                                     class="mx-2" />
                                                 <InputText type="text" v-else disabled
-                                                    v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;"
+                                                    v-model="salaryStore.lwif.availPerInCtc" style="max-width: 100px;"
                                                     class="mx-2" />
                                                 % of their CTC.
                                             </h1>
                                         </div>
-
                                         <div class="col-12 d-flex align-items-center">
-                                            <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1"
+                                            <RadioButton v-model="salaryStore.lwif.precent_Or_Amt" inputId="ingredient1"
                                                 name="dectmeth" value="fixed" class="mx-3" />
-                                            <h1 class="fs-5">The employee must have served for a minimum of
-                                                <InputText type="text" v-model="salaryStore.ifl.minEligibile"
-                                                    style="max-width: 100px; " class="mx-2" />
+                                            <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the
+                                                employees
+                                                <InputText v-if="salaryStore.lwif.precent_Or_Amt == 'fixed'" type="text"
+                                                    v-model="salaryStore.lwif.max_loan_limit" style="width: 150px;" />
+                                                <InputText v-else disabled type="text"
+                                                    v-model="salaryStore.lwif.max_loan_limit" style="width: 150px;" />
                                             </h1>
                                         </div>
                                         <div class="col-10">
                                             <p class="fs-6 clr-gray ">(Note: This will be calculated based on the employee's
-                                                date of joining.)
-                                            </p>
+                                                date of
+                                                joining.)</p>
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +106,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <h1 class="fs-5">Enter the percentage of interest for the loan
-                                                <InputText type="text" v-model="salaryStore.lwif.availPerInCtc"
+                                                <InputText type="text" v-model="salaryStore.lwif.loan_amt_interest"
                                                     style="width: 150px;" /> of the loan amount.
                                             </h1>
                                         </div>
@@ -109,6 +125,8 @@
                             <p class="my-2 fs-5">The EMI, or Equated Monthly Installment, is the sum of the principal amount
                                 borrowed
                                 and the interest charged on the loan.</p>
+                            <!--  -->
+                            <!--  -->
 
                             <div class="row">
                                 <div class="shadow-sm card border-L rounded-top">
@@ -116,10 +134,10 @@
                                         <div class="row">
                                             <div class="col-7 d-flex justify-content-start align-items-center">
                                                 <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1"
-                                                    name="percofsaladvance" value="1" />
-
+                                                    name="dectmeth" value="1" />
                                                 <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin
-                                                    deducting the EMI in the
+                                                    deducting
+                                                    the EMI in the
                                                     upcoming payroll.</label>
                                             </div>
                                         </div>
@@ -128,10 +146,10 @@
                                         <div class="my-1 row">
                                             <div class="col-7 d-flex justify-content-start align-items-center">
                                                 <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1"
-                                                    name="percofsaladvance" value="emi" />
+                                                    name="dectmeth" value="emi" />
                                                 <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when
-                                                    they would like their
-                                                    EMI
+                                                    they
+                                                    would like their EMI
                                                     payments to begin
                                                 </label>
                                             </div>
@@ -147,18 +165,19 @@
                                         </div>
                                         <div class="ml-1 row" v-if="salaryStore.lwif.deductMethod == 'emi'">
                                             <div class="ml-4 col">
-                                                <p class="fs- clr-gray" style="line-height: 14px;">
+                                                <p class="fs-6 clr-gray" style="line-height: 14px;">
                                                     (Note: During the specified period, employees have the option to select
-                                                    the month in which they
+                                                    the
+                                                    month in which they
                                                     would
                                                     like the EMI deductions to begin.)</p>
                                             </div>
                                         </div>
-                                        <div class="row" v-if="salaryStore.lwif.deductMethod == 'emi'">
+                                        <div class="row">
                                             <div class="col">
                                                 <p class="fs-5 clr-dark">Please specify the maximum duration or tenure for
-                                                    the employee to repay
                                                     the
+                                                    employee to repay the
                                                     loan amount
                                                     <InputText type="text" v-model="salaryStore.lwif.maxTenure"
                                                         style="max-width: 100px;" class="mx-2" />
@@ -170,6 +189,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="col">
@@ -256,7 +276,8 @@
                     <div class="col">
                         <div class="float-right" v-if="salaryStore.isLoanWithInterestFeature == '2'">
                             <button class="btn btn-border-primary">Cancel</button>
-                            <button class="mx-4 btn btn-primary" @click="salaryStore.saveLoanWithInterest">Save
+                            <!-- submitForm -->
+                            <button class="mx-4 btn btn-primary" @click="submitForm">Save
                                 Changes</button>
                         </div>
                     </div>
@@ -269,9 +290,11 @@
 </template>
 <script setup>
 
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore';
+import useValidate from '@vuelidate/core';
+import { required, email, minLength, sameAs } from '@vuelidate/validators';
 
 const salaryStore = salaryAdvanceSettingMainStore()
 
@@ -281,9 +304,31 @@ const op = ref([
 ])
 
 onMounted(() => {
-    opt.value = "Department"
+    opt.value = "Department";
+    salaryStore.getClientsName();
 })
 
+
+const rules = computed(() => {
+    return {
+        selectClientID: { required },
+        // Pancard: { required }
+    }
+})
+
+const v$ = useValidate(rules, salaryStore.lwif)
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        salaryStore.saveLoanWithInterest();
+    } else {
+        console.log('Form failed submitted.')
+    }
+
+}
 
 </script>
 <style>
@@ -343,5 +388,34 @@ input[type=radio] {
 .p-dropdown-label.p-inputtext {
     color: var(--navy);
 }
-</style>
+
+.arrow {
+    text-align: center;
+    margin: 8% 0;
+}
+
+.bounce {
+    -moz-animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-30px);
+    }
+
+    60% {
+        transform: translateY(-15px);
+    }
+}</style>
 

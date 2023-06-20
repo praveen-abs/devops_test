@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useToast } from "primevue/usetoast";
 import { reactive, ref } from "vue";
+// import {}
 
 /*
     This Pinia code will store the ajax values of the
@@ -147,7 +148,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             sa.isSalaryAdvanceEnabled = 1
         }
         axios.post(url, sa).finally(() => {
-            canShowLoading.value = false
+            canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
         })
         console.log(sa);
@@ -165,18 +166,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Eligible Employees and Amount
     // Deduction Method
+    const  deduction_starting_months =  ref();
     const ifl = reactive({
         isInterestFreeLoanIsEnabled: 0,
+        selectClientID:'',
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
         precent_Or_Amt:'',
-        deduction_starting_months:"",
+        deductMethod:"",
         max_loan_limit:'',
         cusDeductMethod: '',
         maxTenure: '',
         approvalflow: approvalFormat
     })
+    const ClientsName = ref();
     // deduction_starting_months
     // max_loan_limit
 
@@ -194,16 +198,24 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ifl);
             ifl.isInterestFreeLoanIsEnabled = 1
         }
+        if(ifl.precent_Or_Amt == 'fixed'){
+            ifl.availPerInCtc ="";
+        }
+        else if(ifl.precent_Or_Amt == 'percnt'){
+            ifl.max_loan_limit = "";
+        }
+        // if()
 
         let form  = new FormData();
 
         form.append('isInterestFreeLoanIsEnabled',ifl.isInterestFreeLoanIsEnabled)
+        form.append('client_id',ifl.selectClientID)
         form.append('min_month_served',ifl.minEligibile);
         form.append('percent_of_ctc',ifl.availPerInCtc);
         form.append('deductMethod',ifl.deductMethod);
         form.append('loan_applicable_type',ifl.precent_Or_Amt)
         form.append('max_loan_limit',ifl.max_loan_limit)
-        form.append('deduction_starting_months',ifl.deduction_starting_months);
+        form.append('deduction_starting_months',ifl.deductMethod);
         form.append('max_tenure_months',ifl.maxTenure);
         form.append('approver_flow',JSON.stringify( ifl.approvalflow));
         form.append('loan_type','InterestFreeLoan');
@@ -214,6 +226,16 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         axios.post(url, form).finally(() => {
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
+        })
+    }
+
+    // /get-clients-for-loan-adv
+
+    //
+
+    async function getClientsName(){
+        await axios.get('/get-clients-for-loan-adv').then((res)=>{
+            ClientsName.value=  res.data;
         })
     }
 
@@ -249,11 +271,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         } else {
             console.log(ta);
         }
-
         let url = '/saveTravelAdvanceSettings'
         axios.post(url, ta).finally(() => {
-            canShowLoading.value = false
-            approvalFormat.splice(0, approvalFormat.length)
+            canShowLoading.value = false;
+            approvalFormat.splice(0, approvalFormat.length);
         })
     }
 
@@ -266,36 +287,57 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const isLoanWithInterestFeature = ref(1)
 
     const lwif = reactive({
+        LoanWithInterestFeature:'',
+        selectClientID:'',
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
+        precent_Or_Amt:'',
+        deductMethod:"",
+        max_loan_limit:'',
         cusDeductMethod: '',
         maxTenure: '',
+        loan_amt_interest:'',
         approvalflow: approvalFormat
-
     })
 
     const saveLoanWithInterest = () => {
         canShowLoading.value = true
         if (isLoanWithInterestFeature.value == '1') {
             console.log("disabled");
+            lwif.LoanWithInterestFeature = 1;
         } else {
             console.log(ta);
         }
+        if(lwif.precent_Or_Amt == 'fixed'){
+            lwif.availPerInCtc ="";
+        }
+        else if(lwif.precent_Or_Amt == 'percnt'){
+            lwif.max_loan_limit = "";
+        }
+        if (lwif.deductMethod == 'emi') {
+            lwif.deductMethod = lwif.cusDeductMethod
+        } else {
+            console.log("same of percent");
+        }
 
         let form = new FormData();
-        form.append('minEligibile',lwif.minEligibile);
-        form.append('availPerInCtc',lwif.availPerInCtc);
+        form.append('isInterestFreeLoanIsEnabled',lwif.LoanWithInterestFeature)
+        form.append('client_id',lwif.selectClientID)
+        form.append('min_month_served',lwif.minEligibile);
+        form.append('percent_of_ctc',lwif.availPerInCtc);
         form.append('deductMethod',lwif.deductMethod);
-        form.append('cusDeductMethod',lwif.cusDeductMethod);
-        form.append('maxTenure',lwif.maxTenure);
-        form.append('approvalflow', JSON.stringify(approvalFormat));
-        form.append('Loan_type','LoanWithInterest');
-        // let form = formData.append("username", "Chris")
+        form.append('loan_applicable_type',lwif.precent_Or_Amt)
+        form.append('max_loan_limit',lwif.max_loan_limit)
+        form.append('deduction_starting_months',lwif.deductMethod);
+        form.append('max_tenure_months',lwif.maxTenure);
+        form.append('loan_amt_interest',lwif.loan_amt_interest)
+        form.append('approver_flow',JSON.stringify( lwif.approvalflow));
+        form.append('loan_type','InterestWithLoan');
 
         // let url = '/saveLoanWithIntrest'
         // let url = '/save-int-and-int-free-loan-settings';
-        let url = 'http://localhost:3000/InterestWithLoan';
+        let url = '/save-int-and-int-free-loan-settings';
 
         axios.post(url, form).finally(() => {
             canShowLoading.value = false
@@ -439,7 +481,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Interest Free Loan
 
-        isInterestFreeLoaneature, ifl, saveInterestfreeLoan,
+        isInterestFreeLoaneature, ifl, saveInterestfreeLoan,deduction_starting_months,
+
+        getClientsName,ClientsName,
 
         // Travel Advance Feature
 
