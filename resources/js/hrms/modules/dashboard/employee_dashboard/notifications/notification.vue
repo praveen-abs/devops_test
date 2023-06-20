@@ -2,8 +2,7 @@
   <div class="border-0 notification-wrapper card w-100 box-shadow-md h-100">
     <div class="card-body">
       <div class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary" id="">
-        <span>Notifications</span>
-        <!-- <i type="button" class="position-relative fa fa-bell"> -->
+        <span class="text-primary font-semibold fs-6">Notifications</span>
           <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="pi pi-bell p-overlay-badge" style="font-size: 1.5rem" />
           <!-- {{ -- < span class="top-0 position-absolute start-100 translate-middle badge rounded-circle bg-danger" >
             5 +
