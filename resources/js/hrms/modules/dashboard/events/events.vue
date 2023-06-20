@@ -2,7 +2,7 @@
     <div class="my-3 event-wrapper">
         <div class="mb-0 overflow-x-hidden overflow-y-auto border-0 card" >
             <div class="card-body" >
-                <div class="mb-3 f-18 text-primary" id=""> <span>Events</span>
+                <div class="mb-3 f-18 text-primary" id=""> <span class="text-primary font-semibold fs-5">Events</span>
                 </div>
                 <div class="grid gap-4 my-4 md:grid-cols-4 sm:grid-cols-4 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5"
                     style="display: grid;">
