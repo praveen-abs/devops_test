@@ -121,7 +121,7 @@
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '400px' }" :modal="true">
             <div class="confirmation-content">
                 <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of this employee?</span>
+                <!-- <span>Are you sure you want to {{ currentlySelectedStatus }} all the documents of this employee?</span> -->
             </div>
             <template #footer>
                 <Button label="Yes" icon="pi pi-check" @click="processBulkApproveReject('Approve')" class="p-button-text"
