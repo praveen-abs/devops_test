@@ -2,12 +2,10 @@
         <div class="card">
             <Carousel :value="holidays" :numVisible="1" :numScroll="1" :responsiveOptions="responsiveOptions">
                 <template #item="slotProps">
-
                     <div class="px-1 text-center h-90">
-                        <img :src="`data:image/png;base64,${slotProps.data.image}`" :alt="slotProps.data.holiday_name" />
+                        <img :src="`data:image/png;base64,${slotProps.data.image}`" class="mt-3 rounded shadow-sm" style="width: 290px; height: 135px; " :alt="slotProps.data.holiday_name" />
                         <div>
-                            <h4 class="mb-1">{{ slotProps.data.holiday_name }}</h4>
-
+                            <h4 class="my-2 fw-semibold">{{ slotProps.data.holiday_name }}</h4>
                         </div>
                     </div>
                 </template>
