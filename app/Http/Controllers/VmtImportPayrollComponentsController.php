@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\VmtPayrollCompTypes;
+use App\Models\VmtPayrollCompCategory;
+use App\Models\VmtPayrollCompNature;
 use App\Models\VmtPayrollComponents;
 use App\Imports\VmtFinancialComponents;
 use Illuminate\Support\Facades\Validator;
@@ -55,15 +58,15 @@ $i=array_keys($excelRowdata_row);
             $currentRowInExcel++;
 
             $rules = [
-                 'component_name'=>'required',
-                 'componant_type'=>'required',
-                 'component_nature'=>'required',
-                 'category'=>'required',
-                 'calculation_method'=>'required',
-                 'taxability'=>'required',
-                 'epf'=>'required',
-                 'esi'=>'required',
-                 'pt'=>'required',
+                 'component_name'=>'nullable',
+                 'componant_type'=>'nullable',
+                 'component_nature'=>'nullable',
+                 'category'=>'nullable',
+                 'calculation_method'=>'nullable',
+                 'taxability'=>'nullable',
+                 'epf'=>'nullable',
+                 'esi'=>'nullable',
+                 'pt'=>'nullable',
                  'lwf'=>'nullable',
 
 
@@ -118,14 +121,17 @@ $i=array_keys($excelRowdata_row);
 
     private function storeSingle_Components($row)
     {
-      
+
 
         try{
                 $fin_components = new VmtPayrollComponents;
                 $fin_components->comp_name =$row["component_name"];
-                $fin_components->comp_type =$row["componant_type"];
-                $fin_components->comp_nature =$row["component_nature"];
-                $fin_components->category =$row["category"];
+                $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
+                $fin_components->comp_type_id =  $component_type->id;
+                $component_nature =VmtPayrollCompNature::where('name',strtolower($row["component_nature"]))->first();
+                $fin_components->comp_nature_id =$component_nature->id;
+                $component_category =VmtPayrollCompCategory::where('name',strtolower($row["category"]))->first();
+                $fin_components->category_id =$component_category->id;
                 $fin_components->calculation_method =$row["calculation_method"];
                 $fin_components->taxability =$row["taxability"];
                 $fin_components->epf =$row["epf"];

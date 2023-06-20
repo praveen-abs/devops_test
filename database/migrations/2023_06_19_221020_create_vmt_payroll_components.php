@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('vmt_payroll_components', function (Blueprint $table) {
             $table->id();
             $table->text('comp_name');
-            $table->text('comp_type');
-            $table->text('comp_nature');
-            $table->text('category');
+            $table->text('comp_type_id');
+            $table->text('comp_nature_id');
+            $table->text('category_id');
             $table->text('calculation_method');
             $table->text('taxability');
             $table->text('epf');
