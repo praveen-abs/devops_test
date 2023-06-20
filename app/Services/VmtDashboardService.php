@@ -149,7 +149,7 @@ class VmtDashboardService{
 
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
-        $response["events"] = $this->getAllEvents();
+        $response["events"] = $this->getAllEventsDashboard();
 
         return $response;
     }
