@@ -149,7 +149,7 @@ class VmtDashboardService{
 
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
-        $response["events"] = $this->getAllEvents();
+        $response["events"] = $this->getAllEventsDashboard();
 
         return $response;
     }
@@ -165,6 +165,8 @@ class VmtDashboardService{
 
     */
     public function getAllEventsDashboard(){
+
+        try{
 
         $employeesEventDetails = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
@@ -210,8 +212,24 @@ class VmtDashboardService{
 
         }
 
-                return  $dashboardEmployeeEventsData;
+        // return  $dashboardEmployeeEventsData;
 
+        return response()->json([
+            "status" => "success",
+            "message" => "",
+            "data" =>$dashboardEmployeeEventsData,
+        ]);
+
+    }
+    catch(\Exception $e){
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch Allevent",
+            "data" => $e,
+        ]);
+
+    }
 
     }
 
@@ -226,7 +244,7 @@ class VmtDashboardService{
     }
 
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
+    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $checkout_time , $work_mode, $attendance_mode_checkin, $checkin_lat_long,$selfie_checkin)
     {
 
 
@@ -289,17 +307,51 @@ class VmtDashboardService{
             \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
 
             $attendanceCheckin->selfie_checkin = $fileName;
+
+            $attendanceCheckin->save();
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Check-in success',
+                'data'   => ''
+            ]);
+        } else {
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                            ->where('date', date('Y-m-d'))
+                            ->first();
+
+            //dd($attendance);
+            //$attendance->date = date('Y-m-d');
+            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+            $attendance->checkout_time = $currentTime;
+            $attendance->attendance_mode_checkout = "web";
+            $attendance->save();
+
+            //Get the time diff
+            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'))
+                        ->first();
+
+            $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
+
+            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
+
+            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+
+               // dd($effective_hours);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'You have successfully checked out!',
+                'time' => $attendance->checkout_time,
+                'effective_hours' => $effective_hours,
+            ]);
         }
 
-        $attendanceCheckin->save();
+        }
 
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Check-in success',
-            'data'   => ''
-        ]);
-    }
+     
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
     {
@@ -754,7 +806,11 @@ class VmtDashboardService{
     public function getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period)
     {
         // TODO:: Which Leave Types we Have to Find Avalied And Balance //Need To Change In Setting Page
-        //  $visible_leave_types = array('Casual/Sick Leave'=>1,'Earned Leave'=>2);
+
+  //  $visible_leave_types = array('Casual/Sick Leave'=>1,'Earned Leave'=>2);
+
+  try{
+
         $leave_balance_for_all_types = array();
         $avalied_leaves = array();
         $response = array();
@@ -828,7 +884,23 @@ class VmtDashboardService{
 
         }
         $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'Avalied Leaves' => $avalied_leaves);
-        return $response;
+        // return $response;
+
+        return response()->json([
+            "status" => "success",
+            "message" => "",
+            "data" => $response,
+        ]);
+
+    }
+    catch(\Exception $e){
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch LeaveBalance",
+            "data" => $e,
+        ]);
+    }
     }
 
     public function fetchUnusedCompensatoryOffDays($user_id)
@@ -942,68 +1014,34 @@ class VmtDashboardService{
     }
 
     public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period){
+
+        $user_code = auth()->user()->user_code;
+
         try{
-        $getAllEvent = $this->getAllEventsDashboard();
+            $getAllEvent = $this->getAllEventsDashboard();
+            $getAllNotification =  $this->getNotifications($user_code);
+            $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
+
+            return response()->json([
+                [
+                    "all_events"=>$getAllEvent,
+                    "all_notification" => $getAllNotification,
+                    "leave_balance_per_month"=>$getEmpLeaveBalance,
+                    // "Leave-report"=>$simma3
+                ]
+            ]);
+
         }
         catch(\Exception $e){
 
             return response()->json([
                 "status" => "failure",
-                "message" => "Unable to fetch Allevent",
+                "message" => "Unable to fetch new dashboard details",
                 "data" => $e,
             ]);
 
         }
 
-     try{
-         $user_code = auth()->user()->user_code;
-         $getAllNotification =  $this->getNotifications($user_code);
-       }
-        catch(\Exception $e){
-        return response()->json([
-            "status" => "failure",
-            "message" => "Unable to fetch AllNotifications",
-            "data" => $e,
-        ]);
-    }
-
-    try{
-        $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
-    }
-    catch(\Exception $e){
-
-        return response()->json([
-            "status" => "failure",
-            "message" => "Unable to fetch LeaveBalance",
-            "data" => $e,
-        ]);
-    }
-    // try{
-    //     $user_code = auth()->user()->user_code;
-    //     $year = date("Y");
-    //     $month = date("m");
-
-    //     $simma3 = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
-
-    // }
-    //  catch(\Exception $e){
-
-    //     return response()->json([
-    //         "status" => "failure",
-    //         "message" => "Unable to fetch notifications",
-    //         "data" => $e,
-    //     ]);
-    // }
-
-
-        return response()->json([
-            [
-                "All-Events"=>$getAllEvent ,
-                "All-Notification" => $getAllNotification,
-                "Leave-Balance"=>$getEmpLeaveBalance,
-                // "Leave-report"=>$simma3
-            ]
-        ]);
     }
 
 

@@ -1760,7 +1760,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         final_checkin_button_code +
                                         "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 60px;' class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span class='mr-5' ><button  style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+getSelfieImage(ajax_data_currentdate.attendance_mode_checkout) +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span class='mr-5' ><button  style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+selfie_checkout+">"+getSelfieImage(ajax_data_currentdate.attendance_mode_checkout) +
                                         "</span> " +
                                         final_checkout_button_code +
                                         "</div></div></div>"

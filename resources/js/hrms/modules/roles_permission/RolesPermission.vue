@@ -18,11 +18,11 @@
     </div> -->
     <div class="w-full">
         <div>
-            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissiom</h4>
+            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissions</h4>
         </div>
         <div class="p-4 my-4 card">
             <div class="card-body">
-                <p class="text-lg font-semibold text-gray-700">Here You Can Manage The Employees Roles And Premission Given To Them.</p>
+                <p class="text-lg font-semibold text-gray-700 fs-4">Here you can manage the Employees Roles and Permissions</p>
                 <div class="flex my-6">
                     <InputText placeholder="Search...."  class="w-4 h-10"/>
                     <!-- Creating New Job Roles dailog-->
@@ -86,6 +86,11 @@ const lding = ref(true)
 
 const selectedKey = ref()
 const addNewroleDailog = ref(false)
+
+const canShowLoadingScreen = ref(true);
+const canShowCreateRole_Dialog = ref(false);
+const canShowManageRoles_Dialog = ref(false);
+
 const nodes = ref(
     [
         {
