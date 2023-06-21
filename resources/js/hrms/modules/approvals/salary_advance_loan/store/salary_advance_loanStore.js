@@ -91,7 +91,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     async function IFLapproveAndReject(val, Status,reviewer_comments) {
         currentlySelectedStatus.value=Status;
         canShowLoadingScreen.value = true;
-
+console.log(reviewer_comments);
         let data = val;
         await axios.post('http://localhost:3000/submitApproveAndReject', {
             record_id: data,
