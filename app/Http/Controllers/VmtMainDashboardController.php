@@ -523,22 +523,14 @@ class VmtMainDashboardController extends Controller
     {
 
         //Fetch the data
-        $request->user_code = "LAL0013";
+        // $request->user_code = "LAL0013";
         return $serviceVmtDashboardService->getNotifications($request->user_code);
     }
     public function performAttendanceCheckIn(Request $request, VmtDashboardService $serviceVmtDashboardService)
     {
         //  dd($request->all());
-        //Fetch the data
-        // $request->user_code="SA100";
-        $request->date = date("Y-m-d");
-        // $request->checkin_time = date("h:i:sa");
-        $request->selfie_checkin = "";
-        $request->work_mode = "home";
-        $request->attendance_mode_checkin = "web";
-        $request->checkin_lat_long = "";
 
-        return $serviceVmtDashboardService->performAttendanceCheckIn($request->user_code, $request->date, $request->check_in, $request->check_out, $request->work_mode, $request->attendance_mode, $request->selfie_checkin, $request->unknown);
+        return $serviceVmtDashboardService->performAttendanceCheckIn($request->check_in);
     }
 
 
@@ -583,7 +575,7 @@ class VmtMainDashboardController extends Controller
         // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
         $time_frame = $calender_type . ' ' . substr($start_date, 0, 4) . '-' . substr($end_date, 0, 4);
 
-        return $serviceVmtDashboardService->getAllNewDashboardDetails(auth::user()->id, $start_date, $end_date,$year, $month);
+        return $serviceVmtDashboardService->getAllNewDashboardDetails(auth::user()->id, $start_date, $end_date, $year, $month);
     }
 
 
