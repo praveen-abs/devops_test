@@ -102,10 +102,15 @@ $i=array_keys($excelRowdata_row);
 
                 array_push($data_array, $rowdata_response);
             }
-
+         if($rowdata_response['status']=='success'){
             $responseJSON['status'] = 'success';
             $responseJSON['message'] = "Excelsheet data import success";
             $responseJSON['data'] = $data_array;
+         }else{
+            $responseJSON['status'] = 'failure';
+            $responseJSON['message'] = 'error while uploading excel sheet';
+            $responseJSON['data'] = $data_array;
+         }
         } else {
             $responseJSON['status'] = 'failure';
             $responseJSON['message'] = "Please fix the below excelsheet data";

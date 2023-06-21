@@ -83,9 +83,9 @@
         <script type="text/javascript">
             $('#role-form').on('submit', function(e) {
                 e.preventDefault();
-                $('#error-msg').html('Please wait. Uploading....');
-                $('#success-msg').html('');
-                //var formData = new FormData(this);
+                //$('#error-msg').html('Please wait. Uploading....');
+               $('#success-msg').html('');
+                var formData = new FormData(this);
                 var roleUri = $('#role-form').attr('action');
                 console.log(roleUri);
 
@@ -109,42 +109,42 @@
                         }
 
 
-                        $('#error-msg').html('');
-                        $('#error-msg').append('<b>Upload Status : <br/></b>');
-                        $('#error-msg').append(ajaxData.message+' : <br/>');
+                       // $('#error-msg').html('');
+                      // $('#error-msg').append('<b>Upload Status : <br/></b>');
+                       // $('#error-msg').append(ajaxData.message+' : <br/>');
 
-                        console.log('Data array length : '+ajaxData.data.length);
+                       // console.log('Data array length : '+ajaxData.data.length);
 
-                        for(var i=0; i < ajaxData.data.length; i++)
-                        {
-                            var row_data = ajaxData.data[i];
-                            $('#error-msg').append('<ul><li><b>'+ row_data.message+ '<b/></li></ul>');
+                        // for(var i=0; i < ajaxData.data.length; i++)
+                        // {
+                        //     var row_data = ajaxData.data[i];
+                        //     $('#error-msg').append('<ul><li><b>'+ row_data.message+ '<b/></li></ul>');
 
-                            if(ajaxData.status == 'failure'){
+                        //     if(ajaxData.status == 'failure'){
 
-                                var json_error_fields = JSON.parse(row_data.error_fields);
-                                var keys = Object.keys(json_error_fields);
+                        //         var json_error_fields = JSON.parse(row_data.error_fields);
+                        //         var keys = Object.keys(json_error_fields);
 
-                                for(var j=0;j<keys.length;j++)
-                                {
-                                        $('#error-msg').append('<p>&emsp;'+ json_error_fields[keys[j]]+ '</p>');
-                                }
-                            }
+                        //         for(var j=0;j<keys.length;j++)
+                        //         {
+                        //                 $('#error-msg').append('<p>&emsp;'+ json_error_fields[keys[j]]+ '</p>');
+                        //         }
+                        //     }
 
-                            console.log(row_data.message);
+                        //     console.log(row_data.message);
 
-                        }//for
+                        // }//for
                     },
                     error: function(data) {
                         //console.log('error', data);
-                        $('#error-msg').html(data.responseText);
+                       // $('#error-msg').html(data.responseText);
                     }
                 })
                 //console.log($('#role-form').serialize());
             });
 
 
-       $(document).ready(function(){
+      $(document).ready(function(){
         $('input[type="file"]').change(function(e){
             var fileName = e.target.files[0].name;
             $("#uploaded_doc").html(fileName)
