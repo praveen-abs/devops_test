@@ -208,10 +208,6 @@ class VmtRolesPermissionsService {
         }
 
 
-
-
-
-
     }
 
 
@@ -220,18 +216,59 @@ class VmtRolesPermissionsService {
     */
     public function updateRoleDetails($role_id, $updated_role_name, $updated_role_description, $updated_permissions_array){
 
+        $validator = Validator::make(
+            $data = [
+                'role_id' => $role_id,
+                'updated_role_name' => $updated_role_name,
+                'updated_role_description' => $updated_role_description
+            ],
+            $rules = [
+                'role_id' => 'required|exists:roles,id',
+                'updated_role_name' => 'required',
+                'updated_role_description' => 'required'
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
              $update_role = Role::find($role_id);
 
             if(($update_role)->exists()){
-
-                dd($update_role);
-
+                $update_role->name = $updated_role_name ;
+                $update_role->save();
             }
 
+             $updated_description = VmtRolesDescription::where('roles_id',$role_id)->first();
 
+                if(($updated_description)->exists()){
+                    $updated_description->description = $updated_role_description ;
+                    $updated_description->save();
+                }
 
-
-
+                return response()->json([
+                    "status" => "success",
+                    "message" =>"Updated successfully",
+                    "data" =>"",
+                    ]);
+            }
+            catch (\Exception $e) {
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "",
+                    "data" => $e,
+                ]);
+            }
 
     }
 
@@ -243,11 +280,122 @@ class VmtRolesPermissionsService {
 
     }
 
-    public function deleteRole(){
+    public function deleteRole($role_id){
+
+        $validator = Validator::make(
+            $data = [
+                'role_id' => $role_id,
+            ],
+            $rules = [
+                'role_id' => 'required|exists:roles,id',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+            $del_description = VmtRolesDescription::where('roles_id',$role_id)->first();
+            $del_description->delete();
+
+            $del_role = Role::find($role_id);
+            $del_role->delete();
+
+            return response()->json([
+                "status" => "success",
+                "message" =>"Deleted successfully",
+                "data" =>"",
+                ]);
+
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $e,
+            ]);
+        }
+
+
 
     }
 
-    public function createPermission(){
+    public function createPermission($role_name){
+
+        // $validator = Validator::make(
+        //     $data = [
+        //         'permission_name' => $permission_name,
+        //     ],
+        //     $rules = [
+        //         'permission_name' => 'required',
+        //     ],
+        //     $messages = [
+        //         'required' => 'Field :attribute is missing',
+        //         'exists' => 'Field :attribute is invalid',
+        //     ]
+        // );
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'status' => 'failure',
+        //         'message' => $validator->errors()->all()
+        //     ]);
+        // }
+
+        // try{
+
+        //     $create_permission = new Permission;
+        //     $create_permission->name = $permission_name;
+        //     $create_permission->guard_name= "web";
+        //     $create_permission->save();
+
+        //      return response()->json([
+        //         "status" => "success",
+        //         "message" =>"Saved successfully",
+        //         "data" =>"",
+        //         ]);
+
+        // }
+        // catch (\Exception $e) {
+        //     return response()->json([
+        //         "status" => "failure",
+        //         "message" => "",
+        //         "data" => $e,
+        //     ]);
+        // }
+        $role_name = "editor";
+
+         $role_name  = Role::where('name',$role_name);
+
+         if($role_name->exists()){
+
+            $role = $role_name->first();
+            $role = Role::create(['name' =>$role->name]);
+            $role->syncPermissions("can_view_inestment");
+         }else{
+
+            $role = Role::create(['name' =>$role_name]);
+            $role->syncPermissions("can_view_inestment");
+         }
+
+        // $role = Role::create(['name' => "CEo"]);
+
+
+         return "syn role permission";
+
+            // dd($role);
+
+
+
+
 
     }
 
@@ -265,7 +413,8 @@ class VmtRolesPermissionsService {
 
     }
 
-    public function deletePermission(){
+    public function deletePermission($permission_id){
+
 
     }
 

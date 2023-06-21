@@ -39,8 +39,8 @@ class VmtRolesPermissionsController extends Controller
 
     public function createRole(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
-        // $request->role_name = "CEO";
-        // $request->role_description = "all access of the company";
+        $request->role_name = "CEO";
+        $request->role_description = "all access of the company";
 
         return $serviceVmtRolesPermissionsService->createRole($request->role_name ,$request->role_description);
     }
@@ -60,7 +60,9 @@ class VmtRolesPermissionsController extends Controller
     */
     public function updateRoleDetails(Request $request , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
-        $request->role_id = "1";
+        $request->role_id = "17";
+        $request->updated_role_name = "developer";
+        $request->updated_role_description = "simma is bad boy";
         return $serviceVmtRolesPermissionsService->updateRoleDetails($request->role_id, $request->updated_role_name, $request->updated_role_description, $request->updated_permissions_array);
     }
 
@@ -72,12 +74,17 @@ class VmtRolesPermissionsController extends Controller
 
     }
 
-    public function deleteRole(Request $request){
+    public function deleteRole(Request $request , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
+
+        $request->role_id = "17";
+        return $serviceVmtRolesPermissionsService->deleteRole($request->role_id);
 
     }
 
-    public function createPermission(Request $request){
+    public function createPermission(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        $request->permission_name = "can_view_inestment" ;
+        return $serviceVmtRolesPermissionsService->createPermission($request->permission_name);
     }
 
     /*
@@ -94,8 +101,10 @@ class VmtRolesPermissionsController extends Controller
 
     }
 
-    public function deletePermission(Request $request){
+    public function deletePermission(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        $request->permission_id = "6" ;
+        return $serviceVmtRolesPermissionsService->createPermission($request->permission_id);
     }
 
     /*
