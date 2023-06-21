@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="mb-3 f-18 text-primary" id=""> <span class="text-primary font-semibold fs-5">Events</span>
                 </div>
-                <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5"
+                <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
                     style="display: grid;">
                     <div class="mb-3 card left-line" v-for="events in useDashboard.allEventSource" :key="events">
                         <div class="card-body flex">
@@ -23,12 +23,12 @@
                                         transform: rotate(45deg);
                                         position: absolute;
                                         opacity: 0.4;
-                                        margin-left: 28px;
+                                        right: 4px;
                                         top: 3px;" class="fa text-orange fa-birthday-cake"></i>
                                 <i style="font-size: 20px;
                                         position: absolute;
-                                        margin-left: 30px;
                                         top: 20px;
+                                        right: 4px;
                                         " class=" f-15 fa fa-commenting-o text-right my-5 cursor-pointer"
                                     data-bs-target="#wishes_popup" data-bs-toggle="modal"></i>
                             </div>

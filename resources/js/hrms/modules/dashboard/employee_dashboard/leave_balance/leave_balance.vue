@@ -21,7 +21,7 @@
                 </div>
               </div>
               <div class="col-sm-9 col-md-9 col-xl-9 col-lg-9 d-flex col-xxl-9 leave-balance-type">
-                <p class="text-primary">{{leaveBalance.leave_type}}</p>
+                <p class=" font-semibold text-lg text-primary">{{leaveBalance.leave_type}}</p>
               </div>
             </div>
           </div>

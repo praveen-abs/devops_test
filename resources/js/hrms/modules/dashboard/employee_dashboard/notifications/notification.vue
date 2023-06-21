@@ -16,7 +16,7 @@
           <div class="p-2 card-body">
             <div class="notify-content">
               <p class="mb-1 orange-median align-items-center d-flex justify-content-between">
-                <span class="">{{ notification.notification_title }}</span><span class="fs-11">{{ notification.redirect_to_module }}</span>
+                <span class="orange-median font-semibold text-lg ">{{ notification.notification_title }}</span><span class="fs-11">{{ notification.redirect_to_module }}</span>
               </p>
               <div class="notify-message">
                 <p class="fs-10">
