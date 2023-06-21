@@ -371,27 +371,26 @@ class VmtRolesPermissionsService {
         //         "data" => $e,
         //     ]);
         // }
-        $role_name = "editor";
+        $role_name = "designer";
 
          $role_name  = Role::where('name',$role_name);
 
          if($role_name->exists()){
 
             $role = $role_name->first();
-            $role = Role::create(['name' =>$role->name]);
             $role->syncPermissions("can_view_inestment");
          }else{
 
-            $role = Role::create(['name' =>$role_name]);
+            $role = new Role;
+            $role->name = $role_name;
+            $role->save();
             $role->syncPermissions("can_view_inestment");
          }
-
-        // $role = Role::create(['name' => "CEo"]);
 
 
          return "syn role permission";
 
-            // dd($role);
+
 
 
 
