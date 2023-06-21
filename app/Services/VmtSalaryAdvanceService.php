@@ -583,4 +583,8 @@ class VmtSalaryAdvanceService
             }
         }
     }
+
+    public function applyLoan(){
+        return "Working";
+    }
 }

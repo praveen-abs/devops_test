@@ -155,5 +155,12 @@ class VmtSalaryAdvanceController extends Controller
         }
     }
 
+    public function applyLoan(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $user_id=auth()->user()->id;
+        dd($user_id);
+         $response = $vmtSalaryAdvanceService->applyLoan();
+         return $response;
+    }
+
 
 }
