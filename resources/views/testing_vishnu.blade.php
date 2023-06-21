@@ -9,6 +9,7 @@
     use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
+    use App\Models\VmtPayrollComponents;
     use App\Models\VmtEmployeeOfficeDetails;
 
     use App\Models\VmtEmployeePayroll;
@@ -214,9 +215,12 @@
 // dd($payroll_available_months);
 
 
-$last_join_emp_code= VmtEmployee::orderBy('created_at', 'desc')->first('doj');
-dd($last_join_emp_code->toarray());
+// $last_join_emp_code= VmtEmployee::orderBy('created_at', 'desc')->first('doj');
+// dd($last_join_emp_code->toarray());
 
+
+$paygroupcomponents =VmtPayrollComponents::get();
+dd($paygroupcomponents->toarray());
     ?>
 
 

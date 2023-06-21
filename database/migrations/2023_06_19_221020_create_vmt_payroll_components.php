@@ -21,10 +21,12 @@ return new class extends Migration
             $table->text('category_id');
             $table->text('calculation_method');
             $table->text('taxability');
+            $table->text('comp_name_payslip');
             $table->text('epf');
             $table->text('esi');
             $table->text('pt');
             $table->text('lwf');
+            $table->text('status');
             $table->timestamps();
         });
     }
