@@ -5,14 +5,15 @@
             <span class="text-primary font-semibold fs-6">Current Month</span>
             <a role="button"><span class="text-primary fs-11">View All</span></a>
           </div>
-          <div class="row">
+          <div class="row" v-for="(attendance,i) in  useDashboard.attenanceReportPerMonth" :key="i"
+          >
             <div class="col-sm-12 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
               <div class="border-0 card box-shadow-sm bg-green-lighten">
                 <div class="py-2 mx-auto text-center card-body">
-                  <!-- <img src="{{ URL::asset('assets/images/dashboard/present.svg') }}"
-                                                    class="" alt="present-icon" height="20px" width="20px"> -->
+                  <!-- <img src="../../dashboard/present.svg" class="" alt="present-icon" height="20px" width="20px"> -->
+                  
                   <div class="d-flex">
-                    <span class="h1">0</span><span class="mt-4 fs-12 ms-1">days</span>
+                    <span class="h1">{{attendance.present}}</span><span class="mt-4 fs-12 ms-1">days</span>
                   </div>
                   <p class="text-primary">Present</p>
                 </div>
@@ -24,7 +25,7 @@
                   <!-- <img src="{{ URL::asset('assets/images/dashboard/leave.svg') }}"
                                                     class="" alt="leave-icon" height="20px" width="20px"> -->
                   <div class="d-flex">
-                    <span class="h1">0</span><span class="mt-4 fs-12 ms-1">days</span>
+                    <span class="h1">{{attendance.not_applied}}</span><span class="mt-4 fs-12 ms-1">days</span>
                   </div>
                   <p class="text-primary">Leave</p>
                 </div>
@@ -37,7 +38,7 @@
                                                 <img src="{{ URL::asset('assets/images/dashboard/absent.svg') }}"
                                                     class="" alt="absent-icon" height="20px" width="20px"> -->
                   <div class="d-flex">
-                    <span class="h1">0</span><span class="mt-4 fs-12 ms-1">days</span>
+                    <span class="h1">{{attendance.absent}}</span><span class="mt-4 fs-12 ms-1">days</span>
                   </div>
                   <p class="text-primary">Absent</p>
                 </div>
@@ -55,24 +56,11 @@
 import { onMounted, ref ,reactive } from "vue";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
 
-const mainDashboardStore = useMainDashboardStore();
-
-const leave_history = ref([])
-
-const total_present_days = ref()
-const total_leave_days = ref()
-const total_absent_days = ref()
-
-
-
+const useDashboard = useMainDashboardStore();
 
 
 onMounted(() =>{
 
-//     mainDashboardStore.fetch_leave_history().then(res =>{
-//     console.log(res.data);
-
-//   })
 })
 
 </script>

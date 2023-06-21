@@ -82,6 +82,10 @@ export default defineConfig({
                 // Payrun 
                 'resources/js/hrms/modules/payroll/payRun/payRun.js',
 
+                // payroll setup
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
+
 
                 // Salary Advance and Loan Setting
 
