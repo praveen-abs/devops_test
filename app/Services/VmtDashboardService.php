@@ -708,7 +708,7 @@ class VmtDashboardService{
 
         return response()->json([
             "status" => "failure",
-            "message" => "Unable to fetch notifications",
+            "message" => "Unable to fetch attenance report per_month",
             "data" => $e,
         ]);
 
