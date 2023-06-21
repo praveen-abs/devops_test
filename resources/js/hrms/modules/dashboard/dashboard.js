@@ -8,7 +8,6 @@ import '../../../../../public/assets/css/hr_dashboard.css'
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
-import BadgeDirective from "primevue/badgedirective";
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
@@ -32,6 +31,12 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
+import Badge from 'primevue/badge';
+import BadgeDirective from 'primevue/badgedirective';
+import Carousel from 'primevue/carousel';
+import Galleria from 'primevue/galleria';
+
+
 
 
 import Dashboard from './dashboard.vue'
@@ -51,6 +56,8 @@ app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
+app.directive('badge', BadgeDirective);
+
 
 app.component('Button', Button);
 app.component('DataTable', DataTable);
@@ -66,7 +73,11 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
+app.component('Badge', Badge)
 app.component('MultiSelect', MultiSelect)
+app.component('Carousel', Carousel)
+app.component('Galleria', Galleria)
+
 
 app.mount("#Dashboard");
 

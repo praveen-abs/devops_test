@@ -79,5 +79,5 @@ app.component('AccordionTab',AccordionTab)
 app.component('Tree',Tree)
 app.component('Skeleton',Skeleton)
 
-app.mount("#RolesPermission");
+app.mount("#VJS_RolesPermissions");
 

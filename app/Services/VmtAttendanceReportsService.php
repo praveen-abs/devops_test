@@ -187,15 +187,14 @@ class VmtAttendanceReportsService
                 //dd($dateString);
 
 
-                if (
-                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA'
-                ) {
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('user_Id', $singleUser->user_code)
-                        ->first(['check_out_time']);
+                      if( sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                      || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA')
+                      {
+                          $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                              ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                              ->whereDate('date', $dateString)
+                              ->where('user_Id', $singleUser->user_code)
+                              ->first(['check_out_time']);
 
                     $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
@@ -692,19 +691,16 @@ class VmtAttendanceReportsService
                 $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
 
 
-                $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
-                //dd($dateString);
 
-
-                if (
-                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
-                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA'
-                ) {
-                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                        ->whereDate('date', $dateString)
-                        ->where('user_Id', $singleUser->user_code)
-                        ->first(['check_out_time']);
+                     $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                      //dd($dateString);
+                      if(sessionGetSelectedClientCode() == "DM")
+                      {
+                          $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                              ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                              ->whereDate('date', $dateString)
+                              ->where('user_Id',$singleUser->user_code)
+                              ->first(['check_out_time']);
 
                     $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))

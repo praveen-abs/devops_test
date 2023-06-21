@@ -1402,7 +1402,7 @@ class VmtAttendanceService
         ];
     }
 
-    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text)
+    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text,VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         //Get the user_code
@@ -1461,12 +1461,26 @@ class VmtAttendanceService
         } else {
             $mail_status = "There was one or more failures.";
         }
+        if($status == 'Approved'){
 
+            $attendance_regularization_type='manager_approves_attendance_reg';
 
+        }else if($status == 'Rejected'){
+
+            $attendance_regularization_type='manager_rejects_attendance_reg';
+
+        }
+
+        $res_notification =$serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+            notif_user_id:$data->user_id,
+            attendance_regularization_type:$attendance_regularization_type,
+            manager_user_code: $approver_user_code,
+        );
 
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Regularization done successfully!',
+            'notification_status'=> $res_notification ,
             'mail_status' => $mail_status,
             'data' => [],
         ];

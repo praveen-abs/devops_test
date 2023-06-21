@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DashboardAnnouncementMail;
+use App\Models\VmtOrgTimePeriod;
 use App\Services\VmtAttendanceService;
 use App\Services\VmtDashboardService;
 use App\Services\VmtHolidayService;
@@ -44,6 +45,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
+
 
 class VmtMainDashboardController extends Controller
 {
@@ -525,5 +527,99 @@ class VmtMainDashboardController extends Controller
             'data' => $response
         ]);
     }
+
+
+    //Employee New Main Dashboard
+
+    public function getNotifications(Request $request, VmtDashboardService $serviceVmtDashboardService ){
+
+        //Fetch the data
+        $request->user_code = "LAL0013";
+       return $serviceVmtDashboardService->getNotifications($request->user_code);
+    }
+    public function performAttendanceCheckIn(Request $request, VmtDashboardService $serviceVmtDashboardService ){
+        //  dd($request->all());
+        //Fetch the data
+        // $request->user_code="SA100";
+        $request->date = date("Y-m-d");
+        // $request->checkin_time = date("h:i:sa");
+        $request->selfie_checkin = "";
+        $request->work_mode = "home";
+        $request->attendance_mode_checkin = "web";
+        $request->checkin_lat_long = "";
+
+       return $serviceVmtDashboardService->performAttendanceCheckIn($request->user_code, $request->date, $request->check_in, $request->check_out, $request->work_mode, $request->attendance_mode,$request->selfie_checkin ,$request->unknown);
+    }
+
+
+    public function getAllEventsDashboard(Request $request, VmtDashboardService $serviceVmtDashboardService ){
+
+        //Fetch the data
+       return $serviceVmtDashboardService->getAllEventsDashboard();
+    }
+
+    public function getEmployeeLeaveBalanceDashboards(Request $request, VmtDashboardService $serviceVmtDashboardService)
+    {
+        //Accrued Leave Year Frame
+        if (empty($request->all())) {
+            $time_periods_of_year_query = VmtOrgTimePeriod::where('status', 1)->first();
+        } else {
+            $time_periods_of_year_query = VmtOrgTimePeriod::whereYear('start_date',)->whereMonth('start_date',)
+                ->whereYear('end_date',)->whereMonth('end_date',)->first();
+        }
+        $start_date =  $time_periods_of_year_query->start_date;
+        $end_date   = $time_periods_of_year_query->end_date;
+        $calender_type = $time_periods_of_year_query->abbrevation;
+        // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+        $time_frame = $calender_type . ' ' . substr($start_date, 0, 4) . '-' . substr($end_date, 0, 4);
+        $leave_balance_details = $serviceVmtDashboardService->getEmployeeLeaveBalanceDashboards(auth::user()->id, $start_date, $end_date);
+        return  $leave_balance_details;
+    }
+
+    public function getAllNewDashboardDetails(Request $request, VmtDashboardService $serviceVmtDashboardService){
+
+        if (empty($request->all())) {
+            $time_periods_of_year_query = VmtOrgTimePeriod::where('status', 1)->first();
+        } else {
+            $time_periods_of_year_query = VmtOrgTimePeriod::whereYear('start_date',)->whereMonth('start_date',)
+                ->whereYear('end_date',)->whereMonth('end_date',)->first();
+        }
+        $start_date =  $time_periods_of_year_query->start_date;
+        $end_date   = $time_periods_of_year_query->end_date;
+        $calender_type = $time_periods_of_year_query->abbrevation;
+        // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+        $time_frame = $calender_type . ' ' . substr($start_date, 0, 4) . '-' . substr($end_date, 0, 4);
+
+        return $serviceVmtDashboardService->getAllNewDashboardDetails(auth::user()->id, $start_date, $end_date);
+    }
+
+
+public function fetchAttendanceDailyReport_PerMonth(Request $request, VmtDashboardService $serviceVmtDashboardService ){
+
+    //Fetch the data
+    $request->user_code = "LAL0002";
+    $request->year = "2023";
+     $request->month = "6";
+
+   return $serviceVmtDashboardService->fetchAttendanceDailyReport_PerMonth($request->user_code,$request->year,$request->month);
+}
+
+
+
+//HR New Main Dashboard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

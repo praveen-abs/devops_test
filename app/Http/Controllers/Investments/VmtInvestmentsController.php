@@ -214,7 +214,7 @@ class VmtInvestmentsController extends Controller
 
     public function saveSection80(Request $request)
     {
-           // dd($request->all());
+        // dd($request->all());
         $json_decodeHra = json_encode($request->all());
         $current_date = date("Y-m-d");
         // dd($json_decodeHra);
@@ -300,7 +300,7 @@ class VmtInvestmentsController extends Controller
             ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
             ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
             ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
-            ->where('vmt_inv_f_emp_assigned.user_id', '1')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
             ->get(
                 [
                     'vmt_inv_formsection.section_id',
@@ -323,10 +323,18 @@ class VmtInvestmentsController extends Controller
                 ]
             )->toArray();
 
-        //  dd( $v_form_template);
+        //dd( $v_form_template);
 
 
         $res = array();
+        $hra = array('section_name' => 'HRA', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $section80 =  array('section_name' => 'Section 80C & 80CC', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $otherExemption =  array('section_name' => 'Other Excemptions', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $houseProperty = array('section_name' => 'House Properties',  'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $reimbersument = array('section_name' => 'Reimbersument',  'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $previousEmployerIncome = array('section_name' =>'Previous Employer Income',  'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+        $otherSourceIncome = array('section_name' => 'Other Source Of  Income', 'dec_amount' => 0, 'proof_submitted' => 0, 'amount_rejected' => 0, 'amount_accepted' => 0);
+
         $sumOfSec = 0;
         $sumOfHra = 0;
         $sumOfotherExemption = 0;
@@ -339,7 +347,7 @@ class VmtInvestmentsController extends Controller
 
 
         foreach ($v_form_template as $dec_amt) {
-
+            //dd( $dec_amt);
             $empGeneralInfo['gross'] = $dec_amt['gross'];
             $empGeneralInfo['basic'] = $dec_amt['basic'];
             $empGeneralInfo['hra'] = $dec_amt['hra'];
@@ -349,7 +357,9 @@ class VmtInvestmentsController extends Controller
 
             // dd($empGeneralInfo);
 
+
             if ($dec_amt['section_group'] == "HRA") {
+                // dd($dec_amt['section_group'] == "HRA");
                 $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));
                 $sumOfHra += $hraTotalRent['total_rent_paid'];
                 $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
@@ -359,25 +369,26 @@ class VmtInvestmentsController extends Controller
                 $hra['amount_rejected'] = 0;
                 $hra['amount_accepted'] = 0;
                 // dd($hraTotalRent);
+                // dd($hra);
             }
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
-           
+
                 $sumOfSec += $dec_amt['dec_amount'];
                 $totalSumOfExemption += $dec_amt['dec_amount'];
                 $section80['section_name'] = $dec_amt['section_group'];
                 $section80['dec_amount'] = $sumOfSec;
                 $section80['proof_submitted'] = 0;
-                if($sumOfSec > 150000){
+                if ($sumOfSec > 150000) {
                     $section80['amount_rejected'] = 150000 - $sumOfSec;
-                }else{
+                } else {
                     $section80['amount_rejected'] = 0;
                 }
-                if($sumOfSec > 150000){
-                   $section80['amount_accepted'] = $sumOfSec - abs(150000 - $sumOfSec) ;
-                }else{
+                if ($sumOfSec > 150000) {
+                    $section80['amount_accepted'] = $sumOfSec - abs(150000 - $sumOfSec);
+                } else {
                     $section80['amount_accepted'] = 0;
                 }
-               
+
             }
             if ($dec_amt['section_group'] == "Other Excemptions ") {
                 $sumOfOtherExemptionDec += $dec_amt['max_amount'];
@@ -386,17 +397,17 @@ class VmtInvestmentsController extends Controller
                 $otherExemption['section_name'] = $dec_amt['section_group'];
                 $otherExemption['dec_amount'] = $sumOfotherExemption;
                 $otherExemption['proof_submitted'] = 0;
-                if($sumOfotherExemption > $sumOfOtherExemptionDec  ){
+                if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
                     $otherExemption['amount_rejected'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
-                }else{
+                } else {
                     $otherExemption['amount_rejected'] = 0;
                 }
-                if($sumOfotherExemption > $sumOfOtherExemptionDec  ){
-                    $otherExemption['amount_accepted'] =  $sumOfOtherExemptionDec - $sumOfotherExemption ;
-                }else{
+                if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
+                    $otherExemption['amount_accepted'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
+                } else {
                     $otherExemption['amount_accepted'] = 0;
                 }
-                
+
             }
             if ($dec_amt['section_group'] == "House Properties ") {
                 $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
@@ -443,7 +454,7 @@ class VmtInvestmentsController extends Controller
 
         }
         // dd($sumOfOtherExemptionDec);
-
+        //dd($hra);
         // array_push($res,$section80,$otherExemption,$houseProperty,$reimbersument ,$previousEmployerIncome,$otherSourceIncome);
         array_push(
             $res,
@@ -455,19 +466,23 @@ class VmtInvestmentsController extends Controller
             $previousEmployerIncome,
             $otherSourceIncome,
         );
+
         return $res;
 
     }
 
     public function taxDeclaration(Request $request)
     {
+
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
         $v_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
             ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
             ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
             ->leftjoin('vmt_inv_f_emp_assigned', 'vmt_inv_f_emp_assigned.id', '=', 'vmt_inv_emp_formdata.f_emp_id')
             ->leftjoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_inv_f_emp_assigned.user_id')
             ->leftjoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_compensatory_details.user_id')
-            ->where('vmt_inv_f_emp_assigned.user_id', '1')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)
             ->get(
                 [
                     'vmt_inv_section_group.section_group',
@@ -511,9 +526,10 @@ class VmtInvestmentsController extends Controller
             $year = $dob["year"];
             $empAge = ($current_year - $year);
 
+
             $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
             $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));
-            $empHra = $dec_amt['hra'] * 12 ;
+            // $empHra = $dec_amt['hra'] * 12;
             $empBasic = $dec_amt['basic'] * 12;
 
             $otherAllowance = intval($sumOfHra) - intval($empBasic * 10 / 100);

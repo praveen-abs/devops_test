@@ -199,16 +199,16 @@
                             <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item ">
-                                    <a href="{{ route('manageEmployees') }}" id="tds"
+                                    <a href="{{ route('manageEmployees') }}"
                                         class="py-1 nav-link sidebar"><span>Manage Employees</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('showOrgTree') }}" id="tds"
+                                    <a href="{{ route('showOrgTree') }}"
                                         class="py-1 nav-link sidebar"><span>ORG
                                             structure</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('department') }}" id="tds"
+                                    <a href="{{ route('department') }}"
                                         class="py-1 nav-link sidebar"><span>Department</span></a>
                                 </li>
                                 <li class="nav-item ">
@@ -227,25 +227,31 @@
                                             Upload</span> </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('page-not-found') }}" id="tds"
+                                    <a href="{{ route('page-not-found') }}"
                                         class="py-1 nav-link sidebar"><span>Exit</span></a>
                                 </li>
                                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
                                     <li class="nav-item ">
-                                        <a href="{{ route('vmt-documents-route') }}" id="tds"
+                                        <a href="{{ route('vmt-documents-route') }}"
                                             class="py-1 nav-link sidebar"><span>Documents</span></a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a href="{{ route('assetinventory-index') }}" id="tds"
+                                        <a href="{{ route('assetinventory-index') }}"
                                             class="py-1 nav-link sidebar"><span>Assets</span></a>
                                     </li>
                                 @endif
                                 @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
                                     <li class="nav-item ">
-                                        <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
+                                        <a href="{{ route('manage_welcome_mails_status') }}"
                                             class="py-1 nav-link sidebar"><span>Manage WelcomeMail Status</span></a>
                                     </li>
                                 @endcan
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+                                <li class="nav-item ">
+                                    <a href="{{ route('showRolesPermissionsPage') }}"
+                                        class="py-1 nav-link sidebar"><span>Roles & Permissions</span></a>
+                                </li>
+                            @endcan
                             </ul>
                         </div>
                     </li>
@@ -368,6 +374,20 @@
                                             </span> --}}
                                             <span>
                                                 Taxations
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {{-- ('Employee-Details-approvals') --}}
+                                    <li class="nav-item">
+                                        <a href="{{ route('page-not-found') }}" id=""
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Taxations<span
+                                                    class="text-white badge bg-danger rounded-circle">4</span>
+                                            </span> --}}
+                                            <span>
+                                                Employee Details
                                             </span>
                                         </a>
                                     </li>

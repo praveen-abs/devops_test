@@ -1,8 +1,8 @@
 <template>
-    <div class="border-0 attendance-wrapper card w-100 box-shadow-md">
+    <div class="border-0 attendance-wrapper card w-100 box-shadow-md" style="height: 180px;">
         <div class="card-body">
           <div class="mb-2 d-flex justify-content-between align-items-center">
-            <span class="text-primary">Current Month</span>
+            <span class="text-primary font-semibold fs-6">Current Month</span>
             <a role="button"><span class="text-primary fs-11">View All</span></a>
           </div>
           <div class="row">
@@ -53,7 +53,7 @@
 <script setup>
 
 import { onMounted, ref ,reactive } from "vue";
-import { useMainDashboardStore } from "../../dashboard_service";
+import { useMainDashboardStore } from "../../stores/dashboard_service";
 
 const mainDashboardStore = useMainDashboardStore();
 

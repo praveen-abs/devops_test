@@ -53,8 +53,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Tax Saving Investments
 
     const taxSavingInvestments = reactive({
-        max_limit: "",
-        declared_amt: "",
+        max_limit: 0,
+        declared_amt: 0,
         status: "Not Submited",
         Date_of_submission: "",
     });
@@ -82,6 +82,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
     const investmentMainSource = ref();
     const formDataSource = reactive([]);
+    const investmentSummarySource = ref()
     const getFormId = ref();
     const editingRowSource = ref();
     const updatedRowSource = ref();
@@ -129,13 +130,13 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
 
                 // Getting IsSubmitted from Disable Editor
 
-                   let result =  res.data.data.is_submitted == 0 ? true : false
-                   isSubmitted.value = result
-                   console.log(result)
+                let result = res.data.data.is_submitted == 0 ? true : false
+                isSubmitted.value = result
+                console.log(result)
 
                 //    Getting Employee Doj For HRA validation
 
-                employeDoj.value =  res.data.data.doj
+                employeDoj.value = res.data.data.doj
                 console.log("employee DOJ" + res.data.data.doj);
 
                 res.data.data.form_details["House Properties "].forEach(
@@ -173,18 +174,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             })
             .catch((e) => console.log(e))
             .finally(() => {
-                canShowLoading.value = false;
-                var declared_amt = 0;
-                var max_limit = 0;
-                // console.log("completed");
-                otherExemptionSource.value.forEach((item) => {
-                    // console.log(item);
-                    declared_amt += item.dec_amount;
-                    taxSavingInvestments.declared_amt = declared_amt;
-
-                    max_limit += item.max_amount;
-                    taxSavingInvestments.max_limit = max_limit;
-                });
+                canShowLoading.value = false
                 fetchPropertyType();
                 fetchotherExe();
                 fetchHraNewRental();
@@ -266,6 +256,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 formDataSource.splice(0, formDataSource.length);
                 taxSavingInvestments.status = "Drafed";
                 restChars();
+                fetchInvestmentSummary();
             });
     };
 
@@ -292,14 +283,14 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // COnvert Declaration Amount Into INR Currency
 
     const formatCurrency = (value) => {
-        let currency =  new Intl.NumberFormat("en-US", {
+        let currency = new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "INR",
         }).format(value);
 
-       let format = `${currency.charAt(0)} ${currency.substring(1,currency.length )}`
+        let format = `${currency.charAt(0)} ${currency.substring(1, currency.length)}`
 
-       return format
+        return format
 
     };
 
@@ -310,7 +301,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const current_data = ref();
 
     const hra = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         from_month: "",
@@ -355,7 +346,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(currentRowData);
         dailogAddNewRental.value = true;
         hra.id = currentRowData.id;
-        hra.from_month = dayjs( currentRowData.json_popups_value.from_month ).format("DD-MM-YYYY");
+        hra.from_month = dayjs(currentRowData.json_popups_value.from_month).format("DD-MM-YYYY");
         hra.to_month = dayjs(currentRowData.json_popups_value.to_month).format("DD-MM-YYYY");
         hra.address = currentRowData.json_popups_value.address;
         hra.city = currentRowData.json_popups_value.city;
@@ -417,7 +408,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         getInvestmentSource()
                     });
             },
-            reject: () => {},
+            reject: () => { },
         });
     };
 
@@ -460,7 +451,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     });
 
     const other_exe_80EE = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         loan_sanction_date: "",
@@ -471,7 +462,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         section: "80EE",
     });
     const other_exe_80EEA = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         loan_sanction_date: "",
@@ -482,7 +473,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         section: "80EEA",
     });
     const other_exe_80EEB = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         loan_sanction_date: "",
@@ -544,7 +535,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             dailog_80EE.value = true;
             other_exe_80EE.fs_id = currentRowData.json_popups_value.fs_id
             other_exe_80EE.user_code = service.current_user_code
-            other_exe_80EE.loan_sanction_date =dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
+            other_exe_80EE.loan_sanction_date = dayjs(currentRowData.json_popups_value.loan_sanction_date).format("YYYY-MM-DD");
             other_exe_80EE.lender_type =
                 currentRowData.json_popups_value.lender_type;
             other_exe_80EE.loan_amount =
@@ -558,7 +549,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             other_exe_80EEA.fs_id = currentRowData.json_popups_value.fs_id
             other_exe_80EEA.user_code = service.current_user_code
             other_exe_80EEA.loan_sanction_date =
-            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
+                dayjs(currentRowData.json_popups_value.loan_sanction_date).format("YYYY-MM-DD");
             other_exe_80EEA.lender_type =
                 currentRowData.json_popups_value.lender_type;
             other_exe_80EEA.loan_amount =
@@ -572,7 +563,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             other_exe_80EEB.user_code = service.current_user_code
             dailog_80EEB.value = true;
             other_exe_80EEB.loan_sanction_date =
-            dayjs( currentRowData.json_popups_value.loan_sanction_date ).format("YYYY-MM-DD");
+                dayjs(currentRowData.json_popups_value.loan_sanction_date).format("YYYY-MM-DD");
             other_exe_80EEB.vechicle_brand =
                 currentRowData.json_popups_value.vechicle_brand;
             other_exe_80EEB.vechicle_model =
@@ -609,7 +600,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                         getInvestmentSource();
                     });
             },
-            reject: () => {},
+            reject: () => { },
         });
     };
 
@@ -702,7 +693,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Self Occupied Property
 
     const sop = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         lender_name: "",
@@ -716,7 +707,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Let Out Property
 
     const lop = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         lender_name: "",
@@ -736,7 +727,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     // Deemed Let Out Property
 
     const dlop = reactive({
-        id:'',
+        id: '',
         user_code: "",
         fs_id: "",
         lender_name: "",
@@ -766,20 +757,20 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         );
         lop.maintenance = lop_maintenance;
         dlop.maintenance = dlop_maintenance;
-            const lop_net = formula.net_value_cal(
-                lop.rent_received,
-                lop.municipal_tax,
-                lop.maintenance
-            );
-            // console.log(lop_net);
-            lop.net_value = lop_net;
-            const dlop_net = formula.net_value_cal(
-                dlop.rent_received,
-                dlop.municipal_tax,
-                dlop.maintenance
-            );
-            // console.log(dlop_net);
-            dlop.net_value = dlop_net;
+        const lop_net = formula.net_value_cal(
+            lop.rent_received,
+            lop.municipal_tax,
+            lop.maintenance
+        );
+        // console.log(lop_net);
+        lop.net_value = lop_net;
+        const dlop_net = formula.net_value_cal(
+            dlop.rent_received,
+            dlop.municipal_tax,
+            dlop.maintenance
+        );
+        // console.log(dlop_net);
+        dlop.net_value = dlop_net;
         lop.income_loss = formula.income_loss_cal(lop.interest, lop.net_value);
         dlop.income_loss = formula.income_loss_cal(
             dlop.interest,
@@ -972,6 +963,25 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
     };
 
+    const fetchInvestmentSummary = () => {
+        axios.get('/investments/investment-summary').then(res => {
+            investmentSummarySource.value = res.data
+        }).finally(() => {
+            canShowLoading.value = false
+            var declared_amt = 0;
+            var max_limit = 0;
+            // console.log("completed");
+            investmentSummarySource.value.forEach((item) => {
+                declared_amt += item.dec_amount;
+                max_limit += item.amount_rejected;
+            });
+            console.log("declaration amount :" + declared_amt);
+            taxSavingInvestments.declared_amt = declared_amt;
+            taxSavingInvestments.max_limit = parseInt(max_limit) + parseInt(declared_amt) ;
+
+        })
+    }
+
     const metrocitiesOption = ref([
         { id: 1, name: "Chennai", value: "Chennai" },
         { id: 2, name: "Mumbai", value: "Mumbai" },
@@ -1080,6 +1090,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // Tax Saving Investments
 
         taxSavingInvestments,
+        fetchInvestmentSummary,
+        investmentSummarySource,
 
         // hra begins
 

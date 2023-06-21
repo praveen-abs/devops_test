@@ -35,22 +35,9 @@ Route::get('/offer-letter', function () {
 
 
 
-
-Route::get('/roles', function () {
-    return view('rolesAndPermission');
-})->name('roles');
-
 Route::get('/integrations', function () {
     return view('Integrations_Auth');
 })->name('integrations');
-
-Route::get('/addPermission', function () {
-    return view('addPermissionTo_role');
-})->name('addPermission');
-
-Route::get('/Add-New', function () {
-    return view('addNew_role');
-})->name('Add-New');
 
 Route::get('/paycheckDashboard', function () {
     return view('paycheckDashboard');
@@ -192,8 +179,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
     //Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgEmployeesPendingLeaves'])->name('fetch-org-leaves');
     Route::post('/fetch-team-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamEmployeesPendingLeaves'])->name('fetch-team-leaves');
-    Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgLeaveBalance'])->name('fetchOrgLeaveBalance');
-    Route::get('/fetch-team-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamLeaveBalance'])->name('fetchTeamLeaveBalance');
+    Route::post('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgLeaveBalance'])->name('fetchOrgLeaveBalance');
+    Route::post('/fetch-team-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamLeaveBalance'])->name('fetchTeamLeaveBalance');
 
 
 
@@ -365,17 +352,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
     // Permission Roles Routing
-    Route::get('vmt-roles', 'App\Http\Controllers\RolesController@create');
+    Route::get('/roles_permissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'showRolesPermissionsPage'])->name('showRolesPermissionsPage');
+    Route::get('/getAllRoles', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAllRoles'])->name('getAllRoles');
+    Route::get('/getAllPermissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAllPermissions'])->name('getAllPermissions');
+    Route::get('/getAssignedUsers_ForGivenRole', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAssignedUsers_ForGivenRole'])->name('getAssignedUsers_ForGivenRole');
+    Route::get('/createRole', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'createRole'])->name('createRole');
+    Route::get('/getRoleDetails', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getRoleDetails'])->name('getRoleDetails');
+    Route::get('/updateRoleDetails', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'updateRoleDetails'])->name('updateRoleDetails');
 
-    Route::get('vmt-role-list', 'App\Http\Controllers\RolesController@index');
-    Route::post('vmt-roles', 'App\Http\Controllers\RolesController@store');
-    Route::get('vmt-role-permissions/{id}', 'App\Http\Controllers\RolesController@permissionListForRoles');
-
-    Route::post('vmt-permissions', 'App\Http\Controllers\RolesController@assignPermissionToRoles');
-    Route::get('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRoles');
-    Route::post('vmt-assign-roles', 'App\Http\Controllers\RolesController@assignRolesToUser');
-
-    Route::post('vmt-delete-roles', 'App\Http\Controllers\RolesController@deleteRoles');
 
     //360 Review Module Routing
     Route::get('vmt-360-questions', 'App\Http\Controllers\Review360ModuleController@showQuestionsPage');
@@ -555,6 +539,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('documents-review', 'App\Http\Controllers\VmtApprovalsController@storeDocumentsReviewByAdmin')->name('vmt-store-documents-review');
     //Route::post('documents-review-approve-all', 'App\Http\Controllers\VmtApprovalsController@approveAllDocumentByAdmin')->name('vmt-store-documents-review-approve-all');
 
+    //Employee Details Documents Approvals
+    Route::get('Employee-Details-approvals', 'App\Http\Controllers\VmtApprovalsController@showEmployeeDetailsDocApprovalPage')->name('Employee-Details-approvals');
 
     //PMS Approvals
     Route::post('/approvals-pms', 'App\Http\Controllers\VmtApprovalsController@approveRejectPMSForm')->name('vmt-approvals-pms');
@@ -842,6 +828,13 @@ Route::middleware(['auth'])->group(function () {
 
     //New Dashboard URL
     Route::post('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
+    Route::get('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
+    Route::post('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
+    Route::get('/getAllEventsDashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllEventsDashboard']);
+    Route::get('/getEmployeeLeaveBalanceDashboards', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeeLeaveBalanceDashboards']);
+    Route::get('/getAllNewDashboardDetails', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllNewDashboardDetails']);
+    Route::get('/fetchAttendanceDailyReport_PerMonth', [App\Http\Controllers\VmtMainDashboardController::class, 'fetchAttendanceDailyReport_PerMonth']);
+
 
 
 
