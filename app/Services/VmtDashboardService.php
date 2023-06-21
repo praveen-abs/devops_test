@@ -351,11 +351,11 @@ class VmtDashboardService{
 
         }
 
-     
+
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
     {
-
+        try{
         //Get the user_code
         $user_id = User::where('user_code', $user_code)->first()->id;
 
@@ -371,6 +371,8 @@ class VmtDashboardService{
         $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
         $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
+        // dd($endOfMonth);
+
 
         if ($currentDate->lte($endOfMonth)) {
             $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
@@ -378,9 +380,10 @@ class VmtDashboardService{
             $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
         }
 
+
+
         $totalDays  = $lastAttendanceDate->format('d');
         $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
-
 
 
         // attendance details from vmt_staff_attenndance_device table
@@ -420,7 +423,12 @@ class VmtDashboardService{
                     );
                 }
             }
+
+                // echo $i;
+
+
         } //for
+        // dd();
 
 
 
@@ -440,7 +448,8 @@ class VmtDashboardService{
 
         $days_count = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
-        for ($i = 1; $i <= $days_count; $i++) {
+
+        for ($i = 1; $i <= $totalDays; $i++) {
             $date = "";
 
             if ($i < 10)
@@ -665,29 +674,46 @@ class VmtDashboardService{
             }
         } //for each
 
-        return ($attendanceResponseArray);
+        // return ($attendanceResponseArray);
 
-    //     $res= array();
-    //     $count =0;
-    //     $count1=0;
-    //     $count2 = 0;
-    //     foreach($attendanceResponseArray as $attendancedash){
 
-    //          if($attendancedash['isAbsent']){
-    //           $count++;
-    //          }
-    //          if(!$attendancedash['isAbsent']){
-    //             $count1++;
-    //          }
-    //          if($attendancedash['absent_status'] == "Not Applied"){
-    //             $count2++;
-    //          }
-    //     }
-    //    $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
+        $res= array();
+        $count =0;
+        $count1=0;
+        $count2 = 0;
 
-    //     array_push($res, $current_mnth);
+        foreach($attendanceResponseArray as $attendancedash){
 
-    //      return $res;
+             if($attendancedash['isAbsent']){
+              $count++;
+             }
+             if(!$attendancedash['isAbsent']){
+                $count1++;
+             }
+             if($attendancedash['absent_status'] == "Not Applied"){
+                $count2++;
+             }
+        }
+       $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
+
+        array_push($res, $current_mnth);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "",
+            "data" =>$res,
+        ]);
+    }
+    catch(\Exception $e){
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch notifications",
+            "data" => $e,
+        ]);
+
+    }
+
 
 
 
@@ -726,7 +752,7 @@ class VmtDashboardService{
                 $startDate = Carbon::parse($single_leave_details->start_date)->subDay();
                 $endDate = Carbon::parse($single_leave_details->end_date);
                 $currentDate =  Carbon::parse($attendance_date);
-                echo $currentDate;
+                // echo $currentDate;
                 // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
                 if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
 
@@ -1013,7 +1039,7 @@ class VmtDashboardService{
         return $query_emp_attendanceDetails;
     }
 
-    public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period){
+    public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period , $year , $month){
 
         $user_code = auth()->user()->user_code;
 
@@ -1021,12 +1047,14 @@ class VmtDashboardService{
             $getAllEvent = $this->getAllEventsDashboard();
             $getAllNotification =  $this->getNotifications($user_code);
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
+            $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
             return response()->json([
                 [
                     "all_events"=>$getAllEvent,
                     "all_notification" => $getAllNotification,
                     "leave_balance_per_month"=>$getEmpLeaveBalance,
+                    "attenance_report_permonth"=>$getAttenanceReportpermonth
                     // "Leave-report"=>$simma3
                 ]
             ]);
