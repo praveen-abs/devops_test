@@ -244,7 +244,7 @@ class VmtDashboardService{
     }
 
 
-    public function performAttendanceCheckIn($check_in)
+    public function performAttendanceCheckIn($checked)
     {
 
 
@@ -258,13 +258,12 @@ class VmtDashboardService{
             ]);
         }
 
-        $checked = $check_in;
+        // $checked = $check_in;
         if ($checked == 'true') {
 
             //Check if the user already checked-out.
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
                         ->where('date', date('Y-m-d'));
-
 
             if($attendance->exists())
             {

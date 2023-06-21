@@ -530,7 +530,7 @@ class VmtMainDashboardController extends Controller
     {
         //  dd($request->all());
 
-        return $serviceVmtDashboardService->performAttendanceCheckIn($request->check_in);
+        return $serviceVmtDashboardService->performAttendanceCheckIn($request->checked);
     }
 
 
