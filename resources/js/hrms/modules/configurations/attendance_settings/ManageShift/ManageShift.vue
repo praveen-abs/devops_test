@@ -41,9 +41,10 @@
                 </Column>
             </DataTable>
 
-            <Dialog visible="canShowAssignShift" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            <Dialog  v-model:visible="canShowAssignShift" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
                 :style="{ width: '90vw', borderTop: '5px solid #002f56',background:'navy' }" class="bg-primary-900"
-                :modal="true" :closable="true" :closeOnEscape="false" >
+               >
+               <!-- :modal="false" :closable="true" :closeOnEscape="false" -->
                 <template #header>
                     <h6 class=" modal-title fs-21 ">
                         Add Shift</h6>
