@@ -1,6 +1,6 @@
 <template>
-<div class="mx-4 ">
-        <section id="header" class="flex ">
+<div >
+        <!-- <section id="header" class="flex ">
             <div class="w-10 my-6 ">Salary Structure(Paygroup)</div>
             <div><button class="my-6 btn btn-orange">Add Structure</button></div>
         </section>
@@ -13,8 +13,9 @@
                 <Column field="thisYearProfit" header="Quantity"></Column>
             </DataTable>
 
-        </div>
+        </div> -->
         <!-- <new_salary_structure /> -->
+        <new_salary_structure />
     </div>
 </template>
 

@@ -108,7 +108,8 @@ const welcome_card = reactive({
     check_in: "",
     check_out: "",
     attendance_mode:"web",
-    work_mode:""
+    work_mode:"",
+    checked:false
 });
 
 const getSession = () => {
@@ -130,19 +131,17 @@ const getSession = () => {
 const getTime = () => {
     if (welcome_card.check == true) {
         welcome_card.check_in = new Date().toLocaleTimeString();
+        welcome_card.checked = true
         check_in_dailog.value = true;
     } else {
         welcome_card.check_out = new Date().toLocaleTimeString();
         check_out_dailog.value = true;
+        welcome_card.checked = false
+
     }
 
     usedashboard.updateCheckin_out({
-        user_code:service.current_user_code,
-        date:welcome_card.date,
-        check_in: welcome_card.check_in,
-        check_out: welcome_card.check_out,
-        attendance_mode:welcome_card.attendance_mode,
-        work_mode:welcome_card.work_mode
+        checked:welcome_card.checked
     }).finally(()=>{
         resetChars()
     });

@@ -2,24 +2,24 @@
 
 
   <div class="w-full m-auto">
-    <h1 class="text-white">Payroll Setting</h1>
+    <h1 class="text-white font-semibold fs-3 mx-4">Payroll Setting</h1>
     <div class="mt-4 tabs">
-      <a class="w-2 d-flex " @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
+      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
         ><div class="md:text-sm" :style="{width:'25px' }">1</div> General Payroll Setting</a
       >
-      <a class="w-2 d-flex" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
-        ><div>2</div>PF_ESI Setting</a
+      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
+        ><div>2</div>PF & ESI Setting</a
       >
-      <a class="w-2 d-flex" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
+      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
         ><div>3</div>Salary Components</a
       >
-      <a class="w-2 d-flex" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
+      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
         ><div>4</div>Salary Structure</a
       >
-      <a class="w-2 d-flex" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
+      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
         ><div>5</div>Finance Setting
       </a>
-      <a class="w-2 d-flex" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
+      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
         Statutory Filling</a
       >
     </div>
@@ -78,7 +78,7 @@ const activetab = ref(1);
 .tabs a {
   float: left;
   cursor: pointer;
-  color: #fff;
+  color: #aaa;
   padding: 12px 18px;
   transition: background-color 0.2s;
   border: 1px solid #003056;
@@ -88,7 +88,7 @@ const activetab = ref(1);
 }
 .tabs a > div {
     color: #aaa;
-    background: #fff;
+    background: gainsboro;
     border-radius: 50%;
     width: 20px !important;
     height: 20px;
