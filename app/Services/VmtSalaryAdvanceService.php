@@ -469,10 +469,10 @@ class VmtSalaryAdvanceService
                 $applicable_loan_info['max_tenure_months'] = $single_record->max_tenure_months;
                 $applicable_loan_info['deduction_starting_month'] = Carbon::parse($last_payroll_month)
                     ->addMonth($single_record->deduction_starting_months)->format('Y-m-d');
-                    if($loan_type == 'InterestWithLoan'){
-                        $applicable_loan_info['loan_amt_interest']=$single_record->loan_amt_interest;
-                    }
-                return response()->json( $applicable_loan_info);
+                if ($loan_type == 'InterestWithLoan') {
+                    $applicable_loan_info['loan_amt_interest'] = $single_record->loan_amt_interest;
+                }
+                return response()->json($applicable_loan_info);
             };
         }
         return null;
@@ -625,7 +625,47 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function applyLoan()
-    {
+    public function applyLoan(
+        $loan_type,
+        $vmt_int_free_loan_id,
+        $borrowed_amount,
+        $interest_rate,
+        $deduction_starting_month,
+        $deduction_ending_month,
+        $emi_per_month,
+        $reason
+    ) {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+                "vmt_int_free_loan_id"=>$vmt_int_free_loan_id,
+                "borrowed_amount"=> $borrowed_amount,
+                "deduction_starting_month"=>  $deduction_starting_month,
+                "deduction_ending_month"=>$deduction_ending_month,
+                "emi_per_month"=> $emi_per_month,
+                "reason"=> $reason,
+                "interest_rate"=>$interest_rate
+            ],
+            $rules = [
+                "loan_type" => "required",
+                "vmt_int_free_loan_id"=>"required",
+                "borrowed_amount"=> "required",
+                "deduction_starting_month"=> "required",
+                "deduction_ending_month"=>"required",
+                "emi_per_month"=> "required",
+                "reason"=> "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
     }
 }

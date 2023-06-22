@@ -27,8 +27,8 @@
     {{-- <!-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
    <div id="Investments"></div> -->--}}
 
-   @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-    <div id="SalaryAdvanceLoan"></div>
+   {{-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+    <div id="SalaryAdvanceLoan"></div> --}}
 
      {{-- @vite('resources\js\hrms\modules\leave_policy_Settings\Leave_Policy_Setting_Master\Leave_Policy_Setting_Master.js') --}}
      {{-- <div id="Leave_Policy_Setting_Master"></div> --}}
@@ -63,8 +63,8 @@
 
            {{-- @vite('resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js') --}}
            {{-- <div id="approvals_salary_advance"></div> --}}
-           {{-- @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
-           <div id="EmpSalaryAdvanceLoan"></div> --}}
+           @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
+           <div id="EmpSalaryAdvanceLoan"></div>
 
 </body>
 </html>
