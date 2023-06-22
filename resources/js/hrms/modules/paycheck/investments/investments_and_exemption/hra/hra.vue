@@ -148,7 +148,6 @@
         :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
             <span class="text-lg font-semibold modal-title text-indigo-950">Add New Rental</span>
-
         </template>
         <div
             class="grid my-4 mb-6 gap-y-4 gap-x-6 md:grid-cols-2 2xl:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 lg:grid-cols-2">

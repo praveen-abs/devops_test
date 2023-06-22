@@ -28,6 +28,7 @@
                     <!-- Creating New Job Roles dailog-->
                     <button class="h-10 mx-6 btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
                 </div>
+
                 <div>
                     <DataTable>
                         <Column field="product" header="Role"></Column>
@@ -63,7 +64,7 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-            <Tree v-model:selectionKeys="selectedKey" :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
+            <Tree :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
             </Tree>
         </div>
         <template #footer>
@@ -75,12 +76,18 @@
 
         </template>
     </Dialog>
-    {{ selectedKey }}
+     <!-- {{ selectedKey }} -->
+    <!-- {{ rolespermission.allpermission }} -->
+    <!-- {{ allpermission.data }} -->
 </template>
 
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { UseRolePermissionServie } from "./roles_permission_service";
+import axios from 'axios';
+
+const rolespermission = UseRolePermissionServie()
 
 const lding = ref(true)
 
@@ -90,6 +97,15 @@ const addNewroleDailog = ref(false)
 const canShowLoadingScreen = ref(true);
 const canShowCreateRole_Dialog = ref(false);
 const canShowManageRoles_Dialog = ref(false);
+
+const allpermission = ref();
+
+axios.get('/getAllPermissions').then(res => {
+            allpermission.value = res.data;
+            console.log(allpermission);
+        });
+
+
 
 const nodes = ref(
     [

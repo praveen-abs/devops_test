@@ -1,45 +1,38 @@
 <template>
     <div class="my-3 event-wrapper">
-        <div class="mb-0 overflow-x-hidden overflow-y-auto border-0 card" >
-            <div class="card-body" >
+        <div class="mb-0 overflow-x-hidden overflow-y-auto border-0 card">
+            <div class="card-body">
                 <div class="mb-3 f-18 text-primary" id=""> <span class="text-primary font-semibold fs-5">Events</span>
                 </div>
-                <div class="grid gap-4 my-4 md:grid-cols-4 sm:grid-cols-4 xxl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5"
+                <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
                     style="display: grid;">
-                    <div class="mb-3 card wishes_content topOrange-line"  v-for="events in useDashboard.allEventSource" :key="events">
-                        <div class="card-body ">
-                            <p class="mb-1 text-right badge text-orange">Upcoming</p>
-                            <div class="mb-2 d-flex justify-content-center align-items-center">
-                                <!-- @if ($empAvatar->type == 'shortname') -->                            
-
-                                <div
-                                    class="rounded-xl img-xl d-flex justify-content-center align-items-center userShort_name">
-                                    <span class="text-white fw-bold">
-                                        <!-- {{ $empAvatar->data }} -->
-                                    </span>
+                    <div class="mb-3 card left-line" v-for="events in useDashboard.allEventSource" :key="events">
+                        <div class="card-body flex">
+                            <div>
+                                <div class="text-left" style="width: 170px;">
+                                    <p class=" text-muted fw-bold f-15" style="width: 210px;">
+                                        {{ events.name }}
+                                    </p>
+                                    <p class="f-14 fw-bold text-orange program-day mt-2">
+                                        {{ dayjs(events.dob).format('DD') }}th {{ dayjs(events.dob).format('MMM') }}
+                                    </p>
                                 </div>
-                                <!-- <img class="rounded userShort_name img-xl" src="" alt=""> -->
+                            </div>
+                            <div>
+                                <i style="font-size: 23px;
+                                        transform: rotate(45deg);
+                                        position: absolute;
+                                        opacity: 0.4;
+                                        right: 4px;
+                                        top: 3px;" class="fa text-orange fa-birthday-cake"></i>
+                                <i style="font-size: 20px;
+                                        position: absolute;
+                                        top: 20px;
+                                        right: 4px;
+                                        " class=" f-15 fa fa-commenting-o text-right my-5 cursor-pointer"
+                                    data-bs-target="#wishes_popup" data-bs-toggle="modal"></i>
                             </div>
 
-                            <div class="text-center">
-                                <p class=" text-muted fw-bold f-14">
-                                    {{ events.name }} 
-                                </p>
-                                <p class="f-12 fw-bold text-orange program-day ">
-                                    {{ dayjs(events.dob).format('DD')}}th {{dayjs(events.dob).format('MMM')  }}
-                                </p>
-                            </div>
-                            <div class="row social_content">
-                                <div class="col-6 text-start">
-                                    <i class="fa text-orange fa-birthday-cake"></i>
-                                </div>
-                                <div class="text-right col-6">
-                                    <button
-                                        class="p-2 border-0 outline-none shadow-lite rounded-circle msg_box bg-ash text-orange"
-                                        data-bs-target="#wishes_popup" data-bs-toggle="modal">
-                                        <i class=" f-15 fa fa-commenting-o"></i></button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
