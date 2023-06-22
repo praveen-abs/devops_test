@@ -2,7 +2,8 @@
     <div class="mx-4 payroll-settings">
         <div class="mb-4 payroll-settings-header">
             <h4 class="mb-3 text-2xl font-semibold">Payroll Settings</h4>
-            <p class="mb-4 text-sm font-bold text-gray-600">We kindly asked for your patience as we gather all the necessary information to process the
+            <p class="mb-4 text-sm font-bold text-gray-600">We kindly asked for your patience as we gather all the necessary
+                information to process the
                 payroll.We understand that is may cause a sightly delay,and we appreciate you understanding during
                 this time.Rest assured that we have worked to simplify the process to male it as easy as possible
                 for you.Thank you for your cooperation
@@ -26,7 +27,7 @@
                 </div>
             </a>
 
-            <a   href="/payroll/setup"
+            <a href="/payroll/setup"
                 class="flex items-center justify-between p-1 text-white bg-blue-900 border-orange-200 rounded-lg shadow-md cursor-pointer payroll-settings-content row">
                 <div class="flex items-center col-3">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt="">
@@ -41,7 +42,7 @@
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
                         <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    
+
                     <i class="ml-8 mr-6 text-xl font-bold fa fa-angle-double-right text-white-200 ">
                     </i>
                 </div>
@@ -103,7 +104,7 @@
                 class="flex items-center justify-between p-1 text-white bg-blue-900 border-green-600 rounded-lg shadow-md cursor-pointer payroll-settings-content row ">
                 <div class="flex items-center col-3">
                     <img class="h-8" src="../../../../../../public/assets/images/dashboard/donate.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white" >Contribution Rate</span>
+                    <span class="ml-5 text-lg font-semibold text-white">Contribution Rate</span>
                 </div>
                 <div class="flex col-4 ">
                     <span class="text-sm font-semibold text-gray-100">[Manage PF Contribution Rate]</span>
@@ -188,7 +189,8 @@ a.payroll-settings-content:hover button {
     border: 1px solid #023562 !important;
     color: #023562 !important;
 }
+
 .page-content {
-  padding: calc(30px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>

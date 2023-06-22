@@ -11,7 +11,7 @@ class VmtPayrollComponentsController extends Controller
 {
     //
 
-    public function ShowPayRollComponentsPage(Request $request)
+    public function fetchPayRollComponents(Request $request)
     {
         $paygroupcomponents =VmtPayrollComponents::get();
         return response()->json($paygroupcomponents);

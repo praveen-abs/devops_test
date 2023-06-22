@@ -2,7 +2,7 @@
 
 
   <div class="w-full m-auto">
-    <h1 class="text-white font-semibold fs-3 mx-4">Payroll Setting</h1>
+    <h1 class="text-white font-semibold fs-4 py-2 mx-2">Payroll Setting</h1>
     <div class="mt-4 tabs">
       <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
         ><div class="md:text-sm" :style="{width:'25px' }">1</div> General Payroll Setting</a
@@ -55,8 +55,15 @@ import salary_components from "./salary_components/salary_components.vue";
 import salart_structure from "./salary_structure/salary_structure.vue";
 import statutory_filling from "./statutory_filling/statutory_filling.vue";
 import finance_setting from "./finance_setting/finance_setting.vue";
-
 const activetab = ref(1);
+
+import {usePayrollMainStore} from '../../stores/payrollMainStore'
+
+const usePayroll = usePayrollMainStore()
+
+onMounted(() => {
+    usePayroll.getSalaryComponents()
+})
 
 </script>
 

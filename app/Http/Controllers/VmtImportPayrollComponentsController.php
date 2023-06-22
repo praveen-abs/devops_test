@@ -68,6 +68,7 @@ $i=array_keys($excelRowdata_row);
                  'esi'=>'nullable',
                  'pt'=>'nullable',
                  'lwf'=>'nullable',
+                 'status'=>'nullable',
 
 
             ];
@@ -143,6 +144,7 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->esi =$row["esi"];
                 $fin_components->pt =$row["pt"];
                 $fin_components->lwf =$row["lwf"];
+                $fin_components->lwf =$row["status"];
                 $fin_components->save();
 
             return $rowdata_response = [

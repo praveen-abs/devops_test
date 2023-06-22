@@ -27,21 +27,25 @@
 
                         <div class="flex my-5">
                             <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
-                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is includes the option for provident fund (PF)
+                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is includes the option
+                                for provident fund (PF)
                                 contributions</p>
                         </div>
                         <div class="flex my-5">
                             <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
-                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is includes the coverage for employee state insurance
+                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is includes the coverage
+                                for employee state insurance
                                 (ESI)</p>
                         </div>
                         <div class="flex my-5">
                             <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
-                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is subject to TDS(Tax deducted at source)</p>
+                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is subject to TDS(Tax
+                                deducted at source)</p>
                         </div>
                         <div class="flex my-5">
                             <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
-                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary is eligible for flexible benefit plan(FBP)</p>
+                            <p class="mx-3 text-gray-800 font-semibold fs-6">This salary is eligible for flexible benefit
+                                plan(FBP)</p>
                         </div>
                     </div>
 
@@ -59,6 +63,12 @@
                         <Column field="thisYearSale" header="Category"></Column>
                     </DataTable>
                 </div>
+            </div>
+        </div>
+        <div class="float-right">
+            <div class="flex">
+                <button @click=" visbile = false" class="btn btn-orange-outline">Cancel</button>
+                <button class="btn btn-orange mx-2">Save</button>
             </div>
         </div>
     </div>
