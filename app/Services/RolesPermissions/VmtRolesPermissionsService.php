@@ -472,7 +472,50 @@ class VmtRolesPermissionsService {
         Assign roles for the given array of users.
         This also handles updates
     */
-    public function assignRoleToUsers(){
+    public function assignRoleToUsers($user_code , $role_name){
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'role_name' => $role_name,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users.user_code',
+                'role_name' => 'required|exists:roles.name',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+        $user_code = User::where('user_code',$user_code);
+
+        $user = $user_code->first();
+        $user->assignRole($role_name);
+
+        return response()->json([
+            "status" => "success",
+            "message" =>"Emp assign to role",
+            "data" =>"",
+            ]);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $e,
+            ]);
+        }
 
 
     }
