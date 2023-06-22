@@ -830,7 +830,7 @@ class VmtAttendanceReportsService
             ]);
             $dateWiseData         =  $sortedCollection->groupBy('date'); //->all();
             //dd($merged_attendanceData);
-            if ($singleUser->id == '192')
+            //if ($singleUser->id == '192')
 
                 // dd($dateWiseData);
                 // dd($attendanceResponseArray);
@@ -904,7 +904,7 @@ class VmtAttendanceReportsService
                 }
 
 
-            if ($singleUser->id == '192')
+           // if ($singleUser->id == '192')
                 //dd($attendanceResponseArray );
                 foreach ($attendanceResponseArray as $key => $value) {
 
