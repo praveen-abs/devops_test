@@ -367,20 +367,27 @@ class VmtSalaryAdvanceService
             ]);
         }
         $approver_flow = json_encode($approver_flow);
+        $client_id = explode(",", $client_id);
+        dd($approver_flow);
         foreach ($client_id as $single_cl_id) {
             try {
                 if ($loan_type == 'InterestFreeLoan') {
                     $setting_for_loan = new VmtInterestFreeLoanSettings;
-                } else {
+                } else if($loan_type='InterestWithLoan') {
                     $setting_for_loan = new VmtLoanInterestSettings;
                     $setting_for_loan->loan_amt_interest = $loan_amt_interest;
+                }else{
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Undefined Loan type'
+                    ]);
                 }
 
-                $setting_for_loan->client_id = $single_cl_id->client_id;
+                $setting_for_loan->client_id = $single_cl_id;
                 $setting_for_loan->loan_applicable_type = $loan_applicable_type;
                 if ($loan_applicable_type == 'percnt') {
                     $setting_for_loan->percent_of_ctc = $percent_of_ctc;
-                } else if ($single_cl_id->loan_applicable_type == 'fixed') {
+                } else if ($loan_applicable_type == 'fixed') {
                     $setting_for_loan->max_loan_amount = $max_loan_limit;
                 }
                 $setting_for_loan->min_month_served = $min_month_served;
@@ -388,6 +395,7 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->max_tenure_months = $max_tenure_months;
                 $setting_for_loan->approver_flow = $approver_flow;
                 $setting_for_loan->active = 1;
+                $setting_for_loan->save();
             } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
@@ -585,6 +593,6 @@ class VmtSalaryAdvanceService
     }
 
     public function applyLoan(){
-        return "Working";
+
     }
 }
