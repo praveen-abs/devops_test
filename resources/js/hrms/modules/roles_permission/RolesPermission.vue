@@ -64,7 +64,7 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-            <Tree :value="allpermission.data" selectionMode="checkbox" class="w-8 font-semibold ">
+            <Tree :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
             </Tree>
         </div>
         <template #footer>
@@ -78,7 +78,7 @@
     </Dialog>
      <!-- {{ selectedKey }} -->
     <!-- {{ rolespermission.allpermission }} -->
-    {{ allpermission.data }}
+    <!-- {{ allpermission.data }} -->
 </template>
 
 

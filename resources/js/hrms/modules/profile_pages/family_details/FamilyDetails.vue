@@ -30,10 +30,10 @@
                                 id="familyDetails_Relationship" pattern-data="alpha" required>
                         </div>
                     </div>
-                    <div class="space-between M-T">
+                    <div class="space-between M-T mr-4">
                         <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" :minDate="minDate" :maxDate="maxDate" />
+                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob"  class="h-10 w-full" :minDate="minDate" :maxDate="maxDate" />
                             <!-- <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" > -->
                         </div>
 
