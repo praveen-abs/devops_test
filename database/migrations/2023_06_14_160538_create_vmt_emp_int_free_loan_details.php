@@ -21,7 +21,9 @@ return new class extends Migration
             $table->text('borrowed_amount');
             $table->date('requested_date');
             $table->date('deduction_starting_month');
+            $table->date('deduction_ending_month');
             $table->text('emi_per_month');
+            $table->text('tenure_months');
             $table->text('reason');
             $table->text('approver_flow');
             $table->integer('loan_crd_sts');

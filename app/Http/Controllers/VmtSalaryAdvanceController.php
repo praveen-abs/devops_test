@@ -54,7 +54,7 @@ class VmtSalaryAdvanceController extends Controller
     {
 
         //   dd($request->all());
-        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod ,$request->approvalflow);
+        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow);
     }
 
     public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
@@ -86,7 +86,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveIntersetAndIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        dd($request->all());
+        //dd($request->all());
 
         $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
             $request->loan_type,
@@ -110,7 +110,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails();
+        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type);
         return  $response;
     }
 
@@ -155,5 +155,18 @@ class VmtSalaryAdvanceController extends Controller
         }
     }
 
-
+    public function applyLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $response = $vmtSalaryAdvanceService->applyLoan(
+            $request->loan_type,
+            $request->vmt_int_free_loan_id,
+            $request->borrowed_amount,
+            $request->interest_rate,
+            $request->deduction_starting_month,
+            $request->deduction_ending_month,
+            $request->emi_per_month,
+            $request->reason,
+        );
+        dd($response);
+    }
 }

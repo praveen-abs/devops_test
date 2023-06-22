@@ -7,16 +7,14 @@
                         {{ current_session }}
                     </p>
                     <p class="my-1 fw-bold fs-16 text-orange">
-                        <!-- {{ auth()->user()->name }} -->
                         {{ service.current_user_name }}
                     </p>
-
-                    <div class="my-3">
-                        <i class="fa fa-sun-o me-3 text-warning" aria-hidden="true"></i>General Shift
-                        <label class="switch-checkbox f-12 text-muted ms-3">
+                    <div class="my-2.5 flex">
+                        <i class="fa fa-sun-o  text-warning my-auto" aria-hidden="true"></i>
+                        <p class="mx-2 fs-6 my-auto">General Shift</p>
+                        <label class="switch-checkbox f-12 text-muted ">
                             <input type="checkbox" id="checkin_function" class="f-13 text-muted"
                                 v-model="welcome_card.check" @change="getTime" />
-
                             <span class="slider-checkbox check-in round">
                                 <span class="slider-checkbox-text"> </span>
                             </span>
@@ -110,7 +108,8 @@ const welcome_card = reactive({
     check_in: "",
     check_out: "",
     attendance_mode:"web",
-    work_mode:""
+    work_mode:"",
+    checked:false
 });
 
 const getSession = () => {
@@ -132,19 +131,17 @@ const getSession = () => {
 const getTime = () => {
     if (welcome_card.check == true) {
         welcome_card.check_in = new Date().toLocaleTimeString();
+        welcome_card.checked = true
         check_in_dailog.value = true;
     } else {
         welcome_card.check_out = new Date().toLocaleTimeString();
         check_out_dailog.value = true;
+        welcome_card.checked = false
+
     }
 
     usedashboard.updateCheckin_out({
-        user_code:service.current_user_code,
-        date:welcome_card.date,
-        check_in: welcome_card.check_in,
-        check_out: welcome_card.check_out,
-        attendance_mode:welcome_card.attendance_mode,
-        work_mode:welcome_card.work_mode
+        checked:welcome_card.checked
     }).finally(()=>{
         resetChars()
     });

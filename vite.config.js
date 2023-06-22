@@ -74,10 +74,18 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
 
-
                 // Paycheck
-
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
+
+                //Payroll
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+                // Payrun 
+                'resources/js/hrms/modules/payroll/payRun/payRun.js',
+
+                // payroll setup
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
+
 
                 // Salary Advance and Loan Setting
 
@@ -89,30 +97,28 @@ export default defineConfig({
 
                 // Salary Advance
 
-                    // Employee Salary Advance
-                    'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
+                // Employee Salary Advance
+                'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
 
 
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
 
                 //// Profile pages
-                    // familyinfo_table_page
-                    'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
+                // familyinfo_table_page
+                'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
 
-                    // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
+                // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
-                    // // Experience page
-                    // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
+                // // Experience page
+                // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
 
-                    // // financeDetails page
-                    // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
-                    // // Documents Review
+                // // financeDetails page
+                // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
+                // // Documents Review
 
-                    // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
+                // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
-                //Payroll
-                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
 
                 // Payslip Template
 
@@ -129,7 +135,7 @@ export default defineConfig({
                 //'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
                 //manage welcome mail status
-               'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
+                'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
 
                 // Exit
                 'resources/js/hrms/modules/exit/exit.js',
@@ -141,14 +147,14 @@ export default defineConfig({
                 'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
 
                 // Onboarding From management
-               'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js',
+                'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js',
 
-              // Employee details approvals
+                // Employee details approvals
 
-              'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js',
+                'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js',
 
-              //approvals_salary_advance
-              'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js'
+                //approvals_salary_advance
+                'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js'
 
 
             ],
@@ -158,7 +164,7 @@ export default defineConfig({
     ],
     resolve: {
         dedupe: ['vue', 'vue-router'],
-      },
+    },
     // css: {
     //     preprocessorOptions: {
     //       scss: {

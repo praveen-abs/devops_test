@@ -339,9 +339,20 @@ $bank_names = \DB::table('vmt_banks')->get();
                         {{-- <p class="txt-right"><img height="8.5" width="12"
                                 src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
                                 style="padding-right:0px;">{{ number_format(round($employee_payslip->hra), 2) }}</p> --}}
-                        <p class="txt-right"><img height="8.5" width="12"
-                                src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                                style="padding-right:0px;">{{ number_format(round($employee_payslip->vpf), 2) }}</p>
+                                @if ($employee_payslip->vpf == 'null'|$employee_payslip->vpf =='' )
+                                <p class="txt-right"><img height="8.5" width="12"
+                                    src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                             style="padding-right:0px;">{{ number_format(round(0), 2) }}</p>
+
+                                @else
+                                <p class="txt-right"><img height="8.5" width="12"
+                                    src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                                             style="padding-right:0px;">{{ number_format(round($employee_payslip->vpf ), 2) }}</p>
+
+
+                                @endif
+
+
                     </td>
 
                 </tr>

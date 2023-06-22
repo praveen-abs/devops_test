@@ -102,7 +102,7 @@ class VmtAttendanceReportsService{
                       //dd($dateString);
 
 
-                      if(sessionGetSelectedClientCode() == "DM")
+                      if(sessionGetSelectedClientCode() == "DM" ||sessionGetSelectedClientCode()=="PLIPL")
                       {
                           $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                               ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -625,7 +625,7 @@ class VmtAttendanceReportsService{
 
                      $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
                       //dd($dateString);
-                      if(sessionGetSelectedClientCode() == "DM")
+                      if(sessionGetSelectedClientCode() == "DM"||sessionGetSelectedClientCode()=="PLIPL")
                       {
                           $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                               ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))

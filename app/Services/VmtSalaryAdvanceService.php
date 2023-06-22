@@ -367,20 +367,27 @@ class VmtSalaryAdvanceService
             ]);
         }
         $approver_flow = json_encode($approver_flow);
+        $client_id = explode(",", $client_id);
+        dd($approver_flow);
         foreach ($client_id as $single_cl_id) {
             try {
                 if ($loan_type == 'InterestFreeLoan') {
                     $setting_for_loan = new VmtInterestFreeLoanSettings;
-                } else {
+                } else if ($loan_type = 'InterestWithLoan') {
                     $setting_for_loan = new VmtLoanInterestSettings;
                     $setting_for_loan->loan_amt_interest = $loan_amt_interest;
+                } else {
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Undefined Loan type'
+                    ]);
                 }
 
-                $setting_for_loan->client_id = $single_cl_id->client_id;
+                $setting_for_loan->client_id = $single_cl_id;
                 $setting_for_loan->loan_applicable_type = $loan_applicable_type;
                 if ($loan_applicable_type == 'percnt') {
                     $setting_for_loan->percent_of_ctc = $percent_of_ctc;
-                } else if ($single_cl_id->loan_applicable_type == 'fixed') {
+                } else if ($loan_applicable_type == 'fixed') {
                     $setting_for_loan->max_loan_amount = $max_loan_limit;
                 }
                 $setting_for_loan->min_month_served = $min_month_served;
@@ -388,6 +395,7 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->max_tenure_months = $max_tenure_months;
                 $setting_for_loan->approver_flow = $approver_flow;
                 $setting_for_loan->active = 1;
+                $setting_for_loan->save();
             } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
@@ -406,15 +414,46 @@ class VmtSalaryAdvanceService
     {
     }
 
-    public function showEligibleInterestFreeLoanDetails()
+    public function showEligibleInterestFreeLoanDetails($loan_type)
     {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+            ],
+            $rules = [
+                "loan_type" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
         $user_id = auth()->user()->id;
         $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
         $last_payroll_month = VmtEmployeePayroll::join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
-            ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date','DESC')->first()->payroll_date;
-           // dd( $last_payroll_month);
+            ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date', 'DESC')->first()->payroll_date;
+        // dd( $last_payroll_month);
         $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
             ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+        if ($loan_type == 'InterestWithLoan') {
+            $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
+                ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+        } else if ($loan_type == 'InterestFreeLoan') {
+            $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
+                ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+        } else {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Undefined Loan type'
+            ]);
+        }
         $exp_month = $doj->diffInMonths(Carbon::now());
         //dd(36);
         // dd($avaliable_int_loans);
@@ -422,16 +461,18 @@ class VmtSalaryAdvanceService
 
             if ($single_record->min_month_served <= $exp_month) {
                 if ($single_record->loan_applicable_type == 'fixed') {
-                    $int_free_loan['max_loan_amount'] = $single_record->max_loan_amount;
+                    $applicable_loan_info['max_loan_amount'] = $single_record->max_loan_amount;
                 } else if ($single_record->loan_applicable_type == 'percnt') {
                     $yearly_ctc = Compensatory::where('user_id', $user_id)->first()->cic * 12;
-                    $int_free_loan['max_loan_amount'] =   $yearly_ctc * $single_record->percent_of_ctc / 100;
+                    $applicable_loan_info['max_loan_amount'] =   $yearly_ctc * $single_record->percent_of_ctc / 100;
                 }
-                $int_free_loan['max_tenure_months'] = $single_record->max_tenure_months;
-                $int_free_loan['deduction_starting_month']=Carbon::parse( $last_payroll_month)
-                ->addMonth($single_record->deduction_starting_months)->format('Y-m-d');
-                return response()->json($int_free_loan);
-
+                $applicable_loan_info['max_tenure_months'] = $single_record->max_tenure_months;
+                $applicable_loan_info['deduction_starting_month'] = Carbon::parse($last_payroll_month)
+                    ->addMonth($single_record->deduction_starting_months)->format('Y-m-d');
+                if ($loan_type == 'InterestWithLoan') {
+                    $applicable_loan_info['loan_amt_interest'] = $single_record->loan_amt_interest;
+                }
+                return response()->json($applicable_loan_info);
             };
         }
         return null;
@@ -581,6 +622,50 @@ class VmtSalaryAdvanceService
                 }
                 dd($res);
             }
+        }
+    }
+
+    public function applyLoan(
+        $loan_type,
+        $vmt_int_free_loan_id,
+        $borrowed_amount,
+        $interest_rate,
+        $deduction_starting_month,
+        $deduction_ending_month,
+        $emi_per_month,
+        $reason
+    ) {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+                "vmt_int_free_loan_id"=>$vmt_int_free_loan_id,
+                "borrowed_amount"=> $borrowed_amount,
+                "deduction_starting_month"=>  $deduction_starting_month,
+                "deduction_ending_month"=>$deduction_ending_month,
+                "emi_per_month"=> $emi_per_month,
+                "reason"=> $reason,
+                "interest_rate"=>$interest_rate
+            ],
+            $rules = [
+                "loan_type" => "required",
+                "vmt_int_free_loan_id"=>"required",
+                "borrowed_amount"=> "required",
+                "deduction_starting_month"=> "required",
+                "deduction_ending_month"=>"required",
+                "emi_per_month"=> "required",
+                "reason"=> "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
         }
     }
 }
