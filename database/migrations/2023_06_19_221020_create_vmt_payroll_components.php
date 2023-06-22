@@ -16,17 +16,20 @@ return new class extends Migration
         Schema::create('vmt_payroll_components', function (Blueprint $table) {
             $table->id();
             $table->text('comp_name');
-            $table->text('comp_type_id');
-            $table->text('comp_nature_id');
-            $table->text('category_id');
+            $table->integer('comp_type_id');
+            $table->integer('comp_nature_id');
+            $table->integer('category_id');
             $table->text('calculation_method');
-            $table->text('taxability');
             $table->text('comp_name_payslip');
-            $table->text('epf');
-            $table->text('esi');
-            $table->text('pt');
-            $table->text('lwf');
-            $table->text('status');
+            $table->integer('epf');
+            $table->integer('esi');
+            $table->integer('pt');
+            $table->integer('lwf');
+            $table->integer('is_part_of_empsal_structure');
+            $table->integer('is_taxable');
+            $table->integer('calculate_on_prorate_basis');
+            $table->integer('can_show_inpayslip');
+            $table->integer('status');
             $table->timestamps();
         });
     }
