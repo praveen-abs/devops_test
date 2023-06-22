@@ -68,7 +68,10 @@ class VmtPayrollComponentsService{
         try{
               $paygroup_components =VmtPayrollComponents::where('comp_name',$comp_name)->where('comp_type_id',$comp_type_id)->first();
               if(!empty($paygroup_components)){
-                $save_paygroup_comp =$paygroup_components;
+                return response()->json([
+                    "status" => "Failure",
+                    "message" => "Component is already created",
+                ]);
               }else{
                 $save_paygroup_comp =new VmtPayrollComponents;
               }
@@ -337,7 +340,7 @@ class VmtPayrollComponentsService{
         }
 
     }
-    public function CreatePaygroupCompStructure($paygroup_name,$description,$pf,$esi,$tds,$fbp,$Sal_components,$assigned_employees)
+    public function CreatePaygroupCompStructure($paygroup_name,$description,$pf,$esi,$tds,$fbp,$sal_components,$assigned_employees)
     {
            //Validate
            $validator = Validator::make(
@@ -348,7 +351,7 @@ class VmtPayrollComponentsService{
                 'esi' => $esi,
                 'tds' => $tds,
                 'fbp' => $fbp,
-                'Sal_components' =>$Sal_components,
+                'sal_components' =>$Sal_components,
                 'assigned_employees' => $assigned_employees
             ],
             $rules = [
@@ -358,7 +361,7 @@ class VmtPayrollComponentsService{
                 'esi' => 'required|numeric',
                 'tds' => 'required|numeric',
                 'fbp' => 'required|numeric',
-                'Sal_components' => 'required',
+                'sal_components' => 'required',
                 'assigned_employees' => 'required',
             ],
             $messages = [
@@ -379,12 +382,16 @@ class VmtPayrollComponentsService{
 
             $emp_data =User::where('id',auth()->user()->id)->first();
 
-              $paygroup_components =VmtPayrollComponents::where('comp_name',$comp_name)->where('comp_type_id',$comp_type_id)->first();
+              $paygroup_components =VmtPaygroup::where('paygroup_name',$paygroup_name)->first();
+
               if(!empty($paygroup_components)){
-                $save_paygroup_comp =$paygroup_components;
-              }else{
-                $save_paygroup_comp =new VmtPayrollComponents;
-              }
+                return response()->json([
+                    "status" => "Failure",
+                    "message" => "Salary Structure is already created",
+                ]);
+               }else{
+                $save_paygroup_comp =new VmtPaygroup;
+               }
 
               $save_paygroup_comp->client_id = $emp_data->client_id;
               $save_paygroup_comp->paygroup_name = $paygroup_name;
@@ -393,15 +400,24 @@ class VmtPayrollComponentsService{
               $save_paygroup_comp->esi =$esi ;
               $save_paygroup_comp->tds =$tds ;
               $save_paygroup_comp->fbp =$fbp ;
-
-
               $save_paygroup_comp->save();
+              $assign_comps_to_paygroup =$this->assignComponents_to_Paygroup($sal_components,$paygroup_components->id);
+              $assign_paygroupcomps_to_emp =$this->assignComponents_to_Paygroup($assigned_employees,$paygroup_components->id);
 
-
-            return response()->json([
-                "status" => "success",
-                "message" => "Component added successfully",
-            ]);
+                if( $assign_paygroupcomps_to_emp ='success'&& $assign_comps_to_paygroup ='success' ){
+                    $response=([
+                        "status" => "success",
+                        "message" => "Salary Structure  added successfully",
+                    ]);
+                }else{
+                    $response=([
+                        "status" => "success",
+                        "message" => "error while add Salary Structure ",
+                    ]);
+                }
+            return response()->json(
+                $response
+            );
 
 
         }
@@ -411,18 +427,54 @@ class VmtPayrollComponentsService{
 
             return response()->json([
                 "status" => "failure",
-                "message" => "Unable to add new component",
+                "message" => "Unable to add new Salary Structure ",
                 "data" => $e->getmessage(),
             ]);
 
         }
 
     }
-    public function ShowPaySlipTemplateMgmtPage(){
+    public function assignComponents_to_Paygroup($sal_components,$paygroup_id){
+            try{
 
+                        $assign_comp_paygroup = new VmtPaygroupComps;
+
+                        foreach ($sal_components as $key => $singlecomp) {
+                            $assign_comp_paygroup->paygroup_id=$paygroup_id;
+                            $assign_comp_paygroup->comp_id=$singlecomp;
+                            $assign_comp_paygroup->save();
+                        }
+                        return 'success';
+
+            }catch(\Exception $e){
+
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Unable to assign components ",
+                    "data" => $e->getmessage(),
+                ]);
+            }
     }
-    public function assignPaySlipTemplateToClient(){
+    public function assignPaygroupComponents_to_Employee($assigned_employees,$user_id){
 
+        try{
+            $assign_comp_paygroup = new VmtPaygroupComps;
+
+            foreach ($assigned_employees as $key => $singleemp) {
+                $assign_comp_paygroup->paygroup_id=$user_id;
+                $assign_comp_paygroup->comp_id=$singleemp;
+                $assign_comp_paygroup->save();
+            }
+
+            return 'success';
+        }catch(\Exception $e){
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to assign components ",
+                "data" => $e->getmessage(),
+            ]);
+}
     }
 
 

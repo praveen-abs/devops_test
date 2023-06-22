@@ -73,7 +73,7 @@ class VmtPayrollComponentsController extends Controller
             $request->esi,
             $request->tds,
             $request->fbp,
-            $request->Sal_components,
+            $request->sal_components,
             $request->assigned_employees
         );
 
