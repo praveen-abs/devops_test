@@ -223,13 +223,13 @@ try{
     {
     try {
 
-        $query_user = user::where('user_code', $user_code)->first();
-        $query_user->email =$request->$email;
+        $query_user = user::where('user_code', $request->user_code)->first();
+        $query_user->email =$request->email;
         $query_user->save();
 
         $employee_office_details = VmtEmployeeOfficeDetails::where('user_id', $query_user->id)->first();
         $employee_office_details->officical_mail = $request->officical_mail;
-         $employee_office_details->official_mobile = $official_mobile_number;
+         $employee_office_details->official_mobile = $request->official_mobile_number;
         $employee_office_details->save();
 
 
