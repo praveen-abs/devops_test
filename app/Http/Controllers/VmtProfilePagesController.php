@@ -227,6 +227,10 @@ try{
         $query_user->email =$request->email;
         $query_user->save();
 
+        $employee_emp_details = VmtEmployee::where('userid', $query_user->id)->first();
+        $employee_emp_details->mobile_number = $request->mobile_number;
+        $employee_emp_details->save();
+
         $employee_office_details = VmtEmployeeOfficeDetails::where('user_id', $query_user->id)->first();
         $employee_office_details->officical_mail = $request->officical_mail;
          $employee_office_details->official_mobile = $request->official_mobile_number;
