@@ -269,79 +269,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    // public function saveLoanWithInterestSettings($min_month_served, $loan_applicable_type, $percent_of_ctc, $max_loan_amount, $loan_amt_interest, $deduction_starting_months, $max_tenure_months, $approver_flow)
-    // {
 
-    //     $validator = Validator::make(
-    //         $data = [
-    //             'min_month_served' => $min_month_served,
-    //             'loan_applicable_type' => $loan_applicable_type,
-    //             'percent_of_ctc' => $percent_of_ctc,
-    //             "max_loan_amount" => $max_loan_amount,
-    //             "loan_amt_interest" => $loan_amt_interest,
-    //             "deduction_starting_months" => $deduction_starting_months,
-    //             "max_tenure_months" => $max_tenure_months,
-    //             "approver_flow" => $approver_flow,
-    //         ],
-    //         $rules = [
-
-    //             'min_month_served' => 'required',
-    //             'loan_applicable_type' => 'required',
-    //             'percent_of_ctc' => 'required',
-    //             "max_loan_amount" => 'required',
-    //             "loan_amt_interest" => "required",
-    //             "deduction_starting_months" => "required",
-    //             "max_tenure_months" => "required",
-    //             "approver_flow" => "required",
-
-    //         ],
-    //         $messages = [
-    //             "required" => "Field :attribute is missing",
-    //             "exists" => "Field :attribute is invalid"
-    //         ]
-    //     );
-
-
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'status' => 'failure',
-    //             'message' => $validator->errors()->all()
-    //         ]);
-    //     }
-
-    //     try {
-
-    //         $save_loan_setting_data = new VmtLoanInterestSettings;
-    //         $save_loan_setting_data->client_id = auth()->user()->client_id;
-    //         $save_loan_setting_data->loan_applicable_type = $loan_applicable_type;
-    //         if ($loan_applicable_type == 'fixed') {
-    //             $save_loan_setting_data->min_month_served = $min_month_served;
-    //             $save_loan_setting_data->percent_of_ctc = $percent_of_ctc;
-    //         } else if ($loan_applicable_type == 'percent') {
-    //             $save_loan_setting_data->max_loan_amount = $max_loan_amount;
-    //         }
-    //         $save_loan_setting_data->loan_amt_interest = $loan_amt_interest;
-    //         $save_loan_setting_data->deduction_starting_months = $deduction_starting_months;
-    //         $save_loan_setting_data->max_tenure_months = $max_tenure_months;
-    //         $save_loan_setting_data->approver_flow = $approver_flow;
-    //         $save_loan_setting_data->save();
-
-    //         return response()->json([
-    //             "status" => "success",
-    //             "message" => "loan setting data saved successfully",
-    //             "data" => '',
-    //         ]);
-    //     } catch (\Exception $e) {
-
-    //         //dd("Error :: uploadDocument() ".$e);
-
-    //         return response()->json([
-    //             "status" => "failure",
-    //             "message" => "Failed to save loan setting",
-    //             "data" => $e->getMessage(),
-    //         ]);
-    //     }
-    // }
 
     public function saveIntersetAndIntersetFreeLoanSettings(
         $loan_type,
@@ -745,4 +673,6 @@ class VmtSalaryAdvanceService
             ]);
         }
     }
+
+
 }

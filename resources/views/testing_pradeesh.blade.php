@@ -61,10 +61,10 @@
            <div class="mt-6" id="SalaryAdvanceLoan"></div> - --}}
 
 
-           {{-- @vite('resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js') --}}
-           {{-- <div id="approvals_salary_advance"></div> --}}
-           @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
-           <div id="EmpSalaryAdvanceLoan"></div>
+           @vite('resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js')
+           <div id="approvals_salary_advance"></div>
+           {{-- @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
+           <div id="EmpSalaryAdvanceLoan"></div> --}}
 
 </body>
 </html>
