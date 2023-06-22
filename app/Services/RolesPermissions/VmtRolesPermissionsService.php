@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\VmtPermissionModule;
+use App\Models\VmtPermodulePermission;
 use App\Models\VmtRolesDescription;
 use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
@@ -58,28 +60,51 @@ class VmtRolesPermissionsService {
     */
     public function getAllPermissions(){
 
-        try{
+        // try{
 
-          $all_permission_in_database = Permission::all()->pluck('name');
+          $all_permission_in_database = Permission::join('vmt_permodule_permission','vmt_permodule_permission.permission_id','=','permissions.id')
+                                                    ->join('vmt_permission_module','vmt_permission_module.id','=','vmt_permodule_permission.per_module_id')
+                                                    ->get([
+                                                        'permissions.id as key',
+                                                        'vmt_permission_module.id as module_id',
+                                                        'vmt_permission_module.module_name as label',
+                                                        'permissions.name',
+                                                    ])->toArray();
+                                                    // dd($all_permission_in_database);
+                    $count = 0;                             // ->groupBy('label');
+                foreach($all_permission_in_database as $single_details){
 
-          return response()->json([
-            "status" => "success",
-            "message" => "",
-            "data" => $all_permission_in_database,
-            ]);
-        }
-        catch (\Exception $e) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "Error while fetching permission ",
-                "data" => $e,
-            ]);
-        }
+                    if (!array_key_exists($single_details["label"], $all_permission_in_database)) {
+
+                        $all_permission_in_database[$single_details["label"]]=array();
+                        array_push($all_permission_in_database[$single_details["label"]],$single_details);
+
+
+                }
+                unset($all_permission_in_database[$count]);
+                $count++;
 
 
 
+
+
+        //   return response()->json([
+        //     "status" => "success",
+        //     "message" => "",
+        //     "data" => $all_permission_in_database
+        //     ]);
+        // }
+        // catch (\Exception $e) {
+        //     return response()->json([
+        //         "status" => "failure",
+        //         "message" => "Error while fetching permission ",
+        //         "data" => $e,
+        //     ]);
+        // }
 
     }
+    dd($all_permission_in_database);
+}
 
 
 
@@ -328,67 +353,93 @@ class VmtRolesPermissionsService {
 
     }
 
-    public function createPermission($role_name){
+    public function createPermission($permission_name, $permission_module){
 
-        // $validator = Validator::make(
-        //     $data = [
-        //         'permission_name' => $permission_name,
-        //     ],
-        //     $rules = [
-        //         'permission_name' => 'required',
-        //     ],
-        //     $messages = [
-        //         'required' => 'Field :attribute is missing',
-        //         'exists' => 'Field :attribute is invalid',
-        //     ]
-        // );
+        $validator = Validator::make(
+            $data = [
+                'permission_name' => $permission_name,
+                'permission_module' => $permission_module,
+            ],
+            $rules = [
+                'permission_name' => 'required',
+                'permission_module' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+        );
 
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'status' => 'failure',
-        //         'message' => $validator->errors()->all()
-        //     ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+        //    $per_exist =  Permission::where('name',$permission_name)->first();
+           $permodule_exist = VmtPermissionModule::where('module_name', $permission_module)->first();
+
+           if(!empty($permodule_exist)){
+
+            $create_permission = Permission::create(['name'=>$permission_name , 'guard_name'=>"web"]);
+            VmtPermodulePermission::create(['per_module_id'=>$permodule_exist->id,'permission_id'=>$create_permission->id]);
+
+           }else{
+
+                    $create_permission = Permission::create(['name'=>$permission_name]);
+
+                    $create_module = VmtPermissionModule::create(['module_name'=>$permission_module]);
+
+                    VmtPermodulePermission::create(['per_module_id'=>$create_module->id,'permission_id'=>$create_permission->id]);
+           }
+
+
+             return response()->json([
+                "status" => "success",
+                "message" =>"Saved successfully",
+                "data" =>"",
+                ]);
+
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $e,
+            ]);
+        }
+
+
+        // $role_name ="master";
+        // $role_permission = array("MANAGE_PAYSLIPS_can_view","MANAGE_PAYSLIPS_release_payslip");
+        // $role_description = "worst";
+
+        // $role_Exist  = Role::where('name',$role_name);
+
+        //  if($role_Exist->exists()){
+
+        //       $roles_des =  $role_Exist->first();
+        //       VmtRolesDescription::create(['roles_id'=>$roles_des->id,'description'=>$role_description]);
+        //       foreach($role_permission as $single_permission){
+        //       $roles_des->givePermissionTo($single_permission);
+
+        //     }
+
+        //  }else{
+
+        // $role1 = Role::create(['name' =>$role_name]);
+        // VmtRolesDescription::create(['roles_id'=>$role1->id,'description'=>$role_description]);
+        // foreach($role_permission as $single_permission){
+        // $role1->givePermissionTo($single_permission);
+
+        //     }
+
         // }
 
-        // try{
 
-        //     $create_permission = new Permission;
-        //     $create_permission->name = $permission_name;
-        //     $create_permission->guard_name= "web";
-        //     $create_permission->save();
-
-        //      return response()->json([
-        //         "status" => "success",
-        //         "message" =>"Saved successfully",
-        //         "data" =>"",
-        //         ]);
-
-        // }
-        // catch (\Exception $e) {
-        //     return response()->json([
-        //         "status" => "failure",
-        //         "message" => "",
-        //         "data" => $e,
-        //     ]);
-        // }
-        $role_name = "designer";
-
-         $role_name  = Role::where('name',$role_name);
-
-         if($role_name->exists()){
-
-            $role = $role_name->first();
-            $role->syncPermissions("can_view_inestment");
-         }else{
-
-            $role = new Role;
-            $role->name = $role_name;
-            $role->save();
-            $role->syncPermissions("can_view_inestment");
-         }
-
-
-         return "syn role permission";
+        // return "syn role permission";
 
 
 
@@ -422,6 +473,7 @@ class VmtRolesPermissionsService {
         This also handles updates
     */
     public function assignRoleToUsers(){
+
 
     }
 

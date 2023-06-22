@@ -83,8 +83,10 @@ class VmtRolesPermissionsController extends Controller
 
     public function createPermission(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
-        $request->permission_name = "can_view_inestment" ;
-        return $serviceVmtRolesPermissionsService->createPermission($request->permission_name);
+        $request->permission_name = "emp" ;
+        $request->permission_module = "inve" ;
+
+        return $serviceVmtRolesPermissionsService->createPermission($request->permission_name,$request->permission_module);
     }
 
     /*
