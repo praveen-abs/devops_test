@@ -337,7 +337,87 @@ class VmtPayrollComponentsService{
         }
 
     }
+    public function CreatePaygroupCompStructure($paygroup_name,$description,$pf,$esi,$tds,$fbp,$Sal_components,$assigned_employees)
+    {
+           //Validate
+           $validator = Validator::make(
+            $data = [
+                'paygroup_name' => $paygroup_name,
+                'description' => $description,
+                'pf' => $pf,
+                'esi' => $esi,
+                'tds' => $tds,
+                'fbp' => $fbp,
+                'Sal_components' =>$Sal_components,
+                'assigned_employees' => $assigned_employees
+            ],
+            $rules = [
+                'paygroup_name' => 'required',
+                'description' => 'required',
+                'pf' => 'required|numeric',
+                'esi' => 'required|numeric',
+                'tds' => 'required|numeric',
+                'fbp' => 'required|numeric',
+                'Sal_components' => 'required',
+                'assigned_employees' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
 
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            $emp_data =User::where('id',auth()->user()->id)->first();
+
+              $paygroup_components =VmtPayrollComponents::where('comp_name',$comp_name)->where('comp_type_id',$comp_type_id)->first();
+              if(!empty($paygroup_components)){
+                $save_paygroup_comp =$paygroup_components;
+              }else{
+                $save_paygroup_comp =new VmtPayrollComponents;
+              }
+
+              $save_paygroup_comp->client_id = $emp_data->client_id;
+              $save_paygroup_comp->paygroup_name = $paygroup_name;
+              $save_paygroup_comp->description =$description ;
+              $save_paygroup_comp->pf =$pf ;
+              $save_paygroup_comp->esi =$esi ;
+              $save_paygroup_comp->tds =$tds ;
+              $save_paygroup_comp->fbp =$fbp ;
+
+
+              $save_paygroup_comp->save();
+
+
+            return response()->json([
+                "status" => "success",
+                "message" => "Component added successfully",
+            ]);
+
+
+        }
+        catch(\Exception $e){
+
+            //dd("Error :: uploadDocument() ".$e);
+
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to add new component",
+                "data" => $e->getmessage(),
+            ]);
+
+        }
+
+    }
     public function ShowPaySlipTemplateMgmtPage(){
 
     }

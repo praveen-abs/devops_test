@@ -64,10 +64,23 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
-    public function ShowPayRollComponentsMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    public function CreatePaygroupCompStructure(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        return $serviceVmtPayrollComponentsService->ShowPayRollComponentsMgmtPage();
+        return$response = $serviceVmtPayrollComponentsService->CreatePaygroupCompStructure(
+            $request->paygroup_name,
+            $request->description,
+            $request->pf,
+            $request->esi,
+            $request->tds,
+            $request->fbp,
+            $request->Sal_components,
+            $request->assigned_employees
+        );
+
+        return $response;
     }
+
+
     public function ShowPaySlipTemplateMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
         return $serviceVmtPayrollComponentsService->ShowPaySlipTemplateMgmtPage();

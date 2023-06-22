@@ -13,12 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_payslip_comps', function (Blueprint $table) {
+        Schema::create('vmt_paygroup', function (Blueprint $table) {
             $table->id();
-            $table->integer('payslip_template_id');
-            $table->integer('comp_id');
+            $table->integer('client_id');
+            $table->text('paygroup_name');
+            $table->text('description');
+            $table->integer('pf');
+            $table->integer('esi');
+            $table->integer('tds');
+            $table->integer('fbp');
             $table->timestamps();
         });
+      
     }
 
     /**
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_payslip_comps');
+        Schema::dropIfExists('vmt_paygroup');
     }
 };
