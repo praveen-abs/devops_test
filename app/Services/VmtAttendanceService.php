@@ -527,14 +527,13 @@ class VmtAttendanceService
         //To store notif emails, if no notif emails given , then send this empty array to Mail::
         $notification_mails = array();
 
-        if (!empty($notifications_users_id))
-        {
+        if (!empty($notifications_users_id)) {
             //Create array from CSV value
-            $array_notif_ids = explode(',',$notifications_users_id);
+            $array_notif_ids = explode(',', $notifications_users_id);
 
 
 
-           // dd($array_notif_ids);
+            // dd($array_notif_ids);
             $notification_mails = VmtEmployeeOfficeDetails::whereIn('user_id', $array_notif_ids)->pluck('officical_mail');
         }
 
@@ -550,7 +549,7 @@ class VmtAttendanceService
         //     is_read: 0
 
 
-       // );
+        // );
 
 
 
@@ -576,9 +575,9 @@ class VmtAttendanceService
             $mail_status = "failure";
         }
         //send notification
-        $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
+        $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
             notif_user_id: $query_user->user_code,
-            leave_module_type:'employee_applies_leave',
+            leave_module_type: 'employee_applies_leave',
             manager_user_code: $manager_emp_code,
             notifications_users_id: $array_notif_ids,
         );
@@ -586,7 +585,7 @@ class VmtAttendanceService
             'status' => 'success',
             'message' => 'Leave Request applied successfully',
             'mail_status' => $mail_status,
-            'notification' => $res_notification ,
+            'notification' => $res_notification,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -684,32 +683,30 @@ class VmtAttendanceService
             $mail_status = "failure";
         }
 
-        if ($status == "Approved"){
+        if ($status == "Approved") {
             $text_status = "approved";
-           $leave_module_type ='manager_approves_leave';
-        }
-        else
-        if ($status == "Rejected"){
+            $leave_module_type = 'manager_approves_leave';
+        } else
+        if ($status == "Rejected") {
             $text_status = "rejected";
-            $leave_module_type ='manager_rejects_leave';
-        }
-        else
-        if ($status == "Revoked"){
+            $leave_module_type = 'manager_rejects_leave';
+        } else
+        if ($status == "Revoked") {
             $text_status = "revoked";
-           $leave_module_type ='manager_withdraw_leave';
+            $leave_module_type = 'manager_withdraw_leave';
         }
-         $users_id=VmtEmployeeOfficeDetails::where('l1_manager_code',$approver_user_code)->first()->user_id;
+        $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code)->first()->user_id;
 
-        $res_notification =$serviceNotificationsService->sendLeaveApplied_FCMNotification(
-                notif_user_id:User::where('id',$users_id)->first()->user_code,
-                leave_module_type:$leave_module_type,
-                manager_user_code: $approver_user_code,
-            );
+        $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
+            notif_user_id: User::where('id', $users_id)->first()->user_code,
+            leave_module_type: $leave_module_type,
+            manager_user_code: $approver_user_code,
+        );
         $response = [
             'status' => 'success',
             'message' => 'Leave Request ' . $text_status . ' successfully',
             'mail_status' => $mail_status,
-            'notification' => $res_notification ,
+            'notification' => $res_notification,
             'error' => '',
             'error_verbose' => ''
         ];
@@ -773,20 +770,35 @@ class VmtAttendanceService
             if ($dayStr != 'Sunday') {
 
                 $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                $client_code = User::join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
+                    ->where('users.user_code', $user_code)->first()->client_code;
+                if ($client_code == "DM" || $client_code == "PLIPL") {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id', $user_code)
+                        ->first(['check_out_time']);
 
-                $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-                    ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-                    ->whereDate('date', $dateString)
-                    ->where('direction', 'out')
-                    ->where('user_Id', $user_code)
-                    ->first(['check_out_time']);
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('user_Id',  $user_code)
+                        ->first(['check_in_time']);
+                } else {
+                    $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'out')
+                        ->where('user_Id', $user_code)
+                        ->first(['check_out_time']);
 
-                $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-                    ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-                    ->whereDate('date', $dateString)
-                    ->where('direction', 'in')
-                    ->where('user_Id', $user_code)
-                    ->first(['check_in_time']);
+                    $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                        ->whereDate('date', $dateString)
+                        ->where('direction', 'in')
+                        ->where('user_Id', $user_code)
+                        ->first(['check_in_time']);
+                }
 
                 $deviceCheckOutTime = empty($attendanceCheckOut->check_out_time) ? null : explode(' ', $attendanceCheckOut->check_out_time)[1];
                 $deviceCheckInTime  = empty($attendanceCheckIn->check_in_time) ? null : explode(' ', $attendanceCheckIn->check_in_time)[1];
@@ -1364,27 +1376,23 @@ class VmtAttendanceService
             "Pending"
         ));
 
-        if($regularization_type == 'LC'){
+        if ($regularization_type == 'LC') {
 
-            $attendance_regularization_type='employee_applies_lc';
+            $attendance_regularization_type = 'employee_applies_lc';
+        } else if ($regularization_type == 'EG') {
 
-        }else if($regularization_type == 'EG'){
+            $attendance_regularization_type = 'employee_applies_eg';
+        } else if ($regularization_type == 'MOP') {
 
-            $attendance_regularization_type='employee_applies_eg';
+            $attendance_regularization_type = 'employee_applies_mop';
+        } else if ($regularization_type == 'MIP') {
 
-        }else if($regularization_type == 'MOP'){
-
-            $attendance_regularization_type='employee_applies_mop';
-
-        }else if($regularization_type == 'MIP'){
-
-            $attendance_regularization_type='employee_applies_mip';
-
+            $attendance_regularization_type = 'employee_applies_mip';
         }
 
-        $res_notification =$serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-            notif_user_id:$user_id,
-            attendance_regularization_type:$attendance_regularization_type,
+        $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+            notif_user_id: $user_id,
+            attendance_regularization_type: $attendance_regularization_type,
             manager_user_code: $manager_usercode,
         );
         if ($isSent) {
@@ -1396,13 +1404,13 @@ class VmtAttendanceService
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Request sent successfully!',
-            'notification_status'=> $res_notification ,
+            'notification_status' => $res_notification,
             'mail_status' => $mail_status,
             'data' => [],
         ];
     }
 
-    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text,VmtNotificationsService $serviceVmtNotificationsService)
+    public function approveRejectAttendanceRegularization($approver_user_code, $record_id, $status, $status_text, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         //Get the user_code
@@ -1461,26 +1469,24 @@ class VmtAttendanceService
         } else {
             $mail_status = "There was one or more failures.";
         }
-        if($status == 'Approved'){
+        if ($status == 'Approved') {
 
-            $attendance_regularization_type='manager_approves_attendance_reg';
+            $attendance_regularization_type = 'manager_approves_attendance_reg';
+        } else if ($status == 'Rejected') {
 
-        }else if($status == 'Rejected'){
-
-            $attendance_regularization_type='manager_rejects_attendance_reg';
-
+            $attendance_regularization_type = 'manager_rejects_attendance_reg';
         }
 
-        $res_notification =$serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-            notif_user_id:$data->user_id,
-            attendance_regularization_type:$attendance_regularization_type,
+        $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+            notif_user_id: $data->user_id,
+            attendance_regularization_type: $attendance_regularization_type,
             manager_user_code: $approver_user_code,
         );
 
         return $responseJSON = [
             'status' => 'success',
             'message' => 'Regularization done successfully!',
-            'notification_status'=> $res_notification ,
+            'notification_status' => $res_notification,
             'mail_status' => $mail_status,
             'data' => [],
         ];
@@ -1531,7 +1537,8 @@ class VmtAttendanceService
         If checkout was not done, then checkout date will be NULL.
 
     */
-    public function getLastAttendanceStatus($user_code){
+    public function getLastAttendanceStatus($user_code)
+    {
 
         $query_response = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
             ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_attendance.vmt_employee_workshift_id')
@@ -1579,15 +1586,15 @@ class VmtAttendanceService
             ]);
         }
 
-        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active','1')->first();
+        $vmt_employee_workshift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->first();
 
-        if(empty( $vmt_employee_workshift->work_shift_id)){
+        if (empty($vmt_employee_workshift->work_shift_id)) {
             return response()->json([
                 'status' => 'failure',
                 'message' => 'No shift has been assigned',
                 'data'   => ""
             ]);
-    }
+        }
 
 
         //If check-in not done already , then create new record
@@ -1680,7 +1687,7 @@ class VmtAttendanceService
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Check-out success for the check-in date : '.$existing_check_in_date,
+                'message' => 'Check-out success for the check-in date : ' . $existing_check_in_date,
                 'data'   => ''
             ]);
         } else {
@@ -1779,13 +1786,12 @@ class VmtAttendanceService
             $leave_details['leave_type'] = VmtLeaves::find($leave_details->leave_type_id)->leave_type;
             // $leave_details['reviewer_name'] = User::find($leave_details->reviewer_user_id)->name;
             $leave_details['approver_name'] =  User::find($leave_details->reviewer_user_id)->name;
-            $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->designation;
+            $leave_details['approver_designation'] = VmtEmployeeOfficeDetails::where('user_id', $leave_details->user_id)->first()->designation;
 
             if (!empty($leave_details->notifications_users_id)) {
                 $leave_details['notification_userName'] = User::find($leave_details->notifications_users_id)->name;
-                $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id',$leave_details->user_id)->first()->designation;
-            }
-            else
+                $leave_details['notification_designation'] = VmtEmployeeOfficeDetails::where('user_id', $leave_details->user_id)->first()->designation;
+            } else
                 $leave_details['notification_userName'] = "";
 
             $leave_details['avatar'] = getEmployeeAvatarOrShortName($leave_details->user_id);
@@ -1879,7 +1885,7 @@ class VmtAttendanceService
             for ($i = 0; $i < count($query_employees_leaves); $i++) {
 
                 $reviewer_name = User::find($query_employees_leaves[$i]["reviewer_user_id"])->name;
-                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id',$query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
+                $reviewer_designation = VmtEmployeeOfficeDetails::where('user_id', $query_employees_leaves[$i]["reviewer_user_id"])->first()->designation;
                 $query_employees_leaves[$i]["reviewer_name"] = $reviewer_name;
                 $query_employees_leaves[$i]["reviewer_designation"] = $reviewer_designation;
                 $query_employees_leaves[$i]["reviewer_short_name"] = getUserShortName($query_employees_leaves[$i]["reviewer_user_id"]);
@@ -1917,16 +1923,17 @@ class VmtAttendanceService
                 'manager_code' => 'required',
                 'filter_month' => 'required',
                 'filter_year' => 'required',
-                'filter_leave_status' => ['required',
-                                        function ($attribute, $value, $fail) {
-                                            $valid_status_data = array("Approved","Rejected","Pending");
+                'filter_leave_status' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $valid_status_data = array("Approved", "Rejected", "Pending");
 
-                                            $diff = array_diff($value, $valid_status_data);
+                        $diff = array_diff($value, $valid_status_data);
 
-                                            if(count($diff) != 0)
-                                                $fail('The '.$attribute.' has invalid status types.');
-                                            },
-                                    ],
+                        if (count($diff) != 0)
+                            $fail('The ' . $attribute . ' has invalid status types.');
+                    },
+                ],
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1954,10 +1961,10 @@ class VmtAttendanceService
 
             //use wherein and fetch the relevant records
             $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)
-                                ->whereMonth('leaverequest_date','=',$filter_month)
-                                ->whereYear('leaverequest_date','=',$filter_year)
-                                ->whereIn('status',$filter_leave_status)
-                                ->get();
+                ->whereMonth('leaverequest_date', '=', $filter_month)
+                ->whereYear('leaverequest_date', '=', $filter_year)
+                ->whereIn('status', $filter_leave_status)
+                ->get();
 
 
             //dd($map_allEmployees[1]["name"]);
@@ -2006,16 +2013,17 @@ class VmtAttendanceService
             $rules = [
                 'filter_month' => 'required',
                 'filter_year' => 'required',
-                'filter_leave_status' => ['required',
-                                        function ($attribute, $value, $fail) {
-                                            $valid_status_data = array("Approved","Rejected","Pending");
+                'filter_leave_status' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        $valid_status_data = array("Approved", "Rejected", "Pending");
 
-                                            $diff = array_diff($value, $valid_status_data);
+                        $diff = array_diff($value, $valid_status_data);
 
-                                            if(count($diff) != 0)
-                                                $fail('The '.$attribute.' has invalid status types.');
-                                            },
-                                    ],
+                        if (count($diff) != 0)
+                            $fail('The ' . $attribute . ' has invalid status types.');
+                    },
+                ],
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -2104,18 +2112,15 @@ class VmtAttendanceService
                     ->sum('total_leave_datetime');
                 if ($single_leave_types->is_carry_forward != 1) {
 
-                    if($single_leave_types->leave_type=='Compensatory Off'){
+                    if ($single_leave_types->leave_type == 'Compensatory Off') {
                         $total_accrued =  count($this->fetchUnusedCompensatoryOffDays($user_id));
-                    }else{
+                    } else {
                         $total_accrued = VmtEmployeesLeavesAccrued::where('user_id', $user_id)
-                        ->whereBetween('date', [$start_date, $end_date])
-                        ->where('leave_type_id', $single_leave_types->id)
-                        ->sum('accrued_leave_count');
+                            ->whereBetween('date', [$start_date, $end_date])
+                            ->where('leave_type_id', $single_leave_types->id)
+                            ->sum('accrued_leave_count');
                         // dd($single_leave_types->leave_type);
                     }
-
-
-
                 } else if ($single_leave_types->is_carry_forward == 1) {
                     $total_accrued = VmtEmployeesLeavesAccrued::where('user_id', $user_id)
                         ->where('leave_type_id', $single_leave_types->id)
@@ -2287,7 +2292,7 @@ class VmtAttendanceService
         $avalied_leaves = array();
         $response = array();
         $accrued_leave_types = VmtLeaves::get();
-        $temp_leave=array();
+        $temp_leave = array();
 
         foreach ($accrued_leave_types as $single_leave_types) {
             if ($single_leave_types->is_finite == 1) {
@@ -2305,12 +2310,12 @@ class VmtAttendanceService
                         $leave_balance = count($this->fetchUnusedCompensatoryOffDays($user_id));
                     } else {
                         $leave_balance =  $total_accrued -  $total_avalied_leaves;
-                        $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
-                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
+                        $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
+                        $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
                     }
-                    $temp_leave['leave_type']= $single_leave_types->leave_type;
-                    $temp_leave['leave_balance']=$leave_balance;
-                    $temp_leave['avalied_leaves']= $total_avalied_leaves;
+                    $temp_leave['leave_type'] = $single_leave_types->leave_type;
+                    $temp_leave['leave_balance'] = $leave_balance;
+                    $temp_leave['avalied_leaves'] = $total_avalied_leaves;
                     // $leave_balance_for_all_types[$single_leave_types->leave_type]= $leave_balance;
                     // $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
                     //$temp_leave=array('leave_type'=>$single_leave_types->leave_type,'leave_balance'=>$leave_balance,'avalied_leaves'=>$total_avalied_leaves);
@@ -2328,15 +2333,10 @@ class VmtAttendanceService
                     $leave_balance =  $total_accrued - $total_avalied_leaves;
                     // $leave_balance_for_all_types[$single_leave_types->leave_type] = $leave_balance;
                     // $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves ;
-                    $temp_leave['leave_type']= $single_leave_types->leave_type;
-                    $temp_leave['leave_balance']=$leave_balance;
-                    $temp_leave['avalied_leaves']= $total_avalied_leaves;
-
-
-
+                    $temp_leave['leave_type'] = $single_leave_types->leave_type;
+                    $temp_leave['leave_balance'] = $leave_balance;
+                    $temp_leave['avalied_leaves'] = $total_avalied_leaves;
                 }
-
-
             } else {
                 $total_avalied_leaves = VmtEmployeeLeaves::where('user_id', $user_id)
                     ->whereBetween('start_date', [$start_time_period, $end_time_period])
@@ -2344,16 +2344,13 @@ class VmtAttendanceService
                     ->whereIn('status', array('Approved', 'Pending'))
                     ->sum('total_leave_datetime');
                 $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
-                $temp_leave['leave_type']= $single_leave_types->leave_type;
-                $temp_leave['leave_balance']=0;
-                $temp_leave['avalied_leaves']= $total_avalied_leaves;
-
-
+                $temp_leave['leave_type'] = $single_leave_types->leave_type;
+                $temp_leave['leave_balance'] = 0;
+                $temp_leave['avalied_leaves'] = $total_avalied_leaves;
             }
             array_push($response, $temp_leave);
 
             unset($temp_leave);
-
         }
         $leave_details = array('Leave Balance' => $leave_balance_for_all_types, 'Avalied Leaves' => $avalied_leaves);
         return $response;

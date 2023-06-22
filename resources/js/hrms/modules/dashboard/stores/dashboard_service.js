@@ -17,6 +17,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const allEventSource = ref([])
     const allNotificationSource = ref([])
     const leaveBalancePerMonthSource = ref([])
+    const attenanceReportPerMonth = ref([])
 
     // Subscribe Main DashBoard Data Source
     const getMainDashboardSource = (async () => {
@@ -28,6 +29,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
                 allEventSource.value = element.all_events.original.data.birthday
                 allNotificationSource.value = element.all_notification.original.data.array_notifications
                 leaveBalancePerMonthSource.value = element.leave_balance_per_month.original.data
+                attenanceReportPerMonth.value = element.attenance_report_permonth.original.data
             });
 
         })
@@ -103,7 +105,11 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         // Notification
 
-        allNotificationSource
+        allNotificationSource,
+
+        // Attendance report Per Month 
+
+        attenanceReportPerMonth
 
     };
 });

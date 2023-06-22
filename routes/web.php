@@ -353,6 +353,13 @@ Route::middleware(['auth'])->group(function () {
     // Permission Roles Routing
     Route::get('/roles_permissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'showRolesPermissionsPage'])->name('showRolesPermissionsPage');
     Route::get('/getAllRoles', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAllRoles'])->name('getAllRoles');
+    Route::get('/getAllPermissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAllPermissions'])->name('getAllPermissions');
+    Route::get('/getAssignedUsers_ForGivenRole', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getAssignedUsers_ForGivenRole'])->name('getAssignedUsers_ForGivenRole');
+    Route::get('/createRole', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'createRole'])->name('createRole');
+    Route::get('/getRoleDetails', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getRoleDetails'])->name('getRoleDetails');
+    Route::get('/updateRoleDetails', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'updateRoleDetails'])->name('updateRoleDetails');
+    Route::get('/deleteRole', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'deleteRole'])->name('deleteRole');
+    Route::get('/createPermission', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'createPermission'])->name('createPermission');
 
 
     //360 Review Module Routing
