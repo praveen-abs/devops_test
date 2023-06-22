@@ -178,7 +178,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         max_loan_limit:'',
         cusDeductMethod: '',
         maxTenure: '',
-        approvalflow: approvalFormat
+        approvalflow: approvalFormat,
+        loan_type:'InterestFreeLoan'
     })
     const ClientsName = ref();
     // deduction_starting_months
@@ -204,26 +205,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         else if(ifl.precent_Or_Amt == 'percnt'){
             ifl.max_loan_limit = "";
         }
-        // if()
-
-        let form  = new FormData();
-
-        form.append('isInterestFreeLoanIsEnabled',ifl.isInterestFreeLoanIsEnabled)
-        form.append('client_id',ifl.selectClientID)
-        form.append('min_month_served',ifl.minEligibile);
-        form.append('percent_of_ctc',ifl.availPerInCtc);
-        form.append('deductMethod',ifl.deductMethod);
-        form.append('loan_applicable_type',ifl.precent_Or_Amt)
-        form.append('max_loan_limit',ifl.max_loan_limit)
-        form.append('deduction_starting_months',ifl.deductMethod);
-        form.append('max_tenure_months',ifl.maxTenure);
-        form.append('approver_flow',JSON.stringify( ifl.approvalflow));
-        form.append('loan_type','InterestFreeLoan');
 
         // let url = '/save-interset-free-loan-settings';
         let url = '/save-int-and-int-free-loan-settings';
         // let url = 'http://localhost:3000/InterestWithLoan';
-        axios.post(url, form).finally(() => {
+        axios.post(url,ifl).finally(() => {
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
         })
@@ -298,6 +284,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         cusDeductMethod: '',
         maxTenure: '',
         loan_amt_interest:'',
+        loan_type:'LoanWithInterest',
         approvalflow: approvalFormat
     })
 
@@ -320,26 +307,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         } else {
             console.log("same of percent");
         }
-
-        let form = new FormData();
-        form.append('isInterestFreeLoanIsEnabled',lwif.LoanWithInterestFeature)
-        form.append('client_id',lwif.selectClientID)
-        form.append('min_month_served',lwif.minEligibile);
-        form.append('percent_of_ctc',lwif.availPerInCtc);
-        form.append('deductMethod',lwif.deductMethod);
-        form.append('loan_applicable_type',lwif.precent_Or_Amt)
-        form.append('max_loan_limit',lwif.max_loan_limit)
-        form.append('deduction_starting_months',lwif.deductMethod);
-        form.append('max_tenure_months',lwif.maxTenure);
-        form.append('loan_amt_interest',lwif.loan_amt_interest)
-        form.append('approver_flow',JSON.stringify( lwif.approvalflow));
-        form.append('loan_type','InterestWithLoan');
-
-        // let url = '/saveLoanWithIntrest'
-        // let url = '/save-int-and-int-free-loan-settings';
         let url = '/save-int-and-int-free-loan-settings';
 
-        axios.post(url, form).finally(() => {
+        axios.post(url,lwif).finally(() => {
             canShowLoading.value = false
             approvalFormat.splice(0, approvalFormat.length)
         })
@@ -492,12 +462,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Loan With interest Feature
         isLoanWithInterestFeature, lwif, saveLoanWithInterest
-
-
-
-
-
-
 
     };
 });
