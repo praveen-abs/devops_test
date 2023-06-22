@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
 use App\Models\VmtInterestFreeLoanSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
+use App\Models\VmtEmpInterestLoanDetails;
 use App\Models\Department;
 use App\Models\State;
 use Exception;
@@ -30,6 +31,29 @@ use App\Models\VmtClientMaster;
 class VmtSalaryAdvanceService
 {
 
+    public function getEmpapproverjson($settings_flow, $user_id)
+    {
+        $settings_flow = json_decode($settings_flow, true);
+        $approver_flow = array();
+        $temp_ar = array();
+        foreach ($settings_flow as $single_ar) {
+
+            $temp_ar['order'] = $single_ar['order'];
+
+            $temp_column = $single_ar['approver'];
+            $temp_ar['approver'] = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->$temp_column;
+            if ($temp_column == 'l1_manager_code') {
+                $temp_ar['approver'] = User::where('user_code', $temp_ar['approver'])->first()->id;
+            }
+            $temp_ar['status'] = 0;
+            if ($temp_ar['approver'] == null || empty($temp_ar['approver'])) {
+                dd('Error While Creating Approver Flow json');
+            }
+            array_push($approver_flow, $temp_ar);
+            unset($temp_ar);
+        }
+        return (json_encode($approver_flow, true));
+    }
     public function getAllDropdownFilterSetting()
     {
 
@@ -396,6 +420,11 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->approver_flow = $approver_flow;
                 $setting_for_loan->active = 1;
                 $setting_for_loan->save();
+                return response()->json([
+                    'status' => 'save successfully',
+                    'message' => 'Done',
+
+                ]);
             } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
@@ -627,33 +656,39 @@ class VmtSalaryAdvanceService
 
     public function applyLoan(
         $loan_type,
-        $vmt_int_free_loan_id,
+        $loan_setting_id,
+        $eligible_amount,
         $borrowed_amount,
         $interest_rate,
         $deduction_starting_month,
         $deduction_ending_month,
         $emi_per_month,
+        $tenure_months,
         $reason
     ) {
         $validator = Validator::make(
             $data = [
                 "loan_type" => $loan_type,
-                "vmt_int_free_loan_id"=>$vmt_int_free_loan_id,
-                "borrowed_amount"=> $borrowed_amount,
-                "deduction_starting_month"=>  $deduction_starting_month,
-                "deduction_ending_month"=>$deduction_ending_month,
-                "emi_per_month"=> $emi_per_month,
-                "reason"=> $reason,
-                "interest_rate"=>$interest_rate
+                "loan_setting_id" => $loan_setting_id,
+                "eligible_amount" => $eligible_amount,
+                "borrowed_amount" => $borrowed_amount,
+                "deduction_starting_month" =>  $deduction_starting_month,
+                "deduction_ending_month" => $deduction_ending_month,
+                "emi_per_month" => $emi_per_month,
+                "tenure_months" => $tenure_months,
+                "reason" => $reason,
+                "interest_rate" => $interest_rate
             ],
             $rules = [
                 "loan_type" => "required",
-                "vmt_int_free_loan_id"=>"required",
-                "borrowed_amount"=> "required",
-                "deduction_starting_month"=> "required",
-                "deduction_ending_month"=>"required",
-                "emi_per_month"=> "required",
-                "reason"=> "required",
+                "loan_setting_id" => "required",
+                "eligible_amount" => "required",
+                "borrowed_amount" => "required",
+                "deduction_starting_month" => "required",
+                "deduction_ending_month" => "required",
+                "emi_per_month" => "required",
+                "tenure_months" => "required",
+                "reason" => "required",
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -665,6 +700,48 @@ class VmtSalaryAdvanceService
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
+            ]);
+        }
+        $user_id = auth()->user()->id;
+        try {
+            if ($loan_type == 'InterestFreeLoan') {
+                $loan_details = new VmtEmployeeInterestFreeLoanDetails;
+                $loan_details->vmt_int_free_loan_id = $loan_setting_id;
+                $settings_flow = VmtInterestFreeLoanSettings::where('id', $loan_setting_id)->first()->approver_flow;
+            } else if ($loan_type = 'InterestWithLoan') {
+                $loan_details = new VmtEmpInterestLoanDetails;
+                $loan_details->vmt_int_loan_id = $loan_setting_id;
+                $settings_flow = VmtLoanInterestSettings::where('id', $loan_setting_id)->first()->approver_flow;
+                $loan_details->interest_rate = $interest_rate;
+            } else {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Undefined Loan type'
+                ]);
+            }
+            $loan_details->user_id = $user_id;
+
+            $loan_details->eligible_amount = $eligible_amount;
+            $loan_details->borrowed_amount = $borrowed_amount;
+            $loan_details->requested_date = Carbon::now();
+            $loan_details->deduction_starting_month = $deduction_starting_month;
+            $loan_details->deduction_ending_month = $deduction_ending_month;
+            $loan_details->emi_per_month = $emi_per_month;
+            $loan_details->tenure_months = $tenure_months;
+            $loan_details->reason = $reason;
+            $loan_details->approver_flow = $this->getEmpapproverjson($settings_flow, $user_id);
+            $loan_details->loan_crd_sts = 0;
+            $loan_details->save();
+            return response()->json([
+                'status' => 'save successfully',
+                'message' => 'Done',
+
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "applyLoan failed",
+                "data" => $e->getMessage(),
             ]);
         }
     }

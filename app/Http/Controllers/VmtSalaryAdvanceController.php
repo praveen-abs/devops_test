@@ -157,16 +157,28 @@ class VmtSalaryAdvanceController extends Controller
 
     public function applyLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
+        $request['loan_type'] = 'InterestWithLoan';
+        $request['loan_setting_id'] = 1;
+        $request['eligible_amount'] = '500000';
+        $request['borrowed_amount'] = '100000';
+        $request['interest_rate'] = '2.5';
+        $request['deduction_starting_month'] = '2023-07-21';
+        $request['deduction_ending_month'] = '2023';
+        $request['emi_per_month'] = '4271';
+        $request['tenure_months'] = '24';
+        $request['reason'] = 'Testing';
         $response = $vmtSalaryAdvanceService->applyLoan(
             $request->loan_type,
-            $request->vmt_int_free_loan_id,
+            $request->loan_setting_id,
+            $request->eligible_amount,
             $request->borrowed_amount,
             $request->interest_rate,
             $request->deduction_starting_month,
             $request->deduction_ending_month,
             $request->emi_per_month,
+            $request->tenure_months,
             $request->reason,
         );
-        dd($response);
+        return $response;
     }
 }

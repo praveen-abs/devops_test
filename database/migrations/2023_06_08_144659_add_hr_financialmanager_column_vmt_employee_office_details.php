@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vmt_employee_office_details', function (Blueprint $table) {
-            $table->integer('hr_id')->after('l1_manager_name');
-            $table->integer('finance_admin_id')->after('hr_id');
+            $table->integer('hr_user_id')->after('l1_manager_name');
+            $table->integer('fa_user__id')->after('hr_user_id');
         });
     }
 
