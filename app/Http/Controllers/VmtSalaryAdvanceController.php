@@ -110,7 +110,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails();
+        $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type);
         return  $response;
     }
 
