@@ -25,7 +25,12 @@ class VmtPayrollComponentsController extends Controller
             $request->comp_name_payslip,
             $request->epf,
             $request->esi,
-            $request->status);
+            $request->is_part_of_empsal_structure,
+            $request->is_taxable,
+            $request->calculate_on_prorate_basis,
+            $request->can_show_inpayslip,
+            $request->status
+        );
 
         return $response;
     }
@@ -39,6 +44,10 @@ class VmtPayrollComponentsController extends Controller
             $request->comp_name_payslip,
             $request->epf,
             $request->esi,
+            $request->is_part_of_empsal_structure,
+            $request->is_taxable,
+            $request->calculate_on_prorate_basis,
+            $request->can_show_inpayslip,
             $request->status);
 
         return $response;

@@ -68,6 +68,11 @@ $i=array_keys($excelRowdata_row);
                  'esi'=>'nullable',
                  'pt'=>'nullable',
                  'lwf'=>'nullable',
+                 'is_part_of_empsal_structure'=>'nullable',
+                 'is_taxable'=>'nullable',
+                 'calculate_on_prorate_basis'=>'nullable',
+                 'can_show_inpayslip'=>'nullable',
+
 
 
             ];
@@ -138,11 +143,14 @@ $i=array_keys($excelRowdata_row);
                 $component_category =VmtPayrollCompCategory::where('name',strtolower($row["category"]))->first();
                 $fin_components->category_id =$component_category->id;
                 $fin_components->calculation_method =$row["calculation_method"];
-                $fin_components->taxability =$row["taxability"];
                 $fin_components->epf =$row["epf"];
                 $fin_components->esi =$row["esi"];
                 $fin_components->pt =$row["pt"];
                 $fin_components->lwf =$row["lwf"];
+                $fin_components->is_part_of_empsal_structure =$row["is_part_of_empsal_structure"];
+                $fin_components->is_taxable =$row["is_taxable"];
+                $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];
+                $fin_components->can_show_inpayslip =$row["can_show_inpayslip"];
                 $fin_components->save();
 
             return $rowdata_response = [
