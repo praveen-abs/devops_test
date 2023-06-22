@@ -7,19 +7,22 @@
             <p>EPF Details</p>
             <div><button><i class="pi pi-pencil"></i></button></div>
         </div> -->
-        <div class="row border">
-            <div class="col-6 border-red-400">
+        <div class="row mx-5" >
+            <div class="col d-flex px-5">
                 <p>EPF Details</p>
                 <button><i class="pi pi-pencil"></i>
                 </button>
             </div>
-            <div class="col">
-
+            <div class="col-6">
+                <div class="d-flex text-gray-400 w-9 border">
+                    <p class="fs-6">Disable EPF</p>
+                    <InputSwitch v-model="checked" />
+                    <h1 class="">Enable EPF</h1>
+                </div>
             </div>
-
         </div>
         <div class="flex gap-6 mx-6 ">
-            <div class="flex w-6 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="flex w-6 p-4 my-1 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="w-12">
                     <div class="my-1">
                         <h5 class="my-2 text-lg font-semibold">EPF Number</h5>
@@ -188,4 +191,21 @@ const products = ref([
         thisYearProfit: 8500,
     },
 ]);
+
+
 </script>
+{
+    <!--
+        <template>
+    <div class="card flex justify-content-center">
+        <InputSwitch v-model="checked" />
+    </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+const checked = ref(true);
+</script>
+     -->
+}
