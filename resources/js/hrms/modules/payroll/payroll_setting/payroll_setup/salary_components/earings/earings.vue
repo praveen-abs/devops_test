@@ -2,7 +2,8 @@
     <div class="w-full ">
         <section id="header" class="flex justify-between w-full my-4 ">
             <p class="w-4 mx-1 font-semibold fs-5.5">Salary Compenents</p>
-            <div><button class="btn btn-orange" @click="visbile = true">Add Components</button></div>
+            <div><button class="btn btn-orange" @click="usePayroll.dailogNewSalaryComponents = true">Add Components</button>
+            </div>
         </section>
         <div class="table-responsive">
             <DataTable :value="usePayroll.salaryComponentsSource" :rows="5" :rowsPerPageOptions="[5, 10, 25]"
@@ -26,10 +27,22 @@
                     </Row>
                 </ColumnGroup>
                 <Column field="comp_name" />
-                <Column field="comp_type_id"></Column>
+                <Column field="comp_type_id">
+                    <template #body="{ data }">
+                        <p>{{ findCompType(data.comp_type_id) }}</p>
+                    </template>
+                </Column>
                 <Column field="calculation_method"></Column>
-                <Column field="epf"></Column>
-                <Column field="esi"></Column>
+                <Column field="epf">
+                    <template #body="{ data }">
+                        <p>{{ findIsSelected(data.epf) }}</p>
+                    </template>
+                </Column>
+                <Column field="esi">
+                    <template #body="{ data }">
+                        <p>{{ findIsSelected(data.esi) }}</p>
+                    </template>
+                </Column>
                 <Column field="status">
                     <template #body="slotProps">
                         <div v-if="slotProps.data.status">
@@ -43,15 +56,17 @@
                     </template>
                 </Column>
                 <Column>
-                    <template #body>
-                        <button class="p-1 mx-4 bg-green-200 border-green-500 rounded-xl">
+                    <template #body="{ data }">
+                        <button class="p-1 mx-4 bg-green-200 border-green-500 rounded-xl"
+                            @click="usePayroll.editNewSalaryComponent(true, data)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-8 h-6 px-auto text-center">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
                         </button>
-                        <button class="p-1 bg-red-200 border-red-500 rounded-xl">
+                        <button class="p-1 bg-red-200 border-red-500 rounded-xl"
+                            @click="usePayroll.deleteSalaryComponent(data.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                 stroke="currentColor" class="w-8 h-6 font-bold">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -64,7 +79,7 @@
 
             </DataTable>
         </div>
-        <Dialog v-model:visible="visbile" :modal="true" :closable="true"
+        <Dialog v-model:visible="usePayroll.dailogNewSalaryComponents" :modal="true" :closable="true"
             :style="{ width: '80vw', borderTop: '5px solid #002f56' }">
             <template #header>
                 <span class="text-lg font-semibold modal-title text-indigo-950">Add New Components</span>
@@ -75,7 +90,7 @@
                     <div class="">
                         <label for="metro_city" class="block mb-2  text-gray-700 font-semibold fs-6">Type of the
                             component</label>
-                        <Dropdown :options="componentTypes" editable class="w-full" optionLabel="name" optionValue="name"
+                        <Dropdown :options="componentTypes" editable class="w-full" optionLabel="name" optionValue="value"
                             placeholder="Select component" v-model="usePayroll.salaryComponents.typeOfComp" />
                     </div>
                     <div class="my-3">
@@ -94,19 +109,25 @@
                     <div class="my-3">
                         <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Type of
                             calculation</label>
-                        <Dropdown editable class="w-full" optionLabel="name" optionValue="name" :options="calculationTypes"
+                        <Dropdown editable class="w-full" optionLabel="name" optionValue="value" :options="calculationTypes"
                             placeholder="Select calculation type" v-model="usePayroll.salaryComponents.typeOfCalc" />
                     </div>
-                    <div class="">
+                    <div class="" v-if="usePayroll.salaryComponents.typeOfCalc == 1">
                         <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Enter the
                             amount</label>
                         <InputText class="w-full" placeholder="Enter the amount"
                             v-model="usePayroll.salaryComponents.amount" />
                     </div>
+                    <div class="" v-if="usePayroll.salaryComponents.typeOfCalc == 2">
+                        <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Enter the
+                            percentage</label>
+                        <InputText class="w-full" placeholder="Enter the amount"
+                            v-model="usePayroll.salaryComponents.percentage" />
+                    </div>
                 </div>
                 <div>
                     <div class="border-1 rounded-lg p-2">
-                        <div class="mx-2">
+                        <div class="mx-2 my-3">
                             <span>Status</span>
                             <div class="form-check form-check-inline mx-8">
                                 <input style="height: 20px;width: 20px;" class="form-check-input" type="radio" name="status"
@@ -175,8 +196,9 @@
             </div>
             <div class="float-right">
                 <div class="flex">
-                    <button @click=" visbile = false" class="btn btn-orange-outline">Cancel</button>
-                    <button @click="usePayroll.saveNewSalaryComponent" class="btn btn-orange mx-2">Save</button>
+                    <button @click=" usePayroll.dailogNewSalaryComponents = false"
+                        class="btn btn-orange-outline">Cancel</button>
+                    <button @click="usePayroll.saveNewSalaryComponent(false)" class="btn btn-orange mx-2">Save</button>
                 </div>
             </div>
         </Dialog>
@@ -192,33 +214,30 @@ const usePayroll = usePayrollMainStore()
 const visbile = ref(false)
 
 
-
-const lastYearTotal = computed(() => {
-    let total = 0;
-    for (let sale of sales.value) {
-        total += sale.lastYearProfit;
-    }
-
-    // return formatCurrency(total);
-});
-
-const thisYearTotal = computed(() => {
-    let total = 0;
-    for (let sale of sales.value) {
-        total += sale.thisYearProfit;
-    }
-
-    // return formatCurrency(total);
-});
-
 const componentTypes = ref([
-    { id: 1, name: "Fixed", value: 0 },
-    { id: 2, name: "Variable", value: 1 },
+    { id: 1, name: "Fixed", value: 1 },
+    { id: 2, name: "Variable", value: 2 },
 ])
 const calculationTypes = ref([
-    { id: 1, name: "Flat Amount", value: 0 },
-    { id: 2, name: "Percentage of CTC", value: 1 },
+    { id: 1, name: "Flat Amount", value: 1 },
+    { id: 2, name: "Percentage of CTC", value: 2 },
 ])
+
+const findCompType = (value) => {
+    let type = componentTypes.value.find(ele => {
+        return ele.value == value
+    })
+    return type.name
+}
+
+const findIsSelected = (value) => {
+    if (value == 1) {
+        return "Yes"
+    } else {
+        return "No"
+    }
+}
+
 
 </script>
 
@@ -236,5 +255,4 @@ const calculationTypes = ref([
 .p-datatable-table .p-datatable-thead>tr {
     box-shadow: 0px 0px 0px 0px !important;
     border-radius: 6px;
-}
-</style>
+}</style>

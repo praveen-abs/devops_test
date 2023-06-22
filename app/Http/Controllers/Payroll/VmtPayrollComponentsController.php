@@ -18,17 +18,19 @@ class VmtPayrollComponentsController extends Controller
     }
     public function CreatePayRollComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
+        // dd($request->all());
+
         $response =$serviceVmtPayrollComponentsService->CreatePayRollComponents(
-            $request->comp_name,
-            $request->comp_type_id,
-            $request->calculation_method,
-            $request->comp_name_payslip,
-            $request->epf,
-            $request->esi,
-            $request->is_part_of_empsal_structure,
-            $request->is_taxable,
-            $request->calculate_on_prorate_basis,
-            $request->can_show_inpayslip,
+            $request->name,
+            $request->typeOfComp,
+            $request->typeOfCalc,
+            $request->nameInPayslip,
+            $request->isConsiderForEPF,
+            $request->isConsiderForESI,
+            $request->isPartOfEmpSalStructure,
+            $request->isTaxable,
+            $request->isCalcShowProBasis,
+            $request->isShowInPayslip,
             $request->status
         );
 
@@ -37,18 +39,19 @@ class VmtPayrollComponentsController extends Controller
     public function UpdatePayRollComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
         $response =$serviceVmtPayrollComponentsService->UpdatePayRollComponents(
-            $request->comp_id,
-            $request->comp_name,
-            $request->comp_type_id,
-            $request->calculation_method,
-            $request->comp_name_payslip,
-            $request->epf,
-            $request->esi,
-            $request->is_part_of_empsal_structure,
-            $request->is_taxable,
-            $request->calculate_on_prorate_basis,
-            $request->can_show_inpayslip,
-            $request->status);
+            $request->id,
+            $request->name,
+            $request->typeOfComp,
+            $request->typeOfCalc,
+            $request->nameInPayslip,
+            $request->isConsiderForEPF,
+            $request->isConsiderForESI,
+            $request->isPartOfEmpSalStructure,
+            $request->isTaxable,
+            $request->isCalcShowProBasis,
+            $request->isShowInPayslip,
+            $request->status
+        );
 
         return $response;
     }

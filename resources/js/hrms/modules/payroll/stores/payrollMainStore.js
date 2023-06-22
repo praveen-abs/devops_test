@@ -1,11 +1,21 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref, reactive } from 'vue';
+import { useToast } from "primevue/usetoast";
+import { useConfirm } from "primevue/useconfirm";
 
 
 export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     //Global  variable Declaration
+    // Confirmation Service
+    const confirm = useConfirm();
+
+    // Notification Service
+    const toast = useToast();
+
+    // loading Spinner
+    const canShowLoading = ref(false);
 
     /*  Payroll Setup Structure
         
@@ -29,17 +39,22 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     // Salary Components - Earnings
 
+    const dailogNewSalaryComponents = ref(false);
+    const salaryComponentsUpdated = ref(false)
+
     const salaryComponents = reactive({
         typeOfComp: null,
+        id: null,
         name: null,
         nameInPayslip: null,
         typeOfCalc: null,
         amount: null,
+        percentage: null,
         status: null,
-        isPartOfEmpSalStructure: null,
-        isTaxable: null,
-        isCalcShowProBasis: null,
-        isShowInPayslip: null,
+        isPartOfEmpSalStructure: 0,
+        isTaxable: 0,
+        isCalcShowProBasis: 0,
+        isShowInPayslip: 0,
         isConsiderForEPF: null,
         isConsiderForESI: null,
     })
@@ -47,22 +62,83 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     const salaryComponentsSource = ref()
 
     const getSalaryComponents = (async () => {
+        canShowLoading.value = true
         let salaryComponentUrl = `/Paygroup/fetchPayRollComponents`
         await axios.get(salaryComponentUrl).then(res => {
             salaryComponentsSource.value = res.data
+        }).finally(() => {
+            canShowLoading.value = false
         })
     })
 
     const saveNewSalaryComponent = () => {
-        console.log(salaryComponents);
-        axios.post('/Paygroup/CreatePayRollComponents', salaryComponents)
+        dailogNewSalaryComponents.value = false
+        canShowLoading.value = true
+        if (salaryComponentsUpdated.value) {
+            axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
             .finally(() => {
                 restChars()
+                canShowLoading.value = false
+                getSalaryComponents()
             })
+        } else {
+            axios.post('/Paygroup/CreatePayRollComponents', salaryComponents)
+                .finally(() => {
+                    restChars()
+                    canShowLoading.value = false
+                    getSalaryComponents()
+                })
+        }
+    }
+
+    const editNewSalaryComponent = (boolean, data) => {
+        dailogNewSalaryComponents.value = true
+        salaryComponentsUpdated.value = boolean
+        salaryComponents.name = data.comp_name,
+            salaryComponents.id = data.id,
+            salaryComponents.typeOfComp = data.comp_type_id,
+            salaryComponents.nameInPayslip = data.comp_name_payslip,
+            salaryComponents.typeOfCalc = data.calculation_method,
+            salaryComponents.amount = null,
+            salaryComponents.status = data.status,
+            salaryComponents.isPartOfEmpSalStructure = data.is_part_of_empsal_structure,
+            salaryComponents.isTaxable = data.is_taxable,
+            salaryComponents.isCalcShowProBasis = data.calculate_on_prorate_basis,
+            salaryComponents.isShowInPayslip = data.can_show_inpayslip,
+            salaryComponents.isConsiderForEPF = data.epf,
+            salaryComponents.isConsiderForESI = data.esi
+    }
+
+    const deleteSalaryComponent = (recordID) => {
+        confirm.require({
+            message: "Do you want to delete this record?",
+            header: "Delete Confirmation",
+            icon: "pi pi-info-circle",
+            acceptClass: "p-button-danger",
+            accept: () => {
+                canShowLoading.value = true;
+                axios.post('/Paygroup/DeletePayRollComponents', {
+                    comp_id: recordID
+                })
+                    .finally(() => {
+                        toast.add({
+                            severity: "error",
+                            summary: "Deleted",
+                            detail: "Salary Component Deleted",
+                            life: 3000,
+                        });
+                        canShowLoading.value = false
+                        getSalaryComponents()
+                    });
+            },
+            reject: () => { },
+        });
     }
 
 
     // Salary structure
+
+    const dailogNewSalaryStructure = ref(false);
 
     const salaryStructure = reactive({
         structureName: null,
@@ -84,12 +160,21 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         })
     })
 
+    const addsalaryComponents = (selectedData) =>{
+        console.log(selectedData);
+        salaryStructureSource.value = selectedData;
+    }
+
     const saveNewsalaryStructure = () => {
         console.log(salaryStructure);
-        axios.post('/Paygroup/CreatePayRollComponents', salaryComponents)
-            .finally(() => {
-                restChars()
-            })
+        if (salaryComponentsUpdated.value) {
+            axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
+        } else {
+            axios.post('/Paygroup/CreatePayRollComponents', salaryComponents)
+                .finally(() => {
+                    restChars()
+                })
+        }
     }
 
 
@@ -108,12 +193,13 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
             salaryComponents.isConsiderForESI = null
     }
     return {
-
+        // Varaible Declaration
+        canShowLoading,
         // Salary Components - Earnings
-        salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent,
+        dailogNewSalaryComponents, salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent, editNewSalaryComponent, deleteSalaryComponent,
 
         // Salary Structure - Paygroup
-        salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure,
+        dailogNewSalaryStructure,salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure,addsalaryComponents,
     }
 
 })    
