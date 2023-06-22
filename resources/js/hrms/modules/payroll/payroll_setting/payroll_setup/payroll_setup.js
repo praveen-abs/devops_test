@@ -32,6 +32,7 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
 import Steps from 'primevue/steps';
+import InputSwitch from 'primevue/inputswitch';
 import { router } from "./router";
 
 
@@ -73,6 +74,7 @@ app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
 app.component('Steps', Steps)
+app.component('InputSwitch', InputSwitch)
 
 app.mount("#payroll_setup");
 
