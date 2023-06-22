@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     plugins: [
+        { src: '@/plugins/vue3-html2pdf', mode: 'client' },
         vue(),
         laravel({
             input: [
@@ -12,19 +13,20 @@ export default defineConfig({
 
                 'resources/js/app.js',
 
+                //Main dashboard
+                'resources/js/hrms/modules/dashboard/dashboard.js',
+
                 // Profile Page new
 
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
                 // Leaves
 
+                'resources/js/hrms/modules/leave_module/LeaveModule.js',
+
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
-                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveBalance.js',
-                'resources/js/hrms/modules/leave_module/leave_balance/leave_balance.js',
-                'resources/js/hrms/modules/leave_module/org_leave_module/OrgLeaveHistoryTable.js',
 
-                'resources/js/hrms/modules/leave_module/team_leave_module/TeamLeaveBalance.js',
                 //Reports
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
@@ -41,15 +43,19 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/pms/PMSApprovalTable.js',
                 'resources/js/hrms/modules/profile_pages/EmployeeDocumentsManager.js',
 
-
                 ////Reimbursements Module
 
                 //Employee Reimbursements
                 'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
 
                 //Configurations
+                //Attendance settings
 
                 'resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js',
+
+                // testing GeneralShift
+
+                'resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js',
 
                 // Client Onboarding
 
@@ -60,11 +66,26 @@ export default defineConfig({
 
                 //Holidays
                 'resources/js/hrms/modules/configurations/holidays/Holidays_Lists.js',
+                // Holidays_Master
+                'resources/js/hrms/modules/configurations/holidays/Holidays_Master.js',
+                'resources/js/hrms/modules/configurations/holidays/CreateNewHolidaysList.js',
 
+                // Investment Setting
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/finance_setting/finance_setting.js',
 
                 // Paycheck
-
                 'resources/js/hrms/modules/paycheck/investments/investment.js',
+
+                //Payroll
+                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+                // Payrun 
+                'resources/js/hrms/modules/payroll/payRun/payRun.js',
+
+                // payroll setup
+
+                'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
+
 
                 // Salary Advance and Loan Setting
 
@@ -74,27 +95,34 @@ export default defineConfig({
                 'resources/js/hrms/modules/paycheck/investments/declaration/declaration.js',
                 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/investments_and_exemption.js',
 
+                // Salary Advance
+
+                // Employee Salary Advance
+                'resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js',
+
 
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
 
                 //// Profile pages
-                    // familyinfo_table_page
-                    'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
+                // familyinfo_table_page
+                'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
 
-                    // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
+                // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
 
-                    // // Experience page
-                    // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
+                // // Experience page
+                // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
 
-                    // // financeDetails page
-                    // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
-                    // // Documents Review
+                // // financeDetails page
+                // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
+                // // Documents Review
 
-                    // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
+                // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
 
-                //Payroll
-                'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
+
+                // Payslip Template
+
+                'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
 
                 // Roles and permission
 
@@ -104,19 +132,41 @@ export default defineConfig({
 
 
                 //PMS forms management
-                'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
-                'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
+                'resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.js',
+                //'resources/js/hrms/modules/pms/pms_forms_mgmt/employee_view/PMSFormsMgmt_SelfView.js',
+                //'resources/js/hrms/modules/pms/pms_forms_mgmt/hr_view/PMSFormsMgmt_HRView.js',
 
-                //managewelcomemailstatus
-                'resources\js\hrms\modules\Organization\manage_welcome_mails_status\ManageWelcomeMailStatus.js',
+                //manage welcome mail status
+                'resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.js',
+
+                // Exit
+                'resources/js/hrms/modules/exit/exit.js',
 
                 // testing_pradeesh
-                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js'
+                'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
+                // 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js',
+                'resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.js',
+                'resources/js/hrms/modules/profile_pages/finance_details/EmployeePayslips.js',
+
+                // Onboarding From management
+                'resources/js/hrms/modules/onboarding_module/onboarding_form_mgmt/OnboardingFormMgmt.js',
+
+                // Employee details approvals
+
+                'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js',
+
+                //approvals_salary_advance
+                'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js'
+
 
             ],
+
             refresh: true,
         }),
     ],
+    resolve: {
+        dedupe: ['vue', 'vue-router'],
+    },
     // css: {
     //     preprocessorOptions: {
     //       scss: {

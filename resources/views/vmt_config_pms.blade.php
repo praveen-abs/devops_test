@@ -1,17 +1,10 @@
 @extends('layouts.master')
-@section('css')
-    <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
-@endsection
 
 @section('content')
-    @component('components.performance_breadcrumb')
-        @slot('li_1')
-        @endslot
-    @endcomponent
-
-
-
+    <div>
         <div id="msform" class="pms-config-wrapper">
+            <h3>PMS Configuration</h3>
+
             @if ($data && $data->id)
                 <form id="form-1" method="POST" action="{{ route('store_config_pms', $data->id) }}"
                     enctype="multipart/form-data">
@@ -211,8 +204,8 @@
                                     </div>
                                     <div class="col-3">
                                         <input class="mr-1" type="checkbox" name="operational_check"
-                                            id="operational_check" @if ($data && $data->selected_columns && in_array('operational', explode(',', $data->selected_columns))) checked @endif>
-                                        <label for="operational" style="margin-left:2px;">Operational</label>
+                                            id="operational_check" @if ($data && $data->selected_columns && in_array('operational_definition', explode(',', $data->selected_columns))) checked @endif>
+                                        <label for="operational_check" style="margin-left:2px;">Operational</label>
                                     </div>
                                     <div class="col-3">
                                         <input class="mr-1" type="checkbox" name="measure_check" id="measure_check"
@@ -231,7 +224,7 @@
                                     </div>
                                     <div class="col-3">
                                         <input class="mr-1" type="checkbox" name="stretchTarget_check"
-                                            id="stretchTarget_check" @if ($data && $data->selected_columns && in_array('stretchTarget', explode(',', $data->selected_columns))) checked @endif>
+                                            id="stretchTarget_check" @if ($data && $data->selected_columns && in_array('stretch_target', explode(',', $data->selected_columns))) checked @endif>
                                         <label for="stretchTarget_check" style="margin-left:2px;">Stretch
                                             Target</label>
                                     </div>
@@ -242,7 +235,7 @@
                                     </div>
                                     <div class="col-3">
                                         <input class="mr-1" type="checkbox" name="kpiWeightage_check"
-                                            id="kpiWeightage_check" @if ($data && $data->selected_columns && in_array('kpiWeightage', explode(',', $data->selected_columns))) checked @endif>
+                                            id="kpiWeightage_check" @if ($data && $data->selected_columns && in_array('kpi_weightage', explode(',', $data->selected_columns))) checked @endif>
                                         <label for="kpiWeightage_check" style="margin-left:2px;">KPI
                                             Weightage</label>
                                     </div>
@@ -417,7 +410,7 @@
                                     <th scope="col">Score Range</th>
                                     <th scope="col">Performance Rating</th>
                                     <th scope="col">Ranking</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Recommendation</th>
                                     {{-- <th scope="col">Sort Order</th> --}}
 
 
@@ -469,8 +462,6 @@
         </div>
     </div>
 
-
-    </div>
 @endsection
 @section('script')
     <!-- ui notifications -->
@@ -495,11 +486,35 @@
         }
     </script>
     <script>
+        var swaL_loadingPopup = null;
+
+        function showLoadingDialog(){
+
+            swaL_loadingPopup = Swal.fire({
+                    title: 'Please wait',
+                    html: 'Loading PMS Configuration',
+                    //timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                    },
+                    willClose: () => {
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('Loading dialog closed');
+                    }
+                });
+
+
+        }
 
         $(document).ready(function() {
 
 
-
+            showLoadingDialog();
 
 
             $('#calendar_type').change(function() {
@@ -535,6 +550,7 @@
             $('#selected_frequency').change(function() {
                 frequencyChange();
                 console.log("Updating frequency dropdown");
+
             });
 
 
@@ -586,7 +602,7 @@
                     {
                         year = year - 1;
                         nextyear = year + 1;
-                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +year +"(Apr-Jun)</option><option value='q2'>Q2 " + year +"(July-Sept)</option><option value='q3'>Q3 " + year +"(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
+                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 (Apr-Jun)</option><option value='q2'>Q2 (July-Sept)</option><option value='q3'>Q3 (Oct-Dec)</option><option value='q4'>Q4 (Jan-Mar)</option>";
                     }
                     else
                     {
@@ -597,7 +613,7 @@
                     {
                         year = year - 1;
                         nextyear = year + 1;
-                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
+                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1</option><option value='h2'>H2</option>";
                     }
                     else
                     {
@@ -608,6 +624,13 @@
                     data = "<option value=''>Select</option><option value='yearly'>Yearly</option>";
                 }
                 $('#assignment_period_start').html(data);
+
+                let selectionAssignmentPeriod_Value = "{{ $data->assignment_period }}";
+                //Update the assignment dropdown value also.
+                $('#assignment_period_start option[value='+selectionAssignmentPeriod_Value+']').attr("selected", "selected");
+
+                //dismiss loading dialog
+                Swal.close();
             }
 
         });

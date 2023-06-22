@@ -5,15 +5,18 @@
             <div class="row">
                 <div class="col-12 text-end">
                     <button class="p-0 m-0 bg-transparent border-0 outline-none btn" @click="dialogIdCard = true">
-                        <i class="fa fa-id-card text-success" aria-hidden="true"></i>
+                        <i class="pi pi-id-card text-success fs-4" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="text-center col-12">
-                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img " style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
+                        style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
-                        <img v-if="profile" class="rounded-circle img-xl userActive-status profile-img"
-                            :src="`data:image/png;base64,${profile}`" srcset=""  />
+                        <img v-if="_instance_profilePagesStore.profile"
+                            class="rounded-circle img-xl userActive-status profile-img"
+                            :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" />
+
 
                         <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
@@ -24,11 +27,111 @@
                     <div class="mt-4">
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
-                            <div class="mb-1 text-center px-auto">
-                                <h6 class="text-center fw-bold">
+                            <div
+                                class="mb-1  px-auto d-flex align-items-center justify-content-center pl-5">
+                                <h6 class="text-center fw-bold ">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
+                                <span class="personal-edit position-absolute" style="right: -9px;">
+                                    <a href="#" class="edit-icon "><i class="ri-pencil-fill"
+                                            @click="dialog_emp_name_visible = true"></i>
+                                    </a>
+                                </span>
                             </div>
+
+
+                            <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
+                                :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                                <template #header>
+                                    <div>
+                                        <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                            class="fw-bold fs-5">
+                                            Edit Employee Name</h5>
+                                    </div>
+                                </template>
+                                <div>
+                                    <div class="modal-body">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3 form-group">
+                                                    <label class="mb-2 font-semibold text-lg">Employee Name</label>
+                                                    <!-- <InputMask @focusout="panCardExists" id="serial" mask="aaaaa9999a"
+                                                        v-model="employee_info.emp_name" placeholder="AHFCS1234F"
+                                                        style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                                            v$.emp_name.$error ? 'p-invalid' : '',
+                                                        ]" /> -->
+                                                    <InputText type="text" v-model="employee_info.emp_name"
+                                                        style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                                            v$.emp_name.$error ? 'p-invalid' : '',
+                                                        ]" />
+                                                    <span v-if="v$.emp_name.$error" class="text-red-400 fs-6 font-semibold">
+                                                        {{ v$.emp_name.required.$message.replace("Value", "Employee Name")
+                                                        }}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class=" form-group">
+                                                    <label for="" class="mb-1 mb-1 font-semibold text-lg">Documents</label>
+                                                    <Dropdown v-model="employee_info.emp_doc_name" :options="doc_name"
+                                                        optionLabel="name" placeholder="Select a document "
+                                                        class="form-controls pl-2 w-full h-12" :class="[
+                                                            v$.emp_doc_name.$error ? 'p-invalid' : '',
+                                                        ]" />
+                                                    <span v-if="v$.emp_doc_name.$error"
+                                                        class="text-red-400 fs-6 font-semibold">
+                                                        {{ v$.emp_doc_name.required.$message.replace("Value", "Documents")
+                                                        }}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 d-flex flex-column ">
+                                                <!-- flex-column -->
+                                                <div class="d-flex justify-items-center  flex-column ">
+                                                    <label for="" class="float-label mb-2 font-semibold text-lg">Upload Documents</label>
+                                                    <div class="d-flex  justify-items-center align-items-center">
+                                                        <Toast />
+                                                        <label
+                                                            class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                                            style="width:100px ; " id="" for="uploadPassBook">
+                                                            <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
+                                                            <h1 class="text-light">Upload</h1>
+                                                        </label>
+
+                                                        <div v-if="employee_info.emp_upload_doc"
+                                                            class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
+                                                            {{ employee_info.emp_upload_doc.name }}</div>
+
+                                                        <input type="file" name="" id="uploadPassBook" hidden
+                                                            @change="UploadEmpDocsPhoto($event)" :class="[
+                                                                v$.emp_upload_doc.$error ? 'p-invalid' : '',
+                                                            ]" />
+                                                    </div>
+                                                    <span v-if="v$.emp_upload_doc.$error"
+                                                        class="text-red-400 fs-6 font-semibold">
+                                                        {{ v$.emp_upload_doc.required.$message.replace("Value", "document")
+                                                        }}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-right">
+                                                <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                                    @click="submitForm">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Dialog>
+
+
+
+
                             <div class="mx-auto mb-1 d-flex justify-content-between">
                                 <span class="text-muted f-12">Profile Completeness</span>
                                 <span class="text-muted text-end f-12 fw-bold" id="prograssBar_percentage">
@@ -43,12 +146,12 @@
                                 </div> -->
                             <ProgressBar :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
                             </ProgressBar>
-                            <!-- <ProgressBar  :value="60"></ProgressBar> -->
+
                             <p class="mb-2 text-muted f-10 text-start fw-bold">
                                 Your profile is completed
                             </p>
                         </div>
-                        <!-- <ProgressBar class="bg-red-600" :value="10"></ProgressBar> -->
+
 
                         <div class="mb-4 text-center profile-mid-right-content">
                             <div class="py-2 border-bottom-liteAsh">
@@ -96,8 +199,8 @@
                                             class="ri-pencil-fill"></i></a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
-                                            .get_employee_office_details.department_id
-                                        " class="f-12 fw-bold">
+                                    .get_employee_office_details.department_id
+                                    " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.department_name
@@ -109,12 +212,12 @@
                                 <p class="text-muted f-12 fw-bold">
                                     Reporting To
                                     <a href="#" class="edit-icon" @click="dailogReporting
-                                    = true"><i class="ri-pencil-fill"></i>
+                                                = true"><i class="ri-pencil-fill"></i>
                                     </a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
-                                            .get_employee_office_details.l1_manager_code
-                                        " class="f-12 fw-bold">
+                                    .get_employee_office_details.l1_manager_code
+                                    " class="f-12 fw-bold">
                                     {{
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_name
@@ -139,12 +242,12 @@
             </div>
         </div>
     </div>
-    <Dialog header="Status" v-model:visible="canShowCompletionScreen"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
-      <div class="confirmation-content">
-        <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
-        <span>{{ status_text_CompletionDialog }}</span>
-      </div>
+    <Dialog header="Status" v-model:visible="canShowCompletionScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '350px' }" :modal="true">
+        <div class="confirmation-content">
+            <i class="mr-3 pi pi-check-circle" style="font-size: 2rem" />
+            <span>{{ status_text_CompletionDialog }}</span>
+        </div>
     </Dialog>
     <Dialog v-model:visible="dailogDepartment" modal header="Edit Department"
         :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
@@ -153,8 +256,7 @@
             placeholder="Select Department" class="w-full form-selects" optionValue="id" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success"
-                    @click="editDepartment">
+                <button type="button" class="submit_btn warning success" @click="editDepartment">
                     Save
                 </button>
             </div>
@@ -166,8 +268,7 @@
             optionValue="user_code" placeholder="Select Reporting Manager" class="w-full form-selects" />
         <template #footer>
             <div>
-                <button type="button" class="submit_btn warning success"
-                    @click="editReportingManager">
+                <button type="button" class="submit_btn warning success" @click="editReportingManager">
                     Save
                 </button>
             </div>
@@ -187,21 +288,30 @@
 
         </template>
         <div class="card p-3 d-flex justify-items-center align-items-center"
-            style="width: 18rem;margin-left: 140px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            style="width: 18rem;margin-left: 150px; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
-            <img src="" alt="" class=""
+            <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" class=""
                 style="height: 40px;width:140px; ">
 
-            <div class="card-body d-flex justify-items-center align-items-center " style="flex-direction: column ">
+            <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
+                <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
+                    style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+                    <img v-if="_instance_profilePagesStore.profile"
+                        class="rounded-circle img-xl userActive-status profile-img border"
+                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
+                        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
+                </div>
 
-                <img v-if="profile" class="rounded-circle   profile-img"
-                    :src="`data:image/png;base64,${profile}`" srcset="" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
 
-                <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;" > {{ _instance_profilePagesStore.employeeDetails.name }}</h5>
+                <!-- <img v-if="profile" class="rounded-circle   profile-img"
+                    :src="`data:image/png;base64,${profile}`" srcset=""  /> -->
+
+                <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;"> {{
+                    _instance_profilePagesStore.employeeDetails.name }}</h5>
 
                 <h5 v-if="_instance_profilePagesStore.employeeDetails
                     .get_employee_office_details.department_id
-                    " class="f-12  card-text mb-2 text-gray-400" >
+                    " class="f-12  card-text mb-2 text-gray-400">
                     {{
                         _instance_profilePagesStore.employeeDetails
                             .get_employee_office_details.department_name
@@ -209,12 +319,26 @@
                 </h5>
                 <h1 v-else class="f-12 fw-bold">-</h1>
 
-                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold mb-2" style="color:grey">
+                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold mb-2"
+                    style="color:grey">
                     {{ _instance_profilePagesStore.employeeDetails.user_code }}
                 </h5>
                 <p v-else class="f-12   mb-2 text-secondary-emphasis">-</p>
             </div>
         </div>
+    </Dialog>
+
+
+
+    <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
     </Dialog>
 
     <!-- <Dropdown :options="departmentOption" optionLabel="name" v-model="dep"
@@ -224,13 +348,15 @@
 <script setup>
 import { _ } from "lodash";
 import axios from "axios";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, computed } from "vue";
 import { Service } from "../../Service/Service";
 import { profilePagesStore } from "../stores/ProfilePagesStore";
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
 const service = Service();
 
-const profile = ref();
+const canShowLoading = ref(false);
 
 const dialogIdCard = ref(false)
 
@@ -239,35 +365,37 @@ const employee_card = reactive({
     reporting_manager: "",
 });
 
+const employee_info = reactive({
+    emp_name: "",
+    emp_doc_name: "",
+    emp_upload_doc: ""
+});
+
+
+const doc_name = ref([
+    { name: 'Birth Certificate', code: 1 },
+    { name: 'Aadhar Card Front', code: 2 },
+    { name: 'Pan Card', code: 3 },
+]);
+
+
+const dialog_emp_name_visible = ref(false);
+
 let _instance_profilePagesStore = profilePagesStore();
 
-const getProfilePhoto = () => {
-    axios
-        .post("/profile-pages/getProfilePicture", {
-            user_code: service.current_user_code,
-        })
-        .then((res) => {
-            // console.log(res.data);
-            profile.value = res.data.data;
-        })
-        .finally(() => {
-            console.log("profile Pic Fetched");
-        });
-};
 
 const updateProfilePhoto = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
         // Get uploaded file
-        profile.value = e.target.files[0];
+        _instance_profilePagesStore.profile = e.target.files[0];
         // Get file size
         // Print to console
-        console.log(profile.value);
     }
 
     let form = new FormData();
-    form.append("user_code", service.current_user_code);
-    form.append("file_object", profile.value);
+    form.append("user_code", _instance_profilePagesStore.user_code);
+    form.append("file_object", _instance_profilePagesStore.profile);
 
     let url = "/profile-pages/updateProfilePicture";
     axios
@@ -277,7 +405,7 @@ const updateProfilePhoto = (e) => {
         })
         .finally(() => {
             console.log("Photo Sent");
-            getProfilePhoto();
+            _instance_profilePagesStore.getProfilePhoto();
         });
 };
 
@@ -317,7 +445,7 @@ const editDepartment = (dep) => {
         })
         .catch((err) => {
             status_text_CompletionDialog.value = "Error while updating department. Kindly contact the Admin.";
-            console.log("Error while updating Department : "+ err);
+            console.log("Error while updating Department : " + err);
         })
         .finally(() => {
 
@@ -328,33 +456,33 @@ const editDepartment = (dep) => {
 };
 
 const editReportingManager = (rm) => {
-    console.log("editReportingManager : "+rm);
+    console.log("editReportingManager : " + rm);
 
     axios.post("/profile-pages/updateReportingManager", {
-        user_code : _instance_profilePagesStore.employeeDetails.user_code,
-        manager_user_code : employee_card.reporting_manager,
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        manager_user_code: employee_card.reporting_manager,
     }).
-    then((res) => {
-        //console.log("Reporting Manager Options : "+ JSON.stringify(reportManagerOption.value));
+        then((res) => {
+            //console.log("Reporting Manager Options : "+ JSON.stringify(reportManagerOption.value));
 
-       let selected_reportedManager = _.find(reportManagerOption.value, ["user_code" , employee_card.reporting_manager]);
+            let selected_reportedManager = _.find(reportManagerOption.value, ["user_code", employee_card.reporting_manager]);
 
-       _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name = selected_reportedManager.name;
-       _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code = selected_reportedManager.user_code;
+            _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_name = selected_reportedManager.name;
+            _instance_profilePagesStore.employeeDetails.get_employee_office_details.l1_manager_code = selected_reportedManager.user_code;
 
-        status_text_CompletionDialog.value = "Reporting Manager updated successfully !";
+            status_text_CompletionDialog.value = "Reporting Manager updated successfully !";
 
-        console.log(res.data);
+            console.log(res.data);
 
 
 
-    }).catch((err) => {
-        status_text_CompletionDialog.value = "Error while updating Reporting Manager. Kindly contact the Admin.";
-            console.log("Error while updating Reporting Manager : "+ err);
-    }).finally(() =>{
-        canShowCompletionScreen.value = true;
-        dailogReporting.value = false;
-    });
+        }).catch((err) => {
+            status_text_CompletionDialog.value = "Error while updating Reporting Manager. Kindly contact the Admin.";
+            console.log("Error while updating Reporting Manager : " + err);
+        }).finally(() => {
+            canShowCompletionScreen.value = true;
+            dailogReporting.value = false;
+        });
 
 
 };
@@ -368,6 +496,7 @@ const setvalue = () => {
 };
 
 onMounted(() => {
+
     service.DepartmentDetails().then((res) => {
         departmentOption.value = res.data;
         console.log(
@@ -379,16 +508,74 @@ onMounted(() => {
     service.ManagerDetails().then((res) => {
         reportManagerOption.value = res.data;
     });
-    getProfilePhoto();
     setvalue();
 });
+
+const UploadEmpDocsPhoto = (e) => {
+    if (e.target.files && e.target.files[0]) {
+        employee_info.emp_upload_doc = e.target.files[0];
+        console.log(employee_info.emp_upload_doc);
+    }
+}
+
+
+const rules = computed(() => {
+    return {
+        emp_name: { required },
+        emp_doc_name: { required },
+        emp_upload_doc: { required }
+    }
+})
+
+
+
+const v$ = useValidate(rules, employee_info)
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        saveEmpChangeInfoDetails();
+    } else {
+        console.log('Form failed submitted.')
+    }
+
+}
+
+
+const saveEmpChangeInfoDetails = () => {
+    canShowLoading.value = true;
+
+    dialog_emp_name_visible.value = false;
+    let id = service.current_user_id;
+    const url = `/update-EmplpoyeeName-info/${id}`;
+    const form = new FormData;
+    form.append('user_code', _instance_profilePagesStore.employeeDetails.user_code)
+    form.append('name', employee_info.emp_name);
+    form.append('onboard_document_type', employee_info.emp_doc_name.name);
+    form.append('emp_doc', employee_info.emp_upload_doc);
+
+
+    axios.post(url, form).finally(() => {
+
+        canShowLoading.value =false;
+    })
+
+
+}
+
+
+
 </script>
 
 <style>
 .p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
 }
-*{
+
+* {
     /* font-family: sans-serif; */
 }
 </style>
+

@@ -17,24 +17,6 @@ class VmtAPIDashboardController extends HRMSBaseAPIController
 {
     public function getMainDashboardData(Request $request, VmtDashboardService $serviceVmtDashboardService, VmtAttendanceService $serviceVmtAttendanceService, VmtHolidayService  $serviceHolidayService ){
 
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'user_code' => 'required|exists:users,user_code',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
-            ]);
-        }
 
         //Fetch the data
         $response = $serviceVmtDashboardService->getMainDashboardData($request->user_code, $serviceVmtAttendanceService, $serviceHolidayService);

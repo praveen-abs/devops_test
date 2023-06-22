@@ -1,5 +1,15 @@
 <template>
-     <Toast />
+    <Toast />
+    <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="fw-bold mb-3 fs-15">General Information
@@ -9,8 +19,8 @@
                 </a>
 
                 <Dialog v-model:visible="is_dialog_generalInfo_visible" modal header="General Information"
-                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }" >
-                    <template #header >
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                    <template #header>
                         <div>
                             <h5
                                 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }">
@@ -24,39 +34,45 @@
                                 <label :style="{ marginLeft: '10px' }">Birth Date<span class="text-danger">*</span>
                                 </label>
                                 <div class="cal-icon">
-                                    <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
-                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
+                                    <!-- <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
+                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" /> -->
+                                        <Calendar class="mb-3 form-selects" v-model="dialog_general_information.dob" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
+                            <div class="mb-1 form-group">
                                 <label>Gender<span class="text-danger">*</span></label>
-
-                                <Dropdown v-model="dialog_general_information.gender" :options="options_gender" optionLabel="name"
-                                    optionValue="value" placeholder="Choose Gender" class="form-selects" />
-
+                                <Dropdown v-model="dialog_general_information.gender" :options="options_gender"
+                                    optionLabel="name" optionValue="value" placeholder="Choose Gender"
+                                    class="form-selects" />
                             </div>
                         </div>
 
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
-                                <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
+                            <div class="mb-1 form-group">
+                                <!-- <label :style="{ marginLeft: '10px' }">Date Of Joining(DOJ)<span
                                         class="text-danger">*</span></label>
                                 <div class="cal-icon">
                                     <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.doj"
-                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy"  />
-                                </div>
+                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
+                                </div> -->
+
+                                <label :style="{ marginLeft: '10px' ,marginRight:'10px' }">Marital status <span class="text-danger">*</span></label>
+                                <Dropdown v-model="dialog_general_information.marital_status_id"
+                                    :options="option_maritals_status" optionLabel="name" optionValue="id"
+                                    placeholder="Select Marital Status" class="form-selects" :style="{ marginLeft: '10px' ,marginRight:'10px' }" />
 
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group">
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
+                            <div class="mb-2 form-group">
                                 <label>Blood Group<span class="text-danger">*</span></label>
                                 <div class="cal-icon">
-                                    <Dropdown v-model="dialog_general_information.blood_group_id" :options="options_blood_group"
-                                        optionLabel="name" optionValue="id" placeholder="Select Bloodgroup" class="form-selects" />
+                                    <Dropdown v-model="dialog_general_information.blood_group_id"
+                                        :options="options_blood_group" optionLabel="name" optionValue="id"
+                                        placeholder="Select Bloodgroup" class="form-selects" />
                                 </div>
                                 <!-- {{dialog_general_information.blood_group_id  }} -->
 
@@ -64,20 +80,21 @@
                         </div>
 
 
-                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
-                            <div class="mb-3 form-group" :style="{ marginLeft: '10px' }">
-                                <label>Marital status <span class="text-danger">*</span></label>
-                                <Dropdown v-model="dialog_general_information.marital_status_id" :options="option_maritals_status"
-                                    optionLabel="name" optionValue="id" placeholder="Select Marital Status"
-                                    class="form-selects" />
+                        <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
+                            <div class=" form-group w-full" :style="{ marginLeft: '10px' }">
+                                <label class="my-1" >Physically Handicapped</label>
+                                <Dropdown v-model="dialog_general_information.physically_challenged"
+                                    :options="options_phy_challenged" optionLabel="name" optionValue="value"
+                                    placeholder="Select" class="form-selects"  />
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
                             <div class="mb-3 form-group">
-                                <label>Physically Handicapped</label>
+                                <!-- <label>Physically Handicapped</label>
                                 <Dropdown v-model="dialog_general_information.physically_challenged"
                                     :options="options_phy_challenged" optionLabel="name" optionValue="value"
-                                    placeholder="Select" class="form-selects" />
+                                    placeholder="Select" class="form-selects" /> -->
+
                             </div>
                         </div>
                     </div>
@@ -93,7 +110,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
                         <div class="text">
-                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY') }}
+                            {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
+                            }}
                         </div>
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
@@ -108,7 +126,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            {{dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY') }}
+                            {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY')
+                            }}
 
                         </div>
                     </li>
@@ -123,10 +142,10 @@
                     </li>
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title"> Blood Group</div>
-                        <div class="text" >
+                        <div class="text">
                             <!-- {{ emp_details.blood_group_id.name }} -->
-<!---->
-                         <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
+                            <!---->
+                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
                             {{ cmpBldGrp }}
                             <!-- {{  _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }} -->
 
@@ -153,11 +172,10 @@
         <div class="card-body">
             <h6 class="mb-3 fw-bold fs-15">Contact Information
                 <span class="personal-edit">
-                    <a href="#" class="edit-icon"
-                        @click="onClick_EditButtonContacttInfo" ><i class="ri-pencil-fill"></i></a>
+                    <a href="#" class="edit-icon" @click="onClick_EditButtonContacttInfo"><i class="ri-pencil-fill"></i></a>
                 </span>
 
-                <Dialog v-model:visible="ContactVisible"   modal header="Contact Information"
+                <Dialog v-model:visible="ContactVisible" modal header="Contact Information"
                     :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
                     <template #header>
                         <div>
@@ -196,14 +214,14 @@
 
                                 <div class="mb-3 form-group">
                                     <label>Official Mobile Number</label>
-                                    <input type="text" size=20 maxlength=10 name="official_mobile_number" class="form-control"
-                                        v-model="dailog_contactinfo.official_mobile_number">
+                                    <input type="text" size=20 maxlength=10 name="official_mobile_number"
+                                        class="form-control" v-model="dailog_contactinfo.official_mobile_number">
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="text-right">
-                                    <button  class="btn btn-border-orange submit-btn"
+                                    <button class="btn btn-border-orange submit-btn"
                                         @click="save_contactinfoDetails">Save</button>
                                 </div>
                             </div>
@@ -252,8 +270,8 @@
     <div class="mb-2 card">
         <div class="card-body">
             <h6 class="ml-2 fw-bold fs-15">Address
-                <span class="personal-edit"><a href="#" class="edit-icon"
-                        @click="onClick_EditButtonAddressInfo"><i class="ri-pencil-fill"></i></a></span>
+                <span class="personal-edit"><a href="#" class="edit-icon" @click="onClick_EditButtonAddressInfo"><i
+                            class="ri-pencil-fill"></i></a></span>
 
                 <Dialog v-model:visible="addressVisible" modal header
                     :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
@@ -300,7 +318,9 @@
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">Current Address </div>
                                 <div class="text">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 }}
+                                    {{
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
+                                    }}
 
                                 </div>
                             </li>
@@ -311,7 +331,9 @@
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">Permanent Address </div>
                                 <div class="text">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1 }}
+                                    {{
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1
+                                    }}
                                 </div>
                             </li>
                         </ul>
@@ -321,7 +343,6 @@
 
         </div>
     </div>
-
 </template>
 
 
@@ -344,7 +365,7 @@ const fetch_data = Service()
 
 const _instance_profilePagesStore = profilePagesStore()
 
-
+const canShowLoading = ref(false)
 
 const toast = useToast();
 const Addresstoast = useToast();
@@ -371,58 +392,51 @@ const options_gender = ref([
 ]);
 
 const computedGenderValue = computed(() => {
-    if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'male')
+    if (_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'male')
         return "Male";
     else
-    if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'female')
-        return "Female";
+        if (_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'female')
+            return "Female";
         // return ""
-    else
-    if(_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'others')
-        return "Others";
+        else
+            if (_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'others')
+                return "Others";
 
-    else
-        return "-"
+            else
+                return "-"
 
 })
-const computedMarital_StatusValue = computed(()=>{
-    if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 1) return "Unmarried";
+const computedMarital_StatusValue = computed(() => {
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 2) return "Married";
+    return _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status;
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 3) return "Separated";
-
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 4) return "Widowed";
-
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id == 5) return "Divorced";
-    // "Widowed Divorced"
 })
-const cmpBldGrp =computed(()=>{
-    if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  == 1) return "A Positive";
+const cmpBldGrp = computed(() => {
+    if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 1) return "A Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==2) return "A Negative";
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 3) return "B Positive";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 2) return "A Negative";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 3) return "B Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==4) return "B Negative";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 4) return "B Negative";
 
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==5) return "AB Positive";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 5) return "AB Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id ==6) return "AB Negative";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 6) return "AB Negative";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
 
-    else if(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
 
 
 
 })
 
-const computedPhy_challenged = computed(()=>{
+const computedPhy_challenged = computed(() => {
 
-if( _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged == "no") return "No";
+    if (_instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged == "no") return "No";
 
-if( _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged =="yes") return "Yes";
+    if (_instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged == "yes") return "Yes";
 
 })
 
@@ -439,6 +453,7 @@ const confirm = useConfirm();
 
 onMounted(() => {
 
+    _instance_profilePagesStore.fetchEmployeeDetails();
     fetch_data.getBloodGroups().then((result) => {
         console.log(result.data);
         options_blood_group.value = result.data;
@@ -453,7 +468,7 @@ onMounted(() => {
 
 });
 
-function onClick_EditButton_GeneralInfo(){
+function onClick_EditButton_GeneralInfo() {
     console.log("Opening General Info Dialog");
 
     // Assign json values into dialog elements also
@@ -467,7 +482,7 @@ function onClick_EditButton_GeneralInfo(){
 
     dialog_general_information.gender = _instance_profilePagesStore.employeeDetails.get_employee_details.gender;
 
-    dialog_general_information.blood_group_id = parseInt( _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id);
+    dialog_general_information.blood_group_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id);
 
     // dialog_general_information.blood_group_id = 3;
     dialog_general_information.physically_challenged = _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged;
@@ -479,25 +494,27 @@ function onClick_EditButton_GeneralInfo(){
 
 
 function saveGeneralInformationDetails() {
-    console.log("Called saveGeneralInformationDetails.... ");
+    console.log(dialog_general_information.dob);
+
+    canShowLoading.value = true;
+
     let id = fetch_data.current_user_id
-    let url = `/profile-pages-update-generalinfo/${id}`
+    let url = `/profile-pages-update-generalinfo/${id}`;
 
     axios.post(url, {
-            user_code: _instance_profilePagesStore.employeeDetails.user_code,
-            dob: dialog_general_information.dob,
-            gender: dialog_general_information.gender,
-            marital_status_id: dialog_general_information.marital_status_id,
-            doj: dialog_general_information.doj,
-            blood_group_id: dialog_general_information.blood_group_id,
-            physically_challenged: dialog_general_information.physically_challenged,
-        })
+        user_code: _instance_profilePagesStore.employeeDetails.user_code,
+        dob:  dayjs(dialog_general_information.dob).format('YYYY-MM-DD') ,
+        gender: dialog_general_information.gender,
+        marital_status_id: dialog_general_information.marital_status_id,
+        doj: dialog_general_information.doj,
+        blood_group_id: dialog_general_information.blood_group_id,
+        physically_challenged: dialog_general_information.physically_challenged,
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
-                toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
-                _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob,'YYYY-MM-DD' );
+                //  window.location.reload();
+                _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob, 'YYYY-MM-DD');
                 // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
                 _instance_profilePagesStore.employeeDetails.gender = dialog_general_information.gender;
                 _instance_profilePagesStore.employeeDetails.marital_status_id = dialog_general_information.marital_status_id;
@@ -511,12 +528,16 @@ function saveGeneralInformationDetails() {
         })
         .catch((err) => {
             console.log(err);
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails()
+            canShowLoading.value = false;
+            toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
         });
 
-        is_dialog_generalInfo_visible.value = false
+    is_dialog_generalInfo_visible.value = false
 
 
-            window.location.reload();
+    // window.location.reload();
 
 }
 
@@ -530,47 +551,41 @@ const dailog_contactinfo = reactive({
 
 });
 
-function onClick_EditButtonContacttInfo(){
+function onClick_EditButtonContacttInfo() {
     console.log("Opening General Info Dialog : ");
 
     // Assign json values into dialog elements also
 
     dailog_contactinfo.email = _instance_profilePagesStore.employeeDetails.email;
     dailog_contactinfo.official_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
-    // dailog_contactinfo.mobile_number = _instance_profilePagesStore.employeeDetails.get_employee_office_details.mobile_number;
-    console.log("Mobile number : "+_instance_profilePagesStore.employeeDetails.mobile_number);
-
     dailog_contactinfo.mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number);
     dailog_contactinfo.official_mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile);
 
     console.log("testing");
 
     ContactVisible.value = true;
-
-    // console.log(ContactVisible.value);
 }
 
-function save_contactinfoDetails(){
-    console.log("testing contact");
-
+function save_contactinfoDetails() {
     let id = fetch_data.current_user_id
     let url = `/profile-pages-update-contactinfo/${id}`;
+    canShowLoading.value = true;
 
     axios.post(url, {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        email:dailog_contactinfo.email,
-        officical_mail:dailog_contactinfo.official_email,
-        mobile_number:dailog_contactinfo.mobile_number,
-        official_mobile_number:dailog_contactinfo.official_mobile_number
-        })
+        email: dailog_contactinfo.email,
+        officical_mail: dailog_contactinfo.official_email,
+        mobile_number: dailog_contactinfo.mobile_number,
+        official_mobile_number: dailog_contactinfo.official_mobile_number
+    })
         .then((res) => {
 
             if (res.data.status == "success") {
-                console.log("Updating mobile number : "+ dailog_contactinfo.mobile_number);
-                _instance_profilePagesStore.employeeDetails.email =  dailog_contactinfo.email
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail =  dailog_contactinfo.official_email
-                _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number =  dailog_contactinfo.mobile_number
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile =  dailog_contactinfo.official_mobile_number
+                toast.add({ severity: 'success', summary: 'Updated', detail: 'Contact information updated', life: 3000 });
+                _instance_profilePagesStore.employeeDetails.email = dailog_contactinfo.email
+                _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail = dailog_contactinfo.official_email
+                _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number = dailog_contactinfo.mobile_number
+                _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile = dailog_contactinfo.official_mobile_number
 
             } else if (res.data.status == "failure") {
                 contact_details.leave_request_error_messege = res.data.message;
@@ -578,11 +593,14 @@ function save_contactinfoDetails(){
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
+        })
 
-        ContactVisible.value = false;
+    ContactVisible.value = false;
 
-        window.location.reload();
+
 
 }
 
@@ -595,7 +613,7 @@ const diolog_Addressinfo = reactive({
     Permanent_Address: ""
 });
 
-function onClick_EditButtonAddressInfo(){
+function onClick_EditButtonAddressInfo() {
     console.log("Opening General Info Dialog");
 
     // Assign json values into dialog elements also
@@ -611,39 +629,40 @@ function onClick_EditButtonAddressInfo(){
 }
 
 const saveAddressinfoDetails = () => {
+    canShowLoading.value = true;
 
     if (diolog_Addressinfo.current_address == " " || diolog_Addressinfo.Permanent_Address == " ") {
         Addresstoast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-        console.log(Addressinfo);
     }
     else {
         let id = fetch_data.current_user_id
-       let url = `/profile-pages-update-address_info/${id}`;
+        let url = `/profile-pages-update-address_info/${id}`;
 
-    axios.post(url, {
-        user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        current_address_line_1: diolog_Addressinfo.current_address,
-        permanent_address_line_1:diolog_Addressinfo.Permanent_Address
+        axios.post(url, {
+            user_code: _instance_profilePagesStore.employeeDetails.user_code,
+            current_address_line_1: diolog_Addressinfo.current_address,
+            permanent_address_line_1: diolog_Addressinfo.Permanent_Address
 
         })
-        .then((res) => {
-            data_checking.value = false;
-            if (res.data.status == "success") {
+            .then((res) => {
+                data_checking.value = false;
+                if (res.data.status == "success") {
+                    toast.add({ severity: 'success', summary: 'Updated', detail: 'Address information updated', life: 3000 });
+                    _instance_profilePagesStore.employeeDetails.current_address_line_1 = diolog_Addressinfo.current_address
+                    _instance_profilePagesStore.employeeDetails.get_employee_office_details.permanent_address_line_1 = diolog_Addressinfo.Permanent_Address
 
-                _instance_profilePagesStore.employeeDetails.current_address_line_1 =  diolog_Addressinfo.current_address
-                _instance_profilePagesStore.employeeDetails.get_employee_office_details.permanent_address_line_1 =  diolog_Addressinfo.Permanent_Address
-
-            } else if (res.data.status == "failure") {
-                addressUpdateDetails.leave_request_error_messege = res.data.message;
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+                } else if (res.data.status == "failure") {
+                    addressUpdateDetails.leave_request_error_messege = res.data.message;
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                _instance_profilePagesStore.fetchEmployeeDetails();
+                canShowLoading.value = false;
+            })
 
         addressVisible.value = false;
-
-        window.location.reload();
     }
 
 }
@@ -734,33 +753,9 @@ dialog>header {
 Dialog {
     color: #002f56;
 }
-
-
-
-
-
-
-
-
 </style>
 
 
-{
 
-
-<!--
-<template>
-    <div class="card">
-        <Message :closable="false">Message Content</Message>
-    </div>
-</template>
-
-<script setup>
-</script>
-
-
--->
-
-}
 
 

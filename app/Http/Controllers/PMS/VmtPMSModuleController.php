@@ -425,8 +425,10 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->selected_columns && in_array('target', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->selected_columns && in_array('stretchTarget', explode(',', $config->selected_columns)) ? 'true': 'false';
             $show['source'] = $config->selected_columns && in_array('source', explode(',', $config->selected_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->selected_columns && in_array('kpiWeightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->selected_columns && in_array('kpi_weightage', explode(',', $config->selected_columns)) ? 'true': 'false';
+           // dd( $config->selected_columns);
         }
+        //dd($show);
         return view('pms.vmt_pms_kpiform_create',compact('config','show','selectedYear'));
     }
 
@@ -724,7 +726,7 @@ class VmtPMSModuleController extends Controller
         $show['kpiWeightage'] = 'true';
         $show['appraiser'] = false;
         $show['manager'] = false;
-
+       //  dd($config);
         if ($config) {
             $config->header = json_decode($config->column_header, true);
             $show['dimension'] = $config->available_columns && in_array('dimension', explode(',', $config->available_columns)) ? 'true': 'false';
@@ -735,9 +737,9 @@ class VmtPMSModuleController extends Controller
             $show['target'] = $config->available_columns && in_array('target', explode(',', $config->available_columns)) ? 'true': 'false';
             $show['stretchTarget'] = $config->available_columns && in_array('stretchTarget', explode(',', $config->available_columns)) ? 'true': 'false';
             $show['source'] = $config->available_columns && in_array('source', explode(',', $config->available_columns)) ? 'true': 'false';
-            $show['kpiWeightage'] = $config->available_columns && in_array('kpiWeightage', explode(',', $config->available_columns)) ? 'true': 'false';
+            $show['kpiWeightage'] = $config->available_columns && in_array('kpi_weightage', explode(',', $config->available_columns)) ? 'true': 'false';
         }
-
+      // dd($show);
         $review  =  VmtPMS_KPIFormAssignedModel::join('vmt_pms_kpiform_details','vmt_pms_kpiform_details.vmt_pms_kpiform_id','=','vmt_pms_kpiform_assigned.vmt_pms_kpiform_id')
         ->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')
         ->where('vmt_pms_kpiform_reviews.assignee_id','=',$request->assigneeId)
@@ -755,22 +757,26 @@ class VmtPMSModuleController extends Controller
                 $commentArray = (json_decode($ff->reviewer_kpi_comments, true)) ? (json_decode($ff->reviewer_kpi_comments, true)) : [];
             }
         }
-
+          //dd($show);
         $kpiRows      =  VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->get();
         $reviewCompleted = false;
         $kpiRowsId = VmtPMS_KPIFormDetailsModel::where('vmt_pms_kpiform_id', $kpiFormAssignedDetails->vmt_pms_kpiform_id)->pluck('id')->toArray();
         $kpiRowsId = implode(',',$kpiRowsId);
 
         // Get assigned Details
-        $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
+        $assignedGoals  = VmtPMS_KPIFormAssignedModel::where('vmt_pms_kpiform_assigned.id',$request->assignedFormid)
+                                                      ->where('vmt_pms_kpiform_reviews.assignee_id',$request->assigneeId)
+                                                      ->join('vmt_pms_kpiform_reviews','vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id','=','vmt_pms_kpiform_assigned.id')->first();
 
 
 
         $assignedUserDetails = User::where('id',$request->assigneeId)->with('getEmployeeDetails','getEmployeeOfficeDetails')->first();
+        $assignedUserDepartment = Department::where('id',$assignedUserDetails->getEmployeeOfficeDetails->department_id)->first();
         $assignedEmployee_Userdata = User::where('id',  $request->assigneeId)->first();
         $assignedEmployeeOfficeDetails = VmtEmployeeOfficeDetails::where('user_id', $request->assigneeId)->first();
         $empSelected = true;
         $employeeData = VmtEmployee::where('userid', $request->assigneeId)->first();
+
 
         $reviewersId = explode(',',$assignedGoals->reviewer_id);
 
@@ -812,22 +818,23 @@ class VmtPMSModuleController extends Controller
 
         //Calculate score for the currently selected form
         $ratingDetail = calculateReviewRatings($request->assignedFormid, $request->assigneeId);
+        $overallRatingDetails = calculateOverallReviewRating($request->assigneeId);
 
         // check if logged in user is assignee or not
         if($request->assigneeId == auth()->user()->id){
-            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
+            return view('pms.vmt_pms_kpiappraisal_review_assignee', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedUserDepartment','assignedGoals','empSelected','assignersName','config','show','ratingDetail','overallRatingDetails','kpiRowsId','kpiRows','reviewCompleted','isAllReviewersSubmittedOrNot','reviewersId','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic'));
         }
 
         // check if logged in user is reviewer or not
         if(in_array(Auth::id(), $reviewersId)){
            // $assigneeId = $request->assigneeId;
             $enableButton = true;
-            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','canShowOverallScoreCard_ReviewPage','canShowRatingCard','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
+            return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','assignedUserDetails','canShowOverallScoreCard_ReviewPage','canShowRatingCard','assignedUserDepartment','assignedGoals','empSelected','assignersName','config','show','ratingDetail','overallRatingDetails','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
         }
         $enableButton = false;
 
-        return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedGoals','empSelected','assignersName','config','show','ratingDetail','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
-        dD("Assigner's review page is pending");
+        return view('pms.vmt_pms_kpiappraisal_review_reviewer', compact('review','canShowRatingCard','canShowOverallScoreCard_ReviewPage','assignedUserDetails','assignedUserDepartment','assignedGoals','empSelected','assignersName','config','show','ratingDetail','overallRatingDetails','kpiRowsId','kpiRows','reviewCompleted','reviewersId','isAllReviewersSubmittedOrNot','isAllReviewersSubmittedData','isAllReviewersAcceptedData','isAllReviewersAcceptedOrNot','pmsRatingDetails','kpiFormAssignedDetails','headerColumnsDynamic', 'enableButton'));
+
 
 
     }
@@ -1688,6 +1695,32 @@ class VmtPMSModuleController extends Controller
         $dashboardCountersData['finalScoreCount'] =  $finalScoreCount;
 
         return $dashboardCountersData;
+    }
+
+    /*
+        Revoke a manager reviewed form. It can be done by HR .
+
+        Todo : In future, manager also can revoke the form based on end date. After that, he cant .
+                This is controlled via PMS settings page.
+
+    */
+    public function revokeSubmittedForm(Request $request){
+        //dd($request->all());
+
+        $vmtAssignedFormReview = VmtPMS_KPIFormReviewsModel::where('id',$request->assigneeGoalId)->first();
+
+        $json_values = json_decode($vmtAssignedFormReview->is_reviewer_submitted, true);
+
+        foreach($json_values as $key => $value)
+        {
+            $json_values[$key] = "0";
+            //dd(json_encode($json_values));
+            $vmtAssignedFormReview->is_reviewer_submitted = json_encode($json_values);
+            $vmtAssignedFormReview->save();
+        }
+        return response()->json([
+            "status" => "success"
+        ]);
     }
 
 }

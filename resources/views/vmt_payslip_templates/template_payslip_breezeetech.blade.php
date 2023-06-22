@@ -1,5 +1,5 @@
 <?php
-//$employee = \DB::table('vmt_employee_payslip')->first();
+
 $general_info = \DB::table('vmt_general_info')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
 $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
@@ -108,7 +108,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                 <td colspan="7" class="  border-t-b">
                     <p class="text-bolder " style="margin: 0;padding:.7em 0;">
                         Payslip For the Month of :
-                        {{ strtoupper(date('F-Y', strtotime($employee_payslip->PAYROLL_MONTH))) }}
+                        {{ strtoupper(date('F-Y', strtotime($emp_payroll_month->payroll_date))) }}
                     </p>
                 </td>
             </tr>
@@ -121,7 +121,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                     Employee code
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_payslip->EMP_NO }}
+                                    {{ $employee_code }}
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
                                     Designation
@@ -316,36 +316,36 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <tr>
                             <td colspan="1" style="padding-bottom: .3em;">Basic</td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->BASIC), 2) }}
+                                {{ number_format(round($employee_payslip->basic), 2) }}
                             </td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->Earned_BASIC), 2) }}
+                                {{ number_format(round($employee_payslip->earned_basic), 2) }}
                             </td>
                             <td colspan="1" style="padding-bottom: .3em;padding-right:1em ">
-                                {{ number_format(round($employee_payslip->BASIC_ARREAR), 2) }}
+                                {{ number_format(round($employee_payslip->basic_arrear), 2) }}
                             </td>
                         </tr>
                         <tr>
                             <td colspan="1" style="padding-bottom: .3em;">HRA</td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->HRA), 2) }}
+                                {{ number_format(round($employee_payslip->hra), 2) }}
                             </td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->Earned_HRA), 2) }}
+                                {{ number_format(round($employee_payslip->earned_hra), 2) }}
                             </td>
                             <td colspan="1" style="padding-bottom: .3em;padding-right:1em ">
-                                {{ number_format(round($employee_payslip->HRA_ARREAR), 2) }}
+                                {{ number_format(round($employee_payslip->hra_arrear), 2) }}
                             </td>
                         </tr>
                         <tr>
                             <td colspan="1" style="padding-bottom: .3em;">Spl_Allowance
                             </td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->SPL_ALW), 2) }}</td>
+                                {{ number_format(round($employee_payslip->spl_alw), 2) }}</td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->Earned_SPL_ALW), 2) }}</td>
+                                {{ number_format(round($employee_payslip->earned_spl_alw), 2) }}</td>
                             <td colspan="1" style="padding-bottom: .3em;padding-right:1em ">
-                                {{ number_format(round($employee_payslip->SPL_ALW_ARREAR), 2) }}</td>
+                                {{ number_format(round($employee_payslip->spl_alw_arrear), 2) }}</td>
                         </tr>
                         <tr>
                             <td colspan="1" style="padding-bottom: .3em;">Statutory Bonus
@@ -392,7 +392,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <tr>
                             <td colspan="1" style="padding-bottom: .3em;">PT</td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->PROF_TAX), 2) }}</td>
+                                {{ number_format(round($employee_payslip->prof_tax), 2) }}</td>
                             <td colspan="1" style="padding-bottom: .3em;">1800.00</td>
 
                         </tr>
@@ -409,7 +409,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <tr class="border-t-b">
                             <td colspan="1" style="padding:.6em 0;" class="border-t-b">Total Deductions</td>
                             <td colspan="1" style="padding:.6em 0;" class="border-t-b">
-                                {{ number_format(round($employee_payslip->TOTAL_DEDUCTIONS), 2) }}</td>
+                                {{ number_format(round($employee_payslip->total_deductions), 2) }}</td>
                             <td colspan="1" style="padding:.6em 0;" class="border-t-b"></td>
                         </tr>
 
@@ -421,12 +421,12 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                 <td colspan="7">
                     <p class="margin-0">
                         <span  class=" text-bolder">Payable Salary &nbsp;
-                            {{ number_format(round($employee_payslip->TOTAL_EARNED_GROSS), 2) }}
+                            {{ number_format(round($employee_payslip->total_earned_gross), 2) }}
                         </span>
                         <br>
                         <span style="padding:.2em 0">
                             Net Amount in words:
-                            {{ $employee_payslip->Rupees }} Only
+                            {{ $employee_payslip->rupees }} Only
                         </span>
                     </p>
                 </td>

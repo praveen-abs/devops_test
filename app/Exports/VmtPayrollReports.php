@@ -152,102 +152,92 @@ WithCustomValueBinder
 
     public function collection()
     {
-        $query_payroll_data = VmtEmployeePaySlip::leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_employee_payslip.user_id')
-            ->leftJoin('users', 'users.id', '=', 'vmt_employee_payslip.user_id')
-            ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_employee_payslip.user_id')
-            ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_employee_payslip.user_id')
-            ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_employee_payslip.user_id')
-            ->where('vmt_employee_payslip.PAYROLL_MONTH', $this->payroll_month)
-            ->select('users.user_code',
-                     'users.name',
 
-                     'vmt_employee_office_details.DESIGNATION',
-                     'vmt_employee_details.doj',
-                     'vmt_employee_details.dob',
+     $query_payroll_data=VmtEmployeePaySlipV2::leftjoin('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
+            ->leftjoin('vmt_payroll','vmt_payroll.id','=','vmt_emp_payroll.payroll_id')
+            ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_emp_payroll.user_id')
+           ->leftJoin('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+           ->leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'vmt_emp_payroll.user_id')
+           ->leftJoin('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'vmt_emp_payroll.user_id')
+           ->leftJoin('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'vmt_emp_payroll.user_id')
+           ->whereYear('vmt_payroll.payroll_date', $request->payroll_year)
+           // ->orWhere('vmt_employee_office_details.work_location',$request->work_location)
+           ->select('users.user_code',
+                    'users.name',
 
-                     'vmt_employee_office_details.work_location',
+                    'vmt_employee_office_details.DESIGNATION',
+                    'vmt_employee_details.doj',
+                    'vmt_employee_details.dob',
 
-                      'vmt_employee_details.Aadhar_Number',
-                      'vmt_employee_details.PAN_Number',
+                    'vmt_employee_office_details.work_location',
 
-                     'vmt_employee_statutory_details.uan_number',
-                     'vmt_employee_statutory_details.epf_number',
-                     'vmt_employee_statutory_details.esic_number',
+                     'vmt_employee_details.Aadhar_Number',
+                     'vmt_employee_details.PAN_Number',
 
-                     'vmt_employee_details.bank_id',
-                     'vmt_employee_details.bank_account_number',
-                     'vmt_employee_details.bank_ifsc_code',
-                     'vmt_employee_details.mobile_number',
+                    'vmt_employee_statutory_details.uan_number',
+                    'vmt_employee_statutory_details.epf_number',
+                    'vmt_employee_statutory_details.esic_number',
 
-                     'vmt_employee_office_details.officical_mail',
+                    'vmt_employee_details.bank_id',
+                    'vmt_employee_details.bank_account_number',
+                    'vmt_employee_details.bank_ifsc_code',
+                    'vmt_employee_details.mobile_number',
 
-                     //Abry and Enitiy
-                     'vmt_employee_payslip.PAYROLL_MONTH',
-                     //Total Emoluments
-                     'vmt_employee_payslip.BASIC',
-                     'vmt_employee_payslip.HRA',
-                     'vmt_employee_payslip.SPL_ALW',
-                     'vmt_employee_payslip.TOTAL_FIXED_GROSS',
+                    'vmt_employee_office_details.officical_mail',
 
-                     'vmt_employee_statutory_details.esic_applicable',
+                    //Abry and Enitiy
+                    'vmt_payroll.payroll_date as PAYROLL_MONTH',
+                    //Total Emoluments
+                    'vmt_employee_payslip_v2.basic as BASIC',
+                    'vmt_employee_payslip_v2.hra as HRA',
+                    'vmt_employee_payslip_v2.spl_alw as SPL_ALW',
+                    'vmt_employee_payslip_v2.total_fixed_gross as TOTAL_FIXED_GROSS',
 
-                     'vmt_employee_payslip.MONTH_DAYS',
-                     'vmt_employee_payslip.Worked_Days',
-                     'vmt_employee_payslip.Arrears_Days',
-                     'vmt_employee_payslip.LOP',
-                     'vmt_employee_payslip.Earned_BASIC',
-                     'vmt_employee_payslip.BASIC_ARREAR',
-                     'vmt_employee_payslip.Earned_HRA',
-                     'vmt_employee_payslip.HRA_ARREAR',
-                     'vmt_employee_payslip.Earned_SPL_ALW',
-                     'vmt_employee_payslip.SPL_ALW_ARREAR',
-                     'vmt_employee_payslip.Overtime',
-                     //Overtime Arrears
-                     'vmt_employee_payslip.TOTAL_EARNED_GROSS',
-                     'vmt_employee_payslip.PF_WAGES',
-                     'vmt_employee_payslip.PF_WAGES_ARREAR_EPFR',
-                     'vmt_employee_payslip.EPFR',
-                     'vmt_employee_payslip.EPFR_ARREAR',
-                     'vmt_employee_payslip.EDLI_CHARGES',
-                     'vmt_employee_payslip.EDLI_CHARGES_ARREARS',
-                     'vmt_employee_payslip.PF_ADMIN_CHARGES',
-                     'vmt_employee_payslip.PF_ADMIN_CHARGES_ARREARS',
-                     'vmt_employee_payslip.EMPLOYER_ESI',
-                     'vmt_employee_payslip.Employer_LWF',
-                     'vmt_employee_payslip.CTC',
-                     'vmt_employee_payslip.EPF_EE',
-                     //VPF
-                     'vmt_employee_payslip.EPF_EE_ARREAR',
-                     'vmt_employee_payslip.EMPLOYEE_ESIC',
-                     'vmt_employee_payslip.PROF_TAX',
-                     //'vmt_employee_payslip.TDS',
-                     //incomeTax
-                     'vmt_employee_payslip.SAL_ADV',
-                     'vmt_employee_payslip.CANTEEN_DEDN',
-                     'vmt_employee_payslip.OTHER_DEDUC',
-                     'vmt_employee_payslip.LWF',
-                     'vmt_employee_payslip.TOTAL_DEDUCTIONS',
-                     'vmt_employee_payslip.NET_TAKE_HOME'
+                    'vmt_employee_statutory_details.esic_applicable',
+
+                    'vmt_employee_payslip_v2.month_days as MONTH_DAYS',
+                    'vmt_employee_payslip_v2.worked_Days as Worked_Days',
+                    'vmt_employee_payslip_v2.arrears_Days as Arrears_Days',
+                    'vmt_employee_payslip_v2.lop as LOP',
+                    'vmt_employee_payslip_v2.earned_basic as Earned_BASIC',
+                    'vmt_employee_payslip_v2.basic_arrear as BASIC_ARREAR',
+                    'vmt_employee_payslip_v2.earned_hra as Earned_HRA',
+                    'vmt_employee_payslip_v2.hra_arrear as HRA_ARREAR',
+                    'vmt_employee_payslip_v2.earned_spl_alw as Earned_SPL_ALW',
+                    'vmt_employee_payslip_v2.spl_alw_arrear as SPL_ALW_ARREAR',
+                    'vmt_employee_payslip_v2.overtime as Overtime',
+                    //Overtime Arrears
+                    'vmt_employee_payslip_v2.total_earned_gross as TOTAL_EARNED_GROSS',
+                    'vmt_employee_payslip_v2.pf_wages as PF_WAGES',
+                    'vmt_employee_payslip_v2.pf_wages_arrear_epfr as PF_WAGES_ARREAR_EPFR',
+                    'vmt_employee_payslip_v2.epfr as EPFR',
+                    'vmt_employee_payslip_v2.epfr_arrear as EPFR_ARREAR',
+                    'vmt_employee_payslip_v2.edli_charges as EDLI_CHARGES',
+                    'vmt_employee_payslip_v2.edli_charges_arrears as EDLI_CHARGES_ARREARS',
+                    'vmt_employee_payslip_v2.pf_admin_charges as PF_ADMIN_CHARGES',
+                    'vmt_employee_payslip_v2.pf_admin_charges_arrears as PF_ADMIN_CHARGES_ARREARS',
+                    'vmt_employee_payslip_v2.employer_esi as EMPLOYER_ESI',
+                    'vmt_employee_payslip_v2.employer_lwf as Employer_LWF',
+                    'vmt_employee_payslip_v2.ctc as CTC',
+                    'vmt_employee_payslip_v2.epf_ee as EPF_EE',
+                    //VPF
+                    'vmt_employee_payslip_v2.epf_ee_arrear as EPF_EE_ARREAR',
+                    'vmt_employee_payslip_v2.employee_esic as EMPLOYEE_ESIC',
+                    'vmt_employee_payslip_v2.prof_tax as PROF_TAX',
+                    //'vmt_employee_payslip_v2.TDS',
+                    //incomeTax
+                    'vmt_employee_payslip_v2.sal_adv as SAL_ADV',
+                    'vmt_employee_payslip_v2.canteen_dedn as CANTEEN_DEDN',
+                    'vmt_employee_payslip_v2.other_deduc as OTHER_DEDUC',
+                    'vmt_employee_payslip_v2.LWF',
+                    'vmt_employee_payslip_v2.total_deductions as TOTAL_DEDUCTIONS',
+                    'vmt_employee_payslip_v2.net_take_home as NET_TAKE_HOME'
+           );
+
+           // For Filter Option
 
 
 
-
-
-
-                     //  'vmt_employee_office_details.DEPARTMENT_ID'
-                    //  'vmt_employee_payslip.CHILD_EDU_ALLOWANCE',
-                    //  'vmt_employee_payslip.CHILD_EDU_ALLOWANCE_ARREAR',
-                    //  'vmt_employee_payslip.Earned_CHILD_EDU_ALLOWANCE',
-                    //  'vmt_employee_payslip.Rupees',
-                    //  'vmt_employee_payslip.EL_Opn_Bal',
-                    //  'vmt_employee_payslip.Availed_EL',
-                    //  'vmt_employee_payslip.Balance_EL',
-                    //  'vmt_employee_payslip.SL_Opn_Bal',
-                    //  'vmt_employee_payslip.Availed_SL',
-                    //  'vmt_employee_payslip.Balance_SL',
-                    //  'vmt_employee_payslip.Rename',
-            );
-        // dd($query_payroll_data);
 
        if (session('client_id') == '1')
         return $query_payroll_data->get();

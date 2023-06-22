@@ -7,18 +7,21 @@
 
 
 @section('content')
- @component('components.attendance_breadcrumb')
-   @slot('li_1')@endslot
- @endcomponent
 
-<div class="card flex-fill project-wrapper">
-	<div class="card-header">
-	   <h5><span class="text-muted">Attendance &gt;</span> <span class="text-danger"> Settings </span></h5>
-	</div>
-        <div class="card-body p-2">
+ <div class="mb-0 card approvals_wrapper mt-30">
+    <div class="card-body ">
+        <div class="filter-content">
+            <div class="row">
+                <div class="col-sm-12 col-xxl-6 col-md-6 col-xl-6 col-lg-6">
+                    <h6 class="my-2 text-lg font-semibold">Attendance Settings</h6>
+                </div>
+            </div>
+        </div>
+        @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
 
-	</div>
-</div>
+        <div id="vjs_attendance_master"></div>
+    </div>
+ </div>
 @endsection
 
 @section('script')

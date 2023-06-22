@@ -1,73 +1,317 @@
 <template>
-    <div class=" justify-content-center align-items-center">
-        <div class="mx-2 ">
-            <div class="my-3">
-                <p class="text-2xl text-black">Tax Deductions FY 2022-2023</p>
-            </div>
-            <div class="p-2 my-2 text-black border-red-100 rounded-lg bg-red-50">
-                <div class="px-2 my-2">Kindly update your <strong class="text-blue-500">PAN </strong>to avoid 20$ TDS
-                    deduction (if applicable) </div>
-            </div>
-            <div class="my-4 bg-gray-100 rounded-lg border-1">
-                <p class="p-3 text-black">You have the option of either using a new regime(with no tax deducations), or
-                    using the same regime as FY 2019-20.To help you make an informed decision., we are displaying your tax
-                    liability in both these regimes,and you can choose the option that you prefer.For us to accurately
-                    calculated your tax liabilities , please ensure you full in all the information requested
-                    below,irrespective of the regime that you pick</p>
-            </div>
-            <div class="flex gap-6 my-4">
-                <div class="w-6">
-                    <div class="text-lg ">Your current chosen tax regime is <strong class="text-lg text-blue-500">Old
-                            Tax Regime</strong> </div>
-
-                    <p class="text-sm font-bold text-gray-400 ">The confirmed old tax regime will be used in future payroll
-                        calculations
-                    </p>
-                    <div>
+    <div class="p-1">
+        <div class=" justify-content-center align-items-center">
+            <div class="mx-2 ">
+                <div class="my-3">
+                    <p class="font-semibold text-black fs-2">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
+                        Date().getFullYear() + 1 }}</p>
+                </div>
+                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400 w-7 ">
+                    <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
+                    <div style="font-weight: 600;" class="px-1 my-2 fs-5 d-flex ">Kindly update your <span
+                            class="font-semibold text-blue-400 fs-5">PAN</span>to avoid 20$ TDS
+                        deduction (if applicable) </div>
+                </div>
+                <div class="my-4 rounded-lg card ">
+                    <div class="card-body">
+                        <p class="text-lg font-semibold text-black" style="line-height: 25px;">
+                            Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
+                            investment amount till last day of every month until the cutoff date of {{ new
+                                Date().toLocaleString('default', { month: 'long', }) }} 27, {{ new Date().getFullYear() }}. Last
+                            date
+                            for submitting your investment proofs is {{ new Date().toLocaleString('default', {
+                                month:
+                                    'long',
+                            }) }} 27, {{ new Date().getFullYear() }}. '$' - Not considered for exemption if
+                            opted for New tax regime (Section 115BAC). You can declare your investment amount till last day
+                            of every month until the cutoff date of {{ new Date().toLocaleString('default', {
+                                month:
+                                    'long',
+                            }) }} 27, {{ new Date().getFullYear() }}.Last date for submitting your investment
+                            proofs is {{ new Date().toLocaleString('default', { month: 'long', }) }} 27, {{ new
+                                Date().getFullYear() }}.
+                        </p>
                     </div>
                 </div>
-                <div>
-                    <button @click="switch_regime_dailo = true" type="button"
-                        class="p-2 font-thin text-white bg-blue-500 rounded-lg ">
-                        Old Tax Regime</button>
-                    <span class="text-sm">Maximum benefit</span>
+                <div class="flex justify-between gap-6 my-4">
+                    <div class="w-9">
+                        <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
+                                class="text-blue-500 underline cursor-pointer fs-4"
+                                style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
+                                v-tooltip.bottom="`Last Updated Date  ${dayjs(lastUpdated).format('dddd, MMMM D, YYYY h:mm A')}`">{{
+                                    findRegime(regime) }}
+                            </strong>
+                            <span v-if="regime == 'old'">
+                                <span class="text-sm text-green-600"
+                                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                                    benefit</span>
+                            </span>
+                            <span v-else>
+                                <span class="text-sm text-green-600"
+                                    v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
+                                    benefit</span>
+                            </span>
+                        </div>
 
+                        <!-- text-sm -->
+                        <p class="text-gray-600 fs-6 fst-italic">The confirmed old tax regime will be used in future payroll
+                            calculations
+                        </p>
+                        <div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="text-end">
+                        <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true"
+                            :disabled="!disableRegime(lastUpdated)">Switch Regime</button>
+                    </div>
                 </div>
-                <div>
-
-
-                    <button @click="switch_regime_dailog = true" type="button"
-                        class="p-2 text-orange-400 font-bold hover:text-white border border-orange-400 hover:bg-orange-400 focus:ring-4 focus:outline-none focus:ring-orange-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-8 mb-2 dark:border-orange-400 dark:text-orange-400dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-400">
-                        Switch Regime
-                    </button>
-
+                <div v-if="disableRegime(lastUpdated)"
+                    class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
+                    <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
+                    <p class="ml-2 font-semibold text-black fs-5 ">
+                        Not considered for exemption if opted for New tax regime (Section 115BAC). You can declare your
+                        investment amount till last day of every month.
+                    </p>
                 </div>
-
-
-
+                <div v-else class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
+                    <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
+                    <p class="ml-2 font-semibold text-black fs-5">
+                        The tax regime cannot be changed until the financial year
+                        {{ new Date().getFullYear() }} - {{ new Date().getFullYear() + 1 }} ends. (April {{ new
+                            Date().getFullYear() }} -March {{ new Date().getFullYear() + 1 }} )
+                    </p>
+                </div>
             </div>
-            <div class="h-full p-3 my-4 bg-blue-50">
-                <p class="text-blue-700">
-                    Choosing old regime will give you an additional benefits of &#x20B9; 41,222.00 as compared to New
-                    Regime.Calculations are based on the latest released payroll - Jul 2022
-                </p>
+        </div>
+
+        <DataTable :value="tax_deduction" dataKey="id">
+            <template #empty> No Data Found. </template>
+            <template #loading> Loading customers data. Please wait. </template>
+            <Column header="#">
+                <template #body="slotProps">
+                    {{ slotProps.data.sno }}.
+                </template>
+            </Column>
+            <Column field="section" header="" style=" width: 26rem; text-align: left !important;">
+                <template #header>
+                    <p style="font-weight: 501;">
+                        Particulars
+                    </p>
+                </template>
+                <template #body="slotProps">
+                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Taxable Income'">
+                        {{ slotProps.data.section }} <strong>(a + b + c + d + e + f)</strong>
+                    </p>
+                    <p style="font-weight: 501;" v-else>
+                        {{ slotProps.data.section }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="old_regime" header="" style="text-align: right !important;">
+                <template #header>
+                    <p style="font-weight: 501;">
+                        Old Tax Regime
+                    </p>
+                </template>
+                <template #body="slotProps">
+                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                        {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.old_regime
+                            , 'old', slotProps.data.age)) }}
+                    </p>
+                    <p style="font-weight: 501;" v-else>
+                        {{ investmentStore.formatCurrency(slotProps.data.old_regime) }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="new_regime" header="" style="text-align: right !important;">
+                <template #header>
+                    <p style="font-weight: 501;">
+                        New Tax Regime
+                    </p>
+                </template>
+                <template #body="slotProps">
+                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                        {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.new_regime
+                            , 'new', slotProps.data.age)) }}
+                    </p>
+                    <p style="font-weight: 501;" v-else>
+                        {{ investmentStore.formatCurrency(slotProps.data.new_regime) }}
+                    </p>
+                </template>
+            </Column>
+
+        </DataTable>
+
+        <div class="my-3">
+            <p class="font-semibold text-black fs-2">Declaration</p>
+        </div>
+
+        <div class="my-3 card">
+            <div class="grid gap-4 my-1 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body">
+                <div class="p-2 text-left border-l-4 rounded-lg bg-sky-100 border-l-sky-400">
+                    <p class="font-semibold fs-6 ">Net Taxable Income</p>
+                    <div class="grid  my-1 md:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2">
+                        <h6 v-if="regime == 'old'" class="text-lg font-bold">
+                            {{ investmentStore.formatCurrency(total_gross) }}</h6>
+                        <h6 v-else class="text-lg font-bold "> {{ investmentStore.formatCurrency(total_gross) }}</h6>
+                        <p class="pl-3 text-orange-400 underline lg:text-base"> Income Tax Computation</p>
+                    </div>
+                </div>
+                <div class="p-2 text-left bg-gray-100 border-l-4 rounded-lg tw-card border-l-gray-400">
+                    <p class="font-semibold fs-6 ">Total Tax Payable</p>
+                    <h6 v-if="regime == 'old'" class="text-lg font-bold"> {{ investmentStore.formatCurrency(
+                        formula.taxCalculation(total_gross, 'old', age)) }}</h6>
+                    <h6 v-else class="text-lg font-bold"> {{ investmentStore.formatCurrency(
+                        formula.taxCalculation(total_gross, 'new', age)) }}</h6>
+                </div>
+
+                <div class="p-2 text-left bg-orange-100 border-l-4 rounded-lg tw-card border-l-orange-400 ">
+                    <p class="font-semibold fs-6 ">Tax Paid Till Now</p>
+                    <h6 class="text-lg font-bold">{{ investmentStore.formatCurrency(0) }}</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-3">
+            <div>
+                <p class="text-2xl font-semibold ">Important!</p>
+                <div class="mx-2">
+                    <ul class="font-semibold f-13">
+                        <li class="my-2 text-lg font-semibold">
+                            '$' - Not considered for exemption if opted for New tax regime (Section 115BAC).
+                        </li>
+                        <li class="my-2 text-lg font-semibold">
+                            You can declare your investment amount till last day of every month until the cutoff date of {{
+                                new Date().toLocaleString('default', { month: 'long', }) }}
+                            27, {{ new Date().getFullYear() }}.
+                        </li>
+                        <li class="my-2 text-lg font-semibold">
+                            Last date for submitting your investment proofs is {{ new Date().toLocaleString('default',
+                                { month: 'long', }) }} 27, {{ new Date().getFullYear() }}.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="my-2 card">
+            <div class="card-body">
+                <div>
+                    <p class="font-semibold fs-4 ">My Declaration</p>
+                    <p class="my-2 font-semibold fs-6"> Below are the declarations done by you under various sections.</p>
+                </div>
+                <div class="my-2 table-responsive">
+                    <DataTable :rows="7" dataKey="id" :value="investmentStore.investmentSummarySource">
+                        <template #empty> No Data Found. </template>
+                        <template #loading> Loading customers data. Please wait. </template>
+                        <Column field="particulars" header="S.No">
+                            <template #body="slotProps">
+                                {{ slotProps.index + 1 }}
+                            </template>
+                        </Column>
+                        <Column field="section_name" header="Declaration" style="width: 16rem;text-align: left !important;">
+                        </Column>
+                        <Column field="dec_amount" style="width: 18rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Amount Declared
+                                </p>
+                            </template>
+                            <template #body="slotProps">
+                                {{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}
+                            </template>
+                        </Column>
+                        <Column field="proof_submitted" style="width: 16rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Proof Submitted
+                                </p>
+                            </template>
+                        </Column>
+                        <Column field="amount_rejected" style="width: 16rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Amount Rejected
+                                </p>
+                            </template>
+                            <template #body="slotProps">
+                                {{ investmentStore.formatCurrency(slotProps.data.amount_rejected) }}
+                            </template>
+                        </Column>
+                        <Column field="amount_accepted" style="width: 16rem;text-align: right !important;">
+                            <template #header>
+                                <p style="font-weight: 501;">
+                                    Amount Accepted
+                                </p>
+                            </template>
+                            <template #body="slotProps">
+                                {{ investmentStore.formatCurrency(slotProps.data.amount_accepted) }}
+                            </template>
+                        </Column>
+                    </DataTable>
+                </div>
+                <!-- <div class="my-6">
+                    <div>
+                        <p class="my-2 font-semibold fs-5">Month- Month Tax Deduction Details</p>
+                        <p class="my-2 font-semibold fs-6">Below deductions are based on your declared amount. Tax amount
+                            may change based on the amount approved.</p>
+                    </div>
+                    <div>
+                        <div class="grid gap-4 md:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 card-body ">
+                            <div class="text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Total Tax Payable</p>
+                                <div class="flex gap-2">
+                                    <h6 class="mb-0 font-semibold fs-4">INR 0</h6>
+                                </div>
+                            </div>
+                            <div class="p-2 text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Tax Paid Till Now</p>
+                                <h6 class="mb-0 font-semibold fs-4 ">INR 0</h6>
+                            </div>
+
+                            <div class="p-2 text-left rounded-lg ">
+                                <p class="my-2 font-semibold fs-3 text-ash-medium ">Remaining Tax Amount</p>
+                                <h6 class="mb-0 font-semibold fs-4">INR 0</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <DataTable :paginator="true" :rows="1" dataKey="id" scrollable>
+                            <template #empty> No Data Found. </template>
+                            <template #loading> Loading customers data. Please wait. </template>
+                            <Column field="particulars" header="Month" frozen class="font-bold">
+                                <template #body>
+                                    <p>
+                                        Monthly Tax
+                                    </p>
+                                </template>
+                            </Column>
+                            <Column field="new_regime" header="Apr 23"></Column>
+                            <Column field="old_regime" header="May 23"></Column>
+                            <Column field="old_regime" header="June 23 "></Column>
+                            <Column field="old_regime" header="July 23 "></Column>
+                            <Column field="new_regime" header="Aug 23"></Column>
+                            <Column field="old_regime" header="Sep 23"></Column>
+                            <Column field="old_regime" header="Oct 23 "></Column>
+                            <Column field="old_regime" header="Nov 23 "></Column>
+                            <Column field="old_regime" header="Dec 23 "></Column>
+                            <Column field="old_regime" header="Jan 23 "></Column>
+                            <Column field="old_regime" header="Feb 23 "></Column>
+                            <Column field="old_regime" header="Mar 23 "></Column>
+                        </DataTable>
+                    </div>
+                    <div class="flex my-3">
+                        <p class="font-semibold fs-6">
+                            <strong class="text-red-600">*</strong>
+                            Projected Income Tax does not include any revisions, bonuses or other additional projected
+                            payments other than salary.
+                        </p>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
-
-    <DataTable :value="tax_deduction" :paginator="true" :rows="10" dataKey="id"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-        <template #empty> No Data Found. </template>
-        <template #loading> Loading customers data. Please wait. </template>
-        <Column field="particulars" header="Particulars"></Column>
-        <Column field="new_regime" header="New Tax Regime"></Column>
-        <Column field="old_regime" header="Old Tax Regime"></Column>
-    </DataTable>
-
-
-
 
     <Dialog v-model:visible="switch_regime_dailog" modal :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
         <template #header>
@@ -75,66 +319,154 @@
 
         </template>
 
-        <p class="">Your current switching regime is <span class="text-lg font-semibold text-primary">New Tax
-                Regime</span> </p>
-
-        <p class="my-3 text-justify text-gray-500">
+        <p class="">Your current switching regime is
+            <strong class="text-lg font-semibold text-primary" v-if="regime == 'new'">{{ findRegime('old') }}
+                <span class="text-sm text-green-600"
+                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                    benefit</span>
+            </strong>
+            <strong class="text-lg font-semibold text-primary" v-else-if="regime == 'old'">
+                {{ findRegime('new') }}
+                <span class="text-sm text-green-600"
+                    v-if="formula.taxCalculation(total_gross, 'new', age) < formula.taxCalculation(total_gross, 'old', age) ? true : false">Maximum
+                    benefit</span>
+            </strong>
+            <strong class="text-lg font-semibold text-primary" v-else>
+                {{ findRegime('old') }}
+                <span class="text-sm text-green-600"
+                    v-if="formula.taxCalculation(total_gross, 'old', age) < formula.taxCalculation(total_gross, 'new', age) ? true : false">Maximum
+                    benefit</span>
+            </strong>
+        </p>
+        <p class="my-3 text-justify text-gray-700">
             Are you sure you want to switch your regime? You cannot change your regime selection once you
             have confirmed your selection.
         </p>
-        <p class="text-justify text-gray-500">
+        <p class="text-justify text-gray-700">
             In case of an incorrect selection, your only option will be to change your selection when you
             file your tax returns for the current financial year.
         </p>
 
 
         <div class="mt-5 text-end">
-            <button id="confirm_switchRegime"
-                class="px-4 py-2 text-center text-white bg-orange-700 rounded-md">Confirm</button>
+            <button id="confirm_switchRegime" class="px-4 py-2 text-lg text-center text-white bg-orange-700 rounded-md"
+                @click="saveRegime">Confirm</button>
         </div>
 
-
     </Dialog>
-
-<input type="number" v-model="test" name="" class="form-control" id="">
-{{ test }}<br>
-<button @click="formula.taxCalculation(test)">click</button>
-
-    
 </template>
 
 
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import {investmentFormulaStore} from '../../stores/investmentFormulaStore'
+import axios from 'axios'
+import dayjs from 'dayjs';
+import { onMounted, reactive, ref } from 'vue'
+import { investmentFormulaStore } from '../../stores/investmentFormulaStore'
+import { investmentMainStore } from '../../stores/investmentMainStore';
+const data = ref()
+onMounted(() => {
+    investmentStore.canShowLoading = true
+    investmentStore.fetchInvestmentSummary()
+    fetchTaxableIncomeInfo()
+    console.log(new Date().getFullYear() - 1);
 
+
+})
+
+// investmentStore.taxSavingInvestments.declared_amt += parseInt(ele.dec_amount)
+// investmentStore.taxSavingInvestments.max_limit += ele.amount_rejected
+// investmentStore.taxSavingInvestments.status = ele.is_submitted
+
+const investmentStore = investmentMainStore()
 const formula = investmentFormulaStore()
+const tax_deduction = ref()
+const total_gross = ref()
+const total_taxable = ref()
+
+const amount = ref()
+const regime = ref()
+const age = ref()
+const totalTax = ref()
+const lastUpdated = ref()
+const isRegimeSwitched = ref(false)
 
 
 
-
-
-
-
-
-
-
-const tax_deduction = ref([
-    {id:'1',particulars:'Earings',old_regime :'0' ,new_regime:'0'},
-    {id:'2',particulars:'Exemption',old_regime :'0' ,new_regime:'0'},
-    {id:'3',particulars:'Standard Deduction',old_regime :'50000' ,new_regime:'50000'},
-    {id:'4',particulars:'Deduction',old_regime :'0' ,new_regime:'0'},
-    {id:'5',particulars:'Taxable Income',old_regime :'0' ,new_regime:'0'},
-    {id:'6',particulars:'Total Tax Liability',old_regime :'0' ,new_regime:'0'},
+const regimeOption = ref([
+    { name: "old", value: "old" },
+    { name: "new", value: "new" }
 ])
 
-
-
-
 const switch_regime_dailog = ref(false);
-const switch_regime_dailo = ref(false);
 
+const saveRegime = () => {
+    switch_regime_dailog.value = false
+    investmentStore.canShowLoading = true
+    let selectedRegime = '';
+    if (regime.value == 'old') {
+        selectedRegime = 'new'
+    } else {
+        selectedRegime = 'old'
+    }
+    axios.post('/investments/saveRegime', {
+        regime: selectedRegime
+    }).finally(() => {
+        investmentStore.canShowLoading = false
+        fetchTaxableIncomeInfo()
+        isRegimeSwitched.value = true
+
+    })
+}
+
+const findRegime = (regime) => {
+    switch (regime) {
+        case "old":
+            return "OLD TAX REGIME"
+        case "new":
+            return "NEW TAX REGIME"
+        default:
+            return "NEW TAX REGIME"
+    }
+}
+
+const fetchTaxableIncomeInfo = async () => {
+    await axios.get('/investments/TaxDeclaration').then(res => {
+        tax_deduction.value = res.data
+        if (res.data[7].regime == 'old') {
+            total_gross.value = res.data[6].old_regime
+        } else {
+            total_gross.value = res.data[6].new_regime
+        }
+
+        total_taxable.value = res.data[7].old_regime
+        age.value = res.data[7].age
+        regime.value = res.data[7].regime
+        lastUpdated.value = res.data[7].last_updated
+    }).finally(() => {
+        investmentStore.canShowLoading = false
+        disableRegime(lastUpdated.value)
+    })
+}
+
+const disableRegime = (value) => {
+
+    let currentDate = new Date();
+    let updatedDate = '';
+
+    if (value) {
+        updatedDate = new Date(value);
+    } else {
+        updatedDate = new Date();
+    }
+
+    if (updatedDate >= currentDate) {
+        return true
+    } else {
+        return false
+    }
+
+}
 
 </script>
 

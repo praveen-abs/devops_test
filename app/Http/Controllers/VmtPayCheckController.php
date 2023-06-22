@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
-
+use Illuminate\Support\Facades\Validator;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePayslipStatus;
@@ -90,6 +90,29 @@ class VmtPayCheckController extends Controller
 
 
     }
+    public function importBulkEmployeesPayslipExcelData(Request $request ,VmtEmployeePayCheckService $VmtEmployeePayCheckService)
+    {
+
+        $validator =    Validator::make(
+            $request->all(),
+            ['file' => 'required|file|mimes:xls,xlsx'],
+            ['required' => 'The :attribute is required.']
+        );
+
+        if ($validator->passes()) {
+            $importDataArry = \Excel::toArray(new VmtPaySlip, request()->file('file'));
+           // dd( $importDataArry);
+            return $response=$VmtEmployeePayCheckService->storeBulkEmployeesPayslips($importDataArry);
+        } else {
+            $data['failed'] = $validator->errors()->all();
+            $responseJSON['status'] = 'failure';
+            $responseJSON['message'] = $data['failed'][0];//"Please fix the below excelsheet data";
+            //$responseJSON['data'] = $validator->errors()->all();
+            return response()->json($responseJSON);
+        }
+        // linking Manager To the employees;
+        // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
+    }
 
 
     public function getEmployeePayslipDetailsAsHTML(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
@@ -111,7 +134,7 @@ class VmtPayCheckController extends Controller
         return $employeePayCheckService->getEmployeePayslipDetailsAsHTML($user_code, $request->month, $request->year);
     }
 
-    public function getEmployeePayslipDetailsAsPDF_v2(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
+    public function getEmployeePayslipDetailsAsPDF(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
 
         $user_code = null;
 
@@ -126,7 +149,7 @@ class VmtPayCheckController extends Controller
             //dd("Enc User details from request : ".$user);
         }
 
-        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF_v2($user_code, $request->month, $request->year);
+        return $employeePayCheckService->getEmployeePayslipDetailsAsPDF($user_code, $request->month, $request->year);
     }
 
     public function sendMail_employeePayslip(Request $request, VmtEmployeePayCheckService $employeePayCheckService){
@@ -171,71 +194,78 @@ class VmtPayCheckController extends Controller
         Fetch payslips for currently logged in user
 
     */
-    public function showSalaryDetailsPage(Request $request) {
+//     public function showSalaryDetailsPage(Request $request) {
 
-        try{
+//         try{
 
-         $enc_user_id = Crypt::encryptString(auth()->user()->id);
-         //$show_employeepayslip = VmtEmployeePayslipStatus::where('user_id',auth()->user()->id);
+//          $enc_user_id = Crypt::encryptString(auth()->user()->id);
+//          //$show_employeepayslip = VmtEmployeePayslipStatus::where('user_id',auth()->user()->id);
 
-   //     if($show_employeepayslip->exists()){
-            //         $is_released =$show_employeepayslip->first()->is_released;
+//    //     if($show_employeepayslip->exists()){
+//             //         $is_released =$show_employeepayslip->first()->is_released;
 
-            //     if($is_released == '1'){
+//             //     if($is_released == '1'){
 
-            //       }
-            //    }
-         $data =  DB::table('vmt_employee_payslip')
-             ->where('vmt_employee_payslip.user_id', auth()->user()->id)->orderBy('PAYROLL_MONTH', 'DESC')
-             ->get();
+//             //       }
+//             //    }
+
+//         $data =  VmtEmployeePaySlip::join('vmt_employee_payslip_status','vmt_employee_payslip_status.payroll_month','=','vmt_employee_payslip.PAYROLL_MONTH')
+//             ->where('vmt_employee_payslip.user_id', auth()->user()->id)
+//             ->orderBy('vmt_employee_payslip.PAYROLL_MONTH', 'DESC')
+//             ->get();
 
 
-         if($data->count()!=0)
-         {
+//          if($data->count()!=0)
+//          {
 
-             $compensatory =  Compensatory::where('user_id', auth()->user()->id)->first();
-             $result['CTC'] = 0;
-             $result['TOTAL_EARNED_GROSS'] = 0;
-             $result['TOTAL_DEDUCTIONS'] = 0;
-             $result['BASIC'] = 0;
-             $result['HRA'] = 0;
-             $result['TOTAL_FIXED_GROSS'] = 0;
-             $result['EPFR'] = 0;
-             $result['TOTAL_PF_WAGES'] = 0;
+//              $compensatory =  Compensatory::where('user_id', auth()->user()->id)->first();
+//              $result['CTC'] = 0;
+//              $result['TOTAL_EARNED_GROSS'] = 0;
+//              $result['TOTAL_DEDUCTIONS'] = 0;
+//              $result['BASIC'] = 0;
+//              $result['HRA'] = 0;
+//              $result['TOTAL_FIXED_GROSS'] = 0;
+//              $result['EPFR'] = 0;
+//              $result['TOTAL_PF_WAGES'] = 0;
 
-             if ($data && $data[0]) {
-                 $result['CTC'] = $data[0]->CTC;
-                 $result['TOTAL_EARNED_GROSS'] = $data[0]->TOTAL_EARNED_GROSS;
-                 $result['TOTAL_DEDUCTIONS'] = $data[0]->TOTAL_DEDUCTIONS;
-                 $result['BASIC'] = $data[0]->BASIC;
-                 $result['HRA'] = $data[0]->HRA;
-                 $result['TOTAL_FIXED_GROSS'] = $data[0]->TOTAL_FIXED_GROSS;
-                 $result['EPFR'] = $data[0]->EPFR;
+//              if ($data && $data[0]) {
+//                  $result['CTC'] = $data[0]->CTC;
+//                  $result['TOTAL_EARNED_GROSS'] = $data[0]->TOTAL_EARNED_GROSS;
+//                  $result['TOTAL_DEDUCTIONS'] = $data[0]->TOTAL_DEDUCTIONS;
+//                  $result['BASIC'] = $data[0]->BASIC;
+//                  $result['HRA'] = $data[0]->HRA;
+//                  $result['TOTAL_FIXED_GROSS'] = $data[0]->TOTAL_FIXED_GROSS;
+//                  $result['EPFR'] = $data[0]->EPFR;
 
-                 $result['BASIC'] = $data[0]->BASIC;
-                 $result['HRA'] = $data[0]->HRA;
-                 $result['NET_TAKE_HOME'] = $data[0]->NET_TAKE_HOME;
-                 $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
-             }
+//                  $result['BASIC'] = $data[0]->BASIC;
+//                  $result['HRA'] = $data[0]->HRA;
+//                  $result['NET_TAKE_HOME'] = $data[0]->NET_TAKE_HOME;
+//                  $result['PAYROLL_MONTH'] = $data[0]->PAYROLL_MONTH;
+//              }
 
-             foreach($data as $d) {
-                 $result['TOTAL_PF_WAGES'] += (int)$d->PF_WAGES;
-             }
-                    return view('vmt_salary_details', compact('data', 'result', 'compensatory','enc_user_id'));
-            }
+//              foreach($data as $d) {
+//                  $result['TOTAL_PF_WAGES'] += (int)$d->PF_WAGES;
+//              }
+//                     return view('vmt_salary_details', compact('data', 'result', 'compensatory','enc_user_id'));
+//             }
 
-         else
-         {
-             return view('vmt_nodata_salaryDetails');
+//          else
+//          {
+//              return view('vmt_nodata_salaryDetails');
 
-         }
-        }
-        catch(\Exception $e){
-            dd("showSalaryDetailsPage : ".$e);
-        }
+//          }
+//         }
+//         catch(\Exception $e){
+//             dd("showSalaryDetailsPage : ".$e);
+//         }
 
-}
+// }
 
+    public function showSalaryDetailsPage_v2(Request $request){
+
+        return view('vmt_salary_details_v2');
+
+    }
 
      public function showInvestmentsPage(Request $request){
         return view('vmt_investments');

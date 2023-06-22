@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtEmployeeDocumentsService;
 use App\Services\Admin\VmtEmployeeMailNotifMgmtService;
 
 class VmtEmployeeOnboardingController extends Controller
@@ -196,7 +197,20 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function showNormalOnboardingPage(Request $request)
     {
-        return view('onboarding.vmt_normal_onboarding_v2');
+
+        if(empty($request->all())){
+            return view('onboarding.vmt_normal_onboarding_v2');
+        }else{
+        $user_id = Crypt::decrypt($request->uid);
+        $can_onboard_employee =User::where('id',$user_id)->first()->is_onboarded;
+
+        if($can_onboard_employee == '0'){
+            return view('onboarding.vmt_normal_onboarding_v2');
+        }else{
+            return redirect()->route('index');
+        }
+    }
+
     }
 
     /*
@@ -349,12 +363,11 @@ class VmtEmployeeOnboardingController extends Controller
 
             }
             else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
-            if($currentLoggedinInUser->is_onboarded == 0 && $currentLoggedinInUser->onboard_type  == "quick")
+            if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code &&  $currentLoggedinInUser->onboard_type  == "quick")
             {
 
-                //check whether if emp_code is tampered
-                if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code)
-                {
+                //if($currentLoggedinInUser->is_onboarded == 0)
+                //{
                     //$response = $this->storeEmployeeNormalOnboardForm($onboard_form_data, $request->input('can_onboard_employee'));
 
                     $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,"quick","onboard_form");
@@ -363,20 +376,20 @@ class VmtEmployeeOnboardingController extends Controller
 
                     if($result == "success")
                     {
-                        // if($request->input('can_onboard_employee') == "1")
-                        // {
-                        //     $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
-                        //     $message="Employee onboarded successfully";
-                        // }
-                        // else
-                        // {
-                            $message="Your Onboard information Saved in draft";
-                      //  }
+                        if($request->input('can_onboard_employee') == "1")
+                        {
+                            $message="Employee onboarded successfully";
+                        }
+                        else
+                        {
+                           $message="Your Onboard information Saved in draft";
+                        }
 
                         $response = [
                             'status' => 'success',
                             'message' => $message,
                             'mail_status' => $isEmailSent ? "success" : "failure",
+                            'can_redirect' => $request->input('can_onboard_employee'), //if its "1", then redirect from onboarding form to under review page
                             'error' => '',
                             'error_verbose' =>''
                         ];
@@ -392,25 +405,23 @@ class VmtEmployeeOnboardingController extends Controller
                         ];
 
                     }
-                }
-                else
-                {
-                    //dd("Emp code mismatch. Please contact HR immediately");
+                //}
+                // else
+                // {
+                //     //dd("Emp code mismatch. Please contact HR immediately");
 
-                    $response = [
-                        'status' => 'failure',
-                        'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
-                        'mail_status' => '',
-                        'error' => '',
-                        'error_verbose' =>''
-                    ];
+                //     $response = [
+                //         'status' => 'failure',
+                //         'message' => 'Unauthorized Action :: Emp code mismatch. Please contact HR immediately',
+                //         'mail_status' => '',
+                //         'error' => '',
+                //         'error_verbose' =>''
+                //     ];
 
-                }
+                // }
             }
             else
             {
-                //dd("You are not authorized to perform this action. Please contact the Admin immediately. Log : ".$currentLoggedinInUser);
-
                 $response = [
                     'status' => 'failure',
                     'message' => 'You are not authorized to perform this action. Please contact the Admin immediately. Log : '.$currentLoggedinInUser,
@@ -791,6 +802,13 @@ class VmtEmployeeOnboardingController extends Controller
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
+        if(empty($excelRowdata_row )){
+            return $rowdata_response = [
+                'status' => 'failure',
+                'message' => 'Please fill the excel',
+            ];
+
+        }else{
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
           //  dd($excelRowdata);
             $currentRowInExcel++;
@@ -809,7 +827,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict',
+                'email' => 'nullable|email:strict'|'unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -905,6 +923,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $isAllRecordsValid = false;
             }
+        }
         } //for loop
 
         //Runs only if all excel records are valid
@@ -1218,7 +1237,9 @@ class VmtEmployeeOnboardingController extends Controller
            $request->validate([
                'file' => 'required|file|mimes:xls,xlsx'
            ]);
+
            $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
+
            return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
        }
 
@@ -1242,7 +1263,15 @@ class VmtEmployeeOnboardingController extends Controller
            ];
 
            $excelRowdata_row = $data;
+
            $currentRowInExcel = 0;
+            if(empty($excelRowdata_row )){
+                return $rowdata_response = [
+                    'status' => 'failure',
+                    'message' => 'Please fill the excel',
+                ];
+
+            }else{
 
            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
 
@@ -1268,7 +1297,7 @@ class VmtEmployeeOnboardingController extends Controller
                    'doj' => 'required|date',
                    'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',
                    'designation' => 'required',
-                   'basic' => 'required|numeric',
+                   'basic' => 'required|numeric|min:0|not_in:0',
                    'hra' => 'required|numeric',
                    'statutory_bonus' => 'required|numeric',
                    'child_education_allowance' => 'required|numeric',
@@ -1289,6 +1318,7 @@ class VmtEmployeeOnboardingController extends Controller
                $messages = [
                    'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+                   'not_in' => 'Field <b>:attribute</b> should be greater than zero: :values .',
                    'required' => 'Field <b>:attribute</b> is required',
                    'regex' => 'Field <b>:attribute</b> is invalid',
                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
@@ -1315,7 +1345,11 @@ class VmtEmployeeOnboardingController extends Controller
 
                    $isAllRecordsValid = false;
                }
-           }//for each
+          }
+
+        }
+
+          //for each
            //Runs only if all excel records are valid
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
@@ -1507,9 +1541,13 @@ class VmtEmployeeOnboardingController extends Controller
 
        $response= $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
 
-       $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
+      // $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
 
        return $response;
 
+    }
+
+    public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
+            return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
 }

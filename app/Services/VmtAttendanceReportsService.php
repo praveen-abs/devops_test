@@ -10,6 +10,7 @@ use App\Models\VmtLeaves;
 use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
+use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
 use App\Models\vmtHolidays;
 use \Datetime;
@@ -69,8 +70,8 @@ class VmtAttendanceReportsService{
 
 
 
-
-            $regularTime  = VmtWorkShifts::where('shift_type', 'First Shift')->first();
+            $work_shift_id = VmtEmployeeWorkShifts::where('user_id',$singleUser->id)->first()->work_shift_id;
+            $regularTime  = VmtWorkShifts::where('id',$work_shift_id)->first();
 
              $requestedDate = $year . '-' . $month . '-01';
              $currentDate = Carbon::now();
@@ -101,7 +102,7 @@ class VmtAttendanceReportsService{
                       //dd($dateString);
 
 
-                      if(sessionGetSelectedClientCode() == "DM")
+                      if(sessionGetSelectedClientCode() == "DM" ||sessionGetSelectedClientCode()=="PLIPL")
                       {
                           $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                               ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -624,7 +625,7 @@ class VmtAttendanceReportsService{
 
                      $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
                       //dd($dateString);
-                      if(sessionGetSelectedClientCode() == "DM")
+                      if(sessionGetSelectedClientCode() == "DM"||sessionGetSelectedClientCode()=="PLIPL")
                       {
                           $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                               ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))

@@ -20,6 +20,7 @@ use App\Models\VmtDocuments;
 use App\Notifications\ViewNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\WelcomeMail;
+use App\Mail\ActivationMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -161,7 +162,7 @@ class VmtEmployeeMailNotifMgmtService {
             $image_view = url('/') . $VmtGeneralInfo->logo_img;
 
 
-            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+            $isSent = \Mail::to($user_mail)->send(new ActivationMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
 
             //Store the sent status in ' vmt_user_mail_status'
 

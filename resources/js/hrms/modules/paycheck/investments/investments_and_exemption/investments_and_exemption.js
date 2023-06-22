@@ -24,7 +24,6 @@ import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
-import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
@@ -63,7 +62,6 @@ app.component('ConfirmDialog',ConfirmDialog);
 app.component('Dropdown',Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
-app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)

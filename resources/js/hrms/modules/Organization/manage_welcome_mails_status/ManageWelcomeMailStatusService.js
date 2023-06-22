@@ -8,6 +8,7 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
     // Variable Declarations
 
     const loading = ref(false);
+    const sendWelcomeMail_Status_diaconfirmation = ref(false);
 
     const array_employees_list = ref();
 
@@ -21,40 +22,34 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
 
         })
     }
-    // async function
 
+       function send_WelcomeMail(user_code) {
+        console.log("sendMail_employeePayslip() : Sending mail to user : " + user_code);
+        loading.value = true
+        sendWelcomeMail_Status_diaconfirmation.value= false;
+        axios.post('/send_WelcomeMailNotification', {
+            user_code: user_code,
+        }).then((response) => {
+            console.log(" Response [send_WelcomeMail] : " + response.data);
+        })
+            .catch((data) => {
+                console.log(data);
 
-    // async function downloadPayslipReleaseStatus(user_code, month, year, status) {
-    //     console.log("downloadPayslipReleaseStatus() : Updating releasepayslip status to user : " + user_code);
+            }).finally(()=>{
+                loading.value = false
+            })
 
-
-    //     let selectedDate = new Date(selectedPayRollDate.value)
-    //     axios.post('/paycheck/employee_payslip/downloadPayslipReleaseStatus', {
-    //         user_code: user_code,
-    //         month: month,
-    //         year: year,
-    //         status: status
-    //     }).then((response) => {
-    //         console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
-    //         window.open(`data:application/pdf;base64,${response.data.data}`);
-
-    //     })
-    //         .catch((data) => {
-    //             console.log(data);
-
-    //          });
-    // }
-
+    }
 
 
     return {
 
         // Varaible Declartion
-        array_employees_list,loading,
+        array_employees_list,loading,sendWelcomeMail_Status_diaconfirmation,
 
 
         // Functions
-        getManageWelcomeMailStatus
+        getManageWelcomeMailStatus,send_WelcomeMail,
 
     };
 

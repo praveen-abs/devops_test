@@ -63,7 +63,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $request->all(),
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
-                "date" => "required",
+                "existing_check_in_date" => "required",
                 "checkout_time" => "required",
                 "work_mode" => "required", //office, work
                 "attendance_mode_checkout" => "required", //mobile, web
@@ -84,7 +84,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         $response =  $serviceVmtAttendanceService->performAttendanceCheckOut($request->user_code,
-                                                                             $request->date,
+                                                                             $request->existing_check_in_date,
                                                                              $request->checkout_time,
                                                                              $request->selfie_checkout,
                                                                              $request->work_mode,
@@ -121,6 +121,34 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         $response = $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $validator->errors()->all(),
+            'data' => $response
+        ]);
+    }
+
+    public function getLastAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response = $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
 
         return response()->json([
             'status' => 'success',
@@ -234,14 +262,15 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                                                                     serviceNotificationsService: $serviceVmtNotificationsService
                                                 );
 
+
         return $response;
     }
 
-    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
 
 
         //Fetch the data
-        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment);
+        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
 
     }
 
@@ -295,7 +324,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
-    public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
 
         //Validate the request
         $validator = Validator::make(
@@ -324,7 +353,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason);
+        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason, serviceVmtNotificationsService : $serviceVmtNotificationsService);
 
 
         return $response;
@@ -332,7 +361,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     }
 
 
-    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
 
         //Validate the request
         $validator = Validator::make(
@@ -358,7 +387,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text);
+        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text, $serviceVmtNotificationsService = $serviceVmtNotificationsService);
 
         return $response;
 
@@ -435,6 +464,21 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
        return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
+
+    }
+    public function getEmployeeLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+    public function getAllEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails($request->filter_month,$request->filter_year,$request->filter_leave_status);
+
+    }
+    public function getTeamEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+       return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
 
     }
 

@@ -1,3 +1,8 @@
+<?php
+
+    //dd($assignedGoals);
+
+?>
 @extends('layouts.master')
 @section('css')
 
@@ -16,7 +21,7 @@
                             <div class="card-body  text-center">
 
                                 <div class="d-flex justify-content-center">
-                                    <div class="profile-img d-flex">
+                                    <div class="profile-img d-flex  " >
                                         <?php $currentUserDetails = App\Models\User::find($assignedUserDetails->id); ?>
                                         @include('ui-profile-avatar-lg', [
                                             'currentUser' => $currentUserDetails,
@@ -25,43 +30,133 @@
                                 </div>
 
                                 <div class="appraisal_userDet mt-3">
-                                    <h6>{{ $assignedUserDetails->name }}</h6>
-                                    <p class="f-14 mt-2  text-primary">
+                                    <h6>{{ $assignedUserDetails->name.' - '.$assignedUserDetails->user_code  }}</h6>
+                                    <p class="f-12 mt-2  text-primary">
                                         {{ $assignedUserDetails->getEmployeeOfficeDetails->designation }}</p>
-                                    <p class="f-12 text-muted mt-2">
-                                        {{ $assignedUserDetails->user_code }}</p>
+                                    {{-- <p class="f-12 text-muted mt-2">
+                                        {{ }}</p> --}}
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 col-xxl-4 d-flex  ">
-                        <div class="card mb-0 w-100 border-0 boxshadow_lite4">
-                            <div class="card-body">
-                                <p class="f-14 text-ash  ">Business Unit/Process/Function</p>
-                                <p class="mb-4 f-14 fw-bold text-primary">
-                                    {{ $assignedUserDetails->getEmployeeOfficeDetails->department_id }}</p>
-                                <p class="f-14 text-ash  ">Reporting Manager</p>
-                                <p class="mb-4 f-14 fw-bold text-primary ">{{ $assignersName }}</p>
-                                <p class="f-14 text-ash  ">Review Period</p>
-                                <p class="mb-4 f-14 fw-bold text-primary">{{ $assignedGoals->year }} -
-                                    {{ strtoupper($assignedGoals->assignment_period) }}</p>
-                            </div>
-                        </div>
+                                {{--  --}}
+                                <div class="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xxl-6 d-flex w-100 mt-4">
+                                    <div class=" ">
 
+                                            <p class="f-14 ">Business Unit/Process/Function</p>
+                                            <p class="mb-2 f-14 fw-bold text-primary">
+                                                {{ $assignedUserDepartment->name }}</p>
+                                            <p class="f-14 ">Reporting Manager</p>
+                                            <p class="mb-2 f-14 fw-bold text-primary ">{{ $assignersName }}</p>
+                                            <p class="f-14  ">Review Period</p>
+                                            <p class="mb-2 f-14 fw-bold text-primary">{{ $assignedGoals->year }}
+                                                {{-- {{ strtoupper($assignedGoals->assignment_period) }}--}}</p>
+
+                                    </div>
+
+                                </div>
+
+                                {{--  --}}
+
+                            </div>
+                        </div>
                     </div>
+
                     @if ($canShowOverallScoreCard_ReviewPage == 'true')
 
-                        <div class="col-md-12 col-sm-12 col-lg-5 col-xl-5 col-xxl-5   d-flex">
+                        <div class="col-md-12 col-sm-12 col-lg-9 col-xl-9 col-xxl-9   d-flex">
                             <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4">
                                 <div class="card-body">
-                                    <p class="mb-2 fw-bold f-14 text-primary">Ratings</p>
+                                    <p class="mb-2 fw-bold f-15 text-primary">Current Rating</p>
                                     <div class="mb-3">
-                                        <p class="f-14 text-ash mt-2 ">Overall Annual Score</p>
+
+                                        <div class="row mt-4" >
+                                            <div class="col-9 ">
+                                                <p class="f-14  ">Frequency</p>
+                                            </div>
+                                            <div class="col-3">
+                                                {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
+                                                <b class="f-15 text-primary">
+                                                    {{ ucfirst($assignedGoals->frequency) }}
+                                                </b>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="mb-4">
+
+                                        <div class="row mt-3">
+                                            <div class="col-9 mt-2">
+                                                <p class="f-14  ">Current Period</p>
+                                            </div>
+                                            <div class="col-3">
+                                                {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
+                                                <b class="f-15 text-primary">
+                                                    {{ strtoupper( $assignedGoals->assignment_period ) }}
+                                                </b>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="mb-4">
+
+                                        <div class="row mt-3">
+                                            <div class="col-9 ">
+                                                <p class="f-14  ">Score</p>
+                                            </div>
+                                            <div class="col-3">
+                                                {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
+                                                <b class="f-15 text-primary">
+                                                    @if ($isAllReviewersSubmittedOrNot)
+                                                        @if ($ratingDetail)
+                                                            {{ $ratingDetail['score'] }}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    @else
+                                                       -
+                                                    @endif
+                                                </b>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row w-full">
+                                        {{-- <div class="col-10 mt-2">
+                                            <div class="progress">
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                                    aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-6">
+                                            <p class="f-14  ">Performance Rating</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <b class="f-15 text-primary float-right ">
+                                                @if ($isAllReviewersSubmittedOrNot)
+                                                    @if ($ratingDetail)
+                                                        {{ $ratingDetail['performance_rating'] }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                @else
+                                                    -
+                                                @endif
+                                            </b>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="card mb-0 w-100 appraisal_rating border-0 boxshadow_lite4 mx-4">
+                                <div class="card-body">
+                                    <p class="mb-2 fw-bold f-15 text-primary">Overall Ratings</p>
+                                    <div class="mb-3">
+                                        <p class="f-14 mt-2 ">Overall Annual Score</p>
                                         <div class="row">
                                             <div class="col-10 mt-2">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-success" role="progressbar"
+                                                    <div class="progress-bar bg-warning" role="progressbar"
                                                         style="width:25%" aria-valuenow="25" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
@@ -70,8 +165,8 @@
                                                 {{-- <span class="text-primary f-15 fw-bold">1/3</span> --}}
                                                 <b class="f-15 text-primary">
                                                     @if ($isAllReviewersSubmittedOrNot)
-                                                        @if ($ratingDetail)
-                                                            {{ $ratingDetail['score'] }}
+                                                        @if ($overallRatingDetails)
+                                                            {{ $overallRatingDetails['score'] }}
                                                         @else
                                                             -
                                                         @endif
@@ -84,7 +179,7 @@
 
                                     </div>
                                     <div class="mb-3">
-                                        <p class="f-14 text-ash mt-2 ">Corresponding ANNUAL PERFORMANCE Rating</p>
+                                        <p class="f-14 mt-2 ">Overall Corresponding ANNUAL PERFORMANCE Rating</p>
                                         <div class="row">
                                             {{-- <div class="col-10 mt-2">
                                             <div class="progress">
@@ -95,8 +190,8 @@
                                             <div class="col-12">
                                                 <b class="f-15 text-primary">
                                                     @if ($isAllReviewersSubmittedOrNot)
-                                                        @if ($ratingDetail)
-                                                            {{ $ratingDetail['performance_rating'] }}
+                                                        @if ($overallRatingDetails)
+                                                            {{ $overallRatingDetails['performance_rating'] }}
                                                         @else
                                                             -
                                                         @endif
@@ -108,11 +203,11 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <p class="f-14 text-ash mt-2 ">Ranking</p>
+                                        <p class="f-14 mt-2 ">Overall Ranking</p>
                                         <div class="row">
                                             <div class="col-10 mt-2">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-warning" role="progressbar"
+                                                    <div class="progress-bar bg-green-400" role="progressbar"
                                                         style="width: 75%" aria-valuenow="75" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
@@ -120,8 +215,8 @@
                                             <div class="col-2">
                                                 <b class="f-15 text-primary">
                                                     @if ($isAllReviewersSubmittedOrNot)
-                                                        @if ($ratingDetail)
-                                                            {{ $ratingDetail['rank'] }}
+                                                        @if ($overallRatingDetails)
+                                                            {{ $overallRatingDetails['rank'] }}
                                                         @else
                                                             -
                                                         @endif
@@ -135,34 +230,31 @@
                                     </div>
 
 
-                                    <div class="mb-3">
-                                        <p class="f-14 text-ash mt-2 ">Action</p>
-                                        <div class="row">
-                                            <div class="col-10 mt-2">
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-danger" role="progressbar"
-                                                        style="width: 100%" aria-valuenow="100" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <b class="f-15 text-primary">
-                                                    @if ($isAllReviewersSubmittedOrNot)
-                                                        @if ($ratingDetail)
-                                                            {{ $ratingDetail['action'] }}
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    @else
-                                                        -
-                                                    @endif
-                                                </b>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-12 mt-2  d-flex justify-content-between">
+                                            <p class="f-14 "> Overall Recommendation</p>
+                                        <div class="col  mr-4">
+                                            <b class="f-15 text-primary">
+                                            @if ($isAllReviewersSubmittedOrNot)
+                                                @if ( $overallRatingDetails)
+                                                    {{  $overallRatingDetails['action'] }}
+                                                @else
+                                                    -
+                                                @endif
+                                            @else
+                                                -
+                                            @endif
+                                        </b>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
+
+                            {{--  --}}
+
+
+
 
                         </div>
                     @endif
@@ -664,11 +756,9 @@
                                                                             @if(is_numeric($kpiRow->target))
                                                                                 readonly placeholder="Calculate based on Target and Manager Review"
                                                                             @else
-                                                                                placeholder="type number here" @endif>
-                                                                    @if (isset($decodedKpiReviewPerc[$reviewersReview]))
-{{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}
-@endif
-                                                                    </textarea>
+                                                                                placeholder="type number here"
+                                                                                style="background-color:#edebeb;"
+                                                                            @endif> @if (isset($decodedKpiReviewPerc[$reviewersReview])){{ $decodedKpiReviewPerc[$reviewersReview][$kpiRow->id] }}@endif</textarea>
                                                                     @else
                                                                         <div>
                                                                             @if (isset($decodedKpiReviewPerc[$reviewersReview]))
@@ -723,6 +813,13 @@
                                 @endif
 
                             </form>
+
+                                @if (str_contains($assignedGoals->is_reviewer_submitted,'"1"') &&  Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR'])   )
+                                    <div class="buttons d-flex align-items-center justify-content-end ">
+                                        <button class="btn btn-orange" id="revoke_form"> Revoke Form</button>
+                                    </div>
+                                @endif
+
                             @if ($enableButton)
                                 @if ($assignedGoals->is_assignee_submitted == '1')
                                     @if ($decodedKpiReviewSubmittedStatus[Auth::id()] != '1')
@@ -808,7 +905,7 @@
                                             <tr>
 
                                                 <th class="" style="width:350px">
-                                                    Action
+                                                    Recommendation
                                                 </th>
                                                 @foreach ($pmsRatingDetails as $ratingDetails)
                                                     <td class="" style="border:1px solid #002f56">
@@ -889,6 +986,53 @@
         $(document).on('keyup', '.reviewer_kpi_percentage', function() {
             calculateOverallReviewerKpiPercentage();
         })
+
+        //Revoke PMS form . For now this is done by HR only. In future, Manager too can do this
+        $('#revoke_form').click(function(e) {
+            e.preventDefault();
+            console.log("Revoking the PMS form");
+
+            //$('.loader').show();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You want to revoke this form?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then(function(value) {
+                if (value.isConfirmed) {
+                    var assigneeGoalId = "{{ $assignedGoals->id }}";
+
+                    //$('.loader').show();
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('pms-revokeSubmittedForm') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            assigneeGoalId: assigneeGoalId,
+                        },
+                        success: function(data) {
+                            if (data.status == "success") {
+                                Swal.fire("Form revoked successfully", data.message, "success").then(function() {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire("Error!", data.message, "error");
+                            }
+                            $('.loader').hide();
+                        },
+                        error: function(error) {
+                            $('.loader').hide();
+                        }
+                    });
+                }
+            });
+        });
+
 
         function getCalculationResult(idValue) {
             var kpiAchievementReviewerReview = idValue.val();

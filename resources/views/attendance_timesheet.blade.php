@@ -803,7 +803,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             avatar_data +
                             '</div>' +
                             '<div class="user_content text-start">' +
-                            '<p class="fw-bold text-primary text-capitalize">' + element.trim() + '</p>' +
+                            '<p class="fw-bold text-primary text-capitalize">' + element.name.trim() + '</p>' +
                             '<p class=" text-muted f-11">' + element.designation + '</p>' +
                             '</div>' +
                             '</a>' +
@@ -822,6 +822,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         currentlySelectedUser = $(this).attr('data-userid');
                         console.log("currentlySelectedUser : " + currentlySelectedUser +
                             ", Month - Year : " + currentMonth + " , " + currentYear);
+
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -900,6 +901,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                         currentlySelectedUser = $(this).attr('data-userid');
                         console.log("currentlySelectedUser : " + currentlySelectedUser +
                             ", Month - Year : " + currentMonth + " , " + currentYear);
+
                         ajaxGetMonthlyDate_TimeSheet(currentMonth, currentYear, currentlySelectedUser);
 
                     });
@@ -1459,7 +1461,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                             let todayDate = new Date().toISOString().slice(0, 10)
                             //console.log("today" + todayDate);
 
-
                             if(!ajax_data_currentdate.isAbsent){
 
                                 let final_checkin_button_code = "";
@@ -1470,6 +1471,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                     if (ajax_data_currentdate.lc_status == "Approved" || ajax_data_currentdate.mip_status ==
                                         "Approved")
+
                                         final_checkin_time == "" ? "--:--:--" : moment(final_checkin_time, ["HH:mm"])
                                         .format('h:mm a');
 
@@ -1516,6 +1518,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate
                                             .eg_status);
                                     } else
+
                                     if (ajax_data_currentdate.isMOP) {
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);
@@ -1661,6 +1664,7 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
 
                                 }
                                 else {
+
                                     let final_checkin_button_code = "";
                                     let final_checkout_button_code = "";
                                     let final_checkin_time = ajax_data_currentdate.checkin_time ?? "";
@@ -1698,32 +1702,37 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         final_checkout_time + "' value='EG'/>&nbsp;&nbsp;";
 
                                     let html_MOP_Button =
-                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='p-1 text-white border-0 f-10 btn-orange bn ms-2 lc_btn ' data-userid='" +
+                                        "<input type='button' onclick ='showRegularizationModal(this)' title='Missed Out Punch'  class='p-1 text-white border-0 f-10 btn-orange bn ml-2 lc_btn ' data-userid='" +
                                         ajax_data_currentdate.user_id + "' data-applystatus='" + ajax_data_currentdate
                                         .mop_status + "' data-currentdate='" + currentDate + "' value='MOP' />&nbsp;&nbsp;";
 
                                     const clientName = "{{ sessionGetSelectedClientName() }}";
+                                    console.log("Current client name : "+clientName);
 
-                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines')){
+                                    if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Avatar Live') || clientName.includes('Dunamis Machines')){
 
                                         if (ajax_data_currentdate.isLC) {
+
                                             final_checkin_button_code = html_LC_Button + getStatusIcon(ajax_data_currentdate.lc_status);
                                         }
 
                                     }
-                                    else
+
                                     if (ajax_data_currentdate.isMIP) {
+
                                         final_checkin_button_code = html_MIP_Button + getStatusIcon(ajax_data_currentdate.mip_status);
                                     }
 
-                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Dunamis Machines'))
+                                     if(clientName.includes('All') || clientName.includes('Brand Avatar') || clientName.includes('Avatar Live') || clientName.includes('Dunamis Machines'))
                                      {
                                         if (ajax_data_currentdate.isEG) {
                                             final_checkout_button_code = html_EG_Button + getStatusIcon(ajax_data_currentdate.eg_status);
+
                                         }
                                      }
-                                     else
-                                    if (ajax_data_currentdate.isMOP) {
+
+                                     if (ajax_data_currentdate.isMOP) {
+
                                         final_checkout_button_code = html_MOP_Button + getStatusIcon(ajax_data_currentdate
                                             .mop_status);
                                     }
@@ -1743,32 +1752,32 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                         }
 
 
-                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date w-full d-flex align-items-center justify-content-between' >" + date + "<span style='font-size:9px; float: right;' class='badge bg-dark rounded-pill ' title='"+ajax_data_currentdate.workshift_name+"'>"+ ajax_data_currentdate.workshift_code+"</span>"+
 
-                                        "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
+                                        "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span style='width: 60px;'class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button style='border: none;background: none;width: 23px;'><a style='color: black;' target='_blank'  href="+selfie_checkin+"><i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkin") +"</span><span><button class='mx-1' style='border: none;background: none;'><a style='color: black;' target='_blank'  href="+selfie_checkin+">"+getSelfieImage(ajax_data_currentdate.attendance_mode_checkin)+
                                         final_checkin_button_code +
-                                        "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 50px;' class='f-11' id='checkout_time_" +
+                                        "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i  class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span style='width: 60px;' class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
-                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span><button style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+ajax_data_currentdate.selfie_checkout+"><i style='width:0px'color: black;'' class='fa fa-picture-o me-2'></i></a></button></span>" +
-                                        "</span>" +
+                                        getAttendanceModeIcon(ajax_data_currentdate, "checkout") +"</span><span class='mr-5' ><button  style='border: none;background: none;'><a target='_blank'  style='color: black;' href="+selfie_checkout+">"+getSelfieImage(ajax_data_currentdate.attendance_mode_checkout) +
+                                        "</span> " +
                                         final_checkout_button_code +
                                         "</div></div></div>"
-                                        console.log("---check in selfie-----"+ajax_data_currentdate.selfie_checkin+"------------");
-                                        console.log("---check out selfie-----"+ajax_data_currentdate.selfie_checkout+"------------");
+                                        //console.log("---check in selfie-----"+ajax_data_currentdate.selfie_checkin+"------------");
+                                        //console.log("---check out selfie-----"+ajax_data_currentdate.selfie_checkout+"------------");
 
 
                                      }else{
 
-                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date +
+                                        cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date  + "<span style='font-size:9px; float:right;' class='badge bg-dark rounded-pill ' title='"+ajax_data_currentdate.workshift_name+ "''>"+ ajax_data_currentdate.workshift_code+"</span>"+
 
                                         "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
                                         "</span>" +
                                         final_checkin_button_code +
-                                        "</div> <div class='mt-2 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
+                                        "</div> <div class='mt-1 w-100 d-flex align-items-center justify-content-start check-out f-10 text-danger'><i class='fa fa-arrow-down me-1' style='transform: rotate(230deg);'></i><span class='f-11' id='checkout_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkout_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkout") +
                                         "</span>" +
@@ -1844,6 +1853,15 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
             else
             {
                 return ''; // when attendance_mode column is empty.
+            }
+
+        }
+
+        function getSelfieImage(mode){
+            if(mode=='mobile'){
+                return "<i style='width:0px' class='fa fa-picture-o me-2'></i></a></button></span>";
+            }else{
+                return '';
             }
 
         }

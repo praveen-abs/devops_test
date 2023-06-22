@@ -4,15 +4,16 @@ namespace App\Services;
 
 use App\Models\User;
 
+use App\Models\VmtEmployee;
 use App\Models\VmtInvestmentForm;
-
+use App\Models\VmtInvEmpFormdata;
+use App\Models\VmtInvFEmpAssigned;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 use App\Models\VmtInvForm;
 use App\Models\VmtInvFormSection;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\VmtInvSectionImport;
-
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
@@ -21,25 +22,10 @@ use \Datetime;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Validator;
 
 class VmtInvestmentsService
 {
-    const SECTION_TABS = [
-            "HRA",
-            "Section 80c & 80CCC",
-            "Other Exemptions",
-            "House Property",
-            "House Property_Self Occupied Property",
-            "House Property_Let Out Property",
-            "House Property_Deemed Let Out Property",
-
-            "Reimbursement",
-            "Previous Employer Income",
-            "Other Source Of Income"
-        ];
-
 
     /*
         Get the investments form detail template
@@ -62,7 +48,7 @@ class VmtInvestmentsService
 
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
@@ -70,25 +56,117 @@ class VmtInvestmentsService
         }
 
 
-        try{
+        try {
             //get the current active form id
             $query_form_details = VmtInvForm::where('form_name', $form_name)->first();
 
-            //Get the query structure
+            $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-            $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-                                        ->where('vmt_inv_formsection.form_id', $query_form_details->id)
-                                        ->get(
-                                            [
-                                                'vmt_inv_formsection.section_id',
-                                                'vmt_inv_section.section',
-                                                'vmt_inv_section.particular',
-                                                'vmt_inv_section.reference',
-                                                'vmt_inv_section.max_amount',
-                                            ]
-                                        );
+            $query_is_sumbitted = VmtInvFEmpAssigned::where('user_id' , $user_id)->first();
+
+            $query_doj = VmtEmployee::where('userid', $user_id)->first();
+
+
+            // $query_fempAssigned_table = VmtInvFEmpAssigned::where('user_id', $user_id)
+            // ->where('year', $year)
+            //  ->first();
+
+            //  $assigned_form_id = $query_fempAssigned_table->form_id;
+            //  $f_emp_id = $query_fempAssigned_table->id;
+
+            //Get the form template
+            $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+                ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+                // ->where('vmt_inv_formsection.form_id', $assigned_form_id)
+
+                ->get(
+                    [
+                        'vmt_inv_formsection.section_id',
+                        'vmt_inv_section.section',
+                        'vmt_inv_section.particular',
+                        'vmt_inv_section.reference',
+                        'vmt_inv_section.max_amount',
+                        'vmt_inv_section_group.section_group',
+                        'vmt_inv_formsection.id as fs_id',
+                        'vmt_inv_section.section_option_1',
+                        'vmt_inv_section.section_option_2',
+                        'vmt_inv_formsection.form_id',
+
+                    ]
+                )->toArray();
+
+             // dd($query_inv_form_template);
+
+            // employee declaration amount
+            $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+                ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get()->toArray();
+
+            // dd($inv_emp_value);
+            // json decode popup value;
+            $popdecode = array();
+            foreach ($inv_emp_value as $details_tem) {
+
+                $rentalDetail['id'] = $details_tem["id"];
+                $rentalDetail['user_id'] = $details_tem["user_id"];
+                $rentalDetail['form_id'] = $details_tem["form_id"];
+                $rentalDetail['f_emp_id'] = $details_tem["f_emp_id"];
+                $rentalDetail['year'] = $details_tem["year"];
+                $rentalDetail['fs_id'] = $details_tem["fs_id"];
+                $rentalDetail['dec_amount'] = $details_tem["dec_amount"];
+                $rentalDetail['is_submit'] = $details_tem["is_sumbit"];
+                $rentalDetail['selected_section_options'] = $details_tem["selected_section_options"];
+                $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
+                array_push($popdecode, $rentalDetail);
+
+            };
+
+
+
+            $arr = array();
+            foreach ($query_inv_form_template as $single_template) {
+                foreach ($popdecode as $single_emp_env_value) {
+                    if ($single_template['fs_id'] == $single_emp_env_value['fs_id']) {
+                        $single_template['id'] = $single_emp_env_value['id'];
+                        $single_template['user_id'] = $single_emp_env_value['user_id'];
+                        $single_template['form_id'] = $single_emp_env_value['form_id'];
+                        $single_template['year'] = $single_emp_env_value['year'];
+                        $single_template['f_emp_id'] = $single_emp_env_value['f_emp_id'];
+                        $single_template['dec_amount'] = $single_emp_env_value['dec_amount'];
+                        $single_template['json_popups_value'] = $single_emp_env_value['json_popups_value'];
+                        $single_template['is_submit'] = $single_emp_env_value['is_submit'];
+                        $single_template['selected_section_options'] = $single_emp_env_value['selected_section_options'];
+                    }
+                }
+                array_push($arr, $single_template);
+            }
+            //dd($arr);
+
+            $query_inv_form_template = $arr;
+
+
+            $count = 0;
+            foreach ($query_inv_form_template as $single_inv_form_template) {
+
+                if (!array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template)) {
+                    $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
+                    array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+                } else {
+                    array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+
+                }
+
+                //remove from outer json
+                unset($query_inv_form_template[$count]);
+
+                $count++;
+
+            }
+            //  dd($query_inv_form_template);
+
 
             $response["form_name"] = $query_form_details->form_name;
+            $response["is_submitted"] = $query_is_sumbitted->is_sumbit ?? 0;
+            $response["doj"] = $query_doj->doj;
             $response["form_details"] = $query_inv_form_template;
 
             return response()->json([
@@ -97,8 +175,7 @@ class VmtInvestmentsService
                 "data" => $response,
             ]);
 
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching investments form template",
@@ -112,15 +189,23 @@ class VmtInvestmentsService
         Get the emp investment form details
 
     */
-    public function getEmployeeInvFormDetails($user_code, $year){
+    public function SaveInvDetails($user_code , $form_id , $is_submitted, $formDataSource)
+    {
 
         //Validate
         $validator = Validator::make(
             $data = [
-                'form_name' => $form_name
+                'user_code' => $user_code,
+                'form_id' => $form_id,
+                'is_submitted' => $is_submitted,
+                'formDataSource' => $formDataSource,
+
             ],
             $rules = [
-                'form_name' => 'required|exists:vmt_inv_form,form_name',
+                'user_code' => 'required|exists:users,user_code',
+                'form_id' => 'required',
+                'is_submitted' => 'required',
+                'formDataSource' => 'required',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -129,7 +214,7 @@ class VmtInvestmentsService
 
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
@@ -137,33 +222,91 @@ class VmtInvestmentsService
         }
 
 
-        try{
-            //get the current active form id
-            $form_id = VmtInvForm::where('form_name', $form_name)->first()->id;
+        try {
 
-            //Get the query structure
+            // $form_id = $request->form_id;
+            $user_id = User::where('user_code', $user_code)->first()->id;
+            // $form_data = $request->formDataSource;
+            $current_date = date("Y-m-d");
 
-            $query_inv_form_template  =  VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id','=','vmt_inv_formsection.section_id')
-                            // ->leftjoin('vmt_inv_emp_formdata','vmt_inv_formsection.id','=','vmt_inv_emp_formdata.fs_id')
-                            ->where('vmt_inv_formsection.id', $form_id)
-                            ->get(
-                        //     [
-                        //         'vmt_inv_section.section',
-                        //         'vmt_inv_section.particular',
-                        //         'vmt_inv_section.reference',
-                        //         'vmt_inv_section.max_amount',
 
-                        //  ]
-                        );
+            $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+            if ($query_femp->exists()) {
+                $query_assign = $query_femp->first();
+
+            } else {
+
+                $emp_assign_form = new VmtInvFEmpAssigned;
+                $emp_assign_form->user_id = $user_id;
+                $emp_assign_form->form_id = $form_id;
+                $emp_assign_form->year = $current_date;
+                $emp_assign_form->is_sumbit = $is_submitted;
+
+                $emp_assign_form->save();
+                $query_assign = $emp_assign_form;
+
+            }
+
+            // dd($form_data);
+            $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+            if (isset($formDataSource)) {
+
+                foreach ($formDataSource as $singleFormData) {
+
+                    $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $singleFormData['fs_id'])->first();
+
+                    if (empty($emp_formdata)) {
+
+                        $emp_formdata = new VmtInvEmpFormdata;
+                        $emp_formdata->f_emp_id = $query_assign->id;
+                        $emp_formdata->fs_id = $singleFormData['fs_id'];
+                        $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+                        $emp_formdata->selected_section_options = $singleFormData['select_option'] ?? '';
+                        //   $emp_formdata->json_popups_value = $sima ?? "none";
+                        $emp_formdata->save();
+
+                    } else {
+
+                        $emp_formdata->f_emp_id = $query_assign->id;
+                        $emp_formdata->fs_id = $singleFormData['fs_id'];
+                        $emp_formdata->dec_amount = $singleFormData['declaration_amount'];
+                        $emp_formdata->selected_section_options = $singleFormData['select_option'] ?? '';
+                        //    $emp_formdata->json_popups_value = $singleFormData['json_popups_value'];
+
+                        //   $emp_formdata->json_popups_value = $sima ?? "none";
+                        $emp_formdata->save();
+
+                    }
+
+                }
+            } else {
+
+                $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first();
+
+                if ($assigned_form_user_id->exists()) {
+
+                    $assigned_form_user_id->is_sumbit = $is_submitted;
+                    $assigned_form_user_id->save();
+
+                }
+
+               // return "sumbit";
+            }
+
+
+
 
             return response()->json([
                 "status" => "success",
                 "message" => "",
-                "data" => $query_inv_form_template,
+                "data" =>"submit successfully",
             ]);
 
         }
-        catch(\Exception $e){
+
+         catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching investments form template",
@@ -174,54 +317,34 @@ class VmtInvestmentsService
 
     }
 
-    /*
-        //Get the curren active investment form (i.e: active = 1 in 'vmt_investment_forms' )
 
-
-    */
-    // public function getCurrentInvestmentsFormDetailsTemplate()
-    // {
-    //     try{
-
-
-
-    //         return response()->json([
-    //             "status" => "success",
-    //             "message" => "",
-    //             "data" =>"",
-    //         ]);
-
-    //     }
-    //     catch(\Exception $e){
-    //         return response()->json([
-    //             "status" => "failure",
-    //             "message" => "Error while fetching investments form data",
-    //             "data" => $e,
-    //         ]);
-    //     }
-
-    // }
-
-
-    /*
-        This function calls the resp. function
-        based on the section name
-
-
-    */
-    public function saveEmpInvSecDetails($user_code, $section_name, $section_data){
+    public function saveSectionPopups($id, $user_code, $fs_id, $from_month,$to_month, $city, $total_rent_paid ,$landlord_name, $landlord_PAN, $address)
+    {
 
 
         $validator = Validator::make(
             $data = [
+                'id'=> $id,
                 'user_code' => $user_code,
-                'section_name' => $section_name,
-                'section_data' => $section_data,
+                'fs_id' => $fs_id,
+                'from_month' => $from_month,
+                'to_month' => $to_month,
+                'city' => $city,
+                'total_rent_paid' => $total_rent_paid,
+                'landlord_name' => $landlord_name,
+                'landlord_PAN' => $landlord_PAN,
+                'address' => $address,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
-                "section_name" => "required| Rule::in(VmtInvestmentsService::SECTION_TABS)",
-                "section_data" => 'required',
+                "fs_id" => "required",
+                "from_month" => 'required',
+                "to_month" => 'required',
+                "city" => 'required',
+                "total_rent_paid" => 'required',
+                "landlord_name" => 'required',
+                "landlord_PAN" => 'required',
+                "address" => 'required',
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -229,90 +352,451 @@ class VmtInvestmentsService
             ]
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+              $json_decodeHra =  json_encode($data);
+
+             $current_date = date("Y-m-d");
+
+            //   dd($json_decodeHra);
+
+             $form_id = "1";
+
+            //  $fs_id = $request->fs_id;
+
+             // dd($fs_id);
+             $user_id = User::where('user_code', $user_code)->first()->id;
+
+             $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+
+             if ($query_femp->exists()) {
+                 $query_assign = $query_femp->first();
+
+             } else {
+
+                 $emp_assign_form = new VmtInvFEmpAssigned;
+                 $emp_assign_form->user_id = $user_id;
+                 $emp_assign_form->form_id = $form_id;
+                 $emp_assign_form->year = $current_date;
+                 $emp_assign_form->save();
+                 $query_assign = $emp_assign_form;
+             }
+
+             if (empty($id)) {
+
+                 $Hra_save = new VmtInvEmpFormdata;
+                 $Hra_save->fs_id = $fs_id;
+                 $Hra_save->f_emp_id = $query_assign->id;
+                 $Hra_save->dec_amount = "0";
+                 $Hra_save->json_popups_value = $json_decodeHra;
+                 $Hra_save->save();
+
+             } else {
+
+                 $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+                 $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('id', $id)->first();
+
+                 $emp_formdata->f_emp_id = $query_assign->id;
+                 $emp_formdata->fs_id = $fs_id;
+                 $emp_formdata->dec_amount = "0";
+                 $emp_formdata->json_popups_value = $json_decodeHra;
+
+                 $emp_formdata->save();
+
+             }
+
+         return response()->json([
+            'status' => 'success',
+            'message' =>"submit successfully",
+            'data' => "",
+        ]);
+
+}
+
+    catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error while fetching investments form template",
+            "data" => $e,
+        ]);
+    }
+
+    }
+
+/*
+ "user_code" => "LAL0013"
+  "fs_id" => 30
+  "loan_sanction_date" => "2017-03-15T18:30:00.000Z"
+  "lender_type" => "Financial Institution"
+  "property_value" => 600
+  "loan_amount" => 700
+  "interest_amount_paid" => 5000
+  "section" => "80EE"
+
+   "user_code" => "LAL0013"
+  "fs_id" => 31
+  "loan_sanction_date" => "2020-03-17T18:30:00.000Z"
+  "lender_type" => "Others"
+  "property_value" => 300
+  "loan_amount" => 900
+  "interest_amount_paid" => 900
+  "section" => "80EEA"
+
+   "user_code" => "LAL0013"
+  "fs_id" => 32
+  "loan_sanction_date" => "2023-03-14T18:30:00.000Z"
+  "lender_type" => null
+  "property_value" => null
+  "loan_amount" => null
+  "interest_amount_paid" => 777777
+  "vechicle_brand" => "Hyundai"
+  "vechicle_model" => "Hyundai IONIQ 5"
+  "section" => "80EEB"
+*/
+    public function saveSection80($user_code, $fs_id, $loan_sanction_date,$lender_type, $property_value, $loan_amount ,$interest_amount_paid, $section)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'fs_id' => $fs_id,
+                'loan_sanction_date' => $loan_sanction_date,
+                'lender_type' => $lender_type,
+                'property_value' => $property_value,
+                'loan_amount' => $loan_amount,
+                'interest_amount_paid' => $interest_amount_paid,
+                'section' => $section,
+
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "fs_id" => "required",
+                "loan_sanction_date" => 'required',
+                "interest_amount_paid" => 'required',
+                "section" => 'required',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            $json_decodeHra = json_encode($data);
+            $current_date = date("Y-m-d");
+            // dd($json_decodeHra);
+
+            $form_id = "1";
+
+           // $dec_amount = $request->interest_amount_paid;
+
+          //  $fs_id = $request->fs_id;
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            // $form_data = $request->formDataSource;
+
+            $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+
+
+            if ($query_femp->exists()) {
+                $query_assign = $query_femp->first();
+
+            } else {
+
+                $emp_assign_form = new VmtInvFEmpAssigned;
+                $emp_assign_form->user_id = $user_id;
+                $emp_assign_form->form_id = $form_id;
+                $emp_assign_form->year = $current_date;
+                $emp_assign_form->save();
+                $query_assign = $emp_assign_form;
+            }
+
+            $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+            $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('fs_id', $fs_id)->first();
+
+            if (empty($emp_formdata)) {
+
+                $Hra_save = new VmtInvEmpFormdata;
+                $Hra_save->f_emp_id = $query_assign->id;
+                $Hra_save->fs_id = $fs_id;
+                $Hra_save->dec_amount = $interest_amount_paid;
+                $Hra_save->json_popups_value = $json_decodeHra;
+                $Hra_save->selected_section_options = '0';
+                $Hra_save->save();
+
+            } else {
+                $emp_formdata->f_emp_id = $query_assign->id;
+                $emp_formdata->fs_id = $fs_id;
+                $emp_formdata->dec_amount = $interest_amount_paid;
+                $emp_formdata->json_popups_value = $json_decodeHra;
+                $emp_formdata->selected_section_options = '0';
+                $emp_formdata->save();
+
+            }
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' =>"save successfully",
+                'data' => "",
+            ]);
+        }
+
+        catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "don't save details",
+                "data" => $e,
             ]);
         }
 
 
+    }
+    public function fetchEmpRentalDetails($user_code, $fs_id)
+    {
+
+        $validator = Validator::make(
+            $data = [
+
+                'user_code' => $user_code,
+                'fs_id' => $fs_id,
+
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "fs_id" => "required",
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+        $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+        $rentalDetails = VmtInvEmpFormdata::where('fs_id', $fs_id)->where('f_emp_id', $form_assignrd_id)->get();
+
+        $sumOfHra = 0;
+        $res = array();
+
+        foreach($rentalDetails as $item){
+
+            $hraDecAmt = (json_decode($item->json_popups_value, true));
+            $sumOfHra += $hraDecAmt['total_rent_paid'];
+            $sumosRentPaid['sumofRentPaid'] = $sumOfHra;
+        }
+        array_push($res,$sumosRentPaid);
 
 
+        $popupjson = $rentalDetails->map(function ($item, $key) {
+            $rentalDetail['id'] = $item->id;
+            $rentalDetail['f_emp_id'] = $item->f_emp_id;
+            $rentalDetail['fs_id'] = $item->fs_id;
+            $rentalDetail['dec_amount'] = $item->dec_amount;
+            $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
+
+
+            return $rentalDetail;
+        });
+
+        return ["rent_details" =>$popupjson,"dec_amt"=>$res] ;
+
+        }
+    catch (\Exception $e) {
         return response()->json([
-            'status' => 'success',
-            'message' => $section_name.' data saved successfully',
-            'data' => ''
+            "status" => "failure",
+            "message" => "Error while fetching investments form template",
+            "data" => $e,
         ]);
-
-    }
-
-    private function saveEmpInvSecDetails_HRA(){
-
-    }
-
-    private function saveEmpInvSecDetails_80c_80ccc(){
-
-    }
-
-    private function saveEmpInvSecDetails_OtherExemptions(){
-
     }
 
 
-    /*
-        Section name : House Property
-        Sub section : Self Occupied Property
-
-    */
-    private function saveEmpInvSecDetails_HouseProperty_SelfOccProp(){
 
     }
 
-        /*
-        Section name : House Property
-        Sub section : Let Out Property
+    public function fetchHousePropertyDetails($user_code, $fs_id)
+    {
 
-    */
-    private function saveEmpInvSecDetails_HouseProperty_LetoutProp(){
+        $validator = Validator::make(
+            $data = [
 
+                'user_code' => $user_code,
+                'fs_id' => $fs_id,
+
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "fs_id" => "required",
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+        $user_id = User::where('user_code', $user_code)->first()->id;
+
+        $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+
+        $res = array();
+        foreach ($fs_id as $single_fs_id) {
+            $query_rentalDetails = VmtInvEmpFormdata::where('fs_id', $single_fs_id)->where('f_emp_id', $form_assigned_id);
+
+            if ($query_rentalDetails->exists()) {
+                $rentalDetails = $query_rentalDetails->first();
+                $rentalDetail['id'] = $rentalDetails->id;
+                $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
+                $rentalDetail['fs_id'] = $rentalDetails->fs_id;
+                $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
+                $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
+                array_push($res, $rentalDetail);
+            }
+
+        }
+        return $res;
+
+
+    }
+    catch (\Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Error while fetching investments form template",
+            "data" => $e,
+        ]);
     }
 
 
-    /*
-        Section name : House Property
-        Sub section : Deemed Let Out Property
+    }
 
-    */
-    private function saveEmpInvSecDetails_HouseProperty_DeemedLetOutProps(){
+    public function deleteEmpRentalDetails($currentTableId)
+    {
+
+        $validator = Validator::make(
+            $data = [
+
+            'currentTableId' => $currentTableId,
+
+            ],
+            $rules = [
+                "currentTableId" => 'required',
+
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+            $rentalDetails = VmtInvEmpFormdata::where('id', $currentTableId)->delete();
+
+            return $response = [
+                'status' => 'success',
+                'message' => "Rental details deleted successfully"
+            ];
+
+        } catch (\Exception $e) {
+           return $response = [
+                'status' => 'failure',
+                'message' => 'Error while Deleting Rental Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+
+
+    }
+    public function deleteHousePropertyDetails($currentTableId)
+    {
+
+        $validator = Validator::make(
+            $data = [
+
+            'currentTableId' => $currentTableId,
+
+            ],
+            $rules = [
+                "currentTableId" => 'required',
+
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+        try {
+            $houseProperty = VmtInvEmpFormdata::where('id', $currentTableId)->delete();
+
+           return $response = [
+                'status' => 'success',
+                'message' => "Rental details deleted successfully"
+            ];
+
+        } catch (\Exception $e) {
+           return $response = [
+                'status' => 'failure',
+                'message' => 'Error while Deleting Rental Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
 
     }
 
-    /*
-        Section name : Reimbursements
-
-    */
-    private function saveEmpInvSecDetails_Reimbursement(){
-
-    }
-
-    /*
-        Section name : Previous Employer Income
-
-    */
-    private function saveEmpInvSecDetails_PrevEmployerIncome(){
-
-    }
-
-    /*
-        Section name : Other Source of Income
-
-    */
-    private function saveEmpInvSecDetails_OtherSrcOfIncome(){
-
-    }
-
-    //Investements excel import
 
     public function ImportInvestmentForm_Excel($form_name, $excel_file)
     {
@@ -333,7 +817,7 @@ class VmtInvestmentsService
 
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
@@ -343,8 +827,7 @@ class VmtInvestmentsService
 
 
 
-        try
-        {
+        try {
 
             //Create Form name
             $invform = new VmtInvForm;
@@ -352,7 +835,7 @@ class VmtInvestmentsService
             $invform->save();
 
             //Import excel data
-            $response = Excel::import(new VmtInvSectionImport($invform->id) , $excel_file);
+            $response = Excel::import(new VmtInvSectionImport($invform->id), $excel_file);
 
             return response()->json([
                 'status' => 'success',
@@ -360,8 +843,7 @@ class VmtInvestmentsService
                 'data' => $response
             ]);
 
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
 
             return response()->json([
                 'status' => 'failure',

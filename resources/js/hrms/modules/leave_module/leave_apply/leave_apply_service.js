@@ -4,7 +4,7 @@ import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
 
-export const Service = defineStore("Service", () => {
+export const useLeaveService = defineStore("useLeaveService", () => {
 
     // Notification service
     const toast = useToast();
@@ -36,7 +36,7 @@ export const Service = defineStore("Service", () => {
         leave_request_error_messege:""
     });
 
-
+   const leaveApplyDailog = ref(false)
     const TotalNoOfDays = ref(true);
     const full_day_format = ref(true);
     const half_day_format = ref(false);
@@ -97,10 +97,6 @@ export const Service = defineStore("Service", () => {
         compensatory_format.value = false;
     };
     const dayCalculation = () => {
-
-
-
-
 
         if (custom_format.value == true) {
             if (
@@ -187,7 +183,6 @@ export const Service = defineStore("Service", () => {
 
     const Permission = () => {
 
-
         if (leave_data.selected_leave.includes("Permission")) {
             Permission_format.value = true;
             TotalNoOfDays.value = false;
@@ -218,13 +213,14 @@ export const Service = defineStore("Service", () => {
             Permission_format.value = false;
             compensatory_format.value = false;
             TotalNoOfDays.value=true
+            full_day_format.value = true
         }
     };
 
 
-    const get_user=()=>{
+    const get_user  = () =>{
 
-        // data_checking.value=true
+     // data_checking.value=true
 
         axios.get('/currentUser').then(res=>{
              leave_data.current_login_user=res.data;
@@ -237,7 +233,7 @@ export const Service = defineStore("Service", () => {
 
 
 
-    const get_leave_types=()=>{
+    const get_leave_types = () =>{
 
         axios.get('/fetch-leave-policy-details').then(res=>{
             console.log(res.data);
@@ -249,7 +245,7 @@ export const Service = defineStore("Service", () => {
     const get_compensatroy_leaves=() =>{
 
         let user_id= leave_data.current_login_user;
-        axios.get(`/fetch-employee-unused-compensatory-days/${user_id}`).then(res=>{
+        axios.get(`/fetch-employee-unused-compensatory-days`).then(res=>{
             leave_data.compensatory_leaves=res.data
 
 
@@ -423,6 +419,7 @@ export const Service = defineStore("Service", () => {
     return {
 
         // Variable Declaration
+        leaveApplyDailog,
         leave_data,
         invalidDate,
         today,

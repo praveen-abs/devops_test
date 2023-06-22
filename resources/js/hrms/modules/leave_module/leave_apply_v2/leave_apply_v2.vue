@@ -7,7 +7,7 @@
                 </div>
                 <div class="row">
                     <button id="box"
-                        class="p-1 mx-3 my-4 border-2 rounded-lg shadow-md col-lg-3 left-line col-md-3 col-xl-2 hover:bg-slate-100 focus:bg-green-100 active:bg-green-200" 
+                        class="p-1 mx-3 my-4 border-2 rounded-lg shadow-md col-lg-3 left-line col-md-3 col-xl-2 hover:bg-slate-100 focus:bg-green-100 active:bg-green-200"
                         @click="check(leaves)" v-for="(leaves) in useStore.leave_types" :key="leaves.id">
                         <p class="text-lg font-semibold text-center ">{{ leaves.leave_type }}</p>
                         <p class="my-3 text-xl font-bold text-center">{{ leaves.days_monthly }} <span>days</span></p>
@@ -113,21 +113,21 @@
 <script setup>
 
 import { onMounted, ref } from 'vue'
-import { Service } from '../leave_apply/leave_apply_service'
+import { useLeaveService } from '../leave_apply/leave_apply_service'
 
-const useStore = Service()
+const useStore = useLeaveService()
 
 onMounted(() => {
     useStore.get_leave_types()
 })
 
-const sickActive = ref(false) 
-const earnActive = ref(false) 
+const sickActive = ref(false)
+const earnActive = ref(false)
 
 
 const check = (a) => {
     console.log(a);
-    let leave 
+    let leave
 
     switch (leave) {
         case "Sick Leave / Casual Leave":

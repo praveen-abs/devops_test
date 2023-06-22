@@ -80,7 +80,7 @@
                                         <th class="sort" data-sort="status" data-name='source' data-filterable="false" data-visible="{{$show['source']}}">@if($config &&
                                             $config->header) {{$config->header['source']}} @else Source @endif</th>
                                         <th class="sort" data-sort="status" data-name='kpiWeightage' data-filterable="false" data-visible="{{$show['kpiWeightage']}}">@if($config && $config->header)
-                                            {{$config->header['kpiWeightage']}} @else KPI Weightage ( % ) @endif
+                                            {{($config->header['kpi_weightage'])}} @else KPI Weightage ( % ) @endif
                                             <span id="percentage-header"></span>
                                         </th>
                                     </tr>

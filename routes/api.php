@@ -46,8 +46,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/getEmployeeRole', [HRMSBaseAPIController::class, 'getEmployeeRole']);
     Route::post('/getOrgTimePeriod', [HRMSBaseAPIController::class, 'getOrgTimePeriod']);
 
-    Route::post('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
-    Route::post('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
+    Route::get('/getFCMToken', [HRMSBaseAPIController::class, 'getFCMToken']);
+    Route::get('/updateFCMToken', [HRMSBaseAPIController::class, 'updateFCMToken']);
     Route::post('/getEmployeePermissions', [HRMSBaseAPIController::class, 'getEmployeePermissions']);
 
     Route::post('/get-maindashboard-data', [VmtAPIDashboardController::class, 'getMainDashboardData']);
@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('attendance_checkin', [VmtAPIAttendanceController::class, 'performAttendanceCheckIn']);
     Route::post('attendance_checkout', [VmtAPIAttendanceController::class, 'performAttendanceCheckOut']);
     Route::post('/attendance/get_attendance_status', [VmtAPIAttendanceController::class, 'getAttendanceStatus']);
+    Route::post('/attendance/get_last_attendance_status', [VmtAPIAttendanceController::class, 'getLastAttendanceStatus']);
     Route::post('/attendance/getEmployeeWorkShiftTimings', [VmtAPIAttendanceController::class, 'getEmployeeWorkShiftTimings']);
 
     //Leave
@@ -83,6 +84,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/approveRejectRevoke-att-leave', [VmtAPIAttendanceController::class, 'approveRejectRevokeLeaveRequest']);
     Route::post('/attendance/getData-att-unused-compensatory-days', [VmtAPIAttendanceController::class, 'getUnusedCompensatoryDays']);
     Route::post('/attendance/getEmployeeLeaveBalance', [VmtAPIAttendanceController::class, 'getEmployeeLeaveBalance']);
+    Route::post('/attendance/getEmployeeLeaveDetails', [VmtAPIAttendanceController::class, 'getEmployeeLeaveDetails']);
+    Route::post('/attendance/getAllEmployeesLeaveDetails', [VmtAPIAttendanceController::class, 'getAllEmployeesLeaveDetails']);
+    Route::post('/attendance/getTeamEmployeesLeaveDetails', [VmtAPIAttendanceController::class, 'getTeamEmployeesLeaveDetails']);
 
     //Attendance Reports
     Route::post('/attendance/monthStatsReport', [VmtAPIAttendanceController::class, 'getAttendanceMonthStatsReport']);
@@ -102,7 +106,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/payroll/payslip/getEmployeeAllPayslipList', [VmtAPIPaySlipController::class, 'getEmployeeAllPayslipList']);
     Route::post('/payroll/getEmployeeCompensatoryDetails', [VmtAPIPaySlipController::class, 'getEmployeeCompensatoryDetails']);
 
-    
+
 
     //Profile pages
     Route::post('/profile-pages-getEmpDetails', [VmtAPIProfilePagesController::class, 'fetchEmployeeProfileDetails']);
@@ -110,15 +114,23 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/profile-pages/updateProfilePicture', [VmtAPIProfilePagesController::class, 'updateProfilePicture']);
     Route::post('/profile-pages/updateEmployeeGeneralInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeGeneralInformation']);
     Route::post('/profile-pages/updateEmployeeContactInformation', [VmtAPIProfilePagesController::class, 'updateEmployeeContactInformation']);
+    Route::post('/profile-pages/updateEmployeeBankDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeBankDetails']);
     Route::post('/profile-pages/addEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'addEmployeeFamilyDetails']);
     Route::post('/profile-pages/updateEmployeeFamilyDetails', [VmtAPIProfilePagesController::class, 'updateEmployeeFamilyDetails']);
     Route::post('/profile-pages/deleteEmployeeFamilyDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeFamilyDetails']);
+    Route::post('/profile-pages/addEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'addEmployeeExperianceDetails']);
+    Route::post('/profile-pages/updateEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'updateEmployeeExperianceDetails']);
+    Route::post('/profile-pages/deleteEmployeeExperianceDetails', [VmtAPIProfilePagesController::class,'deleteEmployeeExperianceDetails']);
 
 
     //Investments
-    Route::post('/investments/getCurrentInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getCurrentInvestmentsFormDetails']);
-    Route::post('/investments/getInvestmentsFormDetails', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetails']);
-    Route::post('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
+     Route::post('/investments/saveSection80', [VmtAPIInvestmentsController::class,'saveSection80']);
+     Route::post('/investments/saveSectionPopups', [VmtAPIInvestmentsController::class,'saveSectionPopups']);
+     Route::post('/investments/SaveInvDetails', [VmtAPIInvestmentsController::class,'SaveInvDetails']);
+     Route::post('/investments/getInvestmentsFormDetailsTemplate', [VmtAPIInvestmentsController::class,'getInvestmentsFormDetailsTemplate']);
+     Route::post('/investments/fetchHousePropertyDetails', [VmtAPIInvestmentsController::class,'fetchHousePropertyDetails']);
+     Route::post('/investments/fetchEmpRentalDetails', [VmtAPIInvestmentsController::class,'fetchEmpRentalDetails']);
+     Route::post('/investments/deleteHousePropertyDetails', [VmtAPIInvestmentsController::class,'deleteHousePropertyDetails']);
 
     //Notifications
     Route::post('/notifications/getNotifications', [VmtApiNotificationsController::class,'getNotifications']);
@@ -128,6 +140,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Onboarding
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
+
+    //Payroll
+
+    Route::post('/payroll/getCurrentPayrollDates', [App\Http\Controllers\VmtPayrollController::class, 'getCurrentPayrollMonth'])->name('payroll/getCurrentPayrollDates');
+
+
+
 
 
 });

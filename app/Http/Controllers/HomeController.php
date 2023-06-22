@@ -24,7 +24,9 @@ use Illuminate\Support\Facades\Session;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeEmergencyContactDetails;
+use App\Models\VmtEmployeeWorkShifts;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -406,61 +408,149 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    /*
+        Check if the current user is already checkedin.
+        Used in main dashboard to control that check-in toggle button
+
+    */
+    public function isAlreadyCheckedIn(Request $request){
+
+        $query_attendance = VmtEmployeeAttendance::where('id',auth()->user()->id)->orderBy('id','desc');
+
+        if($query_attendance->exists()){
+            $query_attendance = $query_attendance->first();
+
+            if(!empty($query_attendance->checkin_time) && empty($query_attendance->checkout_time))
+            {
+                return response()->json([
+                    'status'=> 'success',
+                    'message' => 'User already checked-in',
+                    'data' => 'true'
+                ]);
+            }
+            else
+            if(empty($query_attendance->checkin_time) && empty($query_attendance->checkout_time) )
+            {
+                return response()->json([
+                    'status'=> 'success',
+                    'message' => 'No check-in/check-out done',
+                    'data' => 'false'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'status'=> 'success',
+                    'message' => 'Check-in and check-out already done',
+                    'data' => 'false'
+                ]);
+
+            }
+
+        }
+        else
+        {
+            //if record doesnt exist
+            return response()->json([
+                'status'=> 'failure',
+                'message' => 'No checkin data exists',
+                'data' => 'false'
+            ]);
+
+        }
+
+    }
+
     public function updateCheckin(Request $request) {
+
+        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', auth()->user()->id)->where('is_active','1')->first();
+
+        if(empty( $vmt_employee_workshift->work_shift_id)){
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'No work-shift has been assigned.Please contact Admin.',
+                'data'   => ""
+            ]);
+        }
+
         $checked = $request->input('checkin');
         if ($checked == 'true') {
+
+            //Check if the user already checked-out.
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'));
+
+
+            if($attendance->exists())
+            {
+                return response()->json([
+                    'status'=> 'failure',
+                    'message' => 'You have already checked-out for the day',
+                    'time' => ""
+                ]);
+            }
+
+
             $attendance = new VmtEmployeeAttendance;
             $attendance->user_id = auth()->user()->id;
             $attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkin_time = $currentTime;
+            $attendance->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
             $attendance->attendance_mode_checkin = "web";
             $attendance->save();
 
             //Check whether if its LC/EG
-            $regularization_type = checkRegularizationType($currentTime, "check-in");
-            $isSent = null;
-            $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
+            // $regularization_type = checkRegularizationType($currentTime, "check-in");
+            // $isSent = null;
+            // $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
 
             //Send mail if its LC
-            if( !empty($regularization_type) &&  $regularization_type == "LC")
-            {
-                //dd("adsf");
-                $VmtGeneralInfo = VmtGeneralInfo::first();
-                $image_view = url('/') . $VmtGeneralInfo->logo_img;
-                $emp_avatar = getEmployeeAvatarOrShortName(auth::user()->id);
-
-                $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
-                    auth::user()->name,
-                    auth::user()->user_code,
-                    Carbon::parse($attendance->date)->format('M jS, Y'),
-                    Carbon::parse($currentTime)->format('h:i:s A'),
-                    $image_view,
-                    $emp_avatar,
-                    request()->getSchemeAndHttpHost(),
+            // if( !empty($regularization_type) &&  $regularization_type == "LC")
+            // {
+               // dd("adsf");
+                // $VmtGeneralInfo = VmtGeneralInfo::first();
+                // $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                // $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+                // dd($emp_avatar);
+                // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                //     auth::user()->name,
+                //     auth::user()->user_code,
+                //     Carbon::parse($attendance->date)->format('M jS, Y'),
+                //     Carbon::parse($currentTime)->format('h:i:s A'),
+                //     $image_view,
+                //     $emp_avatar,
+                //     request()->getSchemeAndHttpHost(),
                     // Carbon::parse($leave_request_date)->format('M jS Y'),
-                    $regularization_type
-                ));
-            }
+                //     $regularization_type
+                // ));
+          //  }
 
 
 
             return response()->json([
+                'status' => 'success',
                 'message' => 'You have successfully checkedin!',
                 'time' => $attendance->checkin_time,
-                'regularization_type' => $regularization_type,
-                'regularization_mail_sent' => $isSent ? "True" : $isSent
+               // 'regularization_type' => $regularization_type,
+               // 'regularization_mail_sent' => $isSent ? "True" : $isSent
             ]);
         } else {
-            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
-            $attendance->user_id = auth()->user()->id;
-            $attendance->date = date('Y-m-d');
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                            ->where('date', date('Y-m-d'))
+                            ->first();
+
+            //dd($attendance);
+            //$attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkout_time = $currentTime;
             $attendance->attendance_mode_checkout = "web";
             $attendance->save();
 
-            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)->orderBy('created_at', 'DESC')->first();
+            //Get the time diff
+            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'))
+                        ->first();
 
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
 
@@ -471,6 +561,7 @@ class HomeController extends Controller
                // dd($effective_hours);
 
             return response()->json([
+                'status' => 'success',
                 'message' => 'You have successfully checked out!',
                 'time' => $attendance->checkout_time,
                 'effective_hours' => $effective_hours,

@@ -70,16 +70,18 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
             responseType: 'stream'
         };
 
-        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF_v2',
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF',
         {
             uid : getURLParams_UID(),
              user_code : user_code,
              month : month,
              year : year
         }).then((response) => {
-             console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
-             console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
-             window.open(`data:application/pdf;base64,${response.data.data}`);
+            //  console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
+             console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));
+
+              window.open(`data:application/pdf;base64,${response.data.data}`);
+            //saveAs(`data:application/pdf;base64,${response.data.data}`, 'payslip.pdf');
 
          })
 
