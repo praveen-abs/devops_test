@@ -269,14 +269,17 @@ class VmtReimbursementsService {
                                                                       ->where('date',$date)->exists();
 
                 if($employee_reimbursement_applied_data_query){
-                    $response = true;
+                    $response = 1;
+                    $message = "Reimbursements already applied";
                 }else{
-                    $response = false;
+                    $response = 0;
+                    $message = "Reimbursements not applied";
+
                 }
 
                 return response()->json([
                     'status' => 'success',
-                    'message' => "",
+                    'message' => $message,
                     'data' =>$response
                 ]);
 
