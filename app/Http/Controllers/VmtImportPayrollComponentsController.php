@@ -109,10 +109,18 @@ $i=array_keys($excelRowdata_row);
                 array_push($data_array, $rowdata_response);
             }
          if($rowdata_response['status']=='success'){
+
+                $responseJSON['status'] = 'success';
+                $responseJSON['message'] = "Excelsheet data import success";
+                $responseJSON['data'] = $data_array;
+
+
+         }else if($rowdata_response['status']=='SUCCESS'){
             $responseJSON['status'] = 'success';
-            $responseJSON['message'] = "Excelsheet data import success";
+            $responseJSON['message'] = "Given data is already added";
             $responseJSON['data'] = $data_array;
-         }else{
+         }
+         else{
             $responseJSON['status'] = 'failure';
             $responseJSON['message'] = 'error while uploading excel sheet';
             $responseJSON['data'] = $data_array;
@@ -135,9 +143,12 @@ $i=array_keys($excelRowdata_row);
 
 
         try{
+            $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
+            $paygroup_components =VmtPayrollComponents::where('comp_name',$row["component_name"])->where('comp_type_id',$component_type->id)->first();
+
+            if(empty($paygroup_components)){
                 $fin_components = new VmtPayrollComponents;
                 $fin_components->comp_name =$row["component_name"];
-                $component_type =VmtPayrollCompTypes::where('name',strtolower($row["componant_type"]))->first();
                 $fin_components->comp_type_id =  $component_type->id;
                 $component_nature =VmtPayrollCompNature::where('name',strtolower($row["component_nature"]))->first();
                 $fin_components->comp_nature_id =$component_nature->id;
@@ -156,10 +167,18 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->save();
 
             return $rowdata_response = [
-                'row_number' => '',
+
                 'status' => 'success',
                 'error_fields' => [],
             ];
+        }else{
+            return $rowdata_response = [
+
+                'status' => 'SUCCESS',
+                'message'=>'given data is already added',
+                'error_fields' => [],
+            ];
+        }
         } catch (\Exception $e) {
             //$this->deleteUser($user->id);
 
