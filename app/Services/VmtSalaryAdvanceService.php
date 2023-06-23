@@ -674,34 +674,36 @@ class VmtSalaryAdvanceService
         }
     }
 
-   public function fetchEmployeeForLoanApprovals(){
-     $user_id = auth()->user()->id;
-     $temp_ar=array();
-     $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts',0)->get();
-     foreach( $all_pending_loans as $single_record){
-           $approver_flow=json_decode($single_record->approver_flow,true);
-           $approver_flow = ksort(  $approver_flow);
-           dd( $approver_flow);
-        foreach(  $approver_flow as $single_ar){
-            if( in_array($user_id,$single_ar)){
-                $current_user_order = $single_ar['order'];
-                if($single_ar['order']==1){
-                   array_push( $temp_ar,$single_record);
-
-                }else if($single_ar['order']==2){
-                   dd($approver_flow);
+    public function fetchEmployeeForLoanApprovals()
+    {
+        $user_id = auth()->user()->id;
+        $temp_ar = array();
+        $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts', 0)->get();
+        foreach ($all_pending_loans as $single_record) {
+            $approver_flow = collect(json_decode($single_record->approver_flow, true))->sortBy('order');
+            $ordered_approver_flow = array();
+            foreach ($approver_flow as $key => $value) {
+                $ordered_approver_flow[$value['order']] = $value;
+            }
+            foreach ($ordered_approver_flow as $single_ar) {
+                if (in_array($user_id, $single_ar)) {
+                    $current_user_order = $single_ar['order'];
+                    if ($current_user_order == 1) {
+                        array_push($temp_ar, $single_record);
+                    } else if ($current_user_order == 2) {
+                        dd($ordered_approver_flow);
+                    } else if ($current_user_order == 3) {
+                    } else if ($current_user_order == 4) {
+                    }
                 }
 
-                dd( $current_user_order);
-                dd();
+                // dd($current_user_order);
+                // dd();
             }
 
-
-
+            unset($ordered_approver_flow);
         }
 
-     }
-
-     dd( $all_pending_loans);
-   }
+        dd($all_pending_loans);
+    }
 }
