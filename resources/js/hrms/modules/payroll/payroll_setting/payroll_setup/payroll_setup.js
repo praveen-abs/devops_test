@@ -33,7 +33,7 @@ import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
 import Steps from 'primevue/steps';
 import InputSwitch from 'primevue/inputswitch';
-import { router } from "./router";
+import  router  from "./router";
 
 
 

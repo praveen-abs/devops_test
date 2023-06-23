@@ -132,6 +132,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { usePayrollMainStore } from '../../../stores/payrollMainStore';
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+
+onMounted(()=>{
+    console.log(route.params.id);
+})
 
 const usePayroll = usePayrollMainStore()
 

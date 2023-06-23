@@ -1,6 +1,6 @@
 <template>
     <div class="w-full p-3">
-        <div v-if="!usePayroll.dailogNewSalaryStructure">
+        <div v-if="route.params.id == undefined">
             <section id="header" class="flex mx-2 my-5">
                 <div class="w-10">
                     <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
@@ -40,9 +40,10 @@
             </div>
         </div>
 
-        <new_salary_structure v-if="usePayroll.dailogNewSalaryStructure" />
-
-    </div>
+        <!-- <new_salary_structure  v-else-if="route.params.id == 1" /> -->
+        <router-link class="btn btn-primary" :to="`/payrollSetup/structure/1`">Edit</router-link>  
+        <router-view />
+      </div>
 </template>
 
 
@@ -50,6 +51,9 @@
 import { ref, onMounted } from 'vue';
 import new_salary_structure from './new_salary_structure.vue';
 import { usePayrollMainStore } from '../../../stores/payrollMainStore'
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
 
 const usePayroll = usePayrollMainStore()
 const selectedProduct = ref()
