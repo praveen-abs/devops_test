@@ -14,7 +14,7 @@
             <a href="/payroll/work_location"
                 class="bg-blue-900   payroll-settings-content border-indigo-100  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/location.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/location.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Work Location</span>
                 </div>
                 <div class="flex items-center justify-start ">
@@ -30,7 +30,7 @@
             <a   href="/payroll/setup"
                 class="bg-blue-900   payroll-settings-content border-orange-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Payroll Setup</span>
                 </div>
                 <div class="flex items-center justify-start ">
@@ -42,7 +42,7 @@
                         class="rounded-full text-yellow-100 text-sm border-1 border-solid border-yellow-300 py-1.5 px-5">
                         <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
-                    
+
                     <i class="ml-8 mr-6 text-xl font-bold fa fa-angle-double-right text-white-200 ">
                     </i>
                 </div>
@@ -50,7 +50,7 @@
             <a
                 class="bg-blue-900   payroll-settings-content border-blue-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/categorize.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/categorize.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Misc Settings</span>
                 </div>
                 <div class="flex items-center justify-start ">
@@ -67,7 +67,7 @@
             <a
                 class="bg-blue-900   payroll-settings-content border-yellow-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/purchase-order.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/purchase-order.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Payslip</span>
                 </div>
                 <div class="flex items-center justify-start ">
@@ -85,7 +85,7 @@
             <a
                 class="bg-blue-900   payroll-settings-content border-red-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center w-1/3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/money-bag.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/money-bag.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Full and Final Settlement</span>
                 </div>
                 <div class="flex items-center justify-start ">
@@ -103,7 +103,7 @@
             <a
                 class="bg-blue-900   payroll-settings-content border-green-600  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/donate.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/donate.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Contribution Rate</span>
                 </div>
                 <div class="flex items-center justify-start ">
@@ -120,7 +120,7 @@
             <a
                 class="bg-blue-900   payroll-settings-content border-blue-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
                 <div class="flex items-center">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/iencashment.png" alt="">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/iencashment.png" alt=""> -->
                     <span class="ml-5 text-lg text-white">Leave Encashment</span>
                 </div>
                 <div class="flex items-center justify-start ">
