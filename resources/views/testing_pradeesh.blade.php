@@ -38,7 +38,7 @@
      {{-- <div id="testing_table"></div> --}}
 
      @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js')
-     {{-- <div id="RolesPermission"></div> --}}
+     <div id="VJS_RolesPermissions"></div>
 
      {{-- @vite('resources/js/hrms\modules\profile_pages\EmployeeDocumentsManager.js')
      <div id="vjs_employeeDocsManager"></div> --}}
@@ -47,7 +47,7 @@
             <div id="OnboardingFromMgmt"></div> --}}
 
             @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
-            <div id="vjs_attendance_master"></div>
+            {{-- <div id="vjs_attendance_master"></div> --}}
 
             {{-- @vite('resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js')
             <div id="General_Shift"></div> --}}
