@@ -53,6 +53,8 @@
             <Column field="user_code" header="Employee Id" sortable></Column>
             <Column field="name" header="Employee Name">
             </Column>
+            <!-- <Column field="name" header="Employee New Name">
+            </Column> -->
             <Column field="doc_status" header="Approval Status" :sortable="false">
                 <template #body="{ data }">
                     {{ data.doc_status }}
