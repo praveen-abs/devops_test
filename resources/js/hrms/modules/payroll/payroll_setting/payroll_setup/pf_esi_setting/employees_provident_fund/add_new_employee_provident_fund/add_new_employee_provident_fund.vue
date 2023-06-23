@@ -7,28 +7,29 @@
             <p>EPF Details</p>
             <div><button><i class="pi pi-pencil"></i></button></div>
         </div> -->
-        <div class="row mx-5" >
-            <div class="col d-flex px-5">
+        <div class="row" >
+            <div class="col-6 d-flex px-4">
                 <p>EPF Details</p>
                 <button><i class="pi pi-pencil"></i>
                 </button>
             </div>
-            <div class="col-6">
-                <div class="d-flex text-gray-400 w-9 border">
-                    <p class="fs-6">Disable EPF</p>
-                    <InputSwitch v-model="checked" />
-                    <h1 class="">Enable EPF</h1>
+            <div class="col">
+                <div class=" d-flex w-full justify-end align-items-center" >
+                    <label for="" class="mx-2 text-gray-500">Disable EPF</label>
+                    <InputSwitch  class="mx-2" v-model="checked" />
+                    <h1  class="mx-2" >Enable EPF</h1>
                 </div>
+
             </div>
         </div>
-        <div class="flex gap-6 mx-6 ">
-            <div class="flex w-6 p-4 my-1 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="w-12">
-                    <div class="my-1">
+        <div class="flex gap-6 mx-1">
+            <div class="flex w-6 p-4 my-1 bg-gray-100 rounded-lg shadow-md border-1">
+                <div class="w-6 mr-3">
+                    <div class="my-1 ">
                         <h5 class="my-2 text-lg font-semibold">EPF Number</h5>
-                        <div class="flex gap-8 justify-evenly">
-                            <div class="w-8">
-                                <InputText class="w-full" />
+                        <div class="flex gap-8 justify-evenly ">
+                            <div class="w-full">
+                                <InputText class="w-full h-10"  />
                             </div>
                         </div>
                     </div>
@@ -37,17 +38,16 @@
                             Deduction Cycle
                         </h5>
                         <div class="flex gap-8 justify-evenly">
-                            <div class="w-8">
-                                <InputText class="w-full" />
+                            <div class="w-full">
+                                <InputText class="w-full h-10" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="w-6">
-                    <input type="checkbox" name="" id="">
-                    <label for="">Is Default</label>
-
-                    <p>
+                <div class="w-6 pl-4 pt-6">
+                    <input type="checkbox" class="mr-3" style="width: 18px ; height: 20px;" name="" id="">
+                    <label for="" class=" text-gray-600 fs-5" >Is Default</label>
+                    <p class=" text-gray-600 w-full mt-1">
                         (Note: Once employees are onboarded they will be automatically enrolled in this PF scheme. Any
                         modifications to the enrolement can only be made before the start of payroll processing )
                     </p>
@@ -55,39 +55,39 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="">
-                    <label for="">Employer's Contribution is included in the CTC.</label>
+            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+                <div class="mx-2 my-4 d-flex align-center">
+                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;" >
+                    <label for="" class="fs-6  text-gray-600">Employer's Contribution is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="">
-                    <label for="">Employer's EDLI Contribution is included in the CTC.</label>
+                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;" >
+                    <label for="" class=" text-gray-600">Employer's EDLI Contribution is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="">
-                    <label for="">Admin Charges is included in the CTC.</label>
+                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;" >
+                    <label for="" class=" text-gray-600">Admin Charges is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="">
-                    <label for="">Override PF Contribution rate at employee level</label>
+                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;" >
+                    <label for="" class=" text-gray-600">Override PF Contribution rate at employee level</label>
                 </div>
             </div>
         </div>
-        <div class="mx-6">
-            <p>Employee/employeer contribution</p>
-            <p>Note: The Contribution made by both employers and employees will remain the same</p>
+        <div class="mt-3">
+            <p class="fs-5 fw-semibold">Employee/Employeer Contribution</p>
+            <p class="text-gray-600">Note: The Contribution made by both employers and employees will remain the same</p>
         </div>
-        <div class="flex gap-6 mx-6 my-4">
+        <div class="flex gap-6 ">
             <div class="w-6">
-                <div class="p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+                <div class="p-4 my-4 bg-gray-100 rounded-lg shadow-md border-1">
                     <div class="my-4">
                         <h5 class="my-2 text-lg font-semibold">
                             Select the Rule
                         </h5>
-                        <div class="flex gap-8 justify-evenly">
-                            <div class="w-6">
-                                <Dropdown class="w-full" />
+                        <div class="flex gap-8 justify-evenly ">
+                            <div class=" w-full ">
+                                <Dropdown class=" w-20rem" />
                             </div>
                         </div>
                     </div>
@@ -96,22 +96,22 @@
                             Select the Contribution Tye
                         </h5>
                         <div class="flex gap-8 justify-evenly">
-                            <div class="w-6">
-                                <Dropdown class="w-full" />
+                            <div class=" w-full ">
+                                <Dropdown class=" w-20rem" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
-                    <div class="my-4">
-                        <input type="checkbox" name="" id="">
-                        <label for="">
+                <div class="p-4 bg-gray-100 rounded-lg shadow-md border-1">
+                    <div class="my-4 d-flex align-items-center">
+                        <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;" >
+                        <label for="" class=" text-gray-500" >
                             Pro-rate restricted PF Wage When LOP Applied
                         </label>
                     </div>
-                    <div class="my-4">
-                        <input type="checkbox" name="" id="">
-                        <label for="">
+                    <div class="my-4 d-flex align-items-center">
+                        <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;" >
+                        <label for="" class=" text-gray-500">
                             Consider all applicable salary components if PF Wage is less tham 15,000 after loss of pay
                         </label>
                     </div>
@@ -119,16 +119,16 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
                 <h1 class="my-2 text-xl font-bold">
                     Example
                 </h1>
 
-                <p>Let's assume the Gross Wages = <strong>50,000</strong>
+                <p class=" text-gray-600">Let's assume the Gross Wages = <strong>50,000</strong>
                     and HRA=<strong>4000</strong>
                     ,then the breakup of contribution will be:</p>
 
-                <div class="my-6 w-96">
+                <div class="my-6 w-full">
                     <DataTable :value="products">
                         <Column field="product" header="Code"></Column>
                         <Column field="lastYearSale" header="Name"></Column>
@@ -137,28 +137,29 @@
                     </DataTable>
                 </div>
 
-                <div class="border-gray-300 border-1">
-                    <p><strong>Note:</strong>This Condition Works</p>
-                    <p>if</p>
-                    <p><strong>Gross(-)HRA </strong> is Greater than <strong>15,000</strong>
-                        ,then PF deduction will be 15,000(*) 12%</p>
-                    <p>Else</p>
-                    <p><strong>Gross(-)HRA </strong> is Lesser than <strong>15,000</strong>
-                        ,then PF deduction will be 15,000(*) 12%</p>
+                <div class="border-gray-300 ">
+                    <p class=" text-gray-600"><strong>Note:</strong>This Condition Works</p>
+                    <p class="text-gray-500">if</p>
+                    <p class=" text-gray-600"><strong>Gross(<span class=" text-red-500">-</span>)HRA </strong> is Greater than <strong>15,000</strong>
+                        ,then PF deduction will be 15,000(<span class="text-red-500"> *</span>) 12%</p>
+                    <p class="text-gray-500">Else</p>
+                    <p class=" text-gray-600"><strong>Gross( <span  class="text-red-500">-</span>)HRA </strong> is Lesser than <strong>15,000</strong>
+                        ,and  PF deduction will be <strong>Gross</strong>(<span class="text-red-500">-</span> )HRA(<span  class="text-red-500">*</span> ) 12%</p>
                 </div>
             </div>
         </div>
 
         <div>
-            <div>icon</div>
-            <div>
-                <p>Assign Employees</p>
+
+            <div class=" d-flex ">
+                <i class="pi pi-user-plus fs-4 mx-2 text-primary"></i>
+                <p class=" text-primary fw-semibold fs-5 ">Assign Employees</p>
             </div>
         </div>
         <div>
-            <p><Strong>40</Strong>
+            <p class=" fs-5"><Strong class="mx-1 fs-5">40</Strong>
                 Employees Assigned
-                <button>View/Edit</button>
+                <button class=" text-primary fs-6 fs-8">View/Edit</button>
             </p>
         </div>
     </div>
@@ -167,6 +168,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
+const  checked  = ref();
 
 const products = ref([
     {
