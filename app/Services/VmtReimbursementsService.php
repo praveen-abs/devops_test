@@ -270,10 +270,10 @@ class VmtReimbursementsService {
 
                 if($employee_reimbursement_applied_data_query){
                     $response = 1;
-                    $message = "Reimbursements already applied";
+                    $message = "Reimbursement already applied for the given date";
                 }else{
                     $response = 0;
-                    $message = "Reimbursements not applied";
+                    $message = "Reimbursement not applied for the given date";
 
                 }
 
