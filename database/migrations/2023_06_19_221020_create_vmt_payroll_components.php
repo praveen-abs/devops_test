@@ -25,10 +25,12 @@ return new class extends Migration
             $table->integer('esi');
             $table->integer('pt');
             $table->integer('lwf');
+            $table->integer('impact_on_gross');
             $table->integer('is_part_of_empsal_structure');
             $table->integer('is_taxable');
             $table->integer('calculate_on_prorate_basis');
             $table->integer('can_show_inpayslip');
+            $table->integer('is_default');
             $table->integer('status');
             $table->timestamps();
         });

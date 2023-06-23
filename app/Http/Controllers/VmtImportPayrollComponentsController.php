@@ -73,6 +73,7 @@ $i=array_keys($excelRowdata_row);
                  'is_taxable'=>'nullable',
                  'calculate_on_prorate_basis'=>'nullable',
                  'can_show_inpayslip'=>'nullable',
+                 'is_default'=>'nullable',
 
 
 
@@ -148,6 +149,7 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->esi =$row["esi"];
                 $fin_components->pt =$row["pt"];
                 $fin_components->lwf =$row["lwf"];
+                $fin_components->impact_on_gross =$row["impact_on_gross"];
                 $fin_components->is_part_of_empsal_structure =$row["is_part_of_empsal_structure"];
                 $fin_components->is_taxable =$row["is_taxable"];
                 $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];

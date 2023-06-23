@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_emp_payslip_templates', function (Blueprint $table) {
+        Schema::create('vmt_paygroup_comps', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('payslip_template_id');
+            $table->integer('paygroup_id');
+            $table->integer('comp_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_emp_payslip_templates');
+        Schema::dropIfExists('vmt_paygroup_comps');
     }
 };

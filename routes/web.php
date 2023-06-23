@@ -516,6 +516,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
 
 
+       //paygroup structure
+       Route::get('/Paygroup/CreatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePaygroupCompStructure'])->name('CreatePaygroupCompStructure');
+
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
 
