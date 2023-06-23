@@ -523,12 +523,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}', [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');
 
     //Paygroup module
+       //components creation
     Route::get('/Paygroup/ShowPayRollComponentsPage', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'ShowPayRollComponentsPage'])->name('ShowPayRollComponentsPage');
     Route::get('/Paygroup/CreatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayRollComponents'])->name('CreatePayRollComponents');
     Route::get('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
     Route::get('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
     Route::get('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
 
+
+       //paygroup structure
+       Route::get('/Paygroup/CreatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePaygroupCompStructure'])->name('CreatePaygroupCompStructure');
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');

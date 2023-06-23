@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\VmtEmpPaygroup;
+use App\Models\VmtPaygroup;
+use App\Models\VmtPaygroupComps;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtPayrollComponents;
 use Illuminate\Support\Facades\Validator;
@@ -351,7 +354,7 @@ class VmtPayrollComponentsService{
                 'esi' => $esi,
                 'tds' => $tds,
                 'fbp' => $fbp,
-                'sal_components' =>$Sal_components,
+                'sal_components' =>$sal_components,
                 'assigned_employees' => $assigned_employees
             ],
             $rules = [
@@ -393,7 +396,7 @@ class VmtPayrollComponentsService{
                 $save_paygroup_comp =new VmtPaygroup;
                }
 
-              $save_paygroup_comp->client_id = $emp_data->client_id;
+              $save_paygroup_comp-> client_id = $emp_data->client_id;
               $save_paygroup_comp->paygroup_name = $paygroup_name;
               $save_paygroup_comp->description =$description ;
               $save_paygroup_comp->pf =$pf ;
@@ -401,17 +404,18 @@ class VmtPayrollComponentsService{
               $save_paygroup_comp->tds =$tds ;
               $save_paygroup_comp->fbp =$fbp ;
               $save_paygroup_comp->save();
-              $assign_comps_to_paygroup =$this->assignComponents_to_Paygroup($sal_components,$paygroup_components->id);
-              $assign_paygroupcomps_to_emp =$this->assignComponents_to_Paygroup($assigned_employees,$paygroup_components->id);
 
-                if( $assign_paygroupcomps_to_emp ='success'&& $assign_comps_to_paygroup ='success' ){
+              $assign_comps_to_paygroup =$this->assignComponents_to_Paygroup($sal_components,$save_paygroup_comp->id);
+              $assign_paygroupcomps_to_emp =$this->assignPaygroupComponents_to_Employee($assigned_employees,$save_paygroup_comp->id);
+
+                if( $assign_paygroupcomps_to_emp ='success'&& $assignPaygroupComponents_to_Employee ='success' ){
                     $response=([
                         "status" => "success",
                         "message" => "Salary Structure  added successfully",
                     ]);
                 }else{
                     $response=([
-                        "status" => "success",
+                        "status" => "failure",
                         "message" => "error while add Salary Structure ",
                     ]);
                 }
@@ -437,9 +441,8 @@ class VmtPayrollComponentsService{
     public function assignComponents_to_Paygroup($sal_components,$paygroup_id){
             try{
 
-                        $assign_comp_paygroup = new VmtPaygroupComps;
-
                         foreach ($sal_components as $key => $singlecomp) {
+                            $assign_comp_paygroup = new VmtPaygroupComps;
                             $assign_comp_paygroup->paygroup_id=$paygroup_id;
                             $assign_comp_paygroup->comp_id=$singlecomp;
                             $assign_comp_paygroup->save();
@@ -455,14 +458,15 @@ class VmtPayrollComponentsService{
                 ]);
             }
     }
-    public function assignPaygroupComponents_to_Employee($assigned_employees,$user_id){
+    public function assignPaygroupComponents_to_Employee($assigned_employees,$paygroup_id){
 
         try{
-            $assign_comp_paygroup = new VmtPaygroupComps;
 
-            foreach ($assigned_employees as $key => $singleemp) {
-                $assign_comp_paygroup->paygroup_id=$user_id;
-                $assign_comp_paygroup->comp_id=$singleemp;
+
+            foreach ($assigned_employees as  $key => $singleemp) {
+                $assign_comp_paygroup = new VmtEmpPaygroup;
+                $assign_comp_paygroup->user_id=$singleemp;
+                $assign_comp_paygroup->paygroup_id=$paygroup_id;
                 $assign_comp_paygroup->save();
             }
 

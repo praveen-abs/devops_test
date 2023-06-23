@@ -29,6 +29,7 @@ return new class extends Migration
             $table->integer('is_taxable');
             $table->integer('calculate_on_prorate_basis');
             $table->integer('can_show_inpayslip');
+            $table->integer('is_default');
             $table->integer('status');
             $table->timestamps();
         });

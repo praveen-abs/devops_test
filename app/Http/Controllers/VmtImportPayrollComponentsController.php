@@ -72,6 +72,7 @@ $i=array_keys($excelRowdata_row);
                  'is_taxable'=>'nullable',
                  'calculate_on_prorate_basis'=>'nullable',
                  'can_show_inpayslip'=>'nullable',
+                 'is_default'=>'nullable',
 
 
 
