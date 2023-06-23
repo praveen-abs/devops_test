@@ -37,6 +37,7 @@ export const UseRolePermissionServie = defineStore('RolePermissionServie',()=>{
         getAllPermissions,saveCreateNewJobRole,
 
 
+//
         // function
         AllPermission,CreatingNewJobRole,array_RolePermission_data
 
