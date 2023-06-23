@@ -31,6 +31,15 @@ class VmtAPIReimbursementsController extends Controller
         return $serviceVmtReimbursementsService->getReimbursementTypes();
     }
 
+    public function isReimbursementAppliedOrNot(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+       // dd($request->all());
+        $response = $serviceVmtReimbursementsService->isReimbursementAppliedOrNot(
+           $request->user_code,
+           $request->date,
+        );
+        return $response;
+    }
+
 
 
 }

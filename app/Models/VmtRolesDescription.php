@@ -9,4 +9,7 @@ class VmtRolesDescription extends Model
 {
     use HasFactory;
     protected $table = 'vmt_roles_description';
+
+    protected $fillable = ['roles_id',
+                            'description'];
 }

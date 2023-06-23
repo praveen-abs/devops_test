@@ -60,7 +60,10 @@ class VmtRolesPermissionsController extends Controller
     */
     public function updateRoleDetails(Request $request , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
-        $request->role_id = "1";
+        // $request->role_id = "17";
+        // $request->updated_role_name = "developer";
+        // $request->updated_role_description = "simma is bad boy";
+
         return $serviceVmtRolesPermissionsService->updateRoleDetails($request->role_id, $request->updated_role_name, $request->updated_role_description, $request->updated_permissions_array);
     }
 
@@ -72,12 +75,20 @@ class VmtRolesPermissionsController extends Controller
 
     }
 
-    public function deleteRole(Request $request){
+    public function deleteRole(Request $request , VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
+
+        // $request->role_id = "17";
+
+        return $serviceVmtRolesPermissionsService->deleteRole($request->role_id);
 
     }
 
-    public function createPermission(Request $request){
+    public function createPermission(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        // $request->permission_name = "emp" ;
+        // $request->permission_module = "inve" ;
+
+        return $serviceVmtRolesPermissionsService->createPermission($request->permission_name,$request->permission_module);
     }
 
     /*
@@ -94,15 +105,22 @@ class VmtRolesPermissionsController extends Controller
 
     }
 
-    public function deletePermission(Request $request){
+    public function deletePermission(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
+        // $request->permission_id = "6" ;
+
+        return $serviceVmtRolesPermissionsService->createPermission($request->permission_id);
     }
 
     /*
         Assign roles for the given array of users.
         This also handles updates
     */
-    public function assignRoleToUsers(Request $request){
+    public function assignRoleToUsers(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
+
+        // $request->user_code ="PSC0079";
+
+        return $serviceVmtRolesPermissionsService->assignRoleToUsers($request->user_code,$request->role_name);
 
     }
 

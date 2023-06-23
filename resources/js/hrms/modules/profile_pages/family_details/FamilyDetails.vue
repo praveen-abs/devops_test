@@ -30,17 +30,17 @@
                                 id="familyDetails_Relationship" pattern-data="alpha" required>
                         </div>
                     </div>
-                    <div class="space-between M-T">
+                    <div class="space-between M-T mr-4">
                         <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob" :minDate="minDate" :maxDate="maxDate" />
+                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob"  class="h-10 w-full" :minDate="minDate" :maxDate="maxDate" />
                             <!-- <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" > -->
                         </div>
 
                         <div class="flex-col input_text">
                             <span>phone<span class="text-danger">*</span></span>
-                            <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
-                                name="familyDetails_phoneNumber[]" v-model="familydetails.phone_number">
+                                <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
+                                        v-model="familydetails.phone_number">
                         </div>
                     </div>
 
@@ -129,8 +129,11 @@
 
                                         <div class="flex-col input_text">
                                             <span>phone<span class="text-danger">*</span></span>
-                                            <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
-                                                name="familyDetails_phoneNumber[]"  v-model="Editfamilydetails.phone_number" >
+                                            <!-- <input type="number"  size=20 maxlength=10  id="familyDetails_phoneNumber"
+                                                name="familyDetails_phoneNumber[]"  > -->
+                                                <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
+                                        v-model="Editfamilydetails.phone_number">
+                                                <!-- <InputNumber  inputId="minmax" :min="0" :max="10"  v-model="Editfamilydetails.phone_number" /> -->
                                         </div>
                                     </div>
 
