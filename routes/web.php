@@ -838,6 +838,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show-eligible-interest-free-loan-details', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEligibleInterestFreeLoanDetails']);
     Route::get('/apply-loan', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'applyLoan']);
 
+    //Loan Approval
+    Route::get('/fetch-employee-for-loan-approval',[App\Http\Controllers\VmtSalaryAdvanceController::class,'fetchEmployeeForLoanApprovals']);
 
     //loan with intrest
     Route::get('/saveLoanWithIntrest', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveLoanWithInterestSettings'])->name('save-LoanWithIntrestSettings');

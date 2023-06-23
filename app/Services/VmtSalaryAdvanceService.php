@@ -674,5 +674,34 @@ class VmtSalaryAdvanceService
         }
     }
 
+   public function fetchEmployeeForLoanApprovals(){
+     $user_id = auth()->user()->id;
+     $temp_ar=array();
+     $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts',0)->get();
+     foreach( $all_pending_loans as $single_record){
+           $approver_flow=json_decode($single_record->approver_flow,true);
+           $approver_flow = ksort(  $approver_flow);
+           dd( $approver_flow);
+        foreach(  $approver_flow as $single_ar){
+            if( in_array($user_id,$single_ar)){
+                $current_user_order = $single_ar['order'];
+                if($single_ar['order']==1){
+                   array_push( $temp_ar,$single_record);
 
+                }else if($single_ar['order']==2){
+                   dd($approver_flow);
+                }
+
+                dd( $current_user_order);
+                dd();
+            }
+
+
+
+        }
+
+     }
+
+     dd( $all_pending_loans);
+   }
 }
