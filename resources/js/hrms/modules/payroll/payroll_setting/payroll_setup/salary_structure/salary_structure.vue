@@ -7,8 +7,8 @@
                             class="font-semibold text-gray-600 fs-6">(Paygroup)</span></p>
                 </div>
                 <div class="float-right">
-                    <button class=" btn btn-orange float-right ml-8" @click="usePayroll.dailogNewSalaryStructure = true">Add
-                        Structure</button>
+                    <router-link class=" btn btn-orange float-right ml-8" :to="`/payrollSetup/structure/1`">Add
+                        Structure</router-link>
                 </div>
             </section>
             <div id="table-responsive">
@@ -39,11 +39,9 @@
 
             </div>
         </div>
-
         <!-- <new_salary_structure  v-else-if="route.params.id == 1" /> -->
-        <router-link class="btn btn-primary" :to="`/payrollSetup/structure/1`">Edit</router-link>  
         <router-view />
-      </div>
+    </div>
 </template>
 
 
