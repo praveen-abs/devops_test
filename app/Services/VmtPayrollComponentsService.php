@@ -20,6 +20,7 @@ class VmtPayrollComponentsService{
         $comp_name_payslip,
         $epf,
         $esi,
+        $category,
         $is_part_of_empsal_structure,
         $is_taxable,
         $calculate_on_prorate_basis,
@@ -35,6 +36,7 @@ class VmtPayrollComponentsService{
                 'comp_name_payslip' => $comp_name_payslip,
                 'epf' => $epf,
                 'esi' => $esi,
+                'category' => $category,
                 'is_part_of_empsal_structure' => $is_part_of_empsal_structure,
                 'is_taxable' => $is_taxable,
                 'calculate_on_prorate_basis' => $calculate_on_prorate_basis,
@@ -48,6 +50,7 @@ class VmtPayrollComponentsService{
                 'comp_name_payslip' => 'required',
                 'epf' => 'required|numeric',
                 'esi' => 'required|numeric',
+                'category' => 'required',
                 'is_part_of_empsal_structure' => 'required|numeric',
                 'is_taxable' => 'required|numeric',
                 'calculate_on_prorate_basis' => 'required|numeric',
@@ -85,6 +88,7 @@ class VmtPayrollComponentsService{
               $save_paygroup_comp->comp_name_payslip=$comp_name_payslip;
               $save_paygroup_comp->epf=$epf ;
               $save_paygroup_comp->esi =$esi ;
+              $save_paygroup_comp->$category =$category;
               $save_paygroup_comp->is_part_of_empsal_structure =$is_part_of_empsal_structure ;
               $save_paygroup_comp->is_taxable =$is_taxable ;
               $save_paygroup_comp->calculate_on_prorate_basis =$calculate_on_prorate_basis ;
@@ -121,6 +125,7 @@ class VmtPayrollComponentsService{
         $comp_name_payslip,
         $epf,
         $esi,
+        $category,
         $is_part_of_empsal_structure,
         $is_taxable,
         $calculate_on_prorate_basis,
@@ -137,6 +142,7 @@ class VmtPayrollComponentsService{
                 'comp_name_payslip' => $comp_name_payslip,
                 'epf' => $epf,
                 'esi' => $esi,
+                'category' => $category,
                 'is_part_of_empsal_structure' => $is_part_of_empsal_structure,
                 'is_taxable' => $is_taxable,
                 'calculate_on_prorate_basis' => $calculate_on_prorate_basis,
@@ -151,6 +157,7 @@ class VmtPayrollComponentsService{
                 'comp_name_payslip' => 'required',
                 'epf' => 'required|numeric',
                 'esi' => 'required|numeric',
+                'category' => 'required',
                 'is_part_of_empsal_structure' => 'required|numeric',
                 'is_taxable' => 'required|numeric',
                 'calculate_on_prorate_basis' => 'required|numeric',
@@ -181,6 +188,7 @@ class VmtPayrollComponentsService{
                 $save_paygroup_comp->comp_name_payslip=$comp_name_payslip;
                 $save_paygroup_comp->epf=$epf ;
                 $save_paygroup_comp->esi =$esi ;
+                $save_paygroup_comp->category =$category ;
                 $save_paygroup_comp->is_part_of_empsal_structure =$is_part_of_empsal_structure ;
                 $save_paygroup_comp->is_taxable =$is_taxable ;
                 $save_paygroup_comp->calculate_on_prorate_basis =$calculate_on_prorate_basis ;
