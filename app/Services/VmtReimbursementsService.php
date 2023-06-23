@@ -265,21 +265,20 @@ class VmtReimbursementsService {
         try{
                $query_user =User::where('user_code',$user_code)->first();
 
-            $employee_reimbursement_applied_data_query = VmtEmployeeReimbursements::where('user_id',$query_user->id)
+                $employee_reimbursement_applied_data_query = VmtEmployeeReimbursements::where('user_id',$query_user->id)
                                                                       ->where('date',$date)->exists();
-                                                                    
-            if($employee_reimbursement_applied_data_query){
 
-                $response =true ;
-            }else{
-                $response =false;
-            }
+                if($employee_reimbursement_applied_data_query){
+                    $response = true;
+                }else{
+                    $response = false;
+                }
 
-            return response()->json([
-                'status' => 'success',
-                'message' => "",
-                'data' =>$response
-            ]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => "",
+                    'data' =>$response
+                ]);
 
         }
         catch(\Exception $e)
