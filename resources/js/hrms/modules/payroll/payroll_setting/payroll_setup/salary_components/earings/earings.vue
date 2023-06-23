@@ -6,9 +6,7 @@
             </div>
         </section>
         <div class="table-responsive">
-            <DataTable :value="usePayroll.salaryComponentsSource" :rows="5" :rowsPerPageOptions="[5, 10, 25]"
-                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :paginator="true">
+            <DataTable :value="helper.filterSource(usePayroll.salaryComponentsSource,1)" :rows="helper.filterSource(usePayroll.salaryComponentsSource,1).length" :rowsPerPageOptions="[5, 10, 25]">
                 <ColumnGroup type="header">
                     <Row>
                         <Column header="Name" :rowspan="3" style="min-width: 15rem" />
@@ -26,21 +24,21 @@
                         <Column header="ESI" :rowspan="3" />
                     </Row>
                 </ColumnGroup>
-                <Column field="comp_name" />
+                <Column field="comp_name" style="text-align: left !important;" />
                 <Column field="comp_type_id">
                     <template #body="{ data }">
-                        <p>{{ findCompType(data.comp_type_id) }}</p>
+                        <p>{{ helper.findCompType(data.comp_type_id) }}</p>
                     </template>
                 </Column>
                 <Column field="calculation_method"></Column>
                 <Column field="epf">
                     <template #body="{ data }">
-                        <p>{{ findIsSelected(data.epf) }}</p>
+                        <p>{{ helper.findIsSelected(data.epf) }}</p>
                     </template>
                 </Column>
                 <Column field="esi">
                     <template #body="{ data }">
-                        <p>{{ findIsSelected(data.esi) }}</p>
+                        <p>{{ helper.findIsSelected(data.esi) }}</p>
                     </template>
                 </Column>
                 <Column field="status">
@@ -57,22 +55,27 @@
                 </Column>
                 <Column>
                     <template #body="{ data }">
+                        <button v-if="data.is_default == 1" class="p-2" v-tooltip.bottom="'fixed variable'">
+                            <i class="pi pi-lock" style="font-size: 1.5rem"></i>
+                        </button>
+                       <div v-else>
                         <button class="p-1 mx-4 bg-green-200 border-green-500 rounded-xl"
-                            @click="usePayroll.editNewSalaryComponent(true, data)">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-8 h-6 px-auto text-center">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>
-                        <button class="p-1 bg-red-200 border-red-500 rounded-xl"
-                            @click="usePayroll.deleteSalaryComponent(data.id)">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="w-8 h-6 font-bold">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                            </svg>
-                        </button>
+                        @click="usePayroll.editNewSalaryComponent(true, data)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-8 h-6 px-auto text-center">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                    </button>
+                    <button class="p-1 bg-red-200 border-red-500 rounded-xl"
+                        @click="usePayroll.deleteSalaryComponent(data.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-8 h-6 font-bold">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                    </button>
+                       </div>
                     </template>
                 </Column>
 
@@ -90,7 +93,7 @@
                     <div class="">
                         <label for="metro_city" class="block mb-2  text-gray-700 font-semibold fs-6">Type of the
                             component</label>
-                        <Dropdown :options="componentTypes" editable class="w-full" optionLabel="name" optionValue="value"
+                        <Dropdown :options="helper.componentTypes" editable class="w-full" optionLabel="name" optionValue="value"
                             placeholder="Select component" v-model="usePayroll.salaryComponents.typeOfComp" />
                     </div>
                     <div class="my-3">
@@ -109,7 +112,7 @@
                     <div class="my-3">
                         <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Type of
                             calculation</label>
-                        <Dropdown editable class="w-full" optionLabel="name" optionValue="value" :options="calculationTypes"
+                        <Dropdown editable class="w-full" optionLabel="name" optionValue="value" :options="helper.calculationTypes"
                             placeholder="Select calculation type" v-model="usePayroll.salaryComponents.typeOfCalc" />
                     </div>
                     <div class="" v-if="usePayroll.salaryComponents.typeOfCalc == 1">
@@ -208,36 +211,10 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { usePayrollMainStore } from '../../../../stores/payrollMainStore';
+import {usePayrollHelper} from '../../../../stores/payrollHelper';
 
 const usePayroll = usePayrollMainStore()
-
-const visbile = ref(false)
-
-
-const componentTypes = ref([
-    { id: 1, name: "Fixed", value: 1 },
-    { id: 2, name: "Variable", value: 2 },
-])
-const calculationTypes = ref([
-    { id: 1, name: "Flat Amount", value: 1 },
-    { id: 2, name: "Percentage of CTC", value: 2 },
-])
-
-const findCompType = (value) => {
-    let type = componentTypes.value.find(ele => {
-        return ele.value == value
-    })
-    return type.name
-}
-
-const findIsSelected = (value) => {
-    if (value == 1) {
-        return "Yes"
-    } else {
-        return "No"
-    }
-}
-
+const helper = usePayrollHelper()
 
 </script>
 

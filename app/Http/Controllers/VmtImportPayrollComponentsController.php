@@ -155,6 +155,7 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->calculate_on_prorate_basis =$row["calculate_on_prorate_basis"];
                 $fin_components->can_show_inpayslip =$row["can_show_inpayslip"];
                 $fin_components->status =$row["status"];
+                $fin_components->is_default =$row["is_default"];
                 $fin_components->save();
 
             return $rowdata_response = [

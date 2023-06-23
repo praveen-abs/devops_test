@@ -39,7 +39,6 @@
 
             </div>
         </div>
-        <!-- <new_salary_structure  v-else-if="route.params.id == 1" /> -->
         <router-view />
     </div>
 </template>
@@ -49,12 +48,13 @@
 import { ref, onMounted } from 'vue';
 import new_salary_structure from './new_salary_structure.vue';
 import { usePayrollMainStore } from '../../../stores/payrollMainStore'
+import {usePayrollHelper} from '../../../stores/payrollHelper';
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
 const usePayroll = usePayrollMainStore()
-const selectedProduct = ref()
+const helper = usePayrollHelper()
 
 </script>
 

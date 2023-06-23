@@ -4,10 +4,14 @@ import { ref, reactive } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useConfirm } from "primevue/useconfirm";
 
+import { usePayrollHelper } from './payrollHelper';
+
 
 export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     //Global  variable Declaration
+
+    const helper = usePayrollHelper()
     // Confirmation Service
     const confirm = useConfirm();
 
@@ -66,6 +70,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         let salaryComponentUrl = `/Paygroup/fetchPayRollComponents`
         await axios.get(salaryComponentUrl).then(res => {
             salaryComponentsSource.value = res.data
+            console.log(helper.filterSource(res.data,3));
         }).finally(() => {
             canShowLoading.value = false
         })

@@ -65,9 +65,10 @@
                 </div>
                 <div class="my-2 ">
                     <DataTable :value="usePayroll.salaryStructureSource">
-                        <Column field="comp_name" header="Components"></Column>
-                        <Column field="calculation_method" header="Amount/Calculation"></Column>
-                        <Column header="Action">
+                        <Column field="comp_name" header="Components" style="min-width: 15rem">
+                        </Column>
+                        <Column field="calculation_method" header="Amount/Calculation" style="min-width: 15rem"></Column>
+                        <Column header="Action" style="min-width: 15rem">
                             <template #body>
                                 <button class="p-1 mx-4 bg-green-200 border-green-500 rounded-xl">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -105,21 +106,17 @@
         <template #header>
             <span class="text-lg font-semibold modal-title text-indigo-950">Add New Components</span>
         </template>
-        <!-- {{ usePayroll.salaryComponentsSource }} -->
-        <DataTable :value="usePayroll.salaryComponentsSource" v-model:selection="selectedComponents" dataKey="id" :rows="5"
-            :rowsPerPageOptions="[5, 10, 25]"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :paginator="true">
+        <DataTable :value="usePayroll.salaryComponentsSource" v-model:selection="selectedComponents" dataKey="id" :rows="usePayroll.salaryComponentsSource.length">
             <Column selectionMode="multiple"></Column>
             <Column field="comp_name" header="Name" style="min-width: 15rem"></Column>
             <Column field="comp_name" header="Type" style="min-width: 15rem"></Column>
             <Column header="Type of calculation" style="min-width: 22rem">
                 <template #body="{ data }">
-                    <p>{{ findCompType(data.comp_type_id) }};{{ data.calculation_method }}</p>
+                    <p>{{ helper.findCompType(data.comp_type_id) }};{{ data.calculation_method }}</p>
                 </template>
             </Column>
         </DataTable>
-        <div class="float-right">
+        <div class="float-right my-4">
             <div class="flex">
                 <button @click=" usePayroll.dailogNewSalaryStructure = false" class="btn btn-orange-outline">Cancel</button>
                 <button class="btn btn-orange mx-2"
@@ -132,9 +129,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { usePayrollMainStore } from '../../../stores/payrollMainStore';
+import {usePayrollHelper} from '../../../stores/payrollHelper';
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
+const helper = usePayrollHelper()
+
 
 onMounted(()=>{
     console.log(route.params.id);

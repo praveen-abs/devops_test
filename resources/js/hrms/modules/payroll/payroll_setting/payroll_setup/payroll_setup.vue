@@ -5,7 +5,7 @@
     <h1 class="text-white font-semibold fs-4 py-2 mx-2">Payroll Setting</h1>
     <div class="mt-4 tabs">
       <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
-        ><div class="md:text-sm" :style="{width:'25px' }">1</div> General Payroll Setting</a
+        ><div class="md:text-sm">1</div> <p style="width: 200px;">General payroll Setting</p></a
       >
       <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
         ><div>2</div>PF & ESI Setting</a
