@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="p-2 rounded-lg card my-2">
-            <p>All leave (approved or pending) that falls under this payroll cycle month will be displayed here.</p>
+            <p class="p-2 bg-orange-100 my-3 rounded-lg font-semibold fs-6">All leave (approved or pending) that falls under this payroll cycle month will be displayed here.</p>
         </div>
         <div class="mb-0 card">
             <div class="card-body">
@@ -55,3 +55,14 @@
         </div>
     </div>
 </template>
+
+<script setup>
+
+import { onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+onMounted(()=>{
+    console.log(route.params.module);
+})
+</script>

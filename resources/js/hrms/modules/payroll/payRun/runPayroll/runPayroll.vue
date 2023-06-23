@@ -20,10 +20,11 @@
                 <div v-if="canShowRunPayroll"
                  class="grid gap-4 md:grid-cols-2 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-2 lg:grid-cols-2"
                     style="display: grid;">
-                    <div class="p-3 my-2 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100 " v-for="(item, index) in runPayroll" :key="index"
-                     @click="usePayrun.currentActiveScreen = item.id">
+                    <router-link  class="p-3 my-2 rounded-lg shadow-md dynamic-card-without-border flex hover:bg-slate-100  " v-for="(item, index) in runPayroll" :key="index"
+                    :to="`/payrun/${item.shorName}`">
+                    <img src="../../assests/calendar.svg" alt="" class="rounded-full h-8">
                         <p class="fs-6 font-semibold text-center ">{{item.name}}</p>
-                    </div>
+                    </router-link>
                 </div>
             </div>
             <div id="footer" class="text-end float-right">
@@ -35,23 +36,32 @@
             </div>
         </div>
     </div>
+    <!-- <img src="../../assests/calendar.svg" alt="" srcset=""> -->
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { payrunMainStore } from "../stores/payrunMainStore";
 const canShowRunPayroll= ref(true)
 
 const usePayrun = payrunMainStore()
 
+const findIcons = (values) =>{
+    if(values == 'leave'){
+        return '../../assests/calendar.svg'
+    }
+}
+
+
+
 
 const runPayroll = ref([
-    {id:1,icons :'pi pi-calendar-times' ,name:"Leave, Attendance & Daily Wages"},
-    {icons :'pi pi-calendar-times' ,name:"New Joinee & Exits"},
-    {icons :'pi pi-calendar-times' ,name:"Bonus, Salary Revisions & Overtime"},
-    {icons :'pi pi-calendar-times' ,name:"Reimbursement, Adhoc Payment, Deduction"},
-    {icons :'pi pi-calendar-times' ,name:"Salaries on Hold & Arrears"},
-    {icons :'pi pi-calendar-times' ,name:"Override (PT, ESI, TDS, LWF)"},
+    {id:1,shorName:'leave',icons :'calendar.svg' ,name:"Leave, Attendance & Daily Wages"},
+    {shorName:'attendance',icons :'person.svg' ,name:"New Joinee & Exits"},
+    {shorName:'Salary-Revisions',icons :'breifcase.svg' ,name:"Bonus, Salary Revisions & Overtime"},
+    {shorName:'Reimbursement',icons :'pi pi-calendar-times' ,name:"Reimbursement, Adhoc Payment, Deduction"},
+    {shorName:'Salaries-Hold',icons :'pi pi-calendar-times' ,name:"Salaries on Hold & Arrears"},
+    {shorName:'Override',icons :'pi pi-calendar-times' ,name:"Override (PT, ESI, TDS, LWF)"},
 ])
 
 </script>
