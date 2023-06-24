@@ -2,7 +2,7 @@
     <div class="w-full ">
         <section id="header" class="flex justify-between w-full my-4 ">
             <p class="w-4 mx-1 font-semibold fs-5.5">Salary Compenents</p>
-            <div><button class="btn btn-orange"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add Components</button></div>
+            <div><button class="btn btn-orange" @click="dailogReimbursementComponents = true"><i class="pi pi-plus mx-1" style="font-size: 0.8rem"></i>Add Components</button></div>
         </section>
         <DataTable :value="helper.filterSource(usePayroll.salaryComponentsSource,4)">
             <Column field="comp_name" header="Name"></Column>
@@ -12,13 +12,43 @@
                 </template>
             </Column>
             <Column  header="Actions">
-                <template #body>
-                    <i class="pi pi-pencil" style="font-size: 1rem"></i>
-                    <i class="pi pi-trash mx-3" style="font-size: 1rem"></i>
+                <template #body="{data}">
+                    <i @click="usePayroll.editAdhocSalaryComponents(data,4),dailogReimbursementComponents = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
+                    <i class="pi pi-trash mx-3 cursor-pointer" style="font-size: 1rem"></i>
                 </template>
             </Column>
         </DataTable>
     </div>
+
+    <Dialog v-model:visible="dailogReimbursementComponents" :modal="true" :closable="true"
+        :style="{ width: '30vw', borderTop: '5px solid #002f56' }">
+        <template #header>
+            <span class="text-lg font-semibold modal-title text-indigo-950">Add New Reimbursement Components</span>
+        </template>
+        <div class="">
+            <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Name</label>
+            <InputText class="w-full" placeholder="Enter name" v-model="usePayroll.reimbursementComponents.comp_name" />
+        </div>
+        <div class="my-4">
+            <p class="block mb-2 font-semibold fs-6 text-gray-700 ">Does this have tax status</p>
+            <div class="form-check form-check-inline my-2">
+                <input v-model="usePayroll.reimbursementComponents.is_taxable" style="height: 20px;width: 20px;"
+                    class="form-check-input" type="radio" name="esi" id="full_day" value="1" />
+                <label class="form-check-label leave_type ms-2" for="full_day">Yes</label>
+            </div>
+            <div class="form-check form-check-inline mx-7">
+                <input v-model="usePayroll.reimbursementComponents.is_taxable" style="height: 20px;width: 20px;"
+                    class="form-check-input" type="radio" name="esi" id="full_day" value="0" />
+                <label class="form-check-label leave_type ms-2" for="full_day">No</label>
+            </div>
+        </div>
+        <div class="float-right">
+            <div class="flex">
+                <button @click="dailogReimbursementComponents = false" class="btn btn-orange-outline">Cancel</button>
+                <button @click="usePayroll.saveNewSalaryComponent(4),dailogReimbursementComponents = false" class="btn btn-orange mx-2">Add</button>
+            </div>
+        </div>
+    </Dialog>
 </template>
 
 <script setup>
@@ -28,6 +58,7 @@ import {usePayrollHelper} from '../../../../stores/payrollHelper';
 
 const usePayroll = usePayrollMainStore()
 const helper = usePayrollHelper()
+const dailogReimbursementComponents = ref(false)
 
 
 </script>

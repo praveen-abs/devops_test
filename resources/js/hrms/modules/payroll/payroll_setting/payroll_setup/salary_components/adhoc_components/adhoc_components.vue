@@ -26,9 +26,9 @@
                             </template>
                         </Column>
                         <Column header="Actions">
-                            <template #body>
-                                <i class="pi pi-pencil" style="font-size: 1rem"></i>
-                                <i class="pi pi-trash mx-3" style="font-size: 1rem"></i>
+                            <template #body="{data}">
+                                <i @click="usePayroll.editAdhocSalaryComponents(data,3),dailogAdhocComponents = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
+                                <i class="pi pi-trash mx-3 cursor-pointer" style="font-size: 1rem"></i>
                             </template>
                         </Column>
                     </DataTable>
@@ -50,8 +50,8 @@
                                 </template>
                             </Column>
                             <Column header="Actions">
-                                <template #body>
-                                    <i class="pi pi-pencil" style="font-size: 1rem"></i>
+                                <template #body="{data}">
+                                    <i @click="usePayroll.editAdhocSalaryComponents(data,2),dailogDeduction = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
                                     <i class="pi pi-trash mx-3" style="font-size: 1rem"></i>
                                 </template>
                             </Column>
@@ -69,17 +69,17 @@
         </template>
         <div class="">
             <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Name</label>
-            <InputText class="w-full" placeholder="Enter name  " />
+            <InputText v-model="usePayroll.deductionComponents.comp_name" class="w-full" placeholder="Enter name  " />
         </div>
         <div class="my-4">
             <p class="block mb-2 font-semibold fs-6 text-gray-700 ">Does this have an impact on the gross amount</p>
             <div class="form-check form-check-inline my-2">
-                <input v-model="usePayroll.salaryComponents.isConsiderForESI" style="height: 20px;width: 20px;"
+                <input v-model="usePayroll.deductionComponents.impact_on_gross" style="height: 20px;width: 20px;"
                     class="form-check-input" type="radio" name="esi" id="full_day" value="1" />
                 <label class="form-check-label leave_type ms-2" for="full_day">Yes</label>
             </div>
             <div class="form-check form-check-inline mx-7">
-                <input v-model="usePayroll.salaryComponents.isConsiderForESI" style="height: 20px;width: 20px;"
+                <input v-model="usePayroll.deductionComponents.impact_on_gross" style="height: 20px;width: 20px;"
                     class="form-check-input" type="radio" name="esi" id="full_day" value="0" />
                 <label class="form-check-label leave_type ms-2" for="full_day">No</label>
             </div>
@@ -87,7 +87,7 @@
         <div class="float-right">
             <div class="flex">
                 <button @click="dailogDeduction = false" class="btn btn-orange-outline">Cancel</button>
-                <button class="btn btn-orange mx-2">Add</button>
+                <button class="btn btn-orange mx-2" @click="usePayroll.saveNewSalaryComponent(2),dailogDeduction = false">Add</button>
             </div>
         </div>
     </Dialog>
@@ -99,17 +99,17 @@
         </template>
         <div class="">
             <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Name</label>
-            <InputText class="w-full" placeholder="Enter name  " />
+            <InputText class="w-full" placeholder="Enter name" v-model="usePayroll.adhocComponents.comp_name" />
         </div>
         <div class="my-4">
             <p class="block mb-2 font-semibold fs-6 text-gray-700 ">Does this have tax status</p>
             <div class="form-check form-check-inline my-2">
-                <input v-model="usePayroll.salaryComponents.isConsiderForESI" style="height: 20px;width: 20px;"
+                <input v-model="usePayroll.adhocComponents.is_taxable" style="height: 20px;width: 20px;"
                     class="form-check-input" type="radio" name="esi" id="full_day" value="1" />
                 <label class="form-check-label leave_type ms-2" for="full_day">Yes</label>
             </div>
             <div class="form-check form-check-inline mx-7">
-                <input v-model="usePayroll.salaryComponents.isConsiderForESI" style="height: 20px;width: 20px;"
+                <input v-model="usePayroll.adhocComponents.is_taxable" style="height: 20px;width: 20px;"
                     class="form-check-input" type="radio" name="esi" id="full_day" value="0" />
                 <label class="form-check-label leave_type ms-2" for="full_day">No</label>
             </div>
@@ -117,7 +117,7 @@
         <div class="float-right">
             <div class="flex">
                 <button @click="dailogAdhocComponents = false" class="btn btn-orange-outline">Cancel</button>
-                <button class="btn btn-orange mx-2">Add</button>
+                <button @click="usePayroll.saveNewSalaryComponent(3),dailogAdhocComponents = false" class="btn btn-orange mx-2">Add</button>
             </div>
         </div>
     </Dialog>

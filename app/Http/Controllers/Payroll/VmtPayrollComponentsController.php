@@ -72,6 +72,7 @@ class VmtPayrollComponentsController extends Controller
 
     public function AddAdhocAllowanceDetectionComp(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
+        // dd($request->all());
         $response =$serviceVmtPayrollComponentsService->AddAdhocAllowanceDetectionComp(
             $request->comp_name,
             $request->category_id,

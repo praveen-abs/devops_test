@@ -1,9 +1,9 @@
 <template>
     <div class="w-full" style="transition: opacity 0.5s ease;">
         <div class="mx-6 py-6">
-            <router-link :to="`/payrollSetup/structure/`">
+            <!-- <router-link :to="`/payrollSetup/structure/`">
                 <i class="pi pi-arrow-left py-auto mx-2 cursor-pointer" style="font-size: 1rem"></i>
-            </router-link>
+            </router-link> -->
 
             <p class="text-gray-00 font-semibold fs-4 ">New Salary Structure</p>
             <p class="text-gray-500 font-semibold fs-6">Create custom salary package by selecting the relevant

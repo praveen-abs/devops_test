@@ -201,7 +201,7 @@
                 <div class="flex">
                     <button @click=" usePayroll.dailogNewSalaryComponents = false"
                         class="btn btn-orange-outline">Cancel</button>
-                    <button @click="usePayroll.saveNewSalaryComponent(false)" class="btn btn-orange mx-2">Save</button>
+                    <button @click="usePayroll.saveNewSalaryComponent(1)" class="btn btn-orange mx-2">Save</button>
                 </div>
             </div>
         </Dialog>
