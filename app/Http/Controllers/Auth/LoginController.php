@@ -203,6 +203,8 @@ class LoginController extends Controller
     }
 
     public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){
+
+        //User can either send USER_CODE or EMAIL . So one of them might be null value.
         return $serviceVmtLoginService->sendPasswordResetLink($request->user_code, $request->email);
     }
 

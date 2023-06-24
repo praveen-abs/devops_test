@@ -87,7 +87,7 @@ class VmtLoginService {
             $status = "";
 
             //Generate temporary URL
-            $passwordResetLink =  URL::temporarySignedRoute( 'vmt-signed-passwordresetlink', now()->addMinutes(1), ['uid' => $query_user->id] );
+            $passwordResetLink =  URL::temporarySignedRoute( 'vmt-signed-passwordresetlink', now()->addMinutes(30), ['uid' => $query_user->id] );
 
             //Then, send mail to that email
             $VmtGeneralInfo = VmtGeneralInfo::first();
