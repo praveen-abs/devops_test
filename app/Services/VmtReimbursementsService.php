@@ -236,4 +236,63 @@ class VmtReimbursementsService {
 
             return $employee_reimbursement_data_query;
     }
+
+    public function isReimbursementAppliedOrNot($user_code,$date){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'date' => $date,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+               $query_user =User::where('user_code',$user_code)->first();
+
+                $employee_reimbursement_applied_data_query = VmtEmployeeReimbursements::where('user_id',$query_user->id)
+                                                                      ->where('date',$date)->exists();
+
+                if($employee_reimbursement_applied_data_query){
+                    $response = 1;
+                    $message = "Reimbursement already applied for the given date";
+                }else{
+                    $response = 0;
+                    $message = "Reimbursement not applied for the given date";
+
+                }
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $message,
+                    'data' =>$response
+                ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while getting isReimbursementAppliedOrNot data ",
+                'data' => $e->getmessage()
+            ]);
+        }
+
+
+    }
 }

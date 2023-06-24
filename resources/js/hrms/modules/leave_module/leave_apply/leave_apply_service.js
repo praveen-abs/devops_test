@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
-import { ref, reactive } from "vue";
+import { ref, reactive, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import axios from "axios";
 import moment from "moment";
+const swal = inject("$swal");
+
 
 export const useLeaveService = defineStore("useLeaveService", () => {
 
@@ -397,11 +399,16 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             "leave_reason": leave_Request_data.leave_reason,
         }).then(res=>{
             data_checking.value=false
-
             if(res.data.status=='success'){
-                Email_Service.value=true
+                leaveApplyDailog.value = false   
+                Swal.fire(
+                    'Success',
+                    'leave Applied successfull!',
+                    'success'
+                  )
             }else
             if(res.data.status=='failure'){
+                Email_Service.value=true
                 leave_data.leave_request_error_messege=res.data.message;
                 Email_Error.value=true
             }
