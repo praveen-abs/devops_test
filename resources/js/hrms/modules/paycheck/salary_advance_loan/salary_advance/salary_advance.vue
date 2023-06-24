@@ -1,5 +1,5 @@
 <template>
-    <div class="mr-4 card">
+    <div class="mr-4 card" v-if="useEmpStore.sa.isEligibleEmp == 0">
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
                 <div class="w-8 fs-4">
@@ -41,8 +41,8 @@
             </div>
 
             <div class="table-responsive">
-                {{ useEmpStore.salaryAdvanceEmployeeData }}
-                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="useEmpStore.salaryAdvanceEmployeeData"
+                <!-- {{ useEmpStore.salaryAdvanceEmployeeData }} -->
+                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
@@ -61,22 +61,14 @@
                     </Column>
 
                     <Column field="ref" header="Paid On " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="max_limit" header="Expected Return" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
                     </Column>
 
 
                     <Column field="Status" header="Status" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
                     </Column>
 
                 </DataTable>
@@ -85,7 +77,10 @@
 
         </div>
     </div>
-
+    <div class="mr-4 card pb-10" v-else>
+        <img src="../../../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
+        <p class="my-2 font-semibold fs-3 text-center">You are not eligible to apply salary advance</p>
+    </div>
 
 
 
@@ -100,31 +95,37 @@
         <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
             <div class="w-5 p-4 ">
                 <span class="font-semibold">Your Monthly Income</span>
-                <input id="rentFrom_month" v-model="useEmpStore.sa.ymi"
-                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
+                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-300 ">
             </div>
             <div class="w-5 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month" v-model="useEmpStore.sa.ra"
-                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : 20,000</p>
+                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
+                <span v-if="v$.ra.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.ra.$errors[0].$message }}
+                </span>
+                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ useEmpStore.sa.mxe }} </p>
             </div>
         </div>
 
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Repayment</span>
             <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
-                salary <strong class="text-black fs-5">(ie, March 31, 2023)</strong> </p>
+                salary <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong> </p>
         </div>
 
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
-            <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" />
+            <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" :class="[  v$.reason.$error ? 'p-invalid' : '' ]" />
+            <span v-if="v$.reason.$error" class="font-semibold text-red-400 fs-6">
+                {{ v$.reason.$errors[0].$message }}
+            </span>
         </div>
 
         <div class="float-right ">
             <button class="btn btn-border-orange">Cancel</button>
-            <button class="mx-4 btn btn-orange" @click="useEmpStore.saveSalaryAdvance">Submit</button>
+            <button class="mx-4 btn btn-orange" @click="submitForm">Submit</button>
         </div>
 
     </Dialog>
@@ -141,9 +142,12 @@
   </Dialog>
 </template>
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 
 import {useEmpSalaryAdvanceStore} from '../../stores/employeeSalaryAdvanceLoanMainStore'
+import dayjs from 'dayjs';
 
 const useEmpStore = useEmpSalaryAdvanceStore()
 
@@ -151,6 +155,34 @@ onMounted(() => {
    useEmpStore.fetchSalaryAdvance();
 })
 
+const eligibleRequiredAmount = (value) =>{
+    if(value > useEmpStore.sa.mxe){
+       return false
+    }else{
+        return true
+    }
+}
+
+const rules = computed(() => {
+    return {
+        ra:{ required: helpers.withMessage('Required amount is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount) },
+        reason:{required},
+    }
+})
+
+const v$ = useValidate(rules, useEmpStore.sa)
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        useEmpStore.saveSalaryAdvance()
+        v$.value.$reset()
+    } else {
+        console.log('Form failed validation')
+    }
+}
 
 
 

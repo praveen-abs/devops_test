@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-30">
+    <div>
 
         <div class="p-4 pt-1 pb-0 mb-3 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">

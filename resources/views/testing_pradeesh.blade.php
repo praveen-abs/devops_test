@@ -27,17 +27,17 @@
     {{-- <!-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
    <div id="Investments"></div> -->--}}
 
-   @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-    {{-- <div id="SalaryAdvanceLoan"></div> --}}
+   {{-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+    <div id="SalaryAdvanceLoan"></div> --}}
 
      {{-- @vite('resources\js\hrms\modules\leave_policy_Settings\Leave_Policy_Setting_Master\Leave_Policy_Setting_Master.js') --}}
      {{-- <div id="Leave_Policy_Setting_Master"></div> --}}
      {{-- 'resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js' --}}
 
-     @vite('resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js')
+     {{-- @vite('resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js') --}}
      {{-- <div id="testing_table"></div> --}}
 
-     @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js')
+     {{-- @vite( 'resources/js/hrms/modules/roles_permission/RolesPermission.js') --}}
      {{-- <div id="RolesPermission"></div> --}}
 
      {{-- @vite('resources/js/hrms\modules\profile_pages\EmployeeDocumentsManager.js')
@@ -48,17 +48,25 @@
 
             @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
             {{-- <div id="vjs_attendance_master"></div> --}}
+             {{-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
+            <div id="vjs_attendance_master"></div> --}}
 
             {{-- @vite('resources/js/hrms/modules/configurations/attendance_settings/ManageShift/GeneralShift/GeneralShift.js')
             <div id="General_Shift"></div> --}}
 
-            @vite('resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js')
+            {{-- @vite('resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js') --}}
             {{-- <div id="EmpDetails_approvals"></div> --}}
 
-            @vite('resources/js/hrms/modules/configurations/holidays/Holidays_Master.js')
+            {{-- @vite('resources/js/hrms/modules/configurations/holidays/Holidays_Master.js') --}}
             {{-- <div id="Holidays_Master"></div> --}}
-            @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-           {{-- <div class="mt-6" id="SalaryAdvanceLoan"></div> --}}
+             {{-- @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
+           <div class="mt-6" id="SalaryAdvanceLoan"></div> - --}}
+
+
+           @vite('resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js')
+           <div id="approvals_salary_advance"></div>
+           {{-- @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
+           <div id="EmpSalaryAdvanceLoan"></div> --}}
 
            @vite('resources\js\hrms\modules\payroll\payroll_setting\payroll_setting.js')
            <div id="payroll_setting"></div>
