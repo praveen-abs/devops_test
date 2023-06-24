@@ -55,7 +55,7 @@
         <!-- Select leave type Dropdown -->
 
         <div class="row ">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-7 col-sm-12">
                 <div class="mb-3 row">
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-4 col-xl-5 col-xxl-5 mb-md-0">
                         <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
@@ -431,8 +431,8 @@
             v-if="service.leave_data.leave_reason == ''">
             <li v-if="service.leave_data.leave_reason == ''">Leave Reason</li>
         </Dialog>
-
     </Dialog>
+
 </template>
 
 
@@ -440,7 +440,7 @@
 
 
 
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, inject, onMounted, reactive, ref } from "vue";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import axios from "axios";
 import useValidate from '@vuelidate/core'
@@ -449,7 +449,6 @@ import { required, email, minLength, sameAs, helpers } from '@vuelidate/validato
 import { useLeaveService } from './leave_apply_service'
 
 const visible = ref(false)
-
 const leave_types = ref()
 
 //get first day of current month
@@ -457,7 +456,6 @@ const leave_types = ref()
 var date = new Date();
 var first_day_of_the_month = new Date(date.getFullYear(), date.getMonth(), 1);
 var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
 
 
 // Check All Varaibles and Events Here
