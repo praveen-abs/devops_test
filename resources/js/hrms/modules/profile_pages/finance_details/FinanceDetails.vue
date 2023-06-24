@@ -109,17 +109,16 @@
                                                     v-model="bank_information.ifsc_code" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>PAN No</label>
                                                 <InputText type="text" name="pan_nos" class="form-controls pl-2"
                                                     v-model="bank_information.pan_no" />
-
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-md-6 ">
-                                            <div class="floating">
+                                            <div class="floating d-block justify-items-start al">
                                                 <label for="" class="float-label mb-2">Bank Passbook or Cheque Leaf</label>
                                                 <div class=" flex justify-content-start">
                                                     <Toast />
@@ -129,11 +128,19 @@
                                                         <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
                                                         <h1 class="text-light">Upload file</h1>
                                                     </label>
-                                                    <input type="file" name="" id="uploadPassBook" hidden
-                                                        @change="updateCheckBookPhoto($event)" />
-                                                        <div v-if="bank_information.PassBook"
-                                                            class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
-                                                            {{ bank_information.PassBook.name }}</div>
+                                                    <div class="d-flex flex-column">
+                                                        <input type="file" name="" id="uploadPassBook" hidden
+                                                        @change="updateCheckBookPhoto($event)"
+                                                        style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                                            r$.PassBook.$error ? 'p-invalid' : '',
+                                                        ]" />
+                                                    <span v-if="r$.PassBook.$error" class="text-red-400 fs-6 font-semibold">
+                                                        {{ r$.PassBook.required.$message.replace("Value", "PassBook or Cheque Leaf") }}
+                                                    </span>
+                                                    </div>
+                                                    <div v-if="bank_information.PassBook"
+                                                        class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
+                                                        {{ bank_information.PassBook.name }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -142,7 +149,7 @@
                                     <div class="col-12">
                                         <div class="text-right">
                                             <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                                @click="saveBankinfoDetails">Submit</button>
+                                                @click="submitBankForm">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -405,7 +412,7 @@
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text">
-                                    {{   _instance_profilePagesStore.employeeDetails.get_employee_details.account_no }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.account_no }}
 
                                     {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number }}
 
@@ -550,7 +557,7 @@ const saveBankinfoDetails = () => {
     form.append('account_no', bank_information.bank_ac_no)
     form.append('bank_ifsc', bank_information.ifsc_code)
     form.append('PassBook', bank_information.PassBook)
-    form.append('onboard_document_type',"Cheque leaf/Bank Passbook")
+    form.append('onboard_document_type', "Cheque leaf/Bank Passbook")
 
     axios.post(url, form)
         .then((res) => {
@@ -676,15 +683,35 @@ const savePancardInfoDetails = () => {
     }
 
 
+};
+
+const bankDetailsRules = computed(() => {
+    return {
+        PassBook: { required },
+    }
+});
+
+const r$ = useValidate(bankDetailsRules, bank_information)
+
+const submitBankForm = () => {
+    r$.value.$validate() // checks all inputs
+    if (!r$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        saveBankinfoDetails()
+    } else {
+        console.log('Form failed submitted.')
+    }
+
 }
+
 
 const rules = computed(() => {
     return {
         pan_no: { required },
         Pancard: { required },
-
     }
-})
+});
 
 const v$ = useValidate(rules, pan_information)
 

@@ -220,7 +220,8 @@
                                 <div class="mb-3 form-group">
                                     <label>Official Mobile Number</label>
                                     <input type="text" size=20 maxlength=10 name="official_mobile_number"
-                                        class="form-control" v-model="dailog_contactinfo.official_mobile_number">
+                                        class="form-control" v-model.number="dailog_contactinfo.official_mobile_number" >
+                                        <!-- v-model="dailog_contactinfo.official_mobile_number" -->
                                 </div>
                             </div>
 

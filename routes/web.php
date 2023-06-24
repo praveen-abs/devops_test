@@ -294,8 +294,9 @@ Route::middleware(['auth'])->group(function () {
 //update user details with proof
 
     Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
-    Route::get('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
+    Route::Post('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
     Route::post('/approvals/EmployeeProof-bulkdocs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'BulkDocumentProofApprovals'])->name('BulkDocumentProofApprovals');
+    Route::post('view/getEmpProfileProofPrivateDoc', [App\Http\Controllers\VmtProfilePagesController::class, 'getEmpProfileProofPrivateDoc'])->name('getEmpProfileProofPrivateDoc');
 
 
     // notifications
