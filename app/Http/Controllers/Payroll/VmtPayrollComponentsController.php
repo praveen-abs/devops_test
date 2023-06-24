@@ -121,15 +121,16 @@ class VmtPayrollComponentsController extends Controller
 
     public function addPaygroupCompStructure(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        return$response = $serviceVmtPayrollComponentsService->addPaygroupCompStructure(
-            $request->paygroup_name,
+        // dd($request->all());
+            $response = $serviceVmtPayrollComponentsService->addPaygroupCompStructure(
+            $request->structureName,
             $request->description,
             $request->pf,
             $request->esi,
             $request->tds,
             $request->fbp,
-            $request->sal_components,
-            $request->assigned_employees
+            $request->selectedComponents,
+            $request->assignedEmployees
         );
 
         return $response;

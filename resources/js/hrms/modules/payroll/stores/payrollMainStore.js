@@ -70,7 +70,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         let salaryComponentUrl = `/Paygroup/fetchPayRollComponents`
         await axios.get(salaryComponentUrl).then(res => {
             salaryComponentsSource.value = res.data
-            console.log(helper.filterSource(res.data,3));
+            console.log(helper.filterSource(res.data, 3));
         }).finally(() => {
             canShowLoading.value = false
         })
@@ -81,11 +81,11 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         canShowLoading.value = true
         if (salaryComponentsUpdated.value) {
             axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
-            .finally(() => {
-                restChars()
-                canShowLoading.value = false
-                getSalaryComponents()
-            })
+                .finally(() => {
+                    restChars()
+                    canShowLoading.value = false
+                    getSalaryComponents()
+                })
         } else {
             axios.post('/Paygroup/CreatePayRollComponents', salaryComponents)
                 .finally(() => {
@@ -148,15 +148,16 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     const salaryStructure = reactive({
         structureName: null,
         description: null,
-        pf: null,
-        esi: null,
-        tds: null,
-        fbp: null,
+        pf: 0,
+        esi: 0,
+        tds: 0,
+        fbp: 0,
         selectedComponents: null,
         assignedEmployees: null,
     })
 
     const salaryStructureSource = ref()
+    const employeeSource = ref()
 
     const getsalaryStructure = (async () => {
         let salaryyStructureUrl = `/Paygroup/fetchPayRollComponents`
@@ -165,21 +166,23 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         })
     })
 
-    const addsalaryComponents = (selectedData) =>{
+    const addsalaryComponents = (selectedData) => {
         console.log(selectedData);
         salaryStructureSource.value = selectedData;
     }
 
     const saveNewsalaryStructure = () => {
         console.log(salaryStructure);
-        if (salaryComponentsUpdated.value) {
-            axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
-        } else {
-            axios.post('/Paygroup/CreatePayRollComponents', salaryComponents)
-                .finally(() => {
-                    restChars()
-                })
-        }
+        axios.post('/Paygroup/addPaygroupCompStructure', salaryStructure)
+
+        // if (salaryComponentsUpdated.value) {
+        //     axios.post('Paygroup/addPaygroupCompStructure', salaryComponents)
+        // } else {
+        //     axios.post('/Paygroup/addPaygroupCompStructure', salaryComponents)
+        //         .finally(() => {
+        //             restChars()
+        //         })
+        // }
     }
 
 
@@ -204,7 +207,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         dailogNewSalaryComponents, salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent, editNewSalaryComponent, deleteSalaryComponent,
 
         // Salary Structure - Paygroup
-        dailogNewSalaryStructure,salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure,addsalaryComponents,
+        dailogNewSalaryStructure, salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure, addsalaryComponents,
     }
 
 })    

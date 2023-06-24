@@ -19,7 +19,7 @@ const router = createRouter({
             component: payrollSetup,
         },
         {
-            path: "/payrollSetup/structure/:id",
+            path: "/payrollSetup/structure/:name",
             name: "new_salary_structureVue",
             component: new_salary_structureVue,
         },

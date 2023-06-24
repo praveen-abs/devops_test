@@ -20,21 +20,6 @@
                 </p>
             </div>
         </div>
-        <!-- <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 xl:grid-cols-3" > -->
-        <!-- 
-        <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4"
-            style="display: grid;" >
-            <div class="tw-card " v-for="leave in leave_balance" :key="leave" :class="[leave.leave_type == 'sick' ? 'bg-red-300' :'']" >
-                <div class="text-center">
-                    <p class="mb-2 text-base font-semibold ">
-                        {{ leave.leave_type }}
-                    </p>
-                    <h6 class="mb-0 text-sm font-semibold">
-                        {{  }}
-                    </h6>
-                </div>
-            </div>
-        </div> -->
     </div>
     <div class="tw-card ">
         <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">Leave Availed</h6>

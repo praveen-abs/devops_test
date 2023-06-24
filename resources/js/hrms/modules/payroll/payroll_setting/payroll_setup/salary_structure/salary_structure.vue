@@ -1,17 +1,28 @@
 <template>
     <div class="w-full p-3">
-        <div v-if="route.params.id == undefined">
+        <div v-if="route.params.name == undefined || route.params.name == '' ">
             <section id="header" class="flex mx-2 my-5">
                 <div class="w-10">
                     <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
                             class="font-semibold text-gray-600 fs-6">(Paygroup)</span></p>
                 </div>
                 <div class="float-right">
-                    <router-link class=" btn btn-orange float-right ml-8" :to="`/payrollSetup/structure/1`">Add
+                    <router-link class=" btn btn-orange float-right ml-8" :to="`/payrollSetup/structure/create`">Add
                         Structure</router-link>
                 </div>
             </section>
-            <div id="table-responsive">
+            <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 mx-1"
+                style="display: grid;">
+                <div
+                    class="p-0.5 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100 ">
+                    <p class="text-lg font-semibold text-center ">Earings</p>
+                    <p class="my-0.5 text-xl font-bold text-center">
+                        <!-- <span v-if="leave_balance.leave_balance == ''">0</span> -->
+                        <span >10</span>
+                    </p>
+                </div>
+            </div>
+            <div id="table-responsive" class="my-4">
                 <DataTable :value="usePayroll.salaryStructureSource">
                     <Column field="Components" header="Salary structure name"></Column>
                     <Column field="lastYearSale" header="No of assigned employees"></Column>
@@ -39,22 +50,26 @@
 
             </div>
         </div>
-        <router-view />
+        <NewSalaryStructure  v-if="route.params.name == 'create'" />
     </div>
 </template>
 
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import new_salary_structure from './new_salary_structure.vue';
+import NewSalaryStructure from './new_salary_structure.vue';
 import { usePayrollMainStore } from '../../../stores/payrollMainStore'
-import {usePayrollHelper} from '../../../stores/payrollHelper';
+import { usePayrollHelper } from '../../../stores/payrollHelper';
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
 const usePayroll = usePayrollMainStore()
 const helper = usePayrollHelper()
+
+onMounted(()=>{
+    console.log(route.params.name);
+})
 
 </script>
 

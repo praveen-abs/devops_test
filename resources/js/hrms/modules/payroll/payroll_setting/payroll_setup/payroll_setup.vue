@@ -3,7 +3,7 @@
   <ConfirmDialog></ConfirmDialog>
   <div class="w-full m-auto">
     <h1 class="text-white font-semibold fs-4 py-2 mx-2">Payroll Setting</h1>
-    <div class="mt-4 tabs">
+    <div class="mt-3 tabs">
       <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
         ><div class="md:text-sm">1</div> <p style="width: 200px;">General payroll Setting</p></a
       >
@@ -80,7 +80,7 @@ onMounted(() => {
 
 <style>
 .page-content {
-  padding: calc(45px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+  padding: calc(20px + 1.5rem) calc(1.5rem / 2) 0px calc(1.5rem / 2);
   background: #003056;
 }
 

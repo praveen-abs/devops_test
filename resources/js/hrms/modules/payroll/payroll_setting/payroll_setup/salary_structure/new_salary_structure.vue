@@ -1,8 +1,10 @@
 <template>
     <div class="w-full" style="transition: opacity 0.5s ease;">
         <div class="mx-6 py-6">
-            <i @click=" usePayroll.dailogNewSalaryStructure = false" class="pi pi-arrow-left py-auto mx-2 cursor-pointer"
-                style="font-size: 1rem"></i>
+            <router-link :to="`/payrollSetup/structure/`">
+                <i class="pi pi-arrow-left py-auto mx-2 cursor-pointer" style="font-size: 1rem"></i>
+            </router-link>
+
             <p class="text-gray-00 font-semibold fs-4 ">New Salary Structure</p>
             <p class="text-gray-500 font-semibold fs-6">Create custom salary package by selecting the relevant
                 components
@@ -16,12 +18,13 @@
                     <div class="">
                         <label for="metro_city" class="block mb-2  text-gray-700 font-semibold fs-6">Structure
                             Name</label>
-                        <InputText class="w-full h-10" />
+                        <InputText class="w-full h-10" v-model="usePayroll.salaryStructure.structureName" />
                     </div>
                     <div class="my-4">
                         <label for="metro_city" class="block mb-2  text-gray-700 font-semibold fs-6">Description</label>
                         <div class="flex gap-8 justify-evenly">
-                            <Textarea :autoResize="true" rows="3" cols="90" placeholder="Enter the Reason" />
+                            <Textarea :autoResize="true" rows="3" cols="90" placeholder="Enter the Reason"
+                                v-model="usePayroll.salaryStructure.description" />
                         </div>
                     </div>
                 </div>
@@ -30,26 +33,30 @@
                     <div class="p-4 my-2 mx-6 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
 
                         <div class="flex my-5">
-                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
+                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input"
+                                v-model="usePayroll.salaryStructure.pf" :true-value=1 :false-value=0>
                             <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is includes the
                                 option
                                 for provident fund (PF)
                                 contributions</p>
                         </div>
                         <div class="flex my-5">
-                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
+                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input"
+                                v-model="usePayroll.salaryStructure.esi" :true-value=1 :false-value=0>
                             <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is includes the
                                 coverage
                                 for employee state insurance
                                 (ESI)</p>
                         </div>
                         <div class="flex my-5">
-                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
+                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input"
+                                v-model="usePayroll.salaryStructure.tds" :true-value=1 :false-value=0>
                             <p class="mx-3 text-gray-800 font-semibold fs-6">This salary structure is subject to TDS(Tax
                                 deducted at source)</p>
                         </div>
                         <div class="flex my-5">
-                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input">
+                            <input type="checkbox" name="" id="" style="height: 20px;width: 20px;" class="form-check-input"
+                                v-model="usePayroll.salaryStructure.fbp" :true-value=1 :false-value=0>
                             <p class="mx-3 text-gray-800 font-semibold fs-6">This salary is eligible for flexible
                                 benefit
                                 plan(FBP)</p>
@@ -64,7 +71,7 @@
                     <button @click="addSalaryComponents = true" class="btn btn-orange w-4">Add Components</button>
                 </div>
                 <div class="my-2 ">
-                    <DataTable :value="usePayroll.salaryStructureSource">
+                    <DataTable :value="usePayroll.salaryStructure.selectedComponents">
                         <Column field="comp_name" header="Components" style="min-width: 15rem">
                         </Column>
                         <Column field="calculation_method" header="Amount/Calculation" style="min-width: 15rem"></Column>
@@ -89,13 +96,20 @@
                     </DataTable>
 
                 </div>
+                <button @click="assignEmployee = true" class="text-blue-500"><i class="pi pi-plus mx-1"
+                        style="font-size: 0.8rem"></i>Assign Employee</button>
             </div>
         </div>
+
         <div class="flex justify-between my-5">
             <div></div>
             <div class="flex">
-                <button @click=" usePayroll.dailogNewSalaryStructure = false" class="btn btn-orange-outline ">Cancel</button>
-                <button class="btn btn-orange mx-2 ">Create structure</button>
+                <router-link :to="`/payrollSetup/structure/`">
+                    <button @click=" usePayroll.dailogNewSalaryStructure = false"
+                        class="btn btn-orange-outline">Cancel</button>
+                </router-link>
+
+                <button class="btn btn-orange mx-2 " @click="usePayroll.saveNewsalaryStructure">Create structure</button>
             </div>
         </div>
     </div>
@@ -106,7 +120,9 @@
         <template #header>
             <span class="text-lg font-semibold modal-title text-indigo-950">Add New Components</span>
         </template>
-        <DataTable :value="usePayroll.salaryComponentsSource" v-model:selection="selectedComponents" dataKey="id" :rows="usePayroll.salaryComponentsSource.length">
+        <DataTable :value="usePayroll.salaryComponentsSource"
+            v-model:selection="usePayroll.salaryStructure.selectedComponents" dataKey="id"
+            :rows="usePayroll.salaryComponentsSource.length">
             <Column selectionMode="multiple"></Column>
             <Column field="comp_name" header="Name" style="min-width: 15rem"></Column>
             <Column field="comp_name" header="Type" style="min-width: 15rem"></Column>
@@ -119,8 +135,90 @@
         <div class="float-right my-4">
             <div class="flex">
                 <button @click=" usePayroll.dailogNewSalaryStructure = false" class="btn btn-orange-outline">Cancel</button>
-                <button class="btn btn-orange mx-2"
-                    @click="usePayroll.addsalaryComponents(selectedComponents), addSalaryComponents = false">Save</button>
+                <button class="btn btn-orange mx-2" @click="addSalaryComponents = false">Save</button>
+            </div>
+        </div>
+    </Dialog>
+    <Dialog v-model:visible="assignEmployee" :modal="true" :closable="true"
+        :style="{ width: '95vw', borderTop: '5px solid #002f56' }">
+        <template #header>
+            <span class="text-lg font-semibold modal-title text-indigo-950">Assign Employees</span>
+        </template>
+        <div class=" col-12">
+            <div class="row ">
+                <div class=" float-right">
+                    <span class="p-input-icon-left ">
+                        <i class="pi pi-search" />
+                        <InputText placeholder="Search" v-model="filters['global'].value" class="border-color "
+                            style="height: 3em" />
+                    </span>
+
+                </div>
+                <div class="col-12">
+
+                    <div class="col-12">
+                        <div class="px-2 row">
+                            <div class="col">
+                                <div style="padding: 10px"
+                                    class="border rounded d-flex justify-content-start align-items-center border-color">
+                                    <input type="checkbox" class="mr-3" style="width: 20px; height: 20px"
+                                        @change="salaryStore.resetFilters" />
+                                    <h1>Clear Filters</h1>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <Dropdown v-model="opt" editable :options="salaryStore.dropdownFilter.department"
+                                    optionLabel="name" optionValue="id"
+                                    @change="salaryStore.getSelectoption('department', opt)" placeholder="Department"
+                                    class="w-full text-red-500 md: border-color" />
+                            </div>
+                            <div class="col">
+                                <Dropdown v-model="opt1" editable :options="salaryStore.dropdownFilter.designation"
+                                    optionLabel="designation" optionValue="designation" placeholder="Designation"
+                                    class="w-full text-red-500 md: border-color"
+                                    @change="salaryStore.getSelectoption('designation', opt1)" />
+                            </div>
+                            <div class="col">
+                                <Dropdown v-model="opt2" editable :options="salaryStore.dropdownFilter.location"
+                                    optionLabel="work_location" optionValue="work_location" placeholder="Location"
+                                    class="w-full text-red-500 md: border-color"
+                                    @change="salaryStore.getSelectoption('work_location', opt2)" />
+                            </div>
+                            <div class="col">
+                                <Dropdown v-model="opt3" editable :options="salaryStore.dropdownFilter.state"
+                                    optionLabel="state_name" optionValue="id" placeholder="State"
+                                    class="w-full text-red-500 md: border-color"
+                                    @change="salaryStore.getSelectoption('state', opt3)" />
+                            </div>
+                            <div class="col">
+                                <Dropdown v-model="opt5" editable :options="salaryStore.dropdownFilter.legalEntity"
+                                    optionLabel="client_name" optionValue="id" placeholder="Legal Entity"
+                                    class="w-full text-red-500 md: border-color"
+                                    @change="salaryStore.getSelectoption('client_name', opt5)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="salaryStore.eligbleEmployeeSource"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
+                v-model:selection="usePayroll.salaryStructure.assignedEmployees"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+                <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column>
+                <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
+                <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
+                <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
+                <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
+                <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
+                <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
+            </DataTable>
+        </div>
+        <div class="float-right my-4">
+            <div class="flex">
+                <button @click=" assignEmployee = false" class="btn btn-orange-outline">Cancel</button>
+                <button class="btn btn-orange mx-2" @click=" assignEmployee = false">Save</button>
             </div>
         </div>
     </Dialog>
@@ -128,49 +226,70 @@
   
 <script setup>
 import { ref, onMounted } from "vue";
+import { FilterMatchMode } from 'primevue/api';
 import { usePayrollMainStore } from '../../../stores/payrollMainStore';
-import {usePayrollHelper} from '../../../stores/payrollHelper';
+import { usePayrollHelper } from '../../../stores/payrollHelper';
 import { useRouter, useRoute } from "vue-router";
+import { salaryAdvanceSettingMainStore } from "../../../../salary_loan_setting/stores/salaryAdvanceSettingMainStore";
 const router = useRouter();
 const route = useRoute();
 const helper = usePayrollHelper()
+const salaryStore = salaryAdvanceSettingMainStore()
 
 
-onMounted(()=>{
+onMounted(() => {
     console.log(route.params.id);
 })
 
 const usePayroll = usePayrollMainStore()
 
 const addSalaryComponents = ref(false)
+const assignEmployee = ref(false)
 const selectedComponents = ref()
 
-const componentTypes = ref([
-    { id: 1, name: "Fixed", value: 1 },
-    { id: 2, name: "Variable", value: 2 },
-])
-const calculationTypes = ref([
-    { id: 1, name: "Flat Amount", value: 1 },
-    { id: 2, name: "Percentage of CTC", value: 2 },
-])
 
-const findCompType = (value) => {
-    let type = componentTypes.value.find(ele => {
-        return ele.value == value
-    })
-    return type.name
-}
+
+
+
+const filters = ref({
+    'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+const opt = ref()
+const opt1 = ref()
+const opt2 = ref();
+const opt3 = ref();
+const opt4 = ref();
+const opt5 = ref();
+const opt6 = ref();
+
+
+onMounted(() => {
+    opt.value = "Department"
+    opt1.value = "Designation"
+    opt2.value = "Location"
+    opt3.value = "State"
+    opt4.value = "Branch"
+    opt5.value = "Legal Entity"
+    salaryStore.getDropdownFilterDetails()
+})
 </script>
 
 <style>
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.5s ease;
+:root {
+    --orange: #FF4D00;
+    --white: #fff;
+    --navy: #002f56;
 }
 
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
+.p-dropdown-label.p-inputtext {
+    color: var(--navy);
+}
+
+.border-color {
+    color: #003154;
+    /* border: 2px solid #3B82F6 !important; */
+    border: 2px solid #003487 !important;
 }
 </style>
   
