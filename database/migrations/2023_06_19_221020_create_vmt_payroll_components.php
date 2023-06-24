@@ -20,18 +20,19 @@ return new class extends Migration
             $table->integer('comp_nature_id');
             $table->integer('category_id');
             $table->text('calculation_method');
-            $table->text('comp_name_payslip');
             $table->integer('epf');
             $table->integer('esi');
-            $table->integer('pt');
-            $table->integer('lwf');
-            $table->integer('impact_on_gross');
             $table->integer('is_part_of_empsal_structure');
             $table->integer('is_taxable');
             $table->integer('calculate_on_prorate_basis');
             $table->integer('can_show_inpayslip');
-            $table->integer('is_default');
+            $table->integer('impact_on_gross');
+            $table->integer('maximum_limit');
             $table->integer('status');
+            $table->integer('is_default');
+            $table->integer('lwf');
+            $table->integer('pt');
+            $table->text('comp_name_payslip');
             $table->timestamps();
         });
     }

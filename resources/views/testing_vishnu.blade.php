@@ -9,6 +9,8 @@
     use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
+    use App\Models\VmtEmpPaygroup;
+    use App\Models\VmtPaygroupComps;
     use App\Models\VmtPayrollComponents;
     use App\Models\VmtEmployeeOfficeDetails;
 
@@ -219,8 +221,21 @@
 // dd($last_join_emp_code->toarray());
 
 
-$paygroupcomponents =VmtPayrollComponents::get();
-dd($paygroupcomponents->toarray());
+// $paygroup_components =VmtPaygroupComps::where('paygroup_id',1)->get(['id'])->destroy;
+// VmtPaygroupComps::destroy($paygroup_components);
+$paygroup_comps =VmtPaygroupComps::where('paygroup_id',41);
+
+if(!empty($paygroup_comps)){
+$data1 =$paygroup_comps->get(['id']);
+}
+$emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
+                if(!empty($emp_paygroup_components)){
+                    $data =$emp_paygroup_components->get(['id']);
+                }
+                dd( $data);
+                 VmtEmpPaygroup::destroy( $data);
+                 VmtPaygroupComps::destroy( $data1);
+
     ?>
 
 
