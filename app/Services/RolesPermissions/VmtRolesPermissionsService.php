@@ -62,27 +62,69 @@ class VmtRolesPermissionsService {
 
         // try{
 
-          $all_permission_in_database = Permission::join('vmt_permodule_permission','vmt_permodule_permission.permission_id','=','permissions.id')
-                                                    ->join('vmt_permission_module','vmt_permission_module.id','=','vmt_permodule_permission.per_module_id')
-                                                    ->get([
-                                                        'permissions.id as key',
-                                                        'vmt_permission_module.id as module_id',
-                                                        'vmt_permission_module.module_name as label',
-                                                        'permissions.name',
-                                                    ])->toArray();
+          $all_permission_in_database = VmtPermissionModule::join('vmt_perm_sub_module','vmt_perm_sub_module.perm_module_id','=','vmt_perm_module.id')
+                                                            ->join('vmt_perm_sm_link','vmt_perm_sm_link.sub_module_id','=','vmt_perm_sub_module.id')
+                                                            ->join('permissions','permissions.id','=','vmt_perm_sm_link.permission_id')
+                                                            ->get([
+                                                                    'vmt_perm_module.id as per_module_id',
+                                                                    'vmt_perm_module.module_name as per_module_name',
+                                                                    'vmt_perm_sub_module.id as per_sub_module_id',
+                                                                    'vmt_perm_sub_module.submodule_name as per_sub_module_name',
+                                                                    'permissions.id as permission_id',
+                                                                    'permissions.name as permission_name'
+                                                            ]);
+
+                    // return ($all_permission_in_database);
+
                                                     // dd($all_permission_in_database);
-                    $count = 0;                             // ->groupBy('label');
+                                                       // ->groupBy('label');
+                //     $count = 0;
+
+                    $permission = array();
                 foreach($all_permission_in_database as $single_details){
 
-                    if (!array_key_exists($single_details["label"], $all_permission_in_database)) {
 
-                        $all_permission_in_database[$single_details["label"]]=array();
-                        array_push($all_permission_in_database[$single_details["label"]],$single_details);
+                   $simma['per_module_id'] = rand(200,300);
+                   $simma['per_module_name'] = $single_details['per_module_name'];
+                   $simma['per_sub_module_id'] = rand(400,500);
+                   $simma['per_sub_module_name'] = $single_details['per_sub_module_name'];
+                   $simma['children'] = [["key"=>$single_details['permission_id'],"label"=>$single_details['permission_name']]];
 
-
+                   array_push($permission,$simma);
                 }
-                unset($all_permission_in_database[$count]);
-                $count++;
+
+                // return $permission;
+
+
+
+                $res = array();
+                foreach($permission as $single_perm){
+
+                   $per_module['key']= $single_perm['per_module_id'];
+                   $per_module['label']= $single_perm['per_module_name'];
+                   $per_module['children']= [["key"=>$single_perm['per_sub_module_id'],"label"=>$single_perm['per_sub_module_name'],"children"=>$single_perm['children']]];
+
+                   array_push($res,$per_module);
+                }
+
+                return $res;
+
+
+
+
+                //     if (!array_key_exists($single_details["label"], $all_permission_in_database)) {
+
+                //         $all_permission_in_database[$single_details["label"]]=array();
+
+
+
+                //         array_push($all_permission_in_database[$single_details["label"]],$single_details);
+
+
+                // }
+                // unset($all_permission_in_database[$count]);
+
+                // $count++;
 
 
 
@@ -102,8 +144,9 @@ class VmtRolesPermissionsService {
         //     ]);
         // }
 
-    }
-    dd($all_permission_in_database);
+    // }
+    // dd($all_permission_in_database);
+    // return ($res);
 }
 
 

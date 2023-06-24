@@ -9,7 +9,7 @@ class VmtPermissionModule extends Model
 {
     use HasFactory;
 
-    protected $table = 'vmt_permission_module';
+    protected $table = 'vmt_perm_module';
 
     protected $fillable = ['module_name'];
 }

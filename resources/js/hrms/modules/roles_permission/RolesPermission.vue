@@ -64,7 +64,7 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-            <Tree :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
+            <Tree :value="allpermission" selectionMode="checkbox" class="w-8 font-semibold ">
             </Tree>
         </div>
         <template #footer>
