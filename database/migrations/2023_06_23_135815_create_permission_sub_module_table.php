@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_perm_module', function (Blueprint $table) {
+        Schema::create('vmt_perm_sub_module', function (Blueprint $table) {
             $table->id();
-            $table->text('module_name');
+            $table->foreignId('perm_module_id')->constrained('vmt_perm_module');
+            $table->text('submodule_name');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_perm_module');
+        Schema::dropIfExists('vmt_perm_sub_module');
     }
 };

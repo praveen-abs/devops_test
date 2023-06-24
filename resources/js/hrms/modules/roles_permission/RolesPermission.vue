@@ -89,7 +89,7 @@
     </div>
 
 
-  
+
 
     <Dialog header="Header" v-model:visible="addNewroleDailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '65vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -112,14 +112,8 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-
-            <TreeTable :value="nodes" key="id">
-                <Column field="name" header="Name" expander>
-                    <input type="checkbox">
-                </Column>
-                <Column field="size" header="Size"></Column>
-                <Column field="type" header="Type"></Column>
-            </TreeTable>
+            <Tree :value="allpermission" selectionMode="checkbox" class="w-8 font-semibold ">
+            </Tree>
         </div>
         <template #footer>
             <div>
