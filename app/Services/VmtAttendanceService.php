@@ -254,29 +254,58 @@ class VmtAttendanceService
 
         try {
 
-            $response = array();
+            
+                //Accrued Leave Year Frame
+//                if (empty($request->all())) {
+                $time_periods_of_year_query = VmtOrgTimePeriod::where('status', 1)->first();
+                // } else {
+                //     $time_periods_of_year_query = VmtOrgTimePeriod::whereYear('start_date',)->whereMonth('start_date',)
+                //         ->whereYear('end_date',)->whereMonth('end_date',)->first();
+                // }
+                $start_date =  $time_periods_of_year_query->start_date;
+                $end_date   = $time_periods_of_year_query->end_date;
+                $calender_type = $time_periods_of_year_query->abbrevation;
+                // $time_frame = array( $start_date.'/'. $end_date=>$calender_type.' '.substr($start_date, 0, 4).'-'.substr($end_date, 0, 4));
+                $time_frame = $calender_type . ' ' . substr($start_date, 0, 4) . '-' . substr($end_date, 0, 4);
 
-            $leaveTypes = VmtLeaves::all();
+               
+                $leave_balance_details = $this->calculateEmployeeLeaveBalance(auth::user()->id, $start_date, $end_date);
 
-            $user_id = User::where('user_code', $user_code)->first()->id;
+                //convert current json response to older JSON structure
+                /*
+                    Old structure :
+                    {
+                        "status": "success",
+                        "message": "",
+                        "data" :{
+                            "Earned Leave" : 1,
+                            "Permission" : 0,
+                            "Maternity Leave" : 0,
+                            "Paternity Leave" : 0,
+                        }
 
-            $query_emp_leaves = VmtEmployeeLeaves::join('vmt_leaves', 'vmt_leaves.id', 'vmt_employee_leaves.leave_type_id')
-                ->where('user_id', $user_id);
+                    }
+                */
+               // dd($leave_balance_details);
+                $final_json = array();
 
-            foreach ($leaveTypes as $singleLeaveType) {
-                $response[$singleLeaveType->leave_type] = $query_emp_leaves->where('leave_type_id', $singleLeaveType->id)->get()->count();
-            }
+                foreach($leave_balance_details as $singleLeavebalance)
+                {
+                    //dd($singleLeavebalance["leave_balance"]);
+                    $final_json[$singleLeavebalance["leave_type"]] = $singleLeavebalance["leave_balance"];
+                   // dd($final_json);
+                }
 
 
             return response()->json([
                 "status" => "success",
                 "message" => "",
-                "data" => $response,
+                "data" => $final_json,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
-                "message" => "Error while fetching investments form data",
+                "message" => "Error while fetching employee leave balance",
                 "data" => $e,
             ]);
         }
@@ -2345,7 +2374,7 @@ class VmtAttendanceService
                     ->sum('total_leave_datetime');
                 $avalied_leaves[$single_leave_types->leave_type] =  $total_avalied_leaves;
                 $temp_leave['leave_type'] = $single_leave_types->leave_type;
-                $temp_leave['leave_balance'] = 0;
+                $temp_leave['leave_balance'] = (int)$single_leave_types->days_annual;
                 $temp_leave['avalied_leaves'] = $total_avalied_leaves;
             }
             array_push($response, $temp_leave);
