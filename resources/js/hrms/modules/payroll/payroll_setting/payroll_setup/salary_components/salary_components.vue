@@ -1,8 +1,7 @@
 <template>
- 
-        <div class="mb-1 left-line">
-            <div class="card ">
-                <div class="card-body">
+    <div class="mb-1 left-line">
+        <div class="card ">
+            <div class="card-body">
                 <ul class="my-4 nav nav-pills nav-tabs-dashed " role="tablist">
                     <li class="nav-item text-muted" role="presentation">
                         <button class="pb-2 nav-link active" id="pills-offer-pending-tab" data-bs-toggle="pill"
@@ -26,54 +25,50 @@
                     </li>
                 </ul>
 
-          
 
 
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-offer-pending" role="tabpanel"
-            aria-labelledby="pills-offer-pending-tab">
-           
-                <div class="card-body">
-                    <div class="offer-pending-content">
-                        <earings />
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-offer-pending" role="tabpanel"
+                        aria-labelledby="pills-offer-pending-tab">
+                        <div class="card-body">
+                            <div class="offer-pending-content">
+                                <earings />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="pills-offer-completed" role="tabpanel"
+                        aria-labelledby="pills-offer-completed-tab">
+                        <div class="card-body">
+                            <div class="my-4 offer-pending-content">
+                                <adhoc_componentsVue />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="pills-offer-resent" role="tabpanel"
+                        aria-labelledby="pills-offer-resent-tab">
+                        <div class="card-body">
+                            <div class="offer-pending-content">
+                                <reimbursement />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="pills-offer-resen" role="tabpanel"
+                        aria-labelledby="pills-offer-resen-tab">
+                        <div class="card-body">
+                            <div class="offer-pending-content">
+                                <accounting_code />
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-           
-        </div>
-        <div class="tab-pane fade active" id="pills-offer-completed" role="tabpanel"
-            aria-labelledby="pills-offer-completed-tab">
-                <div class="card-body">
-                    <div class="my-4 offer-pending-content">
-                        <adhoc_componentsVue />
-                    </div>
-
-            </div>
-        </div>
-        <div class="tab-pane fade " id="pills-offer-resent" role="tabpanel"
-            aria-labelledby="pills-offer-resent-tab">
-                <div class="card-body">
-                    <div class="offer-pending-content">
-                    <reimbursement />
-                            
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade " id="pills-offer-resen" role="tabpanel"
-            aria-labelledby="pills-offer-resen-tab">
-                <div class="card-body">
-                    <div class="offer-pending-content">
-                     <accounting_code />
-                    
-                </div>
             </div>
         </div>
     </div>
-
-</div>
-</div>
-</div>
-
 </template>
 
 

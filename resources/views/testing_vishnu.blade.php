@@ -17,6 +17,7 @@
     use App\Models\VmtEmployeePaySlip;
     use App\Models\VmtEmployeePayslipV2;
     use App\Models\VmtPMS_KPIFormModel;
+    use App\Models\VmtLoanInterestSettings;
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;

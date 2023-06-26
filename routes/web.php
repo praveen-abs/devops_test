@@ -34,7 +34,6 @@ Route::get('/offer-letter', function () {
 })->name('offer-letter');
 
 
-
 Route::get('/integrations', function () {
     return view('Integrations_Auth');
 })->name('integrations');
@@ -292,7 +291,7 @@ Route::middleware(['auth'])->group(function () {
         dd('done');
     });
 
-//update user details with proof
+    //update user details with proof
 
     Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
     Route::Post('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
@@ -341,7 +340,8 @@ Route::middleware(['auth'])->group(function () {
         return view('offer_letter.create_offerletter');
     })->name('create-offer');
 
-    Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');;
+    Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');
+    ;
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
 
     // Permission Roles Routing
@@ -420,7 +420,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
 
-
     Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
 
@@ -430,6 +429,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importQuickOnboardEmployeesExcelData');
     //Route::get('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeOnboardingController@showEmployeeOnboardingPage');
     Route::post('vmt-employee/complete-onboarding', 'App\Http\Controllers\VmtEmployeeController@storeQuickOnboardForm');
+
+    //upload Financial components
+    Route::post('vmt-Fin-Components/upload', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'importFinancialComponentsExcelData'])->name('Fin-Components/upload');
+    Route::get('saveComponentsUploadPage', [App\Http\Controllers\VmtImportPayrollComponentsController::class, 'saveComponentsUploadPage'])->name('saveComponentsUploadPage');
+
 
 
     Route::get('manageEmployees', 'App\Http\Controllers\VmtEmployeeController@showManageEmployeePage')->name('manageEmployees');
@@ -488,7 +492,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payroll/paycheck/updatePayslipReleaseStatus', [App\Http\Controllers\VmtPayCheckController::class, 'updatePayslipReleaseStatus'])->name('update-PayslipReleaseStatus');
     Route::post('/payroll/paycheck/updatePayslipReleaseStatus', [App\Http\Controllers\VmtPayCheckController::class, 'updatePayslipReleaseStatus'])->name('update-PayslipReleaseStatus');
 
-    Route::get('payroll/setup', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
+    Route::get('/payroll/setup', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
     Route::get('payroll/work_location', [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
 
     //Pay Check module
@@ -497,6 +501,27 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investments_details', [App\Http\Controllers\VmtPayCheckController::class, 'showInvestmentsPage'])->name('vmt_investments_details');
     Route::get('/form16_details', [App\Http\Controllers\VmtPayCheckController::class, 'showForm16Page'])->name('vmt_form16_details');
     Route::get('/pdfview/{emp_code?}/{selectedPaySliMonth?}', [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');
+
+    //Paygroup module
+    Route::get('/Paygroup/fetchPayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayRollComponents'])->name('fetchPayRollComponents');
+    Route::post('/Paygroup/CreatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayRollComponents'])->name('CreatePayRollComponents');
+    Route::post('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
+    Route::post('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
+    Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
+    
+    // Salary Adhoc Components 
+    Route::post('/Paygroup/AddAdhocAllowDetectComp', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddAdhocAllowanceDetectionComp'])->name('AddAdhocAllowanceDetectionComp');
+    Route::post('/Paygroup/UpdateAdhocAllowDetectComp', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateAdhocAllowanceDetectionComp'])->name('UpdateAdhocAllowanceDetectionComp');
+
+    // Salary Reimbursement Components
+    Route::post('/Paygroup/AddReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddReimbursementComponents'])->name('AddReimbursementComponents');
+    Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
+
+
+    //paygroup structure
+    Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
+    Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
+    Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
@@ -725,7 +750,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/addAllEmployeePayslipDetails', [App\Http\Controllers\VmtCorrectionController::class, 'addAllEmployeePayslipDetails'])->name('addAllEmployeePayslipDetails');
     Route::get('/addElbalancewithjsonString', [App\Http\Controllers\VmtCorrectionController::class, 'addElbalancewithjsonString'])->name('addElbalancewithjsonString');
     Route::get('/changeAttendanceBioMatricIdToHrmsUserid', [App\Http\Controllers\VmtCorrectionController::class, 'changeAttendanceBioMatricIdToHrmsUserid'])->name('changeAttendanceBioMatricIdToHrmsUserid');
-    Route::get('/adding-work-shift-for-all-employees',  [App\Http\Controllers\VmtCorrectionController::class, 'addingWorkShiftForAllEmployees'])->name('addingWorkShiftForAllEmployees');
+    Route::get('/adding-work-shift-for-all-employees', [App\Http\Controllers\VmtCorrectionController::class, 'addingWorkShiftForAllEmployees'])->name('addingWorkShiftForAllEmployees');
 
 
 
@@ -737,7 +762,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/configurations/attendance_settings', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
     Route::get('/attendance_settings/fetch-emp-details', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'fetchEmployeeDetails'])->name('attendance_settings-fetchEmployeeDetails');
     Route::post('/attendance_settings/save-shiftdetails', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'assignEmployeesToWorkShift'])->name('attendance_settings-save-shiftdetails');
-    Route::get('/json-format-for-dummy-week-off-days',[App\Http\Controllers\VmtAttendanceSettingsController::class,'jsonFormatForDummyWeekOffDays'])->name('jsonFormatForDummyWeekOffDays');
+    Route::get('/json-format-for-dummy-week-off-days', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'jsonFormatForDummyWeekOffDays'])->name('jsonFormatForDummyWeekOffDays');
     // Document Setting
     Route::get('/documents_settings', function () {
         return view('configurations.vmt_documents_settings');
@@ -796,19 +821,53 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/investments/saveEmpInvSecDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpInvSecDetails'])->name('saveEmpInvSecDetails');
     Route::post('/investments/fetchEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchEmpRentalDetails'])->name('fetchEmpRentalDetails');
-   // Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
+    // Route::post('/investments/deleteEmpRentalDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteRentalDetails'])->name('deleteRentalDetails');
     Route::post('/investments/fetchHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchHousePropertyDetails'])->name('fetchHousePropertyDetails');
     Route::post('/investments/fetchOtherExemption', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'fetchOtherExemptionDetails'])->name('fetchOtherExemptionDetails');
     Route::post('/investments/deleteHousePropertyDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'deleteHousePropertyDetails'])->name('deleteHousePropertyDetails');
 
     Route::post('/investments/saveEmpdetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'SaveInvDetails']);
 
-    Route::post('/investments/saveSectionPopups',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
-    Route::post('/investments/saveSection80',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
-    Route::get('/investments/TaxDeducation',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
-    Route::get('/investments/TaxDeclaration',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
-    Route::post('/investments/saveRegime',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
-    Route::get('/investments/investment-summary',  [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
+    Route::post('/investments/saveSectionPopups', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSectionPopups']);
+    Route::post('/investments/saveSection80', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveSection80']);
+    Route::get('/investments/TaxDeducation', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeducationCalculate']);
+    Route::get('/investments/TaxDeclaration', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
+    Route::post('/investments/saveRegime', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
+    Route::get('/investments/investment-summary', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
+
+    //Salary Advance
+
+    Route::get('/AssignEmpSalaryAdv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'AssignEmpSalaryAdv']);
+    Route::get('/getAllDropdownFilter', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getAllDropdownFilterSetting']);
+    Route::post('/showAssignEmp', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvSettingsTable']);
+    Route::post('/saveSalaryAdvanceSetting', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveSalaryAdvanceSettings']);
+    Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvShowEmployeeView']);
+    Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvEmpSaveSalaryAmt']);
+    Route::get('/SalAdvApproverFlow', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvApproverFlow']);
+
+    //Travel Advance
+
+    Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
+
+
+
+
+    //interest free loan
+    Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
+    Route::post('/save-int-and-int-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetAndIntersetFreeLoanSettings']);
+    Route::get('/show-eligible-interest-free-loan-details', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEligibleInterestFreeLoanDetails']);
+    Route::get('/apply-loan', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'applyLoan']);
+
+    //Loan Approval
+    Route::get('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
+
+    //loan with intrest
+    Route::get('/saveLoanWithIntrest', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveLoanWithInterestSettings'])->name('save-LoanWithIntrestSettings');
+
+    //Loan And Advance Client Settings Route
+    Route::get('/get-clients-for-loan-adv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getClientForLoanAndAdv'])->name('getClientForLoanAndAdv');
+
+
 
 
     //Emp Mail Notifications
@@ -861,9 +920,9 @@ Route::middleware(['auth'])->group(function () {
 
     //notification
 
-        // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
-        // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
-        // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
+    // Route::get('/home', [App\Http\Controllers\MobileNotificationController::class, 'index'])->name('home');
+    // Route::post('/save-token', [App\Http\Controllers\MobileNotificationController::class, 'saveToken'])->name('save-token');
+    // Route::post('/send-notification', [App\Http\Controllers\MobileNotificationController::class, 'sendNotification'])->name('send.notification');
 
     // invest excell
     Route::view('/sample', 'testing.testings')->name('sample');
