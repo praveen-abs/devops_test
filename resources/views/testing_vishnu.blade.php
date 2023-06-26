@@ -216,10 +216,29 @@
 // dd($payroll_available_months);
 
 
-$query_docs = User::whereIn('id',[174, 177, 179])->get();
-dd($query_docs);
+// $query_docs = User::whereIn('id',[174, 177, 179])->get();
+// dd($query_docs);
+
+
+
+// $timestamp = (strtotime('2023-03-01 08:56:04'));
+// $date = date('Y-j-n', $timestamp);
+// $time = date('H:i:s', $timestamp);
+// echo ($date .'<br>'.$time)
+
+// $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+//                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+//                         ->whereDate('date', '2023-06-26')
+//                         ->where('user_Id', 'PLIPL009')
+//                         ->first(['check_out_time']);
+
+//                         dd($attendanceCheckOut );
+
+
+                        //dd($attendanceCheckOut );
 
     ?>
 
 
 @endsection
+
