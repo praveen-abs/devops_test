@@ -37,14 +37,14 @@ import InputMask from 'primevue/inputmask'
 import OverlayPanel from 'primevue/overlaypanel';
 import Tag from 'primevue/tag'
 import VueHtml2pdf from 'vue3-html2pdf'
-import '../../../assests/tailwind.css'
+import '../../../assets/tailwind.css'
 
 
 
 
 
 import payslip from './payslipMaster.vue'
-  
+
 const app = createApp(payslip);
 const pinia=createPinia()
 

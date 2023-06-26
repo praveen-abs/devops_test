@@ -149,7 +149,7 @@ class VmtDashboardService{
 
         $response["attendance"]["current_day_attendance_status"] = $serviceVmtAttendanceService->fetchAttendanceStatus($user_code, date("Y-m-d"));
         $response["holidays"] = $serviceHolidayService->getAllHolidays();
-        $response["events"] = $this->getAllEvents();
+        $response["events"] = $this->getAllEventsDashboard();
 
         return $response;
     }
@@ -244,84 +244,121 @@ class VmtDashboardService{
     }
 
 
-    public function performAttendanceCheckIn($user_code, $date, $checkin_time, $selfie_checkin, $work_mode, $attendance_mode_checkin, $checkin_lat_long)
+    public function performAttendanceCheckIn($checked)
     {
 
 
-        $user_id = User::where('user_code', $user_code)->first()->id;
-
-        /*
-        1.get the work_shift_id for the particular user from VmtEmployeeWorkShifts.
-        2,then check wheather the user have workshiftid or not.
-        */
-
-        //Check if user already checked-in
-        $attendanceCheckin  = VmtEmployeeAttendance::where('user_id', $user_id)->where("date", $date)->first();
-
-        if ($attendanceCheckin) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => 'Check-in already done',
-                'data'   => ""
-            ]);
-        }
-
-        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active','1')->first();
+        $vmt_employee_workshift =VmtEmployeeWorkShifts::where('user_id', auth()->user()->id)->where('is_active','1')->first();
 
         if(empty( $vmt_employee_workshift->work_shift_id)){
             return response()->json([
                 'status' => 'failure',
-                'message' => 'No shift has been assigned',
+                'message' => 'No work-shift has been assigned.Please contact Admin.',
                 'data'   => ""
             ]);
-    }
-
-
-        //If check-in not done already , then create new record
-
-        $attendanceCheckin           = new VmtEmployeeAttendance;
-        $attendanceCheckin->date          = $date;
-        $attendanceCheckin->checkin_time  = $checkin_time;
-        $attendanceCheckin->user_id       = $user_id;
-        //$attendanceCheckin->shift_type    = $shift_type; Todo : Need to remove in table
-        $attendanceCheckin->work_mode = $work_mode; //office, home
-        $attendanceCheckin->checkin_comments = "";
-        $attendanceCheckin->attendance_mode_checkin = $attendance_mode_checkin;
-        $attendanceCheckin->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id; //TODO : Need to fetch from 'vmt_employee_workshifts'
-        $attendanceCheckin->checkin_lat_long = $checkin_lat_long ?? ''; //TODO : Need to fetch from 'vmt_employee_workshifts'
-        $attendanceCheckin->save();
-        // processing and storing base64 files in public/selfies folder
-        if (!empty('selfie_checkin')) {
-
-            $emp_selfiedir_path = public_path('employees/' . $user_code . '/selfies/');
-
-            // dd($emp_document_path);
-            if (!File::isDirectory($emp_selfiedir_path))
-                File::makeDirectory($emp_selfiedir_path, 0777, true, true);
-
-
-            $selfieFileEncoded  =  $selfie_checkin;
-
-            $fileName = $attendanceCheckin->id . '_checkin.png';
-
-            \File::put($emp_selfiedir_path . $fileName, base64_decode($selfieFileEncoded));
-
-            $attendanceCheckin->selfie_checkin = $fileName;
         }
 
-        $attendanceCheckin->save();
+        // $checked = $check_in;
+        if ($checked == 'true') {
+
+            //Check if the user already checked-out.
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'));
+
+            if($attendance->exists())
+            {
+                return response()->json([
+                    'status'=> 'failure',
+                    'message' => 'You have already checked-out for the day',
+                    'time' => ""
+                ]);
+            }
 
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Check-in success',
-            'data'   => ''
-        ]);
-    }
+            $attendance = new VmtEmployeeAttendance;
+            $attendance->user_id = auth()->user()->id;
+            $attendance->date = date('Y-m-d');
+            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+            $attendance->checkin_time = $currentTime;
+            $attendance->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
+            $attendance->attendance_mode_checkin = "web";
+            $attendance->save();
+
+            //Check whether if its LC/EG
+            // $regularization_type = checkRegularizationType($currentTime, "check-in");
+            // $isSent = null;
+            // $user_mail = VmtEmployeeOfficeDetails::where('user_id',$attendance->user_id)->first()->officical_mail;
+
+            //Send mail if its LC
+            // if( !empty($regularization_type) &&  $regularization_type == "LC")
+            // {
+               // dd("adsf");
+                // $VmtGeneralInfo = VmtGeneralInfo::first();
+                // $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                // $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
+                // dd($emp_avatar);
+                // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
+                //     auth::user()->name,
+                //     auth::user()->user_code,
+                //     Carbon::parse($attendance->date)->format('M jS, Y'),
+                //     Carbon::parse($currentTime)->format('h:i:s A'),
+                //     $image_view,
+                //     $emp_avatar,
+                //     request()->getSchemeAndHttpHost(),
+                    // Carbon::parse($leave_request_date)->format('M jS Y'),
+                //     $regularization_type
+                // ));
+          //  }
+
+
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'You have successfully checkedin!',
+                'time' => $attendance->checkin_time,
+               // 'regularization_type' => $regularization_type,
+               // 'regularization_mail_sent' => $isSent ? "True" : $isSent
+            ]);
+        } else {
+            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                            ->where('date', date('Y-m-d'))
+                            ->first();
+
+            //dd($attendance);
+            //$attendance->date = date('Y-m-d');
+            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+            $attendance->checkout_time = $currentTime;
+            $attendance->attendance_mode_checkout = "web";
+            $attendance->save();
+
+            //Get the time diff
+            $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('date', date('Y-m-d'))
+                        ->first();
+
+            $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
+
+            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
+
+            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+
+               // dd($effective_hours);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'You have successfully checked out!',
+                'time' => $attendance->checkout_time,
+                'effective_hours' => $effective_hours,
+            ]);
+        }
+
+        }
+
+
 
     public function fetchAttendanceDailyReport_PerMonth($user_code, $year, $month)
     {
-
+        try{
         //Get the user_code
         $user_id = User::where('user_code', $user_code)->first()->id;
 
@@ -337,6 +374,8 @@ class VmtDashboardService{
         $startOfMonth = $monthDateObj->startOfMonth(); //->format('Y-m-d');
         $endOfMonth   = $monthDateObj->endOfMonth(); //->format('Y-m-d');
 
+        // dd($endOfMonth);
+
 
         if ($currentDate->lte($endOfMonth)) {
             $lastAttendanceDate  = $currentDate; //->format('Y-m-d');
@@ -344,9 +383,10 @@ class VmtDashboardService{
             $lastAttendanceDate  = $endOfMonth; //->format('Y-m-d');
         }
 
+
+
         $totalDays  = $lastAttendanceDate->format('d');
         $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
-
 
 
         // attendance details from vmt_staff_attenndance_device table
@@ -386,7 +426,12 @@ class VmtDashboardService{
                     );
                 }
             }
+
+                // echo $i;
+
+
         } //for
+        // dd();
 
 
 
@@ -406,7 +451,8 @@ class VmtDashboardService{
 
         $days_count = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
-        for ($i = 1; $i <= $days_count; $i++) {
+
+        for ($i = 1; $i <= $totalDays; $i++) {
             $date = "";
 
             if ($i < 10)
@@ -631,29 +677,46 @@ class VmtDashboardService{
             }
         } //for each
 
-        return ($attendanceResponseArray);
+        // return ($attendanceResponseArray);
 
-    //     $res= array();
-    //     $count =0;
-    //     $count1=0;
-    //     $count2 = 0;
-    //     foreach($attendanceResponseArray as $attendancedash){
 
-    //          if($attendancedash['isAbsent']){
-    //           $count++;
-    //          }
-    //          if(!$attendancedash['isAbsent']){
-    //             $count1++;
-    //          }
-    //          if($attendancedash['absent_status'] == "Not Applied"){
-    //             $count2++;
-    //          }
-    //     }
-    //    $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
+        $res= array();
+        $count =0;
+        $count1=0;
+        $count2 = 0;
 
-    //     array_push($res, $current_mnth);
+        foreach($attendanceResponseArray as $attendancedash){
 
-    //      return $res;
+             if($attendancedash['isAbsent']){
+              $count++;
+             }
+             if(!$attendancedash['isAbsent']){
+                $count1++;
+             }
+             if($attendancedash['absent_status'] == "Not Applied"){
+                $count2++;
+             }
+        }
+       $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
+
+        array_push($res, $current_mnth);
+
+        return response()->json([
+            "status" => "success",
+            "message" => "",
+            "data" =>$res,
+        ]);
+    }
+    catch(\Exception $e){
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch attenance report per_month",
+            "data" => $e,
+        ]);
+
+    }
+
 
 
 
@@ -692,7 +755,7 @@ class VmtDashboardService{
                 $startDate = Carbon::parse($single_leave_details->start_date)->subDay();
                 $endDate = Carbon::parse($single_leave_details->end_date);
                 $currentDate =  Carbon::parse($attendance_date);
-                echo $currentDate;
+                // echo $currentDate;
                 // dd($startDate.'-----'.$currentDate.'------------'.$endDate.'-----');
                 if ($currentDate->gt($startDate) && $currentDate->lte($endDate)) {
 
@@ -979,7 +1042,7 @@ class VmtDashboardService{
         return $query_emp_attendanceDetails;
     }
 
-    public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period){
+    public function getAllNewDashboardDetails($user_id, $start_time_period, $end_time_period , $year , $month){
 
         $user_code = auth()->user()->user_code;
 
@@ -987,12 +1050,14 @@ class VmtDashboardService{
             $getAllEvent = $this->getAllEventsDashboard();
             $getAllNotification =  $this->getNotifications($user_code);
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
+            $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
             return response()->json([
                 [
                     "all_events"=>$getAllEvent,
                     "all_notification" => $getAllNotification,
                     "leave_balance_per_month"=>$getEmpLeaveBalance,
+                    "attenance_report_permonth"=>$getAttenanceReportpermonth
                     // "Leave-report"=>$simma3
                 ]
             ]);

@@ -46,6 +46,7 @@
     </div>
     </div>
 
+    
 
 </template>
 
@@ -54,5 +55,15 @@
 import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
 import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
 import Events from './events/events.vue'
+import { useMainDashboardStore } from './stores/dashboard_service'
+import { onMounted } from 'vue'
+import { Service } from '../Service/Service'
+
+const useDashboard = useMainDashboardStore()
+
+onMounted(()=>{
+    useDashboard.getMainDashboardSource()
+    Service()
+})
 
 </script>

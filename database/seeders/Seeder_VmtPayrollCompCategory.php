@@ -21,6 +21,8 @@ class Seeder_VmtPayrollCompCategory extends Seeder
         DB::table('vmt_payroll_comp_category')->insert([
             ['id'=>'1','name'=>'earnings'],
             ['id'=>'2','name'=>'deduction'],
+            ['id'=>'3','name'=>'adhoc'],
+            ['id'=>'4','name'=>'reimbursement'],
         ]);
     }
 }

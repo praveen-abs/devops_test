@@ -18,16 +18,17 @@
     </div> -->
     <div class="w-full">
         <div>
-            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissiom</h4>
+            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissions</h4>
         </div>
         <div class="p-4 my-4 card">
             <div class="card-body">
-                <p class="text-lg font-semibold text-gray-700">Here You Can Manage The Employees Roles And Premission Given To Them.</p>
+                <p class="text-lg font-semibold text-gray-700 fs-4">Here you can manage the Employees Roles and Permissions</p>
                 <div class="flex my-6">
                     <InputText placeholder="Search...."  class="w-4 h-10"/>
                     <!-- Creating New Job Roles dailog-->
                     <button class="h-10 mx-6 btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
                 </div>
+
                 <div>
                     <DataTable>
                         <Column field="product" header="Role"></Column>
@@ -63,7 +64,7 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-            <Tree v-model:selectionKeys="selectedKey" :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
+            <Tree :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
             </Tree>
         </div>
         <template #footer>
@@ -75,17 +76,37 @@
 
         </template>
     </Dialog>
-    {{ selectedKey }}
+     <!-- {{ selectedKey }} -->
+    <!-- {{ rolespermission.allpermission }} -->
+    <!-- {{ allpermission.data }} -->
 </template>
 
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { UseRolePermissionServie } from "./roles_permission_service";
+import axios from 'axios';
+
+const rolespermission = UseRolePermissionServie()
 
 const lding = ref(true)
 
 const selectedKey = ref()
 const addNewroleDailog = ref(false)
+
+const canShowLoadingScreen = ref(true);
+const canShowCreateRole_Dialog = ref(false);
+const canShowManageRoles_Dialog = ref(false);
+
+const allpermission = ref();
+
+axios.get('/getAllPermissions').then(res => {
+            allpermission.value = res.data;
+            console.log(allpermission);
+        });
+
+
+
 const nodes = ref(
     [
         {

@@ -9,15 +9,12 @@
     use App\Models\VmtGeneralInfo;
     use App\Models\VmtClientMaster;
     use App\Models\User;
-    use App\Models\VmtEmpPaygroup;
-    use App\Models\VmtPaygroupComps;
-    use App\Models\VmtPayrollComponents;
-    use App\Models\VmtEmployeeOfficeDetails;
 
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
     use App\Models\VmtEmployeePayslipV2;
     use App\Models\VmtPMS_KPIFormModel;
+    use App\Models\VmtLoanInterestSettings;
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;
@@ -206,9 +203,9 @@
 //                                             ->where('users.is_ssa','0')
 //                                             ->where('users.active','1')
 //                                             ->get(['payroll_date','users.name','users.id']);
-// $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
-//         for($i=0; $i < count($payroll_month); $i++)
-//         {
+$payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
+        for($i=0; $i < count($payroll_month); $i++)
+        {
 
 //             $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
 //         }
@@ -236,7 +233,9 @@ $emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
                  VmtEmpPaygroup::destroy( $data);
                  VmtPaygroupComps::destroy( $data1);
 
+dd($payroll_available_months);
     ?>
 
 
 @endsection
+

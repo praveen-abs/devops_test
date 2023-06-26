@@ -1,9 +1,8 @@
 <template>
-  <Calendar :inline="true" :showWeek="true" style="300px"/>
+    <div class="border-0 card w-100 box-shadow-md">
+        <Calendar :inline="true" :showWeek="true" style="300px" />
+    </div>
 </template>
-
-
-
 
 <style>
 label {
@@ -66,6 +65,7 @@ label {
     color: #ffffff;
     border-color: none;
 }
+
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 0.2rem 0.55rem;
     margin-right: 0.5rem;
@@ -73,6 +73,7 @@ label {
     color: #495057;
     border-radius: 16px;
 }
+
 .p-checkbox .p-checkbox-box.p-highlight {
     border-color: #3B82F6;
     background: #103674;
@@ -91,11 +92,13 @@ label {
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
 }
+
 .form-control:focus {
     border-color: #002f56;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 5%);
 }
+
 .p-chips-multiple-container {
     margin: 0;
     padding: 0;
@@ -107,6 +110,7 @@ label {
     flex-wrap: wrap;
     width: 100%;
 }
+
 /*.p-dialog.p-component:before {
     content: "";
     background: #002f56;
@@ -114,7 +118,4 @@ label {
     border-radius: 50px 50px 0px;
     position: relative;
     top: 3px;
-}*/
-
-
-</style>
+}*/</style>
