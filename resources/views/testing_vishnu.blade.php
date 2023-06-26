@@ -223,7 +223,7 @@
 
 // $paygroup_components =VmtPaygroupComps::where('paygroup_id',1)->get(['id'])->destroy;
 // VmtPaygroupComps::destroy($paygroup_components);
-$paygroup_comps =VmtPaygroupComps::where('paygroup_id',41);
+$paygroup_comps =VmtPaygroupComps::where('paygroup_id','41');
 
 if(!empty($paygroup_comps)){
 $data1 =$paygroup_comps->get(['id']);
