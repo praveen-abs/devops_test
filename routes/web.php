@@ -353,6 +353,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/deleteRole', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'deleteRole'])->name('deleteRole');
     Route::get('/createPermission', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'createPermission'])->name('createPermission');
     Route::get('/assignRoleToUsers', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'assignRoleToUsers'])->name('assignRoleToUsers');
+    Route::get('/removeRoleToUsers', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'removeRoleToUsers'])->name('removeRoleToUsers');
 
 
     //360 Review Module Routing
