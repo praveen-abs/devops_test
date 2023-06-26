@@ -49,10 +49,48 @@
 
                                     </div>
                                 </div>
+                                <p class="clr mt-4 mb-4 text-lg fw-normal">The tax are detemined based on an employee's Half Yearly Gross Salary. </p>
+
+                                <div class="card border pl-3 pr-3">
+
+                                    <div class="row pt-2 clrs " style="">
+                                        <div class="col d-flex justify-content-center">
+                                            <h1 class="fw-normal">Start Range( <span>&#8377;</span> )</h1>
+                                        </div>
+                                        <div class="col d-flex justify-content-center">
+                                            <h1 class="fw-normal">End Range( <span>&#8377;</span> )</h1>
+
+                                        </div>
+                                        <div class="col d-flex justify-content-center">
+                                            <h1 class="fw-normal">Half yearly Tax Amount( <span>&#8377;</span> )</h1>
+                                        </div>
+                                    </div>
+
+                                    <div class="row pt-2">
+                                        <div class="col d-flex justify-content-center">
+                                            <InputText type="text" v-model="value" class="w-full" style="height: 2.5rem;" placeholder="From" />
+
+                                        </div>
+                                        <div class="col-1 d-flex justify-content-center align-items-center " ><span>-</span></div>
+                                        <div class="col d-flex justify-content-center">
+                                            <InputText type="text" v-model="value" class="w-full" style="height: 2.5rem;" placeholder="To" />
+                                        </div>
+                                        <div class="col-1 d-flex justify-content-center align-items-center " >
+                                            <span>=</span>
+                                        </div>
+                                        <div class="col d-flex justify-content-center">
+                                            <InputText type="text" v-model="value" class="w-full" style="height: 2.5rem;" placeholder="To" />
+                                        </div>
+                                        <div class="col-1 d-flex justify-content-center align-items-center " >
+                                           <button class="p-2 text-danger"><i class="pi pi-minus-circle"></i></button>
+                                           <button><i class="pi pi-plus p-2 text-success"></i></button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
-
                         </Dialog>
-
                     </div>
                    </template>
             </div>
@@ -80,6 +118,16 @@ import { ref } from "vue";
 
 const visible = ref(false);
 </script>
+
+<style>
+.clr{
+    color:  #003056;
+}
+.clrs{
+    background: #0064b51c;
+
+}
+</style>
 
 {
     <!--

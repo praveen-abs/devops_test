@@ -17,6 +17,7 @@ class VmtReimbursementController extends Controller
         return $serviceVmtReimbursementsService->saveReimbursementData_LocalConveyance( user_code: $request->user_code,
                                                                                         date : $request->date,
                                                                                         reimbursement_type: $request->reimbursement_type,
+                                                                                        entry_mode: $request->entry_mode,
                                                                                         vehicle_type: $request->vehicle_type,
                                                                                         from:  $request->from,
                                                                                         to: $request->to,
