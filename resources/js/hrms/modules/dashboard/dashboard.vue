@@ -1,5 +1,4 @@
 <template>
-
     <div class="dashboard-wrapper mt-30">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-0 card-body">
@@ -46,8 +45,8 @@
     </div>
     </div>
 
-    
-
+    <!-- <VueSidebarMenuAkahon :isMenuOpen="false" menuTitle="Welcome" :menuItems="mi" profileImg="" profileName="shelly"
+        profileRole="Developer"  /> -->
 </template>
 
 
@@ -56,12 +55,21 @@ import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
 import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
 import Events from './events/events.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Service } from '../Service/Service'
+// import VueSidebarMenuAkahon from "vue-sidebar-menu-akahon";
 
 const useDashboard = useMainDashboardStore()
 
-onMounted(()=>{
+// const mi = ref( [
+//         {
+//           name: "Dashboard",
+//           tooltip: "Dashboard",
+//           icon: "bx-grid-alt",
+//         },
+//     ])
+
+onMounted(() => {
     useDashboard.getMainDashboardSource()
     Service()
 })

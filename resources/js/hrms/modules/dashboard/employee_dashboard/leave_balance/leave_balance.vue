@@ -1,8 +1,8 @@
 <template>
 <div style="display: none;">
   <LeaveApply />
-  </div>  
-  <div class="border-0 leave-balance-wrapper card w-100 box-shadow-md h-100">
+  </div>
+  <div class="border-0 leave-balance-wrapper card w-100 box-shadow-md h-100 overflow-x-hidden overflow-y-auto h-2">
     <div class="card-body">
       <div class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary" id="">
         <span class="text-primary font-semibold fs-6">Leave Balance</span>

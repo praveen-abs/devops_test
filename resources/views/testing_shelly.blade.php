@@ -13,7 +13,10 @@
 <!-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
 <div id="vjs_attendance_master"></div> -->
 
-@vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
-<div id="PayRun"></div>
+<!-- @vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
+<div id="PayRun"></div> -->
+
+@vite('resources/js/hrms/modules/dashboard/dashboard.js')
+<div id="Dashboard"></div>
 </html>
 @endsection

@@ -36,7 +36,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
     })
 
-    /* Employee Welcome Card 
+    /* Employee Welcome Card
         Employee Check in and out time
     */
 
@@ -107,7 +107,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
         allNotificationSource,
 
-        // Attendance report Per Month 
+        // Attendance report Per Month
 
         attenanceReportPerMonth
 
