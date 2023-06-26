@@ -300,28 +300,20 @@ class VmtRolesPermissionsService
 
                           array_push($temp_ar['accordian'],$single_details);
 
-                               $simma['role']  =  $single_roles['roles_name'];
-                               $simma['description']  =  $single_roles['description'];
-                               $simma['assigned_emp']  = Role::join('model_has_roles','model_has_roles.role_id','=','roles.id')
-                                                             ->join('users','users.id','=','model_has_roles.model_id')->where('roles.name',$single_roles['roles_name'])->get()->count();
-
                     array_push($temp_ac, $temp_ar);
 
                 }
             }
-
-
             //dd($temp_ac);
-            if(!empty($temp_ac)){
-                array_push(  $temp_ar,$temp_ac);
+           if(!empty($temp_ac)){
+                // array_push(  $temp_ar,$temp_ac);
                 array_push($res, $temp_ar);
             }
-
            // $temp_ar['acccc'] = $temp_ac;
            // dd($temp_ar);
-
             unset($temp_ac);
             unset($temp_ar);
+
         }
            return ($res);
         // $res = array();
