@@ -1,4 +1,26 @@
 <template>
+    <Dialog
+      header="Header"
+      v-model:visible="canShowLoadingScreen"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }"
+      :modal="true"
+      :closable="false"
+      :closeOnEscape="false"
+    >
+      <template #header>
+        <ProgressSpinner
+          style="width: 50px; height: 50px"
+          strokeWidth="8"
+          fill="var(--surface-ground)"
+          animationDuration="2s"
+          aria-label="Custom ProgressSpinner"
+        />
+      </template>
+      <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+      </template>
+    </Dialog>
 
     <div class="dashboard-wrapper mt-30">
         <div class="mb-2 card left-line">
@@ -46,7 +68,7 @@
     </div>
     </div>
 
-    
+
 
 </template>
 
@@ -56,14 +78,19 @@ import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
 import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
 import Events from './events/events.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Service } from '../Service/Service'
 
-const useDashboard = useMainDashboardStore()
+const useDashboard = useMainDashboardStore();
+const canShowLoadingScreen = ref();
 
-onMounted(()=>{
-    useDashboard.getMainDashboardSource()
-    Service()
+onMounted(async ()=>{
+    canShowLoadingScreen.value = true;
+    await useDashboard.getMainDashboardData();
+   // await useDashboard.getAttendanceStatus();
+    Service();
+    canShowLoadingScreen.value = false;
+
 })
 
 </script>

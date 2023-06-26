@@ -1,6 +1,6 @@
 <template>
   <div class="border-0 notification-wrapper card w-100 box-shadow-md h-100">
-    <div class="card-body">
+    <div class="card-body overflow-auto h-10 w-100">
       <div class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary" id="">
         <span class="text-primary font-semibold fs-6">Notifications</span>
           <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="pi pi-bell p-overlay-badge" style="font-size: 1.5rem" />
@@ -11,7 +11,7 @@
         <!-- </i> -->
       </div>
       <div class="contents">
-        <div class="p-1 my-4 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100 " 
+        <div class="p-1 my-4 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100 "
         v-for="notification in useDashboard.allNotificationSource" :key="notification.id">
           <div class="p-2 card-body">
             <div class="notify-content">

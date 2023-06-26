@@ -34,7 +34,7 @@ const responsiveOptions = ref([
 
 const getHolidays = async () => {
 await axios.get('/holiday/master-page').then(res => {
-    console.log(res.data);
+    //console.log(res.data);
     holidays.value = res.data
 })
 }

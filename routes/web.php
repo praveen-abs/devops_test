@@ -65,7 +65,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/db/getAllEmployees', [App\Http\Controllers\VmtDBDataController::class, 'getAllEmployees']);
 
-    Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
+    Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'showMainDashboardPage'])->name('main-dashboard');
+    Route::get('/old_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'index']);
 
     //404 error page
     Route::get('/page-not-found', function () {
@@ -151,6 +152,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAttendanceRegularization'])->name('attendance-req-regularization');
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
+    Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
 
     //Pms Form download
     Route::get('/reports-pmsforms-page', [App\Http\Controllers\Reports\VmtPMSReportsController::class, 'showPMSFormsDownloadPage'])->name('reports-pmsforms-page');

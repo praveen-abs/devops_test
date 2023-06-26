@@ -129,7 +129,7 @@ export default defineConfig({
                 'resources/js/hrms/modules/roles_permission/RolesPermission.js',
 
                 // super Admin screen
-              'resources\js\hrms\modules\approvals\roles_permission\RolesAndPermission.js',
+              'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
 
 
                 //PMS forms management
