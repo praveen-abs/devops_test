@@ -266,6 +266,7 @@ class VmtRolesPermissionsService {
                     ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
                     ->get(
                         [
+                        'roles.id as roles_id',
                         'roles.name as roles_name',
                         'vmt_roles_description.description',
                         'users.name',
@@ -283,6 +284,7 @@ class VmtRolesPermissionsService {
 
                 if(!array_key_exists($single_roles["roles_name"], $role_details)) {
 
+                               $simma['roles_id']  =   $single_roles["roles_id"];
                                $simma['role']  =  $single_roles['roles_name'];
                                $simma['description']  =  $single_roles['description'];
                                $simma['assigned_emp']  = Role::join('model_has_roles','model_has_roles.role_id','=','roles.id')

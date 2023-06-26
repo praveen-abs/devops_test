@@ -79,7 +79,7 @@ export default defineConfig({
 
                 //Payroll
                 'resources/js/hrms/modules/manage_payslips/ManagePayslips.js',
-                // Payrun 
+                // Payrun
                 'resources/js/hrms/modules/payroll/payRun/payRun.js',
 
                 // payroll setup
@@ -127,6 +127,9 @@ export default defineConfig({
                 // Roles and permission
 
                 'resources/js/hrms/modules/roles_permission/RolesPermission.js',
+
+                // super Admin screen
+              'resources\js\hrms\modules\approvals\roles_permission\RolesAndPermission.js',
 
 
                 //PMS forms management
