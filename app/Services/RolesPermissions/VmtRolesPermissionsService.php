@@ -235,45 +235,126 @@ class VmtRolesPermissionsService {
     /*
         Get the Role details such as description, title, permissions
     */
-    public function getRoleDetails($role_name){
+    public function getRoleDetails(){
 
-        $validator = Validator::make(
-            $data = [
-                'role_name' => $role_name
-            ],
-            $rules = [
-                'role_name' => 'required|exists:roles,name'
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
+        // $validator = Validator::make(
+        //     $data = [
+        //         'role_name' => $role_name
+        //     ],
+        //     $rules = [
+        //         'role_name' => 'required|exists:roles,name'
+        //     ],
+        //     $messages = [
+        //         'required' => 'Field :attribute is missing',
+        //         'exists' => 'Field :attribute is invalid',
 
-            ]
-        );
+        //     ]
+        // );
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'failure',
-                'message' => $validator->errors()->all()
-            ]);
-        }
-        try{
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'status' => 'failure',
+        //         'message' => $validator->errors()->all()
+        //     ]);
+        // }
+        // try{
 
-            $role_details = Role::findByName($role_name)->permissions;
+        $role_details  = Role::join('vmt_roles_description','vmt_roles_description.roles_id','=','roles.id')
+                    ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
+                    ->join('users','users.id','=','model_has_roles.model_id')
+                    ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                    ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
+                    ->get(
+                        [
+                        'roles.name as roles_name',
+                        'vmt_roles_description.description',
+                        'users.name',
+                        'users.id as user_id',
+                        'users.user_code',
+                        'vmt_department.name as department_name'
 
-            return response()->json([
-                "status" => "success",
-                "message" => "",
-                "data" =>$role_details,
-                ]);
-        }
-        catch (\Exception $e) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "",
-                "data" => $e,
-            ]);
-        }
+                    ]
+                    )->toArray();
+
+                // return $role_details;
+
+                    $res = array();
+                    foreach($role_details as $single_roles){
+
+                if(!array_key_exists($single_roles["roles_name"], $role_details)) {
+
+                               $simma['role']  =  $single_roles['roles_name'];
+                               $simma['description']  =  $single_roles['description'];
+                               $simma['assigned_emp']  = Role::join('model_has_roles','model_has_roles.role_id','=','roles.id')
+                                                             ->join('users','users.id','=','model_has_roles.model_id')->where('roles.name',$single_roles['roles_name'])->get()->count();
+
+                               $simma['assigned_privileged'] = Role::join('role_has_permissions','role_has_permissions.role_id','=','roles.id')
+                               ->leftjoin('permissions','permissions.id','=','role_has_permissions.permission_id')->where('roles.name',$single_roles['roles_name'])->get()->count();
+
+                               $simma['accordian'] =  [$single_roles];
+                               array_push($res,$simma);
+                    }
+                }
+
+                return ($res);
+
+                $mass = array();
+                $bro = array();
+                $count = 0;
+                foreach($res as $res_details){
+
+                    // dd($res_details['accordian']);
+
+                            // $simma1['assigned_emp'] = $res_details['assigned_emp'];
+                            // $simma1['assigned_privileged'] = $res_details['assigned_privileged'];
+
+                            array_push($mass,$res_details['accordian']);
+
+                            $simma1['roles'] = $res_details['role'];
+                            $simma1['description'] = $res_details['description'];
+                            $simma1['accordian'] = $mass;
+
+
+                }
+                array_push($bro,$simma1);
+                return ($bro);
+
+
+
+
+                // $count = 0;
+                //     foreach($res as $single_res){
+
+                //         if(!array_key_exists($single_res["role"], $res)) {
+
+                //             $res[$single_res["role"]]=array();
+                //             array_push($res[$single_res["role"]],$single_res);
+                //     }else{
+
+                //         array_push($res[$single_res["role"]],$single_res);
+                //     }
+
+                //     unset($res[$count]);
+
+                //     $count++;
+
+
+                // }
+
+                // return $res;
+
+
+
+
+
+        // }
+        // catch (\Exception $e) {
+        //     return response()->json([
+        //         "status" => "failure",
+        //         "message" => "",
+        //         "data" => $e,
+        //     ]);
+        // }
 
 
     }
@@ -345,6 +426,9 @@ class VmtRolesPermissionsService {
 
     */
     public function updatePermissions_ForGivenRole(){
+
+
+
 
     }
 

@@ -52,7 +52,7 @@ class VmtRolesPermissionsController extends Controller
     public function getRoleDetails(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
         // $request->role_name = "superadmin";
-        return $serviceVmtRolesPermissionsService->getRoleDetails($request->role_name);
+        return $serviceVmtRolesPermissionsService->getRoleDetails();
     }
 
     /*
