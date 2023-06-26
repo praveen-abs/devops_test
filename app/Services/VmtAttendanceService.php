@@ -1617,13 +1617,13 @@ class VmtAttendanceService
 
                 if(empty($query_response->attendance_mode_checkin)){
 
-                    $query_response->checkin_time =date("H:i:s", strtotime($attendanceCheckIn->check_in_time));
-                    $query_response->attendance_mode_checkin ='biometric';
+                    $query_response->checkin_time =  empty($attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($attendanceCheckIn->check_in_time));
+                    $query_response->attendance_mode_checkin = empty($attendanceCheckIn->check_in_time) ? null : 'biometric';
 
                 }else if(empty($query_response->attendance_mode_checkout)){
 
-                    $query_response->checkout_time =date("H:i:s", strtotime($attendanceCheckOut->check_out_time));
-                    $query_response->attendance_mode_checkout = 'biometric';
+                    $query_response->checkout_time = empty($attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($attendanceCheckOut->check_out_time));
+                    $query_response->attendance_mode_checkout = empty($attendanceCheckOut->check_out_time) ? null : 'biometric';
                 }
                 $response =$query_response;
             }
@@ -1639,7 +1639,8 @@ class VmtAttendanceService
     public function getLastAttendanceStatus($user_code)
     {
 
-        $query_response = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
+        //Web/mobile attendance
+        $query_basic_att = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
             ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_attendance.vmt_employee_workshift_id')
             ->where('users.user_code', $user_code)
             ->orderBy('vmt_employee_attendance.date', 'desc')
@@ -1659,8 +1660,11 @@ class VmtAttendanceService
 
             ]);
 
+        // Biometric
 
-        return $query_response;
+        //Compare which one is recent
+
+        return $query_basic_att;
     }
 
 
