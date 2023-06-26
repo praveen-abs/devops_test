@@ -797,7 +797,7 @@ class VmtPayrollComponentsService{
                     "message" => "No component is present ",
                 ]);
                }
-    
+
             return response()->json($response);
         }
         catch(\Exception $e){
@@ -816,7 +816,7 @@ class VmtPayrollComponentsService{
 
     public function assignComponents_to_Paygroup($sal_components,$paygroup_id){
         try{
-          
+
             $paygroup_comps =VmtPaygroupComps::where('paygroup_id',$paygroup_id);
             if(!empty($paygroup_comps)){
                 $data =$paygroup_comps->get(['id']);
@@ -907,9 +907,9 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
         }
 
         try{
-           
+
             $paygroup_components =VmtPaygroup::where('id',$paygroup_id)->first();
-            
+
             if(!empty($paygroup_components)){
                 $emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',$paygroup_components->id)->get(['id']);
                 $paygroup_comps =VmtPaygroupComps::where('paygroup_id',$paygroup_components->id)->get(['id']);
@@ -917,7 +917,7 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
                 $delete_assign_emp_comp_data=  VmtEmpPaygroup::destroy($emp_paygroup_components);
                 $delete_assign_comp_data=VmtPaygroupComps::destroy($paygroup_comps);
                  $paygroup_components->delete();
-            
+
                 return response()->json([
                     "status" => "success",
                     "message" => "Component deleted successfully",
