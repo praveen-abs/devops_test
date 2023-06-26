@@ -259,21 +259,23 @@ class VmtRolesPermissionsService
         // }
         // try{
 
-        $role_details = Role::join('vmt_roles_description', 'vmt_roles_description.roles_id', '=', 'roles.id')
-            ->join('model_has_roles', 'model_has_roles.role_id', '=', 'roles.id')
-            ->join('users', 'users.id', '=', 'model_has_roles.model_id')
-            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-            ->get(
-                [
-                    'roles.name as roles_name',
-                    'vmt_roles_description.description',
-                    'users.name',
-                    'users.id as user_id',
-                    'users.user_code',
-                    'vmt_department.name as department_name'
-                ]
-            )->toArray();
+        $role_details  = Role::join('vmt_roles_description','vmt_roles_description.roles_id','=','roles.id')
+                    ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
+                    ->join('users','users.id','=','model_has_roles.model_id')
+                    ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                    ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
+                    ->get(
+                        [
+                        'roles.id as roles_id',
+                        'roles.name as roles_name',
+                        'vmt_roles_description.description',
+                        'users.name',
+                        'users.id as user_id',
+                        'users.user_code',
+                        'vmt_department.name as department_name'
+
+                    ]
+                    )->toArray();
 
         // return $role_details;
         $all_roles = Role::join('vmt_roles_description', 'vmt_roles_description.roles_id', '=', 'roles.id')->get(['roles.name', 'vmt_roles_description.description']);
@@ -298,6 +300,10 @@ class VmtRolesPermissionsService
 
                           array_push($temp_ar['accordian'],$single_details);
 
+                               $simma['role']  =  $single_roles['roles_name'];
+                               $simma['description']  =  $single_roles['description'];
+                               $simma['assigned_emp']  = Role::join('model_has_roles','model_has_roles.role_id','=','roles.id')
+                                                             ->join('users','users.id','=','model_has_roles.model_id')->where('roles.name',$single_roles['roles_name'])->get()->count();
 
                     array_push($temp_ac, $temp_ar);
 

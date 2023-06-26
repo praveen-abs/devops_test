@@ -42,34 +42,31 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const sa = reactive({
         ymi:'',
         ra:'',
+        mxe:'',
+        repdate:'',
         reason:'',
+        isEligibleEmp:'',
     })
 
 
     const fetchSalaryAdvance = () => {
-
-        // canShowLoading.value = true
-        console.log(sa);
-        console.log("fetching SA");
-
-        axios.get('http://localhost:3000/salary').then(res=>{
+        canShowLoading.value = true
+        axios.get('/showEmployeeview').then(res=>{
             salaryAdvanceEmployeeData.value = res.data
-            console.log(res.data);
-
+            sa.ymi = res.data.your_monthly_income
+            sa.mxe = res.data.max_eligible_amount
+            sa.repdate = res.data.Repayment_date
+            sa.isEligibleEmp = res.data.eligible
         }).finally(()=>{
             canShowLoading.value = false
         })
     }
 
     const saveSalaryAdvance = () => {
-
-        // canShowLoading.value = true
-        console.log(sa);
-        console.log("Saving SA");
-
-        axios.post('http://localhost:3000/salary',sa).finally(()=>{
+        dailogSalaryAdvance.value = false
+        canShowLoading.value = true
+        axios.post('/EmpSaveSalaryAmt',sa).finally(()=>{
             canShowLoading.value = false
-            fetchSalaryAdvance()
         })
     }
 

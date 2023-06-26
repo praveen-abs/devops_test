@@ -361,6 +361,104 @@ class VmtMainDashboardController extends Controller
 
     }
 
+    public function showMainDashboardPage(Request $request){
+
+        if (auth()->user()->active == 0) {
+
+            if (auth()->user()->is_onboarded == 0) {
+
+                if (auth()->user()->onboard_type == 'quick') {
+
+                    //User record already exists. So fetch it and show in normal onboard form
+                    $encr_user_id = Crypt::encrypt(auth()->user()->id);
+
+                    return redirect()->route('employee-onboarding-v2', ['uid' => $encr_user_id]);
+
+                } else
+                    if (auth()->user()->onboard_type == 'bulk') {
+
+                        return redirect()->route('vmt-documents-route');
+                    } else
+                        if (auth()->user()->onboard_type == 'normal') {
+                            //This wont happen since HR is onboarding and so it should not come. But wrote for safety
+                            return view('vmt_profile_under_review');
+                        }
+            } else
+                if (auth()->user()->is_onboarded == 1) {
+                    //Check all the docs are approved or not
+                    $all_document_approved = VmtEmployeeDocuments::where('user_id', auth()->user()->id);
+
+                    if ($all_document_approved->exists()) {
+
+                        $all_document_approval_count = $all_document_approved->where('Status', 'Rejected')->count();
+                    } else {
+
+                        $all_document_approval_count = '0';
+                    }
+                    //check the login epolyee is active or not
+                    $active_status = User::where('id', auth()->user()->id)->first()->active;
+
+                    if ($all_document_approval_count > '0' && $active_status == '0') {
+                        // dd("dfgsdfg");
+                        return view('vmt_documents');
+                    } else {
+                        // Profile is not activated . Show a message
+                        return view('vmt_profile_under_review');
+                    }
+
+                }
+
+        } else
+            if (auth()->user()->active == -1) {
+                //For employees who left the company.Show account terminated page.
+                return view('vmt_profile_terminated');
+
+            }
+
+
+        ////Update the session vars for sub-clients selection
+        if (Str::contains(currentLoggedInUserRole(), ["Super Admin", "Admin", "HR"])) {
+            //dd(session());
+
+            //Set the session client_id to default client if not set
+            if (!$request->session()->has('client_id')) {
+                $this->updateSessionVariables(null);
+            }
+
+        } else
+            if (Str::contains(currentLoggedInUserRole(), ["Manager"])) {
+                if (!$request->session()->has('client_id')) {
+                    //get the employee client_code
+                    $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
+
+                    $this->updateSessionVariables($assigned_client_id);
+                }
+            } else
+                if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
+                    if (!$request->session()->has('client_id')) {
+                        //get the employee client_code
+                        $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
+
+                        $this->updateSessionVariables($assigned_client_id);
+                    }
+                }
+
+        //Promote user to Manager if any employees reporting him
+        $reporteesCount = VmtEmployeeOfficeDetails::where('l1_manager_code', auth()->user()->user_code)->get()->count();
+
+        if ($reporteesCount > 0) {
+            $currentUser = User::find(auth()->user()->id);
+
+            //change only if current user is employee
+            if ($currentUser->org_role == '5')
+                $currentUser->org_role = '4';
+
+            $currentUser->save();
+        }
+
+        return view('vmt_main_dashboard_v2');
+    }
+
     private function updateSessionVariables($client_id)
     {
 
