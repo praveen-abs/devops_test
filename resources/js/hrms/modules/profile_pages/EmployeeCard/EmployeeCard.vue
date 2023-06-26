@@ -27,8 +27,7 @@
                     <div class="mt-4">
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
-                            <div
-                                class="mb-1  px-auto d-flex align-items-center justify-content-center pl-5">
+                            <div class="mb-1  px-auto d-flex align-items-center justify-content-center pl-5">
                                 <h6 class="text-center fw-bold ">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
@@ -91,7 +90,8 @@
                                             <div class="col-md-6 d-flex flex-column ">
                                                 <!-- flex-column -->
                                                 <div class="d-flex justify-items-center  flex-column ">
-                                                    <label for="" class="float-label mb-2 font-semibold text-lg">Upload Documents</label>
+                                                    <label for="" class="float-label mb-2 font-semibold text-lg">Upload
+                                                        Documents</label>
                                                     <div class="d-flex  justify-items-center align-items-center">
                                                         <Toast />
                                                         <label
@@ -289,10 +289,7 @@
         </template>
         <div class="card p-3 d-flex justify-items-center align-items-center"
             style="width: 18rem;margin-left: 150px; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-
-            <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" class=""
-                style="height: 40px;width:140px; ">
-
+                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style="height: 45px;width:140px; object-fit: cover; " >
             <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
                 <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
                     style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
@@ -559,7 +556,7 @@ const saveEmpChangeInfoDetails = () => {
 
     axios.post(url, form).finally(() => {
 
-        canShowLoading.value =false;
+        canShowLoading.value = false;
     })
 
 

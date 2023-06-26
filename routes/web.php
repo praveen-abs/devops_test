@@ -185,7 +185,6 @@ Route::middleware(['auth'])->group(function () {
 
     //Leave Balance fetchEmployeeLeaveBalance
     Route::get('/get-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'getEmployeeLeaveBalance'])->name('getEmployeeLeaveBalance');
-    // Route::get('/fetch-employee-leave-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchEmployeeLeaveBalance'])->name('fetchEmployeeLeaveBalance');
 
     //Leave history pages
 
@@ -293,8 +292,9 @@ Route::middleware(['auth'])->group(function () {
     //update user details with proof
 
     Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
-    Route::get('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
+    Route::Post('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
     Route::post('/approvals/EmployeeProof-bulkdocs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'BulkDocumentProofApprovals'])->name('BulkDocumentProofApprovals');
+    Route::post('view/getEmpProfileProofPrivateDoc', [App\Http\Controllers\VmtProfilePagesController::class, 'getEmpProfileProofPrivateDoc'])->name('getEmpProfileProofPrivateDoc');
 
 
     // notifications
@@ -310,15 +310,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/registerNewAccount', function () {
         return view('/auth/register');
     })->name('registerNewAccount');
-
-    Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
-    Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showResetPasswordPage')->name('vmt-resetpassword-page');
-    Route::get('/forgetPassword', 'App\Http\Controllers\Auth\LoginController@showForgetPasswordPage')->name('vmt-forgetpassword-page');
-    Route::post('/send-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@sendPasswordResetLink')->name('vmt-send-passwordresetlink');
-    Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
-
-
-
 
 
     // Route::get('pages-profile-settings', [App\Http\Controllers\HomeController::class, 'showProfilePage'])->name('pages-profile-settings');
@@ -882,7 +873,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/download-private-file', [App\Http\Controllers\VmtTestingController::class, 'downloadPrivateFile'])->name('downloadPrivateFile');
     Route::post('/view-profile-private-file', [App\Http\Controllers\VmtProfilePagesController::class, 'getEmployeePrivateDocumentFile'])->name('viewprofileprivatefile');
     Route::get('/mail-test/appointment-letter', [App\Http\Controllers\VmtTestingController::class, 'mailTest_sendAppointmentLetter'])->name('mailTest_sendAppointmentLetter');
-    Route::get('/getLeaves', [App\Http\Controllers\VmtAttendanceController::class, 'employeeLeaveBalance'])->name('employeeLeaveBalance');
     Route::post('/postLeaves', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'applyLeaveRequest'])->name('applyLeaveRequest');
 
     Route::get('/testinginvestment', [App\Http\Controllers\VmtTestingController::class, 'investmenttesting']);
@@ -924,7 +914,8 @@ Route::get('/testEmployeeDocumentsJoin', [App\Http\Controllers\VmtTestingControl
 Route::post('updatePassword', 'App\Http\Controllers\VmtEmployeeController@updatePassword')->name('vmt-updatepassword');
 Route::get('/resetPassword', 'App\Http\Controllers\Auth\LoginController@showResetPasswordPage')->name('vmt-resetpassword-page');
 Route::get('/forgetPassword', 'App\Http\Controllers\Auth\LoginController@showForgetPasswordPage')->name('vmt-forgetpassword-page');
-Route::post('/send-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@sendPasswordResetLink')->name('vmt-send-passwordresetlink');
+
+Route::post('/send-passwordresetlink', [App\Http\Controllers\Auth\LoginController::class, 'sendPasswordResetLink'])->name('vmt-send-passwordresetlink');
 Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
 
 //

@@ -7,7 +7,10 @@
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
     use App\Models\VmtGeneralInfo;
+    use App\Models\VmtTempEmployeeProofDocuments;
+    use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
+    use App\Mail\ApproveRejectEmpDetails;
     use App\Models\User;
     use Carbon\Carbon;
     use Carbon\Carbon;
@@ -203,71 +206,17 @@
 //                                              ->whereMonth('vmt_payroll.payroll_date',$month)
 //                                             ->where('users.is_ssa','0')
 //                                             ->where('users.active','1')
-//                                             ->get(['payroll_date','users.name','users.id']);
+// //                                             ->get(['payroll_date','users.name','users.id']);
+// $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
+//         for($i=0; $i < count($payroll_month); $i++)
+//         {
 
-                                                                        // "max_loan_amount as max_eligible_amount",
-                                                                        // "loan_amt_interest as interest_rate",
-                                                                        // "deduction_starting_months",
-                                                                        // "max_tenure_months",
-                                                                        $multiple_months=array();
+//             $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
+//         }
+//         $payroll_available_months = array_unique($payroll_month->toArray());
 
-
-                                                                        $user_id=auth()->user()->id;
-        $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
-        $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
-
-
-     $client_data = Users::where('id',auth()->user()->id)->first();
-
-
-
-
-
-            $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
-
-            $loan_setting_count =count($loan_withinterest_setting_data);
-            for($i=0; $i<$loan_setting_count; $i++)
-            {
-            $deduction_months = array();
-
-            for($j=1; $j<=$loan_withinterest_setting_data[$i]->deduction_starting_months; $j++)
-            {
-               $deduction_months[]= Carbon::now()->addMonths($j)->format('Y-m-d');
-            }
-
-            $loan_withinterest_setting_data[$i]->deduction_starting_months = $deduction_months;
-           }
-            //array_push( $loan_withinterest_setting_data,$deduction_starting_months);
-
-dd( $loan_withinterest_setting_data );
-
-
-
-//             $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
-
-//            foreach ($loan_withinterest_setting_data as $key => $singledata) {
-
-// echo ($singledata['deduction_starting_months']);
-//             $deduction_months = array();
-
-//             for($j=1; $<=$singledata['deduction_starting_months']; $i++)
-//             {
-//                $deduction_months[]= Carbon::now()->addMonths($j)->format('Y-m-d');
-//             }
-
-//             $$singledata['deduction_starting_months']= $deduction_months;
-//            }
-//             //array_push( $loan_withinterest_setting_data,$deduction_starting_months);
-
-// dd( $loan_withinterest_setting_data );
-
-
-
-
-
-
-
-           ?>
+//dd($payroll_available_months);
+    ?>
 
 
 @endsection

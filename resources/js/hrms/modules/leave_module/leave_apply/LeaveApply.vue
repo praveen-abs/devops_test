@@ -55,7 +55,7 @@
         <!-- Select leave type Dropdown -->
 
         <div class="row ">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-7 col-sm-12">
                 <div class="mb-3 row">
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-4 col-xl-5 col-xxl-5 mb-md-0">
                         <label for="">Choose Leave Type <span class="text-danger">*</span> </label>
@@ -310,7 +310,7 @@
                             :options="service.leave_data.compensatory_leaves" optionLabel="emp_attendance_date"
                             placeholder="Select worked Date" display="chip" class="w-full md:w-full" :maxSelectedLabels="5"
                             :class="[
-                                        cp$.compensatory_leaves_date.$error ? 'p-invalid' : '',
+                                        cp$.selected_compensatory_leaves.$error ? 'p-invalid' : '',
                                     ]" >
 
 
@@ -324,8 +324,8 @@
                         </template>
                         </MultiSelect>
                         <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
-                        <span v-if="cp$.compensatory_leaves_date.$error" class="font-semibold text-red-400 fs-6">
-                            {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "Compensatory Working Date's "  )}}
+                        <span v-if="cp$.selected_compensatory_leaves.$error" class="font-semibold text-red-400 fs-6">
+                            {{ cp$.selected_compensatory_leaves.required.$message.replace( "Value", "Compensatory Working Date's "  )}}
                         </span>
                     </div>
                     <div class="mb-3 col-md-4 col-sm-12 col-lg-4 col-xl-4 col-xxl-3 mb-md-0 ">
@@ -338,7 +338,7 @@
                                         cp$.compensatory_start_date.$error ? 'p-invalid' : '',
                                     ]" />
                                 <span v-if="cp$.compensatory_start_date.$error" class="font-semibold text-red-400 fs-6">
-                                    {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "Start Date "  )}}
+                                    {{ cp$.compensatory_start_date.required.$message.replace( "Value", "Start Date "  )}}
                                 </span>
                         </div>
                     </div>
@@ -350,7 +350,12 @@
                                 <label for="" class="float-label ">Total Days</label>
                                 <InputText style="width: 60px;text-align: center;margin: auto;"
                                     class="capitalize form-onboard-form form-control textbox " type="text"
-                                    v-model="service.leave_data.compensatory_total_days" readonly />
+                                    v-model="service.leave_data.compensatory_total_days" readonly :class="[
+                                        cp$.compensatory_total_days.$error ? 'p-invalid' : '',
+                                    ]" />
+                                <span v-if="cp$.compensatory_total_days.$error" class="font-semibold text-red-400 fs-6">
+                                    {{ cp$.compensatory_total_days.required.$message.replace( "Value", "Value not lesser than zero" )}}
+                                </span>
 
                             </div>
 
@@ -367,7 +372,7 @@
                                         cp$.compensatory_end_date.$error ? 'p-invalid' : '',
                                     ]" />
                                 <span v-if="cp$.compensatory_end_date.$error" class="font-semibold text-red-400 fs-6">
-                                    {{ cp$.compensatory_leaves_date.required.$message.replace( "Value", "End Date "  )}}
+                                    {{ cp$.compensatory_end_date.required.$message.replace( "Value", "End Date "  )}}
                                 </span>
                         </div>
                     </div>
@@ -426,8 +431,8 @@
             v-if="service.leave_data.leave_reason == ''">
             <li v-if="service.leave_data.leave_reason == ''">Leave Reason</li>
         </Dialog>
-
     </Dialog>
+
 </template>
 
 
@@ -435,16 +440,15 @@
 
 
 
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, inject, onMounted, reactive, ref } from "vue";
 import ABS_loading_spinner from "../../../components/ABS_loading_spinner.vue";
 import axios from "axios";
 import useValidate from '@vuelidate/core'
-import { required, email, minLength, sameAs } from '@vuelidate/validators'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 
 import { useLeaveService } from './leave_apply_service'
 
 const visible = ref(false)
-
 const leave_types = ref()
 
 //get first day of current month
@@ -452,7 +456,6 @@ const leave_types = ref()
 var date = new Date();
 var first_day_of_the_month = new Date(date.getFullYear(), date.getMonth(), 1);
 var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
 
 
 // Check All Varaibles and Events Here
@@ -502,10 +505,19 @@ const reason_rules = computed(() => {
         leave_reason: { required },
     }
 })
+
+const compNegative = (value) =>{
+    if(value < 0){
+        return false
+    }else{
+        return true
+    }
+}
 const compen_day_rules = computed(() => {
     return {
-        compensatory_leaves_date: { required },//This refers to comp days selected in dropdown
+        selected_compensatory_leaves: { required },//This refers to comp days selected in dropdown
         compensatory_start_date: { required },
+        compensatory_total_days: {required, compNegative:helpers.withMessage('days not lesser than zero',compNegative)  },
         compensatory_end_date: { required },
 
     }
