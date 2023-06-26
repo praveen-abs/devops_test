@@ -25,10 +25,7 @@ use App\Exports\DetailedAttendanceExport;
 use App\Exports\BasicAttendanceExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-
-
-
-
+use Ramsey\Uuid\Type\Integer;
 
 class VmtAttendanceReportsService
 {
@@ -642,7 +639,7 @@ class VmtAttendanceReportsService
 
     public function detailedAttendanceReport($year, $month)
     {
-
+       // dd('testing');
         ini_set('max_execution_time', 300);
         //dd($month);
         $reportresponse = array();
@@ -689,11 +686,23 @@ class VmtAttendanceReportsService
             //dd($lastAttendanceDate->format('d'));
             $totalDays  = $lastAttendanceDate->format('d');
             $firstDateStr  = $monthDateObj->startOfMonth()->toDateString();
+
+            ///Temp Fix FOr Duna
+            // $firstDateStr='2023-05-26';
+            // $lastAttendanceDate=Carbon::parse('2023-06-25');
+            // $totalDays=  $lastAttendanceDate->diffInDays(Carbon::parse(  $firstDateStr));
+
+
+
+
+
+
+
             //dd($totalDays);
             // attendance details from vmt_staff_attenndance_device table
             $deviceData = [];
 
-            for ($i = 0; $i < ($totalDays); $i++) {
+            for ($i = 0; $i <= ($totalDays); $i++) {
                 // code...
 
                 $dayStr = Carbon::parse($firstDateStr)->addDay($i)->format('l');
@@ -701,6 +710,7 @@ class VmtAttendanceReportsService
 
 
                 $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+
                 //dd(sessionGetSelectedClientCode());
                 if (sessionGetSelectedClientCode() == "DM") {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -716,6 +726,11 @@ class VmtAttendanceReportsService
                         ->whereDate('date', $dateString)
                         ->where('user_Id',  $singleUser->user_code)
                         ->first(['check_in_time']);
+
+                        // dd($attendanceCheckIn);
+                        if(  $attendanceCheckOut->check_out_time ==  $attendanceCheckIn->check_in_time){
+                            $attendanceCheckOut=null;
+                        }
                 } else {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -774,15 +789,16 @@ class VmtAttendanceReportsService
             $heading_dates = array("Emp Code", "Name", "Designation", "DOJ");
             $header_2 = array('', '', '', '');
             $heading_dates_2 = array();
-            for ($i = 1; $i <= $totalDays; $i++) {
+            for ($i = 0; $i <= $totalDays; $i++) {
                 $date = "";
 
                 if ($i < 10)
                     $date = "0" . $i;
                 else
                     $date = $i;
-
-                $fulldate = $year . "-" . $month . "-" . $date;
+                    $fulldate = $year . "-" . $month . "-" . $date;
+                //$fulldate =Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                //$date = Carbon::parse($firstDateStr)->addDay($i)->format('d');
                 // dd($i.' '.substr(Carbon::parse($fulldate)->format('l'),0,1));
                 //  $date_day=$i.'  '.substr(Carbon::parse($fulldate)->format('l'),0,1);
                 $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
@@ -801,6 +817,7 @@ class VmtAttendanceReportsService
                 //echo "Date is ".$fulldate."\n";
                 ///$month_array[""]
             }
+           //dd( $attendanceResponseArray);
             array_push($heading_dates, 'Total Calculation');
             array_push($header_2, "Total Weekoff", "Total Holiday", "Total Over Time", "Total Present", "Total Absent", "Total Late LOP", "Total Leave", "Total Halfday", "Total On Duty");
             $attendance_setting_details = $this->attendanceSettingsinfos(null);
@@ -1161,7 +1178,12 @@ class VmtAttendanceReportsService
             }
 
             if ($total_OT > 0) {
-                $total_OT = CarbonInterval::minutes($total_OT)->cascade()->forHumans();
+               //dd( $total_OT);
+                $total_OT = CarbonInterval::minutes($total_OT)->cascade();
+                $total_hours = (int)$total_OT->totalHours;
+                $total_minutes = $total_OT->toArray()['minutes'];
+                $total_OT =  $total_hours.' Hrs:'. $total_minutes.' Minutes';
+               // dd(  $total_OT );
             }
 
 
