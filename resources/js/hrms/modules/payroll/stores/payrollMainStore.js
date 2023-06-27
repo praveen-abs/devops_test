@@ -102,7 +102,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         if (key == 1) {
 
             if (salaryComponentsUpdated.value) {
-                axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
+                axios.post('/Paygroup/UpdatePayRollEarningsComponents', salaryComponents)
                     .finally(() => {
                         restChars()
                         canShowLoading.value = false
@@ -158,6 +158,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     }
 
     const editNewSalaryComponent = (boolean, data) => {
+        console.log(data);
         dailogNewSalaryComponents.value = true
         salaryComponentsUpdated.value = boolean
         salaryComponents.name = data.comp_name,

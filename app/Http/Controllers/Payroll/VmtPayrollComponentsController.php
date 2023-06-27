@@ -23,7 +23,9 @@ class VmtPayrollComponentsController extends Controller
         $response =$serviceVmtPayrollComponentsService->CreatePayRollComponents(
             $request->name,
             $request->typeOfComp,
+            $request->typeOfCalc,
             $request->amount,
+            $request->percentage,
             $request->nameInPayslip,
             $request->isConsiderForEPF,
             $request->isConsiderForESI,
@@ -39,11 +41,13 @@ class VmtPayrollComponentsController extends Controller
     }
     public function UpdatePayRollEarningsComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->UpdatePayRollComponents(
+        $response =$serviceVmtPayrollComponentsService->UpdatePayRollEarningsComponents(
             $request->id,
             $request->name,
             $request->typeOfComp,
             $request->typeOfCalc,
+            $request->amount,
+            $request->percentage,
             $request->nameInPayslip,
             $request->isConsiderForEPF,
             $request->isConsiderForESI,
