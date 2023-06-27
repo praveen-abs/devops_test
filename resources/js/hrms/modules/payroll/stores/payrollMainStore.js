@@ -22,17 +22,17 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     const canShowLoading = ref(false);
 
     /*  Payroll Setup Structure
-        
+
         1) general payroll Setup
 
         2)Pf & Esi Setting
-        
+
         3)Salary components
             1)Earnings
             2)Adhoc Components
             3)Reimbursement
             4)Accounting Code
-            
+
         4)Salary structure - Paygroups
 
         5)finance Setting
@@ -61,6 +61,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         isShowInPayslip: 0,
         isConsiderForEPF: null,
         isConsiderForESI: null,
+        category_id : 1,
     })
 
     const adhocComponents = ref({
@@ -152,7 +153,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
                     else {
                         console.log("No More options");
                     }
-           console.log(form_data);         
+           console.log(form_data);
 
     }
 
@@ -288,4 +289,4 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         dailogNewSalaryStructure, salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure, addsalaryComponents,
     }
 
-})    
+})

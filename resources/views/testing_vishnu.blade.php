@@ -207,9 +207,31 @@ $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_da
         for($i=0; $i < count($payroll_month); $i++)
         {
 
-            $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
-        }
-        $payroll_available_months = array_unique($payroll_month->toArray());
+//             $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
+//         }
+//         $payroll_available_months = array_unique($payroll_month->toArray());
+
+// dd($payroll_available_months);
+
+
+// $last_join_emp_code= VmtEmployee::orderBy('created_at', 'desc')->first('doj');
+// dd($last_join_emp_code->toarray());
+
+
+// $paygroup_components =VmtPaygroupComps::where('paygroup_id',1)->get(['id'])->destroy;
+// VmtPaygroupComps::destroy($paygroup_components);
+$paygroup_comps =VmtPaygroupComps::where('paygroup_id','41');
+
+if(!empty($paygroup_comps)){
+$data1 =$paygroup_comps->get(['id']);
+}
+$emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
+                if(!empty($emp_paygroup_components)){
+                    $data =$emp_paygroup_components->get(['id']);
+                }
+                dd( $data);
+                 VmtEmpPaygroup::destroy( $data);
+                 VmtPaygroupComps::destroy( $data1);
 
 dd($payroll_available_months);
     ?>

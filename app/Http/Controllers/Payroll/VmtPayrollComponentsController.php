@@ -18,15 +18,16 @@ class VmtPayrollComponentsController extends Controller
     }
     public function CreatePayRollComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        // dd($request->all());
+         //dd($request->all());
 
         $response =$serviceVmtPayrollComponentsService->CreatePayRollComponents(
             $request->name,
             $request->typeOfComp,
-            $request->typeOfCalc,
+            $request->amount,
             $request->nameInPayslip,
             $request->isConsiderForEPF,
             $request->isConsiderForESI,
+            $request->category_id,
             $request->isPartOfEmpSalStructure,
             $request->isTaxable,
             $request->isCalcShowProBasis,
