@@ -208,14 +208,12 @@ class VmtSalaryAdvanceService
             $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting','vmt_salary_adv_setting.id','=','vmt_emp_assign_salary_adv_setting.salary_adv_id')
                                                                 ->where('user_id', $current_user_id)->first();
 
-
-
             $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
             $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett->id;
             $EmpApplySalaryAmt->eligible_amount = $mxe;
             $EmpApplySalaryAmt->borrowed_amount = $ra;
             $EmpApplySalaryAmt->requested_date  = date('Y-m-d');
-            $EmpApplySalaryAmt->dedction_date  = $repdate;
+            // $EmpApplySalaryAmt->dedction_date  = $repdate;
             $EmpApplySalaryAmt->reason  = $reason;
             $EmpApplySalaryAmt->emp_approver_flow  = $this->getEmpapproverjson($employee_sal_sett->approver_flow,$employee_sal_sett->user_id);
             $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
@@ -442,29 +440,55 @@ class VmtSalaryAdvanceService
     public function SalAdvApproverFlow()
     {
 
-        $user_id = auth()->user()->id;
+        $current_user_id = auth()->user()->id;
 
-        $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
-            // ->leftjoin('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
+                   $getuser_setting =  VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')->get();
 
-            ->get()->toArray();
+                   $res = array();
+                   foreach($getuser_setting as $single_setting){
 
-            $simma1 = array();
-           foreach($employee_salary_adv as $single_sal_adv){
+                               $getuser_approval =  json_decode($single_setting['emp_approver_flow'],true);
 
-                     $simma  =  $this->getEmpapproverjson($single_sal_adv['approver_flow'],$single_sal_adv['user_id']);
+                            //    array_push($res,$getuser_approval);
 
-                     $assign_emp = VmtEmpAssignSalaryAdvSettings::where('user_id',$single_sal_adv['user_id'])->first();
+                        foreach($getuser_approval as $single_user_approval){
+                                // dd($single_user_approval);
 
-                     $emp_details = VmtEmpSalAdvDetails::where('vmt_emp_assign_salary_adv_id',$assign_emp->id)->first();
+                                if($single_user_approval['order'] == 1){
+                                        if($single_user_approval['status'] == 0){
+                                             if($current_user_id == $single_user_approval['approver']){
+                                                  array_push($res,$single_setting);
+                                        }else{
+                                            //     $status['status'] = "already_approved ";
+                                            // array_push($res,$status);
+                                        }
+                                }
+                        }
+                                if($single_user_approval['order'] == 2){
+                                        if($single_user_approval['status'] == 0){
+                                             if($current_user_id == $single_user_approval['approver']){
+                                                  array_push($res,$single_setting);
+                                        }else{
+                                            //     $status['status'] = "already_approved";
+                                            // array_push($res,$status);
+                                        }
+                                }
+                        }
+                                if($single_user_approval['order'] == 3){
+                                        if($single_user_approval['status'] == 0){
+                                             if($current_user_id == $single_user_approval['approver']){
+                                                  array_push($res,$single_setting);
+                                        }else{
+                                            //     $status['status'] = "already_approved";
+                                            // array_push($res,$status);
+                                        }
+                                }
+                        }
 
-                     $emp_details->emp_approver_flow = $simma;
-                     $emp_details->save();
-           }
+                   }
 
-               return "saved";
-
-        //    VmtEmpSalAdvDetails::
+                }
+                return ($res);
 
 
 
