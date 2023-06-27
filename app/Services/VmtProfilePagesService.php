@@ -132,6 +132,7 @@ class VmtProfilePagesService
             //Get the image from PRIVATE disk and send as BASE64
             $response = Storage::disk('private')->get($user_code."/profile_pics/".$avatar_filename);
 
+
             if($response)
             {
                 $response = base64_encode($response);
@@ -220,10 +221,12 @@ class VmtProfilePagesService
 
 
            $general_info = \DB::table('vmt_general_info')->first();
+
+           //$query_client_logo = Storage::disk('public')->get($general_info->logo_img);
            $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 
-        // $response['client_logo'] = base64_encode($query_client_logo);
-        $response['client_logo'] = $query_client_logo;
+         //$response['client_logo'] = base64_encode($query_client_logo);
+       $response['client_logo'] = $query_client_logo;
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
@@ -638,6 +641,56 @@ public function uploadProofDocument($emp_id,$fileObject, $onboard_document_type)
 
     return "success";
 }
+public function getEmpProfileProofPrivateDoc($emp_doc_record_id=null)
+{
+    // dd($user_code);
+
+    try{
+
+
+            //Get the filename directly from the record_id
+            $query_emp_doc = VmtTempEmployeeProofDocuments::find($emp_doc_record_id);
+            $user_code = User::find($query_emp_doc->user_id)->user_code;
+            $doc_filename = $query_emp_doc->doc_url;
+
+
+        //Get the image from PRIVATE disk and send as BASE64
+        $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" .$doc_filename);
+
+        if($response)
+        {
+            $response = base64_encode($response);
+        }
+        else// If no file found, then send this
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Employee proof proof document doesnt exist for the given user"
+            ]);
+        }
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Employee document fetched successfully",
+            "data" => $response,
+        ]);
+
+
+    }
+    catch(\Exception $e){
+
+        //dd("Error :: uploadDocument() ".$e);
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch profile picture",
+            "data" => $e,
+        ]);
+
+    }
+    return response()->file(storage_path('employees/' . $private_file));
+}
+
 
 }
 

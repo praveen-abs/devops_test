@@ -38,7 +38,7 @@ class VmtReimbursementsService {
     }
 
 
-    public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
+    public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $entry_mode, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
     {
 
         $validator = Validator::make(
@@ -51,6 +51,7 @@ class VmtReimbursementsService {
                 'to' => $to,
                 'distance_travelled' => $distance_travelled,
                 'user_comments' => $user_comments,
+                'entry_mode' => $entry_mode,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
@@ -61,6 +62,7 @@ class VmtReimbursementsService {
                 "to" => "required",
                 "distance_travelled" => "required",
                 "user_comments" => "nullable",
+                "entry_mode" => "nullable", //make this mandatory once the flutter side also updated
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -99,6 +101,7 @@ class VmtReimbursementsService {
         $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
         $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
         $emp_reimbursement_data->status = "Pending";
+        $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
 
         //reimbursement details
         $emp_reimbursement_data->from = $from;
@@ -235,5 +238,64 @@ class VmtReimbursementsService {
                                                                        'distance_travelled','total_expenses','user_comments']);
 
             return $employee_reimbursement_data_query;
+    }
+
+    public function isReimbursementAppliedOrNot($user_code,$date){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'date' => $date,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+               $query_user =User::where('user_code',$user_code)->first();
+
+                $employee_reimbursement_applied_data_query = VmtEmployeeReimbursements::where('user_id',$query_user->id)
+                                                                      ->where('date',$date)->exists();
+
+                if($employee_reimbursement_applied_data_query){
+                    $response = 1;
+                    $message = "Reimbursement already applied for the given date";
+                }else{
+                    $response = 0;
+                    $message = "Reimbursement not applied for the given date";
+
+                }
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $message,
+                    'data' =>$response
+                ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while getting isReimbursementAppliedOrNot data ",
+                'data' => $e->getmessage()
+            ]);
+        }
+
+
     }
 }

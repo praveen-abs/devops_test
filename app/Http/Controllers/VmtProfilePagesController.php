@@ -12,6 +12,7 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtGeneralInfo;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtTempEmpNames;
@@ -20,9 +21,12 @@ use App\Models\VmtTempPancardDetails;
 use App\Models\VmtTempEmployeeProofDocuments;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeDocuments;
+use App\Models\VmtDocuments;
 use App\Services\VmtEmployeePayCheckService;
+
 use App\Services\VmtProfilePagesService;
 use App\Services\VmtEmployeeService;
+use App\Mail\ApproveRejectEmpDetails;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -787,14 +791,22 @@ public function addExperienceInfo(Request $request)
         return $response;
 
     }
-    public function SingleDocumentProofApproval(Request $request, VmtApprovalsService $serviceApprovalService){
+    public function getEmpProfileProofPrivateDoc(Request $request,VmtProfilePagesService $profilepagesservice){
+
+
+        $response = $profilepagesservice->getEmpProfileProofPrivateDoc($request->emp_doc_record_id);
+        return $response;
+
+    }
+    public function SingleDocumentProofApproval(Request $request){
 
         //Validate the request
                $validator = Validator::make(
                    $request->all(),
                    $rules = [
-                       'record_id' => 'required|exists:vmt_employee_documents,id',
+                       'record_id' => 'required',
                        'status' => 'required',
+                       'approver_user_id' => 'required',
                    ],
                    $messages = [
                        'required' => 'Field :attribute is missing',
@@ -815,21 +827,64 @@ public function addExperienceInfo(Request $request)
                     $record_id =$request->record_id;
                     $status =$request->status;
 
-                   $query = VmtTempEmployeeProofDocuments::find($record_id);
-                   $query->status = $status;
-                   $query->save();
+                   $query_doc_data = VmtTempEmployeeProofDocuments::find($record_id);
+                   $query_doc_data->status = $status;
+                   $query_doc_data->save();
+
+
+                   $message = "";
+                   $mail_status = "";
+
+                   $VmtGeneralInfo = VmtGeneralInfo::first();
+                   $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+                   $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
+                   $employee_user=VmtTempEmployeeProofDocuments::find($record_id);
+                   $DocType = VmtDocuments::where('id', $employee_user->doc_id)->first()->document_name;
+                   $employee_mail = VmtEmployeeOfficeDetails::where('user_id', $employee_user->user_id)->first()->officical_mail;
+                   $obj_employee = User::where('id', $employee_user->user_id)->first();
+
+
+                   $isSent    = \Mail::to($employee_mail)->send(
+                       new ApproveRejectEmpDetails(
+                           $obj_employee->name,
+                           $obj_employee->user_code,
+                           $DocType,
+                           User::find($request->approver_user_id)->name,
+                           User::find($request->approver_user_id)->user_code,
+                           request()->getSchemeAndHttpHost(),
+                           $image_view,
+                           $emp_avatar,
+                           $status
+                       )
+                   );
+
+                   if ($isSent) {
+                       $mail_status = "success";
+                   } else {
+                       $mail_status = "failure";
+                   }
+
+
+
 
                return response()->json([
                    "status"=>'success',
                    "message"=>"Document status updated successfully",
+                   'mail_status' => $mail_status,
                ]);
                }catch(\Exception $e){
-                   return "failure";
+                $response = [
+                    'status' => 'failure',
+                    'message' => '',
+                    'error_message' => $e->getMessage()
+                    ];
+                    return   $response;
             }
        }
 
 
-       public function BulkDocumentProofApprovals(Request $request, VmtApprovalsService $serviceApprovalService){
+       public function BulkDocumentProofApprovals(Request $request){
 
            //Validate the request
            $validator = Validator::make(
@@ -837,6 +892,7 @@ public function addExperienceInfo(Request $request)
                $rules = [
                    'record_ids' => 'required',// Need to check the given ids inside service class.
                    'status' => 'required',
+                   'approver_user_id' => 'required',
                ],
                $messages = [
                    'required' => 'Field :attribute is missing',
@@ -854,23 +910,64 @@ public function addExperienceInfo(Request $request)
 
            try
                {
-                    $record_ids =$request->record_id;
+                    $record_ids =$request->record_ids;
                     $status =$request->status;
+
+
                    $query_docs = VmtTempEmployeeProofDocuments::whereIn('id',$record_ids)->get();
 
                    foreach($query_docs as $singleDoc)
                    {
                        $singleDoc->status = $status;
                        $singleDoc->save();
+
+
+                   $message = "";
+                   $mail_status = "";
+
+                   $VmtGeneralInfo = VmtGeneralInfo::first();
+                   $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+                   $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
+                   $DocType = VmtDocuments::where('id', $singleDoc->doc_id)->first()->document_name;
+                   $employee_mail = VmtEmployeeOfficeDetails::where('user_id', $singleDoc->user_id)->first()->officical_mail;
+                   $obj_employee = User::where('id', $singleDoc->user_id)->first();
+
+
+                   $isSent  = \Mail::to($employee_mail)->send(
+                       new ApproveRejectEmpDetails(
+                           $obj_employee->name,
+                           $obj_employee->user_code,
+                           $DocType,
+                           User::find($request->approver_user_id)->name,
+                           User::find($request->approver_user_id)->user_code,
+                           request()->getSchemeAndHttpHost(),
+                           $image_view,
+                           $emp_avatar,
+                           $status
+                       )
+                   );
+                }
+
+                   if ($isSent) {
+                       $mail_status = "success";
+                   } else {
+                       $mail_status = "failure";
                    }
 
 
                    return response()->json([
-                       "status"=>$response,
+                       "status"=>'success',
                        "message"=>"All documents status updated successfully",
+                       'mail_status' => $mail_status,
                    ]);
            }catch(\Exception $e){
-                return "failure";
+            $response = [
+                'status' => 'failure',
+                'message' => '',
+                'error_message' => $e->getMessage()
+                ];
+            return $response;
        }
 
        }

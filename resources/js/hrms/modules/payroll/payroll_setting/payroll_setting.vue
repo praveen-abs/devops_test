@@ -11,11 +11,11 @@
         </div>
 
         <div class="payroll-settings-cards ">
-            <a href="/payroll/work_location "
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-indigo-100 rounded-lg shadow-md cursor-pointer payroll-settings-content row">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/location.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Work Location</span>
+            <a href="/payroll/work_location"
+                class="bg-blue-900   payroll-settings-content border-indigo-100  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/location.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Work Location</span>
                 </div>
                 <div class="flex col-4">
                     <span class="text-sm font-semibold text-gray-100 ">[Office Location and State Confirmation]</span>
@@ -27,11 +27,11 @@
                 </div>
             </a>
 
-            <a href="/payroll/setup"
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-orange-200 rounded-lg shadow-md cursor-pointer payroll-settings-content row">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Payroll Setup</span>
+            <a   href="/payroll/setup"
+                class="bg-blue-900   payroll-settings-content border-orange-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/payroll.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Payroll Setup</span>
                 </div>
                 <div class="flex col-4">
                     <span class="text-sm font-semibold text-gray-100 ">[General Setting,Salary Structure &
@@ -43,15 +43,16 @@
                         <i class="mr-2 fa fa-exclamation-circle"></i> Pending
                     </button>
 
+
                     <i class="ml-8 mr-6 text-xl font-bold fa fa-angle-double-right text-white-200 ">
                     </i>
                 </div>
             </a>
             <a
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-blue-200 rounded-lg shadow-md cursor-pointer payroll-settings-content row ">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/categorize.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Misc Settings</span>
+                class="bg-blue-900   payroll-settings-content border-blue-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/categorize.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Misc Settings</span>
                 </div>
                 <div class="flex col-4">
                     <span class="text-sm font-semibold text-gray-100">[Payment Setting and Components Rounding]</span>
@@ -65,10 +66,10 @@
                 </div>
             </a>
             <a
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-yellow-200 rounded-lg shadow-md cursor-pointer payroll-settings-content row ">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/purchase-order.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Payslip</span>
+                class="bg-blue-900   payroll-settings-content border-yellow-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/purchase-order.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Payslip</span>
                 </div>
                 <div class="flex col-4">
                     <span class="text-sm font-semibold text-gray-100">[Payslip Option and Fields,Password
@@ -83,10 +84,10 @@
                 </div>
             </a>
             <a
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-red-200 rounded-lg shadow-md cursor-pointer payroll-settings-content row ">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/money-bag.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Full and Final Settlement</span>
+                class="bg-blue-900   payroll-settings-content border-red-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center w-1/3">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/money-bag.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Full and Final Settlement</span>
                 </div>
                 <div class="flex col-4">
                     <span class="text-sm font-semibold text-gray-100">[Opening & closing Notes,Notice Period Buy
@@ -101,10 +102,10 @@
                 </div>
             </a>
             <a
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-green-600 rounded-lg shadow-md cursor-pointer payroll-settings-content row ">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/donate.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Contribution Rate</span>
+                class="bg-blue-900   payroll-settings-content border-green-600  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/donate.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Contribution Rate</span>
                 </div>
                 <div class="flex col-4 ">
                     <span class="text-sm font-semibold text-gray-100">[Manage PF Contribution Rate]</span>
@@ -118,10 +119,10 @@
                 </div>
             </a>
             <a
-                class="flex items-center justify-between p-1 text-white bg-blue-900 border-blue-200 rounded-lg shadow-md cursor-pointer payroll-settings-content row ">
-                <div class="flex items-center col-3">
-                    <img class="h-8" src="../../../../../../public/assets/images/dashboard/iencashment.png" alt="">
-                    <span class="ml-5 text-lg font-semibold text-white">Leave Encashment</span>
+                class="bg-blue-900   payroll-settings-content border-blue-200  cursor-pointer shadow-md text-white flex items-center justify-between rounded-lg p-2.5 ">
+                <div class="flex items-center">
+                    <!-- <img class="h-8" src="../../../../../../public/assets/images/dashboard/iencashment.png" alt=""> -->
+                    <span class="ml-5 text-lg text-white">Leave Encashment</span>
                 </div>
                 <div class="flex col-4">
                     <span class="text-sm font-semibold text-gray-100">[Leave Encashment Policies Calculation]</span>

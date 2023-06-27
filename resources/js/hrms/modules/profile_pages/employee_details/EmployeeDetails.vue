@@ -36,7 +36,8 @@
                                 <div class="cal-icon">
                                     <!-- <Calendar showIcon class="mb-3 form-selects" v-model="dialog_general_information.dob"
                                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" /> -->
-                                        <Calendar class="mb-3 form-selects" v-model="dialog_general_information.dob" placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
+                                    <Calendar class="mb-3 form-selects" v-model="dialog_general_information.dob"
+                                        placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                                 </div>
                             </div>
                         </div>
@@ -58,10 +59,12 @@
                                         placeholder="DD-MM-YYYY" dateFormat="dd-mm-yy" />
                                 </div> -->
 
-                                <label :style="{ marginLeft: '10px' ,marginRight:'10px' }">Marital status <span class="text-danger">*</span></label>
+                                <label :style="{ marginLeft: '10px', marginRight: '10px' }">Marital status <span
+                                        class="text-danger">*</span></label>
                                 <Dropdown v-model="dialog_general_information.marital_status_id"
                                     :options="option_maritals_status" optionLabel="name" optionValue="id"
-                                    placeholder="Select Marital Status" class="form-selects" :style="{ marginLeft: '10px' ,marginRight:'10px' }" />
+                                    placeholder="Select Marital Status" class="form-selects"
+                                    :style="{ marginLeft: '10px', marginRight: '10px' }" />
 
                             </div>
                         </div>
@@ -82,10 +85,10 @@
 
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6 ">
                             <div class=" form-group w-full" :style="{ marginLeft: '10px' }">
-                                <label class="my-1" >Physically Handicapped</label>
+                                <label class="my-1">Physically Handicapped</label>
                                 <Dropdown v-model="dialog_general_information.physically_challenged"
                                     :options="options_phy_challenged" optionLabel="name" optionValue="value"
-                                    placeholder="Select" class="form-selects"  />
+                                    placeholder="Select" class="form-selects" />
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6 col-lg-6 col-md-6 col-xxl-6">
@@ -110,7 +113,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Birthday</div>
                         <div class="text">
-                            {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
+                            {{
+                                dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.dob).format('DD-MMM-YYYY')
                             }}
                         </div>
                     </li>
@@ -126,7 +130,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Date Of Joining (DOJ)</div>
                         <div class="text">
-                            {{ dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY')
+                            {{
+                                dayjs(_instance_profilePagesStore.employeeDetails.get_employee_details.doj).format('DD-MMM-YYYY')
                             }}
 
                         </div>
@@ -215,7 +220,8 @@
                                 <div class="mb-3 form-group">
                                     <label>Official Mobile Number</label>
                                     <input type="text" size=20 maxlength=10 name="official_mobile_number"
-                                        class="form-control" v-model="dailog_contactinfo.official_mobile_number">
+                                        class="form-control" v-model.number="dailog_contactinfo.official_mobile_number" >
+                                        <!-- v-model="dailog_contactinfo.official_mobile_number" -->
                                 </div>
                             </div>
 
@@ -256,7 +262,11 @@
                     </li>
                     <li class="pb-1 ">
                         <div class="title">Official Mobile Number</div>
-                        <div class="text">
+                        <div class="text" v-if="!_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile">
+                            <!-- <h1>-</h1> -->
+                            -
+                        </div>
+                        <div class="text" v-else>
 
                             {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile }}
 
@@ -503,7 +513,7 @@ function saveGeneralInformationDetails() {
 
     axios.post(url, {
         user_code: _instance_profilePagesStore.employeeDetails.user_code,
-        dob:  dayjs(dialog_general_information.dob).format('YYYY-MM-DD') ,
+        dob: dayjs(dialog_general_information.dob).format('YYYY-MM-DD'),
         gender: dialog_general_information.gender,
         marital_status_id: dialog_general_information.marital_status_id,
         doj: dialog_general_information.doj,
@@ -559,7 +569,12 @@ function onClick_EditButtonContacttInfo() {
     dailog_contactinfo.email = _instance_profilePagesStore.employeeDetails.email;
     dailog_contactinfo.official_email = _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail;
     dailog_contactinfo.mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number);
-    dailog_contactinfo.official_mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile);
+    if(!_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile){
+        dailog_contactinfo.official_mobile_number = 0;
+    }else{
+        dailog_contactinfo.official_mobile_number = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_office_details.official_mobile);
+    }
+
 
     console.log("testing");
 
@@ -576,7 +591,7 @@ function save_contactinfoDetails() {
         email: dailog_contactinfo.email,
         officical_mail: dailog_contactinfo.official_email,
         mobile_number: dailog_contactinfo.mobile_number,
-        official_mobile_number: dailog_contactinfo.official_mobile_number
+        official_mobile_number: parseInt(dailog_contactinfo.official_mobile_number)
     })
         .then((res) => {
 

@@ -1,4 +1,27 @@
 <template>
+    <Dialog
+      header="Header"
+      v-model:visible="canShowLoadingScreen"
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+      :style="{ width: '25vw' }"
+      :modal="true"
+      :closable="false"
+      :closeOnEscape="false"
+    >
+      <template #header>
+        <ProgressSpinner
+          style="width: 50px; height: 50px"
+          strokeWidth="8"
+          fill="var(--surface-ground)"
+          animationDuration="2s"
+          aria-label="Custom ProgressSpinner"
+        />
+      </template>
+      <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+      </template>
+    </Dialog>
+
     <div class="dashboard-wrapper mt-30">
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-0 card-body">
@@ -45,8 +68,8 @@
     </div>
     </div>
 
-    <!-- <VueSidebarMenuAkahon :isMenuOpen="false" menuTitle="Welcome" :menuItems="mi" profileImg="" profileName="shelly"
-        profileRole="Developer"  /> -->
+
+
 </template>
 
 
@@ -55,23 +78,19 @@ import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
 import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
 import Events from './events/events.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'
-import { onMounted, ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Service } from '../Service/Service'
-// import VueSidebarMenuAkahon from "vue-sidebar-menu-akahon";
 
-const useDashboard = useMainDashboardStore()
+const useDashboard = useMainDashboardStore();
+const canShowLoadingScreen = ref();
 
-// const mi = ref( [
-//         {
-//           name: "Dashboard",
-//           tooltip: "Dashboard",
-//           icon: "bx-grid-alt",
-//         },
-//     ])
+onMounted(async ()=>{
+    canShowLoadingScreen.value = true;
+    await useDashboard.getMainDashboardData();
+   // await useDashboard.getAttendanceStatus();
+    Service();
+    canShowLoadingScreen.value = false;
 
-onMounted(() => {
-    useDashboard.getMainDashboardSource()
-    Service()
 })
 
 </script>
