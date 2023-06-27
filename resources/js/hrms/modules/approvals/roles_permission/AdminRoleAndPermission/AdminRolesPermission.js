@@ -42,11 +42,11 @@ import TreeTable from 'primevue/treetable';
 
 
 
-import AdminRolesPermission from './RolesAndPermission.vue';
+import AdminRolesPermission from './AdminRolesPermission.vue';
 
 
 const app = createApp(AdminRolesPermission);
-const pinia = createPinia()
+const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
@@ -84,4 +84,4 @@ app.component('Skeleton',Skeleton)
 app.component('MultiSelect',MultiSelect)
 app.component('TreeTable',TreeTable)
 
-app.mount("#SuperAdminRolesPermission");
+app.mount("#AdminRolesPermission");
