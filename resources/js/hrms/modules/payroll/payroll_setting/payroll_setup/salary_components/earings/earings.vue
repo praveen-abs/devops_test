@@ -121,8 +121,8 @@
                     <div class="my-3">
                         <label for="metro_city" class="block mb-2 font-semibold fs-6 text-gray-700 ">Type of
                             calculation</label>
-                        <Dropdown editable class="w-full" optionLabel="name" optionValue="value"
-                            :options="helper.calculationTypes" placeholder="Select calculation type"
+                        <Dropdown editable class="w-full"  :options="helper.calculationTypes"  optionLabel="name" optionValue="value"
+                           placeholder="Select calculation type"
                             v-model="usePayroll.salaryComponents.typeOfCalc" />
                     </div>
                     <div class="" v-if="usePayroll.salaryComponents.typeOfCalc == 1">

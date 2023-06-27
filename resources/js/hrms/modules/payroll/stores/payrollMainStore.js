@@ -165,7 +165,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
             salaryComponents.id = data.id,
             salaryComponents.typeOfComp = data.comp_type_id,
             salaryComponents.nameInPayslip = data.comp_name_payslip,
-            salaryComponents.typeOfCalc = data.calculation_method_id,
+            salaryComponents.typeOfCalc = parseInt(data.calculation_method_id),
             salaryComponents.amount = data.flat_amount,
             salaryComponents.status = data.status,
             salaryComponents.isPartOfEmpSalStructure = data.is_part_of_empsal_structure,
