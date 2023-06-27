@@ -54,6 +54,7 @@ class VmtSalaryAdvanceService
         }
         return (json_encode($approver_flow, true));
     }
+
     public function getAllDropdownFilterSetting()
     {
 
@@ -204,16 +205,19 @@ class VmtSalaryAdvanceService
 
             $current_user_id = auth()->user()->id;
 
-            $employee_user_id = VmtEmpAssignSalaryAdvSettings::where('user_id', $current_user_id)->first();
+            $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting','vmt_salary_adv_setting.id','=','vmt_emp_assign_salary_adv_setting.salary_adv_id')
+                                                                ->where('user_id', $current_user_id)->first();
+
+
 
             $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
-            $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_user_id->id;
+            $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett->id;
             $EmpApplySalaryAmt->eligible_amount = $mxe;
             $EmpApplySalaryAmt->borrowed_amount = $ra;
             $EmpApplySalaryAmt->requested_date  = date('Y-m-d');
             $EmpApplySalaryAmt->dedction_date  = $repdate;
             $EmpApplySalaryAmt->reason  = $reason;
-            $EmpApplySalaryAmt->approver_flow  = "0";
+            $EmpApplySalaryAmt->emp_approver_flow  = $this->getEmpapproverjson($employee_sal_sett->approver_flow,$employee_sal_sett->user_id);
             $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
             $EmpApplySalaryAmt->save();
 
@@ -445,141 +449,25 @@ class VmtSalaryAdvanceService
 
             ->get()->toArray();
 
-        // dd($employee_salary_adv);
+            $simma1 = array();
+           foreach($employee_salary_adv as $single_sal_adv){
+
+                     $simma  =  $this->getEmpapproverjson($single_sal_adv['approver_flow'],$single_sal_adv['user_id']);
+
+                     $assign_emp = VmtEmpAssignSalaryAdvSettings::where('user_id',$single_sal_adv['user_id'])->first();
+
+                     $emp_details = VmtEmpSalAdvDetails::where('vmt_emp_assign_salary_adv_id',$assign_emp->id)->first();
+
+                     $emp_details->emp_approver_flow = $simma;
+                     $emp_details->save();
+           }
+
+               return "saved";
+
+        //    VmtEmpSalAdvDetails::
 
 
 
-        foreach ($employee_salary_adv as $single_apprflow) {
-
-            //    echo $single_apprflow['approver_flow'] ."<br>";
-            $approver_flow  = json_decode(($single_apprflow['approver_flow']), true);
-
-            foreach ($approver_flow as $approver_order) {
-                // dd($approver_order['order']);
-
-
-                if ($approver_order['order'] == 1) {
-                    if ($approver_order['approver'] == "HR") {
-
-                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
-                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
-
-                        $res = array();
-                        foreach ($simma as $simma1) {
-                            if ($simma1['hr_id'] == $user_id) {
-
-                                if ($simma1['approv_hr'] == "0") {
-
-
-                                    array_push($res, $simma1);
-                                    dd($res);
-                                }
-                            };
-                        }
-                    }
-
-                    if ($approver_order['approver'] == "Finance Admin") {
-
-                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
-                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
-
-                        $res = array();
-                        foreach ($simma as $simma1) {
-                            if ($simma1['finance_admin_id'] == $user_id) {
-                                if ($simma1['approv_finance_admin'] == "0") {
-
-                                    array_push($res, $simma1);
-                                    dd($res);
-                                }
-                            }
-                        }
-                        // dd ($res);
-                    }
-                    if ($approver_order['approver'] == "Line Manager") {
-                        dd("line manager");
-                    }
-                }
-
-                if ($approver_order['order'] == 2) {
-                    if ($approver_order['approver'] == "HR") {
-                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
-                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
-
-                        $res = array();
-                        foreach ($simma as $simma1) {
-                            if ($simma1['hr_id'] == $user_id) {
-                                if ($simma1['approv_hr'] == "0") {
-
-
-                                    array_push($res, $simma1);
-                                }
-                            }
-                        }
-                    }
-
-                    if ($approver_order['approver'] == "Finance Admin") {
-                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
-                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
-
-                        $res = array();
-                        foreach ($simma as $simma1) {
-                            if ($simma1['finance_admin_id'] == $user_id) {
-                                if ($simma1['approv_finance_admin'] == "0") {
-
-
-                                    array_push($res, $simma1);
-                                }
-                            }
-                        }
-                    }
-                    if ($approver_order['approver'] == "Line Manager") {
-                        dd("line manager");
-                    }
-                }
-                dd($res);
-                if ($approver_order['order'] == 3) {
-                    if ($approver_order['approver'] == "HR") {
-                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
-                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
-
-                        $res = array();
-                        foreach ($simma as $simma1) {
-                            if ($simma1['hr_id'] == $user_id) {
-                                if ($simma1['approv_hr'] == "0") {
-
-                                    array_push($res, $simma1);
-                                }
-                            }
-                        }
-                    }
-                    if ($approver_order['approver'] == "Finance Admin") {
-                        $simma = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                            ->join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
-                            ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
-
-                        $res = array();
-                        foreach ($simma as $simma1) {
-                            if ($simma1['finance_admin_id'] == $user_id) {
-                                if ($simma1['approv_finance_admin'] == "0") {
-
-
-                                    array_push($res, $simma1);
-                                }
-                            }
-                        }
-                    }
-                    if ($approver_order['approver'] == "Line Manager") {
-                        dd("line manager");
-                    }
-                }
-                dd($res);
-            }
-        }
     }
 
     public function applyLoan(
