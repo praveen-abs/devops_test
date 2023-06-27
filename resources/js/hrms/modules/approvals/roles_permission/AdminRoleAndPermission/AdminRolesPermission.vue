@@ -50,7 +50,7 @@
                     <template #empty> No Employee Details documents for the selected status filter </template>
 
                     <Column :expander="true" />
-                    <Column field="role" header="Roles" sortable></Column>
+                    <Column field="name" header="Roles" sortable></Column>
                     <Column field="description" header="Role Description">
                     </Column>
 
