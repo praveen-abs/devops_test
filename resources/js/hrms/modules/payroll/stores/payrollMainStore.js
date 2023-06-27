@@ -158,6 +158,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     }
 
     const editNewSalaryComponent = (boolean, data) => {
+        console.log(data);
         dailogNewSalaryComponents.value = true
         salaryComponentsUpdated.value = boolean
         salaryComponents.name = data.comp_name,

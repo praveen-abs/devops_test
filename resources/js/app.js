@@ -2,6 +2,7 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import './hrms/assests/tailwind.css'
 
 import './bootstrap';
 import '../../public/assets/css/app.css';
@@ -121,7 +122,6 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
-app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete)
 app.component('Avatar', Avatar);
