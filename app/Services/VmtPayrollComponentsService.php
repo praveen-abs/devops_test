@@ -51,8 +51,8 @@ class VmtPayrollComponentsService{
                 'comp_name' => 'required',
                 'comp_type_id' => 'required|numeric',
                 'calculation_type' => 'required',
-                'amount' => 'required',
-                'percentage' => 'required',
+                'amount' => 'nullable',
+                'percentage' => 'nullable',
                 'comp_name_payslip' => 'nullable',
                 'epf' => 'required|numeric',
                 'esi' => 'required|numeric',
@@ -90,7 +90,7 @@ class VmtPayrollComponentsService{
 
               $save_paygroup_comp->comp_name = $comp_name;
               $save_paygroup_comp->comp_type_id =$comp_type_id ;
-              $save_paygroup_comp->calculation_method =$calculation_type;
+              $save_paygroup_comp->calculation_method_id =$calculation_type;
               if($calculation_type == '1'){
                 $save_paygroup_comp->flat_amount =$amount;
               }else if($calculation_type == '2'){
@@ -99,7 +99,7 @@ class VmtPayrollComponentsService{
               $save_paygroup_comp->comp_name_payslip=$comp_name_payslip;
               $save_paygroup_comp->epf=$epf ;
               $save_paygroup_comp->esi =$esi ;
-              $save_paygroup_comp->$category_id =$category_id;
+              $save_paygroup_comp->category_id =$category_id;
               $save_paygroup_comp->is_part_of_empsal_structure =$is_part_of_empsal_structure ;
               $save_paygroup_comp->is_taxable =$is_taxable ;
               $save_paygroup_comp->calculate_on_prorate_basis =$calculate_on_prorate_basis ;
@@ -149,8 +149,8 @@ class VmtPayrollComponentsService{
                 'comp_name' => 'required',
                 'comp_type_id' => 'required|numeric',
                 'calculation_type' => 'required',
-                'amount' => 'required',
-                'percentage' => 'required',
+                'amount' => 'nullable',
+                'percentage' => 'nullable',
                 'comp_name_payslip' => 'nullable',
                 'epf' => 'required|numeric',
                 'esi' => 'required|numeric',
@@ -181,7 +181,7 @@ class VmtPayrollComponentsService{
                 $save_paygroup_comp =$paygroup_components;
                 $save_paygroup_comp->comp_name = $comp_name;
                 $save_paygroup_comp->comp_type_id =$comp_type_id ;
-                $save_paygroup_comp->calculation_method =$calculation_type;
+                $save_paygroup_comp->calculation_method_id =$calculation_type;
                 if($calculation_type == '1'){
                     $save_paygroup_comp->flat_amount =$amount;
                 }else if($calculation_type == '2'){

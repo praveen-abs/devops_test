@@ -1,12 +1,12 @@
 <template>
     <!-- component -->
     <!-- This is an example component -->
-    <div class="flex flex-row h-full" >
+    <div class="flex flex-row h-full">
         <!-- Sidebar -->
         <nav class="bg-gray-900  justify-between flex flex-col transition-all duration-700  overflow-hidden items-center"
             ref="content" :class="[open ? 'w-2' : 'w-1']" @mouseover="$data.open = true" @mouseout="$data.open = false">
             <div class="mt-10 mb-10">
-                <button >
+                <button>
                     <span>
                         <svg class="fill-current h-10 w-10 text-gray-300 hover:text-green-500 " viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,10 +18,11 @@
                 </button>
                 <div class="mt-10">
                     <ul>
-                        <li class="mb-6">
-                            <a href="#" class="flex">
+                        <li class="mb-6 ">
+                            <a href="#" class="flex  " role="button" id="menu-button" aria-expanded="true"
+                                aria-haspopup="true">
                                 <span>
-                                    <svg class="fill-current h-10 w-10 text-gray-300 hover:text-green-500 "
+                                    <svg class="fill-current h-8 w-10 text-gray-300 hover:text-green-500 "
                                         viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M14 3V3.28988C16.8915 4.15043 19 6.82898 19 10V17H20V19H4V17H5V10C5 6.82898 7.10851 4.15043 10 3.28988V3C10 1.89543 10.8954 1 12 1C13.1046 1 14 1.89543 14 3ZM7 17H17V10C17 7.23858 14.7614 5 12 5C9.23858 5 7 7.23858 7 10V17ZM14 21V20H10V21C10 22.1046 10.8954 23 12 23C13.1046 23 14 22.1046 14 21Z"
@@ -30,7 +31,12 @@
                                 </span>
                                 <strong class="fill-current text-gray-300 my-auto"
                                     :class="[open ? '' : 'hidden']">Notifications</strong>
-                                <strong class="transition-all duration-700 " >></strong>
+                                <svg class="-mr-1 h-5 w-5 text-gray-400 my-auto" viewBox="0 0 20 20" fill="currentColor"
+                                    aria-hidden="true" :class="[open ? '' : 'hidden']">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
                             </a>
                         </li>
                         <li class="mb-6">
@@ -91,28 +97,19 @@
                 </a>
             </div>
         </nav>
-        <div class="px-16 py-4 text-gray-700 bg-gray-200 h-screen w-screen">
-            simma
+        <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
+            <div class="card bg-white">
+                <div class="card-body p-3">
+                    <h5 class="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-2xl lg:text-2xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Manoj</span></h5>
+                </div>
+            </div>
+            <div class="px-16 py-4">
+                <!-- Content -->
+
+
+            </div>
         </div>
     </div>
-    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown hover <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
-<!-- Dropdown menu -->
-<div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-      </li>
-      <li>
-        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-      </li>
-    </ul>
-</div>
 </template>
 
 <script>
