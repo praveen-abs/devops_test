@@ -16,7 +16,9 @@ class VmtPayrollComponentsService{
     public function CreatePayRollComponents(
         $comp_name,
         $comp_type_id,
-        $calculation_method,
+        $calculation_type,
+        $amount,
+        $percentage,
         $comp_name_payslip,
         $epf,
         $esi,
@@ -32,7 +34,9 @@ class VmtPayrollComponentsService{
             $data = [
                 'comp_name' => $comp_name,
                 'comp_type_id' => $comp_type_id,
-                'calculation_method' => $calculation_method,
+                'calculation_type' => $calculation_type,
+                'amount' =>$amount,
+                'percentage' =>$percentage,
                 'comp_name_payslip' => $comp_name_payslip,
                 'epf' => $epf,
                 'esi' => $esi,
@@ -46,7 +50,9 @@ class VmtPayrollComponentsService{
             $rules = [
                 'comp_name' => 'required',
                 'comp_type_id' => 'required|numeric',
-                'calculation_method' => 'required',
+                'calculation_type' => 'required',
+                'amount' => 'required',
+                'percentage' => 'required',
                 'comp_name_payslip' => 'nullable',
                 'epf' => 'required|numeric',
                 'esi' => 'required|numeric',
@@ -84,7 +90,12 @@ class VmtPayrollComponentsService{
 
               $save_paygroup_comp->comp_name = $comp_name;
               $save_paygroup_comp->comp_type_id =$comp_type_id ;
-              $save_paygroup_comp->calculation_method =$calculation_method ;
+              $save_paygroup_comp->calculation_method =$calculation_type;
+              if($calculation_type == '1'){
+                $save_paygroup_comp->flat_amount =$amount;
+              }else if($calculation_type == '2'){
+                $save_paygroup_comp->percentage =$percentage;
+              }
               $save_paygroup_comp->comp_name_payslip=$comp_name_payslip;
               $save_paygroup_comp->epf=$epf ;
               $save_paygroup_comp->esi =$esi ;
@@ -111,7 +122,7 @@ class VmtPayrollComponentsService{
         }
     }
 
-    public function UpdatePayRollEarningsComponents( $comp_id,$comp_name,$comp_type_id,$calculation_method,$comp_name_payslip,$epf,$esi,$category_id,$is_part_of_empsal_structure,
+    public function UpdatePayRollEarningsComponents( $comp_id,$comp_name,$comp_type_id, $calculation_type,$amount,$percentage,$comp_name_payslip,$epf,$esi,$category_id,$is_part_of_empsal_structure,
                                             $is_taxable,$calculate_on_prorate_basis, $can_show_inpayslip, $status){
 
            //Validate
@@ -120,7 +131,9 @@ class VmtPayrollComponentsService{
                 'comp_id'=>$comp_id,
                 'comp_name' => $comp_name,
                 'comp_type_id' => $comp_type_id,
-                'calculation_method' => $calculation_method,
+                'calculation_type' => $calculation_type,
+                'amount' =>$amount,
+                'percentage' =>$percentage,
                 'comp_name_payslip' => $comp_name_payslip,
                 'epf' => $epf,
                 'esi' => $esi,
@@ -135,7 +148,9 @@ class VmtPayrollComponentsService{
                 'comp_id' => 'required|numeric',
                 'comp_name' => 'required',
                 'comp_type_id' => 'required|numeric',
-                'calculation_method' => 'required',
+                'calculation_type' => 'required',
+                'amount' => 'required',
+                'percentage' => 'required',
                 'comp_name_payslip' => 'nullable',
                 'epf' => 'required|numeric',
                 'esi' => 'required|numeric',
@@ -166,7 +181,12 @@ class VmtPayrollComponentsService{
                 $save_paygroup_comp =$paygroup_components;
                 $save_paygroup_comp->comp_name = $comp_name;
                 $save_paygroup_comp->comp_type_id =$comp_type_id ;
-                $save_paygroup_comp->calculation_method =$calculation_method ;
+                $save_paygroup_comp->calculation_method =$calculation_type;
+                if($calculation_type == '1'){
+                    $save_paygroup_comp->flat_amount =$amount;
+                }else if($calculation_type == '2'){
+                    $save_paygroup_comp->percentage =$percentage;
+                }
                 $save_paygroup_comp->comp_name_payslip=$comp_name_payslip;
                 $save_paygroup_comp->epf=$epf ;
                 $save_paygroup_comp->esi =$esi ;

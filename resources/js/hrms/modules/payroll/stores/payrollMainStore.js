@@ -102,7 +102,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         if (key == 1) {
 
             if (salaryComponentsUpdated.value) {
-                axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
+                axios.post('/Paygroup/UpdatePayRollEarningsComponents', salaryComponents)
                     .finally(() => {
                         restChars()
                         canShowLoading.value = false
