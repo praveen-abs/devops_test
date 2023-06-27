@@ -37,6 +37,24 @@ class VmtReimbursementsService {
         }
     }
 
+    public function getModeOfTransports(){
+        $query_mode_of_transports = VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+        $response = array();
+
+        foreach($query_mode_of_transports as $singleRecord)
+        {
+            array_push($response, [
+                "label" => $singleRecord->vehicle_type,
+                "value" => $singleRecord->vehicle_type,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message'=> 'Fetched Mode of transport types',
+            'data'=> $response
+        ]);
+    }
 
     public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $entry_mode, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
     {
@@ -77,49 +95,59 @@ class VmtReimbursementsService {
             ]);
         }
 
-        //check if reimbursements already applied for the given date by the user..
-        $query_reimbursements_exists = VmtEmployeeReimbursements::where('user_id', User::where('user_code', $user_code)->first()->id)
-                                        ->where('date', $date);
+        try{
 
 
-        if($query_reimbursements_exists->exists())
-        {
+            //check if reimbursements already applied for the given date by the user..
+            $query_reimbursements_exists = VmtEmployeeReimbursements::where('user_id', User::where('user_code', $user_code)->first()->id)
+                                            ->where('date', $date);
+
+
+            if($query_reimbursements_exists->exists())
+            {
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Reimbursement data already applied for the given date",
+                    "data"=> ""
+                ]);
+            }
+
+
+
+            $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();
+
+            //Save the reimbursement data
+            $emp_reimbursement_data = new VmtEmployeeReimbursements;
+            $emp_reimbursement_data->date = $date;
+            $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
+            $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
+            $emp_reimbursement_data->status = "Pending";
+            $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
+
+            //reimbursement details
+            $emp_reimbursement_data->from = $from;
+            $emp_reimbursement_data->to = $to;
+            $emp_reimbursement_data->vehicle_type_id = $query_reimbursements_vehicle_types->id;
+            $emp_reimbursement_data->distance_travelled = $distance_travelled;
+            $emp_reimbursement_data->user_comments = $user_comments ?? "";
+
+            $emp_reimbursement_data->total_expenses  = $distance_travelled *  $query_reimbursements_vehicle_types->cost_per_km;
+
+            $emp_reimbursement_data->save();
+
             return response()->json([
-                "status" => "failure",
-                "message" => "Reimbursement data already applied for the given date",
-                "data"=> ""
+                'status' => 'success',
+                'message'=> 'Reimbursement details saved',
+                'data'=> ''
             ]);
         }
-
-
-
-        $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();
-
-        //Save the reimbursement data
-        $emp_reimbursement_data = new VmtEmployeeReimbursements;
-        $emp_reimbursement_data->date = $date;
-        $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
-        $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
-        $emp_reimbursement_data->status = "Pending";
-        $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
-
-        //reimbursement details
-        $emp_reimbursement_data->from = $from;
-        $emp_reimbursement_data->to = $to;
-        $emp_reimbursement_data->vehicle_type_id = $query_reimbursements_vehicle_types->id;
-        $emp_reimbursement_data->distance_travelled = $distance_travelled;
-        $emp_reimbursement_data->user_comments = $user_comments ?? "";
-
-        $emp_reimbursement_data->total_expenses  = $distance_travelled *  $query_reimbursements_vehicle_types->cost_per_km;
-
-        $emp_reimbursement_data->save();
-
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Reimbursement details saved',
-            'data'=> ''
-        ]);
-
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'failure',
+                'message'=> 'Failed to save reimbursement data !',
+                'data'=> $e->getMessage()
+            ]);
+        }
     }
 
     public function getReimbursementVehicleTypes(){
