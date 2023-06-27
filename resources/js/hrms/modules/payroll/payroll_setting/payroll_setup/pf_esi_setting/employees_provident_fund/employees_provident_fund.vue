@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between mx-5 my-4">
+    <!-- <div class="flex justify-between mx-5 my-4">
         <div>
         </div>
         <div>
@@ -19,10 +19,10 @@
             <Column field="thisYearProfit" header="Quantity"></Column>
         </DataTable>
 
-    </div>
+    </div> -->
 
     <!-- <non_pf_employees /> -->
-    <!-- <add_new_employee_provident_fund /> -->
+    <add_new_employee_provident_fund />
 </template>
 
 

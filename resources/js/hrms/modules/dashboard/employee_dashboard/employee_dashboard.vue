@@ -10,14 +10,14 @@
       <HolidayWidget />
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4 col-xxl-4">
+  <div class="row" >
+    <div class="col-sm-6 col-md-6 col-xl-4 col-lg-4 col-xxl-4" style="height: 350px;">
       <Notification />
     </div>
-    <div class="col-sm-12 col-md-6 col-xl-4 col-lg-4 col-xxl-4">
+    <div class="col-sm-12 col-md-6 col-xl-4 col-lg-4 col-xxl-4" style="height: 350px;">
       <LeaveBalance />
     </div>
-    <div class="h-3 col-sm-12 col-md-6 col-xl-4 col-lg-4 d-flex col-xxl-4">
+    <div class="h-3 col-sm-12 col-md-6 col-xl-4 col-lg-4 d-flex col-xxl-4" style="height: 350px;">
       <Calender />
     </div>
   </div>

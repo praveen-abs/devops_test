@@ -1,23 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import PayRun from '../payRun.vue'
-import Activity from '../activity/activity.vue'
-import CalculatePayroll from '../calculatedPayrollPerMonth/calculatedPayrollPerMonth.vue'
+import payRunVue from "../payRun.vue";
+import leaveAttendanceDailyWagesVue from "../runPayroll/leaveAttendanceDailyWages/leaveAttendanceDailyWages.vue";
 
-let routes = [{
-    path: '/testing_shelly',
-    name: 'payrun',
-    component: PayRun,
-    path: 'testing_shelly/Activity',
-    name: 'Activity',
-    component: Activity,
-    path: '/testing_shelly/CalculatePayroll',
-    name: 'CalculatePayroll',
-    component: CalculatePayroll,
-  
-}]
 
 const router = createRouter({
-    history: createWebHistory(),
-  routes
-})
-export default router
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
+        {
+            path: "/payrun/:module",
+            name: "home",
+            component: payRunVue,
+        },
+    ],
+});
+export default router;
+

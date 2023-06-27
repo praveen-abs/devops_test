@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full" v-if="usePayrun.currentActiveScreen == 0">
+    <div class="w-full" v-if="route.params.module">
         <!--Current  Financial Year  calculation -->
         <div class="">
             <CurrentFinancialYearStatus />
@@ -25,11 +25,15 @@
             </div>
         </div>
     </div>
-    <Transition>
-        <div class="" v-if="usePayrun.currentActiveScreen == 1">
-            <LeaveAttendanceDailyWages />
-        </div>
-    </Transition>
+    <LeaveAttendanceDailyWages v-if="route.params.module == 'leave'" />
+    <newJoineeAndExitEmployeeVue v-if="route.params.module == 'attendance'"  />
+    <bonusSalaryRevision v-if="route.params.module == 'Salary-Revisions'" />
+    <reimbursementAdhoc v-if="route.params.module == 'Reimbursement'"  />
+    <salaryHold v-if="route.params.module == 'Salaries-Hold'" />
+    <overRide v-if="route.params.module == 'Override'"  />
+
+    <managePayment />
+
 </template>
 
 <script setup>
@@ -39,8 +43,22 @@ import calculatedPayRollPerMonth from './calculatedPayrollPerMonth/calculatedPay
 import PayrollOutCome from './payrollOutcome/payrollOutcome.vue';
 import Activity from './activity/activity.vue'
 
-import LeaveAttendanceDailyWages from './runPayroll/leaveAttendanceDailyWages/leaveAttendanceDailyWages.vue';
 import { payrunMainStore } from './stores/payrunMainStore'
+
+import LeaveAttendanceDailyWages from './runPayroll/leaveAttendanceDailyWages/leaveAttendanceDailyWages.vue';
+import newJoineeAndExitEmployeeVue from './runPayroll/newJoineeAndExitEmployee/newJoineeAndExitEmployee.vue';
+import bonusSalaryRevision from './runPayroll/bonusSalaryRevisionOvertime/bonusSalaryRevisionOvertime.vue'
+import reimbursementAdhoc from './runPayroll/reimbursementAdhocPaymentDeduction/reimbursementAdhocPaymentDeduction.vue'
+import salaryHold from './runPayroll/salaryOnHoldAndArrears/salaryOnHoldAndArrears.vue'
+import overRide from './runPayroll/overRide/overRide.vue'
+
+import managePayment from './payrollOutcome/managePayment.vue';
+
+
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+
 
 const usePayrun = payrunMainStore()
 

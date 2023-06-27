@@ -18,7 +18,7 @@
         3:theme('colors.stone.100'),
         4:theme('colors.green.100'),
         5:theme('colors.indigo.100'),
-        6:theme('colors.emerald.100'),
+        6:theme('colors.pink.100'),
         7:theme('colors.amber.100'),
         8:theme('colors.cyan.100'),
         9:theme('colors.blue.100'),
@@ -29,7 +29,7 @@
         3:theme('colors.stone.400'),
         4:theme('colors.green.400'),
         5:theme('colors.indigo.400'),
-        6:theme('colors.emerald.400'),
+        6:theme('colors.pink.400'),
         7:theme('colors.amber.400'),
         8:theme('colors.cyan.400'),
         9:theme('colors.blue.400'),
@@ -44,7 +44,11 @@
                     background-color: $values-100;
                     border-left: .4em solid;
 
-
+                }
+            }
+            .dynamic-card-without-border {
+                &:nth-child(#{$key}) {
+                    background-color: $values-100;
                 }
             }
         }
@@ -67,7 +71,7 @@
             border-left: .4em solid  theme('colors.indigo.400');
         }
         &:nth-child(6) {
-            border-left: .4em solid  theme('colors.emerald.400');
+            border-left: .4em solid  theme('colors.pink.400');
         }
         &:nth-child(7) {
             border-left: .4em solid  theme('colors.amber.400');
@@ -82,4 +86,6 @@
             border-left: .4em solid  theme('colors.slate.400');
         }
     }
+
+
 }
