@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('comp_nature_id');
             $table->integer('category_id');
             $table->text('calculation_method_id');
-            $table->integer('flat_amount');
+            $table->text('flat_amount');
             $table->text('percentage');
             $table->integer('epf');
             $table->integer('esi');

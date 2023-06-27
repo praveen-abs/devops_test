@@ -386,7 +386,6 @@ class VmtPayrollComponentsService{
               }else{
                 $save_paygroup_comp =new VmtPayrollComponents;
               }
-              $save_paygroup_comp =$paygroup_components;
               $save_paygroup_comp->comp_name = $comp_name;
               $save_paygroup_comp->category_id =$category_id ;
               if($category_type =='allowance'){

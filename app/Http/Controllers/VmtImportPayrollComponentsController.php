@@ -50,7 +50,7 @@ class VmtImportPayrollComponentsController extends Controller
 
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
-    
+
         $currentRowInExcel = 0;
 $i=array_keys($excelRowdata_row);
 
@@ -160,8 +160,8 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->category_id =$component_category->id;
                 $calculation_method_id =VmtPayrollCalculatiomMethod::where('name',strtolower($row["calculation_method"]))->first();
                 $fin_components->calculation_method_id =$calculation_method_id->id;
-                $fin_components->epf =$row["flat_amount"];
-                $fin_components->epf =$row["percentage"];
+                $fin_components->flat_amount =$row["flat_amount"];
+                $fin_components->percentage =$row["percentage"];
                 $fin_components->epf =$row["epf"];
                 $fin_components->esi =$row["esi"];
                 $fin_components->pt =$row["pt"];
