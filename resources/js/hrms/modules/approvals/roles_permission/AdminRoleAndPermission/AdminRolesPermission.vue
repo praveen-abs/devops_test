@@ -10,19 +10,19 @@
             </div>
             <div class="card bg-blue-200 h-20 border-none p-4 ">
                 <div class="d-flex justify-content-between align-items-center ">
-                    <div class=" w-80 ">
+                    <h1 class=" fw-semibold ">Assigned</h1>
+                    <div class=" d-flex justify-content-between align-items-center">
+                        <div class=" w-80 ">
                         <input type="text" name="" id="" placeholder="search" class="rounded h-10 w-80 pl-2 shadow-md">
-                    </div>
-                    <div class="">
-                        <button class=" bg-blue-800 px-4 py-2 rounded text-white mx-3 shadow-md"
-                            @click="saveallRoleDetails">save</button>
-                        <button class="bg-white text-blue-800 px-3 py-2 rounded shadow-md"
+                        </div>
+                        <!-- <button class=" bg-blue-800 px-4 py-2 rounded text-white mx-3 shadow-md"
+                            @click="saveallRoleDetails">save</button> -->
+                        <button class="bg-white text-blue-800 px-3 py-2 rounded shadow-md mx-2"
                             @click="useData.rolesPermission = 2"> <i class="pi pi-plus"></i>
-                            New Role
+                            Assign New Role
                         </button>
                     </div>
                 </div>
-
             </div>
 
             <Dialog header="Confirmation" v-model:visible="canShowConfirmationDialog"
@@ -50,19 +50,32 @@
                     <template #empty> No Employee Details documents for the selected status filter </template>
 
                     <Column :expander="true" />
-                    <Column field="name" header="Roles" sortable></Column>
+                    <Column field="name" header="Roles" sortable>
+                        <template #body="slotProps">
+                            <h1 class=" text-blue-800">{{ slotProps.data.name}}</h1>
+                        </template>
+                    </Column>
                     <Column field="description" header="Role Description">
+                        <template #body="slotProps" >
+                            <h1 class=" text-gray-600" >{{ slotProps.data.description }}</h1>
+                        </template>
+
                     </Column>
 
                     <Column field="assigned_privileged" header="Assigned Privileges" :sortable="false">
-
+                        <template #body="slotProps">
+                            <h1 class=" text-blue-800">{{ slotProps.data.assigned_privileged  }}</h1>
+                        </template>
                     </Column>
                     <Column field="assigned_emp" header="Assigned Employees" :sortable="false">
+                        <template #body="slotProps">
+                            <h1 class=" text-blue-800">{{ slotProps.data.assigned_emp}}</h1>
+                        </template>
 
                     </Column>
                     <Column field="" header="Action">
                         <template #body="slotProps">
-                                <button class=" text-blue-800  hover:underline "
+                                <button class=" text-blue-600 fw-semibold hover:underline "
                                 @click="removeUserRole(slotProps.data)">Manage Users</button>
 
                         </template>
@@ -80,8 +93,6 @@
 
                                 </Column>
                                 <Column field="department_name" header="Department"  >
-
-
                                 </Column>
 
                                 <Column field="" header="Action">
