@@ -5,8 +5,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 $bank_names = \DB::table('vmt_banks')->get();
 
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,9 +26,9 @@ $bank_names = \DB::table('vmt_banks')->get();
 
 <body>
     <div style="display:flex;background-color: #fbfbfb;
-    padding: 20px;
-">
-        <table class="pms_mailTemplate" bgcolor="#D0DBF0"
+    padding: 8px;
+" class="mr-3">
+        <table class="pms_mailTemplate w-full" bgcolor="#D0DBF0"
             style="margin: 0 auto;font-family: 'Poppins', sans-serif;border-collapse:collapse;width:620px;">
             <tr>
                 <td colspan="8">
@@ -37,12 +37,18 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <tbody>
                             <tr>
                                 <td colspan="8"
-                                    style="padding: 20px 30px 10px 30px;
-                               ">
-                                    <div class="logo text-center" style="width:100%;height:30px;">
+                                    style="padding: 20px 30px 10px 30px;display:flex !important;justify-content:space-between ;align-items:center;
+                               "
+                                    class=" ">
+                                    <div class="logo text-center  border" style="width:100%;height:30px;">
                                         <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
                                             alt="" class="" style="width:140px;height:30px;">
                                     </div>
+                                    <div class=" float-right">
+                                        <img class=" border-orange-300 float-right" src="{{ URL::asset($client_logo) }}" alt=""
+                                            style="width:120px;height:30px;">
+                                    </div>
+
                                 </td>
                             </tr>
 
@@ -124,21 +130,39 @@ $bank_names = \DB::table('vmt_banks')->get();
                                             to your account
                                         </h6>
 
-                                        <p style="padding:5px 0;margin:0;"><span style="color: #FF4D00">Note</span>
+                                        <p style="padding:5px 0;margin:0;" class=""><span
+                                                style="color: #FF4D00">Note</span>
                                             <span>-</span> Please change
                                             the password immediately when you login
                                         </p>
-                                        <div style="padding-bottom:5px ">
-                                            <p style="margin:0;">
-                                                Employee Code
-                                            </p>
-                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;"> @php echo $uEmail; @endphp </b></p></p>
+                                        <div style="display:flex !important; width:100%; justify-content:center !important; align-items:center !important;padding-top:10px;padding-left:100px"
+                                            class=" ">
+
+                                            <div style="border-right:1px solid #003056; padding:0 15px 5px 15px  ">
+                                                <p style="margin:0;">
+                                                    Employee Code
+                                                </p>
+                                                <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">
+                                                    @php echo $uEmail; @endphp </b></p>
+                                                </p>
+                                            </div>
+                                            <div style="border-right:1px solid #003056 ; padding:0 15px 5px 15px  ">
+                                                <p style="margin: 0;">Employee Password </p>
+                                                <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">
+                                                    @php echo $uPassowrd; @endphp </b></p>
+                                                </p>
+                                            </div>
+                                            <div style=" padding:0 15px 5px 15px ;">
+                                                <p style="margin: 0;"> Client Code </p>
+                                                <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">
+                                                    @php echo $uPassowrd; @endphp </b></p>
+                                                </p>
+                                            </div>
+
+
                                         </div>
-                                        <div style="padding-bottom:5px ">
-                                            <p style="margin: 0;">Employee Password </p>
-                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;"> @php echo $uPassowrd; @endphp </b></p>
-                                        </p>
-                                        </div>
+
+
 
                                         <div style="padding: 15px 0;">
                                             <a role="button"
@@ -149,8 +173,8 @@ $bank_names = \DB::table('vmt_banks')->get();
                                          border-radius: 50px;
                                          text-decoration: none;
                                          font-weight: 600;
-                                        "  href="{{ $loginLink }}/login"
-                                                        class="mail-button log-in">Login
+                                        "
+                                                href="{{ $loginLink }}/login" class="mail-button log-in">Login
                                             </a>
                                         </div>
 
@@ -237,16 +261,32 @@ $bank_names = \DB::table('vmt_banks')->get();
                                             <img src="{{ URL::asset('assets/images/youtube.png') }}" alt=""
                                                 class="" style="width:24px;height:24px;margin:0 0em 0 1em;">
                                         </a>
+                                        <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
+                                            target="_blank" style="color:transparent">
+                                            <img src="{{ URL::asset('assets/images/email/twitter.png') }}" alt=""
+                                                class="" style="width:24px;height:24px;margin:0 0em 0 1em;">
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="8" class="text-center" style="padding: 5px 0 30px 0px;">
-                                    <div class="logo text-center" style="display:block;text-align:center;">
-                                        <span style="color:#b6b3b3;margin-right:.3em;font-size:10px;">Generated
-                                            by</span>
-                                        <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
-                                            alt="" class="" style="width:100px;height:24px;">
+                                    <div class="logo text-center" style="display:block; text-align:center; ">
+                                        <span
+                                            style="color:#003056;margin-right:.3em; font-size:12px; display:flex;padding: 0 238px; align-items:center !important; ">Copyrights
+                                            <span style="color:#003056;margin:0 0.3em;font-size:12px;">&copy;</span>
+                                            <a class="text-center" href="{{ $loginLink }}/login"
+                                                style="font-size:12px;
+                                        text-decoration:none;
+                                        color:#003056;
+                                        display:block;
+                                        text-align:center;">abshrms.com
+                                            </a>
+                                        </span>
+
+
+                                        {{-- <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" --}}
+                                        {{-- alt="" class="" style="width:100px;height:24px;"> --}}
                                         {{-- <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
                                             alt="" class="" style="width:130px;height:30px;"> --}}
                                     </div>
