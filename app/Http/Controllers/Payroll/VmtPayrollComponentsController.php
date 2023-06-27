@@ -77,7 +77,7 @@ class VmtPayrollComponentsController extends Controller
 
     public function AddAdhocAllowanceDetectionComp(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        // dd($request->all());
+        //dd($request->all());
         $response =$serviceVmtPayrollComponentsService->AddAdhocAllowanceDetectionComp(
             $request->comp_name,
             $request->category_id,
@@ -125,6 +125,13 @@ class VmtPayrollComponentsController extends Controller
     }
 
 
+    public function fetchPayGroupEmpComponents(Request $request)
+    {
+        $paygroupempstructure =VmtPaygroup::get();
+        $paygroupassigncomps =VmtPaygroupComps::get();
+        $paygroupassignempcomps =VmtEmpPaygroup::get();
+        return response()->json($paygroupcomponents);
+    }
     public function addPaygroupCompStructure(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
         // dd($request->all());
