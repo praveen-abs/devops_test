@@ -122,7 +122,7 @@ export default defineConfig({
 
                 // Payslip Template
 
-                'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
+                //'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
 
                 // Roles and permission
 
