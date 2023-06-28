@@ -1614,17 +1614,19 @@ class VmtAttendanceService
                 $response =$query_biometric_response;
 
             }else if(empty($query_response->attendance_mode_checkin) || empty($query_response->attendance_mode_checkout)){
+                $temp_response = null;
 
                 if(empty($query_response->attendance_mode_checkin)){
 
-                    $query_response->checkin_time =  empty($attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($attendanceCheckIn->check_in_time));
-                    $query_response->attendance_mode_checkin = empty($attendanceCheckIn->check_in_time) ? null : 'biometric';
+                    $temp_response['checkin_time'] =  empty($attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($attendanceCheckIn->check_in_time));
+                    $temp_response['attendance_mode_checkin'] = empty($attendanceCheckIn->check_in_time) ? null : 'biometric';
 
                 }else if(empty($query_response->attendance_mode_checkout)){
 
-                    $query_response->checkout_time = empty($attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($attendanceCheckOut->check_out_time));
-                    $query_response->attendance_mode_checkout = empty($attendanceCheckOut->check_out_time) ? null : 'biometric';
+                    $temp_response['checkout_time'] = empty($attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($attendanceCheckOut->check_out_time));
+                    $temp_response['attendance_mode_checkout'] = empty($attendanceCheckOut->check_out_time) ? null : 'biometric';
                 }
+
                 $response =$query_response;
             }
 
