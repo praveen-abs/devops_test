@@ -89,13 +89,21 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             { label: "Others", value: "Others" },
         ]);
 
-        const local_Conveyance_Mode_of_transport = ref([
-            { label: "Public Transport", value: "Public Transport" },
-            { label: "Car", value: "4-Wheeler" },
-            { label: "Bike", value: "2-Wheeler" },
-        ]);
+        // const local_Conveyance_Mode_of_transport = ref([
+        //     { label: "Public Transport", value: "Public Transport" },
+        //     { label: "Car", value: "4-Wheeler" },
+        //     { label: "Bike", value: "2-Wheeler" },
+        // ]);
+        const local_Conveyance_Mode_of_transport = ref();
 
+        async function getModeOfTransport(){
 
+            await axios.get('/reimbursements/getModeOfTransports').then((response) => {
+                local_Conveyance_Mode_of_transport.value = response.data.data;
+                console.log(response.data);
+            });
+
+        }
 
 
         const employee_reimbursement_attachment_upload = (e) => {
@@ -146,30 +154,81 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
 
             let currentObj = this;
 
-            const config = {
-                headers: { 'content-type': 'multipart/form-data' }
-            }
+            // const config = {
+            //     headers: { 'content-type': 'multipart/form-data' }
+            // }
 
-            let formData = new FormData();
+            // let formData = new FormData();
 
-            formData.append('user_code', service.current_user_code)
-            formData.append('reimbursement_type', 'Local Conveyance')
-            formData.append('date', moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
-            formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
-            formData.append('from', employee_local_conveyance.travel_from)
-            formData.append('to', employee_local_conveyance.travel_to)
-            formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
-            formData.append('vehicle_type', employee_local_conveyance.mode_of_transport)
-            formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled);
+            // formData.append('user_code', service.current_user_code)
+            // formData.append('reimbursement_type', 'Local Conveyance')
+            // formData.append('date', moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'))
+            // formData.append('user_comments', employee_local_conveyance.local_conveyance_remarks)
+            // formData.append('from', employee_local_conveyance.travel_from)
+            // formData.append('to', employee_local_conveyance.travel_to)
+            // formData.append('total_expenses', employee_local_conveyance.local_convenyance_total_amount)
+            // formData.append('vehicle_type', employee_local_conveyance.mode_of_transport)
+            // formData.append('distance_travelled', employee_local_conveyance.total_distance_travelled);
 
 
             let url_all_local_convergance = '/reimbursements/saveReimbursementsData';
 
-            console.log("AJAX URL : " + url_all_local_convergance);
+           // console.log("AJAX URL : " + url_all_local_convergance);
 
-            axios.post(url_all_local_convergance, formData)
+            axios.post(url_all_local_convergance, {
+                "user_code" : service.current_user_code,
+                "reimbursement_type" : 'Local Conveyance',
+                "date" : moment(employee_local_conveyance.travelled_date).format('YYYY-MM-DD'),
+                "user_comments" :  employee_local_conveyance.local_conveyance_remarks,
+                "from" :  employee_local_conveyance.travel_from,
+                "to" :  employee_local_conveyance.travel_to,
+                "total_expenses" :  employee_local_conveyance.local_convenyance_total_amount,
+                "vehicle_type" :  employee_local_conveyance.mode_of_transport,
+                "distance_travelled" :  employee_local_conveyance.total_distance_travelled,
+                "entry_mode" :  "web",
+            })
                 .then((response) => {
-                    employee_local_conveyance.local_convenyance_total_amount = response.data.total_amount;
+
+                    if(response.data.status == "success")
+                    {
+                        localconvergance_dailog.value = false;
+
+                        data_local_convergance.value.push(employee_local_conveyance);
+
+                        employee_local_conveyance.local_convenyance_total_amount = response.data.total_amount;
+
+                        toast.add({
+                            severity: "success",
+                            summary: "Saved",
+                            detail: "Local Coveyance Added",
+                            life: 3000,
+                        });
+
+                    }
+                    else
+                    if(response.data.status == "failure")
+                    {
+                        toast.add({
+                            severity: "error",
+                            summary: "Error",
+                            detail: "Failed to save Local Coveyance due to following errors : "+JSON.stringify(response.data.message),
+                            life: 6000,
+                        });
+
+                        console.log("Failure : "+response.data.data);
+                    }
+                    else
+                    {
+                        toast.add({
+                            severity: "error",
+                            summary: "Error",
+                            detail: "Unknown error occured due to following : "+JSON.stringify(response.data.message),
+                            life: 6000,
+                        });
+                    }
+
+                    console.log(employee_local_conveyance.value);
+
                     console.log(response);
 
                 }).catch(err => {
@@ -180,16 +239,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
                     console.log(res);
                     generate_ajax();
                 });
-            localconvergance_dailog.value = false;
 
-            console.log(employee_local_conveyance.value);
-            data_local_convergance.value.push(employee_local_conveyance);
-            toast.add({
-                severity: "success",
-                summary: "Saved",
-                detail: "Local Coveyance Added",
-                life: 3000,
-            });
 
 
         };
@@ -302,7 +352,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             data_reimbursements,
             loading_spinner,
             amount_calculation,
-
+            getModeOfTransport,
             // employee_reimbursement
 
             employee_reimbursement_attachment_upload,

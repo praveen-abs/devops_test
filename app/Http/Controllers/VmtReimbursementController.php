@@ -11,12 +11,18 @@ class VmtReimbursementController extends Controller
        return view('approvals.vmt_employee_reimbursements');
     }
 
+    public function getModeOfTransports(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+        return $serviceVmtReimbursementsService->getModeOfTransports();
+    }
+
     public function saveReimbursementsData(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
 
+        //dd($request->all());
 
         return $serviceVmtReimbursementsService->saveReimbursementData_LocalConveyance( user_code: $request->user_code,
                                                                                         date : $request->date,
                                                                                         reimbursement_type: $request->reimbursement_type,
+                                                                                        entry_mode: $request->entry_mode,
                                                                                         vehicle_type: $request->vehicle_type,
                                                                                         from:  $request->from,
                                                                                         to: $request->to,

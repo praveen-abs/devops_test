@@ -1565,4 +1565,8 @@ class VmtAttendanceController extends Controller
         $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
         return $response;
     }
+
+    public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
+    }
 }

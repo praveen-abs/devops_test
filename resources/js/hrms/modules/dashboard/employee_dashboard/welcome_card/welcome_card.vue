@@ -3,10 +3,10 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8">
-                    <p class="fw-bold f-18 text-primary" id="greeting_text">
+                    <p class="fw-bold f-18 text-blue-900" id="greeting_text">
                         {{ current_session }}
                     </p>
-                    <p class="my-1 fw-bold fs-16 text-orange">
+                    <p class="my-1 fw-bold fs-6 text-orange">
                         {{ service.current_user_name }}
                     </p>
                     <div class="my-2.5 flex">
@@ -20,13 +20,17 @@
                             </span>
                         </label>
                     </div>
-                    <p v-if="welcome_card.check" class="f-12 text-muted" id="time_duration">
-                        Time Duration:
-                        {{ welcome_card.check_in }}
+                    <p  class="f-12 text-muted" id="time_duration">
+                        Check-in time:
+                        {{  }}
                     </p>
-                    <p v-else class="f-12 text-muted" id="time_duration">
+                    <p  class="f-12 text-muted" id="time_duration">
+                        Check-out time:
+                        {{ }}
+                    </p>
+                    <p class="f-12 text-muted" id="time_duration">
                         Time Duration:
-                        {{ welcome_card.check_out }}
+                        {{  }}
                     </p>
                 </div>
                 <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
@@ -158,6 +162,8 @@ const resetChars = () =>{
     usedashboard.check_out = "",
     usedashboard.work_mode =""
 }
+
+
 </script>
 
 <style>

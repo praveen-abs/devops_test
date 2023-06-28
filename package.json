@@ -68,6 +68,7 @@
     "vue-html2pdf": "^1.8.0",
     "vue-loader": "^17.0.1",
     "vue-router": "^4.1.6",
+    "vue-sidebar-menu-akahon": "^1.0.2",
     "vue-sweetalert2": "^5.0.5",
     "vue3-carousel": "^0.3.1",
     "vue3-html2pdf": "^1.1.2"

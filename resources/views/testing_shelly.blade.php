@@ -7,13 +7,16 @@
 @endsection
 @endsection
 @section('content')
-{{-- @vite('resources/js/hrms/modules/paycheck/investments/investment.js')
-<div id="Investments"></div> --}}
- {{-- @vite('resources/js/hrms/modules/exit/exit.js')
-<div id="Exit"></div> --}}
-{{-- @vite('resources/js/hrms/modules/payroll/payslip/payslipMaster.js')
-<div id="payslip"></div> --}}
-@vite('resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js')
-<div id="EmpSalaryAdvanceLoan"></div>
+<!-- @vite('resources/js/hrms/modules/exit/exit.js')
+<div id="Exit"></div> -->
+
+<!-- @vite('resources/js/hrms/modules/configurations/attendance_settings/Attendance_setting_master.js')
+<div id="vjs_attendance_master"></div> -->
+
+<!-- @vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
+<div id="PayRun"></div> -->
+
+@vite('resources/js/hrms/modules/dashboard/dashboard.js')
+<div id="Dashboard"></div>
 </html>
 @endsection
