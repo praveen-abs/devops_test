@@ -365,6 +365,10 @@ export const useLeaveService = defineStore("useLeaveService", () => {
                 })
             }
 
+        }else if(leave_data.selected_leave.includes('Permissions')){
+            console.log(leave_data.permission_total_time);
+            leave_Request_data.hours_diff =  leave_data.permission_total_time;
+
         }
         else{
             toast.add({
@@ -400,7 +404,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         }).then(res=>{
             data_checking.value=false
             if(res.data.status=='success'){
-                leaveApplyDailog.value = false   
+                leaveApplyDailog.value = false
                 Swal.fire(
                     'Success',
                     'leave Applied successfull!',
