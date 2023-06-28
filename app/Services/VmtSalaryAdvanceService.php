@@ -603,7 +603,7 @@ class VmtSalaryAdvanceService
         $temp_ar = array();
         $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts', 0)->get();
         foreach ($all_pending_loans as $single_record) {
-            dd($single_record);
+            //dd($single_record);
             $approver_flow = collect(json_decode($single_record->approver_flow, true))->sortBy('order');
             $ordered_approver_flow = array();
             foreach ($approver_flow as $key => $value) {
@@ -642,5 +642,49 @@ class VmtSalaryAdvanceService
         return $temp_ar;
 
         dd($all_pending_loans);
+    }
+
+    public function rejectOrApproveLoan(
+        $loan_type,
+        $record_id,
+        $status
+    ) {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+                "record_id" => $record_id,
+                "status" => $status
+            ],
+            $rules = [
+                "loan_type" => "required",
+                "record_id" => "required",
+                "status" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try {
+            if($loan_type == 'InterestFreeLoan'){
+
+            }else if($loan_type = 'InterestWithLoan'){
+
+            }
+
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "applyLoan failed",
+                "data" => $e->getMessage(),
+            ]);
+        }
     }
 }
