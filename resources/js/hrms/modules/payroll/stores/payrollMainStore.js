@@ -45,6 +45,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     const dailogNewSalaryComponents = ref(false);
     const salaryComponentsUpdated = ref(false)
+    const adhocComponentsUpdated = ref(false)
 
     const salaryComponents = reactive({
         typeOfComp: null,
@@ -66,7 +67,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     const adhocComponents = ref({
         category_id: 3,
-        category_type: 'adhoc'
+        category_type: 'allowance'
     })
 
     const deductionComponents = ref({
@@ -121,23 +122,42 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
                 for (var key in adhocComponents.value) {
                     form_data.append(key, adhocComponents.value[key]);
                 }
-                   axios.post(adhocUrl,form_data)
-                   .finally(() => {
-                    restChars()
-                    canShowLoading.value = false
-                    getSalaryComponents()
-                })
+                if(adhocComponentsUpdated.value){
+                    axios.post('/Paygroup/UpdateAdhocAllowDetectComp',form_data)
+                    .finally(() => {
+                     restChars()
+                     canShowLoading.value = false
+                     getSalaryComponents()
+                 })
+                }else{
+                    axios.post(adhocUrl,form_data)
+                    .finally(() => {
+                     restChars()
+                     canShowLoading.value = false
+                     getSalaryComponents()
+                 })
+                }
+
             } else
                 if (key == 2) {
                     for (var key in deductionComponents.value) {
                         form_data.append(key, deductionComponents.value[key]);
                     }
-                       axios.post(adhocUrl,form_data)
+                    if(adhocComponentsUpdated.value){
+                       axios.post('/Paygroup/UpdateAdhocAllowDetectComp',form_data)
                        .finally(() => {
                         restChars()
                         canShowLoading.value = false
                         getSalaryComponents()
                     })
+                }else{
+                    axios.post(adhocUrl,form_data)
+                    .finally(() => {
+                     restChars()
+                     canShowLoading.value = false
+                     getSalaryComponents()
+                 })
+                }
                 } else
                     if (key == 4) {
                         for (var key in reimbursementComponents.value) {
@@ -176,15 +196,20 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
             salaryComponents.isConsiderForESI = data.esi
     }
 
-    const editAdhocSalaryComponents = (currentRowData,key) =>{
+    const editAdhocSalaryComponents = (currentRowData,key,boolean) =>{
         console.log(currentRowData);
         if(key == 2){
-            deductionComponents.value = {...currentRowData}
+            adhocComponentsUpdated.value = true
+           let type = {category_type:'deduction'}
+            deductionComponents.value = {...type, ...currentRowData}
         }else
         if(key == 3){
-            adhocComponents.value = {...currentRowData}
+            adhocComponentsUpdated.value = true
+            let type = {category_type:'allowance'}
+            adhocComponents.value = {...type,...currentRowData}
         }else
         if(key == 4){
+            adhocComponentsUpdated.value = true
             reimbursementComponents.value = {...currentRowData}
         }else{
             console.log("No More options");
