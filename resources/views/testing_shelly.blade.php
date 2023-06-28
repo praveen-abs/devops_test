@@ -16,7 +16,10 @@
 <!-- @vite('resources/js/hrms/modules/payroll/payRun/payRun.js')
 <div id="PayRun"></div> -->
 
-@vite('resources/js/hrms/modules/dashboard/dashboard.js')
-<div id="Dashboard"></div>
+<!-- @vite('resources/js/hrms/modules/dashboard/dashboard.js')
+<div id="Dashboard"></div> -->
+
+@vite('resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js')
+<div id="EmpSalaryAdvanceLoan"></div>
 </html>
 @endsection
