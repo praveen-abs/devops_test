@@ -29,7 +29,7 @@
 
                 <!-- end Dashboard Menu -->
                 <li class="mb-1 nav-item">
-                    <a class="pt-0 nav-link sidebar menu-link" href="{{ route('main-dashboard') }}">
+                    <a class="pt-0 nav-link sidebar menu-link" href="{{ route('old-main-dashboard') }}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path
