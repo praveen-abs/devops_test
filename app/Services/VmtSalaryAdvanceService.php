@@ -210,6 +210,16 @@ class VmtSalaryAdvanceService
 
             $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
             $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett->id;
+
+            $get_lasting = VmtEmpSalAdvDetails::get()->sortByDesc('id')->first();
+            if (empty($get_lasting)) {
+                $EmpApplySalaryAmt->request_id = "ABSSA001";
+            } else {
+                $substrid = substr($get_lasting->request_id, 5);
+                $add1 = ($substrid + 1);
+                $requestid = "ABSSA" . "00" . $add1;
+                $EmpApplySalaryAmt->request_id = $requestid;
+            }
             $EmpApplySalaryAmt->eligible_amount = $mxe;
             $EmpApplySalaryAmt->borrowed_amount = $ra;
             $EmpApplySalaryAmt->requested_date = date('Y-m-d');
@@ -444,8 +454,8 @@ class VmtSalaryAdvanceService
         $user_id = auth()->user()->id;
         $temp_ar = array();
         $all_pending_loans = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
-                                                ->join('users','users.id','=','vmt_emp_assign_salary_adv_setting.user_id')
-                                                 ->where('sal_adv_crd_sts', 0)->get();
+            ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')
+            ->where('sal_adv_crd_sts', 0)->get();
         // dd($all_pending_loans);
         foreach ($all_pending_loans as $single_record) {
             //dd($single_record);
@@ -487,18 +497,18 @@ class VmtSalaryAdvanceService
             unset($ordered_approver_flow);
         }
 
-            $pending = array();
-        foreach($temp_ar as $all_pending_advance){
+        $pending = array();
+        foreach ($temp_ar as $all_pending_advance) {
 
-                // dd($all_pending_advance);
+            // dd($all_pending_advance);
 
-                  $sal_adv['id']  =  $all_pending_advance['id'];
-                  $sal_adv['name']  =  $all_pending_advance['name'];
-                  $sal_adv['user_code']  = $all_pending_advance['user_code'];
-                  $sal_adv['advance_amount']  = $all_pending_advance['borrowed_amount'];
-                  $sal_adv['dedction_date']  = $all_pending_advance['dedction_date'];
+            $sal_adv['id'] = $all_pending_advance['id'];
+            $sal_adv['name'] = $all_pending_advance['name'];
+            $sal_adv['user_code'] = $all_pending_advance['user_code'];
+            $sal_adv['advance_amount'] = $all_pending_advance['borrowed_amount'];
+            $sal_adv['dedction_date'] = $all_pending_advance['dedction_date'];
 
-                  array_push($pending,$sal_adv);
+            array_push($pending, $sal_adv);
         }
 
         return $pending;
@@ -641,7 +651,7 @@ class VmtSalaryAdvanceService
         }
         return $temp_ar;
 
-        dd($all_pending_loans);
+
     }
 
     public function rejectOrApproveLoan(
@@ -673,9 +683,9 @@ class VmtSalaryAdvanceService
         }
 
         try {
-            if($loan_type == 'InterestFreeLoan'){
+            if ($loan_type == 'InterestFreeLoan') {
 
-            }else if($loan_type = 'InterestWithLoan'){
+            } else if ($loan_type = 'InterestWithLoan') {
 
             }
 
