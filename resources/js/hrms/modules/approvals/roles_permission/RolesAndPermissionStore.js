@@ -11,6 +11,14 @@ export const UseRolePermissionStore = defineStore('UseRolePermissionStore',()=>{
     const arrayRoleDetails = ref();
     const LoadingScreenStatus = ref();
 
+    const AdminPrivilege = ref();
+
+    async function getAdminRolesDetails(){
+        await axios.get('http://localhost:3000/useRolesAndPermission').then((res)=>{
+            AdminPrivilege.value = res.data;
+        })
+    }
+
     async function getRoleDetails(){
 
         axios.get('/getRoleDetails').then((res)=>{
@@ -18,6 +26,7 @@ export const UseRolePermissionStore = defineStore('UseRolePermissionStore',()=>{
             console.log(arrayRoleDetails.value);
         })
     }
+
 
     async function removeRoleDetails (roles_name,user_id){
     console.log(roles_name,user_id);
@@ -29,15 +38,21 @@ export const UseRolePermissionStore = defineStore('UseRolePermissionStore',()=>{
     }
     // Events
 
+    async function saveRoleDetails(){
+
+    }
+
 
 
     return{
         rolesPermission,
         arrayRoleDetails,
+        AdminPrivilege,
 
         // function
         getRoleDetails,
-        removeRoleDetails
+        removeRoleDetails,
+        getAdminRolesDetails
 
     }
 })

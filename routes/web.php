@@ -356,6 +356,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/createPermission', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'createPermission'])->name('createPermission');
     Route::get('/assignRoleToUsers', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'assignRoleToUsers'])->name('assignRoleToUsers');
     Route::get('/removeRoleToUsers', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'removeRoleToUsers'])->name('removeRoleToUsers');
+    Route::get('/getPermissionDetails', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getPermissionDetails'])->name('getPermissionDetails');
 
 
     //360 Review Module Routing
@@ -509,8 +510,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
     Route::post('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
     Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
-    
-    // Salary Adhoc Components 
+
+    // Salary Adhoc Components
     Route::post('/Paygroup/AddAdhocAllowDetectComp', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddAdhocAllowanceDetectionComp'])->name('AddAdhocAllowanceDetectionComp');
     Route::post('/Paygroup/UpdateAdhocAllowDetectComp', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateAdhocAllowanceDetectionComp'])->name('UpdateAdhocAllowanceDetectionComp');
 
@@ -627,6 +628,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/approvals/onboarding-bulkdocs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processBulkDocumentApprovals'])->name('processBulkDocumentApprovals');
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
     Route::post('/reimbursements/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
+    Route::get('/reimbursements/getModeOfTransports', [App\Http\Controllers\VmtReimbursementController::class, 'getModeOfTransports'])->name('getModeOfTransports');
 
     Route::post('/getLocalConveyanceCost', [App\Http\Controllers\VmtReimbursementController::class, 'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
     Route::post('/testCreateLocalCovergance', [App\Http\Controllers\VmtReimbursementController::class, 'testCreateLocalCovergance'])->name('testCreateLocalCovergance');

@@ -525,6 +525,10 @@ onMounted(async () => {
     employee_service.selected_date = new Date()
 
     await employee_service.generate_ajax();
+
+    await employee_service.getModeOfTransport();
+
+
 });
 </script>
 

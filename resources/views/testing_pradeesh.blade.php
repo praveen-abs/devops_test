@@ -50,6 +50,9 @@ use App\Models\VmtClientMaster;
     {{-- <div class="mt-6" id="SalaryAdvanceLoan"></div> --}}
 
     @vite('resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js')
+    {{-- <div id="SuperAdminRolesPermission"></div> --}}
+
+    @vite('resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js')
     <div id="AdminRolesPermission"></div>
 
 </body>

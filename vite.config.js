@@ -122,7 +122,7 @@ export default defineConfig({
 
                 // Payslip Template
 
-                'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
+                //'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
 
                 // Roles and permission
 
@@ -132,6 +132,8 @@ export default defineConfig({
 
                 // super Admin screen
               'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
+               // Admin screen roles And Permission
+              'resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js',
 
 
                 //PMS forms management

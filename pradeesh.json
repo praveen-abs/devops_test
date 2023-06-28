@@ -1,430 +1,92 @@
 {
-  "InterestWithLoan": [
-  ],
-  "InterestFreeloan": [
+  "useRolesAndPermission":[
     {
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Completed",
-          "Monthly_EMI": "2000",
-          "reviewer_comments":"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam, non?",
-          "Term_year": 3,
-          "EMI_start_month":" 01/01/2002",
-          "EMI_End_month":" 01/01/2002",
-          "Total_Months": 5
-        }
-      ],
-      "id": 1
-    },
-    {
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Completed"
-        }
-      ],
-      "id": 2
-    }
-  ],
-  "submitApproveAndReject": [
-    {
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Completed"
-        }
-      ]
-    }
-  ],
-  "salary_advance": [
-    {
-      "id": 0,
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Pending Approval"
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1002",
-      "Employee_Name": "guru",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Approved",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Pending Approval"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Rejected",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Completed"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Pending Approval"
-        }
-      ]
-    },
-    {
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1002",
-      "Employee_Name": "Arul",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Pending Approval"
-        }
-      ]
-    },
-    {
-      "request_Id": "req_12345",
-      "Emp_Id": "ABS1001",
-      "Employee_Name": "Pradeesh",
-      "Advance_Amount": "200000",
-      "Date": "15/04/2023",
-      "Status": "Pending",
-      "emp_details": [
-        {
-          "request_Id": "req_12345",
-          "Advance_Amount": 20000,
-          "paid_on": "",
-          "Expected_return": "",
-          "Status": "Completed"
-        }
-      ]
-    }
-  ],
-  "SubmitAddNewLocation": [
-    {
-      "id": 2
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 11
-    },
-    {
-      "id": 7
-    },
-    {
-      "id": 10
-    },
-    {
-      "id": 8,
-      "image_url": "aazhutha pooja.jpg"
-    },
-    {
-      "id": 12
-    },
-    {
-      "id": 13
-    },
-    {
-      "id": 14
-    }
-  ],
-  "sumbitAddNewHoliday": [],
-  "SubmitCreateNewList": [
-    {
-      "List_Name": "TN_200",
-      "HolidaysName": [
-        {
-          "id": 1,
-          "holiday": "Pongal"
-        },
-        {
-          "id": 2,
-          "holiday": "Republic Day"
-        },
-        {
-          "id": 3,
-          "holiday": "Good Friday"
-        },
-        {
-          "id": 4,
-          "holiday": "May Day"
-        },
-        {
-          "id": 5,
-          "holiday": "Independence Day"
-        }
-      ],
-      "id": 1
-    },
-    {
-      "id": 2
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 4
-    },
-    {
-      "id": 5
-    },
-    {
-      "List_Name": "",
-      "HolidaysName": [
-        {
-          "id": 5,
-          "holiday": "Independence Day"
-        },
-        {
-          "id": 6,
-          "holiday": "Ganesh Chadurthi"
-        },
-        {
-          "id": 7,
-          "holiday": "Gandhi Jayanthi"
-        }
-      ],
-      "id": 6
-    },
-    {
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
-      "id": 9
-    }
-  ],
-  "CreateNewList": [
-    {
-      "List_Name": "TN_200",
-      "NoOfHolidays": 18,
-      "Location": "Chennai,Coimbatore",
-      "id": 1
-    },
-    {
-      "List_Name": "TN_201",
-      "NoOfHolidays": 18,
-      "Location": "TamilNadu",
-      "id": 2
-    },
-    {
-      "List_Name": "TN_202",
-      "NoOfHolidays": 18,
-      "Location": "TamilNadu",
-      "id": 3
-    },
-    {
-      "List_Name": "TN_203",
-      "NoOfHolidays": 18,
-      "Location": "TamilNadu",
-      "id": 3
-    }
-  ],
-  "HolidayMaster": [
-    {
-      "id": 1,
-      "Location": "TamilNadu",
-      "Holidays_List": "TN_200",
-      "NoOfHolidays": 18,
-      "Employees": 200
-    },
-    {
-      "id": 2,
-      "Location": "Karanataka",
-      "Holidays_List": "TN_200",
-      "NoOfHolidays": 18,
-      "Employees": 200
-    },
-    {
-      "id": 3,
-      "Location": "Hyderbad",
-      "Holidays_List": "TN_200",
-      "NoOfHolidays": 18,
-      "Employees": 200
-    }
-  ],
-  "assingWorkShifts": [
-    {
-      "weeks": "Sunday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 1
-    },
-    {
-      "weeks": "Monday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 2
-    },
-    {
-      "weeks": "Tuesday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 3
-    },
-    {
-      "weeks": "Wednesday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 4
-    },
-    {
-      "weeks": "Thursday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 5
-    },
-    {
-      "weeks": "Friday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 6
-    },
-    {
-      "weeks": "Saturday",
-      "week_off_list": 0,
-      "first_week": 0,
-      "sec_week": 0,
-      "third_week": 0,
-      "fourth_week": 0,
-      "fifth_week": 0,
-      "id": 7
-    }
-  ],
-  "OnboardingFormDetails": [
-    {
-      "id": 1,
-      "emp_code": "BC001",
-      "emp_name": "Prakesh",
-      "onboarding_status": 1,
-      "action": 1
-    },
-    {
-      "id": 2,
-      "emp_code": "BC002",
-      "emp_name": "Arul",
-      "onboarding_status": 0,
-      "action": 1
-    },
-    {
-      "id": 3,
-      "emp_code": "BC003",
-      "emp_name": "nihal",
-      "onboarding_status": 0,
-      "action": 1
-    },
-    {
-      "id": 4,
-      "emp_code": "BC004",
-      "emp_name": "Hari",
-      "onboarding_status": 0,
-      "action": 1
-    }
-  ],
-  "PANCARD": [
-    {
-      "id": 1
-    }
+        "roles_id": 1,
+        "role": "superadmin",
+        "SubCategory":3,
+        "":4,
+        "accordian": [
+          {
+            "roles_id": 1,
+            "Sub_Category_Name": "Asset Privilege",
+            "user_id": 1,
+            "user_code": "SA100",
+            "Privilege": [
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"}
+          ]
+          },
+          {
+            "Sub_Category_Name": "Asset Privilege",
+            "Privilege": [{
+                "Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"}
+          ]
+          }
+        ]
+      },
+      {
+        "roles_id": 4,
+        "role": "manager",
+        "description": "uwfp8fw8egwpguiweg",
+        "assigned_emp": 19,
+        "assigned_privileged": 0,
+        "accordian": [
+          {
+            "roles_id": 4,
+            "roles_name": "manager",
+            "description": "uwfp8fw8egwpguiweg",
+            "name": "ARUNKUMAR",
+            "user_id": 144,
+            "user_code": "PSC0060",
+            "department_name": "Sales"
+          }
+        ]
+      },
+      {
+        "roles_id": 4,
+        "role": "manager",
+        "description": "uwfp8fw8egwpguiweg",
+        "assigned_emp": 19,
+        "assigned_privileged": 0,
+        "accordian": [
+          {
+            "roles_id": 4,
+            "roles_name": "manager",
+            "description": "uwfp8fw8egwpguiweg",
+            "name": "MURALI",
+            "user_id": 146,
+            "user_code": "LAL0002",
+            "department_name": "Sales"
+          }
+        ]
+      },
+      {
+        "roles_id": 4,
+        "role": "manager",
+        "description": "uwfp8fw8egwpguiweg",
+        "assigned_emp": 19,
+        "assigned_privileged": 0,
+        "accordian": [
+          {
+            "roles_id": 4,
+            "roles_name": "manager",
+            "description": "uwfp8fw8egwpguiweg",
+            "name": "RAVIKUMAR K",
+            "user_id": 149,
+            "user_code": "LAL0008",
+            "department_name": "Technical"
+          }
+        ]
+      }
   ],
   "DeleteOnboardingFormDetails": [],
   "posts": [
