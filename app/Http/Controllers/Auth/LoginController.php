@@ -166,7 +166,8 @@ class LoginController extends Controller
                            //$this->syncStaffAttendance();
 
                            //If User has already updated password, so redirect to dashboard page
-                           return redirect(route('main-dashboard'));
+                         //  return redirect(route('main-dashboard'));
+                           return redirect(route('old-main-dashboard'));
                         }
                         else
                         {
