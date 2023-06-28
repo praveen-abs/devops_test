@@ -2,9 +2,11 @@
 const plugin = require('tailwindcss/plugin')
 module.exports = {
     content: [
+        "./resources/views/testing_shelly.blade.php",
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
-        "./resources/**/*.vue"
+        "./resources/**/*.vue",
+        "./node_modules/flowbite/**/*.js"
     ],
     theme: {
         extend: {},
@@ -23,4 +25,7 @@ module.exports = {
             })
         })
     ],
+    plugins: [
+        require('flowbite/plugin')
+    ]
 }
