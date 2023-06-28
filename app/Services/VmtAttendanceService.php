@@ -1673,6 +1673,7 @@ class VmtAttendanceService
                     'vmt_staff_attenndance_device.date as attendance_mode_checkin',
                     'vmt_staff_attenndance_device.date as attendance_mode_checkout',
                 ]);
+
 //get dates from emp_attedance and staff_attedance and store it in an array
 
             $boimetric_basic_attedance_date = array();
@@ -1685,56 +1686,115 @@ class VmtAttendanceService
 
 //get check-in and check-out date from staff_attedance
 
-          $bio_attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
-          ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
-          ->whereDate('date', $recent_attedance_data)
-          ->where('user_Id', $user_code)
-          ->first(['check_out_time']);
-          $biometric_attendanceCheckoutTime=date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time)) > strtotime('12:00:00') ;
+        //   $bio_attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+        //   ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+        //   ->whereDate('date', $recent_attedance_data)
+        //   ->where('user_Id', $user_code)
+        //   ->first(['check_out_time']);
+        //   $biometric_attendanceCheckoutTime=date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time)) > strtotime('12:00:00') ;
 
-          $bio_attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
-          ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
-          ->whereDate('date', $recent_attedance_data)
-          ->where('user_Id',  $user_code)
-          ->first(['check_in_time']);
-          $biometric_attendanceCheckInTime= date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time)) < strtotime('12:00:00') ;
+        //   $bio_attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+        //   ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+        //   ->whereDate('date', $recent_attedance_data)
+        //   ->where('user_Id',  $user_code)
+        //   ->first(['check_in_time']);
+        //   $biometric_attendanceCheckInTime= date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time)) < strtotime('12:00:00') ;
+
+        $bio_attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+        ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+        ->whereDate('date', $recent_attedance_data)
+        ->where('direction', 'out')
+        ->where('user_Id', $user_code)
+        ->first(['check_out_time']);
 
 
+    $bio_attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+        ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+        ->whereDate('date', $recent_attedance_data)
+        ->where('direction', 'in')
+        ->where('user_Id', $user_code)
+        ->first(['check_in_time']);
+
+        //dd( $bio_attendanceCheckIn->check_in_time,$bio_attendanceCheckOut->check_out_time);
 //check employee mode of check-in and check-out
+
 
         $query_basic_att_date =date("Y-m-d", strtotime($query_basic_att->date));
         $query_biometric_response_date =date("Y-m-d", strtotime($query_biometric_response->date));
 
-        if($query_basic_att_date == $recent_attedance_data &&!empty($query_basic_att->attendance_mode_checkin) && !empty($query_basic_att->attendance_mode_checkout)){
+        if($query_basic_att->date == $recent_attedance_data && $query_biometric_response_date == $recent_attedance_data ){
+
+            if( empty($query_basic_att->attendance_mode_checkin) || empty($query_basic_att->attendance_mode_checkout)){
+
+                if(empty($query_basic_att->attendance_mode_checkin)){
+
+                    $query_basic_att->checkin_time =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_basic_att->attendance_mode_checkin = empty($bio_attendanceCheckIn->check_in_time) ? null : 'biometric';
+
+                }else if(empty($query_basic_att->attendance_mode_checkout)){
+
+                    $query_basic_att->checkout_time = empty($bio_attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                    $query_basic_att->attendance_mode_checkout = empty($bio_attendanceCheckOut->check_out_time) ? null : 'biometric';
+                }
+            $response =$query_basic_att;
+        }
+    }else if($query_basic_att_date == $recent_attedance_data ){
+              if(!empty($query_basic_att->attendance_mode_checkin) && !empty($query_basic_att->attendance_mode_checkout)){
 
                 $response =$query_basic_att;
 
-        }else if($query_biometric_response_date == $recent_attedance_data && $biometric_attendanceCheckInTime && $biometric_attendanceCheckoutTime ){
+              }else if( empty($query_basic_att->attendance_mode_checkin) || empty($query_basic_att->attendance_mode_checkout)){
 
-             /*original  date data split into date and time in biometric and assign the time to checkin and checkout ,
-             then date to date and attedance mode.*/
-             $query_biometric_response->date = $recent_attedance_data;
-             $query_biometric_response->checkin_time =date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
-             $query_biometric_response->checkout_time =date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
-             $query_biometric_response->attendance_mode_checkin = 'biometric';
-             $query_biometric_response->attendance_mode_checkout ='biometric';
+                if(empty($query_basic_att->attendance_mode_checkin)){
+
+                    $query_basic_att->checkin_time =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_basic_att->attendance_mode_checkin = empty($bio_attendanceCheckIn->check_in_time) ? null : 'biometric';
+
+                }else if(empty($query_basic_att->attendance_mode_checkout)){
+
+                    $query_basic_att->checkout_time = empty($bio_attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                    $query_basic_att->attendance_mode_checkout = empty($bio_attendanceCheckOut->check_out_time) ? null : 'biometric';
+                }
+            $response =$query_basic_att;
+        }
+
+
+     }//else if($query_biometric_response_date == $recent_attedance_data && $biometric_attendanceCheckInTime && $biometric_attendanceCheckoutTime ){
+        else if($query_biometric_response_date == $recent_attedance_data ){
+
+            if( !empty($bio_attendanceCheckIn->check_in_time) && !empty($bio_attendanceCheckOut->check_out_time)){
+               /*original  date data split into date and time in biometric and assign the time to checkin and checkout ,
+                then date to date and attedance mode.*/
+                    $query_biometric_response->date = $recent_attedance_data;
+                    $query_biometric_response->checkin_time =date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_biometric_response->checkout_time =date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                    $query_biometric_response->attendance_mode_checkin = 'biometric';
+                    $query_biometric_response->attendance_mode_checkout ='biometric';
 
              $response =$query_biometric_response;
 
-         }else if($query_basic_att->date == $recent_attedance_data && $query_biometric_response_date == $recent_attedance_data && empty($query_basic_att->attendance_mode_checkin) || empty($query_basic_att->attendance_mode_checkout)){
+            }else if(empty($bio_attendanceCheckIn->check_in_time) || empty($bio_attendanceCheckOut->check_out_time)){
 
-             if(empty($query_basic_att->attendance_mode_checkin)){
+                if(empty($bio_attendanceCheckIn->check_in_time)){
 
-                 $query_basic_att->checkin_time =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
-                 $query_basic_att->attendance_mode_checkin = empty($bio_attendanceCheckIn->check_in_time) ? null : 'biometric';
+                     $query_biometric_response->date = $recent_attedance_data;
+                     $query_biometric_response->checkin_time =  empty($query_basic_att->check_in_time) ? null : date("H:i:s", strtotime($query_basic_att->check_in_time));
+                     $query_biometric_response->attendance_mode_checkin = empty($query_basic_att->attendance_mode_checkin) ? null : $query_basic_att->attendance_mode_checkin;
+                     $query_biometric_response->checkout_time =date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                     $query_biometric_response->attendance_mode_checkin = 'biometric';
 
-             }else if(empty($query_basic_att->attendance_mode_checkout)){
+                }else if(empty($bio_attendanceCheckIn->check_out_time)){
 
-                 $query_basic_att->checkout_time = empty($bio_attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
-                 $query_basic_att->attendance_mode_checkout = empty($bio_attendanceCheckOut->check_out_time) ? null : 'biometric';
-             }
-             $response =$query_basic_att;
-         }
+                    $query_biometric_response->date = $recent_attedance_data;
+                    $query_biometric_response->checkin_time =date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_biometric_response->attendance_mode_checkin = 'biometric';
+                    $query_biometric_response->checkout_time = empty($query_basic_att->check_out_time) ? null : date("H:i:s", strtotime($query_basic_att->check_out_time));
+                    $query_biometric_response->attendance_mode_checkout = empty($query_basic_att->attendance_mode_checkout) ? null : $query_basic_att->attendance_mode_checkout;
+                }
+                $response =$query_biometric_response;
+
+            }
+        }
 
               return $response;
 
