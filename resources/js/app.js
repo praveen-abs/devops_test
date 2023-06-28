@@ -7,6 +7,7 @@ import '../../public/assets/css/app.css';
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import AccordionTab from 'primevue/accordiontab';
@@ -108,11 +109,14 @@ import VirtualScroller from 'primevue/virtualscroller';
 import leave from './testings/leave.vue'
 
 const app = createApp(leave);
+const pinia=createPinia()
+
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);

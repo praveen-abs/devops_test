@@ -2,7 +2,6 @@
 const plugin = require('tailwindcss/plugin')
 module.exports = {
     content: [
-        "./resources/views/testing_shelly.blade.php",
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",

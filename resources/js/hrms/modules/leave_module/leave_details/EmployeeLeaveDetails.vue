@@ -1,6 +1,6 @@
 <template>
     <LeaveBalance />
-    <div class="mt-3 row">
+    <div class="mt-13 row">
         <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
             <div class="mb-0 card leave-history">
                 <div class="card-body">

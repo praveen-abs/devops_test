@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { initFlowbite } from 'flowbite'
+// import { initFlowbite } from 'flowbite'
+import EmployeeLeaveBalance from '../hrms/modules/leave_module/leave_details/EmployeeLeaveBalance.vue';
+
 
 // initialize components based on data attribute selectors
 onMounted(() => {
-    initFlowbite();
+    // initFlowbite();
 
 })
 
@@ -96,16 +98,14 @@ const toggle = () => {
         </nav>
         <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
             <div class="card bg-white">
-                <div class="card-body p-3">
+                <div class="card-body">
                     <h5 class="mb-4 text-2xl font-extrabold text-gray-900 dark:text-white md:text-2xl lg:text-2xl"><span
                             class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Manoj</span>
                     </h5>
                 </div>
             </div>
             <div class="px-16 py-4">
-                <!-- Content -->
-
-
+                <EmployeeLeaveBalance />
             </div>
         </div>
     </div>

@@ -5,14 +5,21 @@
                 <div>
                     <h3 class="mx-2 my-2 font-semibold">Leave Type</h3>
                 </div>
-                <div class="row">
-                    <button id="box"
-                        class="p-1 mx-3 my-4 border-2 rounded-lg shadow-md col-lg-3 left-line col-md-3 col-xl-2 hover:bg-slate-100 focus:bg-green-100 active:bg-green-200"
-                        @click="check(leaves)" v-for="(leaves) in useStore.leave_types" :key="leaves.id">
-                        <p class="text-lg font-semibold text-center ">{{ leaves.leave_type }}</p>
-                        <p class="my-3 text-xl font-bold text-center">{{ leaves.days_monthly }} <span>days</span></p>
-                        <p class="text-center">Lorem ipsum dolor sit amet consectetur, .</p>
-                    </button>
+
+                <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-6 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 my-4 "
+                    style="display: grid;">
+                    <div class="card p-2 rounded-lg border-1 border-orange-300 cursor-pointer"
+                        v-for="leave_balance in useLeaveStore.array_employeeLeaveBalance" :key="leave_balance">
+                        <div class="card-body">
+                            <h6 class="text-sm h-8 font-bold text-center text-black dark:text-white"> {{ leave_balance.leave_type }} </h6>
+                            <div class="mx-auto">
+                                <h6 class="text-2xl font-bold text-center dark:text-white">{{
+                                    leave_balance.avalied_leaves }}
+                                    <span class="text-sm">days</span>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,7 +110,7 @@
         </div>
 
 
-{{ active }}
+        {{ active }}
 
     </div>
 
@@ -114,6 +121,10 @@
 
 import { onMounted, ref } from 'vue'
 import { useLeaveService } from '../leave_apply/leave_apply_service'
+import { useLeaveModuleStore } from '../LeaveModuleService';
+
+
+const useLeaveStore = useLeaveModuleStore()
 
 const useStore = useLeaveService()
 
@@ -139,25 +150,25 @@ const check = (a) => {
             earnActive.value = true
             break;
         case "Maternity Leave":
-        console.log("Maternity");
-        active.value = true
+            console.log("Maternity");
+            active.value = true
             break;
         case "Paternity Leave":
-        active.value = true
-        console.log("Paternity");
+            active.value = true
+            console.log("Paternity");
             break;
         case "On Duty":
-        active.value = true
-        console.log("earn");
+            active.value = true
+            console.log("earn");
             break;
         case "Compensatory Off":
-        active.value = true
-        console.log("Compensatory");
-        active.value = true
+            active.value = true
+            console.log("Compensatory");
+            active.value = true
             break;
         case "Permission":
-        active.value = true
-        console.log("Permission");
+            active.value = true
+            console.log("Permission");
 
             break;
 
@@ -165,39 +176,4 @@ const check = (a) => {
 }
 </script>
 
-
-<style>
-.p-datepicker .p-datepicker-header {
-    padding: 0.5rem;
-    color: #061328;
-    background: #002f56;
-    font-weight: 600;
-    margin: 0;
-    border-bottom: 1px solid #dee2e6;
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-}
-
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year,
-.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-    color: #fff;
-    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-    font-weight: 600;
-    padding: 0.5rem;
-}
-
-.p-datepicker:not(.p-datepicker-inline) .p-datepicker-header {
-    background: #002f56;
-    color: black;
-}
-
-.p-calendar-w-btn .p-datepicker-trigger {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: #002f56;
-}
-
-.box:active {
-    background: #000;
-}
-</style>
+<style scoped></style>

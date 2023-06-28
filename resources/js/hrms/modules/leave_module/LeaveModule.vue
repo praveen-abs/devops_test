@@ -1,9 +1,10 @@
 <template>
-    <div class="Leave_dashboard mt-30">
-        <div class="pt-1 pb-0 mb-3 tw-card left-line">
+    <div class="Leave_dashboard">
+        <div class="p-2 pb-0 mb-3 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
             <div class="flex justify-between">
 
-                <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
+
+                    <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
                     <li class="nav-item text-muted" role="presentation">
                         <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
                             role="tab">
@@ -45,8 +46,10 @@
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
+
 
         <div class="tab-content" id="pills-tabContent">
 
