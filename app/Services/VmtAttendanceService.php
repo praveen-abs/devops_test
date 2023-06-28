@@ -1613,7 +1613,7 @@ class VmtAttendanceService
 
                 $response =$query_biometric_response;
 
-            }else if(empty($query_response->attendance_mode_checkin) || empty($query_response->attendance_mode_checkout)){
+            }else if(!empty($query_response) && ( empty($query_response->attendance_mode_checkin) || empty($query_response->attendance_mode_checkout))){
                 $temp_response = null;
 
                 if(empty($query_response->attendance_mode_checkin)){
@@ -1628,6 +1628,9 @@ class VmtAttendanceService
                 }
 
                 $response =$query_response;
+            }
+            else{
+                $response = null;
             }
 
         return $response;
