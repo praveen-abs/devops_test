@@ -205,8 +205,8 @@ class VmtSalaryAdvanceService
 
             $current_user_id = auth()->user()->id;
 
-            $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting','vmt_salary_adv_setting.id','=','vmt_emp_assign_salary_adv_setting.salary_adv_id')
-                                                                ->where('user_id', $current_user_id)->first();
+            $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
+                ->where('user_id', $current_user_id)->first();
 
             $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
             $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett->id;
@@ -215,7 +215,7 @@ class VmtSalaryAdvanceService
             $EmpApplySalaryAmt->requested_date  = date('Y-m-d');
             // $EmpApplySalaryAmt->dedction_date  = $repdate;
             $EmpApplySalaryAmt->reason  = $reason;
-            $EmpApplySalaryAmt->emp_approver_flow  = $this->getEmpapproverjson($employee_sal_sett->approver_flow,$employee_sal_sett->user_id);
+            $EmpApplySalaryAmt->emp_approver_flow  = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
             $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
             $EmpApplySalaryAmt->save();
 
@@ -442,56 +442,51 @@ class VmtSalaryAdvanceService
 
         $current_user_id = auth()->user()->id;
 
-                   $getuser_setting =  VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')->get();
+        $getuser_setting =  VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')->get();
 
-                   $res = array();
-                   foreach($getuser_setting as $single_setting){
+        $res = array();
+        foreach ($getuser_setting as $single_setting) {
 
-                               $getuser_approval =  json_decode($single_setting['emp_approver_flow'],true);
+            $getuser_approval =  json_decode($single_setting['emp_approver_flow'], true);
 
-                            //    array_push($res,$getuser_approval);
+            //    array_push($res,$getuser_approval);
 
-                        foreach($getuser_approval as $single_user_approval){
-                                // dd($single_user_approval);
+            foreach ($getuser_approval as $single_user_approval) {
+                // dd($single_user_approval);
 
-                                if($single_user_approval['order'] == 1){
-                                        if($single_user_approval['status'] == 0){
-                                             if($current_user_id == $single_user_approval['approver']){
-                                                  array_push($res,$single_setting);
-                                        }else{
-                                            //     $status['status'] = "already_approved ";
-                                            // array_push($res,$status);
-                                        }
-                                }
+                if ($single_user_approval['order'] == 1) {
+                    if ($single_user_approval['status'] == 0) {
+                        if ($current_user_id == $single_user_approval['approver']) {
+                            array_push($res, $single_setting);
+                        } else {
+                            //     $status['status'] = "already_approved ";
+                            // array_push($res,$status);
                         }
-                                if($single_user_approval['order'] == 2){
-                                        if($single_user_approval['status'] == 0){
-                                             if($current_user_id == $single_user_approval['approver']){
-                                                  array_push($res,$single_setting);
-                                        }else{
-                                            //     $status['status'] = "already_approved";
-                                            // array_push($res,$status);
-                                        }
-                                }
-                        }
-                                if($single_user_approval['order'] == 3){
-                                        if($single_user_approval['status'] == 0){
-                                             if($current_user_id == $single_user_approval['approver']){
-                                                  array_push($res,$single_setting);
-                                        }else{
-                                            //     $status['status'] = "already_approved";
-                                            // array_push($res,$status);
-                                        }
-                                }
-                        }
-
-                   }
-
+                    }
                 }
-                return ($res);
-
-
-
+                if ($single_user_approval['order'] == 2) {
+                    if ($single_user_approval['status'] == 0) {
+                        if ($current_user_id == $single_user_approval['approver']) {
+                            array_push($res, $single_setting);
+                        } else {
+                            //     $status['status'] = "already_approved";
+                            // array_push($res,$status);
+                        }
+                    }
+                }
+                if ($single_user_approval['order'] == 3) {
+                    if ($single_user_approval['status'] == 0) {
+                        if ($current_user_id == $single_user_approval['approver']) {
+                            array_push($res, $single_setting);
+                        } else {
+                            //     $status['status'] = "already_approved";
+                            // array_push($res,$status);
+                        }
+                    }
+                }
+            }
+        }
+        return ($res);
     }
 
     public function applyLoan(
@@ -592,6 +587,7 @@ class VmtSalaryAdvanceService
         $temp_ar = array();
         $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts', 0)->get();
         foreach ($all_pending_loans as $single_record) {
+            dd($single_record);
             $approver_flow = collect(json_decode($single_record->approver_flow, true))->sortBy('order');
             $ordered_approver_flow = array();
             foreach ($approver_flow as $key => $value) {
@@ -601,20 +597,33 @@ class VmtSalaryAdvanceService
                 if (in_array($user_id, $single_ar)) {
                     $current_user_order = $single_ar['order'];
                     if ($current_user_order == 1) {
-                        array_push($temp_ar, $single_record);
+                        if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
+                            array_push($temp_ar, $single_record);
+                        }
                     } else if ($current_user_order == 2) {
-                        dd($ordered_approver_flow);
+                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1) {
+                            array_push($temp_ar, $single_record);
+                        }
                     } else if ($current_user_order == 3) {
+                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1) {
+                            array_push($temp_ar, $single_record);
+                        }
                     } else if ($current_user_order == 4) {
+                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1) {
+                            array_push($temp_ar, $single_record);
+                        }
                     }
                 }
 
                 // dd($current_user_order);
                 // dd();
             }
+            // if($single_record->user_id==214)
+            // dd($temp_ar);
 
             unset($ordered_approver_flow);
         }
+        return $temp_ar;
 
         dd($all_pending_loans);
     }

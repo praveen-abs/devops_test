@@ -58,8 +58,8 @@ use App\Models\VmtClientMaster;
     @vite('resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js')
     {{-- <div id="SuperAdminRolesPermission"></div> --}}
 
-    @vite('resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js')
-    <div id="AdminRolesPermission"></div>
+    @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')
+    <div id="approvals_salary_advance"></div>
 
 </body>
 
