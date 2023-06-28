@@ -52,7 +52,7 @@ class VmtRolesPermissionsController extends Controller
     public function getRoleDetails(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
         // $request->role_name = "superadmin";
-        return $serviceVmtRolesPermissionsService->getRoleDetails($request->role_name);
+        return $serviceVmtRolesPermissionsService->getRoleDetails();
     }
 
     /*
@@ -118,10 +118,19 @@ class VmtRolesPermissionsController extends Controller
     */
     public function assignRoleToUsers(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
 
-        // $request->user_code ="PSC0079";
+        $request->user_code ="PSC0075";
+        $request->role_name = "superadmin";
 
         return $serviceVmtRolesPermissionsService->assignRoleToUsers($request->user_code,$request->role_name);
 
+    }
+
+    public function removeRoleToUsers(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
+
+        // $request->user_code = "PSC0075";
+        // $request->role_name = "superadmin";
+
+        return $serviceVmtRolesPermissionsService->removeRoleToUsers($request->user_code,$request->role_name);
     }
 
 }

@@ -680,7 +680,6 @@ class VmtDashboardService{
         // return ($attendanceResponseArray);
 
 
-        $res= array();
         $count =0;
         $count1=0;
         $count2 = 0;
@@ -699,12 +698,12 @@ class VmtDashboardService{
         }
        $current_mnth = ["absent"=>$count,"present"=>$count1, "not_applied"=>$count2];
 
-        array_push($res, $current_mnth);
+        //array_push($res, $current_mnth);
 
         return response()->json([
             "status" => "success",
             "message" => "",
-            "data" =>$res,
+            "data" =>$current_mnth,
         ]);
     }
     catch(\Exception $e){
@@ -1052,15 +1051,17 @@ class VmtDashboardService{
             $getEmpLeaveBalance =  $this->getEmployeeLeaveBalanceDashboards($user_id, $start_time_period, $end_time_period);
             $getAttenanceReportpermonth = $this->fetchAttendanceDailyReport_PerMonth($user_code, $year, $month);
 
-            return response()->json([
+
+            //dd($getAttenanceReportpermonth->content());
+
+            return response()->json(
                 [
-                    "all_events"=>$getAllEvent,
-                    "all_notification" => $getAllNotification,
-                    "leave_balance_per_month"=>$getEmpLeaveBalance,
-                    "attenance_report_permonth"=>$getAttenanceReportpermonth
-                    // "Leave-report"=>$simma3
+                     "all_events"=>json_decode($getAllEvent->content(), true)['data'],
+                     "all_notification" => json_decode($getAllNotification->content(),true)['data'],
+                     "leave_balance_per_month"=>json_decode($getEmpLeaveBalance->content(), true)['data'],
+                     "attenance_report_permonth"=>json_decode($getAttenanceReportpermonth->content(), true)['data']
                 ]
-            ]);
+            );
 
         }
         catch(\Exception $e){

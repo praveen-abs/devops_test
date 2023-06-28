@@ -7,7 +7,10 @@
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
     use App\Models\VmtGeneralInfo;
+    use App\Models\VmtTempEmployeeProofDocuments;
+    use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
+    use App\Mail\ApproveRejectEmpDetails;
     use App\Models\User;
 
     use App\Models\VmtEmployeePayroll;
@@ -203,9 +206,9 @@
 //                                             ->where('users.is_ssa','0')
 //                                             ->where('users.active','1')
 //                                             ->get(['payroll_date','users.name','users.id']);
-$payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
-        for($i=0; $i < count($payroll_month); $i++)
-        {
+// $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
+//         for($i=0; $i < count($payroll_month); $i++)
+//         {
 
 //             $payroll_month[$i] = date("m",strtotime($payroll_month[$i]));
 //         }
@@ -233,7 +236,6 @@ $emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
                  VmtEmpPaygroup::destroy( $data);
                  VmtPaygroupComps::destroy( $data1);
 
-dd($payroll_available_months);
     ?>
 
 
