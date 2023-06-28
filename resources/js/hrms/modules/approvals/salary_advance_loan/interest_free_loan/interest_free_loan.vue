@@ -242,7 +242,7 @@
 <script setup>
 import { onMounted, ref, reactive } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { UseSalaryAdvanceApprovals } from '../store/salary_advance_loanStore';
+import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
 import dayjs from 'dayjs';
 
 const UseInterestFreeLoan = UseSalaryAdvanceApprovals();

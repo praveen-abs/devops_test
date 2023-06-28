@@ -17,7 +17,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     async function getEmpDetails() {
         canShowLoadingScreen.value = true;
 
-        await axios.get('http://localhost:3000/salary_advance').then((res) => {
+        await axios.get('/SalAdvApproverFlow').then((res) => {
             arraySalaryAdvance.value = res.data;
         }).finally(() => {
             canShowLoadingScreen.value = false;
@@ -41,7 +41,6 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
             reviewer_comments: "",
         }).then(() => {
         }).finally(()=>{
-
             canShowLoadingScreen.value = false;
         })
     }
