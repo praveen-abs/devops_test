@@ -171,8 +171,11 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     };
 
     const time_difference = () => {
-        console.log(leave_data.permission_start_time);
-        console.log(leave_data.permission_end_time);
+        let start_time =leave_data.permission_start_time.toString();
+        let end_time =leave_data.permission_start_time.toString();
+
+         //console.log( start_time.substring(16,24));
+        console.log(leave_data.full_day_leave_date.toISOString().slice(0, 10));
         let t1 = new Date(leave_data.permission_start_time).getTime();
         let t2 = new Date(leave_data.permission_end_time).getTime();
         console.log("start" + t1, "end" + t2);
@@ -191,6 +194,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             half_day_format.value = false;
             custom_format.value = false;
             compensatory_format.value = false;
+            full_day_format.value = true;
         }
          else if (leave_data.selected_leave.includes('Compensatory')) {
             compensatory_format.value = true;
@@ -366,7 +370,9 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             }
 
         }else if(leave_data.selected_leave.includes('Permissions')){
-            console.log(leave_data.permission_total_time);
+            console.log('eeeeeeeeeee           '+leave_data.full_day_leave_date);
+            leave_Request_data.start_date = leave_data.permission_start_time;
+            leave_Request_data.end_date   = leave_data.permission_end_time;
             leave_Request_data.hours_diff =  leave_data.permission_total_time;
 
         }
