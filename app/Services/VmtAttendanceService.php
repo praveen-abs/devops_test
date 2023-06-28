@@ -1679,10 +1679,16 @@ class VmtAttendanceService
                     'vmt_staff_attenndance_device.date as attendance_mode_checkout',
                 ]);
 
+        //dd($query_biometric_response);
 //get dates from emp_attedance and staff_attedance and store it in an array
 
-            $boimetric_basic_attedance_date = array();
-            array_push($boimetric_basic_attedance_date,$query_basic_att->date,$query_biometric_response->date);
+        $boimetric_basic_attedance_date = array();
+
+        if(!empty($query_basic_att))
+            array_push($boimetric_basic_attedance_date, $query_basic_att->date);
+
+        if(!empty($query_biometric_response))
+            array_push($boimetric_basic_attedance_date, $query_biometric_response->date);
 
 //Compare which one is recent
 
