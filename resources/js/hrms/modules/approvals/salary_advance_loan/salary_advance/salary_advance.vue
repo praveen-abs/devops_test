@@ -37,6 +37,7 @@
                     </div>
                 </div>
             </div>
+         {{   SalaryAdvanceApprovals.arraySalaryAdvance}}
             <div class="table-responsive">
                 <DataTable :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true" :rows="10" class=""
                     dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
@@ -65,7 +66,12 @@
                             </h6>
                         </template>
                     </Column>
-                    <template #expansion="slotProps">
+                    <Column field="" header="Action">
+                        <template #body="slotProps">
+                                <button class="" @click="view_more(slotProps.data.emp_details)"> More </button>
+                        </template>
+                    </Column>
+                    <!-- <template #expansion="slotProps">
                         <div>
                             <DataTable :value="slotProps.data.emp_details" responsiveLayout="scroll"
                                 v-model:selection="selectedAllEmployee" :selectAll="selectAll"
@@ -85,7 +91,7 @@
                                 </Column>
                             </DataTable>
                         </div>
-                    </template>
+                    </template> -->
 
                 </DataTable>
             </div>
@@ -218,6 +224,12 @@ async function processBulkApproveReject(status) {
     await SalaryAdvanceApprovals.SAbulkApproveAndReject(currentlySelectedStatus.value, SalaryAdvanceApprovals.arraySalaryAdvance);
 }
 
+
+ function view_more(selectedRowData){
+    console.log(selectedRowData);
+    currentlySelectedStatus.value  = selectedRowData
+
+}
 
 
 
