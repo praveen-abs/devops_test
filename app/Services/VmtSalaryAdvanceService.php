@@ -229,7 +229,7 @@ class VmtSalaryAdvanceService
             } else {
                 $substrid = substr($get_lasting->request_id, 5);
                 $add1 = ($substrid + 1);
-                $requestid = "ABSSA" . "00" . $add1;
+                $requestid = "ABSSA" . "100" . $add1;
                 $EmpApplySalaryAmt->request_id = $requestid;
             }
             $EmpApplySalaryAmt->eligible_amount = $mxe;
@@ -306,9 +306,10 @@ class VmtSalaryAdvanceService
             foreach ($approver_flow as $key => $value) {
                 $ordered_approver_flow[$value['order']] = $value;
             }
-            //     dd( $ordered_approver_flow);
+                // dd( $ordered_approver_flow);
             foreach ($ordered_approver_flow as $single_ar) {
-                if (in_array($user_id, $single_ar)) {
+
+                if ($user_id == $single_ar['approver']) {
                     $current_user_order = $single_ar['order'];
                     if ($current_user_order == 1) {
                         if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
@@ -338,28 +339,36 @@ class VmtSalaryAdvanceService
             unset($ordered_approver_flow);
         }
 
+        // return ($temp_ar);
+
         $pending = array();
         foreach ($temp_ar as $all_pending_advance) {
 
             // dd($all_pending_advance);
 
             $sal_adv['id'] = $all_pending_advance['id'];
+            $sal_adv['user_id'] = $all_pending_advance['user_id'];
             $sal_adv['name'] = $all_pending_advance['name'];
             $sal_adv['user_code'] = $all_pending_advance['user_code'];
             $sal_adv['advance_amount'] = $all_pending_advance['borrowed_amount'];
             $sal_adv['dedction_date'] = $all_pending_advance['dedction_date'];
+            $sal_adv['status'] = $all_pending_advance['sal_adv_crd_sts'];
+            $sal_adv['emp_prevdetails'] = $this->getEmpsaladvDetails($all_pending_advance['user_id']);
 
             array_push($pending, $sal_adv);
+
+
         }
 
-        return $pending;
+        return ($pending);
+
 
     }
 
 
-    public function getEmpsaladvDetails(){
+    public function getEmpsaladvDetails($user_id){
 
-                    $user_id = auth()->user()->id;
+                    // $user_id = auth()->user()->id;
 
                   $getempdetails  =   VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
                                                                     ->where('user_id',$user_id)
@@ -649,7 +658,7 @@ class VmtSalaryAdvanceService
                 $ordered_approver_flow[$value['order']] = $value;
             }
             foreach ($ordered_approver_flow as $single_ar) {
-                if (in_array($user_id, $single_ar)) {
+                if ($user_id == $single_ar['approver']) {
                     $current_user_order = $single_ar['order'];
                     if ($current_user_order == 1) {
                         if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
