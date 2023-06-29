@@ -46,11 +46,13 @@
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                    <Column :expander="true" />
-                    <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
+                    <!-- <Column :expander="true" /> -->
+                    <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
                     <Column field="id" header="Request ID" sortable></Column>
-                    <Column field="user_code" header="Employee ID"></Column>
-                    <Column field="name" header="Employee Name" :sortable="false"></Column>
+                    <Column field="user_code" header="Employee ID">
+                    </Column>
+                    <Column field="name" header="Employee Name" :sortable="false">
+                    </Column>
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
                     <Column field="Status" header="Status">
@@ -68,7 +70,7 @@
                     </Column>
                     <Column field="" header="Action">
                         <template #body="slotProps">
-                                <button class="" @click="view_more(slotProps.data.emp_details)"> More </button>
+                                <button class=" btn bg-blue-700 shadow-sm text-white fw-semibold" @click="view_more(slotProps.data.emp_details)"> View Report </button>
                         </template>
                     </Column>
                     <!-- <template #expansion="slotProps">
@@ -172,6 +174,7 @@ const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
 const reviewer_comments = ref();
+const useEmpData = ref();
 const required_Amount = reactive({
     required_Amount: ""
 });
@@ -227,9 +230,12 @@ async function processBulkApproveReject(status) {
 
  function view_more(selectedRowData){
     console.log(selectedRowData);
-    currentlySelectedStatus.value  = selectedRowData
+    // currentlySelectedStatus.value  = selectedRowData;
+    useEmpData.value = selectedRowData;
 
 }
+
+// function emp_details()
 
 
 

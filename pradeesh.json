@@ -1,4 +1,35 @@
-{
+{"salaryAdvance":[
+    {
+        "id":1,
+        "user_code":"PSC0060",
+        "name":"ARUNKUMAR",
+        "advance_amount":2000,
+        "dedction_date":"2023-06-16",
+        "status":"Pending",
+        "emp_details":[{
+            "id":2,
+            "advance_amount":"20,000",
+            "paid_on":"12/02/2023",
+            "Expected_Return":"12/02/2023",
+            "status":"Pending"
+        },
+        {
+            "id":3,
+            "advance_amount":"20,000",
+            "paid_on":"12/02/2023",
+            "Expected_Return":"12/02/2023",
+            "status":"Approved"
+        },
+        {
+            "id":4,
+            "advance_amount":"20,000",
+            "paid_on":"12/02/2023",
+            "Expected_Return":"12/02/2023",
+            "status":"Rejected"
+        }]
+    }
+],
+
   "useRolesAndPermission":[
     {
         "roles_id": 1,
