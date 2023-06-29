@@ -65,7 +65,7 @@ class VmtSalaryAdvanceController extends Controller
     public function getEmpsaladvDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
-        return $vmtSalaryAdvanceService->getEmpsaladvDetails();
+        return $vmtSalaryAdvanceService->getEmpsaladvDetails($request->user_id);
     }
 
 
