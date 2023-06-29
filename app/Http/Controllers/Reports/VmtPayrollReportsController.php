@@ -9,8 +9,8 @@ use App\Models\Bank;
 use App\Models\ConfigPms;
 use App\Models\VmtPMS_KPIFormAssignedModel;
 use App\Models\VmtPMS_KPIFormReviewsModel;
-use App\Models\VmtEmployeePaySlipV2;
 use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtEmployeePaySlipV2;
 use App\Models\VmtPayroll;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\User;
@@ -21,6 +21,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
+//test
 class VmtPayrollReportsController extends Controller
 {
 
@@ -64,7 +65,7 @@ class VmtPayrollReportsController extends Controller
     }
 
     public function fetchPayrollReport(Request $request){
-        //  dd($request->all());
+        // dd($request->all());
         $payroll_data=VmtEmployeePaySlipV2::leftjoin('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
          ->leftjoin('vmt_payroll','vmt_payroll.id','=','vmt_emp_payroll.payroll_id')
          ->leftJoin('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'vmt_emp_payroll.user_id')
@@ -121,7 +122,7 @@ class VmtPayrollReportsController extends Controller
                  //Overtime Arrears
                  'vmt_employee_payslip_v2.total_earned_gross as TOTAL_EARNED_GROSS',
                  'vmt_employee_payslip_v2.pf_wages as PF_WAGES',
-                 'vmt_employee_payslip_v2.pf_wages_arrear_epfr as PF_WAGES_ARREAR_EPFR',
+                 'vmt_employee_payslip_v2.pf_wages_arrear as PF_WAGES_ARREAR_EPFR',
                  'vmt_employee_payslip_v2.epfr as EPFR',
                  'vmt_employee_payslip_v2.epfr_arrear as EPFR_ARREAR',
                  'vmt_employee_payslip_v2.edli_charges as EDLI_CHARGES',

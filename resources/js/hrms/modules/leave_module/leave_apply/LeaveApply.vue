@@ -535,6 +535,7 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
+        console.log(service.leave_data.selected_leave);
 
         if(service.leave_data.selected_leave.includes('Compensatory')){
         cp$.value.$validate()
@@ -589,6 +590,19 @@ const submitForm = () => {
         } else {
             console.log('Form failed validation')
         }
+    }else if(service.leave_data.selected_leave.includes('Permissions')){
+        console.log(service.leave_data.permission_total_time);
+        if (!h$.value.$error) {
+            // if ANY fail validation
+            console.log('Form successfully submitted.')
+            r$.value.$validate()
+            if (!r$.value.$error) {
+                service.Submit()
+            }
+        } else {
+            console.log('Form failed validation')
+        }
+
     }
 
 

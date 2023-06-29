@@ -323,7 +323,7 @@ class VmtAttendanceController extends Controller
                 }
             } else {
                 //If its not half day leave, then its fullday or custom days
-                $diff = intval($request->no_of_days);
+                $diff = intval($request->no_of_days)." ";
             }
 
             $mailtext_total_leave = $diff . " Day(s)";
@@ -338,7 +338,7 @@ class VmtAttendanceController extends Controller
         $emp_leave_details->start_date = $request->start_date;
         $emp_leave_details->end_date = $request->end_date;
         $emp_leave_details->leave_reason = $request->leave_reason;
-        $emp_leave_details->total_leave_datetime = $request->no_of_days . " " . $request->leave_session;
+        $emp_leave_details->total_leave_datetime = $diff . $request->leave_session;
         // $emp_leave_details->total_leave_datetime = $diff;
 
 
