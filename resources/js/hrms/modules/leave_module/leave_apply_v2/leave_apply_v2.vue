@@ -32,7 +32,7 @@
         </div>
         <div class="mx-auto my-4 card top-line">
             <div class="card-body row">
-                <div class="col-6 border-1">
+                <div class="col-6">
                     <div>
                         <h3 class="mx-2 my-4 font-semibold">Set Range</h3>
                     </div>
