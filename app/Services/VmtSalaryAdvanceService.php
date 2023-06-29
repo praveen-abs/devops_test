@@ -712,9 +712,10 @@ class VmtSalaryAdvanceService
         }
 
         try {
+            $user_id=auth()->user()->id;
             if ($loan_type == 'InterestFreeLoan') {
 
-            } else if ($loan_type = 'InterestWithLoan') {
+            } else if ($loan_type == 'InterestWithLoan') {
 
             }
 
