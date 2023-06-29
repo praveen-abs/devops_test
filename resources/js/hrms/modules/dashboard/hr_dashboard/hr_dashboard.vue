@@ -35,4 +35,20 @@ import EmployeeStatus from "./employee_status/employee_status.vue";
 import LeaveRequest from "./leave_requests/leave_request.vue";
 import Notifiction from "./notifications/notification.vue";
 import OverallEmployee from "./overall_employees/overall_employee.vue";
+import { useMainDashboardStore } from '../stores/dashboard_service';
+
+// onMounted(async ()=>{
+//     //canShowLoadingScreen.value = true;
+//    // await useDashboard.getMainDashboardData();
+//     //await useDashboard.getAttendanceStatus();
+//     //Service();
+//     //canShowLoadingScreen.value = false;
+
+// })
+
+async function getHRDashboardData(){
+
+}
+
+
 </script>

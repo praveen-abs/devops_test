@@ -43,6 +43,10 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
         });
     }
 
+    async function getHRDashboardData(){
+
+    }
+
     async function getAttendanceStatus(user_code, date){
         await axios.get('/getAttendanceStatus',{
             user_code : 'PLIPL068',
