@@ -847,6 +847,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/showEmployeeview', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvShowEmployeeView']);
     Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvEmpSaveSalaryAmt']);
     Route::get('/SalAdvApproverFlow', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvApproverFlow']);
+    Route::get('/getEmpsaladvDetails', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getEmpsaladvDetails']);
 
     //Travel Advance
 

@@ -112,7 +112,9 @@
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Repayment</span>
             <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
-                salary <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong> </p>
+                salary <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong>
+                <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.repdate" optionLabel="date" optionValue="date" placeholder="Select a City" class="w-full md:w-14rem" />
+            </p>
         </div>
 
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">

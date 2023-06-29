@@ -62,6 +62,11 @@ class VmtSalaryAdvanceController extends Controller
 
         return $vmtSalaryAdvanceService->SalAdvApproverFlow();
     }
+    public function getEmpsaladvDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->getEmpsaladvDetails();
+    }
 
 
     public function saveTravelAdvanceSettings(Request $request)

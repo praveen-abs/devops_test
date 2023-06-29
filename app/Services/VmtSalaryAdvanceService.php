@@ -169,8 +169,8 @@ class VmtSalaryAdvanceService
                 for ($i = 1; $i <= $employee_salary_adv->deduction_period_of_months; $i++) {
 
                     $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
-
-                    array_push($multiple_months, $repayment_months);
+                                    $dates['date'] = $repayment_months;
+                    array_push($multiple_months, $dates);
                 }
 
                 // dd( $repayment_months);
@@ -201,9 +201,21 @@ class VmtSalaryAdvanceService
     public function SalAdvEmpSaveSalaryAmt($mxe, $ra, $repdate, $reason)
     {
 
-        try {
 
-            $current_user_id = auth()->user()->id;
+        $current_user_id = auth()->user()->id;
+
+        $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
+        ->where('user_id', $current_user_id)
+        ->whereYear('requested_date',date("Y"))
+        ->whereMonth('requested_date',date("m"))
+        ->first();
+
+       if(!empty($already_applied)){
+        return response()->json([
+            "status" => "failure",
+            "message" => "Already applied this month",
+        ]);
+       }else{
 
             $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
                 ->where('user_id', $current_user_id)->first();
@@ -223,7 +235,7 @@ class VmtSalaryAdvanceService
             $EmpApplySalaryAmt->eligible_amount = $mxe;
             $EmpApplySalaryAmt->borrowed_amount = $ra;
             $EmpApplySalaryAmt->requested_date = date('Y-m-d');
-            // $EmpApplySalaryAmt->dedction_date  = $repdate;
+            $EmpApplySalaryAmt->dedction_date  = $repdate;
             $EmpApplySalaryAmt->reason = $reason;
             $EmpApplySalaryAmt->emp_approver_flow = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
             $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
@@ -234,14 +246,9 @@ class VmtSalaryAdvanceService
                 'message' => 'Done',
 
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "",
-                "data" => $e,
-            ]);
         }
     }
+
 
     public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow)
     {
@@ -281,6 +288,94 @@ class VmtSalaryAdvanceService
         }
     }
 
+
+    public function SalAdvApproverFlow()
+    {
+
+        $user_id = auth()->user()->id;
+        $temp_ar = array();
+        $all_pending_loans = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
+            ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')
+            ->where('sal_adv_crd_sts', 0)->get();
+        // dd($all_pending_loans);
+        foreach ($all_pending_loans as $single_record) {
+            //dd($single_record);
+            $approver_flow = collect(json_decode($single_record->emp_approver_flow, true))->sortBy('order');
+
+            $ordered_approver_flow = array();
+            foreach ($approver_flow as $key => $value) {
+                $ordered_approver_flow[$value['order']] = $value;
+            }
+            //     dd( $ordered_approver_flow);
+            foreach ($ordered_approver_flow as $single_ar) {
+                if (in_array($user_id, $single_ar)) {
+                    $current_user_order = $single_ar['order'];
+                    if ($current_user_order == 1) {
+                        if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
+                            array_push($temp_ar, $single_record);
+                        }
+                    } else if ($current_user_order == 2) {
+                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
+                            array_push($temp_ar, $single_record);
+                        }
+                    } else if ($current_user_order == 3) {
+                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
+                            array_push($temp_ar, $single_record);
+                        }
+                    } else if ($current_user_order == 4) {
+                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
+                            array_push($temp_ar, $single_record);
+                        }
+                    }
+                }
+
+                // dd($current_user_order);
+                // dd();
+            }
+            // if($single_record->user_id==214)
+            // dd($temp_ar);
+
+            unset($ordered_approver_flow);
+        }
+
+        $pending = array();
+        foreach ($temp_ar as $all_pending_advance) {
+
+            // dd($all_pending_advance);
+
+            $sal_adv['id'] = $all_pending_advance['id'];
+            $sal_adv['name'] = $all_pending_advance['name'];
+            $sal_adv['user_code'] = $all_pending_advance['user_code'];
+            $sal_adv['advance_amount'] = $all_pending_advance['borrowed_amount'];
+            $sal_adv['dedction_date'] = $all_pending_advance['dedction_date'];
+
+            array_push($pending, $sal_adv);
+        }
+
+        return $pending;
+
+    }
+
+
+    public function getEmpsaladvDetails(){
+
+                    $user_id = auth()->user()->id;
+
+                  $getempdetails  =   VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
+                                                                    ->where('user_id',$user_id)
+                                                                    ->get(
+                                                                        [
+                                                                            'vmt_emp_sal_adv_details.request_id',
+                                                                            'vmt_emp_sal_adv_details.borrowed_amount',
+                                                                            'vmt_emp_sal_adv_details.requested_date',
+                                                                            'vmt_emp_sal_adv_details.dedction_date',
+                                                                            'vmt_emp_sal_adv_details.sal_adv_crd_sts as status',
+
+                                                                        ]
+                                                                    );
+
+                          return $getempdetails;
+                }
 
 
     public function saveIntersetAndIntersetFreeLoanSettings(
@@ -448,72 +543,6 @@ class VmtSalaryAdvanceService
         return null;
     }
 
-    public function SalAdvApproverFlow()
-    {
-
-        $user_id = auth()->user()->id;
-        $temp_ar = array();
-        $all_pending_loans = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
-            ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')
-            ->where('sal_adv_crd_sts', 0)->get();
-        // dd($all_pending_loans);
-        foreach ($all_pending_loans as $single_record) {
-            //dd($single_record);
-            $approver_flow = collect(json_decode($single_record->emp_approver_flow, true))->sortBy('order');
-
-            $ordered_approver_flow = array();
-            foreach ($approver_flow as $key => $value) {
-                $ordered_approver_flow[$value['order']] = $value;
-            }
-            //     dd( $ordered_approver_flow);
-            foreach ($ordered_approver_flow as $single_ar) {
-                if (in_array($user_id, $single_ar)) {
-                    $current_user_order = $single_ar['order'];
-                    if ($current_user_order == 1) {
-                        if ($ordered_approver_flow[$current_user_order]['status'] == 0) {
-                            array_push($temp_ar, $single_record);
-                        }
-                    } else if ($current_user_order == 2) {
-                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
-                            array_push($temp_ar, $single_record);
-                        }
-                    } else if ($current_user_order == 3) {
-                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
-                            array_push($temp_ar, $single_record);
-                        }
-                    } else if ($current_user_order == 4) {
-                        if ($ordered_approver_flow[$current_user_order - 1]['status'] == 1 && $ordered_approver_flow[$current_user_order]['status'] == 0) {
-                            array_push($temp_ar, $single_record);
-                        }
-                    }
-                }
-
-                // dd($current_user_order);
-                // dd();
-            }
-            // if($single_record->user_id==214)
-            // dd($temp_ar);
-
-            unset($ordered_approver_flow);
-        }
-
-        $pending = array();
-        foreach ($temp_ar as $all_pending_advance) {
-
-            // dd($all_pending_advance);
-
-            $sal_adv['id'] = $all_pending_advance['id'];
-            $sal_adv['name'] = $all_pending_advance['name'];
-            $sal_adv['user_code'] = $all_pending_advance['user_code'];
-            $sal_adv['advance_amount'] = $all_pending_advance['borrowed_amount'];
-            $sal_adv['dedction_date'] = $all_pending_advance['dedction_date'];
-
-            array_push($pending, $sal_adv);
-        }
-
-        return $pending;
-
-    }
 
     public function applyLoan(
         $loan_type,
