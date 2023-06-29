@@ -48,6 +48,21 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
         isEligibleEmp:'',
     })
 
+    const arraySalaryDetails = ref();
+
+    async function getSalaryDetails(){
+
+        let url = "/getEmpsaladvDetails"
+
+        await axios.get(url).then((res)=>{
+            arraySalaryDetails.value = res.data;
+            console.log(arraySalaryDetails.value);
+        }).finally(()=>{
+
+        });
+    }
+
+
 
     const fetchSalaryAdvance = () => {
         canShowLoading.value = true
@@ -270,7 +285,9 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
         // SalaryAdvanceFeature
 
-        dailogSalaryAdvance, salaryAdvanceEmployeeData, sa,fetchSalaryAdvance, saveSalaryAdvance,
+        dailogSalaryAdvance, salaryAdvanceEmployeeData,sa,fetchSalaryAdvance, saveSalaryAdvance,
+        arraySalaryDetails,
+        getSalaryDetails,
 
         // Interest Free Loan
 
