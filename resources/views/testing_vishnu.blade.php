@@ -12,6 +12,7 @@
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
     use App\Models\User;
+    use App\Models\VmtEmpPaygroup;
 
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -223,18 +224,24 @@
 
 // $paygroup_components =VmtPaygroupComps::where('paygroup_id',1)->get(['id'])->destroy;
 // VmtPaygroupComps::destroy($paygroup_components);
-$paygroup_comps =VmtPaygroupComps::where('paygroup_id','41');
+// $paygroup_comps =VmtPaygroupComps::where('paygroup_id','41');
 
-if(!empty($paygroup_comps)){
-$data1 =$paygroup_comps->get(['id']);
-}
-$emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
-                if(!empty($emp_paygroup_components)){
-                    $data =$emp_paygroup_components->get(['id']);
-                }
-                dd( $data);
-                 VmtEmpPaygroup::destroy( $data);
-                 VmtPaygroupComps::destroy( $data1);
+// if(!empty($paygroup_comps)){
+// $data1 =$paygroup_comps->get(['id']);
+// }
+// $emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
+//                 if(!empty($emp_paygroup_components)){
+//                     $data =$emp_paygroup_components->get(['id']);
+//                 }
+//                 dd( $data);
+//                  VmtEmpPaygroup::destroy( $data);
+//                  VmtPaygroupComps::destroy( $data1);
+// $response=array();
+$paygroupassignempcomps =VmtEmpPaygroup::get();
+           $response['paygroupassignempcomps'] =$paygroupassignempcomps;
+           
+
+              dd($select_employee->toarray());
 
     ?>
 

@@ -63,7 +63,7 @@
                 </Column>
                 <Column>
                     <template #body="{ data }">
-                        <button v-if="data.is_default == 0" class="p-2" v-tooltip.bottom="'fixed variable'">
+                        <button v-if="data.is_default == 1" class="p-2" v-tooltip.bottom="'fixed variable'">
                             <i class="pi pi-lock" style="font-size: 1.5rem"></i>
                         </button>
                         <div v-else>

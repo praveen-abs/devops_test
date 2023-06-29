@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\VmtEmpPaygroup;
 use App\Models\VmtPaygroup;
 use App\Models\VmtPaygroupComps;
+use App\Models\VmtPayrollIntegrations;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtPayrollComponents;
 use Illuminate\Support\Facades\Validator;
@@ -413,7 +414,7 @@ class VmtPayrollComponentsService{
 
  }
 
-    public function UpdateAdhocAllowanceDetectionComp($comp_id,$comp_name,$is_taxable,$category,$category_type,$impact_on_gross){
+    public function UpdateAdhocAllowanceDetectionComp($comp_id,$comp_name,$is_taxable,$category_id,$category_type,$impact_on_gross){
         //Validate
         $validator = Validator::make(
          $data = [
@@ -618,6 +619,161 @@ class VmtPayrollComponentsService{
         }
 
 }
+ public function addPayrollIntegrations($accounting_soft_name,$accounting_soft_logo,$description,$status){
+            //Validate
+            $validator = Validator::make(
+            $data = [
+                'accounting_soft_name' => $accounting_soft_name,
+                'accounting_soft_logo' => $accounting_soft_logo,
+                'description' => $description,
+                'status' => $status,
+
+            ],
+            $rules = [
+                'accounting_soft_name' => 'required',
+                'accounting_soft_logo' => 'required',
+                'description' => 'required|numeric',
+                'status' => 'required|numeric',
+
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            $paygroup_components =VmtPayrollIntegrations::where('id',$comp_id)->first();
+            if(!empty($paygroup_components)){
+                $save_paygroup_comp =$paygroup_components;
+                $save_paygroup_comp->accounting_soft_name = $accounting_soft_name;
+                $save_paygroup_comp->accounting_soft_logo =$accounting_soft_logo ;
+                $save_paygroup_comp->description =$description ;
+                $save_paygroup_comp->status =$status ;
+                $save_paygroup_comp->save();
+            $response=([
+                "status" => "success",
+                "message" => "Component updated successfully",
+            ]);
+
+            }else{
+            $response=([
+                "status" => "failure",
+                "message" => "No component is present ",
+            ]);
+            }
+            return $response;
+
+        }
+        catch(\Exception $e){
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to update component",
+            "data" => $e->getmessage(),
+        ]);
+
+        }
+
+  }
+
+
+
+//   public function ShowAssignEmployeelist($department_id, $designation, $work_location, $client_name)
+//   {
+
+//       try {
+
+//           $select_employee = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+//               ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+//               ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
+//               ->where('process', '<>', 'S2 Admin')
+//               ->select(
+//                   'users.name',
+//                   'users.user_code',
+//                   'vmt_department.name as department_name',
+//                   'vmt_employee_office_details.designation',
+//                   'vmt_employee_office_details.work_location',
+//                   'vmt_client_master.client_name',
+//               );
+
+//           if (!empty($department_id)) {
+//               $select_employee = $select_employee->where('department_id', $department_id);
+//           }
+//           if (!empty($designation)) {
+//               $select_employee = $select_employee->where('designation', $designation);
+//           }
+//           if (!empty($work_location)) {
+//               $select_employee = $select_employee->where('work_location', $work_location);
+//           }
+//           if (!empty($client_name)) {
+//               $select_employee = $select_employee->where('client_id', $client_name);
+//           }
+
+//           return $select_employee->get();
+//       } catch (\Exception $e) {
+//           return response()->json([
+//               "status" => "failure",
+//               "message" => "Error fetching the employee",
+//               "data" => $e,
+//           ]);
+//       }
+//   }
+
+//   public function getAllDropdownFilterSetting()
+//   {
+
+//       $current_client_id = auth()->user()->client_id;
+
+
+//       try {
+
+//           $queryGetDept = Department::select('id', 'name')->get();
+
+//           $queryGetDesignation = VmtEmployeeOfficeDetails::select('designation')->where('designation', '<>', 'S2 Admin')->distinct()->get();
+
+//           $queryGetLocation = VmtEmployeeOfficeDetails::select('work_location')->distinct()->get();
+
+//           $queryGetstate = State::select('id', 'state_name')->distinct()->get();
+
+//           if ($current_client_id == 1) {
+
+//               $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+//           } elseif ($current_client_id == 0) {
+
+//               $queryGetlegalentity = VmtClientMaster::select('id', 'client_name')->distinct()->get();
+//           } elseif ($current_client_id == 2) {
+
+//               $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+//           } elseif ($current_client_id == 3) {
+
+//               $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+//           } elseif ($current_client_id == 4) {
+
+//               $queryGetlegalentity = VmtClientMaster::where('id', $current_client_id)->distinct()->get(['id', 'client_name']);
+//           }
+
+
+//           $getsalary  = ["department" => $queryGetDept, "designation" => $queryGetDesignation, "location" => $queryGetLocation, "state" => $queryGetstate, "legalEntity" => $queryGetlegalentity];
+
+
+//           return  response()->json($getsalary);
+//       } catch (\Exception $e) {
+//           return response()->json([
+//               "status" => "failure",
+//               "message" => "Error fetching the dropdown value",
+//               "data" => $e,
+//           ]);
+//       }
+//   }
 
 
     public function addPaygroupCompStructure($paygroup_name,$description,$pf,$esi,$tds,$fbp,$sal_components,$assigned_employees)
@@ -704,6 +860,8 @@ class VmtPayrollComponentsService{
                     $response=([
                         "status" => "failure",
                         "message" => "Error while add Salary Structure ",
+                        "data1" => $assign_comps_to_paygroup['data'],
+                        "data2" => $assign_paygroupcomps_to_emp['data'],
                     ]);
                 }
                  return response()->json($response);
@@ -846,7 +1004,7 @@ class VmtPayrollComponentsService{
                 foreach ($sal_components as $key => $singlecomp) {
                     $assign_comp_paygroup = new VmtPaygroupComps;
                     $assign_comp_paygroup->paygroup_id=$paygroup_id;
-                    $assign_comp_paygroup->comp_id=$singlecomp;
+                    $assign_comp_paygroup->comp_id=$singlecomp['id'];
                     $assign_comp_paygroup->save();
                 }
                 $response=([
@@ -871,6 +1029,7 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
 
             try{
                 $emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',$paygroup_id);
+
                 if(!empty($emp_paygroup_components)){
                     $data =$emp_paygroup_components->get(['id']);
                 }else{
@@ -878,8 +1037,10 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
                 }
 
                 foreach ($assigned_employees as  $key => $singleemp) {
+
+                    $employee_data =User::where('user_code',$singleemp['user_code'])->first();
                     $assign_comp_paygroup = new VmtEmpPaygroup;
-                    $assign_comp_paygroup->user_id=$singleemp;
+                    $assign_comp_paygroup->user_id=$employee_data->id;
                     $assign_comp_paygroup->paygroup_id=$paygroup_id;
                     $assign_comp_paygroup->save();
                 }
@@ -953,7 +1114,7 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
         }
         catch(\Exception $e){
 
-            return response()->json([
+            return $response=([
                 "status" => "failure",
                 "message" => "Unable to delete component",
                 "data" => $e->getmessage(),
