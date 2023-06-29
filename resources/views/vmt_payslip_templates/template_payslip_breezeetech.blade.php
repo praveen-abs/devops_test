@@ -1,8 +1,8 @@
 <?php
 
-$general_info = \DB::table('vmt_general_info')->first();
+$general_info = \DB::table('vmt_client_master')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 // $bank_names = \DB::table('vmt_banks')->get();
 ?>
@@ -117,43 +117,44 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                     <table class="paySlip_template">
                         <tbody>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Employee code
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
                                     {{ $employee_code }}
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Designation
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
                                     {{ $employee_office_details->designation }}
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;" class="text-bolder ">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;" class="text-bolder ">
                                     LeaveType
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;" class="text-bolder">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;" class="text-bolder">
                                     Leave Taken
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;" class="text-bolder">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;" class="text-bolder">
                                     Available Leave
                                 </td>
                             </tr>
 
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Employee Name
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
                                     {{ $employee_name }}
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Bank Name
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-                                    {{-- {{ $bank_name }} --}}
+                                    {{ $employee_name }}
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     PL
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
@@ -164,13 +165,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     UAN
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
                                     {{ $employee_statutory_details->uan_number }}
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Bank Account No
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
@@ -187,17 +188,17 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Location
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-                                    Chennai
+                                    <p>{{ $employee_payslip->LOCATION ?? "-"}}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     PAN No
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-                                    BTFPR1583J
+                                    <p>{{ $employee_details->pan_number ?? "-" }}</p>
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
 
@@ -211,13 +212,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                             </tr>
 
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     PF No
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_details->pan_number }}
+                                    <p>{{ $employee_statutory_details->epf_number ?? "-" }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Joining Date
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
@@ -235,17 +236,17 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                             </tr>
 
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Paid Days
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-                                    28.00
+                                    <p class="txt-center">{{ $employee_payslip->worked_Days }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     ESI No
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-
+                                    <p>{{ $employee_statutory_details->esic_number ?? "-" }}</p>
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
 
@@ -258,7 +259,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
                                     Leave Balance
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
@@ -268,7 +269,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                                     Arrear Days
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
-
+                                    <p class="txt-center">{{ $employee_payslip->arrears_Days }}</p>
                                 </td>
                                 <td colspan="1" style="padding-bottom: .3em;">
 
@@ -293,23 +294,24 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                     <table class="paySlip_template">
                         <tr>
                             <td colspan="4">
-                                <p class="text-bolder ">
+                                <p class="text-bolder " style="font-weight:600;">
                                     Earnings
                                 </p>
                             </td>
                         </tr>
 
                         <tr class="border-b">
-                            <td class="border-b" style="padding-bottom: .3em;" colspan="1">
+                            <td class="border-b" style="padding-bottom: .3em;font-weight:600;" colspan="1">
                                 Description
                             </td>
-                            <td class="border-b" style="padding-bottom: .3em;" colspan="1">
+                            <td class="border-b" style="padding-bottom: .3em;font-weight:600;" colspan="1">
                                 Fixed Gross
                             </td>
-                            <td class="border-b" style="padding-bottom: .3em;" colspan="1">
+                            <td class="border-b" style="padding-bottom: .3em;font-weight:600;" colspan="1">
                                 Earned Gross
                             </td>
-                            <td class="border-b" style="padding-bottom: .3em;padding-right:1em " colspan="1">
+                            <td class="border-b" style="padding-bottom: .3em;padding-right:1em;font-weight:600;
+                             " colspan="1">
                                 Arrear
                             </td>
                         </tr>
@@ -385,7 +387,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
                         <tr>
                             <td colspan="1" style="padding-bottom: .3em;">PF</td>
                             <td colspan="1" style="padding-bottom: .3em;">
-                                {{ $employee_statutory_details->epf_number ?? '-' }}</td>
+                                {{ $employee_payslip->epfr ?? '-' }}</td>
                             <td colspan="1" style="padding-bottom: .3em;">1800.00</td>
 
                         </tr>
