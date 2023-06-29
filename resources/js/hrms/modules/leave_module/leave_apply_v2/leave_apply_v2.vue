@@ -1,17 +1,19 @@
 <template>
     <div class="w-full">
         <div class="mx-auto card top-line">
-            <div class="mx-auto card-body">
+            <div class=" card-body">
                 <div>
                     <h3 class="mx-2 my-2 font-semibold">Leave Type</h3>
                 </div>
 
                 <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-6 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 my-4 "
                     style="display: grid;">
-                    <div class="card p-2 rounded-lg border-1 border-orange-300 cursor-pointer"
-                        v-for="leave_balance in useLeaveStore.array_employeeLeaveBalance" :key="leave_balance">
+                    <button class="card p-2 rounded-lg border-1 border-orange-300 cursor-pointer focus:bg-green-100"
+                        v-for="leave_balance in useLeaveStore.array_employeeLeaveBalance" :key="leave_balance"
+                        @click="check(leave_balance)">
                         <div class="card-body">
-                            <h6 class="text-sm h-8 font-bold text-center text-black dark:text-white"> {{ leave_balance.leave_type }} </h6>
+                            <h6 class="text-sm h-10 font-bold text-center text-black dark:text-white"> {{
+                                leave_balance.leave_type }} </h6>
                             <div class="mx-auto">
                                 <h6 class="text-2xl font-bold text-center dark:text-white">{{
                                     leave_balance.avalied_leaves }}
@@ -19,7 +21,7 @@
                                 </h6>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -30,27 +32,28 @@
                         <h3 class="mx-2 my-4 font-semibold">Set Range</h3>
                     </div>
                     <div class="mx-1 my-2 mb-3 row">
-                        <div class="mb-3 col-md-1 col-sm-1 col-lg-3 col-xl-4 col-xxl-3 mb-md-0">
+                        <div class="mb-3 col-md-1 col-sm-1 col-lg-4 col-xl-4 col-xxl-4 mb-md-0">
                             <div class="form-group">
                                 <div class="floating">
-
-                                    <label for="start" class="my-2 text-gray-700 float-label">Start Date</label><br>
-                                    <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" id="start"
+                                    <label for="start"
+                                        class="text-lg font-bold text-center text-black dark:text-white">Start
+                                        Date</label><br>
+                                    <!-- <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" id="start"
                                         v-model="useStore.leave_data.custom_start_date" :minDate="new Date()"
-                                        :manualInput="true" />
+                                        :manualInput="true" /> -->
+                                        <input class="border-1 my-1 border-orange-300 rounded-lg" type="date" name="" id="">
 
                                 </div>
-
                             </div>
                         </div>
                         <div class="mb-3 col-md-1 col-sm-1 col-lg-6 col-xl-4 col-xxl-5 mb-md-0">
                             <div class="form-group">
                                 <div class="floating" style="text-align: center;">
 
-                                    <label for="total" class="my-2 text-gray-700 float-label">Total Days</label>
-                                    <InputText style="width: 60px;text-align: center;margin: auto;" id="total"
+                                    <label for="total" class="text-lg  font-bold text-center text-black dark:text-white" >Total Days</label>
+                                    <!-- <InputText style="width: 60px;text-align: center;margin: auto;" id="total"
                                         class="capitalize form-onboard-form form-control textbox " type="text"
-                                        v-model="useStore.leave_data.custom_total_days" readonly />
+                                        v-model="useStore.leave_data.custom_total_days" readonly /> -->
 
                                 </div>
 
@@ -61,10 +64,12 @@
 
                                 <div class="floating">
 
-                                    <label for="end" class="my-2 text-gray-700 float-label">End Day</label><br>
-                                    <Calendar inputId="icon" @date-select="useStore.dayCalculation" dateFormat="dd-mm-yy"
+                                    <label for="end" class="text-lg  font-bold text-center text-black dark:text-white">End Day</label><br>
+                                    <!-- <Calendar inputId="icon" @date-select="useStore.dayCalculation" dateFormat="dd-mm-yy"
                                         :showIcon="true" v-model="useStore.leave_data.custom_end_date" id="end"
-                                        :minDate="new Date()" />
+                                        :minDate="new Date()" /> -->
+                                        <input class="border-1 my-1 border-orange-300 rounded-lg" placeholder="select" type="date" name="" id="">
+
 
                                 </div>
                             </div>
@@ -138,8 +143,7 @@ const earnActive = ref(false)
 
 const check = (a) => {
     console.log(a);
-    let leave
-
+    const leave = ''
     switch (leave) {
         case "Sick Leave / Casual Leave":
             console.log("Sick");
