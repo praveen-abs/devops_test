@@ -2,8 +2,13 @@
     <div class="w-full">
         <div class="mx-auto card top-line">
             <div class=" card-body">
-                <div>
+                <div class="flex justify-between">
                     <h3 class="mx-2 my-2 font-semibold">Leave Type</h3>
+                    <a href="/attendance-leave-policydocument" id="" class="text-md  font-medium border-1 border-orange-400 rounded-lg text-center bg-orange-400 text-white my-auto p-2 dark:text-white" role="button"
+                        aria-expanded="false">
+                        Leave
+                        Policy Explanation
+                    </a>
                 </div>
 
                 <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-6 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6 my-4 "
@@ -41,7 +46,7 @@
                                     <!-- <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" id="start"
                                         v-model="useStore.leave_data.custom_start_date" :minDate="new Date()"
                                         :manualInput="true" /> -->
-                                        <input class="border-1 my-1 border-orange-300 rounded-lg" type="date" name="" id="">
+                                    <input class="border-1 my-1 border-orange-300 rounded-lg" type="date" name="" id="">
 
                                 </div>
                             </div>
@@ -50,7 +55,8 @@
                             <div class="form-group">
                                 <div class="floating" style="text-align: center;">
 
-                                    <label for="total" class="text-lg  font-bold text-center text-black dark:text-white" >Total Days</label>
+                                    <label for="total"
+                                        class="text-lg  font-bold text-center text-black dark:text-white">Total Days</label>
                                     <!-- <InputText style="width: 60px;text-align: center;margin: auto;" id="total"
                                         class="capitalize form-onboard-form form-control textbox " type="text"
                                         v-model="useStore.leave_data.custom_total_days" readonly /> -->
@@ -64,11 +70,13 @@
 
                                 <div class="floating">
 
-                                    <label for="end" class="text-lg  font-bold text-center text-black dark:text-white">End Day</label><br>
+                                    <label for="end" class="text-lg  font-bold text-center text-black dark:text-white">End
+                                        Day</label><br>
                                     <!-- <Calendar inputId="icon" @date-select="useStore.dayCalculation" dateFormat="dd-mm-yy"
                                         :showIcon="true" v-model="useStore.leave_data.custom_end_date" id="end"
                                         :minDate="new Date()" /> -->
-                                        <input class="border-1 my-1 border-orange-300 rounded-lg" placeholder="select" type="date" name="" id="">
+                                    <input class="border-1 my-1 border-orange-300 rounded-lg" placeholder="select"
+                                        type="date" name="" id="">
 
 
                                 </div>

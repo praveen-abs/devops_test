@@ -39,11 +39,7 @@
 
                     </div>
                     <div class="">
-                        <a href="/attendance-leave-policydocument" id="" class=" btn btn-orange" role="button"
-                            aria-expanded="false">
-                            Leave
-                            Policy Explanation
-                        </a>
+                       <button @click="apply = true" class="btn btn-orange">Apply Leave</button>
                     </div>
                 </div>
 
@@ -76,6 +72,16 @@
             <h5 style="text-align: center">Please wait...</h5>
         </template>
     </Dialog>
+
+
+
+    <Dialog v-model:visible="apply" :style="{ width: '80vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
+        <template #header>
+            <h6 class="mb-4 modal-title fs-21">
+                Leave Request</h6>
+        </template>
+        <leaveapply2 />
+    </Dialog>
 </template>
 
 <script setup>
@@ -84,12 +90,14 @@ import EmployeeLeaveDetails from './leave_details/EmployeeLeaveDetails.vue';
 import OrgLeaveDetails from './leave_details/OrgLeaveDetails.vue';
 import TeamLeaveDetails from './leave_details/TeamLeaveDetails.vue';
 import { useLeaveModuleStore } from './LeaveModuleService'
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import leaveapply2 from './leave_apply_v2/leave_apply_v2.vue'
 
 
 const useLeaveStore = useLeaveModuleStore()
 const service = Service()
 
+const apply = ref(false)
 
 onMounted(() => {
     useLeaveStore.getEmployeeLeaveBalance()
