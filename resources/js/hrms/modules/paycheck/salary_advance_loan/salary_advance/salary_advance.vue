@@ -42,33 +42,45 @@
 
             <div class="table-responsive">
                 <!-- {{ useEmpStore.salaryAdvanceEmployeeData }} -->
-                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
+                <!-- {{ useEmpStore.arraySalaryDetails }} -->
+                <DataTable :value="useEmpStore.arraySalaryDetails" ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Request ID" field="section" style="min-width: 8rem">
+                    <Column header="Request ID" field="request_id" style="min-width: 8rem">
                         <!-- <template #body="slotProps">
                         {{  slotProps.data.claim_type }}
                       </template> -->
                     </Column>
 
-                    <Column field="particular" header="Advance Amount" style="min-width: 12rem">
+                    <Column field="borrowed_amount" header="Advance Amount" style="min-width: 12rem">
                         <!-- <template #body="slotProps">
                         {{ "&#x20B9;" + slotProps.data.claim_amount }}
                       </template> -->
                     </Column>
 
-                    <Column field="ref" header="Paid On " style="min-width: 12rem">
+                    <Column field="requested_date" header="Paid On " style="min-width: 12rem">
 
                     </Column>
 
-                    <Column field="max_limit" header="Expected Return" style="min-width: 12rem">
+                    <Column field="dedction_date" header="Expected Return" style="min-width: 12rem">
                     </Column>
 
 
-                    <Column field="Status" header="Status" style="min-width: 12rem">
+                    <Column field="status" header="Status" style="min-width: 12rem">
+                        <template #body="slotProps">
+                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
+                                Pending
+                            </h6>
+                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
+                                Approved
+                            </h6>
+                            <h6 v-if="slotProps.data.status == 2" class="text-red-500">
+                              Rejected
+                            </h6>
+                        </template>
                     </Column>
 
                 </DataTable>
@@ -155,6 +167,7 @@ const useEmpStore = useEmpSalaryAdvanceStore()
 
 onMounted(() => {
    useEmpStore.fetchSalaryAdvance();
+   useEmpStore.getSalaryDetails();
 })
 
 const eligibleRequiredAmount = (value) =>{
