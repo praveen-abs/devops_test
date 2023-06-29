@@ -229,8 +229,21 @@ class VmtSalaryAdvanceService
             } else {
                 $substrid = substr($get_lasting->request_id, 5);
                 $add1 = ($substrid + 1);
-                $requestid = "ABSSA" . "100" . $add1;
-                $EmpApplySalaryAmt->request_id = $requestid;
+                  $tostring = ((string)($add1));
+                   $strlenth = strlen($tostring);
+
+                   if($strlenth == 1){
+                    $requestid = "ABSSA" . "00" . $add1;
+                    $EmpApplySalaryAmt->request_id = $requestid;
+
+                   }else if($strlenth == 2){
+                    $requestid = "ABSSA" . "0" . $add1;
+                    $EmpApplySalaryAmt->request_id = $requestid;
+
+                   }else{
+                    $requestid = "ABSSA". $add1;
+                    $EmpApplySalaryAmt->request_id = $requestid;
+                   }
             }
             $EmpApplySalaryAmt->eligible_amount = $mxe;
             $EmpApplySalaryAmt->borrowed_amount = $ra;
@@ -246,7 +259,7 @@ class VmtSalaryAdvanceService
                 'message' => 'Done',
 
             ]);
-        }
+         }
     }
 
 
@@ -339,7 +352,7 @@ class VmtSalaryAdvanceService
             unset($ordered_approver_flow);
         }
 
-        // return ($temp_ar);
+        return ($temp_ar);
 
         $pending = array();
         foreach ($temp_ar as $all_pending_advance) {
@@ -369,6 +382,7 @@ class VmtSalaryAdvanceService
     public function getEmpsaladvDetails($user_id){
 
                     // $user_id = auth()->user()->id;
+
 
                   $getempdetails  =   VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
                                                                     ->where('user_id',$user_id)
