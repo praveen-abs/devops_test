@@ -27,7 +27,7 @@ use App\Models\VmtClientMaster;
 
 
     @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
-    {{-- <div id="SalaryAdvanceLoan"></div> --}}
+    <div id="SalaryAdvanceLoan"></div>
 
     @vite('resources/js/hrms/modules/paycheck/investments/investments_and_exemption/testing_tableMaster/testing_table.js')
     {{-- <div id="testing_table"></div> --}}
@@ -59,7 +59,10 @@ use App\Models\VmtClientMaster;
     {{-- <div id="SuperAdminRolesPermission"></div> --}}
 
     @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')
-    <div id="approvals_salary_advance"></div>
+    {{-- <div id="approvals_salary_advance"></div> --}}
+
+    @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
+    {{-- <div id="EmpSalaryAdvanceLoan"></div> --}}
 
 </body>
 

@@ -3,12 +3,23 @@
         <div class="px-5 row d-flex justify-content-start align-items-center card-body">
             <div class="flex justify-between gap-6 my-2">
                 <div class="w-8 fs-4">
-                    <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
-                            class="text-lg"> 100%</strong> of their monthly salary.</p>
+                    <!-- v-if="!useEmpData" -->
+                    <p class="text-xl font-medium" v-if="useEmpData == ''">The company allows employees to request a salary
+                        advance of up to <strong class="text-lg"> 100%</strong> of their monthly salary.</p>
+                    <p v-if="useEmpData != ''" class=" fs-4 fw-semibold text-blue-900 font-sans">Employee ID : <span
+                            class=" fs-4 fw-semibold font-sans mr-5">{{ CurrentUser_code }} </span> <span
+                            class="ml-5 pl-14 fs-4 fw-semibold text-blue-900 font-sans"
+                            style="border-left: 2px solid black;">Employee Name : {{ CurrentName }}</span></p>
+                    <!-- {{ useEmpData.user_code }}
+                    {{ useEmpData.name }} -->
                 </div>
                 <div class="float-right ">
-                    <button class="btn btn-border-orange">View Report</button>
-                    <button @click="ShowDialogApprovalAll" class="mx-4 btn btn-orange">Approval All</button>
+                    <button class="btn btn-border-orange " id="" v-if="useEmpData != ''" @click="useEmpData = ''">View
+                        Report</button>
+                    <!-- v-if="!useEmpData" -->
+                    <button @click="ShowDialogApprovalAll" v-if="useEmpData == ''" class="mx-4 btn btn-orange">Approval
+                        All</button>
+
                 </div>
             </div>
 
@@ -37,12 +48,14 @@
                     </div>
                 </div>
             </div>
-         {{   SalaryAdvanceApprovals.arraySalaryAdvance}}
+            <!-- v-if="!useEmpData" -->
+            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
             <div class="table-responsive">
-                <DataTable :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true" :rows="10" class=""
-                    dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
-                    v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
-                    @row-select="onRowSelect" @row-unselect="onRowUnselect" :rowsPerPageOptions="[5, 10, 25]"
+                <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
+                    :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                    v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                    @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                    :rowsPerPageOptions="[5, 10, 25]"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
@@ -52,25 +65,33 @@
                     <Column field="user_code" header="Employee ID">
                     </Column>
                     <Column field="name" header="Employee Name" :sortable="false">
+                        <template #body="slotProps">
+                            <button class="fw-semibold text-primary"
+                                @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">
+                                {{ slotProps.data.name }} </button>
+                        </template>
                     </Column>
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
-                    <Column field="Status" header="Status">
+                    <Column field="status" header="Status">
                         <template #body="slotProps">
-                            <h6 v-if="slotProps.data.Status == 'Pending'" class="text-orange-500">
-                                {{ slotProps.data.Status }}
+                            <h6 v-if="slotProps.data.status == 'Pending'" class="text-orange-500">
+                                {{ slotProps.data.status }}
                             </h6>
-                            <h6 v-if="slotProps.data.Status == 'Approved'" class=" text-green-500">
-                                {{ slotProps.data.Status }}
+                            <h6 v-if="slotProps.data.status == 'Approved'" class=" text-green-500">
+                                {{ slotProps.data.status }}
                             </h6>
-                            <h6 v-if="slotProps.data.Status == 'Rejected'" class="text-red-500">
-                                {{ slotProps.data.Status }}
+                            <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
+                                {{ slotProps.data.status }}
                             </h6>
                         </template>
                     </Column>
                     <Column field="" header="Action">
                         <template #body="slotProps">
-                                <button class=" btn bg-blue-700 shadow-sm text-white fw-semibold" @click="view_more(slotProps.data.emp_details)"> View Report </button>
+                            <button class="" > <i class="pi pi-ellipsis-v"></i>
+                            </button>
+                            <button class="btn shadow-sm fw-semibold bg-green-200 mx-2 text-black" @click="showConfirmDialog(slotProps.data)">view</button>
+                            <button class="btn bg-blue-500 text-white shadow-sm"  @click="view_more(slotProps.data.emp_details,slotProps.data.user_code, slotProps.data.name)">passed Transaction</button>
                         </template>
                     </Column>
                     <!-- <template #expansion="slotProps">
@@ -96,6 +117,27 @@
                     </template> -->
 
                 </DataTable>
+
+                <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class="" dataKey="id"
+                    @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
+                    v-model:selection="selectedAllEmployee" :selectAll="selectAll" @select-all-change="onSelectAllChange"
+                    @row-select="onRowSelect" @row-unselect="onRowUnselect" :rowsPerPageOptions="[5, 10, 25]"
+                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+
+                    <Column field="id" header="Request ID" sortable></Column>
+                    <Column field="advance_amount" header="Advance Amount">
+                    </Column>
+                    <Column field="paid_on" header="Paid On">
+                    </Column>
+                    <Column field="Expected_Return" header="Expected Return">
+                    </Column>
+                    <Column field="status" header="Expected Return">
+                    </Column>
+                </DataTable>
+
+
+
             </div>
         </div>
     </div>
@@ -152,8 +194,6 @@
             <button class="mx-4 btn bg-green-500  text-white px-5" @click="approveAndReject('Approve')">Approve</button>
         </div>
     </Dialog>
-
-
 </template>
 
 
@@ -174,15 +214,15 @@ const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
 const reviewer_comments = ref();
-const useEmpData = ref();
+const useEmpData = ref([""]);
+const CurrentName = ref();
+const CurrentUser_code = ref();
 const required_Amount = reactive({
     required_Amount: ""
 });
 
 onMounted(() => {
-
     SalaryAdvanceApprovals.getEmpDetails();
-
 })
 
 const filters = ref({
@@ -228,15 +268,27 @@ async function processBulkApproveReject(status) {
 }
 
 
- function view_more(selectedRowData){
+function view_more(selectedRowData, user_code, currentName) {
     console.log(selectedRowData);
     // currentlySelectedStatus.value  = selectedRowData;
     useEmpData.value = selectedRowData;
-
+    CurrentName.value = currentName;
+    CurrentUser_code.value = user_code
+    console.log(user_code);
+    console.log(currentName);
 }
+
 
 // function emp_details()
 
 
 
 </script>
+
+<style>.dropdown-content {
+    /* display: none; */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}</style>
