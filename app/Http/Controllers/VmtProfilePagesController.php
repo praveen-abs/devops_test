@@ -791,6 +791,13 @@ public function addExperienceInfo(Request $request)
         return $response;
 
     }
+    public function getEmpProfileProofPrivateDoc(Request $request,VmtProfilePagesService $profilepagesservice){
+
+
+        $response = $profilepagesservice->getEmpProfileProofPrivateDoc($request->emp_doc_record_id);
+        return $response;
+
+    }
     public function SingleDocumentProofApproval(Request $request){
 
         //Validate the request

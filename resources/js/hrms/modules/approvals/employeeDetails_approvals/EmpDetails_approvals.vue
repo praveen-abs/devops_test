@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        <Dialog header="Header" v-model:visible="EmpDetailStore.canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
                 <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -123,6 +123,9 @@ import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseEmpDetailApprovalsStore } from "./EmpDetails_approvals_service";
 import axios from "axios";
 import map from 'lodash/map';
+import {Service}  from "../../Service/Service";
+
+const current_user_id = Service();
 
 const EmpDetailStore = UseEmpDetailApprovalsStore();
 const expandedRows = ref([]);
@@ -143,6 +146,7 @@ const documentPath = ref()
 onMounted(async () => {
     await EmpDetailStore.getEmpDetails_list();
     // console.log(EmpDetailStore.getEmpDetails_list());
+    // console.log();
 });
 
 const filters = ref({
@@ -158,21 +162,22 @@ const filters = ref({
 
 const showDocDialog = (record_id) => {
     // view_document.value = { ...document }
-    canShowLoadingScreen.value = true;
+
     dialog_visible.value = true
 
-    axios.post('/view-profile-private-file', {
+    axios.post('view/getEmpProfileProofPrivateDoc', {
         emp_doc_record_id: record_id,
     }).then(res => {
         console.log(res.data.data);
         documentPath.value = res.data.data
         console.log("data sent", documentPath.value);
     }).finally(() => {
-        canShowLoadingScreen.value = false;
+
     })
 
 
 }
+
 
 function showConfirmDialog(selectedRowData, status) {
     canShowConfirmation.value = true;
@@ -214,6 +219,7 @@ const getBulkApprovalList = (selectedRowData, status) => {
 
 const processBulkDocumentsApproveReject = () => {
 
+    EmpDetailStore.canShowLoadingScreen = true;
 
     hideBulkConfirmDialog();
 
@@ -227,6 +233,7 @@ const processBulkDocumentsApproveReject = () => {
 
 
     axios.post("/approvals/EmployeeProof-bulkdocs-approve-reject", {
+        approver_user_id:current_user_id.current_user_id,
         record_id: processed_doc_ids,
         status:
             currentlySelectedStatus == "Approve"
@@ -240,6 +247,9 @@ const processBulkDocumentsApproveReject = () => {
         console.log("testing data", res.data);
 
     }).finally(() => {
+        EmpDetailStore.canShowLoadingScreen = false;
+        EmpDetailStore.getEmpDetails_list();
+
         resetVars();
     })
 
@@ -274,9 +284,12 @@ const processBulkDocumentsApproveReject = () => {
 
 
 function empDetailsDocumentApproveReject() {
+
+    EmpDetailStore.canShowLoadingScreen = true;
     hideConfirmDialog();
 
     axios.post("/approvals/EmployeeProof-docs-approve-reject", {
+        approver_user_id:current_user_id.current_user_id,
         record_id: currentlySelectedRowData.record_id,
         status:
             currentlySelectedStatus == "Approve"
@@ -290,8 +303,10 @@ function empDetailsDocumentApproveReject() {
         console.log("testing data", res.data);
 
     }).finally(() => {
-        resetVars();
 
+        EmpDetailStore.canShowLoadingScreen = false;
+        resetVars();
+        EmpDetailStore.getEmpDetails_list();
     })
 }
 

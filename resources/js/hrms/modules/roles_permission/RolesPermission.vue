@@ -16,6 +16,7 @@
             </div>
         </div>
     </div> -->
+
     <div class="w-full">
         <div>
             <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissions</h4>
@@ -43,6 +44,10 @@
 
     </div>
 
+
+
+
+
     <Dialog header="Header" v-model:visible="addNewroleDailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '65vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
@@ -64,13 +69,8 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-
-            <TreeTable :value="nodes" key="id">
-            <Column field="name" header="Name" expander>
-            <input type="checkbox"></Column>
-            <Column field="size" header="Size"></Column>
-            <Column field="type" header="Type"></Column>
-        </TreeTable>
+            <Tree :value="allpermission" selectionMode="checkbox" class="w-8 font-semibold ">
+            </Tree>
         </div>
         <template #footer>
             <div>
@@ -81,7 +81,7 @@
 
         </template>
     </Dialog>
-     <!-- {{ selectedKey }} -->
+    <!-- {{ selectedKey }} -->
     <!-- {{ rolespermission.allpermission }} -->
     <!-- {{ allpermission.data }} -->
 </template>
@@ -92,7 +92,10 @@ import { onMounted, ref } from "vue";
 import { UseRolePermissionServie } from "./roles_permission_service";
 import axios from 'axios';
 
-const rolespermission = UseRolePermissionServie()
+const rolespermission = UseRolePermissionServie();
+
+const expandedRows = ref([]);
+const selectedAllEmployee = ref();
 
 const lding = ref(true)
 
@@ -106,53 +109,53 @@ const canShowManageRoles_Dialog = ref(false);
 const allpermission = ref();
 
 axios.get('/getAllPermissions').then(res => {
-            allpermission.value = res.data;
-            console.log(allpermission);
-        });
+    allpermission.value = res.data;
+    console.log(allpermission);
+});
 
 
-        const nodes =ref([
-                {
-                    id:1,
-                    key: '0',
-                    label: 'Documents',
-                    data: 'Documents Folder',
-                    icon: 'pi pi-fw pi-inbox',
-                    children: [
-                        {
+const nodes = ref([
+    {
+        id: 1,
+        key: '0',
+        label: 'Documents',
+        data: 'Documents Folder',
+        icon: 'pi pi-fw pi-inbox',
+        children: [
+            {
 
-                            id:2,
-                            key: '1',
-                            label: 'Work',
-                            data: 'Work Folder',
-                            icon: 'pi pi-fw pi-cog',
-                            children: [
-                                { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
-                                { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' }
-                            ]
-                        },
-                        {
-                            id:3,
-                            key: '2',
-                            label: 'Home',
-                            data: 'Home Folder',
-                            icon: 'pi pi-fw pi-home',
-                            children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }]
-                        }
-                    ]
-                },
-                {
-                    id:4,
-                    key: '4',
-                    label: 'Events',
-                    data: 'Events Folder',
-                    icon: 'pi pi-fw pi-calendar',
-                    children: [
-                        {id:5, key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
-                        {id:6, key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
-                        {id:7, key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
-                    ]
-                }])
+                id: 2,
+                key: '1',
+                label: 'Work',
+                data: 'Work Folder',
+                icon: 'pi pi-fw pi-cog',
+                children: [
+                    { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
+                    { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' }
+                ]
+            },
+            {
+                id: 3,
+                key: '2',
+                label: 'Home',
+                data: 'Home Folder',
+                icon: 'pi pi-fw pi-home',
+                children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }]
+            }
+        ]
+    },
+    {
+        id: 4,
+        key: '4',
+        label: 'Events',
+        data: 'Events Folder',
+        icon: 'pi pi-fw pi-calendar',
+        children: [
+            { id: 5, key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
+            { id: 6, key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
+            { id: 7, key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
+        ]
+    }])
 
 onMounted(() => {
     setTimeout(() => {

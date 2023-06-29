@@ -2,16 +2,16 @@
   <div class="card-body">
     <div class="tab-content" id="pills-tabContent">
       <div class="tab-pane show fade active" id="applications_tab" role="tabpanel" aria-labelledby="pills-profile-tab">
-        <div class="flex justify-evenly">
+        <div class="flex ">
           <div class="w-8">
-            <p class="text-2xl font-bold">Our Accounting Softwares</p>
-            <p class="text-muted fs-12">
+            <p class="text-2xl font-semibold">Our Accounting Softwares</p>
+            <p class="text-muted fs-6">
               Here you can integrate with one of our accounting softwares below
             </p>
           </div>
           <div class="flex gap-4">
             <div class="search-wrapper">
-              <i class="fa fa-search search-icon"></i>
+              <!-- <i class="fa fa-search search-icon"></i> -->
               <input type="text" name="" id="" class="search-input form-control" placeholder="Search App..." />
             </div>
             <div class="">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="flex flex-wrap">
-          <div class="w-3 p-2 mx-6 my-4 bg-white border-gray-200 rounded-lg shadow-md border-1">
+          <div class="w-3 p-2 mx-1 my-4 bg-white border-gray-200 rounded-lg shadow-md border-1">
             <div class="flex justify-between gap-6 my-4">
               <div class="w-4 mx-2">
                 <img :style="{ height: '80px', width: '80px' }" alt="" />

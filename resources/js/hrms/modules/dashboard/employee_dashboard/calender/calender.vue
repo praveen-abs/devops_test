@@ -1,6 +1,6 @@
 <template>
     <div class="border-0 card w-100 box-shadow-md">
-        <Calendar :inline="true" :showWeek="true" style="300px" />
+        <Calendar :inline="true" :showWeek="true"/>
     </div>
 </template>
 
