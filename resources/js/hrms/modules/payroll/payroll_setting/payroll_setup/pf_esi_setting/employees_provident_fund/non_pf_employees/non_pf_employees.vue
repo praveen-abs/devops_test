@@ -3,10 +3,11 @@
         <div class="flex justify-between mx-1">
             <div>
                 <p class="fs-5 ">Non-PF Employees</p>
-                <div class="row my-3" >
+                <div class="row my-3">
                     <div class="col d-flex justify-content-between align-items-center">
                         <div class="w-9 p-2 rounded-lg " style="background-color: #FFF1F1;">
-                            <p class="text-blue"><strong class=" text-yellow-600">Note:</strong> Once payroll processing begins employees asigned to
+                            <p class="text-blue"><strong class=" text-yellow-600">Note:</strong> Once payroll processing
+                                begins employees asigned to
                                 the
                                 Gross - HRA * 12% or restricted PF wage calculation Method cannot be swtiched to a non-pf
                                 employee status, nut the reverse is possible
@@ -36,18 +37,16 @@
     <Dialog v-model:visible="CanShowDialog" :modal="true" :closable="true"
         :style="{ width: '95vw', borderTop: '5px solid #002f56' }">
         <template #header>
-            <span class="text-lg font-semibold modal-title text-indigo-950">Assign Employees</span>
+            <span class="text-lg font-semibold text-indigo-950 pl-3">Assign To</span>
+
+            <div style="background-color: #FFF1F1;" class="p-2 shadow-sm d-flex align-items-center rounded">
+                <strong class=" text-yellow-600 fw-semibold mr-1" >Note:</strong>
+                <p>Once the payroll processing beings Employees assigned to the Gross -HRA *12% calculation method cannot be
+                    switched to the restricted PF wage calculation method, but the reverse is possible.</p>
+            </div>
         </template>
         <div class=" col-12">
             <div class="row ">
-                <div class=" float-right">
-                    <span class="p-input-icon-left ">
-                        <i class="pi pi-search" />
-                        <InputText placeholder="Search" v-model="filters['global'].value" class="border-color "
-                            style="height: 3em" />
-                    </span>
-
-                </div>
                 <div class="col-12">
 
                     <div class="col-12">
@@ -55,42 +54,42 @@
                             <div class="col">
                                 <div style="padding: 10px"
                                     class="border rounded d-flex justify-content-start align-items-center border-color">
-                                    <input type="checkbox" class="mr-3" style="width: 20px; height: 20px"
-                                      />
+                                    <input type="checkbox" class="mr-3" style="width: 20px; height: 20px" />
                                     <h1>Clear Filters</h1>
                                 </div>
                             </div>
                             <div class="col">
-                                <Dropdown v-model="opt" editable
-                                    optionLabel="name" optionValue="id"
-                                   placeholder="Department"
-                                    class="w-full text-red-500 md: border-color" />
+                                <Dropdown v-model="opt" editable optionLabel="name" optionValue="id"
+                                    placeholder="Department" class="w-full text-red-500 md: border-color" />
                             </div>
                             <div class="col">
-                                <Dropdown v-model="opt1" editable
-                                    optionLabel="designation" optionValue="designation" placeholder="Designation"
-                                    class="w-full text-red-500 md: border-color"
-                                   />
+                                <Dropdown v-model="opt1" editable optionLabel="designation" optionValue="designation"
+                                    placeholder="Designation" class="w-full text-red-500 md: border-color" />
                             </div>
                             <div class="col">
-                                <Dropdown v-model="opt2" editable
-                                    optionLabel="work_location" optionValue="work_location" placeholder="Location"
-                                    class="w-full text-red-500 md: border-color"
-                                  />
+                                <Dropdown v-model="opt2" editable optionLabel="work_location" optionValue="work_location"
+                                    placeholder="Location" class="w-full text-red-500 md: border-color" />
                             </div>
                             <div class="col">
-                                <Dropdown v-model="opt3" editable
-                                    optionLabel="state_name" optionValue="id" placeholder="State"
-                                  />
+                                <Dropdown v-model="opt3" editable optionLabel="state_name" optionValue="id"
+                                    placeholder="State" class="w-full text-red-500 md: border-color" />
                             </div>
                             <div class="col">
-                                <Dropdown v-model="opt5" editable
-                                    optionLabel="client_name" optionValue="id" placeholder="Legal Entity"
-                                    class="w-full text-red-500 md: border-color"
-                                 />
+                                <Dropdown v-model="opt5" editable optionLabel="client_name" optionValue="id"
+                                    placeholder="Legal Entity" class="w-full text-red-500 md: border-color" />
                             </div>
                         </div>
                     </div>
+
+                    <div class=" ml-3">
+                        <span class="p-input-icon-left ">
+                            <i class="pi pi-search" />
+                            <InputText placeholder="Search" v-model="filters['global'].value" class="border-color "
+                                style="height: 3em" />
+                        </span>
+
+                    </div>
+
                 </div>
             </div>
 
@@ -109,17 +108,11 @@
         </div>
         <div class="float-right my-4">
             <div class="flex">
-                <button @click=" assignEmployee = false" class="btn btn-orange-outline">Cancel</button>
-                <button class="btn btn-orange mx-2" @click=" assignEmployee = false">Save</button>
+                <button @click=" assignEmployee = false" class="btn text-blue-900 fs-6 fw-semibold btn-orange-outline px-5 " style="border:2px solid #362F78">Cancel</button>
+                <button class="btn bg-blue-900 mx-2 text-white px-5 fs-5" @click=" assignEmployee = false">Assign</button>
             </div>
         </div>
     </Dialog>
-
-
-
-
-
-
 </template>
 
 
@@ -145,7 +138,7 @@ const filters = ref({
 
 const CanShowDialog = ref(false);
 
-function AddMore(){
+function AddMore() {
     CanShowDialog.value = true;
 }
 
