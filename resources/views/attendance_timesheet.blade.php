@@ -1771,7 +1771,6 @@ $svg_icon_notApplied = '/images/icons/svg_icon_notApplied.svg';
                                      }else{
 
                                         cell.innerHTML = " <div class='p-2 w-100 h-100'><p class='show_date' >" + date  + "<span style='font-size:9px; float:right;' class='badge bg-dark rounded-pill ' title='"+ajax_data_currentdate.workshift_name+ "''>"+ ajax_data_currentdate.workshift_code+"</span>"+
-
                                         "</p>  <div class='mt-2 d-flex flex-column bio_check align-items-center' ><div class='check-in f-10 text-success w-100 d-flex align-items-center justify-content-start'><i class='fa fa-arrow-down me-1' style='transform: rotate(-45deg);'></i><span class='f-11' id='checkin_time_" +
                                         year + "-" + processedMonth + "-" + dateText + "'>" + ui_final_checkin_time +
                                         getAttendanceModeIcon(ajax_data_currentdate, "checkin") +
