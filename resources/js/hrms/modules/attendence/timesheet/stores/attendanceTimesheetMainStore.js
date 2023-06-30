@@ -3,6 +3,18 @@ import { computed, ref } from "vue";
 
 export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
+    const mopDetials = ref({})
+    const mipDetials = ref({})
+    const lcDetials = ref({})
+    const egDetials = ref({})
+
+
+    const dailog_Mop = ref(false)
+    const dailog_Mip = ref(false)
+    const dailog_Lc = ref(false)
+    const dailog_Eg = ref(false)
+    const dailog_Selfie = ref(false)
+
 
     const timesheetMainSource = ref([
 
@@ -10,7 +22,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             date: "2023-06-02 12:00",
             absent_status: null,
             attendance_mode_checkin: "web",
-            attendance_mode_checkout: "web",
+            attendance_mode_checkout: "mobile",
             checkin_time: "22:09:40",
             checkout_time: "22:09:48",
             eg_reason: null,
@@ -37,17 +49,17 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         {
             date: "2023-06-04 12:00",
             absent_status: null,
-            attendance_mode_checkin: "web",
-            attendance_mode_checkout: "web",
+            attendance_mode_checkin: "biometric",
+            attendance_mode_checkout: "biometric",
             checkin_time: "22:09:40",
             checkout_time: "22:09:48",
             eg_reason: null,
             eg_reason_custom: null,
             eg_status: null,
             isAbsent: false,
-            isEG: false,
-            isLC: true,
-            isMIP: false,
+            isEG: true,
+            isLC: false,
+            isMIP: true,
             isMOP: false,
             lc_reason: null,
             lc_reason_custom: null,
@@ -64,7 +76,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         },
         {
             date: "2023-06-08 12:00",
-            absent_status: null,
+            absent_status: 'Applied',
             attendance_mode_checkin: "web",
             attendance_mode_checkout: "web",
             checkin_time: "22:09:40",
@@ -72,15 +84,15 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             eg_reason: null,
             eg_reason_custom: null,
             eg_status: null,
-            isAbsent: false,
+            isAbsent: true,
             isEG: false,
-            isLC: true,
+            isLC: false,
             isMIP: false,
             isMOP: false,
             lc_reason: null,
             lc_reason_custom: null,
             lc_status: "None",
-            leave_type: null,
+            leave_type: 'Sick and Casual',
             mip_status: null,
             mop_status: null,
             selfie_checkin: null,
@@ -93,8 +105,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         {
             date: "2023-06-12 12:00",
             absent_status: null,
-            attendance_mode_checkin: "web",
-            attendance_mode_checkout: "web",
+            attendance_mode_checkin: "mobile",
+            attendance_mode_checkout: "mobile",
             checkin_time: "22:09:40",
             checkout_time: "22:09:48",
             eg_reason: null,
@@ -130,8 +142,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             eg_status: null,
             isAbsent: false,
             isEG: false,
-            isLC: true,
-            isMIP: false,
+            isLC: false,
+            isMIP: true,
             isMOP: false,
             lc_reason: null,
             lc_reason_custom: null,
@@ -157,9 +169,9 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             eg_reason_custom: null,
             eg_status: null,
             isAbsent: false,
-            isEG: false,
-            isLC: true,
-            isMIP: false,
+            isEG: true,
+            isLC: false,
+            isMIP: true,
             isMOP: false,
             lc_reason: null,
             lc_reason_custom: null,
@@ -180,17 +192,48 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         console.log(attendance_mode);
         if (attendance_mode == "biometric")
             // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
-            return 'fas fa-fingerprint'
+            return 'fas fa-fingerprint fs-12'
         else
             if (attendance_mode == "web")
-                return 'fa fa-laptop';
+                return 'fa fa-laptop fs-12';
             else
                 if (attendance_mode == "mobile")
-                    return 'fa fa-mobile-phone';
+                    return 'fa fa-mobile-phone fs-12';
                 else {
                     return ''; // when attendance_mode column is empty.
                 }
     }
+
+    //  Applying for Missed In and  Out Punches
+    const applyMop = (value) => {
+        dailog_Mop.value = true
+        console.log(value);
+
+    }
+    const applyMip = (value) => {
+        dailog_Mip.value = true
+        console.log(value);
+
+    }
+
+    //  Applying for Late Coming and Early Going
+
+    const applyLc = (value) => {
+        dailog_Lc.value = true
+        console.log(value);
+
+    }
+    const applyEg = (value) => {
+        dailog_Eg.value = true
+        console.log(value);
+    }
+
+    // View check in and out selfie Images
+
+    const viewSelfie = (value) =>{
+        dailog_Selfie.value = true
+    }
+
 
 
     return {
@@ -200,5 +243,19 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         // Finding Attendance Mode
 
         findAttendanceMode,
+
+        // Attendance Regularization
+        //   MOP
+        mopDetials, applyMop,dailog_Mop,
+        //   MIP
+        mipDetials, applyMip,dailog_Mip,
+        //   LC
+        lcDetials, applyLc,dailog_Lc,
+        //   EG
+        egDetials, applyEg,dailog_Eg,
+        // Selfie
+        dailog_Selfie,viewSelfie
+
+
     }
 })

@@ -1,6 +1,6 @@
 <template>
     <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card">
-        <div class="w-full border grid grid-cols-7 card-body">
+        <div class="w-full border  grid grid-cols-7 gap-1 card-body">
             <!-- Top navigation bar  -->
             <Top />
 
@@ -14,8 +14,9 @@
                 class="h-16 md:h-36 w-full border opacity-50 "></div>
 
             <!-- Attendance Timesheet Data from current month  -->
-            <div v-for="day in daysInCurrentMonth" :key="day" class="h-16 md:h-36 w-full border align-top rounded-lg">
-                <div class="w-full h-full text-xs md:text-sm lg:text-base text-left px-2 transition-colors font-semibold"
+            <div v-for="day in daysInCurrentMonth" :key="day"
+                class="h-16 shadow-sm  md:h-36 w-full border align-top rounded-lg ">
+                <div class="w-full h-full text-xs md:text-sm lg:text-base text-left px-2 transition-colors font-semibold "
                     :class="{
                         'bg-slate-50 text-gray-600 font-medium': isToday(day),
                         'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
@@ -27,47 +28,51 @@
                         <div
                             class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
                             <div class="w-full">
-                                <div class="text-xs tracking-tight text-clip overflow-hidden p-3">
+                                <div class="text-xs tracking-tight text-clip overflow-hidden p-1">
                                     <!-- Attendance Check in  -->
-                                    <div class="grid gap-4 md:grid-cols-6 sm:grid-cols-6 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6"
-                                        style="display: grid;">
+                                    <div class="flex">
                                         <div class="flex ">
                                             <i class="fa fa-arrow-down text-green-400  font-medium text-sm "
                                                 style='transform: rotate(-45deg);'></i>
-                                            <p class="font-semibold text-sm mx-1">{{ attendance.checkin_time }}</p>
-                                            <i class="text-green-400 font-medium px-6 text-sm"
-                                                :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
+                                            <p class="text-green-400 font-medium text-sm mx-1">{{ attendance.checkin_time }}
+                                            </p>
                                         </div>
-                                        <!-- <div class="">
-                                            <i class="text-green-400 font-semibold text-sm"
+                                        <div class="px-1">
+                                            <i class="text-green-400 font-medium text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
-                                        </div> -->
-                                        <!-- Checking Late Coming -->
-                                        <!-- <div v-if="attendance.isLC" class="text-purple-500 font-bold text-sm">
-                                            LC
-                                        </div> -->
+                                            <button @click="useTimesheet.viewSelfie" v-if="attendance.attendance_mode_checkin == 'mobile'" class="mx-2">
+                                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div class="">
+                                          <button v-if="attendance.isMIP" class="regualarization_button bg-orange-600 text-white" @click="useTimesheet.applyMip(attendance)" >MIP</button>
+                                          <button v-if="attendance.isLC"  class="regualarization_button bg-purple-400 text-white" @click="useTimesheet.applyLc(attendance)" >LC</button>
+                                          <i v-if="attendance.isMIP || attendance.isLC" class="fa fa-exclamation-circle fs-15 text-warning mx-2" title="Not Applied"></i>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="text-xs tracking-tight text-clip overflow-hidden p-3">
-                                    <!-- Attendance Check in  -->
+                                <div class="text-xs tracking-tight text-clip overflow-hidden p-1">
+                                    <!-- Attendance Check out  -->
 
-                                    <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6"
-                                        style="display: grid;">
+                                    <div class="flex">
                                         <div class="flex">
                                             <i class="fa fa-arrow-down font-medium text-sm text-red-400 "
                                                 style='transform: rotate(230deg);'></i>
-                                            <p class="font-semibold text-sm mx-1">{{ attendance.checkout_time }}</p>
-                                            <i class="text-red-400 font-medium px-6 text-sm"
-                                                :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i>
+                                            <p class="text-red-400 font-medium text-sm mx-1">{{ attendance.checkout_time }}
+                                            </p>
                                         </div>
-                                        <!--
-                                        <i class="text-red-400 font-semibold text-sm"
-                                            :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i> -->
-
-                                        <!--checking Early going  -->
-                                        <!-- <div v-if="attendance.isEG" class="text-purple-500 font-bold text-sm">
-                                            EG
-                                        </div> -->
+                                        <div class="px-1">
+                                            <i class="text-red-400 font-medium text-sm"
+                                                :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i>
+                                            <button @click="useTimesheet.viewSelfie" v-if="attendance.attendance_mode_checkout == 'mobile'" class="mx-2">
+                                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div class="">
+                                            <button v-if="attendance.isMOP"  class="regualarization_button bg-orange-600 text-white" @click="useTimesheet.applyMop(attendance)" >MOP</button>
+                                            <button v-if="attendance.isEG"  class="regualarization_button bg-purple-400 text-white" @click="useTimesheet.applyEG(attendance)" >EG</button>
+                                            <i v-if="attendance.isMOP || attendance.isEG" class="fa fa-exclamation-circle fs-15 text-warning mx-2" title="Not Applied"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -78,9 +83,9 @@
 
             <!-- Empty Cells in month  -->
             <div v-if="lastEmptyCells > 0" v-for="day in lastEmptyCells" :key="day"
-                class="h-16 md:h-36 w-full border opacity-50"></div>
+                class="h-16  md:h-36 w-full border rounded-lg opacity-50"></div>
 
-            <div class="md:hidden col-span-7 flex justify-between items-center p-2">
+            <div class="rounded-lg md:hidden col-span-7 flex justify-between items-center p-2 ">
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor"
@@ -102,6 +107,7 @@
             </div>
         </div>
     </div>
+
 </template>
 
 <script setup>
@@ -274,5 +280,15 @@ onUpdated(() => {
 .modal-leave-to {
     /** opacity: 0; **/
     translate: 0px 100%;
+}
+
+.regualarization_button{
+    padding: 1px !important;
+    height: 14px;
+    width: auto;
+    min-width: 20px;
+    border-radius: 2px;
+    font-size: 8px !important;
+    text-align: center;
 }
 </style>

@@ -176,6 +176,13 @@
             </div>
         </div>
     </div>
+<MopRegularization />
+<MipRegularization />
+<LcRegularization />
+<EgRegularization />
+<ViewSelfieImage />
+
+
 </template>
 
 
@@ -184,6 +191,16 @@ import Timesheet from './timesheet/timesheet.vue'
 import { useAttendanceTimesheetMainStore } from './timesheet/stores/attendanceTimesheetMainStore'
 import EmployeeList from './timesheet/components/EmployeeList.vue';
 import dayjs from 'dayjs';
+import AttendanceRegularization from './timesheet/components/AttendanceRegularization.vue';
+import MopRegularization from './timesheet/components/MopRegularization.vue'
+import MipRegularization from './timesheet/components/MipRegularization.vue';
+import LcRegularization from './timesheet/components/LcRegularization.vue';
+import EgRegularization from './timesheet/components/EgRegularization.vue';
+import ViewSelfieImage from './timesheet/components/ViewSelfieImage.vue'
+
+
+
+
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 </script>
