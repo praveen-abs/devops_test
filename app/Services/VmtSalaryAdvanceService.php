@@ -525,13 +525,14 @@ class VmtSalaryAdvanceService
             ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date', 'DESC')->first()->payroll_date;
         // dd( $last_payroll_month);
         $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
-            ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+            ->orderBy('min_month_served', 'DESC')->get();
         if ($loan_type == 'InterestWithLoan') {
             $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
         } else if ($loan_type == 'InterestFreeLoan') {
             $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
-                ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+                ->orderBy('min_month_served', 'DESC')->get();
+                // dd($avaliable_int_loans );
         } else {
             return response()->json([
                 'status' => 'failure',
@@ -550,7 +551,13 @@ class VmtSalaryAdvanceService
                     $yearly_ctc = Compensatory::where('user_id', $user_id)->first()->cic * 12;
                     $applicable_loan_info['max_loan_amount'] = $yearly_ctc * $single_record->percent_of_ctc / 100;
                 }
-                $applicable_loan_info['max_tenure_months'] = $single_record->max_tenure_months;
+                   $max_tenure_month =array();
+                for($i=1; $i<=$single_record->max_tenure_months; $i++){
+                    $month['month'] = $i;
+                     array_push($max_tenure_month,$month);
+                }
+                // dd($max_tenure_month);
+                $applicable_loan_info['max_tenure_months'] = $max_tenure_month;
                 $applicable_loan_info['deduction_starting_month'] = Carbon::parse($last_payroll_month)
                     ->addMonth($single_record->deduction_starting_months)->format('Y-m-d');
                 if ($loan_type == 'InterestWithLoan') {
@@ -612,14 +619,67 @@ class VmtSalaryAdvanceService
             ]);
         }
         $user_id = auth()->user()->id;
+
+        $getallintrestfreeemp =  VmtEmployeeInterestFreeLoanDetails::get()->sortByDesc('id')->first();
+
+        $getallintrestwithemp =  VmtEmpInterestLoanDetails::get()->sortByDesc('id')->first();
+
+
+
         try {
             if ($loan_type == 'InterestFreeLoan') {
+
                 $loan_details = new VmtEmployeeInterestFreeLoanDetails;
                 $loan_details->vmt_int_free_loan_id = $loan_setting_id;
+
+                if (empty($getallintrestfreeemp)) {
+                    $loan_details->request_id = "ABSIF001";
+                } else {
+                    $substrid = substr($getallintrestfreeemp->request_id, 5);
+                    $add1 = ($substrid + 1);
+                      $tostring = ((string)($add1));
+                       $strlenth = strlen($tostring);
+
+                       if($strlenth == 1){
+                        $requestid = "ABSIF" . "00" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else if($strlenth == 2){
+                        $requestid = "ABSIF" . "0" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else{
+                        $requestid = "ABSIF". $add1;
+                        $loan_details->request_id = $requestid;
+                       }
+                }
                 $settings_flow = VmtInterestFreeLoanSettings::where('id', $loan_setting_id)->first()->approver_flow;
             } else if ($loan_type = 'InterestWithLoan') {
                 $loan_details = new VmtEmpInterestLoanDetails;
                 $loan_details->vmt_int_loan_id = $loan_setting_id;
+
+                if (empty($getallintrestwithemp)) {
+                    $$loan_details->request_id = "ABSIL001";
+                } else {
+                    $substrid = substr($getallintrestwithemp->request_id, 5);
+                    $add1 = ($substrid + 1);
+                      $tostring = ((string)($add1));
+                       $strlenth = strlen($tostring);
+
+                       if($strlenth == 1){
+                        $requestid = "ABSIL" . "00" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else if($strlenth == 2){
+                        $requestid = "ABSIL" . "0" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else{
+                        $requestid = "ABSIL". $add1;
+                        $loan_details->request_id = $requestid;
+                       }
+                }
+
                 $settings_flow = VmtLoanInterestSettings::where('id', $loan_setting_id)->first()->approver_flow;
                 $loan_details->interest_rate = $interest_rate;
             } else {
@@ -755,5 +815,41 @@ class VmtSalaryAdvanceService
                 "data" => $e->getMessage(),
             ]);
         }
+    }
+
+    public function rejectOrApprovedSaladv($record_id, $status){
+
+        try{
+
+        $user_id = auth()->user()->id;
+
+           $loan_details =  VmtEmpSalAdvDetails::where('id',$record_id)->first();
+
+        $approver_flow = json_decode($loan_details->emp_approver_flow, true);
+
+        for ($i = 0; $i < count($approver_flow); $i++) {
+            if ($approver_flow[$i]['approver'] == $user_id) {
+                $approver_flow[$i]['status'] = $status;
+            }
+        }
+
+        $loan_details->emp_approver_flow = json_encode($approver_flow, true);
+        $loan_details->save();
+
+        return response()->json([
+            'status' => 'Sucess',
+            'message' => 'Loan Approved Or Rejected',
+
+        ]);
+    }
+    catch (Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Approve Or Reject salary_adv  Failed",
+            "data" => $e->getMessage(),
+        ]);
+    }
+
+
     }
 }
