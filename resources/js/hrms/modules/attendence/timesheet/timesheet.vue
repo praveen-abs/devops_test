@@ -1,61 +1,73 @@
 <template>
-    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800">
-        <div class="w-full border grid grid-cols-7">
+    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card">
+        <div class="w-full border grid grid-cols-7 card-body">
             <!-- Top navigation bar  -->
             <Top />
 
             <!-- Finding Days -->
-            <div v-for="day in daysOfTheWeek" class="text-center text-sm md:text-base lg:text-lg font-medium border">
+            <div v-for="day in daysOfTheWeek"
+                class="text-center text-sm md:text-base lg:text-lg font-semibold text-orange-500 my-4">
                 {{ day.substring(0, 3) }}
             </div>
 
             <div v-if="firstDayOfCurrentMonth > 0" v-for="day in firstDayOfCurrentMonth" :key="day"
-                class="h-16 md:h-36 w-full border opacity-50"></div>
+                class="h-16 md:h-36 w-full border opacity-50 "></div>
 
             <!-- Attendance Timesheet Data from current month  -->
-            <div v-for="day in daysInCurrentMonth" :key="day" class="h-16 md:h-36 w-full border align-top">
-                <div class="w-full h-full text-xs md:text-sm lg:text-base text-center transition-colors" :class="{
-                    'bg-slate-200 text-gray-600 font-medium': isToday(day),
-                    'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
-                }">
+            <div v-for="day in daysInCurrentMonth" :key="day" class="h-16 md:h-36 w-full border align-top rounded-lg">
+                <div class="w-full h-full text-xs md:text-sm lg:text-base text-left px-2 transition-colors font-semibold"
+                    :class="{
+                        'bg-slate-50 text-gray-600 font-medium': isToday(day),
+                        'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
+                    }">
                     {{ day }}
 
-                    <div v-if="currentMonthAttendance(day, attendance).length" v-for="attendance in currentMonthAttendance(day, attendance)"
-                        class="hidden md:block">
+                    <div v-if="currentMonthAttendance(day, attendance).length"
+                        v-for="attendance in currentMonthAttendance(day, attendance)" class="hidden md:block">
                         <div
-                            class="w-full px-2 py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden hover:border hover:border-gray-200 cursor-pointer rounded-sm">
+                            class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
                             <div class="w-full">
                                 <div class="text-xs tracking-tight text-clip overflow-hidden p-3">
                                     <!-- Attendance Check in  -->
-                                    <div class="w-full  grid grid-cols-4 gap-4">
-                                        <div class="">
-                                            <p class="font-semibold text-sm">{{ attendance.checkin_time }}</p>
-                                        </div>
-                                        <div class="mx-3">
-                                            <i class="text-green-400 font-semibold text-sm"
+                                    <div class="grid gap-4 md:grid-cols-6 sm:grid-cols-6 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6"
+                                        style="display: grid;">
+                                        <div class="flex ">
+                                            <i class="fa fa-arrow-down text-green-400  font-medium text-sm "
+                                                style='transform: rotate(-45deg);'></i>
+                                            <p class="font-semibold text-sm mx-1">{{ attendance.checkin_time }}</p>
+                                            <i class="text-green-400 font-medium px-6 text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
                                         </div>
+                                        <!-- <div class="">
+                                            <i class="text-green-400 font-semibold text-sm"
+                                                :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
+                                        </div> -->
                                         <!-- Checking Late Coming -->
-                                        <div v-if="attendance.isLC" class="text-purple-500 font-bold text-sm">
+                                        <!-- <div v-if="attendance.isLC" class="text-purple-500 font-bold text-sm">
                                             LC
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="text-xs tracking-tight text-clip overflow-hidden p-3">
                                     <!-- Attendance Check in  -->
 
-                                    <div class="w-full  grid grid-cols-4 gap-4">
-                                        <div class="">
-                                            <p class="font-semibold text-sm">{{ attendance.checkout_time }}</p>
-                                        </div>
-                                        <div class="mx-3">
-                                            <i class="text-red-400 font-semibold text-sm"
+                                    <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-6 xl:grid-cols-6 lg:grid-cols-6"
+                                        style="display: grid;">
+                                        <div class="flex">
+                                            <i class="fa fa-arrow-down font-medium text-sm text-red-400 "
+                                                style='transform: rotate(230deg);'></i>
+                                            <p class="font-semibold text-sm mx-1">{{ attendance.checkout_time }}</p>
+                                            <i class="text-red-400 font-medium px-6 text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i>
                                         </div>
+                                        <!--
+                                        <i class="text-red-400 font-semibold text-sm"
+                                            :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i> -->
+
                                         <!--checking Early going  -->
-                                        <div v-if="attendance.isEG" class="text-purple-500 font-bold text-sm">
+                                        <!-- <div v-if="attendance.isEG" class="text-purple-500 font-bold text-sm">
                                             EG
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

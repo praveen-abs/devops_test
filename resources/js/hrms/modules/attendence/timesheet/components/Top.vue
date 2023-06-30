@@ -4,7 +4,7 @@
       <!-- Current month and year -->
       <div class="w-1/3 p-2 md:p-4">
         <div
-          class="w-full inline-flex space-x-1 text-lg md:text-2xl lg:text-2xl text-left font-bold md:font-semibold"
+          class="w-full inline-flex space-x-1 text-lg md:text-2xl lg:text-2xl text-left  md:font-semibold font-semibold"
         >
           <span class="md:hidden">{{ shortMonthStr }}</span
           ><span class="hidden md:block">{{ monthStr }}</span

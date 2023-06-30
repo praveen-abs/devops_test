@@ -154,7 +154,7 @@
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
                         <div class="flex">
-                            <div class="w-5">
+                            <div class="min-w-fit">
                                 <EmployeeList />
                             </div>
                             <div class="ml-2">
@@ -164,7 +164,7 @@
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
-                            <div class="w-7">
+                            <div class="min-w-fit">
                                 <EmployeeList />
                             </div>
                             <div>
