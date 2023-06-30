@@ -192,7 +192,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     //     },
     // ])
 
-    const getSelectedEmployeeAttendance = (currentlySelectedUser,currentlySelectedMonth,currentlySelectedYear)=>{
+    const getSelectedEmployeeAttendance = async(currentlySelectedUser,currentlySelectedMonth,currentlySelectedYear)=>{
         let url = '/fetch-attendance-user-timesheet'
         return  axios.post(url,{
             month: currentlySelectedMonth+1,
@@ -200,6 +200,17 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             user_id: currentlySelectedUser,
         })
     }
+
+    const getTeamList = async(user_code) =>{
+       return  axios.post('/fetch-team-members',{
+        user_code:user_code
+        })
+    }
+
+    const getOrgList = async() =>{
+        return  axios.get('/fetch-org-members')
+    }
+
 
 
     const findAttendanceMode = (attendance_mode) => {
@@ -281,7 +292,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     return {
         // Timesheet Data source
-        getSelectedEmployeeAttendance, currentEmployeeAttendance,
+        getSelectedEmployeeAttendance, currentEmployeeAttendance,getTeamList,getOrgList,
 
         // Finding Attendance Mode
 

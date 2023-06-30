@@ -159,7 +159,7 @@
                     <div class="tab-pane fade " id="team" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-fit">
-                                <EmployeeList :attendance="useTimesheet.currentEmployeeAttendance" />
+                                <EmployeeList :source="orgList" />
                             </div>
                             <div class="ml-2">
                                 <Timesheet :attendance="useTimesheet.currentEmployeeAttendance" />
@@ -169,10 +169,10 @@
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-fit">
-                                <EmployeeList />
+                                <EmployeeList  :source="orgList"/>
                             </div>
                             <div>
-                                <!-- <Timesheet :attendance="useTimesheet.timesheetMainSource" /> -->
+                                <Timesheet :attendance="useTimesheet.timesheetMainSource" />
                             </div>
                         </div>
                     </div>
@@ -205,12 +205,23 @@ import { onMounted, ref } from 'vue';
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 const useCalendar = useCalendarStore()
+const teamList = ref()
+const orgList = ref()
 
-onMounted(() => {
+onMounted(async () => {
     Service()
 
-    useTimesheet.getSelectedEmployeeAttendance(1, useCalendar.getMonth, useCalendar.getYear).then(res => {
+    await useTimesheet.getSelectedEmployeeAttendance(1, useCalendar.getMonth, useCalendar.getYear).then(res => {
         useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+    })
+
+    await useTimesheet.getTeamList('SA100').then(res=>{
+        console.log(res.data);
+        teamList.value = Object.values(res.data)
+    })
+
+    await useTimesheet.getOrgList().then(res=>{
+        orgList.value = Object.values(res.data)
     })
 
 })

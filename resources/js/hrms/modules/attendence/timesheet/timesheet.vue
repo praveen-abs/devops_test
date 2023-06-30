@@ -1,6 +1,6 @@
 <template>
     <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card">
-        <div class="w-full border  grid grid-cols-7 gap-1 card-body">
+        <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
 
@@ -178,7 +178,7 @@ const getDaysInMonth = () => {
 
 /**
  * Gets in number, the first day of a month
- * The month is gottenn from the calendar store
+ * The month is gotten from the calendar store
  */
 
 
