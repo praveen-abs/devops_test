@@ -59,7 +59,8 @@
             "app/Services/VmtAttendanceSettingsService.php",
             "app/Services/VmtPayrollService.php",
             "app/Services/VmtPayrollComponentsService.php",
-            "app/Services/VmtSalaryAdvanceService.php"
+            "app/Services/VmtSalaryAdvanceService.php",
+            "app/Services/VmtClientService.php"
 
 
         ]
