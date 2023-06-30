@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+
 use App\Models\VmtGeneralInfo;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -121,7 +122,7 @@ class VmtEmployeeMailNotifMgmtService {
             return response()->json([
                 'status' => 'failure',
                 'message' => "",
-                'data' => $e
+                'data' => $e->getmessage().$e->getLine(),
             ]);
         }
 

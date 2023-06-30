@@ -6,6 +6,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
+use App\Models\VmtClientMaster;
 
 class WelcomeMail extends Mailable
 {
@@ -39,17 +41,40 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        $output = $this->view('vmt_welcomeemployee_email')
-                    ->subject('ABShrms - Welcome')
-                    ->with('uEmail', $this->uEmail)
-                    ->with('uPassowrd', $this->uPassowrd)
-                    ->with('loginLink', $this->loginLink)
-                    ->with('image_view', $this->image_view);
+        try{
+
+            $output = $this->view('vmt_welcomeemployee_email')
+            ->subject('ABShrms - Welcome')
+            ->with('uEmail', $this->uEmail)
+            ->with('uPassowrd', $this->uPassowrd)
+            ->with('loginLink', $this->loginLink)
+            ->with('image_view', $this->image_view)
+            ->with('client_code', $this->get_client_code());
+
 
         //Only for Employee Onboarding
         //if($this->filename != "")
-           // $output->attach($this->filename);
+        // $output->attach($this->filename);
 
         return $output;
+        }catch(\Exception $e){
+            return [
+                'status' => "failure",
+                'message' => "Error while processing your request",
+                'data' => $e->getmessage().$e->getLine(),
+            ];
+        }
+
+    }
+    public function get_client_code(){
+
+        $emp_client_id = User::where('user_code',$this->uEmail)->first();
+
+        if(!empty($emp_client_id) ){
+            $client_code =  VmtClientMaster::where('id',$emp_client_id->client_id)->first();
+        }
+
+        return $client_code ? $client_code->abs_client_code : null;
+
     }
 }
