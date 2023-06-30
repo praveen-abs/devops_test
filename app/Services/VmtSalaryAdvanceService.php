@@ -525,13 +525,14 @@ class VmtSalaryAdvanceService
             ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date', 'DESC')->first()->payroll_date;
         // dd( $last_payroll_month);
         $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
-            ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+            ->orderBy('min_month_served', 'DESC')->get();
         if ($loan_type == 'InterestWithLoan') {
             $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
         } else if ($loan_type == 'InterestFreeLoan') {
             $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
-                ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+                ->orderBy('min_month_served', 'DESC')->get();
+                // dd($avaliable_int_loans );
         } else {
             return response()->json([
                 'status' => 'failure',
@@ -550,7 +551,13 @@ class VmtSalaryAdvanceService
                     $yearly_ctc = Compensatory::where('user_id', $user_id)->first()->cic * 12;
                     $applicable_loan_info['max_loan_amount'] = $yearly_ctc * $single_record->percent_of_ctc / 100;
                 }
-                $applicable_loan_info['max_tenure_months'] = $single_record->max_tenure_months;
+                   $max_tenure_month =array();
+                for($i=1; $i<=$single_record->max_tenure_months; $i++){
+                    $month['month'] = $i;
+                     array_push($max_tenure_month,$month);
+                }
+                // dd($max_tenure_month);
+                $applicable_loan_info['max_tenure_months'] = $max_tenure_month;
                 $applicable_loan_info['deduction_starting_month'] = Carbon::parse($last_payroll_month)
                     ->addMonth($single_record->deduction_starting_months)->format('Y-m-d');
                 if ($loan_type == 'InterestWithLoan') {
