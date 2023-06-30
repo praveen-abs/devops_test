@@ -612,14 +612,67 @@ class VmtSalaryAdvanceService
             ]);
         }
         $user_id = auth()->user()->id;
+
+        $getallintrestfreeemp =  VmtEmployeeInterestFreeLoanDetails::get()->sortByDesc('id')->first();
+
+        $getallintrestwithemp =  VmtEmpInterestLoanDetails::get()->sortByDesc('id')->first();
+
+
+
         try {
             if ($loan_type == 'InterestFreeLoan') {
+
                 $loan_details = new VmtEmployeeInterestFreeLoanDetails;
                 $loan_details->vmt_int_free_loan_id = $loan_setting_id;
+
+                if (empty($getallintrestfreeemp)) {
+                    $loan_details->request_id = "ABSIF001";
+                } else {
+                    $substrid = substr($getallintrestfreeemp->request_id, 5);
+                    $add1 = ($substrid + 1);
+                      $tostring = ((string)($add1));
+                       $strlenth = strlen($tostring);
+
+                       if($strlenth == 1){
+                        $requestid = "ABSIF" . "00" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else if($strlenth == 2){
+                        $requestid = "ABSIF" . "0" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else{
+                        $requestid = "ABSIF". $add1;
+                        $loan_details->request_id = $requestid;
+                       }
+                }
                 $settings_flow = VmtInterestFreeLoanSettings::where('id', $loan_setting_id)->first()->approver_flow;
             } else if ($loan_type = 'InterestWithLoan') {
                 $loan_details = new VmtEmpInterestLoanDetails;
                 $loan_details->vmt_int_loan_id = $loan_setting_id;
+
+                if (empty($getallintrestwithemp)) {
+                    $$loan_details->request_id = "ABSIL001";
+                } else {
+                    $substrid = substr($getallintrestwithemp->request_id, 5);
+                    $add1 = ($substrid + 1);
+                      $tostring = ((string)($add1));
+                       $strlenth = strlen($tostring);
+
+                       if($strlenth == 1){
+                        $requestid = "ABSIL" . "00" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else if($strlenth == 2){
+                        $requestid = "ABSIL" . "0" . $add1;
+                        $loan_details->request_id = $requestid;
+
+                       }else{
+                        $requestid = "ABSIL". $add1;
+                        $loan_details->request_id = $requestid;
+                       }
+                }
+
                 $settings_flow = VmtLoanInterestSettings::where('id', $loan_setting_id)->first()->approver_flow;
                 $loan_details->interest_rate = $interest_rate;
             } else {
