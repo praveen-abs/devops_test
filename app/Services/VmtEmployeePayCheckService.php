@@ -254,19 +254,19 @@ $i=array_keys($excelRowdata_row);
 
             //Store the data into vmt_employee_payslip table
             $empPaySlip= new VmtEmployeePayslipV2;
-            $empPaySlip->gender = $row['gender'];
+            $empPaySlip->gender = $row['gender'] ?? null;
             $empPaySlip->designation = $row['designation'];
-            $empPaySlip->department = $row['department'];
+            $empPaySlip->department = $row['department'] ?? null;
             $empPaySlip->location = $row['location'];
-            $empPaySlip-> father_name  = $row['father_name'];
-            $empPaySlip->pan_number = $row['pan_number'];
-            $empPaySlip->aadhar_number = $row['aadhar_number'];
-            $empPaySlip->uan = $row['uan'];
-            $empPaySlip->epf_number = $row["epf_number"]; // => "EPF123"
-            $empPaySlip->esic_number = $row["esic_number"]; // => "Not Applicable",
-            $empPaySlip->Bank_Name = $row["bank_name"];
-            $empPaySlip->account_number = $row["account_number"];
-            $empPaySlip->bank_ifsc_code = $row["bank_ifsc_code"];
+            $empPaySlip-> father_name  = $row['father_name'] ?? null;
+            $empPaySlip->pan_number = $row['pan_number'] ?? null;
+            $empPaySlip->aadhar_number = $row['aadhar_number'] ?? null;
+            $empPaySlip->uan = $row['uan'] ?? null;
+            $empPaySlip->epf_number = $row["epf_number"] ?? null; // => "EPF123"
+            $empPaySlip->esic_number = $row["esic_number"] ?? null; // => "Not Applicable",
+            $empPaySlip->Bank_Name = $row["bank_name"] ?? null;
+            $empPaySlip->account_number = $row["account_number"] ?? null;
+            $empPaySlip->bank_ifsc_code = $row["bank_ifsc_code"] ?? null;
 
             $client_id=User::where('user_code',$row['emp_no'])->first()->client_id;
 
@@ -344,16 +344,16 @@ $i=array_keys($excelRowdata_row);
             $empPaySlip->net_take_home = $row["net_take_home"];
             $empPaySlip->rupees = $row["rupees"];
             $empPaySlip->el_opn_bal = $row["el_opn_bal"];
-            $empPaySlip->availed_el = $row["availed_el"];
-            $empPaySlip->balance_el = $row["balance_el"];
-            $empPaySlip->sl_opn_bal = $row["sl_opn_bal"];
-            $empPaySlip->availed_sl = $row["availed_sl"];
-            $empPaySlip->balance_sl = $row["balance_sl"];
-            $empPaySlip->rename = $row['rename'];
+            $empPaySlip->availed_el = $row["availed_el"] ?? 0;
+            $empPaySlip->balance_el = $row["balance_el"] ??0 ;
+            $empPaySlip->sl_opn_bal = $row["sl_opn_bal"] ?? 0;
+            $empPaySlip->availed_sl = $row["availed_sl"] ?? 0;
+            $empPaySlip->balance_sl = $row["balance_sl"] ?? 0;
+            $empPaySlip->rename = $row['rename'] ?? 0;
             //$empPaySlip->Email = $row['email'];
-            $empPaySlip->greetings = $row['greetings'];
-            $empPaySlip->travel_conveyance = $row['travel_conveyance'];
-            $empPaySlip->other_earnings = $row['other_earnings'];
+            $empPaySlip->greetings = $row['greetings'] ?? 0;
+            $empPaySlip->travel_conveyance = $row['travel_conveyance'] ?? 0;
+            $empPaySlip->other_earnings = $row['other_earnings'] ?? 0;
             $empPaySlip->save();
             }
             //]);
