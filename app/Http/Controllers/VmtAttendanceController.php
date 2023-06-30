@@ -32,6 +32,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
+use Illuminate\Support\Facades\Validator;
 
 
 class VmtAttendanceController extends Controller
@@ -1157,109 +1158,147 @@ class VmtAttendanceController extends Controller
     {
         //dd($request->all());
 
-        //Check if already request applied
-        $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
-            ->where('user_id',  $request->attendance_user)
-            ->where('regularization_type',  $request->regularization_type);
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "regularization_type" => "required", //office, work
+                "attendance_date" => "required",
+                "attendance_user" => "required",
+                "user_time" => "required",
+                "regularize_time" => "required",
 
-        if ($data->exists()) {
-            //dd("Request already applied");
-            return $responseJSON = [
-                'status' => 'failure',
-                'message' => 'Request already applied',
-                'mail_status' => 'failure',
-                'data' => [],
-            ];
-        } else {
-
-            //dd("Request not applied");
-
-            if ($request->regularization_type == 'MIP' || $request->regularization_type == 'MOP')
-                $user_time = null;
-            else
-                $user_time = $request->user_time;
-
-
-
-            $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
-            $attendanceRegularizationRequest->user_id = $request->attendance_user;
-            $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
-            $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
-            $attendanceRegularizationRequest->user_time =  empty($user_time) ? null : Carbon::createFromFormat('H:i:s', $user_time);
-            $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('H:i:s', $request->regularize_time);
-            $attendanceRegularizationRequest->reason_type = $request->reason;
-            $attendanceRegularizationRequest->custom_reason = $request->custom_reason ?? '';
-            $attendanceRegularizationRequest->status = 'Pending';
-
-            $attendanceRegularizationRequest->save();
-        }
-
-
-        ////Send mail to Manager
-
-        $mail_status = "";
-
-        //Get manager details
-        $manager_usercode = VmtEmployeeOfficeDetails::where('user_id', $request->attendance_user)->value('l1_manager_code');
-        $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
-
-        //dd($manager_details);
-
-
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
-
-
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
-
-
-        $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-            auth::user()->name,
-            auth::user()->user_code,
-            $emp_avatar,
-            $request->attendance_date,
-            $manager_details->name,
-            $manager_details->user_code,
-            request()->getSchemeAndHttpHost(),
-            $image_view,
-            $request->custom_reason,
-            "Pending"
-        ));
-        if ($request->regularization_type == 'LC') {
-
-            $attendance_regularization_type = 'employee_applies_lc';
-        } else if ($request->regularization_type == 'EG') {
-
-            $attendance_regularization_type = 'employee_applies_eg';
-        } else if ($request->regularization_type == 'MOP') {
-
-            $attendance_regularization_type = 'employee_applies_mop';
-        } else if ($request->regularization_type == 'MIP') {
-
-            $attendance_regularization_type = 'employee_applies_mip';
-        }
-
-        $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-            notif_user_id: $request->attendance_user,
-            attendance_regularization_type: $attendance_regularization_type,
-            manager_user_code: $manager_usercode,
+                "reason" => "required", //
+                "custom_reason" => "required_with:reason",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "required_with" => "Field :attribute is missing",
+            ]
         );
 
 
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
         }
 
-        return $responseJSON = [
-            'status' => 'success',
-            'message' => 'Request sent successfully!',
-            'notification_status' => $res_notification,
-            'mail_status' => $mail_status,
-            'data' => [],
-        ];
+        try{
+
+            //Check if already request applied
+            $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $request->attendance_date)
+                ->where('user_id',  $request->attendance_user)
+                ->where('regularization_type',  $request->regularization_type);
+
+            if ($data->exists()) {
+                //dd("Request already applied");
+                return $responseJSON = [
+                    'status' => 'failure',
+                    'message' => 'Request already applied',
+                    'mail_status' => 'failure',
+                    'data' => [],
+                ];
+            } else {
+
+                //dd("Request not applied");
+
+                if ($request->regularization_type == 'MIP' || $request->regularization_type == 'MOP')
+                    $user_time = null;
+                else
+                    $user_time = $request->user_time;
+
+
+
+                $attendanceRegularizationRequest = new VmtEmployeeAttendanceRegularization;
+                $attendanceRegularizationRequest->user_id = $request->attendance_user;
+                $attendanceRegularizationRequest->attendance_date = $request->attendance_date;
+                $attendanceRegularizationRequest->regularization_type =  $request->regularization_type;
+                $attendanceRegularizationRequest->user_time =  empty($user_time) ? null : Carbon::createFromFormat('H:i:s', $user_time);
+                $attendanceRegularizationRequest->regularize_time = Carbon::createFromFormat('H:i:s', $request->regularize_time);
+                $attendanceRegularizationRequest->reason_type = $request->reason;
+                $attendanceRegularizationRequest->custom_reason = $request->custom_reason ?? '';
+                $attendanceRegularizationRequest->status = 'Pending';
+
+                $attendanceRegularizationRequest->save();
+            }
+
+
+            ////Send mail to Manager
+
+            $mail_status = "";
+
+            //Get manager details
+            $manager_usercode = VmtEmployeeOfficeDetails::where('user_id', $request->attendance_user)->value('l1_manager_code');
+            $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+            //dd($manager_details);
+
+
+            $VmtGeneralInfo = VmtGeneralInfo::first();
+            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+
+
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
+
+
+            $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                auth::user()->name,
+                auth::user()->user_code,
+                $emp_avatar,
+                $request->attendance_date,
+                $manager_details->name,
+                $manager_details->user_code,
+                request()->getSchemeAndHttpHost(),
+                $image_view,
+                $request->custom_reason,
+                "Pending"
+            ));
+            if ($request->regularization_type == 'LC') {
+
+                $attendance_regularization_type = 'employee_applies_lc';
+            } else if ($request->regularization_type == 'EG') {
+
+                $attendance_regularization_type = 'employee_applies_eg';
+            } else if ($request->regularization_type == 'MOP') {
+
+                $attendance_regularization_type = 'employee_applies_mop';
+            } else if ($request->regularization_type == 'MIP') {
+
+                $attendance_regularization_type = 'employee_applies_mip';
+            }
+
+            $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+                notif_user_id: $request->attendance_user,
+                attendance_regularization_type: $attendance_regularization_type,
+                manager_user_code: $manager_usercode,
+            );
+
+
+            if ($isSent) {
+                $mail_status = "Mail sent successfully";
+            } else {
+                $mail_status = "There was one or more failures.";
+            }
+
+            return $responseJSON = [
+                'status' => 'success',
+                'message' => 'Request sent successfully!',
+                'notification_status' => $res_notification,
+                'mail_status' => $mail_status,
+                'data' => [],
+            ];
+        }
+        catch(\Exception $e){
+
+            return $responseJSON = [
+                'status' => 'failure',
+                'message' => 'Error while processing the request. Please contact the admin',
+                'data' => $e
+            ];
+        }
     }
 
     public function approveRejectAttendanceRegularization(Request $request, VmtNotificationsService $serviceVmtNotificationsService)
