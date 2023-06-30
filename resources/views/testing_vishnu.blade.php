@@ -15,7 +15,7 @@
 
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
-    use App\Models\VmtEmployeePayslipV2;
+    use App\Models\VmtEmployeePaySlipV2;
     use App\Models\VmtPMS_KPIFormModel;
     use App\Models\VmtLoanInterestSettings;
     use App\Models\VmtUserMailStatus;
@@ -88,7 +88,7 @@
 
 //         foreach ($query_all_payslip as $key => $singlepayslipdetails) {
 
-//             $emppayslip = new VmtEmployeePayslipV2;
+//             $emppayslip = new VmtEmployeePaySlipV2;
 //  /*get payroll id from vmt_emp_payroll in order to filter payroll_date and find emp_payroll_id */
 
 //                $client_id = User::where('id',$singlepayslipdetails->user_id)->first()->client_id;
@@ -159,7 +159,7 @@
                 //  $query_payslips=array();
                 //   foreach ($emp_payslip_id as $key => $singleuserid) {
 
-                // //     $query_payslips[] = VmtEmployeePayslipV2::where('emp_payroll_id',$singleuserid->id)
+                // //     $query_payslips[] = VmtEmployeePaySlipV2::where('emp_payroll_id',$singleuserid->id)
                 // //                                     ->orderBy('emp_payroll_id', 'ASC')
                 // //                                     ->get(['id','NET_TAKE_HOME','TOTAL_DEDUCTIONS','TOTAL_EARNED_GROSS']);
                 //  }
@@ -198,7 +198,7 @@
 // $year='2022';
 // $month='10';
 
-//         $query_payslips = VmtEmployeePayslipV2::leftjoin('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
+//         $query_payslips = VmtEmployeePaySlipV2::leftjoin('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
 //                                              ->leftjoin('vmt_payroll','vmt_payroll.id','=','vmt_emp_payroll.payroll_id')
 //                                              ->leftjoin('users','users.id','=','vmt_emp_payroll.user_id')
 //                                              ->whereYear('vmt_payroll.payroll_date', $year)
