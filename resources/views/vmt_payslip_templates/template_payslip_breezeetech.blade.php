@@ -1,8 +1,8 @@
 <?php
 
-$general_info = \DB::table('vmt_client_master')->first();
+$client_data = \DB::table('vmt_client_master')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
+$client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_logo;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 // $bank_names = \DB::table('vmt_banks')->get();
 ?>
@@ -198,7 +198,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="1" class=""
                                     style="border:.1em dashed #b2ff78;padding:.4em .2em">
-                                    <p>1</p>
+                                    <p>{{ $employee_payslip->worked_Days }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -208,7 +208,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="1" class=""
                                     style="border:.1em dashed #b2ff78;padding:.4em .2em">
-                                    <p>2</p>
+                                    <p>{{ $employee_payslip->lop }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -268,14 +268,14 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_basic), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>EPF Contribution</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->epfr), 2) }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -284,18 +284,18 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->hra), 2) }}</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_hra), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em ;">
                                     <p>ESIC Contribution</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->employee_esic), 2) }}</p>
                                 </td>
                             </tr>
 
@@ -305,18 +305,18 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->spl_alw), 2) }}</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_spl_alw), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Income Tax</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->income_tax), 2) }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -325,18 +325,18 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round(0)) }}</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->overtime), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Professional Tax</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->prof_tax), 2) }}</p>
                                 </td>
                             </tr>
 
@@ -346,18 +346,18 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round(0)) }}</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round(0)) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Other Deduction</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->other_deduc), 2) }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -367,11 +367,11 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->total_fixed_gross), 2) }}</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->total_earned_gross), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
@@ -379,7 +379,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p class="text-right">sdfsd</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->total_deductions), 2) }}</p>
                                 </td>
                             </tr>
 
