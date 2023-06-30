@@ -234,6 +234,40 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         dailog_Selfie.value = true
     }
 
+    function onClickShowLC_Dialog(data_selecteddate){
+        console.log("Opening LC dialog");
+
+        //Logic to check whether max apply day limit reached
+
+
+        //If within max apply day limit, then show the Dialog
+
+        //Before showing the dialog, populate the required data. If regularization already applied, then show as non-editable fields
+
+
+    }
+
+    function applyLCRegularization(regularization_type, attendance_date, attendance_user, user_time, regularize_time, reason, custom_reason){
+
+        console.log("Sending regularization req...");
+
+        /*
+            Need to send thses parameters:
+
+                "regularization_type" => "required", //office, work
+                "attendance_date" => "required",
+                "attendance_user" => "required",
+                "user_time" => "required",
+                "regularize_time" => "required",
+
+                "reason" => "required", //
+                "custom_reason" => "required_with:reason",
+
+
+
+        */
+
+    }
 
 
     return {
