@@ -1,4 +1,22 @@
-{"salaryAdvance":[
+{"InterestFreeLoanDetails":
+    {
+        "id":1,
+        "ra":"20,000",
+        "month":[
+            {"name":1,"val":1},
+            {"name":2,"val":2},
+            {"name":3,"val":3},
+            {"name":4,"val":4},
+            {"name":5,"val":5}
+        ],
+        "EMI_Start_Month":[
+        {"Month":"12/09/2022","val":1},
+        {"Month":"21/10/2022","val":2},
+        {"Month":"31/11/2022","val":3},
+        {"Month":"1/12/2022","val":4}]
+    }
+
+    ,"salaryAdvance":[
     {
         "id":1,
         "user_code":"PSC0060",

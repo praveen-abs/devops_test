@@ -23,22 +23,20 @@
                                 <div class="row mx-2">
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Required Amount</h1>
-                                        <InputText type="text" v-model="useEmpStore.ifl.Ra" placeholder="&#8377; Enter The Required Amount" />
-                                        <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000</p>
+                                        <InputNumber  v-model.number="useEmpStore.ifl.Ra" placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping" :useGrouping="false" />
+                                        <!-- <InputText type="text"  v-model.number="useEmpStore.ifl.Ra" placeholder="&#8377; Enter The Required Amount" /> -->
+                                        <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{useEmpStore.ifl.minEligibile.ra }}</p>
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                        <InputText type="text" v-model="useEmpStore.ifl.M_EMI" placeholder="&#8377; " />
+                                        <InputText type="text" readonly v-model="useEmpStore.ifl.M_EMI" placeholder="&#8377; " />
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        <Dropdown v-model="useEmpStore.ifl.Term" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
-                                        <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
+                                        <Dropdown v-model="useEmpStore.ifl.Term" @change="selectMonth" :options="useEmpStore.ifl.minEligibile.month" optionLabel="name" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" />
+                                        <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Month</label>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
 
@@ -50,16 +48,18 @@
                                     <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar v-model="useEmpStore.ifl.EMI_Start_Month" showIcon />
+                                            <!-- <Calendar v-model="useEmpStore.ifl.EMI_Start_Month" showIcon /> -->
+                                            <Dropdown v-model="useEmpStore.ifl.EMI_Start_Month" @change="useEmpStore.calculateMonth" :options="useEmpStore.save_Start_Month" optionLabel="Month" placeholder="Select Month"  />
                                         </div>
 
                                         <div class="col-4 mx-2">
-                                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar v-model="data" showIcon />
+                                            <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
+                                            <!-- <InputText type="text" readonly v-model="useEmpStore.ifl.EMI_End_Month"  style="width: 150px !important;" /> -->
+                                            <Calendar v-model="useEmpStore.ifl.EMI_End_Month" showIcon readonly  style="width: 150px !important;" />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
-                                            <InputText type="text" v-model="useEmpStore.ifl.Total_Months" style="width: 150px !important;" />
+                                            <InputText type="text" readonly v-model="useEmpStore.ifl.Total_Months" style="width: 150px !important;" />
                                         </div>
                                 </div>
                             </div>
@@ -175,13 +175,19 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
-import {useEmpSalaryAdvanceStore}  from '../../stores/employeeSalaryAdvanceLoanMainStore'
+import {useEmpSalaryAdvanceStore}  from '../../stores/employeeSalaryAdvanceLoanMainStore';
+import dayjs from 'dayjs';
+import { useNow, useDateFormat } from '@vueuse/core'
 
 const useEmpStore = useEmpSalaryAdvanceStore();
 
 onMounted(() => {
    useEmpStore.fetchInterestfreeLoan()
+   useEmpStore.getinterestfreeloan();
 })
+
+const select_date = ref();
+const selectedMonth = ref()
 
 const position = ref('center');
 
@@ -191,13 +197,64 @@ const openPosition = (pos) => {
 }
 
 
+function selectMonth(){
+
+    useEmpStore.ifl.M_EMI =  useEmpStore.ifl.Ra/ useEmpStore.ifl.Term;
+    useEmpStore.ifl.Total_Months =   useEmpStore.ifl.Term;
+    // useEmpStore.ifl.Ra
+    // useEmpStore.ifl.Term
+}
+
+function calculateMonth(){
+
+console.log(useEmpStore.ifl.EMI_Start_Month.Month);
+
+var myDate2 = new Date(useEmpStore.ifl.EMI_Start_Month.Month);
+var result2 = myDate2.addMonths(1);
+
+console.log(result2);
+
+
+
+//  let values = dayjs(useEmpStore.ifl.EMI_Start_Month.Month).add(1,'month').format('YYYY/MM/DD');
+//  console.log(values);
+
+}
+
+
+// function endOfQuarterNextYear(someDate) {
+//   // Create a copy since date will get changed
+//   var d = new Date(useEmpStore.ifl.EMI_Start_Month);
+
+//   // Set the date out by 15 months
+//   // (1 year plus 1 quarter)
+//   d.setMonth(d.getMonth() + 15);
+
+//   // Move back to start of quarter
+//   // % 3 means remainder after divide by 3, (and
+//   // note please that month numbers are 0-based in JS)
+//   // in month 9  (Oct) you will get month 9 (Oct)
+//   // in month 10 (Nov) you will get month 9 (Oct)
+//   // in month 11 (Dec) you will get month 9 (Oct)
+//   d.setMonth(d.getMonth() - (d.getMonth() % 3));
+
+//   // Move back to last day of prior month, which is
+//   // also last day in prior quarter
+//   // (and which is day '0' in current month)
+//   d.setDate(0);
+
+//   return d;
+// }
+
 const value = ref();
 
-
+if(useEmpStore.ifl.Term){
+console.log("testing ::",useEmpStore.ifl.Term);
+}
 
 const selectedCity = ref();
     const cities = ref([
-        { name: '1.5', code: 'NY' },
+        { name: 1, val:2 },
         { name: '2', code: 'RM' },
         { name: '2.5', code: 'LDN' },
         { name: '3', code: 'IST' },
@@ -205,6 +262,19 @@ const selectedCity = ref();
     ]);
 
     const date = ref();
+
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        useEmpStore.saveSalaryAdvance()
+        v$.value.$reset()
+    } else {
+        console.log('Form failed validation')
+    }
+}
 
 
 </script>
