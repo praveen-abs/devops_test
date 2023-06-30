@@ -699,6 +699,7 @@ class VmtAttendanceController extends Controller
 
 
             $attendanceResponseArray[$fulldate] = array(
+                "date" => $fulldate,
                 "user_id" => $request->user_id, "isAbsent" => false, "attendance_mode_checkin" => null, "attendance_mode_checkout" => null,
                 "vmt_employee_workshift_id" => null, "workshift_code" => null, "workshift_name" => null,
                 "absent_status" => null, "leave_type" => null, "checkin_time" => null, "checkout_time" => null,
