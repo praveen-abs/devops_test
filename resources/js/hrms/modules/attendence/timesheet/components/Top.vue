@@ -67,7 +67,7 @@
           >
             <template #trigger>
               <div
-                class="flex space-x-1 md:space-x-2 justify-around items-center border rounded-sm px-2 md:px-8 py-1 md:py-4 cursor-pointer hover:bg-gray-200 transition-colors"
+                class="flex space-x-1 md:space-x-2 justify-around items-center bg-purple-300 rounded-sm px-2 md:px-8 py-1 md:py-2 cursor-pointer hover:bg-gray-200 transition-colors"
               >
                 <div>
                   <svg
@@ -94,14 +94,14 @@
             </template>
           </Datepicker>
 
-          <div
+          <!-- <div
             class="flex justify-center items-center border rounded-sm px-2 md:px-5 py-1 md:py-2 cursor-pointer hover:bg-gray-200 transition-colors"
             @click="calendarStore.resetDate()"
           >
             <h1 class="text-xs md:text-base font-medium md:font-semibold">
               Today
             </h1>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
