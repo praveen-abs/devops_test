@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import { useAttendanceTimesheetMainStore } from "./attendanceTimesheetMainStore";
 
 export const useCalendarStore = defineStore("calendar", () => {
+ const useTimesheet = useAttendanceTimesheetMainStore()
   const year = ref(new Date().getFullYear());
   const month = ref(new Date().getMonth());
   const day = ref(new Date().getDate());
@@ -24,6 +26,8 @@ export const useCalendarStore = defineStore("calendar", () => {
     }
 
     month.value = month.value + val;
+
+    useTimesheet.getSelectedEmployeeAttendance(1,getMonth.value,getYear.value)
   }
   function decrementMonth(val) {
     if (month.value == 0) {
@@ -33,6 +37,8 @@ export const useCalendarStore = defineStore("calendar", () => {
     }
 
     month.value = month.value - val;
+    useTimesheet.getSelectedEmployeeAttendance(1,getMonth.value,getYear.value)
+
   }
   function incrementDay(val) {
     day.value = day.value + val;

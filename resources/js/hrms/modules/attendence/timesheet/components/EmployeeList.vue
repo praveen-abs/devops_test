@@ -16,3 +16,16 @@
         </div>
     </div>
 </template>
+
+<script setup>
+
+const props = defineProps({
+    attendance: {
+        type: Object,
+        required: true,
+    },
+});
+
+
+</script>
+

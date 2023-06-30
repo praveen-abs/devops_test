@@ -40,14 +40,21 @@
                                         <div class="px-1">
                                             <i class="text-green-400 font-medium text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
-                                            <button @click="useTimesheet.viewSelfie" v-if="attendance.attendance_mode_checkin == 'mobile'" class="mx-2">
+                                            <button @click="useTimesheet.viewSelfie"
+                                                v-if="attendance.attendance_mode_checkin == 'mobile'" class="mx-2">
                                                 <i class="fa fa-picture-o" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                         <div class="">
-                                          <button v-if="attendance.isMIP" class="regualarization_button bg-orange-600 text-white" @click="useTimesheet.applyMip(attendance)" >MIP</button>
-                                          <button v-if="attendance.isLC"  class="regualarization_button bg-purple-400 text-white" @click="useTimesheet.applyLc(attendance)" >LC</button>
-                                          <i v-if="attendance.isMIP || attendance.isLC" class="fa fa-exclamation-circle fs-15 text-warning mx-2" title="Not Applied"></i>
+                                            <button v-if="attendance.isMIP"
+                                                class="regualarization_button bg-orange-600 text-white"
+                                                @click="useTimesheet.applyMip(attendance)">MIP</button>
+                                            <button v-if="attendance.isLC"
+                                                class="regualarization_button bg-purple-400 text-white"
+                                                @click="useTimesheet.applyLc(attendance)">LC</button>
+                                            <i v-if="attendance.isMIP || attendance.isLC"
+                                                class="fa fa-exclamation-circle fs-15 text-warning mx-2"
+                                                title="Not Applied"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -64,14 +71,21 @@
                                         <div class="px-1">
                                             <i class="text-red-400 font-medium text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i>
-                                            <button @click="useTimesheet.viewSelfie" v-if="attendance.attendance_mode_checkout == 'mobile'" class="mx-2">
+                                            <button @click="useTimesheet.viewSelfie"
+                                                v-if="attendance.attendance_mode_checkout == 'mobile'" class="mx-2">
                                                 <i class="fa fa-picture-o" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                         <div class="">
-                                            <button v-if="attendance.isMOP"  class="regualarization_button bg-orange-600 text-white" @click="useTimesheet.applyMop(attendance)" >MOP</button>
-                                            <button v-if="attendance.isEG"  class="regualarization_button bg-purple-400 text-white" @click="useTimesheet.applyEG(attendance)" >EG</button>
-                                            <i v-if="attendance.isMOP || attendance.isEG" class="fa fa-exclamation-circle fs-15 text-warning mx-2" title="Not Applied"></i>
+                                            <button v-if="attendance.isMOP"
+                                                class="regualarization_button bg-orange-600 text-white"
+                                                @click="useTimesheet.applyMop(attendance)">MOP</button>
+                                            <button v-if="attendance.isEG"
+                                                class="regualarization_button bg-purple-400 text-white"
+                                                @click="useTimesheet.applyEG(attendance)">EG</button>
+                                            <i v-if="attendance.isMOP || attendance.isEG"
+                                                class="fa fa-exclamation-circle fs-15 text-warning mx-2"
+                                                title="Not Applied"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +121,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
@@ -115,8 +128,12 @@ import { ref, onMounted, onUpdated } from "vue";
 import Top from "./components/Top.vue"
 import { useCalendarStore } from "./stores/calendar";
 import { useAttendanceTimesheetMainStore } from './stores/attendanceTimesheetMainStore'
+import {Service } from '../../Service/Service'
+
 
 const useTimesheet = useAttendanceTimesheetMainStore()
+const service = Service()
+
 const props = defineProps({
     attendance: {
         type: Object,
@@ -145,7 +162,6 @@ const daysOfTheWeek = {
 const daysInCurrentMonth = ref(0);
 const firstDayOfCurrentMonth = ref(0);
 const lastEmptyCells = ref(0);
-
 /**
  * Gets the number of days present in a month
  * The month is gotten from the calendar store
@@ -282,7 +298,7 @@ onUpdated(() => {
     translate: 0px 100%;
 }
 
-.regualarization_button{
+.regualarization_button {
     padding: 1px !important;
     height: 14px;
     width: auto;
@@ -290,5 +306,4 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}
-</style>
+}</style>

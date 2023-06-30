@@ -584,7 +584,7 @@ class VmtAttendanceController extends Controller
 
     public function fetchUserTimesheet(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
 
         $user = User::find($request->user_id);
         $userCode = $user->user_code;
