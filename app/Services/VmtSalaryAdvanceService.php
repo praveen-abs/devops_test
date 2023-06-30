@@ -816,4 +816,40 @@ class VmtSalaryAdvanceService
             ]);
         }
     }
+
+    public function rejectOrApprovedSaladv($record_id, $status){
+
+        try{
+
+        $user_id = auth()->user()->id;
+
+           $loan_details =  VmtEmpSalAdvDetails::where('id',$record_id)->first();
+
+        $approver_flow = json_decode($loan_details->emp_approver_flow, true);
+
+        for ($i = 0; $i < count($approver_flow); $i++) {
+            if ($approver_flow[$i]['approver'] == $user_id) {
+                $approver_flow[$i]['status'] = $status;
+            }
+        }
+
+        $loan_details->emp_approver_flow = json_encode($approver_flow, true);
+        $loan_details->save();
+
+        return response()->json([
+            'status' => 'Sucess',
+            'message' => 'Loan Approved Or Rejected',
+
+        ]);
+    }
+    catch (Exception $e) {
+        return response()->json([
+            "status" => "failure",
+            "message" => "Approve Or Reject salary_adv  Failed",
+            "data" => $e->getMessage(),
+        ]);
+    }
+
+
+    }
 }
