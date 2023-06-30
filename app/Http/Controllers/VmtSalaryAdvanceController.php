@@ -24,6 +24,16 @@ use Exception;
 class VmtSalaryAdvanceController extends Controller
 {
 
+    public function showSAemployeeView(){
+        return view('salaryAndLoanAdvance.SAEmployee_view');
+    }
+    public function showSAapprovalView(){
+        return view('salaryAndLoanAdvance.SA_approval_view');
+    }
+    public function showSAsettingsView(){
+        return view('salaryAndLoanAdvance.SA_settings_view');
+    }
+
     public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
