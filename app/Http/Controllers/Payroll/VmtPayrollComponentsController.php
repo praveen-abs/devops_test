@@ -142,68 +142,17 @@ class VmtPayrollComponentsController extends Controller
     }
 
 
-    public function fetchPayGroupEmpComponents(Request $request)
+    public function fetchPayGroupEmpComponents(Request $request , VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =array();
+
+        $response =$serviceVmtPayrollComponentsService->fetchPayGroupEmpComponents();
 
 
-          $paygroupassignempcomps =VmtEmpPaygroup::get();
-
-              $emp_id =array();
-                foreach ($paygroupassignempcomps as $key => $singlepaygroupassignempcomps) {
-
-                    $emp_id[]=$singlepaygroupassignempcomps->user_id;
-
-                }
-
-         $payroll_assign_employees = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                                        ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                                        ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
-                                        ->where('process', '<>', 'S2 Admin')
-                                        ->whereIn('users.id',$emp_id)
-                                        ->select(
-                                            'users.name',
-                                            'users.user_code',
-                                            'vmt_department.name as department_name',
-                                            'vmt_employee_office_details.designation',
-                                            'vmt_employee_office_details.work_location',
-                                            'vmt_client_master.client_name',
-                                            )
-                                        ->get();
-
-                 $response['paygroupassignempcomps'] =$payroll_assign_employees;
-
-      $paygroupassigncomps =VmtPaygroupComps::get();
-
-              $comp_id =array();
-
-         foreach ($paygroupassigncomps as $key => $singlepaygroupassigncomps) {
-
-               $comp_id[]=$singlepaygroupassigncomps->comp_id;
-
-          }
-
-          $paygroup_assign_comps =VmtPayrollComponents::whereIn('id', $comp_id)->get();
-
-           $response['paygroupassigncomps'] =$paygroup_assign_comps;
-
-    $paygroupempstructure =VmtPaygroup::get();
-
-    $paygroup = array();
-
-    foreach ($paygroupempstructure as $key => $singlepaygroupempstructure) {
-
-          $paygroup[]=$singlepaygroupempstructure->creator_user_id;
-
-     }
-      $paygroupempstructure['no_of_employees']=count($payroll_assign_employees);
-      $creator_user_name = User::whereIn('id',$creator_user_id)->first();
-      $paygroupempstructure['creator_user_id as creator_user_name']= $creator_user_name->name;
-
-           $response['paygroupempstructure'] =$paygroupempstructure;
-
-
-        return response()->json($response);
+        return response()->json([
+                "status" => "success",
+                "message" => " ",
+                "data" => $response,
+            ]);
     }
 
     // public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)

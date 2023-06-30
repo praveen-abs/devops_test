@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\VmtEmpPaygroup;
 use App\Models\VmtPaygroup;
 use App\Models\VmtPaygroupComps;
-use App\Models\VmtPayrollIntegrations;
+use App\Models\VmtAppIntegration;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtPayrollComponents;
 use Illuminate\Support\Facades\Validator;
@@ -619,6 +619,97 @@ class VmtPayrollComponentsService{
         }
 
 }
+
+
+  public function fetchPayGroupEmpComponents()
+    {
+        try{
+
+            $paygroup_structure_comps =VmtPaygroup::get();
+
+             $i=0;
+          foreach ($paygroup_structure_comps as $key => $Single_structure) {
+
+            $creator_user_name =User::where('id',$Single_structure->creator_user_id)->first();
+            $paygroup_structure_comps[$i]['creator_user_name']=$creator_user_name->name;
+            $paygroup_structure_comps[$i]['paygroup_comps'] =$this->fetchPaygroupAssignedComponents($Single_structure->id);
+            $paygroup_structure_comps[$i]['paygroup_assign_employees'] =$this->fetchPaygroupAssignedEmployee($Single_structure->id);
+            $paygroup_structure_comps[$i]['no_of_employees']=count($paygroup_structure_comps[$i]['paygroup_assign_employees']);
+
+             $i++;
+
+          }
+
+                return  $paygroup_structure_comps;
+
+
+        }catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to get data",
+                "data" => $e->getmessage(),
+
+            ]);
+
+        }
+
+
+
+}
+ public function fetchPaygroupAssignedEmployee($paygroup_id){
+          try{
+
+
+            $paygroup_assigned_emp_id =VmtEmpPaygroup::where('paygroup_id',$paygroup_id)->pluck('user_id');
+
+            $paygroup_assigned_employees = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                                        ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                                        ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
+                                        ->where('process', '<>', 'S2 Admin')
+                                        ->whereIn('users.id',$paygroup_assigned_emp_id)
+                                        ->select(
+                                            'users.name',
+                                            'users.user_code',
+                                            'vmt_department.name as department_name',
+                                            'vmt_employee_office_details.designation',
+                                            'vmt_employee_office_details.work_location',
+                                            'vmt_client_master.client_name',
+                                            )
+                                        ->get();
+
+             return  $paygroup_assigned_employees;
+
+
+          }catch(\Exception $e){
+                    return response()->json([
+                        "status" => "failure",
+                        "message" => "Unable to get data",
+                        "data" => $e->getmessage(),
+                    ]);
+        }
+
+     }
+     public function fetchPaygroupAssignedComponents($paygroup_id){
+
+        try{
+
+                $paygroup_assign_comps_id =VmtPaygroupComps::where('paygroup_id',$paygroup_id)->pluck('comp_id');
+
+
+                $paygroup_assign_comps =VmtPayrollComponents::whereIn('id', $paygroup_assign_comps_id)->get();
+
+                return  $paygroup_assign_comps ;
+
+            }catch(\Exception $e){
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Unable to get data",
+                    "data" => $e->getmessage(),
+                ]);
+            }
+
+        }
+
  public function addPayrollIntegrations($accounting_soft_name,$accounting_soft_logo,$description,$status){
             //Validate
             $validator = Validator::make(
@@ -652,7 +743,7 @@ class VmtPayrollComponentsService{
 
         try{
 
-            $paygroup_components =VmtPayrollIntegrations::where('id',$comp_id)->first();
+            $paygroup_components =VmtAppIntegration::where('id',$comp_id)->first();
             if(!empty($paygroup_components)){
                 $save_paygroup_comp =$paygroup_components;
                 $save_paygroup_comp->accounting_soft_name = $accounting_soft_name;
