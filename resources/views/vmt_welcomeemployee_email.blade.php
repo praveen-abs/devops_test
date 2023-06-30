@@ -1,7 +1,7 @@
 <?php
-$general_info = \DB::table('vmt_general_info')->first();
-//$employee_name =  \DB::table('users')->where('user_code','=',$uEmail)->first();
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+$client_data = \DB::table('vmt_client_master')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
 // dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
 $bank_names = \DB::table('vmt_banks')->get();
 
