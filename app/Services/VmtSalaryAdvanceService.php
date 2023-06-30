@@ -169,7 +169,7 @@ class VmtSalaryAdvanceService
                 for ($i = 1; $i <= $employee_salary_adv->deduction_period_of_months; $i++) {
 
                     $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
-                                    $dates['date'] = $repayment_months;
+                    $dates['date'] = $repayment_months;
                     array_push($multiple_months, $dates);
                 }
 
@@ -205,17 +205,17 @@ class VmtSalaryAdvanceService
         $current_user_id = auth()->user()->id;
 
         $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
-        ->where('user_id', $current_user_id)
-        ->whereYear('requested_date',date("Y"))
-        ->whereMonth('requested_date',date("m"))
-        ->first();
+            ->where('user_id', $current_user_id)
+            ->whereYear('requested_date', date("Y"))
+            ->whereMonth('requested_date', date("m"))
+            ->first();
 
-       if(!empty($already_applied)){
-        return response()->json([
-            "status" => "failure",
-            "message" => "Already applied this month",
-        ]);
-       }else{
+        if (!empty($already_applied)) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Already applied this month",
+            ]);
+        } else {
 
             $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
                 ->where('user_id', $current_user_id)->first();
@@ -319,7 +319,7 @@ class VmtSalaryAdvanceService
             foreach ($approver_flow as $key => $value) {
                 $ordered_approver_flow[$value['order']] = $value;
             }
-                // dd( $ordered_approver_flow);
+            // dd( $ordered_approver_flow);
             foreach ($ordered_approver_flow as $single_ar) {
 
                 if ($user_id == $single_ar['approver']) {
@@ -369,19 +369,16 @@ class VmtSalaryAdvanceService
             $sal_adv['emp_prevdetails'] = $this->getEmpsaladvDetails($all_pending_advance['user_id']);
 
             array_push($pending, $sal_adv);
-
-
         }
 
         return ($pending);
-
-
     }
 
 
-    public function getEmpsaladvDetails($user_id){
+    public function getEmpsaladvDetails($user_id)
+    {
 
-                    // $user_id = auth()->user()->id;
+        // $user_id = auth()->user()->id;
 
 
                   $getempdetails  =   VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
@@ -394,11 +391,11 @@ class VmtSalaryAdvanceService
                                                                             'vmt_emp_sal_adv_details.dedction_date',
                                                                             'vmt_emp_sal_adv_details.sal_adv_crd_sts as status',
 
-                                                                        ]
-                                                                    );
+                ]
+            );
 
-                          return $getempdetails;
-                }
+        return $getempdetails;
+    }
 
 
     public function saveIntersetAndIntersetFreeLoanSettings(
@@ -560,8 +557,7 @@ class VmtSalaryAdvanceService
                     $applicable_loan_info['loan_amt_interest'] = $single_record->loan_amt_interest;
                 }
                 return response()->json($applicable_loan_info);
-            }
-            ;
+            };
         }
         return null;
     }
@@ -702,8 +698,6 @@ class VmtSalaryAdvanceService
             unset($ordered_approver_flow);
         }
         return $temp_ar;
-
-
     }
 
     public function rejectOrApproveLoan(
@@ -735,17 +729,29 @@ class VmtSalaryAdvanceService
         }
 
         try {
-            $user_id=auth()->user()->id;
+            $user_id = auth()->user()->id;
             if ($loan_type == 'InterestFreeLoan') {
-
+                $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $record_id)->first();
             } else if ($loan_type == 'InterestWithLoan') {
-
+                $loan_details = VmtEmpInterestLoanDetails::where('id', $record_id)->first();
             }
+            $approver_flow = json_decode($loan_details->approver_flow, true);
+            for ($i = 0; $i < count($approver_flow); $i++) {
+                if ($approver_flow[$i]['approver'] == $user_id) {
+                    $approver_flow[$i]['status'] = $status;
+                }
+            }
+            $loan_details->approver_flow = json_encode($approver_flow, true);
+            $loan_details->save();
+            return response()->json([
+                'status' => 'Sucess',
+                'message' => 'Loan Approved Or Rejected',
 
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 "status" => "failure",
-                "message" => "applyLoan failed",
+                "message" => "Approve Or Reject Loan Failed",
                 "data" => $e->getMessage(),
             ]);
         }

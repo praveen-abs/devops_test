@@ -177,11 +177,16 @@ class VmtSalaryAdvanceController extends Controller
     }
 
     public function rejectOrApproveLoan(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $request['record_id']=1;
+        $request['loan_type']='InterestWithLoan';
+        $request['status']=1;
         $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
             $request->loan_type,
             $request->record_id,
             $request->status,
         );
+
+        return $response;
 
     }
 }
