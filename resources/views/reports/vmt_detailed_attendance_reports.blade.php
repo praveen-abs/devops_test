@@ -20,8 +20,8 @@
                         </div>
                     </div>
                 </div>
-                @vite('resources/js/hrms/modules/approvals/leaves/LeaveApproval.js')
-                <div id="VJS_LeaveApproval"></div>
+                @vite('resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js')
+                <div id="vjs_AttendanceReport_Detailed"></div>
             </div>
          </div>
 @endsection
