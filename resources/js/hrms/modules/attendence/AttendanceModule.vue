@@ -162,7 +162,7 @@
                                 <EmployeeList :source="orgList" />
                             </div>
                             <div class="ml-2">
-                                <Timesheet :attendance="useTimesheet.currentEmployeeAttendance" />
+                                <Timesheet :attendance="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                                 <EmployeeList  :source="orgList"/>
                             </div>
                             <div>
-                                <Timesheet :attendance="useTimesheet.timesheetMainSource" />
+                                <Timesheet :attendance="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
                     </div>
@@ -180,11 +180,14 @@
             </div>
         </div>
     </div>
+
     <MopRegularization />
     <MipRegularization />
     <LcRegularization />
     <EgRegularization />
     <ViewSelfieImage />
+
+
 
 </template>
 
@@ -210,19 +213,19 @@ const teamList = ref()
 const orgList = ref()
 const service = Service()
 
-onMounted(async () => {
+onMounted( () => {
     Service()
 
-    await useTimesheet.getSelectedEmployeeAttendance(141,useCalendar.getMonth,useCalendar.getYear).then(res => {
+     useTimesheet.getSelectedEmployeeAttendance(141,useCalendar.getMonth,useCalendar.getYear).then(res => {
         useTimesheet.currentEmployeeAttendance = Object.values(res.data)
     })
 
-    await useTimesheet.getTeamList(service.current_user_code).then(res=>{
+     useTimesheet.getTeamList(service.current_user_code).then(res=>{
         console.log(res.data);
         teamList.value = Object.values(res.data)
     })
 
-    await useTimesheet.getOrgList().then(res=>{
+     useTimesheet.getOrgList().then(res=>{
         orgList.value = Object.values(res.data)
     })
 

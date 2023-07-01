@@ -1,8 +1,13 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import {useCalendarStore} from './calendar'
 
 export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
+
+    const useCalendar = useCalendarStore()
+
+    const canShowLoading = ref(false)
 
     const mopDetails = ref({})
     const mipDetails = ref({})
@@ -17,6 +22,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const dialog_Selfie = ref(false)
 
     const currentEmployeeAttendance = ref()
+    const currentlySelectedTeamMemberAttendance = ref()
 
 
 
@@ -193,11 +199,14 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     // ])
 
     const getSelectedEmployeeAttendance = async(currentlySelectedUser,currentlySelectedMonth,currentlySelectedYear)=>{
+        canShowLoading.value = true
         let url = '/fetch-attendance-user-timesheet'
         return  axios.post(url,{
             month: currentlySelectedMonth+1,
             year: currentlySelectedYear,
             user_id: currentlySelectedUser,
+        }).finally(()=>{
+            canShowLoading.value = false
         })
     }
 
@@ -209,6 +218,15 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const getOrgList = async() =>{
         return  axios.get('/fetch-org-members')
+    }
+
+    const getSelectedEmployeeDetails = (data) =>{
+    let user_id = data.id;
+    getSelectedEmployeeAttendance(user_id,useCalendar.getMonth,useCalendar.getYear).then(res => {
+        console.log(Object.values(res.data));
+        currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
+    })
+
     }
 
 
@@ -301,8 +319,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     return {
         // Timesheet Data source
-        getSelectedEmployeeAttendance, currentEmployeeAttendance,getTeamList,getOrgList,
-
+        getSelectedEmployeeAttendance, currentEmployeeAttendance,getTeamList,getOrgList,getSelectedEmployeeDetails,
+        currentlySelectedTeamMemberAttendance,canShowLoading,
         // Finding Attendance Mode
 
         findAttendanceMode,

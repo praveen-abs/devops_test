@@ -1,5 +1,6 @@
 <template>
-    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card">
+
+    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card" v-if="attendance">
         <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
@@ -83,11 +84,10 @@
                                             </button>
                                         </div>
                                         <div class="">
-                                            {{ useTimesheet.dialog_Lc }}
                                             <button v-if="attendance.isMIP"
                                                 class="regualarization_button bg-orange-600 text-white"
-                                                @click="useTimesheet.applyMip(attendance)">MIP</button>
-                                            <button v-if="attendance.isLC" @click="useTimesheet.dialog_Lc = true,useTimesheet.lcDetials = {...attendance}"
+                                                @click="useTimesheet.dialog_Mip = true,useTimesheet.mipDetails = {...attendance}">MIP</button>
+                                            <button v-if="attendance.isLC" @click="useTimesheet.dialog_Lc = true,useTimesheet.lcDetails = {...attendance}"
                                                 class="regualarization_button bg-purple-400 text-white font-semibold "
                                                 >LC</button>
                                             <i v-if="attendance.isMIP || attendance.isLC"
@@ -118,10 +118,10 @@
                                         <div class="">
                                             <button v-if="attendance.isMOP"
                                                 class="regualarization_button bg-orange-600 text-white"
-                                                @click="useTimesheet.applyMop(attendance)">MOP</button>
+                                                @click="useTimesheet.dialog_Mop = true,useTimesheet.mopDetails = {...attendance}">MOP</button>
                                             <button v-if="attendance.isEG"
                                                 class="regualarization_button bg-purple-400 text-white"
-                                                @click="useTimesheet.applyEg(attendance)">EG</button>
+                                                @click="useTimesheet.dialog_Eg = true,useTimesheet.egDetails = {...attendance}">EG</button>
                                             <i v-if="attendance.isMOP || attendance.isEG"
                                                 class="fa fa-exclamation-circle fs-15 text-warning mx-2"
                                                 title="Not Applied"></i>
@@ -160,6 +160,23 @@
             </div>
         </div>
     </div>
+    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card" v-else>
+        <div class="card-body">
+            <p class="font-semibold fs-6">select Employee</p>
+        </div>
+</div>
+
+    <Dialog header="Header" v-model:visible="useTimesheet.canShowLoading"
+    :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+    :closeOnEscape="false">
+    <template #header>
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+            animationDuration="2s" aria-label="Custom ProgressSpinner" />
+    </template>
+    <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+    </template>
+</Dialog>
 </template>
 
 <script setup>

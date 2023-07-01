@@ -1,5 +1,5 @@
 <template>
-    <Dialog  v-model:visible="useTimesheet.dailog_Eg"  :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    <Dialog  v-model:visible="useTimesheet.dialog_Eg"  :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '35vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="true" :closeOnEscape="true">
         <template #header>
             <div>
@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                     <div class="col-6">
-                        <span class="text-ash-medium fs-15" id="current_date">--/--/----,Monday</span>
+                        <span class="text-ash-medium fs-15" id="current_date">{{useTimesheet.egDetails.date}}</span>
 
                         <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
                             id="attendance_date">
@@ -28,9 +28,7 @@
                         </label>
                     </div>
                     <div class="col-6">
-                        <span class="text-ash-medium fs-15" id="actual_user_time"></span>
-                        <input type="hidden" name="attendance_user" id="attendance_user">
-                        <input type="hidden" class="text-ash-medium form-control fs-15" name="user_time" id="user_time">
+                        {{ useTimesheet.egDetails.checkout_time }}
                     </div>
                 </div>
             </div>
@@ -40,7 +38,8 @@
                             as</label>
                     </div>
                     <div class="col-6">
-                        <input class="text-ash-medium form-control fs-15" name="regularize_time" id="regularize_time">
+                        6.30 PM
+                        <!-- <input class="text-ash-medium form-control fs-15" name="regularize_time" id="regularize_time"> -->
                     </div>
                 </div>
             </div>

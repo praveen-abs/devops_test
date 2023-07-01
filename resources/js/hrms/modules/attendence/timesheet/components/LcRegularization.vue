@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                     <div class="col-6">
-                        <span class="text-ash-medium fs-15" id="current_date">{{useTimesheet.lcDetials.date}}</span>
+                        <span class="text-ash-medium fs-15" id="current_date">{{useTimesheet.lcDetails.date}}</span>
 
                         <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
                             id="attendance_date">
@@ -28,7 +28,7 @@
                         </label>
                     </div>
                     <div class="col-6">
-                        <span class="text-ash-medium fs-15" id="actual_user_time">{{useTimesheet.lcDetials.checkin_time}}</span>
+                        <span class="text-ash-medium fs-15" id="actual_user_time">{{useTimesheet.lcDetails.checkin_time}}</span>
                     </div>
                 </div>
             </div>

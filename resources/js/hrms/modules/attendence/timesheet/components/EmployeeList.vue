@@ -1,7 +1,9 @@
 <template>
     <div class="card h-screen overflow-x-auto">
         <div class="card-body">
-            <button class="list_employee_attendance  p-3 px-1 flex hover:bg-gray-300 rounded-lg w-full focus:bg-gray-300" v-for="employee in source" >
+            <button class="list_employee_attendance  p-3 px-1 flex hover:bg-gray-300 rounded-lg w-full focus:bg-gray-300"
+             v-for="employee in source"
+             @click="useTimesheet.getSelectedEmployeeDetails(employee)" >
                 <div class="col-auto me-2">
                     <div
                         class="color_disco-600 rounded-full  text-center mx-0 p-2">
