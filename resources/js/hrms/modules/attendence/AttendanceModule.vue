@@ -213,7 +213,9 @@ const service = Service()
 onMounted(async () => {
     Service()
 
-
+    await useTimesheet.getSelectedEmployeeAttendance(141,useCalendar.getMonth,useCalendar.getYear).then(res => {
+        useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+    })
 
     await useTimesheet.getTeamList(service.current_user_code).then(res=>{
         console.log(res.data);
@@ -224,12 +226,12 @@ onMounted(async () => {
         orgList.value = Object.values(res.data)
     })
 
-    setTimeout(async () => {
-        await useTimesheet.getSelectedEmployeeAttendance(service.current_user_id,useCalendar.getMonth,useCalendar.getYear).then(res => {
-        useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-    })
-    },
-    300);
+    // setTimeout(async () => {
+    //     await useTimesheet.getSelectedEmployeeAttendance(1,useCalendar.getMonth,useCalendar.getYear).then(res => {
+    //     useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+    // })
+    // },
+    // 3000);
 
 })
 
