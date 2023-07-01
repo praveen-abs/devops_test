@@ -238,6 +238,54 @@
 
                         //dd($attendanceCheckOut );
 
+                        uploadDocument($client_id,$fileObject){
+
+    try{
+            $emp_code = User::find($emp_id)->user_code;
+
+            $Client_logo= VmtClientMaster::where('client_id', $client_id);
+
+            //check if document already uploaded
+           
+            }
+            else
+            {
+                $employee_documents = new VmtEmployeeDocuments;
+                $employee_documents->user_id = $emp_id;
+                $employee_documents->doc_id = $onboard_doc_id;
+            }
+
+
+            $date = date('d-m-Y_H-i-s');
+            $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+            $path = $emp_code.'/onboarding_documents';
+            $filePath = $fileObject->storeAs($path,$fileName, 'private');
+            $employee_documents->doc_url = $fileName;
+
+            $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
+                                                               ->where('doc_id',$onboard_doc_id);
+
+            if($employee_documents_status->exists() ){
+                    $employee_documents_status = $employee_documents_status->first()->status;
+               if($employee_documents_status == 'Approved')
+                    $employee_documents->status = $employee_documents_status;
+               else{
+                $employee_documents->status ='Pending';
+               }
+            }else{
+
+                $employee_documents->status = 'Pending';
+             }
+
+
+            $employee_documents->save();
+        }
+        catch(\Exception $e){
+            dd("Error :: uploadDocument() ".$e);
+        }
+
+        return "success";
+
     ?>
 
 

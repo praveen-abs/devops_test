@@ -13,7 +13,7 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 
 
 
@@ -293,8 +293,8 @@ class VmtDashboardService{
             // if( !empty($regularization_type) &&  $regularization_type == "LC")
             // {
                // dd("adsf");
-                // $VmtGeneralInfo = VmtGeneralInfo::first();
-                // $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                // $VmtClientMaster = VmtClientMaster::first();
+                // $image_view = url('/') . $VmtClientMaster->logo_img;
                 // $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
                 // dd($emp_avatar);
                 // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(
