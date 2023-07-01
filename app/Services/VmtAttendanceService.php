@@ -1667,6 +1667,8 @@ class VmtAttendanceService
     {
 
         //Web/mobile attendance
+    try{
+
         $query_web_mobile_response = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
             ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_attendance.vmt_employee_workshift_id')
             ->where('users.user_code', $user_code)
@@ -1848,6 +1850,14 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
         }
 
               return $response;
+    }catch(Exception $e){
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Error while get latest attedance status',
+            'data'   => $e->getmessage(),
+        ]);
+    }
+
 
         }
 
