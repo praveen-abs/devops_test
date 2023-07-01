@@ -88,10 +88,19 @@
                     </Column>
                     <Column field="" header="Action">
                         <template #body="slotProps">
-                            <button class="" > <i class="pi pi-ellipsis-v"></i>
+                            <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
                             </button>
-                            <button class="btn shadow-sm fw-semibold bg-green-200 mx-2 text-black" @click="showConfirmDialog(slotProps.data)">view</button>
-                            <button class="btn bg-blue-500 text-white shadow-sm"  @click="view_more(slotProps.data.emp_details,slotProps.data.user_code, slotProps.data.name)">passed Transaction</button>
+                            <OverlayPanel ref="op" style="width: 160px;margin-top:12px !important;margin-right: 20px !important;" class="p-0 m-0">
+                                <div class=" d-flex flex-column p-0 m-0" >
+                                    <!-- bg-green-200 -->
+                                    <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                        @click="showConfirmDialog(slotProps.data)">view</button>
+                                            <!-- bg-blue-500 -->
+                                    <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                        @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">passed
+                                        Transaction</button>
+                                </div>
+                            </OverlayPanel>
                         </template>
                     </Column>
                     <!-- <template #expansion="slotProps">
@@ -209,7 +218,10 @@ const SalaryAdvanceApprovals = UseSalaryAdvanceApprovals();
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
 const currentlySelectedStatus = ref();
-
+const op = ref();
+const toggle = (event) => {
+    op.value.toggle(event);
+}
 const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
@@ -285,10 +297,15 @@ function view_more(selectedRowData, user_code, currentName) {
 
 </script>
 
-<style>.dropdown-content {
+<style>
+.dropdown-content {
     /* display: none; */
 }
 
 .dropdown:hover .dropdown-content {
     display: block !important;
-}</style>
+}
+.p-overlaypanel .p-overlaypanel-content{
+    padding: 0;
+}
+</style>
