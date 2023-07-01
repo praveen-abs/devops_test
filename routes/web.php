@@ -519,7 +519,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
 
   // Salary software integration
-    Route::post('/Paygroup/addPayrollIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollIntegrations'])->name('addPayrollIntegrations');
+    Route::get('/Paygroup/fetchPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
+    Route::get('/Paygroup/addPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollAppIntegrations'])->name('addPayrollAppIntegrations');
+    Route::get('/Paygroup/EnableDisableAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableAppIntegration'])->name('EnableDisableAppIntegration');
 
 
     //paygroup structure

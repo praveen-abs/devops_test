@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VmtPayrollComponents;
 use App\Models\VmtPaygroup;
+use App\Models\VmtAppIntegration;
 use App\Models\VmtEmpPaygroup;
 use App\Models\User;
 use App\Models\VmtPaygroupComps;
@@ -130,13 +131,32 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
-    public function addPayrollIntegrations(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    public function fetchPayrollAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->addPayrollIntegrations(
+        $response =VmtAppIntegration::get();
+
+        return response()->json([
+                "status" => "success",
+                "message" => " ",
+                "data" => $response,
+        ]);
+
+    }
+    public function addPayrollAppIntegrations(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->addPayrollAppIntegrations(
         $request->accounting_soft_name,
         $request->accounting_soft_logo,
         $request->description,
         $request->status);
+
+        return $response;
+    }
+    public function EnableDisableAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->EnableDisableAppIntegration(
+            $request->app_id,
+            $request->status);
 
         return $response;
     }

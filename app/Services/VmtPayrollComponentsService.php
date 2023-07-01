@@ -710,7 +710,7 @@ class VmtPayrollComponentsService{
 
         }
 
- public function addPayrollIntegrations($accounting_soft_name,$accounting_soft_logo,$description,$status){
+ public function addPayrollAppIntegrations($accounting_soft_name,$accounting_soft_logo,$description,$status){
             //Validate
             $validator = Validator::make(
             $data = [
@@ -723,7 +723,7 @@ class VmtPayrollComponentsService{
             $rules = [
                 'accounting_soft_name' => 'required',
                 'accounting_soft_logo' => 'required',
-                'description' => 'required|numeric',
+                'description' => 'required',
                 'status' => 'required|numeric',
 
             ],
@@ -743,39 +743,108 @@ class VmtPayrollComponentsService{
 
         try{
 
-            $paygroup_components =VmtAppIntegration::where('id',$comp_id)->first();
-            if(!empty($paygroup_components)){
-                $save_paygroup_comp =$paygroup_components;
+            $paygroup_components =VmtAppIntegration::where('accounting_soft_name',$accounting_soft_name)->first();
+
+            if(empty($paygroup_components)){
+                $save_paygroup_comp =new VmtAppIntegration;
                 $save_paygroup_comp->accounting_soft_name = $accounting_soft_name;
                 $save_paygroup_comp->accounting_soft_logo =$accounting_soft_logo ;
                 $save_paygroup_comp->description =$description ;
                 $save_paygroup_comp->status =$status ;
                 $save_paygroup_comp->save();
+
             $response=([
                 "status" => "success",
-                "message" => "Component updated successfully",
-            ]);
-
-            }else{
-            $response=([
-                "status" => "failure",
-                "message" => "No component is present ",
+                "message" => "app integration created successfully",
             ]);
             }
+            else{
+                $response=([
+                    "status" => "success",
+                    "message" => "app integration already created successfully",
+                ]);
+                }
+
             return $response;
 
         }
         catch(\Exception $e){
         return response()->json([
             "status" => "failure",
-            "message" => "Unable to update component",
+            "message" => "Unable to create integration",
             "data" => $e->getmessage(),
         ]);
 
         }
 
   }
+ public function EnableDisableAppIntegration($app_id,$status){
 
+           //Validate
+           $validator = Validator::make(
+            $data = [
+                'app_id' => $app_id,
+                'status' => $status,
+            ],
+            $rules = [
+                'app_id' => 'required',
+                'status' => 'required|numeric',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+              $paygroup_components =VmtAppIntegration::where('id',$app_id)->first();
+              if(!empty($paygroup_components)){
+                $save_paygroup_comp =$paygroup_components;
+                $save_paygroup_comp->status =$status;
+                $save_paygroup_comp->save();
+
+                if($paygroup_components->status== '0'){
+                    $message ="appintegration disable successfully";
+                }else{
+                    $message ="appintegration enable successfully";
+                }
+                return response()->json([
+                    "status" => "success",
+                    "message" => $message,
+                ]);
+
+              }else{
+
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "No appintegration is present ",
+                ]);
+              }
+
+        }
+        catch(\Exception $e){
+            if($paygroup_components->status== '0'){
+                $message ="Unable to disable appintegration";
+            }else{
+                $message = "Unable to enable appintegration";
+            }
+            return response()->json([
+                "status" => "failure",
+                "message" => $message,
+                "data" => $e->getmessage(),
+            ]);
+
+        }
+
+    }
 
 
 //   public function ShowAssignEmployeelist($department_id, $designation, $work_location, $client_name)
