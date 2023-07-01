@@ -4,17 +4,17 @@ import { computed, ref } from "vue";
 
 export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
-    const mopDetials = ref({})
-    const mipDetials = ref({})
-    const lcDetials = ref({})
-    const egDetials = ref({})
+    const mopDetails = ref({})
+    const mipDetails = ref({})
+    const lcDetails = ref({})
+    const egDetails = ref({})
 
 
-    const dailog_Mop = ref(false)
-    const dailog_Mip = ref(false)
-    const dailog_Lc = ref(false)
-    const dailog_Eg = ref(false)
-    const dailog_Selfie = ref(false)
+    const dialog_Mop = ref(false)
+    const dialog_Mip = ref(false)
+    const dialog_Lc = ref(false)
+    const dialog_Eg = ref(false)
+    const dialog_Selfie = ref(false)
 
     const currentEmployeeAttendance = ref()
 
@@ -229,14 +229,22 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                 }
     }
 
+    const onClickShowLc_dialog = (selectedLcDate) =>{
+        // lcDetails.value = {...selectedLcDate}
+        dialog_Lc.value = true
+    }
+    const applyLcRegularization = () =>{
+
+    }
+
     //  Applying for Missed In and  Out Punches
     const applyMop = (value) => {
-        dailog_Mop.value = true
+        dialog_Mop.value = true
         console.log(value);
 
     }
     const applyMip = (value) => {
-        dailog_Mip.value = true
+        dialog_Mip.value = true
         console.log(value);
 
     }
@@ -244,19 +252,20 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     //  Applying for Late Coming and Early Going
 
     const applyLc = (value) => {
-        dailog_Lc.value = true
+
+        dialog_Lc.value = true
         console.log(value);
 
     }
     const applyEg = (value) => {
-        dailog_Eg.value = true
+        dialog_Eg.value = true
         console.log(value);
     }
 
     // View check in and out selfie Images
 
     const viewSelfie = (value) =>{
-        dailog_Selfie.value = true
+        dialog_Selfie.value = true
     }
 
     const errorMessege  = (value) =>{
@@ -300,15 +309,16 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
         // Attendance Regularization
         //   MOP
-        mopDetials, applyMop,dailog_Mop,
+        mopDetails, applyMop,dialog_Mop,
         //   MIP
-        mipDetials, applyMip,dailog_Mip,
+        mipDetails, applyMip,dialog_Mip,
         //   LC
-        lcDetials, applyLc,dailog_Lc,
+        onClickShowLc_dialog,applyLcRegularization,
+        lcDetails, applyLc,dialog_Lc,
         //   EG
-        egDetials, applyEg,dailog_Eg,
+        egDetails, applyEg,dialog_Eg,
         // Selfie
-        dailog_Selfie,viewSelfie
+        dialog_Selfie,viewSelfie
 
 
     }
