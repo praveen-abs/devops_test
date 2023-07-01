@@ -79,7 +79,7 @@ Travel Advance - ta
 
     const saveSalaryAdvance = () => {
         dailogSalaryAdvance.value = false
-        canShowLoading.value = true
+        canShowLoading.value = true;
         axios.post('/EmpSaveSalaryAmt', sa).finally(() => {
             canShowLoading.value = false
         })
@@ -128,29 +128,7 @@ Travel Advance - ta
             console.log(ifl.minEligibile.ra);
         })
     }
-    const selected_date =ref();
-
-    function calculateMonth() {
-
-        console.log(ifl.EMI_Start_Month.Month);
-
-        //  let values = dayjs(useEmpStore.ifl.EMI_Start_Month.Month).add(1,'month').format('YYYY/MM/DD');
-        //  console.log(values);
-        const a = dayjs(ifl.EMI_Start_Month.Month).format('DD,MMM,YYYY') ;
-        console.log(a);
-        const b = addMonths(a,1);
-        console.log(b);
-
-        function addMonths(date, months) {
-            date.setMonth(parseInt(date.getMonth())  + months);
-            return date;
-          }
-
-        //   addMonths(ifl.EMI_Start_Month.Month,1);
-
-    }
-
-
+    // const selected_date =ref();
     const fetchInterestfreeLoan = () => {
 
         // canShowLoading.value = true
@@ -329,7 +307,6 @@ Travel Advance - ta
 
         dialog_NewInterestFreeLoanRequest, isInterestFreeLoaneature, ifl, save_Start_Month, saveInterestfreeLoan, fetchInterestfreeLoan,
         getinterestfreeloan,
-        calculateMonth,
 
         // Travel Advance Feature
 

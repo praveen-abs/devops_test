@@ -47,7 +47,7 @@ class VmtSalaryAdvanceService
             }
             $temp_ar['status'] = 0;
             if ($temp_ar['approver'] == null || empty($temp_ar['approver'])) {
-                dd('Error While Creating Approver Flow json');
+                return ('Error While Creating Approver Flow json');
             }
             array_push($approver_flow, $temp_ar);
             unset($temp_ar);

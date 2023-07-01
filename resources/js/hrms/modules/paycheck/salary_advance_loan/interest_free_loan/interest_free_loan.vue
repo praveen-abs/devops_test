@@ -49,13 +49,14 @@
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
                                             <!-- <Calendar v-model="useEmpStore.ifl.EMI_Start_Month" showIcon /> -->
-                                            <Dropdown v-model="useEmpStore.ifl.EMI_Start_Month" @change="useEmpStore.calculateMonth" :options="useEmpStore.save_Start_Month" optionLabel="Month" placeholder="Select Month"  />
+                                            <Dropdown v-model="useEmpStore.ifl.EMI_Start_Month" @change="calculateMonth" :options="useEmpStore.save_Start_Month" optionLabel="Month" placeholder="Select Month"  />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
                                             <!-- <InputText type="text" readonly v-model="useEmpStore.ifl.EMI_End_Month"  style="width: 150px !important;" /> -->
-                                            <Calendar v-model="useEmpStore.ifl.EMI_End_Month" showIcon readonly  style="width: 150px !important;" />
+                                            <Calendar v-model="useEmpStore.ifl.EMI_End_Month"  readonly  style="width: 150px !important;" />
+                                            <!-- showIcon -->
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
@@ -201,18 +202,35 @@ function selectMonth(){
 
     useEmpStore.ifl.M_EMI =  useEmpStore.ifl.Ra/ useEmpStore.ifl.Term;
     useEmpStore.ifl.Total_Months =   useEmpStore.ifl.Term;
+
+    return calculateMonth();
     // useEmpStore.ifl.Ra
     // useEmpStore.ifl.Term
 }
 
 function calculateMonth(){
 
-console.log(useEmpStore.ifl.EMI_Start_Month.Month);
+function addMonthsToDate(dateString, months) {
+  var dateParts = dateString.split('/'); // Split the string into an array of parts
+  var month = parseInt(dateParts[0]) - 1; // Subtract 1 to get the zero-based month value
+  var day = parseInt(dateParts[1]);
+  var year = parseInt(dateParts[2]);
 
-var myDate2 = new Date(useEmpStore.ifl.EMI_Start_Month.Month);
-var result2 = myDate2.addMonths(1);
+  var date = new Date(year, month, day); // Create a Date object from the parts
+  date.setMonth(date.getMonth() + months); // Add the specified number of months
 
-console.log(result2);
+  // Format the resulting date back into a string in "MM/DD/YYYY" format
+  var formattedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+  return formattedDate;
+}
+
+// Example usage
+var originalDate = useEmpStore.ifl.EMI_Start_Month.Month;
+var modifiedDate = addMonthsToDate(originalDate, useEmpStore.ifl.Term);
+
+console.log(modifiedDate);
+
+useEmpStore.ifl.EMI_End_Month = modifiedDate;
 
 
 
@@ -220,31 +238,6 @@ console.log(result2);
 //  console.log(values);
 
 }
-
-
-// function endOfQuarterNextYear(someDate) {
-//   // Create a copy since date will get changed
-//   var d = new Date(useEmpStore.ifl.EMI_Start_Month);
-
-//   // Set the date out by 15 months
-//   // (1 year plus 1 quarter)
-//   d.setMonth(d.getMonth() + 15);
-
-//   // Move back to start of quarter
-//   // % 3 means remainder after divide by 3, (and
-//   // note please that month numbers are 0-based in JS)
-//   // in month 9  (Oct) you will get month 9 (Oct)
-//   // in month 10 (Nov) you will get month 9 (Oct)
-//   // in month 11 (Dec) you will get month 9 (Oct)
-//   d.setMonth(d.getMonth() - (d.getMonth() % 3));
-
-//   // Move back to last day of prior month, which is
-//   // also last day in prior quarter
-//   // (and which is day '0' in current month)
-//   d.setDate(0);
-
-//   return d;
-// }
 
 const value = ref();
 
