@@ -1,7 +1,7 @@
 <template>
     <div class="card h-screen overflow-x-auto">
         <div class="card-body">
-            <div class="list_employee_attendance my-3 flex" v-for="employee in orgList" >
+            <div class="list_employee_attendance my-3 flex" v-for="employee in source" >
                 <div class="col-auto me-2 w-3">
                     <div
                         class="color_disco-600 rounded-full w-7 text-center mx-0 p-2">
@@ -39,11 +39,11 @@ const props = defineProps({
 //   return teamList;
 // }
 
-onMounted(async ()=>{
-    await useTimesheet.getOrgList().then(res=>{
-        orgList.value = Object.values(res.data)
-    })
-})
+// onMounted(async ()=>{
+//     await useTimesheet.getOrgList().then(res=>{
+//         orgList.value = Object.values(res.data)
+//     })
+// })
 
 </script>
 

@@ -185,6 +185,7 @@
     <LcRegularization />
     <EgRegularization />
     <ViewSelfieImage />
+
 </template>
 
 
@@ -207,15 +208,14 @@ const useTimesheet = useAttendanceTimesheetMainStore()
 const useCalendar = useCalendarStore()
 const teamList = ref()
 const orgList = ref()
+const service = Service()
 
 onMounted(async () => {
     Service()
 
-    await useTimesheet.getSelectedEmployeeAttendance(1, useCalendar.getMonth, useCalendar.getYear).then(res => {
-        useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-    })
 
-    await useTimesheet.getTeamList('SA100').then(res=>{
+
+    await useTimesheet.getTeamList(service.current_user_code).then(res=>{
         console.log(res.data);
         teamList.value = Object.values(res.data)
     })
@@ -223,6 +223,13 @@ onMounted(async () => {
     await useTimesheet.getOrgList().then(res=>{
         orgList.value = Object.values(res.data)
     })
+
+    setTimeout(async () => {
+        await useTimesheet.getSelectedEmployeeAttendance(service.current_user_id,useCalendar.getMonth,useCalendar.getYear).then(res => {
+        useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+    })
+    },
+    300);
 
 })
 

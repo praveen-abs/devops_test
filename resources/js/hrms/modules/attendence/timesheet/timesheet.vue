@@ -20,25 +20,63 @@
                     :class="{
                         'bg-slate-50 text-gray-600 font-medium': isToday(day),
                         'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
+                        'bg-red-100 ': isWeekEndDays(day),
                     }">
                     {{ day }}
 
                     <div v-if="currentMonthAttendance(day, attendance).length"
                         v-for="attendance in currentMonthAttendance(day, attendance)" class="hidden md:block">
-                        <div
+
+                        <!-- Week end -->
+
+                        <div v-if="isWeekEndDays(day)">
+                            <p class="font-semibold text-sm">Week Off</p>
+                        </div>
+
+                        <!-- If Employee is Absent  -->
+                        <!-- {{ leaveStatus(attendance.isAbsent) }} -->
+                        <div v-if="attendance.isAbsent">
+
+                            <div class="bg-red-100 p-3 rounded-lg" v-if="attendance.absent_status == 'Not Applied'">
+                                <p class="font-semibold text-sm">Absent</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-lg"
+                                v-else-if="attendance.absent_status.includes('Approved')">
+                                <p class="font-semibold text-sm"> {{ attendance.leave_type }} Approved</p>
+                            </div>
+                            <div class="bg-red-100 p-3 rounded-lg"
+                                v-else-if="attendance.absent_status.includes('Rejected')">
+                                {{ attendance.leave_type }}
+                                Rejected
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-lg"
+                                v-else-if="attendance.absent_status.includes('Pending')">
+                                {{ attendance.leave_type }}
+                                Pending
+                            </div>
+                            <div class="bg-slate-100-100 p-3 rounded-lg"
+                                v-else-if="attendance.absent_status.includes('Revoked')">
+                                {{ attendance.leave_type }}
+                                Revoked
+                            </div>
+                        </div>
+
+
+                        <!-- If Employee is Present -->
+                        <div v-else
                             class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
                             <div class="w-full">
                                 <div class="text-xs tracking-tight text-clip overflow-hidden p-1">
                                     <!-- Attendance Check in  -->
                                     <div class="flex">
                                         <div class="flex ">
-                                            <i class="fa fa-arrow-down text-green-400  font-medium text-sm "
+                                            <i class="fa fa-arrow-down text-green-800  font-semibold text-sm "
                                                 style='transform: rotate(-45deg);'></i>
-                                            <p class="text-green-400 font-medium text-sm mx-1">{{ attendance.checkin_time }}
+                                            <p class="text-green-800 font-semibold text-sm mx-1">{{ attendance.checkin_time }}
                                             </p>
                                         </div>
                                         <div class="px-1">
-                                            <i class="text-green-400 font-medium text-sm"
+                                            <i class="text-green-800 font-semibold text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
                                             <button @click="useTimesheet.viewSelfie"
                                                 v-if="attendance.attendance_mode_checkin == 'mobile'" class="mx-2">
@@ -50,7 +88,7 @@
                                                 class="regualarization_button bg-orange-600 text-white"
                                                 @click="useTimesheet.applyMip(attendance)">MIP</button>
                                             <button v-if="attendance.isLC"
-                                                class="regualarization_button bg-purple-400 text-white"
+                                                class="regualarization_button bg-purple-400 text-white font-semibold "
                                                 @click="useTimesheet.applyLc(attendance)">LC</button>
                                             <i v-if="attendance.isMIP || attendance.isLC"
                                                 class="fa fa-exclamation-circle fs-15 text-warning mx-2"
@@ -63,13 +101,13 @@
 
                                     <div class="flex">
                                         <div class="flex">
-                                            <i class="fa fa-arrow-down font-medium text-sm text-red-400 "
+                                            <i class="fa fa-arrow-down font-semibold text-sm text-red-800 "
                                                 style='transform: rotate(230deg);'></i>
-                                            <p class="text-red-400 font-medium text-sm mx-1">{{ attendance.checkout_time }}
+                                            <p class="text-red-800 font-semibold text-sm mx-1">{{ attendance.checkout_time }}
                                             </p>
                                         </div>
                                         <div class="px-1">
-                                            <i class="text-red-400 font-medium text-sm"
+                                            <i class="text-red-800 font-semibold text-sm"
                                                 :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i>
                                             <button @click="useTimesheet.viewSelfie"
                                                 v-if="attendance.attendance_mode_checkout == 'mobile'" class="mx-2">
@@ -128,7 +166,7 @@ import { ref, onMounted, onUpdated } from "vue";
 import Top from "./components/Top.vue"
 import { useCalendarStore } from "./stores/calendar";
 import { useAttendanceTimesheetMainStore } from './stores/attendanceTimesheetMainStore'
-import {Service } from '../../Service/Service'
+import { Service } from '../../Service/Service'
 
 
 const useTimesheet = useAttendanceTimesheetMainStore()
@@ -224,6 +262,33 @@ const isToday = (day) => {
     return false;
 };
 
+const isWeekEndDays = (day) => {
+    var dayValue = new Date(
+        calendarStore.getYear,
+        calendarStore.getMonth,
+        day
+    ).getDay();
+    if (dayValue == 0) {
+        console.log("weeek end");
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const leave = ref(false)
+
+const leaveStatus = (isAbsent) => {
+
+    console.log(isAbsent);
+
+    if (isAbsent) {
+        leave.value = true;
+    } else {
+        leave.value = false;
+    }
+}
+
 
 
 /**
@@ -253,6 +318,7 @@ const isEventToday = (day, startdate) => {
  * @return array Array of the filtered day's event(s)
  */
 const currentMonthAttendance = (day, attendance) => {
+    console.log(attendance);
     if (!attendance.length) return [];
 
     let todaysEvent = [];
@@ -306,4 +372,5 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}</style>
+}
+</style>

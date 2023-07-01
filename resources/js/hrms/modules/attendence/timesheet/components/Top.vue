@@ -17,8 +17,8 @@
       <div
         class="hidden md:flex w-1/3 items-center justify-center text-gray-600"
       >
-        <div class="flex space-x-3 items-center">
-          <div>
+        <div class="flex space-x-8 items-center">
+          <button  @click="calendarStore.decrementMonth(1)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -26,7 +26,7 @@
               stroke-width="1.5"
               stroke="currentColor"
               class="w-10 h-10 hover:text-gray-800 cursor-pointer hover:h-6 hover:w-6 transition-all"
-              @click="calendarStore.decrementMonth(1)"
+
             >
               <path
                 stroke-linecap="round"
@@ -34,8 +34,8 @@
                 d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
               />
             </svg>
-          </div>
-          <div>
+          </button>
+          <button  @click="calendarStore.incrementMonth(1)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -43,7 +43,7 @@
               stroke-width="1.5"
               stroke="currentColor"
               class="w-10 h-10 hover:text-gray-800 cursor-pointer hover:h-6 hover:w-6 transition-all"
-              @click="calendarStore.incrementMonth(1)"
+
             >
               <path
                 stroke-linecap="round"
@@ -51,7 +51,7 @@
                 d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
               />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
       <!-- ----------------------------- -->
