@@ -12,7 +12,7 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\Department;
 
@@ -551,8 +551,8 @@ class VmtAttendanceService
         $message = "";
         $mail_status = "";
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
 
         //To store notif emails, if no notif emails given , then send this empty array to Mail::
         $notification_mails = array();
@@ -687,8 +687,8 @@ class VmtAttendanceService
         $message = "";
         $mail_status = "";
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
 
@@ -1292,8 +1292,8 @@ class VmtAttendanceService
             //dd($manager_details);
 
 
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->logo_img;
 
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
@@ -1386,8 +1386,8 @@ class VmtAttendanceService
         //dd($manager_details);
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
 
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
@@ -1477,8 +1477,8 @@ class VmtAttendanceService
         //dd($employee_details->officical_mail);
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
@@ -1667,6 +1667,8 @@ class VmtAttendanceService
     {
 
         //Web/mobile attendance
+    try{
+
         $query_web_mobile_response = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
             ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_attendance.vmt_employee_workshift_id')
             ->where('users.user_code', $user_code)
@@ -1848,6 +1850,14 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
         }
 
               return $response;
+    }catch(Exception $e){
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Error while get latest attedance status',
+            'data'   => $e->getmessage(),
+        ]);
+    }
+
 
         }
 

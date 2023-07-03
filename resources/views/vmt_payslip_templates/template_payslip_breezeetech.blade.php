@@ -246,7 +246,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em .2em;background-color:#bce2c78c;">
-                                    <p style="color:#015e1c;">EARNING GROSS</p>
+                                    <p style="color:#015e1c;">EARNED GROSS</p>
                                 </td>
                                 <td colspan="3" class="" align=""
                                     style="padding:.5em .2em;background-color:#bce2c78c;">
@@ -325,7 +325,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round(0)) }}</p>
+                                    <p class="text-right">-</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
@@ -342,15 +342,15 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
 
                             <tr>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
-                                    <p>Incentive</p>
+                                    <p>-</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round(0)) }}</p>
+                                    <p class="text-right">-</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round(0)) }}</p>
+                                    <p class="text-right">-</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Other Deduction</p>
@@ -375,7 +375,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="3" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p>Other Deduction</p>
+                                    <p>Total Deduction</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">

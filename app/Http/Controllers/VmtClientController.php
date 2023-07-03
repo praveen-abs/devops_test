@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
 use App\Mail\WelcomeClientMail;
-use App\Models\VmtGeneralInfo;
+
 use Illuminate\Support\Facades\Validator;
 use App\Services\VmtClientService;
 
@@ -40,7 +40,7 @@ class VmtClientController extends Controller
     public function store(Request $request)
     {
            // dd($request->all());
-       $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+       $VmtClientMaster = VmtClientMaster::where('id','1')->orderBy('created_at', 'DESC')->first();
        try
        {
             $vmtClient  =  new VmtClientMaster;
@@ -73,7 +73,7 @@ class VmtClientController extends Controller
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
 
-            $image_view = url('/').$VmtGeneralInfo->logo_img;
+            $image_view = url('/').$VmtClientMaster->logo_img;
             if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
                                                             $request->authorised_person_contact_email,

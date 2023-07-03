@@ -39,7 +39,7 @@ use Carbon\Carbon;
 
 
 use Illuminate\Support\Facades\DB;
-use App\Models\VmtGeneralInfo;
+
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
 use App\Services\VmtAttendanceService;
@@ -251,8 +251,8 @@ class VmtTestingController extends Controller
 
         $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
 
         $response = array();
         try {

@@ -13,8 +13,8 @@ use App\Models\Experience;
 use App\Models\PollVoting;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
-use App\Models\VmtGeneralInfo;
 use App\Models\VmtClientMaster;
+
 use App\Models\VmtGeneralSettings;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -377,20 +377,20 @@ class HomeController extends Controller
 
     //
     public function storeGeneralInfo(Request $request){
-        $vmtGeneralInfo = VmtGeneralInfo::first();
-        if($vmtGeneralInfo){
+        $VmtClientMaster = VmtClientMaster::first();
+        if($VmtClientMaster){
 
         }else{
-            $vmtGeneralInfo  = new VmtGeneralInfo;
-            //$vmtGeneralInfo = vmtGeneralInfo::first();
+            $VmtClientMaster  = new VmtClientMaster;
+            //$VmtClientMaster = VmtClientMaster::first();
         }
-        //$vmtGeneralInfo->short_name  = ;
+        //$VmtClientMaster->short_name  = ;
         if ($request->file('logo')) {
             $avatar = $request->file('logo');
             $avatarName = 'client-logo-'.date("Y-m-d_h_i_sa").'.png';
             $avatarPath = public_path('/generalinfo/');
             $avatar->move($avatarPath, $avatarName);
-            $vmtGeneralInfo->logo_img =  '/generalinfo/'.$avatarName;
+            $VmtClientMaster->logo_img =  '/generalinfo/'.$avatarName;
         }
 
         if($request->file('background-img')) {
@@ -398,12 +398,12 @@ class HomeController extends Controller
             $avatarName = time() . '-bg.' . $avatar->getClientOriginalExtension();
             $avatarPath = public_path('/generalinfo/');
             $avatar->move($avatarPath, $avatarName);
-            $vmtGeneralInfo->background_img =  '/generalinfo/'.$avatarName;
+            $VmtClientMaster->background_img =  '/generalinfo/'.$avatarName;
         }
-        $vmtGeneralInfo->short_name  = $request->short_name;
-        $vmtGeneralInfo->login_instruction = $request->login_instructions;
+        $VmtClientMaster->short_name  = $request->short_name;
+        $VmtClientMaster->login_instruction = $request->login_instructions;
 
-        $vmtGeneralInfo->save();
+        $VmtClientMaster->save();
        // return "General Info Saved";
         return redirect()->back();
     }
@@ -509,8 +509,8 @@ class HomeController extends Controller
             // if( !empty($regularization_type) &&  $regularization_type == "LC")
             // {
                // dd("adsf");
-                // $VmtGeneralInfo = VmtGeneralInfo::first();
-                // $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                // $VmtClientMaster = VmtClientMaster::first();
+                // $image_view = url('/') . $VmtClientMaster->logo_img;
                 // $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
                 // dd($emp_avatar);
                 // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(

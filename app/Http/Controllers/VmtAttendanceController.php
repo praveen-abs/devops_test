@@ -16,7 +16,7 @@ use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
-use App\Models\VmtGeneralInfo;
+
 use App\Models\VmtStaffAttendanceDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -379,8 +379,8 @@ class VmtAttendanceController extends Controller
         $message = "";
         $mail_status = "";
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
 
         // dd($request->leave_type_id);
         if (!empty($request->notifications_users_id))
@@ -1206,8 +1206,8 @@ class VmtAttendanceController extends Controller
         //dd($manager_details);
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
 
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
@@ -1294,8 +1294,8 @@ class VmtAttendanceController extends Controller
         //dd($employee_details->officical_mail);
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->logo_img;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
