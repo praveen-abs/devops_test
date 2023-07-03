@@ -5,7 +5,7 @@
             <div>
                 <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
                     class="fw-bold  fs-5 modal-title ">
-                    Early Going regularization</h5>
+                    Attendance regularization</h5>
             </div>
         </template>
         <div class="row">
@@ -49,12 +49,14 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                         <div class="col-6">
                             <select name="reason" class="form-select btn-line-orange" id="reason_eg"
-                                onchange="showReasonBox(this)">
+                            v-model="useTimesheet.egDetails.reason">>
                                 <option selected hidden disabled>
                                     Choose Reason for EG
                                 </option>
                                 <option value="Permission">Permission</option>
                                 <option value="Technical Error">Technical Error</option>
+                                <option value="Technical Error">Official</option>
+                                <option value="Technical Error">Personal</option>
                                 <option value="Others">Others</option>
                             </select>
                         </div>
@@ -63,14 +65,14 @@
                 <div class="col-12 ">
                     <div class="row">
                         <div class="col-12">
-                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                                placeholder="Reason here...." style="display:none"></textarea>
+                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control " v-model="useTimesheet.egDetails.custom_reason"
+                                placeholder="Reason here...." v-if="useTimesheet.egDetails.reason == 'Others'" ></textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="div_reason_noneditable">
+            <div id="div_reason_noneditable" v-if="false">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
@@ -108,7 +110,7 @@
         </div>
         <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
 
-            <button type="button" class="btn btn-orange">Apply</button>
+            <button type="button" class="btn btn-orange " @click="useTimesheet.applyEgRegularization(), useTimesheet.dialog_Eg = false ">Apply</button>
         </div>
 
     </Dialog>

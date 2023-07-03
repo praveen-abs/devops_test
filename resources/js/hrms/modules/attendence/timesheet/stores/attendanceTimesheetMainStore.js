@@ -1,13 +1,16 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-import {useCalendarStore} from './calendar'
+import { computed, inject, ref } from "vue";
+import { useCalendarStore } from './calendar'
+const swal = inject("$swal");
+
 
 export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const useCalendar = useCalendarStore()
 
     const canShowLoading = ref(false)
+    const isManager = ref(false)
 
     const mopDetails = ref({})
     const mipDetails = ref({})
@@ -25,211 +28,47 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const currentlySelectedTeamMemberAttendance = ref()
 
 
-
-    // const currentEmployeeAttendance = ref([
-
-    //     {
-    //         date: "2023-06-02 12:00",
-    //         absent_status: null,
-    //         attendance_mode_checkin: "web",
-    //         attendance_mode_checkout: "mobile",
-    //         checkin_time: "22:09:40",
-    //         checkout_time: "22:09:48",
-    //         eg_reason: null,
-    //         eg_reason_custom: null,
-    //         eg_status: null,
-    //         isAbsent: false,
-    //         isEG: false,
-    //         isLC: true,
-    //         isMIP: false,
-    //         isMOP: false,
-    //         lc_reason: null,
-    //         lc_reason_custom: null,
-    //         lc_status: "None",
-    //         leave_type: null,
-    //         mip_status: null,
-    //         mop_status: null,
-    //         selfie_checkin: null,
-    //         selfie_checkout: null,
-    //         user_id: "1",
-    //         vmt_employee_workshift_id: 1,
-    //         workshift_code: "FS",
-    //         workshift_name: "First Shift"
-    //     },
-    //     {
-    //         date: "2023-06-04 12:00",
-    //         absent_status: null,
-    //         attendance_mode_checkin: "biometric",
-    //         attendance_mode_checkout: "biometric",
-    //         checkin_time: "22:09:40",
-    //         checkout_time: "22:09:48",
-    //         eg_reason: null,
-    //         eg_reason_custom: null,
-    //         eg_status: null,
-    //         isAbsent: false,
-    //         isEG: true,
-    //         isLC: false,
-    //         isMIP: true,
-    //         isMOP: false,
-    //         lc_reason: null,
-    //         lc_reason_custom: null,
-    //         lc_status: "None",
-    //         leave_type: null,
-    //         mip_status: null,
-    //         mop_status: null,
-    //         selfie_checkin: null,
-    //         selfie_checkout: null,
-    //         user_id: "1",
-    //         vmt_employee_workshift_id: 1,
-    //         workshift_code: "FS",
-    //         workshift_name: "First Shift"
-    //     },
-    //     {
-    //         date: "2023-06-08 12:00",
-    //         absent_status: 'Applied',
-    //         attendance_mode_checkin: "web",
-    //         attendance_mode_checkout: "web",
-    //         checkin_time: "22:09:40",
-    //         checkout_time: "22:09:48",
-    //         eg_reason: null,
-    //         eg_reason_custom: null,
-    //         eg_status: null,
-    //         isAbsent: true,
-    //         isEG: false,
-    //         isLC: false,
-    //         isMIP: false,
-    //         isMOP: false,
-    //         lc_reason: null,
-    //         lc_reason_custom: null,
-    //         lc_status: "None",
-    //         leave_type: 'Sick and Casual',
-    //         mip_status: null,
-    //         mop_status: null,
-    //         selfie_checkin: null,
-    //         selfie_checkout: null,
-    //         user_id: "1",
-    //         vmt_employee_workshift_id: 1,
-    //         workshift_code: "FS",
-    //         workshift_name: "First Shift"
-    //     },
-    //     {
-    //         date: "2023-06-12 12:00",
-    //         absent_status: null,
-    //         attendance_mode_checkin: "mobile",
-    //         attendance_mode_checkout: "mobile",
-    //         checkin_time: "22:09:40",
-    //         checkout_time: "22:09:48",
-    //         eg_reason: null,
-    //         eg_reason_custom: null,
-    //         eg_status: null,
-    //         isAbsent: false,
-    //         isEG: false,
-    //         isLC: true,
-    //         isMIP: false,
-    //         isMOP: false,
-    //         lc_reason: null,
-    //         lc_reason_custom: null,
-    //         lc_status: "None",
-    //         leave_type: null,
-    //         mip_status: null,
-    //         mop_status: null,
-    //         selfie_checkin: null,
-    //         selfie_checkout: null,
-    //         user_id: "1",
-    //         vmt_employee_workshift_id: 1,
-    //         workshift_code: "FS",
-    //         workshift_name: "First Shift"
-    //     },
-    //     {
-    //         date: "2023-06-17 12:00",
-    //         absent_status: null,
-    //         attendance_mode_checkin: "web",
-    //         attendance_mode_checkout: "web",
-    //         checkin_time: "22:09:40",
-    //         checkout_time: "22:09:48",
-    //         eg_reason: null,
-    //         eg_reason_custom: null,
-    //         eg_status: null,
-    //         isAbsent: false,
-    //         isEG: false,
-    //         isLC: false,
-    //         isMIP: true,
-    //         isMOP: false,
-    //         lc_reason: null,
-    //         lc_reason_custom: null,
-    //         lc_status: "None",
-    //         leave_type: null,
-    //         mip_status: null,
-    //         mop_status: null,
-    //         selfie_checkin: null,
-    //         selfie_checkout: null,
-    //         user_id: "1",
-    //         vmt_employee_workshift_id: 1,
-    //         workshift_code: "FS",
-    //         workshift_name: "First Shift"
-    //     },
-    //     {
-    //         date: "2023-06-20 12:00",
-    //         absent_status: null,
-    //         attendance_mode_checkin: "web",
-    //         attendance_mode_checkout: "web",
-    //         checkin_time: "22:09:40",
-    //         checkout_time: "22:09:48",
-    //         eg_reason: null,
-    //         eg_reason_custom: null,
-    //         eg_status: null,
-    //         isAbsent: false,
-    //         isEG: true,
-    //         isLC: false,
-    //         isMIP: true,
-    //         isMOP: false,
-    //         lc_reason: null,
-    //         lc_reason_custom: null,
-    //         lc_status: "None",
-    //         leave_type: null,
-    //         mip_status: null,
-    //         mop_status: null,
-    //         selfie_checkin: null,
-    //         selfie_checkout: null,
-    //         user_id: "1",
-    //         vmt_employee_workshift_id: 1,
-    //         workshift_code: "FS",
-    //         workshift_name: "First Shift"
-    //     },
-    // ])
-
-    const getSelectedEmployeeAttendance = async(currentlySelectedUser,currentlySelectedMonth,currentlySelectedYear)=>{
+    const getSelectedEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
         canShowLoading.value = true
         let url = '/fetch-attendance-user-timesheet'
-        return  axios.post(url,{
-            month: currentlySelectedMonth+1,
+        return axios.post(url, {
+            month: currentlySelectedMonth + 1,
             year: currentlySelectedYear,
             user_id: currentlySelectedUser,
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false
         })
     }
 
-    const getTeamList = async(user_code) =>{
-       return  axios.post('/fetch-team-members',{
-        user_code:user_code
+    const getTeamList = async (user_code) => {
+        return axios.post('/fetch-team-members', {
+            user_code: user_code
         })
     }
 
-    const getOrgList = async() =>{
-        return  axios.get('/fetch-org-members')
+    const getOrgList = async () => {
+        return axios.get('/fetch-org-members')
     }
 
-    const getSelectedEmployeeDetails = (data) =>{
-    let user_id = data.id;
-    getSelectedEmployeeAttendance(user_id,useCalendar.getMonth,useCalendar.getYear).then(res => {
-        console.log(Object.values(res.data));
-        currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
-    })
+    const getSelectedEmployeeDetails = (data) => {
+        let user_id = data.id;
+        getSelectedEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            console.log(Object.values(res.data));
+            currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
+        })
 
     }
 
 
+
+    /* Finding Attendance Mode
+      -> Mobile
+      ->Biometric
+      ->PC
+
+       if Employee check in or check out using mobile
+       selfie image is required
+    */
 
     const findAttendanceMode = (attendance_mode) => {
         console.log(attendance_mode);
@@ -247,56 +86,129 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                 }
     }
 
-    const onClickShowLc_dialog = (selectedLcDate) =>{
-        // lcDetails.value = {...selectedLcDate}
-        dialog_Lc.value = true
-    }
-    const applyLcRegularization = () =>{
 
+    /* Attendance regularization for
+
+    ->LC - Late coming
+    ->EG - Early going
+    ->MIP -> Missed In punch
+    ->MOp -> Missed Out Punch
+
+    */
+
+    const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord) => {
+
+        let AttendanceRegularizeFormat = {
+            user_id: selectedDayRegularizationRecord.user_id,
+            date: selectedDayRegularizationRecord.date,
+            actualTime: selectedDayRegularizationRecord.checkin_time,
+            regularizeTime: '9.30 AM',
+            reason: selectedDayRegularizationRecord.reason,
+            custom_reason: selectedDayRegularizationRecord.custom_reason,
+        }
+        console.log(AttendanceRegularizeFormat);
     }
 
-    //  Applying for Missed In and  Out Punches
-    const applyMop = (value) => {
-        dialog_Mop.value = true
-        console.log(value);
-
-    }
-    const applyMip = (value) => {
-        dialog_Mip.value = true
-        console.log(value);
-
-    }
 
     //  Applying for Late Coming and Early Going
 
-    const applyLc = (value) => {
-
+    const onClickShowLcRegularization = (attendance) => {
         dialog_Lc.value = true
-        console.log(value);
+        lcDetails.value = { ...attendance }
+    }
+
+
+    const applyLcRegularization = () => {
+        AttendanceRegularizationApplyFormat(lcDetails.value);
+
+        Swal.fire(
+            'Good job!',
+            'Attendance Regularized Successful',
+            'success'
+        )
 
     }
-    const applyEg = (value) => {
+
+    const onClickShowEgRegularization = (attendance) => {
         dialog_Eg.value = true
-        console.log(value);
+        egDetails.value = { ...attendance }
     }
+
+    const applyEgRegularization = () => {
+        console.log(egDetails.value);
+        AttendanceRegularizationApplyFormat(egDetails.value);
+
+        Swal.fire(
+            'Good job!',
+            'Attendance Regularized Successful',
+            'success'
+        )
+
+    }
+
+
+    //  Applying for Missed In and  Out Punches
+
+    const onClickShowMipRegularization = (attendance) => {
+        dialog_Mip.value = true
+        mipDetails.value = { ...attendance }
+    }
+
+
+    const applyMipRegularization = () => {
+        AttendanceRegularizationApplyFormat(mipDetails.value);
+
+        Swal.fire(
+            'Good job!',
+            'Attendance Regularized Successful',
+            'success'
+        )
+
+    }
+
+    const onClickShowMopRegularization = (attendance) => {
+        dialog_Mop.value = true
+        mopDetails.value = { ...attendance }
+    }
+
+    const applyMopRegularization = () => {
+        console.log(mopDetails.value);
+        AttendanceRegularizationApplyFormat(mopDetails.value);
+
+        Swal.fire(
+            'Good job!',
+            'Attendance Regularized Successful',
+            'success'
+        )
+
+    }
+
 
     // View check in and out selfie Images
 
-    const viewSelfie = (value) =>{
+    const viewSelfie = (value) => {
         dialog_Selfie.value = true
     }
 
-    const errorMessege  = (value) =>{
+
+    // Helper Functions
+
+    //  error message
+    const errorMessege = (value) => {
         let date = ''
-        if(value){
-            if(date < value){
+        if (value) {
+            if (date < value) {
                 console.log('');
             }
         }
     }
 
-    const findDayDifference = (date) =>{
-        let today= new Date().toJSON().slice(0, 10);
+
+
+    //  Finding Difference between start date and end date
+
+    const findDayDifference = (date) => {
+        let today = new Date().toJSON().slice(0, 10);
         var seletectedCellDate = new Date(date);
         console.log(leave_data.custom_start_date);
         console.log(leave_data.custom_end_date);
@@ -311,32 +223,33 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         ).toFixed(0);
         let total_days = Difference_In_Days;
         console.log(total_days);
-        // leave_data.custom_total_days=parseInt(total_custom_days)+1
-        // console.log(leave_data.custom_total_days);
     }
 
 
 
     return {
         // Timesheet Data source
-        getSelectedEmployeeAttendance, currentEmployeeAttendance,getTeamList,getOrgList,getSelectedEmployeeDetails,
-        currentlySelectedTeamMemberAttendance,canShowLoading,
-        // Finding Attendance Mode
+        getSelectedEmployeeAttendance, currentEmployeeAttendance,
+        getTeamList, getOrgList, getSelectedEmployeeDetails,
 
+        currentlySelectedTeamMemberAttendance, canShowLoading, isManager,
+
+
+        // Finding Attendance Mode
         findAttendanceMode,
 
         // Attendance Regularization
+
         //   MOP
-        mopDetails, applyMop,dialog_Mop,
+        onClickShowLcRegularization,applyMopRegularization, mopDetails, dialog_Mop,
         //   MIP
-        mipDetails, applyMip,dialog_Mip,
+        onClickShowEgRegularization,applyMipRegularization, mipDetails, dialog_Mip,
         //   LC
-        onClickShowLc_dialog,applyLcRegularization,
-        lcDetails, applyLc,dialog_Lc,
+        onClickShowMipRegularization,applyLcRegularization, lcDetails, dialog_Lc,
         //   EG
-        egDetails, applyEg,dialog_Eg,
+        onClickShowMopRegularization,applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie,viewSelfie
+        dialog_Selfie, viewSelfie
 
 
     }

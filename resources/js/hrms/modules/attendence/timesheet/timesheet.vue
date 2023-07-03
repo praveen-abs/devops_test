@@ -1,6 +1,5 @@
 <template>
-
-    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card" v-if="attendance">
+    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card" v-if="singleAttendanceDay">
         <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
@@ -11,22 +10,30 @@
                 {{ day.substring(0, 3) }}
             </div>
 
+
+
             <div v-if="firstDayOfCurrentMonth > 0" v-for="day in firstDayOfCurrentMonth" :key="day"
                 class=" w-full border opacity-50 "></div>
 
-            <!-- Attendance Timesheet Data from current month  -->
+
+            <!-- singleAttendanceDay Timesheet Data from current month  -->
+
             <div v-for="day in daysInCurrentMonth" :key="day"
                 class=" h-full py-3 shadow-sm  md: w-full border align-top rounded-lg " :class="{
                     'bg-slate-50 text-gray-600 font-medium': isToday(day),
                     'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
-                    'bg-gray-200' : isWeekEndDays(day)
+                    'bg-gray-200': isWeekEndDays(day)
                 }">
-                <div v-if="currentMonthAttendance(day, attendance).length"
-                    v-for="attendance in currentMonthAttendance(day, attendance)" class="hidden md:block">
+
+
+                <!-- EACH CELL -->
+                <div v-if="currentMonthsingleAttendanceDay(day, singleAttendanceDay).length"
+                    v-for="singleAttendanceDay in currentMonthsingleAttendanceDay(day, singleAttendanceDay)"
+                    class="hidden md:block">
 
                     <div
                         class="w-full h-full text-xs md:text-sm lg:text-base text-left px-2 transition-colors font-semibold ">
-                        {{ day }}
+                        {{ dayjs(singleAttendanceDay.date).format('D') }}
 
                         <!-- Week end -->
 
@@ -34,26 +41,31 @@
                             <p class="font-semibold text-sm">Week Off</p>
                         </div>
 
-                        <!-- If Employee is Absent  -->
-                        <!-- {{ leaveStatus(attendance.isAbsent) }} -->
-                        <div v-if="attendance.isAbsent">
+                        <div v-if="isFutureDate(day)">
+                            <p>simma</p>
+                        </div>
 
-                            <div class="bg-green-100 p-3 rounded-lg" v-if="attendance.absent_status.includes('Approved')">
-                                <p class="font-semibold text-sm"> {{ attendance.leave_type }} Approved</p>
+                        <!-- If Employee is Absent  -->
+                        <!-- {{ leaveStatus(singleAttendanceDay.isAbsent) }} -->
+                        <div v-if="singleAttendanceDay.isAbsent">
+
+                            <div class="bg-green-100 p-3 rounded-lg"
+                                v-if="singleAttendanceDay.absent_status.includes('Approved')">
+                                <p class="font-semibold text-sm"> {{ singleAttendanceDay.leave_type }} Approved</p>
                             </div>
                             <div class="bg-red-100 p-3 rounded-lg"
-                                v-else-if="attendance.absent_status.includes('Rejected')">
-                                {{ attendance.leave_type }}
+                                v-else-if="singleAttendanceDay.absent_status.includes('Rejected')">
+                                {{ singleAttendanceDay.leave_type }}
                                 Rejected
                             </div>
                             <div class="bg-yellow-100 p-3 rounded-lg"
-                                v-else-if="attendance.absent_status.includes('Pending')">
-                                {{ attendance.leave_type }}
+                                v-else-if="singleAttendanceDay.absent_status.includes('Pending')">
+                                {{ singleAttendanceDay.leave_type }}
                                 Pending
                             </div>
                             <div class="bg-slate-100-100 p-3 rounded-lg"
-                                v-else-if="attendance.absent_status.includes('Revoked')">
-                                {{ attendance.leave_type }}
+                                v-else-if="singleAttendanceDay.absent_status.includes('Revoked')">
+                                {{ singleAttendanceDay.leave_type }}
                                 Revoked
                             </div>
                             <div class="bg-red-100 p-3 rounded-lg" v-else-if="!isWeekEndDays(day)">
@@ -67,62 +79,65 @@
                             class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
                             <div class="w-full">
                                 <div class="text-xs tracking-tight text-clip overflow-hidden p-1">
-                                    <!-- Attendance Check in  -->
+                                    <!-- singleAttendanceDay Check in  -->
                                     <div class="flex">
                                         <div class="flex ">
                                             <i class="fa fa-arrow-down text-green-800  font-semibold text-sm "
                                                 style='transform: rotate(-45deg);'></i>
-                                            <p class="text-green-800 font-semibold text-sm mx-1">{{ attendance.checkin_time}}
+                                            <p class="text-green-800 font-semibold text-sm mx-1">{{
+                                                singleAttendanceDay.checkin_time }}
                                             </p>
                                         </div>
                                         <div class="px-1">
                                             <i class="text-green-800 font-semibold text-sm"
-                                                :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkin)"></i>
+                                                :class="useTimesheet.findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
                                             <button @click="useTimesheet.viewSelfie"
-                                                v-if="attendance.attendance_mode_checkin == 'mobile'" class="mx-2">
+                                                v-if="singleAttendanceDay.attendance_mode_checkin == 'mobile'" class="mx-2">
                                                 <i class="fa fa-picture-o" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                         <div class="">
-                                            <button v-if="attendance.isMIP"
+                                            <button v-if="singleAttendanceDay.isMIP"
                                                 class="regualarization_button bg-orange-600 text-white"
-                                                @click="useTimesheet.dialog_Mip = true,useTimesheet.mipDetails = {...attendance}">MIP</button>
-                                            <button v-if="attendance.isLC" @click="useTimesheet.dialog_Lc = true,useTimesheet.lcDetails = {...attendance}"
-                                                class="regualarization_button bg-purple-400 text-white font-semibold "
-                                                >LC</button>
-                                            <i v-if="attendance.isMIP || attendance.isLC"
+                                                @click="useTimesheet.onClickShowMipRegularization(singleAttendanceDay)">MIP</button>
+                                            <button v-if="singleAttendanceDay.isLC"
+                                                @click="useTimesheet.onClickShowLcRegularization(singleAttendanceDay)"
+                                                class="regualarization_button bg-purple-400 text-white font-semibold ">LC</button>
+                                            <i v-if="singleAttendanceDay.isMIP || singleAttendanceDay.isLC"
                                                 class="fa fa-exclamation-circle fs-15 text-warning mx-2"
                                                 title="Not Applied"></i>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="text-xs tracking-tight text-clip overflow-hidden p-1">
-                                    <!-- Attendance Check out  -->
+                                    <!-- singleAttendanceDay Check out  -->
 
                                     <div class="flex">
                                         <div class="flex">
                                             <i class="fa fa-arrow-down font-semibold text-sm text-red-800 "
                                                 style='transform: rotate(230deg);'></i>
-                                            <p class="text-red-800 font-semibold text-sm mx-1">{{ attendance.checkout_time
+                                            <p class="text-red-800 font-semibold text-sm mx-1">{{
+                                                singleAttendanceDay.checkout_time
                                             }}
                                             </p>
                                         </div>
                                         <div class="px-1">
                                             <i class="text-red-800 font-semibold text-sm"
-                                                :class="useTimesheet.findAttendanceMode(attendance.attendance_mode_checkout)"></i>
+                                                :class="useTimesheet.findAttendanceMode(singleAttendanceDay.attendance_mode_checkout)"></i>
                                             <button @click="useTimesheet.viewSelfie"
-                                                v-if="attendance.attendance_mode_checkout == 'mobile'" class="mx-2">
+                                                v-if="singleAttendanceDay.attendance_mode_checkout == 'mobile'"
+                                                class="mx-2">
                                                 <i class="fa fa-picture-o" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                         <div class="">
-                                            <button v-if="attendance.isMOP"
+                                            <button v-if="singleAttendanceDay.isMOP"
                                                 class="regualarization_button bg-orange-600 text-white"
-                                                @click="useTimesheet.dialog_Mop = true,useTimesheet.mopDetails = {...attendance}">MOP</button>
-                                            <button v-if="attendance.isEG"
+                                                @click="useTimesheet.onClickShowMopRegularization(singleAttendanceDay)">MOP</button>
+                                            <button v-if="singleAttendanceDay.isEG"
                                                 class="regualarization_button bg-purple-400 text-white"
-                                                @click="useTimesheet.dialog_Eg = true,useTimesheet.egDetails = {...attendance}">EG</button>
-                                            <i v-if="attendance.isMOP || attendance.isEG"
+                                                @click="useTimesheet.onClickShowEgRegularization(singleAttendanceDay)">EG</button>
+                                            <i v-if="singleAttendanceDay.isMOP || singleAttendanceDay.isEG"
                                                 class="fa fa-exclamation-circle fs-15 text-warning mx-2"
                                                 title="Not Applied"></i>
                                         </div>
@@ -164,19 +179,26 @@
         <div class="card-body">
             <p class="font-semibold fs-6">select Employee</p>
         </div>
-</div>
+    </div>
 
     <Dialog header="Header" v-model:visible="useTimesheet.canShowLoading"
-    :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
-    :closeOnEscape="false">
-    <template #header>
-        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-            animationDuration="2s" aria-label="Custom ProgressSpinner" />
-    </template>
-    <template #footer>
-        <h5 style="text-align: center">Please wait...</h5>
-    </template>
-</Dialog>
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
+
+
+    <MopRegularization />
+    <MipRegularization />
+    <LcRegularization />
+    <EgRegularization />
+    <ViewSelfieImage />
 </template>
 
 <script setup>
@@ -185,16 +207,23 @@ import Top from "./components/Top.vue"
 import { useCalendarStore } from "./stores/calendar";
 import { useAttendanceTimesheetMainStore } from './stores/attendanceTimesheetMainStore'
 import { Service } from '../../Service/Service'
+import dayjs from "dayjs";
+import MopRegularization from './components/MopRegularization.vue'
+import MipRegularization from './components/MipRegularization.vue';
+import LcRegularization from './components/LcRegularization.vue';
+import EgRegularization from './components/EgRegularization.vue';
+import ViewSelfieImage from './components/ViewSelfieImage.vue'
 
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 const service = Service()
 
 const props = defineProps({
-    attendance: {
+    singleAttendanceDay: {
         type: Object,
         required: true,
     },
+
 });
 
 const calendarStore = useCalendarStore();
@@ -229,6 +258,7 @@ const getDaysInMonth = () => {
         0
     ).getDate();
 };
+
 
 
 
@@ -298,17 +328,19 @@ const isWeekEndDays = (day) => {
 
 }
 
-const leave = ref(false)
 
-const leaveStatus = (isAbsent) => {
+const isFutureDate = (day) => {
 
-    console.log(isAbsent);
+    var dayValue = new Date(day)
 
-    if (isAbsent) {
-        leave.value = true;
+    console.log(dayValue);
+
+    if (new Date() > dayValue) {
+        return true
     } else {
-        leave.value = false;
+        return false
     }
+
 }
 
 
@@ -332,18 +364,18 @@ const isEventToday = (day, startdate) => {
 };
 
 /**
- * Gets all the calendar attendance on a given day
+ * Gets all the calendar singleAttendanceDay on a given day
  *
  * @param {number} day calendar month day whose event(s) we're getting
- * @param {array} attendance Array of attendance objects to filter through
+ * @param {array} singleAttendanceDay Array of singleAttendanceDay objects to filter through
  *
  * @return array Array of the filtered day's event(s)
  */
-const currentMonthAttendance = (day, attendance) => {
-    if (!attendance.length) return [];
+const currentMonthsingleAttendanceDay = (day, singleAttendanceDay) => {
+    if (!singleAttendanceDay.length) return [];
 
     let todaysEvent = [];
-    attendance.forEach((event) => {
+    singleAttendanceDay.forEach((event) => {
         if (isEventToday(day, event.date)) {
             todaysEvent.push(event);
         }
@@ -356,7 +388,7 @@ const currentMonthAttendance = (day, attendance) => {
  * Open the event details modal
  *
  * @param {number} day current calendar month day
- * @param {array} attendance Array of attendance objects to show on the modal
+ * @param {array} singleAttendanceDay Array of singleAttendanceDay objects to show on the modal
  *
  * @return null
  */
@@ -393,5 +425,4 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}
-</style>
+}</style>

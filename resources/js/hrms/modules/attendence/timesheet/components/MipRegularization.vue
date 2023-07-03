@@ -5,7 +5,7 @@
             <div>
                 <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
                     class="fw-bold  fs-5 modal-title ">
-                    Missed in punch regularization</h5>
+                    Attendance regularization</h5>
             </div>
         </template>
         <div class="row">
@@ -14,7 +14,7 @@
                     <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                     <div class="col-6">
                         <span class="text-ash-medium fs-15" id="current_date">
-                             {{ useTimesheet.mipDetails.date }}
+                            {{ useTimesheet.mipDetails.date }}
                         </span>
 
                         <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
@@ -38,24 +38,67 @@
                     <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                     <div class="col-6">
 
-                        <select name="reason" class="form-select btn-line-orange" id="reason_mip"
-                            onchange="showReasonBox(this)">
+                        <select name="reason" class="form-select btn-line-orange" id="reason_mop" v-model="useTimesheet.mipDetails.reason">
                             <option selected hidden disabled>
                                 Choose Reason for MIP
                             </option>
                             <option value="Permission">Permission</option>
                             <option value="Forgot to Punch">Forgot to Punch</option>
                             <option value="Technical Error">Technical Error</option>
+                            <option value="Technical Error">Official</option>
+                            <option value="Technical Error">Personal</option>
                             <option value="Others">Others</option>
                         </select>
 
                     </div>
                 </div>
+                <div class="col-12 ">
+                    <div class="row">
+                        <div class="col-12">
+                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                                v-model="useTimesheet.mopDetails.custom_reason" placeholder="Reason here...."
+                                v-if="useTimesheet.mopDetails.reason == 'Others'"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="div_reason_noneditable" v-if="false">
+                <div class="mb-2 col-12">
+                    <div class="row">
+                        <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
+                        </div>
+                        <div class="col-6">
+                            <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
+                                id="txt_reason_noneditable" value="EMPTY" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-2 col-12" id="div_custom_reason">
+                    <div class="row">
+                        <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
+                        </div>
+                        <div class="col-6">
+                            <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
+                                id="txt_customreason_noneditable" value="EMPTY" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-2 col-12">
+                    <div class="row">
+                        <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
+                        </div>
+                        <div class="col-6">
+                            <input class="text-ash-medium form-control fs-15" name="txt_apply_status" id="txt_apply_status"
+                                value="EMPTY" readonly>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-
-            <button type="button" class="btn btn-orange">Apply</button>
+            <button type="button" class="btn btn-orange" @click="useTimesheet.applyMipRegularization(), useTimesheet.dialog_Mip = false">Apply</button>
         </div>
 
     </Dialog>

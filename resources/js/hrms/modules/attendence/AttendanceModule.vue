@@ -153,7 +153,7 @@
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <Timesheet :attendance="useTimesheet.currentEmployeeAttendance" />
+                        <Timesheet :singleAttendanceDay="useTimesheet.currentEmployeeAttendance" :isemployee="true" />
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
@@ -162,17 +162,17 @@
                                 <EmployeeList :source="orgList" />
                             </div>
                             <div class="ml-2">
-                                <Timesheet :attendance="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                <Timesheet :singleAttendanceDay="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-fit">
-                                <EmployeeList  :source="orgList"/>
+                                <EmployeeList :source="orgList" />
                             </div>
                             <div>
-                                <Timesheet :attendance="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                <Timesheet :singleAttendanceDay="useTimesheet.currentlySelectedTeamMemberAttendance"  />
                             </div>
                         </div>
                     </div>
@@ -180,14 +180,6 @@
             </div>
         </div>
     </div>
-
-    <MopRegularization />
-    <MipRegularization />
-    <LcRegularization />
-    <EgRegularization />
-    <ViewSelfieImage />
-
-
 
 </template>
 
@@ -199,12 +191,6 @@ import { useCalendarStore } from './timesheet/stores/calendar'
 import { Service } from '../Service/Service'
 import EmployeeList from './timesheet/components/EmployeeList.vue';
 import dayjs from 'dayjs';
-import AttendanceRegularization from './timesheet/components/AttendanceRegularization.vue';
-import MopRegularization from './timesheet/components/MopRegularization.vue'
-import MipRegularization from './timesheet/components/MipRegularization.vue';
-import LcRegularization from './timesheet/components/LcRegularization.vue';
-import EgRegularization from './timesheet/components/EgRegularization.vue';
-import ViewSelfieImage from './timesheet/components/ViewSelfieImage.vue'
 import { onMounted, ref } from 'vue';
 
 const useTimesheet = useAttendanceTimesheetMainStore()
@@ -213,19 +199,19 @@ const teamList = ref()
 const orgList = ref()
 const service = Service()
 
-onMounted( () => {
+onMounted(() => {
     Service()
 
-     useTimesheet.getSelectedEmployeeAttendance(141,useCalendar.getMonth,useCalendar.getYear).then(res => {
+    useTimesheet.getSelectedEmployeeAttendance(141, useCalendar.getMonth, useCalendar.getYear).then(res => {
         useTimesheet.currentEmployeeAttendance = Object.values(res.data)
     })
 
-     useTimesheet.getTeamList(service.current_user_code).then(res=>{
+    useTimesheet.getTeamList(service.current_user_code).then(res => {
         console.log(res.data);
         teamList.value = Object.values(res.data)
     })
 
-     useTimesheet.getOrgList().then(res=>{
+    useTimesheet.getOrgList().then(res => {
         orgList.value = Object.values(res.data)
     })
 
