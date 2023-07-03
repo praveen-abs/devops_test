@@ -36,7 +36,7 @@ use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
 use Carbon\Carbon;
-
+use App\Models\VmtEmployeePaySlipV2;
 
 use Illuminate\Support\Facades\DB;
 
