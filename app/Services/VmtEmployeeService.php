@@ -871,7 +871,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {

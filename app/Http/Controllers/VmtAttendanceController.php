@@ -380,7 +380,7 @@ class VmtAttendanceController extends Controller
         $mail_status = "";
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         // dd($request->leave_type_id);
         if (!empty($request->notifications_users_id))
@@ -1207,7 +1207,7 @@ class VmtAttendanceController extends Controller
 
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
@@ -1295,7 +1295,7 @@ class VmtAttendanceController extends Controller
 
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(

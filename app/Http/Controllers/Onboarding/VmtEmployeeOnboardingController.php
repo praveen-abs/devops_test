@@ -975,7 +975,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                    //  $message = "Employee OnBoard was Created   ";
                 //      $VmtClientMaster = VmtClientMaster::first();
-                //      $image_view = url('/') . $VmtClientMaster->logo_img;
+                //      $image_view = url('/') . $VmtClientMaster->client_logo;
                 //    $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
@@ -1190,7 +1190,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
            $VmtClientMaster = VmtClientMaster::first();
-           $image_view = url('/') . $VmtClientMaster->logo_img;
+           $image_view = url('/') . $VmtClientMaster->client_logo;
            $appoinmentPath = "";
 
            if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -1410,7 +1410,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                //Sending mail
                $VmtClientMaster = VmtClientMaster::first();
-               $image_view = url('/') . $VmtClientMaster->logo_img;
+               $image_view = url('/') . $VmtClientMaster->client_logo;
 
                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 

@@ -73,7 +73,7 @@ class VmtClientController extends Controller
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
 
-            $image_view = url('/').$VmtClientMaster->logo_img;
+            $image_view = url('/').$VmtClientMaster->client_logo;
             if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
                                                             $request->authorised_person_contact_email,

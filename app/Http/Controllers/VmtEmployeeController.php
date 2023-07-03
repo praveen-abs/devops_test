@@ -1229,7 +1229,7 @@ class VmtEmployeeController extends Controller
 
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -1485,7 +1485,7 @@ class VmtEmployeeController extends Controller
     //         $notification_user = User::where('id',auth::user()->id)->first();
     //         $message = "Employee OnBoard was Created   ";
     //         $VmtClientMaster = VmtClientMaster::first();
-    //         $image_view = url('/') . $VmtClientMaster->logo_img;
+    //         $image_view = url('/') . $VmtClientMaster->client_logo;
     //         Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
     //         \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 

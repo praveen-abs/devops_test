@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         //
-        Schema::dropIfExists('vmt_general_info');
+        Schema::dropIfExists('vmt_client_master');
     }
 
     /**

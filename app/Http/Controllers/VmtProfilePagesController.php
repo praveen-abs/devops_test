@@ -836,7 +836,7 @@ public function addExperienceInfo(Request $request)
                    $mail_status = "";
 
                    $VmtClientMaster = VmtClientMaster::first();
-                   $image_view = url('/') . $VmtClientMaster->logo_img;
+                   $image_view = url('/') . $VmtClientMaster->client_logo;
 
                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
                    $employee_user=VmtTempEmployeeProofDocuments::find($record_id);
@@ -926,7 +926,7 @@ public function addExperienceInfo(Request $request)
                    $mail_status = "";
 
                    $VmtClientMaster = VmtClientMaster::first();
-                   $image_view = url('/') . $VmtClientMaster->logo_img;
+                   $image_view = url('/') . $VmtClientMaster->client_logo;
 
                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
                    $DocType = VmtDocuments::where('id', $singleDoc->doc_id)->first()->document_name;

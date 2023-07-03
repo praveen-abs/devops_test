@@ -1006,7 +1006,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $pdf->render();
 
             $VmtClientMaster = VmtClientMaster::first();
-            $image_view = url('/') . $VmtClientMaster->logo_img;
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
             // $pdf->stream($client_name.'.pdf');
             $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));

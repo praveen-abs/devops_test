@@ -164,7 +164,7 @@
                                 <td colspan="4" style="background-color:#fff; border-radius:1.3em; ">
                                     <div class="inner-content">
                                         <table class="template_mail"
-                                            style="font-family: 'Poppins', sans-serif;    
+                                            style="font-family: 'Poppins', sans-serif;
                                         padding: 20px 40px;">
                                             <tr>
                                                 <td colspan="4" align="center">
@@ -522,7 +522,7 @@ Email Notification to the Employee, Once the Manager Uploaded their KRA/KPI
                                 <td colspan="4" style="background-color:#fff; border-radius:1.3em; ">
                                     <div class="inner-content">
                                         <table class="template_mail"
-                                            style="font-family: 'Poppins', sans-serif;    
+                                            style="font-family: 'Poppins', sans-serif;
                                         padding: 20px 40px;">
                                             <tr>
                                                 <td colspan="4" align="center">
@@ -883,7 +883,7 @@ Email Notification to the Manager, Once the Employee Rejected his /her KRA/KPI
                                 <td colspan="4" style="background-color:#fff; border-radius:1.3em; ">
                                     <div class="inner-content">
                                         <table class="template_mail"
-                                            style="font-family: 'Poppins', sans-serif;    
+                                            style="font-family: 'Poppins', sans-serif;
                                         padding: 20px 40px;">
                                             <tr>
                                                 <td colspan="4" align="center">
@@ -1230,7 +1230,7 @@ Email Notification to the Employee, Once the Manager Rejected his /her KRA/KPI
                                 <td colspan="4" style="background-color:#fff; border-radius:1.3em; ">
                                     <div class="inner-content">
                                         <table class="template_mail"
-                                            style="font-family: 'Poppins', sans-serif;    
+                                            style="font-family: 'Poppins', sans-serif;
                                         padding: 20px 40px;">
                                             <tr>
                                                 <td colspan="4" align="center">
@@ -1576,7 +1576,7 @@ Email Notification to the Employee, Once the Manager Rejected his /her KRA/KPI
                                 <td colspan="4" style="background-color:#fff; border-radius:1.3em; ">
                                     <div class="inner-content">
                                         <table class="template_mail"
-                                            style="font-family: 'Poppins', sans-serif;    
+                                            style="font-family: 'Poppins', sans-serif;
                                         padding: 20px 40px;">
                                             <tr>
                                                 <td colspan="4" align="center">

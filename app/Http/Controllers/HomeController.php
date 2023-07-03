@@ -390,7 +390,7 @@ class HomeController extends Controller
             $avatarName = 'client-logo-'.date("Y-m-d_h_i_sa").'.png';
             $avatarPath = public_path('/generalinfo/');
             $avatar->move($avatarPath, $avatarName);
-            $VmtClientMaster->logo_img =  '/generalinfo/'.$avatarName;
+            $VmtClientMaster->client_logo =  '/generalinfo/'.$avatarName;
         }
 
         if($request->file('background-img')) {
@@ -510,7 +510,7 @@ class HomeController extends Controller
             // {
                // dd("adsf");
                 // $VmtClientMaster = VmtClientMaster::first();
-                // $image_view = url('/') . $VmtClientMaster->logo_img;
+                // $image_view = url('/') . $VmtClientMaster->client_logo;
                 // $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id),true);
                 // dd($emp_avatar);
                 // $isSent    = \Mail::to($user_mail)->send(new AttendanceCheckinCheckoutNotifyMail(

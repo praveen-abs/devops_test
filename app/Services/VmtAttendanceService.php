@@ -552,7 +552,7 @@ class VmtAttendanceService
         $mail_status = "";
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         //To store notif emails, if no notif emails given , then send this empty array to Mail::
         $notification_mails = array();
@@ -688,7 +688,7 @@ class VmtAttendanceService
         $mail_status = "";
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
 
@@ -1293,7 +1293,7 @@ class VmtAttendanceService
 
 
             $VmtClientMaster = VmtClientMaster::first();
-            $image_view = url('/') . $VmtClientMaster->logo_img;
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
@@ -1387,7 +1387,7 @@ class VmtAttendanceService
 
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
@@ -1478,7 +1478,7 @@ class VmtAttendanceService
 
 
         $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->logo_img;
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(

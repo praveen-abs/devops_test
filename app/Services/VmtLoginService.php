@@ -91,7 +91,7 @@ class VmtLoginService {
 
             //Then, send mail to that email
             $VmtClientMaster = VmtClientMaster::first();
-            $image_view = url('/') . $VmtClientMaster->logo_img;
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
             $isSent    = \Mail::to($query_user->email)->send(new PasswordResetLinkMail($query_user->name, $query_user->user_code, $passwordResetLink, $image_view));
 

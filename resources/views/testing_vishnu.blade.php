@@ -11,6 +11,7 @@
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
+    use App\Mail\VmtPMSMail_Assignee;
     use App\Models\User;
 
     use App\Models\VmtEmployeePayroll;
@@ -238,53 +239,87 @@
 
                         //dd($attendanceCheckOut );
 
-                        uploadDocument($client_id,$fileObject){
+    //                     uploadDocument($client_id,$fileObject){
 
-    try{
-            $emp_code = User::find($emp_id)->user_code;
+    // try{
+    //         $emp_code = User::find($emp_id)->user_code;
 
-            $Client_logo= VmtClientMaster::where('client_id', $client_id);
+    //         $Client_logo= VmtClientMaster::where('client_id', $client_id);
 
-            //check if document already uploaded
-           
-            }
-            else
-            {
-                $employee_documents = new VmtEmployeeDocuments;
-                $employee_documents->user_id = $emp_id;
-                $employee_documents->doc_id = $onboard_doc_id;
-            }
+    //         //check if document already uploaded
 
-
-            $date = date('d-m-Y_H-i-s');
-            $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
-            $path = $emp_code.'/onboarding_documents';
-            $filePath = $fileObject->storeAs($path,$fileName, 'private');
-            $employee_documents->doc_url = $fileName;
-
-            $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
-                                                               ->where('doc_id',$onboard_doc_id);
-
-            if($employee_documents_status->exists() ){
-                    $employee_documents_status = $employee_documents_status->first()->status;
-               if($employee_documents_status == 'Approved')
-                    $employee_documents->status = $employee_documents_status;
-               else{
-                $employee_documents->status ='Pending';
-               }
-            }else{
-
-                $employee_documents->status = 'Pending';
-             }
+    //         }
+    //         else
+    //         {
+    //             $employee_documents = new VmtEmployeeDocuments;
+    //             $employee_documents->user_id = $emp_id;
+    //             $employee_documents->doc_id = $onboard_doc_id;
+    //         }
 
 
-            $employee_documents->save();
-        }
-        catch(\Exception $e){
-            dd("Error :: uploadDocument() ".$e);
-        }
+    //         $date = date('d-m-Y_H-i-s');
+    //         $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+    //         $path = $emp_code.'/onboarding_documents';
+    //         $filePath = $fileObject->storeAs($path,$fileName, 'private');
+    //         $employee_documents->doc_url = $fileName;
 
-        return "success";
+    //         $employee_documents_status = VmtEmployeeDocuments::where('user_id', $emp_id)
+    //                                                            ->where('doc_id',$onboard_doc_id);
+
+    //         if($employee_documents_status->exists() ){
+    //                 $employee_documents_status = $employee_documents_status->first()->status;
+    //            if($employee_documents_status == 'Approved')
+    //                 $employee_documents->status = $employee_documents_status;
+    //            else{
+    //             $employee_documents->status ='Pending';
+    //            }
+    //         }else{
+
+    //             $employee_documents->status = 'Pending';
+    //          }
+
+
+    //         $employee_documents->save();
+    //     }
+    //     catch(\Exception $e){
+    //         dd("Error :: uploadDocument() ".$e);
+    //     }
+
+    //     return "success";
+
+
+$flowCheck	="1";
+
+$assignment_period_year =	"2023";
+$calendar_type	="financial_year";
+$hidden_calendar_year=	"April+-+2022+to+March+-+2023";
+$frequency	="quarterly";
+$assignment_period_start=	"q3";
+$department=	"6";
+$employees =['246','247','248'];
+$reviewer[]="245";
+$hr_id	="245";
+$selected_kpi_form_id=	"1";
+
+    //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
+     $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
+    //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
+               $comments_employee = '';
+    $login_Link = request()->getSchemeAndHttpHost();
+
+
+     $is_sent=\Mail::to('vvishva185@gmail.com')
+                        ->send(new VmtPMSMail_Assignee("none",$flowCheck,
+                                                       $assigneeName,
+                                                       $hidden_calendar_year." - ".strtoupper($assignment_period_start),
+                                                       'vishnu',
+                                                       $comments_employee,
+                                                       $login_Link));
+if($is_sent){
+    echo 'hii';
+}else{
+    echo 'bye';
+}
 
     ?>
 

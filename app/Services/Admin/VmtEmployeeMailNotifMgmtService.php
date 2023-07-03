@@ -79,7 +79,7 @@ class VmtEmployeeMailNotifMgmtService {
             ->first()->email;
 
             $VmtClientMaster = VmtClientMaster::first();
-            $image_view = url('/') . $VmtClientMaster->logo_img;
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
             $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
@@ -160,7 +160,7 @@ class VmtEmployeeMailNotifMgmtService {
             ->first()->email;
 
             $VmtClientMaster = VmtClientMaster::first();
-            $image_view = url('/') . $VmtClientMaster->logo_img;
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
             $isSent = \Mail::to($user_mail)->send(new ActivationMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
