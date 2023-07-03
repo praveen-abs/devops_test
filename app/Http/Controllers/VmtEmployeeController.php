@@ -21,7 +21,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
-use App\Models\VmtGeneralInfo;
+
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployeePMSGoals;
@@ -986,8 +986,8 @@ class VmtEmployeeController extends Controller
     //     }
     // }
 
-        public function getallemployee(){
-          $query_employee = User::where('is_ssa','<>','1')->get();
+        public function getAllEmployees(){
+          $query_employee = User::where('is_ssa','0')->get(['id', 'name','user_code']);
           return ($query_employee);
         }
 
@@ -1008,6 +1008,11 @@ class VmtEmployeeController extends Controller
     public function fetchMaritalStatus(Request $request){
         $query = VmtMaritalStatus::all(['id','name']);
         return response()->json($query);
+    }
+
+    public function fetchclientcode(Request $request){
+        $employee_code_prefix = VmtMasterConfig::where('config_name','employee_code_prefix')->first()->config_value;
+        return response()->json($employee_code_prefix);
     }
 
     public function fetchBloodGroups(Request $request){
@@ -1223,8 +1228,8 @@ class VmtEmployeeController extends Controller
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -1285,7 +1290,7 @@ class VmtEmployeeController extends Controller
     //     //For validation
     //     $isAllRecordsValid = true;
 
-    //     $VmtGeneralInfo = VmtGeneralInfo::first();
+    //     $VmtClientMaster = VmtClientMaster::first();
 
     //     $rules = [];
     //     $responseJSON = [
@@ -1479,8 +1484,8 @@ class VmtEmployeeController extends Controller
 
     //         $notification_user = User::where('id',auth::user()->id)->first();
     //         $message = "Employee OnBoard was Created   ";
-    //         $VmtGeneralInfo = VmtGeneralInfo::first();
-    //         $image_view = url('/') . $VmtGeneralInfo->logo_img;
+    //         $VmtClientMaster = VmtClientMaster::first();
+    //         $image_view = url('/') . $VmtClientMaster->client_logo;
     //         Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
     //         \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
@@ -1809,6 +1814,16 @@ class VmtEmployeeController extends Controller
         }
 
         return "saved";
+
+
+    }
+
+    public function getCurrentEmployeeDetails(Request $request){
+
+      $user_id = User::where('user_code', auth()->user()->user_code)->first();
+       $user =  User::where('user_code','SA100')->get();
+
+       dd($user_id);
 
 
     }

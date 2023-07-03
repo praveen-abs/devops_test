@@ -39,7 +39,7 @@ class ConfigPmsController extends Controller
             'target' => $request->input('target') != '' ? $request->input('target') : 'Target',
             'stretchTarget' => $request->input('stretchTarget') != '' ? $request->input('stretchTarget') : 'Stretch Target',
             'source' => $request->input('source') != '' ? $request->input('source') : 'Source',
-            'kpiWeightage' => $request->input('kpiWeightage') != '' ? $request->input('kpiWeightage') : 'KPI Weightage ( % )',
+            'kpi_weightage' => $request->input('kpiWeightage') != '' ? $request->input('kpiWeightage') : 'KPI Weightage ( % )',
         ]);
         $selectedColumn = [];
         if ($request->input('dimension_check')) {

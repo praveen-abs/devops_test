@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth as auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\VmtGeneralInfo;
-use App\Models\User;
 use App\Models\VmtClientMaster;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Cache;
 use App\Mail\PasswordResetLinkMail;
 use Illuminate\Support\Facades\URL;
@@ -59,9 +59,9 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        $generalInfo = VmtGeneralInfo::first();
+        $Clientinfo = VmtClientMaster::first();
         $clientList = VmtClientMaster::all(['id','client_name']);
-        //dd($generalInfo);
+        //dd($Clientinfo);
         $cacheStatus = "";
 
         // $cookies = \Cookie::get();
@@ -78,13 +78,13 @@ class LoginController extends Controller
             $cacheStatus = "Cache not cleared";
 
 
-        return view('auth.login', compact('generalInfo','clientList','cacheStatus'));
+        return view('auth.login', compact('Clientinfo','clientList','cacheStatus'));
     }
 
     public function showForgetPasswordPage(Request $request){
-        $generalInfo = VmtGeneralInfo::first();
+        $Clientinfo = VmtClientMaster::first();
 
-        return view('forget_password',compact('generalInfo'));
+        return view('forget_password',compact('Clientinfo'));
     }
 
     public function login(Request $request)
@@ -108,54 +108,54 @@ class LoginController extends Controller
             $isDefaultPasswordUpdated = $user->is_default_password_updated;
 
             //If client_code selected
-            if(isset($request->client_code))
-            {
-                if(str_contains( $user->user_code , $request->client_code) || str_contains( $user->user_code , 'EMP'))
-                {
-                    $credentials = $request->only('user_code', 'password');
-                    if (Hash::check($request->password, $user->password)) {
-                    // if (Auth::attempt($credentials)) {
-                        // Auth::login($user, $save_credentials);
-                        if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
+            // if(isset($request->client_code))
+            // {
+            //     if(str_contains( $user->user_code , $request->client_code) || str_contains( $user->user_code , 'EMP'))
+            //     {
+            //         $credentials = $request->only('user_code', 'password');
+            //         if (Hash::check($request->password, $user->password)) {
+            //         // if (Auth::attempt($credentials)) {
+            //             // Auth::login($user, $save_credentials);
+            //             if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials)) {
 
-                            if($isDefaultPasswordUpdated == '1')
-                            {
+            //                 if($isDefaultPasswordUpdated == '1')
+            //                 {
 
-                                // Sync Staff attendance data from device
-                              //  $this->syncStaffAttendance();
+            //                     // Sync Staff attendance data from device
+            //                   //  $this->syncStaffAttendance();
 
-                                //If User has already updated password, so redirect to dashboard page
-                                return redirect(route('index'));
-                             }
-                             else
-                             {
-                                //If User has to update password, then redirect to reset password page
-                                return redirect(route('vmt-resetpassword-page'));
+            //                     //If User has already updated password, so redirect to dashboard page
+            //                     return redirect(route('index'));
+            //                  }
+            //                  else
+            //                  {
+            //                     //If User has to update password, then redirect to reset password page
+            //                     return redirect(route('vmt-resetpassword-page'));
 
-                             }
+            //                  }
 
-                        }
-                    }
-                    else
-                    {
-                        $errors = ['Invalid credentials provided'];
-                        return redirect()->back()->withErrors($errors);
-                    }
+            //             }
+            //         }
+            //         else
+            //         {
+            //             $errors = ['Invalid credentials provided'];
+            //             return redirect()->back()->withErrors($errors);
+            //         }
 
-                }
-                else
-                {
-                    //Invalid client-code selected
-                    $errors = ['Employee is not part of selected Client'];
-                    return redirect()->back()->withErrors($errors);
-                }
+            //     }
+            //     else
+            //     {
+            //         //Invalid client-code selected
+            //         $errors = ['Employee is not part of selected Client'];
+            //         return redirect()->back()->withErrors($errors);
+            //     }
 
-                // return redirect()->back();
-            }
-            else
-            {
+            //     // return redirect()->back();
+            // }
+          //  else
+           // {
                 //If no client_code selected, then perform login based on username and pwd
-                $credentials = $request->only('user_code', 'password');
+                //$credentials = $request->only('user_code', 'password');
                 if (Hash::check($request->password, $user->password)) {
 
                     if (auth::attempt(['user_code' => $request->user_code, 'password' => $request->password], $save_credentials))
@@ -166,7 +166,8 @@ class LoginController extends Controller
                            //$this->syncStaffAttendance();
 
                            //If User has already updated password, so redirect to dashboard page
-                           return redirect(route('index'));
+                         //  return redirect(route('main-dashboard'));
+                           return redirect(route('old-main-dashboard'));
                         }
                         else
                         {
@@ -182,7 +183,7 @@ class LoginController extends Controller
                     return redirect()->back()->withErrors($errors);
                 }
 
-            }
+           // }
         }
         else
         {
@@ -197,12 +198,14 @@ class LoginController extends Controller
 
     public function showResetPasswordPage(Request $request)
     {
-        $generalInfo = VmtGeneralInfo::first();
+        $Clientinfo = VmtClientMaster::first();
 
-        return view('auth.reset_password',compact('generalInfo'));
+        return view('auth.reset_password',compact('Clientinfo'));
     }
 
     public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){
+
+        //User can either send USER_CODE or EMAIL . So one of them might be null value.
         return $serviceVmtLoginService->sendPasswordResetLink($request->user_code, $request->email);
     }
 

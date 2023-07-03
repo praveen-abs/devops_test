@@ -14,7 +14,7 @@
 
 <div class=" approval_documents-wrapper card mt-30">
     <div class="card-body">
-        
+
 
 
                @vite('resources/js/hrms/modules/approvals/onboarding/review_document.js')

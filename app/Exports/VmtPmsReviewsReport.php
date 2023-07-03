@@ -24,29 +24,33 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 
 
 
-class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,WithColumnWidths,WithCustomStartCell,WithEvents
+class VmtPmsReviewsReport implements FromCollection, WithHeadings, WithStyles, WithColumnWidths, WithCustomStartCell, WithEvents
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
     protected $calender_type;
     protected $year;
     protected $assignment_period;
     protected $is_assignee_submitted;
-    protected $is_reviewer_accepted;
+    protected $is_reviewer_submitted;
     protected $manager_id;
     protected $manager_name;
     protected $getHttpHost;
+    protected $is_emp_accepted;
+    protected $is_reviewer_accepted;
 
-    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted, $is_reviewer_accepted ,$getHttpHost)
+    function __construct($calendar_type, $year, $assignment_period, $is_assignee_submitted, $is_reviewer_submitted, $is_reviewer_accepted, $is_emp_accepted, $getHttpHost)
     {
         $this->calendar_type = $calendar_type;
-        $this->year=$year;
+        $this->year = $year;
         $this->assignment_period = $assignment_period;
-        $this->is_assignee_submitted=$is_assignee_submitted;
-        $this->is_reviewer_accepted= $is_reviewer_accepted;
+        $this->is_assignee_submitted = $is_assignee_submitted;
+        $this->is_reviewer_submitted = $is_reviewer_submitted;
         $this->getHttpHost = $getHttpHost;
+        $this->is_reviewer_accepted = $is_reviewer_accepted;
+        $this->is_emp_accepted = $is_emp_accepted;
 
 
 
@@ -62,10 +66,11 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
 
 
-             //For column widths
-    public function columnWidths(): array{
-        return[
-            'A' => 14.29 ,
+    //For column widths
+    public function columnWidths(): array
+    {
+        return [
+            'A' => 14.29,
             'B' => 27.57,
             'C' => 13.00,
             'D' => 24.29,
@@ -77,15 +82,16 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
         ];
     }
 
-       //For first Row Col span
-    public function registerEvents(): array {
+    //For first Row Col span
+    public function registerEvents(): array
+    {
         return [
-            AfterSheet::class => function(AfterSheet $event) {
+            AfterSheet::class => function (AfterSheet $event) {
                 /** @var Sheet $sheet */
                 $sheet = $event->sheet;
 
                 $sheet->mergeCells('A1:I1');
-                $sheet->setCellValue('A1', "OKR / PMS - Review Report -".$this->getHttpHost);
+                $sheet->setCellValue('A1', "OKR / PMS - Review Report -" . $this->getHttpHost);
 
 
                 $styleArray = [
@@ -101,21 +107,19 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
                     'fill' => [
                         'fillType' => Fill::FILL_SOLID,
                         'startColor' => array('argb' => 'ffff31')
-                        ]
+                    ]
 
                 ];
                 $cellRange = 'A1:I1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
-
-
             },
         ];
     }
 
-                   // For Headings
-    public function headings():array
+    // For Headings
+    public function headings(): array
     {
-        return[
+        return [
             'Employee Code',
             'Employee Name',
             'Calendar Type',
@@ -127,12 +131,12 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
             'Manager Name',
 
             // 'HR Score Published Status'
-                 ];
-     }
+        ];
+    }
 
 
 
-      //For styles
+    //For styles
     public function styles(Worksheet $sheet)
     {
         return [
@@ -149,177 +153,170 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
     public function collection()
     {
-        $query_pms_data=VmtPMS_KPIFormReviewsModel::
-                        leftJoin('users','users.id', '=','vmt_pms_kpiform_reviews.assignee_id')
-                        ->leftJoin('vmt_pms_kpiform_assigned','vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
-                        ->where([
-                            //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
-                            ['vmt_pms_kpiform_assigned.year','=',$this->year],
-                            //['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
-                            //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
-                        ])
-                        ->select(
-                                  'users.user_code',
-                                  'users.name',
-                                  'vmt_pms_kpiform_assigned.calendar_type',
-                                  'vmt_pms_kpiform_assigned.year',
-                                  'vmt_pms_kpiform_assigned.frequency',
-                                  'vmt_pms_kpiform_assigned.assignment_period',
-                                  'vmt_pms_kpiform_reviews.is_assignee_submitted',
-                                   //'vmt_pms_kpiform_reviews.is_reviewer_accepted', //For Manager name
-                                   'vmt_pms_kpiform_reviews.is_reviewer_submitted',
+        $query_pms_data = VmtPMS_KPIFormReviewsModel::leftJoin('users', 'users.id', '=', 'vmt_pms_kpiform_reviews.assignee_id')
+            ->leftJoin('vmt_pms_kpiform_assigned', 'vmt_pms_kpiform_assigned.id', '=', 'vmt_pms_kpiform_reviews.vmt_pms_kpiform_assigned_id')
+            ->where([
+                //['vmt_pms_kpiform_assigned.calendar_type','=',$this->calendar_type],
+                ['vmt_pms_kpiform_assigned.year', '=', $this->year],
+                //['vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period],
+                //['vmt_pms_kpiform_reviews.is_assignee_submitted','=',$this->is_assignee_submitted]
+            ])
+            ->select(
+                'users.user_code',
+                'users.name',
+                'vmt_pms_kpiform_assigned.calendar_type',
+                'vmt_pms_kpiform_assigned.year',
+                'vmt_pms_kpiform_assigned.frequency',
+                'vmt_pms_kpiform_assigned.assignment_period',
+                'vmt_pms_kpiform_reviews.is_assignee_submitted',
+                //'vmt_pms_kpiform_reviews.is_reviewer_accepted', //For Manager name
+                'vmt_pms_kpiform_reviews.is_reviewer_submitted',
 
 
-                                 );
+            );
 
 
-                            if($this->assignment_period!="All"){
-                             $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_assigned.assignment_period','=',$this->assignment_period);
-                            }
+        if ($this->assignment_period != "All") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_assigned.assignment_period', '=', $this->assignment_period);
+        }
 
-                            if($this->is_assignee_submitted=="1"){
-                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',1);
-                            }else if($this->is_assignee_submitted=="" || $this->is_assignee_submitted==null ){
-                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_assignee_submitted','=',null);
-                            }
+        if ($this->is_assignee_submitted == "1") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_assignee_submitted', '=', 1);
+        } else if ($this->is_assignee_submitted == "" || $this->is_assignee_submitted == null) {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_assignee_submitted', '=', null);
+        }
 
-                            if( $this->is_reviewer_accepted=="1"){
-                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','like','%"1"}');
-                            }else if( $this->is_reviewer_accepted==""){
-                                $query_pms_data= $query_pms_data-> where('vmt_pms_kpiform_reviews.is_reviewer_submitted','not like','%"1"}');
-                            }
+        if ($this->is_reviewer_submitted == "1") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_submitted', 'like', '%"1"}');
+        } else if ($this->is_reviewer_submitted == "") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_submitted', 'not like', '%"1"}');
+        }
+        if ($this->is_emp_accepted == "1") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_assignee_accepted', '=', 1);
+        } else if ($this->is_emp_accepted == "") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_assignee_accepted', '=', null);
+        }
+        if ($this->is_reviewer_accepted == "1") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_accepted', 'like', '%"1"}');
+        } else if ($this->is_reviewer_accepted == "") {
+            $query_pms_data = $query_pms_data->where('vmt_pms_kpiform_reviews.is_reviewer_accepted', 'not like', '%"1"}');
+        }
 
-                            if (session('client_id') != '1') {
-                                $query_pms_data= $query_pms_data-> where('users.client_id', session('client_id'));
-                                //return ($payroll_data);
-                            }
+        if (session('client_id') != '1') {
+            $query_pms_data = $query_pms_data->where('users.client_id', session('client_id'));
+            //return ($payroll_data);
+        }
 
 
-                            $query_pms_data = $query_pms_data->get();
+        $query_pms_data = $query_pms_data->get();
 
-        foreach($query_pms_data as $singleData){
+        foreach ($query_pms_data as $singleData) {
 
 
-            if($singleData->is_reviewer_accepted!=""){
-
+            if ($singleData->is_reviewer_accepted != "") {
             }
-            if($singleData->calendar_type=="financial_year"){
-                $singleData->calendar_type="Financial Year";
-                $start_year=substr($singleData->year,8,4);
-                $end_year=substr($singleData->year,24,4);
-                if($singleData->frequency=='quarterly'){
-                    $singleData->frequency='Quarterly';
-                    if($singleData->assignment_period == "q1"){
-                        $singleData->assignment_period = "Q1 (Apr-".$start_year." - Jun-".$start_year .")";
+            if ($singleData->calendar_type == "financial_year") {
+                $singleData->calendar_type = "Financial Year";
+                $start_year = substr($singleData->year, 8, 4);
+                $end_year = substr($singleData->year, 24, 4);
+                if ($singleData->frequency == 'quarterly') {
+                    $singleData->frequency = 'Quarterly';
+                    if ($singleData->assignment_period == "q1") {
+                        $singleData->assignment_period = "Q1 (Apr-" . $start_year . " - Jun-" . $start_year . ")";
+                    } else if ($singleData->assignment_period == "q2") {
+                        $singleData->assignment_period = "Q2 (July-" . $start_year . " - Sept-" . $start_year . ")";
+                    } else if ($singleData->assignment_period == "q3") {
+                        $singleData->assignment_period = "Q3 (Oct-" . $start_year . " - Dec-" . $start_year . ")";
+                    } else if ($singleData->assignment_period == "q4") {
+                        $singleData->assignment_period = "Q4 (Jan-" . $end_year . " - March-" . $end_year . ")";
                     }
-                    else if($singleData->assignment_period == "q2")
-                    {
-                        $singleData->assignment_period = "Q2 (July-".$start_year." - Sept-".$start_year .")";
-                    }
-                    else if($singleData->assignment_period == "q3")
-                    {
-                        $singleData->assignment_period = "Q3 (Oct-".$start_year." - Dec-".$start_year .")";
-                    }else if($singleData->assignment_period == "q4")
-                    {
-                        $singleData->assignment_period = "Q4 (Jan-".$end_year." - March-".$end_year .")";
-                    }
-                }else if($singleData->frequency=='monthly'){
-                    $singleData->frequency='Monthly';
-                    $month=$singleData->assignment_period;
-                    switch($month){
+                } else if ($singleData->frequency == 'monthly') {
+                    $singleData->frequency = 'Monthly';
+                    $month = $singleData->assignment_period;
+                    switch ($month) {
                         case "apr":
-                            $singleData->assignment_period = "April - ".$start_year;
+                            $singleData->assignment_period = "April - " . $start_year;
                             break;
                         case "may":
-                            $singleData->assignment_period = "May - ".$start_year;
+                            $singleData->assignment_period = "May - " . $start_year;
                             break;
                         case "june":
-                             $singleData->assignment_period = "June - ".$start_year;
+                            $singleData->assignment_period = "June - " . $start_year;
                             break;
                         case "july":
-                            $singleData->assignment_period = "July - ".$start_year;
+                            $singleData->assignment_period = "July - " . $start_year;
                             break;
                         case "aug":
-                            $singleData->assignment_period = "August - ".$start_year;
+                            $singleData->assignment_period = "August - " . $start_year;
                             break;
                         case "sept":
-                            $singleData->assignment_period = "September - ".$start_year;
+                            $singleData->assignment_period = "September - " . $start_year;
                             break;
                         case "oct":
-                            $singleData->assignment_period = "October - ".$start_year;
+                            $singleData->assignment_period = "October - " . $start_year;
                             break;
                         case "nov":
-                             $singleData->assignment_period = "November - ".$start_year;
+                            $singleData->assignment_period = "November - " . $start_year;
                             break;
                         case "dec":
-                            $singleData->assignment_period = "December - ".$start_year;
+                            $singleData->assignment_period = "December - " . $start_year;
                             break;
                         case "jan":
-                            $singleData->assignment_period = "January - ".$end_year;
+                            $singleData->assignment_period = "January - " . $end_year;
                             break;
                         case "feb":
-                            $singleData->assignment_period = "February - ".$end_year;
+                            $singleData->assignment_period = "February - " . $end_year;
                             break;
                         case "mar":
-                            $singleData->assignment_period = "March - ".$end_year;
+                            $singleData->assignment_period = "March - " . $end_year;
                             break;
-
-
-
-
                     }
-                }else if($singleData->frequency=='halfYearly'){
-                    $singleData->frequency='Half Yearly';
-                    if($singleData->assignment_period=='h1'){
-                            $singleData->assignment_period="Apr - ".$start_year."Sept - ".$start_year;
-                    }else if($singleData->assignment_period=='h2'){
-                            $singleData->assignment_period="Oct - ".$start_year."Mar - ".$end_year;
+                } else if ($singleData->frequency == 'halfYearly') {
+                    $singleData->frequency = 'Half Yearly';
+                    if ($singleData->assignment_period == 'h1') {
+                        $singleData->assignment_period = "Apr - " . $start_year . "Sept - " . $start_year;
+                    } else if ($singleData->assignment_period == 'h2') {
+                        $singleData->assignment_period = "Oct - " . $start_year . "Mar - " . $end_year;
                     }
-                }else if($singleData->frequency=='annually'){
-                    $singleData->frequency='Annually';
-                    $singleData->assignment_period=$singleData->year;
-
+                } else if ($singleData->frequency == 'annually') {
+                    $singleData->frequency = 'Annually';
+                    $singleData->assignment_period = $singleData->year;
                 }
-
-            }else if($singleData->calendar_type=="calendar_year"){
-                $singleData->calendar_type="Calendar Year";
+            } else if ($singleData->calendar_type == "calendar_year") {
+                $singleData->calendar_type = "Calendar Year";
             }
 
 
 
 
 
-            if($singleData->is_assignee_submitted == "1"){
+            if ($singleData->is_assignee_submitted == "1") {
                 $singleData->is_assignee_submitted = "Submitted";
-            }
-            else
-            {
+            } else {
                 $singleData->is_assignee_submitted = "Not Yet Submitted";
             }
 
-               //For Manager Name and review Status
-            $reviewerStatus=(json_decode($singleData->is_reviewer_submitted, true));
+            //For Manager Name and review Status
+            $reviewerStatus = (json_decode($singleData->is_reviewer_submitted, true));
             $array_key = array_keys($reviewerStatus);
 
-              //For Manager Review
-            if($reviewerStatus[$array_key[0]]==1){
+            //For Manager Review
+            if ($reviewerStatus[$array_key[0]] == 1) {
                 $singleData->is_reviewer_submitted = "Reviewed";
-            }else{
+            } else {
                 $singleData->is_reviewer_submitted = "Not Yet Reviewed";
             }
 
             //For Manager Name
 
-                  $manager_id=$array_key[0];
-                //   $singleData->is_reviewer_accepted=$array_key[0];
-                //$manager_name=User::where('user_code','=',$manager_id)->get();
-                $singleData->manager_name= User::find($manager_id)->name;
-
-
+            $manager_id = $array_key[0];
+            //   $singleData->is_reviewer_accepted=$array_key[0];
+            //$manager_name=User::where('user_code','=',$manager_id)->get();
+            $singleData->manager_name = User::find($manager_id)->name;
         }
 
-        $space=array(" "," ");
-        $date=array(date("Y/m/d"),"This report is generated by ABShrms and OKR Software");
+        $space = array(" ", " ");
+        $date = array(date("Y/m/d"), "This report is generated by ABShrms and OKR Software");
 
         $query_pms_data->push($space);
         $query_pms_data->push($date);
@@ -327,7 +324,7 @@ class VmtPmsReviewsReport implements FromCollection,WithHeadings,WithStyles,With
 
         //dd($query_pms_data->toArray());
 
-          //dd($this->is_assignee_submitted);
+        //dd($this->is_assignee_submitted);
 
         return $query_pms_data;
 

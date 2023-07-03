@@ -22,7 +22,7 @@ use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
-use App\Models\VmtGeneralInfo;
+
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
@@ -197,7 +197,20 @@ class VmtEmployeeOnboardingController extends Controller
 
     public function showNormalOnboardingPage(Request $request)
     {
-        return view('onboarding.vmt_normal_onboarding_v2');
+
+        if(empty($request->all())){
+            return view('onboarding.vmt_normal_onboarding_v2');
+        }else{
+        $user_id = Crypt::decrypt($request->uid);
+        $can_onboard_employee =User::where('id',$user_id)->first()->is_onboarded;
+
+        if($can_onboard_employee == '0'){
+            return view('onboarding.vmt_normal_onboarding_v2');
+        }else{
+            return redirect()->route('index');
+        }
+    }
+
     }
 
     /*
@@ -789,6 +802,13 @@ class VmtEmployeeOnboardingController extends Controller
         // $excelRowdata = $data[0][0];
         $excelRowdata_row = $data;
         $currentRowInExcel = 0;
+        if(empty($excelRowdata_row )){
+            return $rowdata_response = [
+                'status' => 'failure',
+                'message' => 'Please fill the excel',
+            ];
+
+        }else{
         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
           //  dd($excelRowdata);
             $currentRowInExcel++;
@@ -903,6 +923,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                 $isAllRecordsValid = false;
             }
+        }
         } //for loop
 
         //Runs only if all excel records are valid
@@ -953,8 +974,8 @@ class VmtEmployeeOnboardingController extends Controller
 
 
                    //  $message = "Employee OnBoard was Created   ";
-                //      $VmtGeneralInfo = VmtGeneralInfo::first();
-                //      $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                //      $VmtClientMaster = VmtClientMaster::first();
+                //      $image_view = url('/') . $VmtClientMaster->client_logo;
                 //    $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
@@ -1168,8 +1189,8 @@ class VmtEmployeeOnboardingController extends Controller
            $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
 
-           $VmtGeneralInfo = VmtGeneralInfo::first();
-           $image_view = url('/') . $VmtGeneralInfo->logo_img;
+           $VmtClientMaster = VmtClientMaster::first();
+           $image_view = url('/') . $VmtClientMaster->client_logo;
            $appoinmentPath = "";
 
            if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -1216,7 +1237,9 @@ class VmtEmployeeOnboardingController extends Controller
            $request->validate([
                'file' => 'required|file|mimes:xls,xlsx'
            ]);
+
            $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
+
            return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
        }
 
@@ -1230,7 +1253,7 @@ class VmtEmployeeOnboardingController extends Controller
            //For validation
            $isAllRecordsValid = true;
 
-           $VmtGeneralInfo = VmtGeneralInfo::first();
+           $VmtClientMaster = VmtClientMaster::first();
 
            $rules = [];
            $responseJSON = [
@@ -1240,7 +1263,15 @@ class VmtEmployeeOnboardingController extends Controller
            ];
 
            $excelRowdata_row = $data;
+
            $currentRowInExcel = 0;
+            if(empty($excelRowdata_row )){
+                return $rowdata_response = [
+                    'status' => 'failure',
+                    'message' => 'Please fill the excel',
+                ];
+
+            }else{
 
            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
 
@@ -1266,7 +1297,7 @@ class VmtEmployeeOnboardingController extends Controller
                    'doj' => 'required|date',
                    'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',
                    'designation' => 'required',
-                   'basic' => 'required|numeric',
+                   'basic' => 'required|numeric|min:0|not_in:0',
                    'hra' => 'required|numeric',
                    'statutory_bonus' => 'required|numeric',
                    'child_education_allowance' => 'required|numeric',
@@ -1287,6 +1318,7 @@ class VmtEmployeeOnboardingController extends Controller
                $messages = [
                    'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
+                   'not_in' => 'Field <b>:attribute</b> should be greater than zero: :values .',
                    'required' => 'Field <b>:attribute</b> is required',
                    'regex' => 'Field <b>:attribute</b> is invalid',
                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
@@ -1313,7 +1345,11 @@ class VmtEmployeeOnboardingController extends Controller
 
                    $isAllRecordsValid = false;
                }
-           }//for each
+          }
+
+        }
+
+          //for each
            //Runs only if all excel records are valid
            if ($isAllRecordsValid) {
                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
@@ -1373,8 +1409,8 @@ class VmtEmployeeOnboardingController extends Controller
                     $message =  $row['employee_code']  . ' has failed';
 
                //Sending mail
-               $VmtGeneralInfo = VmtGeneralInfo::first();
-               $image_view = url('/') . $VmtGeneralInfo->logo_img;
+               $VmtClientMaster = VmtClientMaster::first();
+               $image_view = url('/') . $VmtClientMaster->client_logo;
 
                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 

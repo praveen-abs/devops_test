@@ -48,6 +48,12 @@ return [
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'private',
         ],
+        'private1' => [
+            'driver' => 'local',
+            'root' => storage_path('core'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'private',
+        ],
 
         's3' => [
             'driver' => 's3',
@@ -76,5 +82,8 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
     ],
+
+    'authentication_key' =>[ env('FIREBASE_SERVER_KEY')
+],
 
 ];

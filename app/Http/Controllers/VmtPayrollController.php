@@ -13,6 +13,7 @@ use App\Models\User;
 use Dompdf\Options;
 use Dompdf\Dompdf;
 use PDF;
+use App\Services\VmtPayrollService;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtGeneralInfo;
@@ -29,14 +30,11 @@ class VmtPayrollController extends Controller
     }
 
 
-    //
-    public function uploadPayRunData(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
-
-        return $employeePaySlipService->importBulkEmployeesPayslipExcelData($request->all());
-
-        //$importDataArry = \Excel::import(new VmtPaySlip, request()->file('file'));
-        //dd($importDataArry);
+    public function getCurrentPayrollMonth(Request $request , VmtPayrollService $serviceVmtPayrollService ){
+            dd($request->all());
+        return $serviceVmtPayrollService->getCurrentPayrollMonth;
     }
+
 
     public function showPayrollClaimsPage(Request $request){
         return view('payRoll_claim');

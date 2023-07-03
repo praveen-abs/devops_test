@@ -1,6 +1,7 @@
 <template>
-    <div style="position: relative; top:-15px ">
-        <h1 class="mb-4 fs-3 d-flex  align-items-center fw-bolder"  style="color: #003056; " ><i class='fas fa-cog fs-3 mr-3 '></i> Salary Advance & Loan Settings</h1>
+    <div style="position: relative;">
+        <h1 class="mb-4 fs-3 d-flex align-items-center fw-bolder" style="color: #003056; "><i
+                class='mr-3 fas fa-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
 
         <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -31,16 +32,10 @@
                     </a>
                 </li>
             </ul>
-
         </div>
-
-
         <!-- Tab Content -->
-
-
         <div class="tab-content " id="">
-            <div class="mr-4 ">
-
+            <div>
                 <div class="card-body">
                     <div v-if="activetab === 1">
                         <SalaryAdvance />
@@ -55,13 +50,20 @@
                         <LoanWithInterest />
                     </div>
                 </div>
-
-
             </div>
-
-
         </div>
     </div>
+    <Dialog header="Header" v-model:visible="useSalaryStore.canShowLoading"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 
 
@@ -73,12 +75,20 @@ import SalaryAdvance from './salary_advance/salary_advance.vue';
 import LoanWithInterest from './loan_with_interest/loan_with_interest.vue';
 import InterestFreeLoan from './interest_free_loan/interest_free_loan.vue';
 import TravelAdvance from './travel_advance/travel_advance.vue';
-
-
-
+import { salaryAdvanceSettingMainStore } from './stores/salaryAdvanceSettingMainStore';
 
 const activetab = ref(1);
 
+const useSalaryStore = salaryAdvanceSettingMainStore()
 
+onMounted(() => {
+    useSalaryStore.getDropdownFilterDetails()
+})
 
 </script>
+
+<style>
+.page-content {
+    padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+}
+</style>

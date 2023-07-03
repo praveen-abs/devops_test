@@ -11,6 +11,7 @@
       </template>
     </Dialog>
 
+
     <div>
       <DataTable :value="manageEmployeesStore.array_active_employees" :paginator="true" :rows="10" dataKey="id"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -46,10 +47,11 @@
         </Column>
         <Column field="enc_user_id" header="View Profile">
           <template #body="slotProps">
-            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data.enc_user_id)" class="btn btn-orange " style="height: 2em" raised />
+            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
           </template>
         </Column>
       </DataTable>
+
     </div>
   </div>
 </template>
@@ -58,12 +60,15 @@ import dayjs from 'dayjs';
 
 import { ref, onMounted } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
-
+import { profilePagesStore } from '../../../profile_pages/stores/ProfilePagesStore';
 import { useManageEmployeesStore } from '../manage_service'
 
 const manageEmployeesStore = useManageEmployeesStore()
+const profilePageStore = profilePagesStore()
 
 let canShowLoadingScreen = ref(true);
+
+ const enc_user_id = ref();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -90,8 +95,11 @@ onMounted(async () => {
 
 });
 
-function openProfilePage(uid){
-    window.location.href = "/pages-profile-new?uid="+uid;
+async function openProfilePage(uid){
+    console.log(uid);
+    enc_user_id.value = uid.data;
+    profilePageStore.user_code = uid.enc_user_id
+    window.location.href = "/pages-profile-new?uid="+uid.enc_user_id;
 }
 
 </script>

@@ -24,10 +24,14 @@
     </Dialog>
 
     <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
-      <div class="confirmation-content">
-        <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '450px' }" :modal="true">
+      <div class="confirmation-content d-flex justify-content-start align-items-center mt-3 ml-3">
+        <i class="mr-3 pi pi-exclamation-triangle text-red-600" style="font-size: 2rem" />
         <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
+      </div>
+      <div class="w-full d-flex justify-content-start align-items-center mt-4 pl-3" style="margin-bottom: -12px;" >
+        <Textarea v-if=" currentlySelectedStatus =='Reject' "  name="" id="" v-model="reviewer_comments" class="border p-2 rounded" cols="45" rows="4" autoResize placeholder="Add Comment" />
+        {{ reviewer_comments }}
       </div>
       <template #footer>
         <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
@@ -38,6 +42,7 @@
       :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
       <div class="confirmation-content">
         <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+
         <span>Error while processing the request : {{  responseErrorMessage }}</span>
       </div>
       <template #footer>
@@ -140,7 +145,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import dateFormat, { masks } from "dateformat";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
@@ -154,7 +159,7 @@ let responseErrorMessage = ref();
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
-
+const reviewer_comments = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   employee_name: {
@@ -178,12 +183,16 @@ const toggle = (event) => {
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
+const form_data = reactive({
+    review_comment:''
+});
+
 onMounted(() => {
   ajax_GetLeaveData();
 });
 
 function ajax_GetLeaveData() {
-  let url = window.location.origin + "/fetch-leaverequests";
+  let url = window.location.origin + "/fetch-leaverequests-based-on-currentrole";
 
   //console.log("AJAX URL : " + url);
 
@@ -202,7 +211,7 @@ function processDate(date){
 }
 
 function showConfirmDialog(selectedRowData, status) {
-  canShowErrorResponseScreen.value =false;
+  canShowErrorResponseScreen.value = false;
   canShowConfirmation.value = true;
   currentlySelectedStatus = status;
   currentlySelectedRowData = selectedRowData;
@@ -253,6 +262,7 @@ const css_statusColumn = (data) => {
 };
 
 function processApproveReject() {
+    console.log(form_data.review_comment);
   hideConfirmDialog(false);
 
   canShowLoadingScreen.value = true;
@@ -268,7 +278,7 @@ function processApproveReject() {
           : currentlySelectedStatus == "Reject"
             ? "Rejected"
             : currentlySelectedStatus,
-            review_comment: "",
+            review_comment: form_data.review_comment,
     })
     .then((response) => {
       console.log(response);

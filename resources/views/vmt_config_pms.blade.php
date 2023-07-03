@@ -410,7 +410,7 @@
                                     <th scope="col">Score Range</th>
                                     <th scope="col">Performance Rating</th>
                                     <th scope="col">Ranking</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Recommendation</th>
                                     {{-- <th scope="col">Sort Order</th> --}}
 
 
@@ -602,7 +602,7 @@
                     {
                         year = year - 1;
                         nextyear = year + 1;
-                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 " +year +"(Apr-Jun)</option><option value='q2'>Q2 " + year +"(July-Sept)</option><option value='q3'>Q3 " + year +"(Oct-Dec)</option><option value='q4'>Q4 " + nextyear + "(Jan-Mar)</option>";
+                        data ="<option value='' selected disabled>Select Assignment Period</option><option value='q1'>Q1 (Apr-Jun)</option><option value='q2'>Q2 (July-Sept)</option><option value='q3'>Q3 (Oct-Dec)</option><option value='q4'>Q4 (Jan-Mar)</option>";
                     }
                     else
                     {
@@ -613,7 +613,7 @@
                     {
                         year = year - 1;
                         nextyear = year + 1;
-                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1(Apr " + year + " - Sept " + year + ")</option><option value='h2'>H2(Oct " + year + "- Mar " + nextyear + ")</option>";
+                        data = "<option value='' selected disabled>Select Assignment Period</option><option value='h1'>H1</option><option value='h2'>H2</option>";
                     }
                     else
                     {

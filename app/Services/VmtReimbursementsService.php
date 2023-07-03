@@ -37,8 +37,26 @@ class VmtReimbursementsService {
         }
     }
 
+    public function getModeOfTransports(){
+        $query_mode_of_transports = VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+        $response = array();
 
-    public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
+        foreach($query_mode_of_transports as $singleRecord)
+        {
+            array_push($response, [
+                "label" => $singleRecord->vehicle_type,
+                "value" => $singleRecord->vehicle_type,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message'=> 'Fetched Mode of transport types',
+            'data'=> $response
+        ]);
+    }
+
+    public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $entry_mode, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
     {
 
         $validator = Validator::make(
@@ -51,6 +69,7 @@ class VmtReimbursementsService {
                 'to' => $to,
                 'distance_travelled' => $distance_travelled,
                 'user_comments' => $user_comments,
+                'entry_mode' => $entry_mode,
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
@@ -61,6 +80,7 @@ class VmtReimbursementsService {
                 "to" => "required",
                 "distance_travelled" => "required",
                 "user_comments" => "nullable",
+                "entry_mode" => "nullable", //make this mandatory once the flutter side also updated
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -75,36 +95,72 @@ class VmtReimbursementsService {
             ]);
         }
 
-        $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();
+        try{
 
-        //Save the reimbursement data
-        $emp_reimbursement_data = new VmtEmployeeReimbursements;
-        $emp_reimbursement_data->date = $date;
-        $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
-        $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
-        $emp_reimbursement_data->status = "Pending";
 
-        //reimbursement details
-        $emp_reimbursement_data->from = $from;
-        $emp_reimbursement_data->to = $to;
-        $emp_reimbursement_data->vehicle_type_id = $query_reimbursements_vehicle_types->id;
-        $emp_reimbursement_data->distance_travelled = $distance_travelled;
-        $emp_reimbursement_data->user_comments = $user_comments ?? "";
+            //check if reimbursements already applied for the given date by the user..
+            $query_reimbursements_exists = VmtEmployeeReimbursements::where('user_id', User::where('user_code', $user_code)->first()->id)
+                                            ->where('date', $date);
 
-        $emp_reimbursement_data->total_expenses  = $distance_travelled *  $query_reimbursements_vehicle_types->cost_per_km;
 
-        $emp_reimbursement_data->save();
+            if($query_reimbursements_exists->exists())
+            {
+                return response()->json([
+                    "status" => "failure",
+                    "message" => "Reimbursement data already applied for the given date",
+                    "data"=> ""
+                ]);
+            }
 
-        return response()->json([
-            'status' => 'success',
-            'message'=> 'Reimbursement details saved',
-            'data'=> ''
-        ]);
 
+
+            $query_reimbursements_vehicle_types = VmtReimbursementVehicleType::where('vehicle_type', $vehicle_type)->first();
+
+            //Save the reimbursement data
+            $emp_reimbursement_data = new VmtEmployeeReimbursements;
+            $emp_reimbursement_data->date = $date;
+            $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
+            $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
+            $emp_reimbursement_data->status = "Pending";
+            $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
+
+            //reimbursement details
+            $emp_reimbursement_data->from = $from;
+            $emp_reimbursement_data->to = $to;
+            $emp_reimbursement_data->vehicle_type_id = $query_reimbursements_vehicle_types->id;
+            $emp_reimbursement_data->distance_travelled = $distance_travelled;
+            $emp_reimbursement_data->user_comments = $user_comments ?? "";
+
+            $emp_reimbursement_data->total_expenses  = $distance_travelled *  $query_reimbursements_vehicle_types->cost_per_km;
+
+            $emp_reimbursement_data->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Reimbursement details saved',
+                'data'=> ''
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'failure',
+                'message'=> 'Failed to save reimbursement data !',
+                'data'=> $e->getMessage()
+            ]);
+        }
     }
 
     public function getReimbursementVehicleTypes(){
-        return VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+        $query_reimbursement_vehicle_types =  VmtReimbursementVehicleType::all(['id','vehicle_type','cost_per_km']);
+
+        //convert 'cost_per_km' to non-string value
+       // dd($query_reimbursement_vehicle_types);
+        foreach($query_reimbursement_vehicle_types as $singleReimbursementVehicleType)
+        {
+            $singleReimbursementVehicleType['cost_per_km'] = intval($singleReimbursementVehicleType['cost_per_km']);
+        }
+
+        return $query_reimbursement_vehicle_types;
     }
 
     public function getReimbursementTypes(){
@@ -151,7 +207,7 @@ class VmtReimbursementsService {
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
                                 ->where('vmt_employee_reimbursements.reimbursement_type_id',$reimbursement_type_id)
                                 ->select('vmt_employee_reimbursements.id','vmt_employee_reimbursements.reimbursement_type_id','vmt_employee_reimbursements.date',
-                                'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to', 'vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
+                                'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to','user_comments','vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
 
             if($status!=null){
                 $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);
@@ -179,7 +235,6 @@ class VmtReimbursementsService {
 
         }
 
-        //dd($json_response);
 
         return $json_response;
 
@@ -211,5 +266,64 @@ class VmtReimbursementsService {
                                                                        'distance_travelled','total_expenses','user_comments']);
 
             return $employee_reimbursement_data_query;
+    }
+
+    public function isReimbursementAppliedOrNot($user_code,$date){
+        $validator = Validator::make(
+            $data = [
+                'user_code' => $user_code,
+                'date' => $date,
+            ],
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "date" => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        try{
+               $query_user =User::where('user_code',$user_code)->first();
+
+                $employee_reimbursement_applied_data_query = VmtEmployeeReimbursements::where('user_id',$query_user->id)
+                                                                      ->where('date',$date)->exists();
+
+                if($employee_reimbursement_applied_data_query){
+                    $response = 1;
+                    $message = "Reimbursement already applied for the given date";
+                }else{
+                    $response = 0;
+                    $message = "Reimbursement not applied for the given date";
+
+                }
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $message,
+                    'data' =>$response
+                ]);
+
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while getting isReimbursementAppliedOrNot data ",
+                'data' => $e->getmessage()
+            ]);
+        }
+
+
     }
 }

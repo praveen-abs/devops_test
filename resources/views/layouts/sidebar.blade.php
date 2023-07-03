@@ -29,7 +29,7 @@
 
                 <!-- end Dashboard Menu -->
                 <li class="mb-1 nav-item">
-                    <a class="pt-0 nav-link sidebar menu-link" href="{{ route('index') }}">
+                    <a class="pt-0 nav-link sidebar menu-link" href="{{ route('old-main-dashboard') }}">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363"
                                 class="bi bi-grid-fill" viewBox="0 0 16 16">
                                 <path
@@ -38,13 +38,6 @@
                         </i>
                         <span data-key="t-landing">Dashboard</span>
                     </a>
-                    <!-- <a class="pt-0 nav-link sidebar menu-link" href="{{ route('index') }}">
-                        <i> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#686363" class="bi bi-grid-fill" viewBox="0 0 16 16">
-                                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z" />
-                            </svg>
-                        </i>
-                        <span data-key="t-landing">Dashboard</span>
-                    </a> -->
                 </li>
 
 
@@ -199,16 +192,16 @@
                             <ul class="nav nav-sm flex-column">
 
                                 <li class="nav-item ">
-                                    <a href="{{ route('manageEmployees') }}" id="tds"
+                                    <a href="{{ route('manageEmployees') }}"
                                         class="py-1 nav-link sidebar"><span>Manage Employees</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('showOrgTree') }}" id="tds"
+                                    <a href="{{ route('showOrgTree') }}"
                                         class="py-1 nav-link sidebar"><span>ORG
                                             structure</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('department') }}" id="tds"
+                                    <a href="{{ route('department') }}"
                                         class="py-1 nav-link sidebar"><span>Department</span></a>
                                 </li>
                                 <li class="nav-item ">
@@ -227,25 +220,31 @@
                                             Upload</span> </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('page-not-found') }}" id="tds"
+                                    <a href="{{ route('page-not-found') }}"
                                         class="py-1 nav-link sidebar"><span>Exit</span></a>
                                 </li>
                                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
                                     <li class="nav-item ">
-                                        <a href="{{ route('vmt-documents-route') }}" id="tds"
+                                        <a href="{{ route('vmt-documents-route') }}"
                                             class="py-1 nav-link sidebar"><span>Documents</span></a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a href="{{ route('assetinventory-index') }}" id="tds"
+                                        <a href="{{ route('assetinventory-index') }}"
                                             class="py-1 nav-link sidebar"><span>Assets</span></a>
                                     </li>
                                 @endif
                                 @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
                                     <li class="nav-item ">
-                                        <a href="{{ route('manage_welcome_mails_status') }}" id="tds"
+                                        <a href="{{ route('manage_welcome_mails_status') }}"
                                             class="py-1 nav-link sidebar"><span>Manage WelcomeMail Status</span></a>
                                     </li>
                                 @endcan
+                                @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
+                                <li class="nav-item ">
+                                    <a href="{{ route('showRolesPermissionsPage') }}"
+                                        class="py-1 nav-link sidebar"><span>Roles & Permissions</span></a>
+                                </li>
+                            @endcan
                             </ul>
                         </div>
                     </li>
@@ -371,6 +370,20 @@
                                             </span>
                                         </a>
                                     </li>
+                                    {{-- ('Employee-Details-approvals') --}}
+                                    <li class="nav-item">
+                                        <a href="{{ route('page-not-found') }}" id=""
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Taxations<span
+                                                    class="text-white badge bg-danger rounded-circle">4</span>
+                                            </span> --}}
+                                            <span>
+                                                Employee Details
+                                            </span>
+                                        </a>
+                                    </li>
                                     {{-- @endif --}}
                                 @endif
                             </ul>
@@ -429,8 +442,8 @@
 
                                 @if (Str::contains(currentLoggedInUserRole(), ['Super Admin', 'Admin', 'HR']))
                                     <li class="nav-item">
-                                        <a href="{{ route('showPMSFormsMgmtPage_HRView') }}" class="nav-link">
-                                            <span>PMS Forms Management : HR</span>
+                                        <a href="{{ route('showPMSFormsMgmtPage') }}" class="nav-link">
+                                            <span>PMS Forms Management</span>
                                         </a>
                                     </li>
                                 @endif
@@ -557,6 +570,12 @@
                                             Reports</span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('showPayrollSetup') }}" class="py-1 nav-link sidebar"
+                                        role="button"><span>
+                                            Setup</span>
+                                    </a>
+                                </li>
 
 
                             </ul>
@@ -605,7 +624,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('vmt_investments_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Investments</span></a>
-                            </li> 
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('vmt_form16_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>

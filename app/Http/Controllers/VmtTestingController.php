@@ -36,12 +36,13 @@ use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
 use Carbon\Carbon;
-
+use App\Models\VmtEmployeePaySlipV2;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\VmtGeneralInfo;
+
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
 use App\Jobs\sendemailjobs;
@@ -250,8 +251,8 @@ class VmtTestingController extends Controller
 
         $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         $response = array();
         try {
@@ -307,10 +308,15 @@ class VmtTestingController extends Controller
             $user = User::find($user_id);
         }
 
-        $data['employee_payslip'] = VmtEmployeePaySlip::where('user_id', $user_id)
-            ->whereMonth('payroll_month', $month)
-            ->whereYear('payroll_month', $year)->first();
-        // dd($data['employee_payslip']);
+        $payroll_month= VmtPayroll::whereMonth('payroll_date', $month)
+                    ->whereYear('payroll_date', $year)->where('client_id',$query_user->client_id)->first();
+            //dd(payroll_month);
+
+            $emp_payslip_id =VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_month->id)->first()->id;
+
+            $data['employee_payslip'] = VmtEmployeePaySlipV2::where('emp_payroll_id',$emp_payslip_id)->first();
+
+            $data['emp_payroll_month'] = $payroll_month;
 
         $data['employee_name'] = $user->name;
         // dd( $data['employee_name']);
@@ -437,21 +443,24 @@ class VmtTestingController extends Controller
         //Get the form template
         $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
             ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
-            ->where('vmt_inv_formsection.form_id', $assigned_form_id)
+             ->leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+            ->leftjoin('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+         //  ->where('vmt_inv_formsection.form_id', $assigned_form_id)
 
             ->get(
-                [
-                    'vmt_inv_formsection.section_id',
-                    'vmt_inv_section.section',
-                    'vmt_inv_section.particular',
-                    'vmt_inv_section.reference',
-                    'vmt_inv_section.max_amount',
-                    'vmt_inv_section_group.section_group',
-                    'vmt_inv_formsection.id as fs_id',
+                // [
+                //     'vmt_inv_formsection.section_id',
+                //     'vmt_inv_section.section',
+                //     'vmt_inv_section.particular',
+                //     'vmt_inv_section.reference',
+                //     'vmt_inv_section.max_amount',
+                //     'vmt_inv_section_group.section_group',
+                //     'vmt_inv_formsection.id as fs_id',
 
-                ]
+                // ]
             )->toArray();
 
+            dd($query_inv_form_template);
     // employee declaration amount
         $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
             ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
@@ -533,60 +542,15 @@ class VmtTestingController extends Controller
 
     public function testEmployeeDocumentsJoin(Request $request)
     {
+        // $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
-
-        $simma = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
-            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get();
-
-        dd($simma->toArray());
-        //      $sum=0;
-        //    foreach( $simma as $simmas){
-        //         $sum +=  $simmas['dec_amount'];
-        //    }
-        //       dd($sum);
-
-
-
-
-
-        //  dd($simma);
-        // dd($request->all());
-        //    $simma = json_encode($request->all());
-
-        //    $form_id = "1";
-        //    $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
-
-        // $form_data = $request->formDataSource;
-
-        //    $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
-
-
-        //    if ($query_femp->exists()) {
-        //        $query_assign = $query_femp->first();
-
-        //    } else {
-
-        //        $emp_assign_form = new VmtInvFEmpAssigned;
-        //        $emp_assign_form->user_id = $user_id;
-        //        $emp_assign_form->form_id = $form_id;
-        //        $emp_assign_form->save();
-        //        $query_assign = $emp_assign_form;
-        //    }
-
-        //         $Hra_save = new VmtInvEmpFormdata;
-        //         $Hra_save->f_emp_id = $query_assign->id;
-        //         $Hra_save->fs_id = '1';
-        //         $Hra_save->dec_amount ='none';
-        //         $Hra_save->json_popups_value = $simma;
-        //         $Hra_save->save();
-
-
-
-
-        // return 'saved';
-
+        $v_form_template =VmtInvFormSection::join('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+        ->join('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+         ->join('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.fs_id', '=', 'vmt_inv_formsection.id')
+        ->join('vmt_inv_f_emp_assigned','vmt_inv_f_emp_assigned.id','=','vmt_inv_emp_formdata.f_emp_id')
+        ->join('users','users.id','=','vmt_inv_f_emp_assigned.user_id')->orderBy('name', 'asc')
+        ->get();
+            return  $v_form_template;
 
     }
 
@@ -599,6 +563,10 @@ class VmtTestingController extends Controller
         dispatch($jobs);
 
         return "mail send successfully";
+    }
+
+    public function test_getTeamEmployeesLeaveDetails(Request $request,  VmtAttendanceService $serviceVmtAttendanceService){
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails("MC0005",5, 2023, ["Approved","Rejected","Pending"] );
     }
 
 }

@@ -14,19 +14,22 @@ class DepartmentTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::table('vmt_department')->truncate();
+
         DB::table('vmt_department')->insert([
-            ['name'=> 'IT', 'created_at' => now()],
-            ['name'=> 'Sales', 'created_at' => now()],
-            ['name'=> 'HR', 'created_at' => now()],
-            ['name'=> 'Support', 'created_at' => now()],
-            ['name'=> 'Leadership', 'created_at' => now()],
-            ['name'=> 'Production', 'created_at' => now()],
-            ['name'=> 'Client Service', 'created_at' => now()],
-            ['name'=> 'Business Development', 'created_at' => now()],
-            ['name'=> 'Management', 'created_at' => now()],
-            ['name'=> 'Finance', 'created_at' => now()],
-            ['name'=> 'Admin', 'created_at' => now()],
-            ['name'=> 'Creative', 'created_at' => now()],
+            ['id'=>'1','name'=> 'IT', 'created_at' => now()],
+            ['id'=>'2','name'=> 'Sales', 'created_at' => now()],
+            ['id'=>'3','name'=> 'HR', 'created_at' => now()],
+            ['id'=>'4','name'=> 'Support', 'created_at' => now()],
+            ['id'=>'5','name'=> 'Leadership', 'created_at' => now()],
+            ['id'=>'6','name'=> 'Production', 'created_at' => now()],
+            ['id'=>'7','name'=> 'Client Service', 'created_at' => now()],
+            ['id'=>'8','name'=> 'Business Development', 'created_at' => now()],
+            ['id'=>'9','name'=> 'Management', 'created_at' => now()],
+            ['id'=>'10','name'=> 'Finance', 'created_at' => now()],
+            ['id'=>'11','name'=> 'Admin', 'created_at' => now()],
+            ['id'=>'12','name'=> 'Creative', 'created_at' => now()],
         ]);
     }
 }

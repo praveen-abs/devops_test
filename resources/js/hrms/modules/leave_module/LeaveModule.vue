@@ -9,13 +9,18 @@
                             role="tab">
                             Leave Balance</a>
                     </li>
-                    <li class="nav-item text-muted " role="presentation">
+                    <!--
+                        Current User Role == 2 ,HR
+                        Current User Role == 4 ,Manager
+                        Current User Role == 5 ,Employee
+                     -->
+                    <li class="nav-item text-muted " role="presentation" v-if="service.current_user_role == 2 || service.current_user_role == 4 ">
                         <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false"
                             tabindex="-1" role="tab">
                             Team Leave Balance</a>
                     </li>
 
-                    <li class="nav-item text-muted " role="presentation">
+                    <li class="nav-item text-muted " role="presentation"  v-if="service.current_user_role == 2">
                         <a class="pb-2 nav-link" data-bs-toggle="tab" href="#org_leave" aria-selected="false" tabindex="-1"
                             role="tab">
                             Org Leave Balance</a>
@@ -28,11 +33,6 @@
                             <label class="input-group-text " for="inputGroupSelect01"><i
                                     class="fa fa-calendar text-primary " aria-hidden="true"></i></label>
                             <select class="form-select btn-line-primary" id="inputGroupSelect01">
-                                <!-- {{ -- @foreach($available_time_frames as $key => $value)
-                                    < option value = {{
-                                        $key }}> {{ $value }} </option>
-                                @endforeach --}}
-                                <option>{{ $time_frame }}</option> -->
                             </select>
                         </div>
 
@@ -54,7 +54,7 @@
                 <EmployeeLeaveDetails />
             </div>
             <div class="tab-pane fade show " id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">
-                <TeamLeaveDetails /> 
+                <TeamLeaveDetails />
             </div>
             <div class="tab-pane show " id="org_leave" role="tabpanel" aria-labelledby="pills-profile-tab">
                 <OrgLeaveDetails />
@@ -62,24 +62,35 @@
 
         </div>
     </div>
+    <Dialog header="Header" v-model:visible="useLeaveStore.canShowLoading"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+        :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 
 <script setup>
+import { Service } from '../Service/Service';
 import EmployeeLeaveDetails from './leave_details/EmployeeLeaveDetails.vue';
 import OrgLeaveDetails from './leave_details/OrgLeaveDetails.vue';
 import TeamLeaveDetails from './leave_details/TeamLeaveDetails.vue';
-import {useLeaveModuleStore} from './LeaveModuleService'
+import { useLeaveModuleStore } from './LeaveModuleService'
 import { onMounted } from 'vue';
 
 
-const  useLeaveStore = useLeaveModuleStore()
+const useLeaveStore = useLeaveModuleStore()
+const service = Service()
 
-onMounted(()=>{
-    setTimeout(() => {
-        useLeaveStore.getCurrentEmployeeLeaveBalance()
-    }, 2000);
+
+onMounted(() => {
+    useLeaveStore.getEmployeeLeaveBalance()
 })
-
 
 
 </script>
@@ -194,10 +205,6 @@ onMounted(()=>{
     }
 }
 
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-    width: 200px;
-}
-
 .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
     color: red;
 }
@@ -278,7 +285,4 @@ onMounted(()=>{
     color: #fff !important;
 }
 
-.p-datatable .p-datatable-thead>tr>th>.p-column-header-content>.p-column-title:nth-child(1) {
-    margin-left: 30px;
-}
 </style>

@@ -3,21 +3,11 @@
         <div class="mb-2 card">
             <div class="card-body">
                 <h6 class="fw-bold fs-15">Experience Information
-                    <!-- <span class="personal-edit">
-                                        <a href="#" class="edit-icon"
-                                            data-bs-toggle="modal" data-bs-target="#edit_familyInfo">
 
-                                            </a>
-                                    </span> -->
-                    <!-- <button type="button" class="btn_txt edit-icon" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        @click="visible = true">
-                        <i class="ri-pencil-fill"></i>
-
-                    </button> -->
                     <button type="button" class="float-right btn btn-orange" style="margin-left: 76%"
                         @click="dialog_ExperienceInfovisible = true">
                         Add New
-                        <!-- <i class="ri-pencil-fill"></i> -->
+
                     </button>
                     <Dialog v-model:visible="dialog_ExperienceInfovisible" modal
                         :style="{ width: '50vw', borderTop: '5px solid #002f56' }" id="">
@@ -98,33 +88,22 @@
                         responsiveLayout="scroll">
 
                         <Column header="Company Name" field="company_name" style="min-width: 12rem">
-                            <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+
                         </Column>
 
                         <Column field="location" header="Location" style="min-width: 8rem">
-                            <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+
                         </Column>
 
                         <Column field="job_position" header="Job Position " style="min-width: 10rem">
-                            <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+
                         </Column>
 
                         <Column field="period_from" header="Period from" style="min-width: 6rem">
-                            <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                         </Column>
 
                         <Column field="period_to" header="Period To" style="min-width: 6rem">
-                            <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
 
                         </Column>
                         <Column :exportable="false" header="Action" style="min-width:12rem">
@@ -224,10 +203,10 @@
 
                     <div class="timeline">
                         <div class="container bg- left" id="experience_card">
-                            <div class="card   experience-card  " style="margin-right: 500px;">
-                                <div class="card-body py-1 " >
+                            <div class="card experience-card " style="margin-right: 500px;">
+                                <div class="py-1 card-body " >
                                     <ul class="personal-info ">
-                                        <li class="border-bottom-liteAsh border-0 pb-1">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title"></div>
                                             <div class="text text-end">
                                                 <a class="edit-icon" data-bs-toggle="modal" data-bs-target=""><i
@@ -235,27 +214,27 @@
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Organization</div>
                                             <div class="text" data-toggle="tooltip" data-placement="bottom">
                                                 Organization Organization Organization
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Designation</div>
                                             <div class="text">
                                                 Designation
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 ">
+                                        <li class="pb-1 border-bottom-liteAsh ">
                                             <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
                                             <div class="text">
                                                 From
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 border-0">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
                                             <div class="text">
@@ -267,10 +246,10 @@
                             </div>
                         </div>
                         <div class="container bg-white right">
-                            <div class="card   experience-card  ">
-                                <div class="card-body py-1">
+                            <div class="card experience-card ">
+                                <div class="py-1 card-body">
                                     <ul class="personal-info">
-                                        <li class="border-bottom-liteAsh border-0 pb-1">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title"></div>
                                             <div class="text text-end">
                                                 <a class="edit-icon" data-bs-toggle="modal"
@@ -278,27 +257,27 @@
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Organization</div>
                                             <div class="text">
                                                 Organization
 
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1">
+                                        <li class="pb-1 border-bottom-liteAsh">
                                             <div class="title">Designation</div>
                                             <div class="text">
                                                 Designation
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 ">
+                                        <li class="pb-1 border-bottom-liteAsh ">
                                             <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
                                             <div class="text">
                                                 From
                                             </div>
                                         </li>
-                                        <li class="border-bottom-liteAsh pb-1 border-0">
+                                        <li class="pb-1 border-0 border-bottom-liteAsh">
                                             <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
                                             <div class="text">
@@ -320,6 +299,7 @@
     </div>
 </template>
 <script setup>
+import dayjs from 'dayjs';
 
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
@@ -369,8 +349,8 @@ const saveExperienceDetails = () => {
         company_name: ExperienceInfo.company_name,
         experience_location: ExperienceInfo.location,
         job_position: ExperienceInfo.job_position,
-        period_from: ExperienceInfo.period_from,
-        period_to: ExperienceInfo.period_to
+        period_from:  dayjs( ExperienceInfo.period_from ).format('YYYY-MM-DD'),
+        period_to: dayjs(  ExperienceInfo.period_to  ).format('YYYY-MM-DD'),
     })
         .then((res) => {
 
@@ -418,7 +398,7 @@ const editExperienceDetails = (get_experience_details) => {
     ExperienceInfo.company_name = get_experience_details.company_name
     ExperienceInfo.location = get_experience_details.location
     ExperienceInfo.job_position = get_experience_details.job_position
-    ExperienceInfo.period_from = get_experience_details.period_from
+    ExperienceInfo.period_from = get_experience_details.period_from,
     ExperienceInfo.period_to = get_experience_details.period_to
 
 };
@@ -436,8 +416,8 @@ const sumbit_Edit_Exp_details = (get_experience_details) => {
         company_name: ExperienceInfo.company_name,
         experience_location: ExperienceInfo.location,
         job_position: ExperienceInfo.job_position,
-        period_from: ExperienceInfo.period_from,
-        period_to: ExperienceInfo.period_to
+        period_from:   dayjs( ExperienceInfo.period_from ).format('YYYY-MM-DD'),
+        period_to:  dayjs(  ExperienceInfo.period_to ).format('YYYY-MM-DD'),
     })
         .then((res) => {
 

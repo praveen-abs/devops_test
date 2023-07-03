@@ -14,14 +14,16 @@
         <Column field="welcome_mail_status" header="Welcome Mail Status">
             <template #body="slotProps">
                 <div>
-                    <Button @click="welcome_mail_status_view_btn(slotProps.data)" label="Send mail"
+                    <Button @click="showConfirmationDialog(slotProps.data.empcode)" label="Send mail"
                         class="btn btn-primary" />
+                    <br/>
+                    <h4 v-if="slotProps.data.value == null">Mail Not Sent</h4>
                 </div>
             </template>
         </Column>
         <Column field="onboard_docs_approval_mail_status" header="Onboard Document Approval Mail Status">
             <template #body="slotProps">
-                <h1 v-if="slotProps.data.value == null || slotProps.data == 0">Mail Not Send</h1>
+                <h1 v-if="slotProps.data.value == null || slotProps.data == 0" v-tooltip="'Normally, mail is sent when docs are reviewed'">Mail Not Sent</h1>
                 <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
             </template>
 
@@ -29,29 +31,28 @@
             <!-- onboard_docs_approval_mail_status -->
         </Column>
         <!-- <Column field="" header="Mail Status">  </Column> -->
-        <Column field="acc_activation_mail_status" header="Activation Mail Status">
+        <Column field="acc_activation_mail_status" header="Activation Mail Status" >
             <template #body="slotProps">
-                <h1 v-if="slotProps.data.value == null || slotProps.data == 0">Mail Not Send</h1>
+                <h1 v-if="slotProps.data.value == null || slotProps.data == 0"  v-tooltip="'Normally, mail is sent once onboarding is done'">Mail Not Sent</h1>
                 <h1 v-if="slotProps.data.value == 1">Mail Sent</h1>
             </template>
         </Column>
 
     </DataTable>
 
-    <Dialog header="Confirmation" v-model:visible="sendWelcomeMail_Status_diaconfirmation"
+    <Dialog header="Confirmation" v-model:visible="ManageWelcomeMailStatusStore.sendWelcomeMail_Status_diaconfirmation"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
         <div class="confirmation-content">
 
             <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-            <span>Are you sure you want to download payslip? {{ managePayslipStore.name }} </span>
+            <span>Are you sure you want to send Welcome Mail?</span>
         </div>
 
         <div class="d-flex mt-11 " style="position: relative; right: -180px; width: 140px;">
 
             <Button class="btn-primary py-2 mr-3" label="Yes" icon="pi pi-check"
-                @click="showWecMailSendConfirmationDialog(selectedUserCode)" autofocus />
-
-            <Button label="No" icon="pi pi-times" @click="hideConfirmDialog = false"
+                @click="ManageWelcomeMailStatusStore.send_WelcomeMail(selectedUserCode)" autofocus />
+            <Button label="No" icon="pi pi-times" @click="ManageWelcomeMailStatusStore.sendWelcomeMail_Status_diaconfirmation = false"
                 class="p-button-text  py-2" autofocus />
 
         </div>
@@ -68,13 +69,14 @@ const ManageWelcomeMailStatusStore = useManageWelcomeMailStatusStore();
 
 
 // const canShowPayslipHTMLView = ref(false);
- const sendWelcomeMail_Status_diaconfirmation = ref(false);
+
 // const show_releasePayslip_dialogconfirmation = ref(false);
 // const show_downloadPayslip_dialogconfirmation = ref(false);
 
 // const selectedPayRollDate = ref();
 
 const selectedUserCode = ref();
+// console.log(selectedUserCode.value);
 
 
 
@@ -83,62 +85,14 @@ onMounted(() => {
 
 });
 
-function showWecMailSendConfirmationDialog(selected_user_code) {
+function showConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
-
-    sendWelcomeMail_Status_diaconfirmation.value = true;
+    console.log(selected_user_code);
+    ManageWelcomeMailStatusStore.sendWelcomeMail_Status_diaconfirmation = true;
 }
 
-function hideConfirmDialog(){
-    sendWelcomeMail_Status_diaconfirmation = false;
-
-};
-
-// const is_released = computed(() => {
-//     if (managePayslipStore.is_released == 1) return "Released";
-// })
-
-// async function showPaySlipHTMLView(selected_user_code) {
-//     console.log("Showing payslip html for (user_code, month): " + selected_user_code + " , " + parseInt(managePayslipStore.selectedPayRollDate.getMonth() + 1));
-
-//     await managePayslipStore.getEmployeePayslipDetailsAsHTML(selected_user_code, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-
-//     canShowPayslipHTMLView.value = true;
-
-// }
-
-// function showConfirmationDialog(selected_user_code) {
-//     selectedUserCode.value = selected_user_code;
-
-//     show_dialogconfirmation.value = true;
-
-// }
 
 
-// function showReleasePayslipConfirmationDialog(selected_user_code) {
-//     selectedUserCode.value = selected_user_code;
-
-//     show_releasePayslip_dialogconfirmation.value = true;
-// }
-
-
-// async function sendMail(selectedUserCode) {
-
-//     await managePayslipStore.sendMail_employeePayslip(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-//     show_dialogconfirmation.value = false;
-
-// }
-
-// async function updatePayslipReleaseStatus(selectedUserCode) {
-//     await managePayslipStore.updatePayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear(), 1);
-//     show_releasePayslip_dialogconfirmation.value = false;
-
-// }
-// async function downloadPayslipReleaseStatus(selectedUserCode) {
-//     await managePayslipStore.downloadPayslipReleaseStatus(selectedUserCode, managePayslipStore.selectedPayRollDate.getMonth() + 1, managePayslipStore.selectedPayRollDate.getFullYear());
-//     show_downloadPayslip_dialogconfirmation.value = false;
-
-// }
 
 
 

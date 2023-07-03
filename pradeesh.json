@@ -1,0 +1,107 @@
+{
+  "useRolesAndPermission":[
+    {
+        "roles_id": 1,
+        "role": "superadmin",
+        "SubCategory":3,
+        "":4,
+        "accordian": [
+          {
+            "roles_id": 1,
+            "Sub_Category_Name": "Asset Privilege",
+            "user_id": 1,
+            "user_code": "SA100",
+            "Privilege": [
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"}
+          ]
+          },
+          {
+            "Sub_Category_Name": "Asset Privilege",
+            "Privilege": [{
+                "Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"},
+                {"Privilege_name":"View Asset Dashboard"}
+          ]
+          }
+        ]
+      },
+      {
+        "roles_id": 4,
+        "role": "manager",
+        "description": "uwfp8fw8egwpguiweg",
+        "assigned_emp": 19,
+        "assigned_privileged": 0,
+        "accordian": [
+          {
+            "roles_id": 4,
+            "roles_name": "manager",
+            "description": "uwfp8fw8egwpguiweg",
+            "name": "ARUNKUMAR",
+            "user_id": 144,
+            "user_code": "PSC0060",
+            "department_name": "Sales"
+          }
+        ]
+      },
+      {
+        "roles_id": 4,
+        "role": "manager",
+        "description": "uwfp8fw8egwpguiweg",
+        "assigned_emp": 19,
+        "assigned_privileged": 0,
+        "accordian": [
+          {
+            "roles_id": 4,
+            "roles_name": "manager",
+            "description": "uwfp8fw8egwpguiweg",
+            "name": "MURALI",
+            "user_id": 146,
+            "user_code": "LAL0002",
+            "department_name": "Sales"
+          }
+        ]
+      },
+      {
+        "roles_id": 4,
+        "role": "manager",
+        "description": "uwfp8fw8egwpguiweg",
+        "assigned_emp": 19,
+        "assigned_privileged": 0,
+        "accordian": [
+          {
+            "roles_id": 4,
+            "roles_name": "manager",
+            "description": "uwfp8fw8egwpguiweg",
+            "name": "RAVIKUMAR K",
+            "user_id": 149,
+            "user_code": "LAL0008",
+            "department_name": "Technical"
+          }
+        ]
+      }
+  ],
+  "DeleteOnboardingFormDetails": [],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {}
+}

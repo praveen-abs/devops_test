@@ -23,7 +23,7 @@ if ($query_clientMaster) {
                 </span>
             </button>
             <div class="topbar-logo mx-2 ">
-                <img src=" {{ URL::asset(session()->get('client_logo_url')) }}" alt="" class=""
+                <img src=" {{$logoSrc }}" alt="" class=""
                     style="height: 40px;width:140px;">
             </div>
         </div>
@@ -52,7 +52,7 @@ if ($query_clientMaster) {
                 </button>
                 <div class="offcanvas  selectClient-Offcanvas offcanvas-end" data-bs-keyboard="true"
                     data-bs-backdrop="true" tabindex="-1" id="select_client" aria-labelledby=""
-                    style="top: 50px;border-radius:10px 0px 0px 0px">
+                    style="top: 50px;border-radius:10px 0px 0px 0px;">
                     <div class="offcanvas-header pb-0 bg-ash w-100 d-flex justify-content-between align-items-center  ">
 
                         <a role="button" href="{{ route('pages-profile-new') }}"
@@ -124,13 +124,15 @@ if ($query_clientMaster) {
                                 @foreach ($clientsList as $client)
                                     <div class="choose-client justify-content-between d-flex p-2  border-bottom-liteAsh  align-items-center  @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif>"
                                         data-client_id="{{ $client->id }}">
-                                        <div class="d-flex mx-2   align-items-center   ">
+                                        <div class="d-flex mx-2   align-items-center">
                                             <div class="mx-2 p-1 border d-flex align-items-center  rounded border-1"
                                                 style="height: 40px;width:40px">
                                                 <img src="{{ URL::asset($client->client_logo) }}" alt=""
                                                     class=" mh-100 mw-100">
                                             </div>
-                                            <span class=" fw-bold ">{{ $client->client_name }}</span>
+                                            <?php
+                                               echo GetSelectedClientFullName($client->id).'  ( '.(GetSelected_abs_clientcode($client->id)).' )';
+                                             ?>
                                         </div>
                                         @if (!empty($currentClientID) && $currentClientID == $client->id)
                                             <img src='{{ URL::asset('assets/images/check.png') }}'
@@ -148,9 +150,9 @@ if ($query_clientMaster) {
             </div>
 
 
-            <a role="button"   href="{{ route('pages-profile-new') }}"  type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
+            <a role="button"    type="button" class="btn bg-transparent border-0 mx-1 py-1 " id="page-header-user-dropdown"
                 aria-haspopup="true" aria-expanded="false"
-                aria-controls="" aria-haspopup="true" aria-expanded="false">
+                aria-controls="" aria-haspopup="true" aria-expanded="false"   data-bs-toggle="offcanvas" data-bs-target=".offcanvas">
                 <div class="d-flex align-items-center page-header-user-dropdown">
 
                     <?php

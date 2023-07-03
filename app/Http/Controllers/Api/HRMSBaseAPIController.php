@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\VmtConfigAppService;
 use App\Services\VmtEmployeeService;
+use App\Services\VmtCoreService;
 
 class HRMSBaseAPIController extends Controller
 {
@@ -81,6 +82,7 @@ class HRMSBaseAPIController extends Controller
             ],
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
+                "fcm_token"  =>'required'
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',

@@ -19,9 +19,12 @@ use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtMaritalStatus;
+use App\Models\VmtTempEmployeeProofDocuments;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Services\VmtApprovalsService;
+use App\Http\Controllers\VmtProfilePagesController;
 
 class VmtProfilePagesService
 {
@@ -129,6 +132,7 @@ class VmtProfilePagesService
             //Get the image from PRIVATE disk and send as BASE64
             $response = Storage::disk('private')->get($user_code."/profile_pics/".$avatar_filename);
 
+
             if($response)
             {
                 $response = base64_encode($response);
@@ -189,17 +193,47 @@ class VmtProfilePagesService
            $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
            ->where('vmt_employee_documents.user_id', $response->id)
            ->get();
+// check wheather employee proof documents approved or not .
+           $emp_proof_docs = VmtTempEmployeeProofDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_temp_employee_proof_documents.doc_id')
+                                                            ->where('vmt_temp_employee_proof_documents.user_id', $response->id)
+                                                            ->get();
 
-           $general_info = \DB::table('vmt_general_info')->first();
-           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+          $employee_proof_doc_list = array('Pan Card'=>'updatePancardInfo', 'Cheque leaf/Bank Passbook'=>'updateBankInfo',
+                                            'Aadhar Card Front'=>'updateEmplpoyeeName','Birth Certificate' => 'updateEmplpoyeeName');
 
-        // $response['client_logo'] = base64_encode($query_client_logo);
-        $response['client_logo'] = $query_client_logo;
+           $update_user_data = array();
+           if(!empty($emp_proof_docs)){
+          foreach($employee_proof_doc_list  as $singledoc => $updateuserdata){
+
+               $emp_doc_status =$emp_proof_docs->Where('document_name',$singledoc)->first();
+
+                if(!empty($emp_doc_status))
+                {
+                    if($emp_doc_status->status == 'Approved'){
+
+                      $update_user_data =(new VmtProfilePagesController)->$updateuserdata($user_id,$emp_doc_status->doc_id);
+                    }
+
+                }
+             }
+          }
+
+
+
+           $general_info = \DB::table('vmt_client_master')->first();
+
+           //$query_client_logo = Storage::disk('public')->get($general_info->client_logo);
+           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
+
+         //$response['client_logo'] = base64_encode($query_client_logo);
+       $response['client_logo'] = $query_client_logo;
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
+        $response['employee_documents_proof'] = $update_user_data;
 
         //Add the documents details
+
         $response['avatar'] = $this->getProfilePicture($response->user_code);
 
         if(!empty($response['getEmployeeOfficeDetails']['department_id']))
@@ -214,6 +248,28 @@ class VmtProfilePagesService
 
         }
 
+        if(!empty($response['getEmployeeDetails']['blood_group_id']))
+        {
+            $response['getEmployeeDetails']['blood_group_name'] = VmtBloodGroup::where('id',$response['getEmployeeDetails']['blood_group_id'])->first()->name;
+
+        }
+
+        if(!empty($response['getEmployeeDetails']['marital_status_id']))
+        {
+            $query = VmtMaritalStatus::where('id',$response['getEmployeeDetails']['marital_status_id']);
+
+            // $response['getEmployeeDetails']['marital_status'] = VmtMaritalStatus::where('id',$response['getEmployeeDetails']['marital_status_id'])->first()->name;
+
+            if($query->exists())
+            {
+                $response['getEmployeeDetails']['marital_status'] = $query->first()->name;
+            }
+            else
+            {
+                $response['getEmployeeDetails']['marital_status'] = 'Undefined';
+            }
+
+        }
 
         $response['profile_completeness'] = calculateProfileCompleteness($user_id);
 
@@ -294,7 +350,7 @@ class VmtProfilePagesService
             $details->dob = $birthday;
             $details->gender = $gender;
             $details->marital_status_id = VmtMaritalStatus::where('name', $marital_status)->first()->id;
-            $details->blood_group_id = $blood_group;
+            $details->blood_group_id = VmtBloodGroup::where('name', $blood_group)->first()->id;
             $details->physically_challenged = $phy_challenged;
             $details->save();
 
@@ -482,8 +538,9 @@ class VmtProfilePagesService
 
 
     try{
-        //  dd($request->all());
+
         $user_id = user::where('user_code', $user_code)->first()->id;
+
         $exp = Experience::where('id',$exp_current_table_id)->first();
             $exp->user_id = $user_id;
             $exp->company_name = $company_name;
@@ -527,4 +584,113 @@ class VmtProfilePagesService
 
          return $response;
 }
+public function uploadProofDocument($emp_id,$fileObject, $onboard_document_type){
+
+    try{
+        $emp_code = User::find($emp_id)->user_code;
+
+        if(empty($fileObject))
+            return null;
+
+        $onboard_doc_id = VmtDocuments::where('document_name',$onboard_document_type)->first();
+
+
+        if($onboard_doc_id->exists()){
+            $onboard_doc_id = $onboard_doc_id->id;
+
+        }
+        else
+            return null;
+
+        $employee_documents = VmtTempEmployeeProofDocuments::where('user_id', $emp_id)->where('doc_id',$onboard_doc_id);
+
+        //check if document already uploaded
+        if( $employee_documents->exists()){
+
+            $employee_documents = $employee_documents->first();
+
+            $file_path = '/'.$emp_code.'/onboarding_documents'.'/'.$employee_documents->doc_url;
+
+            //fetch the existing document and delete its file from STORAGE folder
+            $file_exists_status = Storage::disk('private')->exists($file_path);
+            if($file_exists_status){
+
+                //delete the file
+                Storage::disk('private')->delete($file_path);
+            }
+        }
+        else
+        {
+            $employee_documents = new VmtTempEmployeeProofDocuments;
+            $employee_documents->user_id = $emp_id;
+            $employee_documents->doc_id = $onboard_doc_id;
+        }
+
+
+        $date = date('d-m-Y_H-i-s');
+        $fileName =  str_replace(' ', '', $onboard_document_type).'_'.$emp_code.'_'.$date.'.'.$fileObject->extension();
+        $path = $emp_code.'/onboarding_documents';
+        $filePath = $fileObject->storeAs($path,$fileName, 'private');
+        $employee_documents->doc_url = $fileName;
+        $employee_documents->status ='Pending';
+        $employee_documents->save();
+    }
+    catch(\Exception $e){
+        dd("Error :: uploadDocument() ".$e);
+    }
+
+    return "success";
 }
+public function getEmpProfileProofPrivateDoc($emp_doc_record_id=null)
+{
+    // dd($user_code);
+
+    try{
+
+
+            //Get the filename directly from the record_id
+            $query_emp_doc = VmtTempEmployeeProofDocuments::find($emp_doc_record_id);
+            $user_code = User::find($query_emp_doc->user_id)->user_code;
+            $doc_filename = $query_emp_doc->doc_url;
+
+
+        //Get the image from PRIVATE disk and send as BASE64
+        $response = Storage::disk('private')->get($user_code . "/onboarding_documents/" .$doc_filename);
+
+        if($response)
+        {
+            $response = base64_encode($response);
+        }
+        else// If no file found, then send this
+        {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Employee proof proof document doesnt exist for the given user"
+            ]);
+        }
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Employee document fetched successfully",
+            "data" => $response,
+        ]);
+
+
+    }
+    catch(\Exception $e){
+
+        //dd("Error :: uploadDocument() ".$e);
+
+        return response()->json([
+            "status" => "failure",
+            "message" => "Unable to fetch profile picture",
+            "data" => $e,
+        ]);
+
+    }
+    return response()->file(storage_path('employees/' . $private_file));
+}
+
+
+}
+

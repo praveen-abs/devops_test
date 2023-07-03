@@ -6,48 +6,41 @@ import { ref , reactive } from 'vue';
 export const UseRolePermissionServie = defineStore('RolePermissionServie',()=>{
 
     // Variable Declarations
-    const loading = ref(false);
     const array_RolePermission_data = ref();
+    const AllPermission = ref();
 
-    const dialog_CreatingNewJobRole = reactive({
-        Role_Title:"",
-        Role_Description:"",
-        Assets_privileges:[],
-    })
-
-
-    // Events
+    const CreatingNewJobRole = reactive({
+        Role_Title:'',
+        Role_description:'',
+        Assign_to:'',
+    });
 
 
-    async function CreateRolePermission(){
 
-        axios.post(' http://localhost:3000/Creating_New_Job_role',{}).then(()=>{
+    const getAllPermissions = () => {
 
-        }).finally(()=>{
-
-        })
-
-    }
-
-    async function fetchRolePermission(){
-        axios.get({}).then(()=>{
-
-        }).finally(()=>{
-
+        axios.get('/getAllPermissions').then(res => {
+            AllPermission.value = res.data;
+            console.log(allpermission);
         });
 
-    }
+    };
+     const saveCreateNewJobRole = ()=>{
+        axios.post('',).finally(()=>{
 
-
-
+        })
+     };
 
     return{
 
-        // variable
-        loading,array_RolePermission_data,
+        // variable Declaration
+        getAllPermissions,saveCreateNewJobRole,
 
+
+//
         // function
-        CreateRolePermission,fetchRolePermission
+        AllPermission,CreatingNewJobRole,array_RolePermission_data
+
 
     }
 })

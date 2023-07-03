@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use \stdClass;
@@ -18,7 +18,7 @@ use App\Models\VmtEmployee;
 use App\Models\Department;
 use App\Models\VmtMaritalStatus;
 use App\Models\Bank;
-use App\Models\VmtClientMaster;
+
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -197,7 +197,9 @@ class VmtEmployeeService {
             $newUser->user_code = strtoupper($data['employee_code']);
 
             $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+
+                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+
 
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
@@ -868,8 +870,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -966,7 +968,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
 
     */
-    function fetchAllEmployeesDocumentsAsGroups(Request $request){
+    public function fetchAllEmployeesDocumentsAsGroups(Request $request){
 
         $json_response = array();
 
@@ -987,6 +989,66 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                                             'vmt_employee_documents.id as record_id',
                                             'vmt_employee_documents.status as doc_status',
                                             'vmt_employee_documents.doc_url as doc_url'
+                                        ]);
+
+        // //store all the documents in single key
+        foreach($query_pending_onboard_docs as $single_pending_docs){
+
+            $user_code = $single_pending_docs->user_code;
+
+            if(array_key_exists($user_code, $json_response))
+            {
+                array_push($json_response[$user_code]["documents"], [
+                                            "record_id" => $single_pending_docs->record_id,
+                                            "doc_name" => $single_pending_docs->doc_name,
+                                            "doc_url" => $single_pending_docs->doc_url,
+                                            "doc_status" => $single_pending_docs->doc_status
+                ]);
+            }
+            else
+            {
+                $user_details = [
+                    "name" => $single_pending_docs->name,
+                    "user_code" =>  $single_pending_docs->user_code,
+                    "doj" => $single_pending_docs->doj,
+                    "documents" => array([
+                                    "record_id" => $single_pending_docs->record_id,
+                                    "doc_name" => $single_pending_docs->doc_name,
+                                    "doc_url" => $single_pending_docs->doc_url,
+                                    "doc_status" => $single_pending_docs->doc_status
+                                   ]),
+                ];
+
+                $json_response[$user_code] = $user_details;
+                //array_push(, $user_details);
+            }
+        }
+
+
+        return array_values($json_response);
+
+    }
+     public function fetchAllEmployeesDocumentsProof(Request $request){
+
+        $json_response = array();
+
+        //Get all the  doc for the given user_id
+        $query_pending_onboard_docs = User::join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                        ->join('vmt_temp_employee_proof_documents','vmt_temp_employee_proof_documents.user_id','=','users.id')
+                                        ->join('vmt_documents','vmt_documents.id','=','vmt_temp_employee_proof_documents.doc_id')
+                                        ->where('vmt_temp_employee_proof_documents.status',"Pending")
+                                        ->where('users.is_ssa',"0")
+                                        ->where('users.is_onboarded',"1")
+                                        ->where('users.active','<>',"-1")
+                                        ->where('vmt_temp_employee_proof_documents.status','<>',"Approved")
+                                        ->get([
+                                            'users.name as name',
+                                            'vmt_employee_details.doj as doj',
+                                            'users.user_code as user_code',
+                                            'vmt_documents.document_name as doc_name',
+                                            'vmt_temp_employee_proof_documents.id as record_id',
+                                            'vmt_temp_employee_proof_documents.status as doc_status',
+                                            'vmt_temp_employee_proof_documents.doc_url as doc_url'
                                         ]);
 
         // //store all the documents in single key

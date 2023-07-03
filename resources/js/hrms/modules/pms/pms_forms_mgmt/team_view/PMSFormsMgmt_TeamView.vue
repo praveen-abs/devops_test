@@ -91,9 +91,9 @@
     import { ref, onMounted } from 'vue';
     import axios from 'axios'
     import {FilterMatchMode,FilterOperator} from 'primevue/api';
-    import {usePMSFormsDownloadStore} from '../PMSFormsMgmtService'
+    import {usePMSFormsMgmtStore} from '../PMSFormsMgmtService'
 
-    const usePmsFormsStore = usePMSFormsDownloadStore()
+    const usePmsFormsStore = usePMSFormsMgmtStore()
 
 
 

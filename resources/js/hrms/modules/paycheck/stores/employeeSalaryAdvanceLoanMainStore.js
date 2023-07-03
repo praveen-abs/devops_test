@@ -42,34 +42,31 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const sa = reactive({
         ymi:'',
         ra:'',
+        mxe:'',
+        repdate:'',
         reason:'',
+        isEligibleEmp:'',
     })
 
 
     const fetchSalaryAdvance = () => {
-
         canShowLoading.value = true
-        console.log(sa);
-        console.log("fetching SA");
-
-        axios.get('http://localhost:3000/salary').then(res=>{
+        axios.get('/showEmployeeview').then(res=>{
             salaryAdvanceEmployeeData.value = res.data
-            console.log(res.data);
-
+            sa.ymi = res.data.your_monthly_income
+            sa.mxe = res.data.max_eligible_amount
+            sa.repdate = res.data.Repayment_date
+            sa.isEligibleEmp = res.data.eligible
         }).finally(()=>{
             canShowLoading.value = false
         })
     }
 
     const saveSalaryAdvance = () => {
-
+        dailogSalaryAdvance.value = false
         canShowLoading.value = true
-        console.log(sa);
-        console.log("Saving SA");
-
-        axios.post('http://localhost:3000/salary',sa).finally(()=>{
+        axios.post('/EmpSaveSalaryAmt',sa).finally(()=>{
             canShowLoading.value = false
-            fetchSalaryAdvance()
         })
     }
 
@@ -106,7 +103,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const fetchInterestfreeLoan = () => {
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
 
         console.log("fetching SA");
 
@@ -123,7 +120,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const saveInterestfreeLoan = () => {
 
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
         console.log("Saving SA");
 
         axios.post('http://localhost:3000/Interst_free_loan',ifl).finally(()=>{
@@ -164,7 +161,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const fetchTraveladvance = ()=>{
 
-        canShowLoading.value = true
+        // canShowLoading.value = true
 
         console.log("fetching SA");
 
@@ -228,7 +225,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
         console.log(lwif);
 
-        canShowLoading.value = true;
+        // canShowLoading.value = true;
 
         axios.get('http://localhost:3000/InterestWithLoan').then(res=>{
 
@@ -245,7 +242,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const saveinterestWithLoan = ()=>{
 
-        canShowLoading.value = true;
+        // canShowLoading.value = true;
 
         axios.post(' http://localhost:3000/InterestWithLoan',lwif).finally(()=>{
             canShowLoading.value = false

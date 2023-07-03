@@ -16,18 +16,20 @@
             </div>
         </div>
     </div> -->
+
     <div class="w-full">
         <div>
-            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissiom</h4>
+            <h4 class="px-4 text-2xl font-semibold ">Employee Roles and Permissions</h4>
         </div>
         <div class="p-4 my-4 card">
             <div class="card-body">
-                <p class="text-lg font-semibold text-gray-700">Here You Can Manage The Employees Roles And Premission Given To Them.</p>
+                <p class="text-lg font-semibold text-gray-700 fs-4">Here you can manage the Employees Roles and Permissions</p>
                 <div class="flex my-6">
                     <InputText placeholder="Search...."  class="w-4 h-10"/>
                     <!-- Creating New Job Roles dailog-->
                     <button class="h-10 mx-6 btn btn-orange" @click="addNewroleDailog = true">Create Role</button>
                 </div>
+
                 <div>
                     <DataTable>
                         <Column field="product" header="Role"></Column>
@@ -41,6 +43,10 @@
 
 
     </div>
+
+
+
+
 
     <Dialog header="Header" v-model:visible="addNewroleDailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '65vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -63,7 +69,7 @@
             <div class="my-3">
                 <h5 class="text-lg font-semibold">Assign To</h5>
             </div>
-            <Tree v-model:selectionKeys="selectedKey" :value="nodes" selectionMode="checkbox" class="w-8 font-semibold ">
+            <Tree :value="allpermission" selectionMode="checkbox" class="w-8 font-semibold ">
             </Tree>
         </div>
         <template #footer>
@@ -75,130 +81,81 @@
 
         </template>
     </Dialog>
-    {{ selectedKey }}
+    <!-- {{ selectedKey }} -->
+    <!-- {{ rolespermission.allpermission }} -->
+    <!-- {{ allpermission.data }} -->
 </template>
 
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { UseRolePermissionServie } from "./roles_permission_service";
+import axios from 'axios';
+
+const rolespermission = UseRolePermissionServie();
+
+const expandedRows = ref([]);
+const selectedAllEmployee = ref();
 
 const lding = ref(true)
 
 const selectedKey = ref()
 const addNewroleDailog = ref(false)
-const nodes = ref(
-    [
-        {
-            key: '0',
-            label: 'Assets Privileges ',
-            data: 'Assets Privileges ',
-            children: [
-                {
-                    key: 'Apply for attendance adjustment / regularisation on behalf of employees',
-                    label: 'Apply for attendance adjustment / regularisation on behalf of employees',
-                    data: 'Apply for attendance adjustment / regularisation on behalf of employees',
-                },
-                {
-                    key: '0-1',
-                    label: `Approve/Reject 'Work from Home (WFH) / On Duty (OD)' requests`,
-                    data: `Approve/Reject 'Work from Home (WFH) / On Duty (OD)' requests`,
-                },
-                {
-                    key: '0-2',
-                    label: 'Edit Individual Asset Information',
-                    data: 'Edit Individual Asset Information',
-                },
-                {
-                    key: '0-3',
-                    label: `Bulk import assets & assignment`,
-                    data: `Bulk import assets & assignment`,
-                },
-                {
-                    key: '0-4',
-                    label: 'Assign Asset to an Employee',
-                    data: 'Assign Asset to an Employee',
-                },
-                {
-                    key: '0-5',
-                    label: `Update Asset Availability`,
-                    data: `Update Asset Availability`,
-                },
-                {
-                    key: '0-6',
-                    label: 'Recover Asset & Update Condition',
-                    data: 'Recover Asset & Update Condition',
-                },
-                {
-                    key: '0-7',
-                    label: `View Reports`,
-                    data: `View Reports`,
-                },
-                {
-                    key: '0-8',
-                    label: 'Download Reports',
-                    data: 'Download Reports',
-                },
-                {
-                    key: '0-9',
-                    label: `Manage Asset DefinitionsGlobal`,
-                    data: `Manage Asset DefinitionsGlobal`,
-                },
-                {
-                    key: '0-10',
-                    label: 'Delete Asset',
-                    data: 'Delete Asset',
-                }
-            ]
-        },
-        {
-            key: '1',
-            label: 'Attendance Privileges',
-            data: 'Attendance Privileges',
-            icon: 'pi pi-fw pi-calendar',
-            children: [
-                { key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
-                { key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
-                { key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
-            ]
-        },
-        {
-            key: '2',
-            label: 'Employee Document Privileges',
-            data: 'Employee Document Privileges',
-            icon: 'pi pi-fw pi-star-fill',
-            children: [
-                {
-                    key: '2-0',
-                    icon: 'pi pi-fw pi-star-fill',
-                    label: 'Al Pacino',
-                    data: 'Pacino Movies',
-                    children: [
-                        { key: '2-0-0', label: 'Scarface', icon: 'pi pi-fw pi-video', data: 'Scarface Movie' },
-                        { key: '2-0-1', label: 'Serpico', icon: 'pi pi-fw pi-video', data: 'Serpico Movie' }
-                    ]
-                },
-                {
-                    key: '2-1',
-                    label: 'Robert De Niro',
-                    icon: 'pi pi-fw pi-star-fill',
-                    data: 'De Niro Movies',
-                    children: [
-                        { key: '2-1-0', label: 'Goodfellas', icon: 'pi pi-fw pi-video', data: 'Goodfellas Movie' },
-                        { key: '2-1-1', label: 'Untouchables', icon: 'pi pi-fw pi-video', data: 'Untouchables Movie' }
-                    ]
-                }]
-        },
-        {
-            key: '3',
-            label: 'Employee Finance Privileges',
-            data: 'Employee Finance Privileges',
-            children: [
-                { key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
-                { key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
-                { key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
-            ]
-        }
-    ])
+
+const canShowLoadingScreen = ref(true);
+const canShowCreateRole_Dialog = ref(false);
+const canShowManageRoles_Dialog = ref(false);
+
+const allpermission = ref();
+
+axios.get('/getAllPermissions').then(res => {
+    allpermission.value = res.data;
+    console.log(allpermission);
+});
+
+
+const nodes = ref([
+    {
+        id: 1,
+        key: '0',
+        label: 'Documents',
+        data: 'Documents Folder',
+        icon: 'pi pi-fw pi-inbox',
+        children: [
+            {
+
+                id: 2,
+                key: '1',
+                label: 'Work',
+                data: 'Work Folder',
+                icon: 'pi pi-fw pi-cog',
+                children: [
+                    { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
+                    { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' }
+                ]
+            },
+            {
+                id: 3,
+                key: '2',
+                label: 'Home',
+                data: 'Home Folder',
+                icon: 'pi pi-fw pi-home',
+                children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }]
+            }
+        ]
+    },
+    {
+        id: 4,
+        key: '4',
+        label: 'Events',
+        data: 'Events Folder',
+        icon: 'pi pi-fw pi-calendar',
+        children: [
+            { id: 5, key: '1-0', label: 'Meeting', icon: 'pi pi-fw pi-calendar-plus', data: 'Meeting' },
+            { id: 6, key: '1-1', label: 'Product Launch', icon: 'pi pi-fw pi-calendar-plus', data: 'Product Launch' },
+            { id: 7, key: '1-2', label: 'Report Review', icon: 'pi pi-fw pi-calendar-plus', data: 'Report Review' }
+        ]
+    }])
 
 onMounted(() => {
     setTimeout(() => {

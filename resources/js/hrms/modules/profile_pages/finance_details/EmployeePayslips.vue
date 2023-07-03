@@ -27,14 +27,14 @@
 
             <Column header="Action">
                 <template #body="slotProps">
-                    <Button class="btn-primary" label="View "
+                    <Button class="btn-primary z-0" label="View "
                         @click="employeePayslipStore.getEmployeePayslipDetailsAsHTML('', slotProps.data.PAYROLL_MONTH)" />
                 </template>
             </Column>
             <column header="Download">
                 <template #body="slotProps">
                     <!-- {{slotProps.data}} -->
-                    <Button class="btn-primary" label="Download "
+                    <Button class="btn-primary z-0" label="Download "
                         @click="employeePayslipStore.getEmployeePayslipDetailsAsPDF('', slotProps.data.PAYROLL_MONTH)" />
                 </template>
 

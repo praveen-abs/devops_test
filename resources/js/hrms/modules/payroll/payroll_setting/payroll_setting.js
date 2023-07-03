@@ -4,6 +4,7 @@ import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import '../../../.././../../public/assets/css/tailwind.css';
 import '../../../assests/tailwind.css'
+// import router from "./router";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -32,6 +33,7 @@ import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips';
+import InputSwitch from 'primevue/inputswitch';
 
 
 import payroll_setting from './payroll_setting.vue'
@@ -45,6 +47,7 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia)
+// app.use(router)
 
 
 app.directive('tooltip', Tooltip);
@@ -68,6 +71,7 @@ app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('InputNumber', InputNumber)
+app.component('InputSwitch', InputSwitch)
 
 app.mount("#payroll_setting");
 

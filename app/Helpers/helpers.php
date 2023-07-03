@@ -91,6 +91,15 @@ function sessionGetSelectedClientCode()
     else
         return "";
 }
+function sessionGetSelectedClientid()
+{
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->id;
+    else
+        return "";
+}
 
 function sessionGetSelectedClientName()
 {
@@ -118,6 +127,27 @@ function sessionGetSelected_abs_clientcode()
 {
 
     $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->abs_client_code;
+    else
+        return "";
+}
+function GetSelectedClientFullName($client_id)
+{
+
+    $query_client = VmtClientMaster::where('id',$client_id)->first();
+
+    if (!empty($query_client))
+        return $query_client->client_fullname;
+    else
+        return "";
+}
+
+function GetSelected_abs_clientcode($client_id)
+{
+
+    $query_client = VmtClientMaster::where('id',$client_id)->first();
 
     if (!empty($query_client))
         return $query_client->abs_client_code;
@@ -290,14 +320,14 @@ function getUserShortName($user_id)
 
     if (count($dotPattern) > 1) {
         $toStore = trim($dotPattern[0])[0] . trim($dotPattern[1])[0];
-        return $toStore;
+        return strtoupper($toStore);
     } else
     if (count($whiteSpacePattern) > 1) {
         $toStore = $whiteSpacePattern[0][0] . $whiteSpacePattern[1][0];
-        return $toStore;
+        return strtoupper($toStore);
     } else {
         $toStore = $singleWordPattern[0] . $singleWordPattern[1];
-        return $toStore;
+        return strtoupper($toStore);
     }
 
     // return $whiteSpacePattern;

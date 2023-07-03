@@ -30,16 +30,17 @@
                                 id="familyDetails_Relationship" pattern-data="alpha" required>
                         </div>
                     </div>
-                    <div class="space-between M-T">
+                    <div class="space-between M-T mr-4">
                         <div class="flex-col input_text">
                             <span>Date of birth <span class="text-danger">*</span></span>
-                            <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" v-model="familydetails.dob">
+                            <Calendar dateFormat="dd/mm/yy" v-model="familydetails.dob"  class="h-10 w-full" :minDate="minDate" :maxDate="maxDate" />
+                            <!-- <input type="date" id="datemin" name="familyDetails_dob[]" min="2000-01-02" > -->
                         </div>
 
                         <div class="flex-col input_text">
                             <span>phone<span class="text-danger">*</span></span>
-                            <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
-                                name="familyDetails_phoneNumber[]" v-model="familydetails.phone_number">
+                                <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
+                                        v-model="familydetails.phone_number">
                         </div>
                     </div>
 
@@ -128,8 +129,11 @@
 
                                         <div class="flex-col input_text">
                                             <span>phone<span class="text-danger">*</span></span>
-                                            <input type="number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]{9}" id="familyDetails_phoneNumber"
-                                                name="familyDetails_phoneNumber[]"  v-model="Editfamilydetails.phone_number" >
+                                            <!-- <input type="number"  size=20 maxlength=10  id="familyDetails_phoneNumber"
+                                                name="familyDetails_phoneNumber[]"  > -->
+                                                <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
+                                        v-model="Editfamilydetails.phone_number">
+                                                <!-- <InputNumber  inputId="minmax" :min="0" :max="10"  v-model="Editfamilydetails.phone_number" /> -->
                                         </div>
                                     </div>
 
@@ -163,7 +167,7 @@
 </template>
 <script setup>
 import dayjs from 'dayjs';
-
+import { useNow, useDateFormat } from '@vueuse/core'
 import { ref, onMounted, reactive, onUpdated } from 'vue';
 import axios from 'axios'
 import { useToast } from "primevue/usetoast";
@@ -210,13 +214,13 @@ const saveFamilyDetails = () => {
             user_code: _instance_profilePagesStore.employeeDetails.user_code,
             name: familydetails.name,
             relationship: familydetails.relationship,
-            dob: familydetails.dob,
+            dob: dayjs( familydetails.dob ).format('YYYY-MM-DD'),
             phone_number: familydetails.phone_number
         })
         .then((res) => {
 
             if (res.data.status == "success") {
-                //  window.location.reload();
+
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Family information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
@@ -228,13 +232,13 @@ const saveFamilyDetails = () => {
                 // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
                 _instance_profilePagesStore.employeeDetails.get_family_details.phone_number = familydetails.phone_number;
             } else if (res.data.status == "failure") {
-                leave_data.leave_request_error_messege = res.data.message;
+                // leave_data.leave_request_error_messege = res.data.message;
             }
         })
         .catch((err) => {
             console.log(err);
         }).finally(()=>{
-            _instance_profilePagesStore.fetchEmployeeDetails()
+            _instance_profilePagesStore.fetchEmployeeDetails();
             _instance_profilePagesStore.loading_screen = false
             });
         // window.location.reload();
@@ -259,6 +263,7 @@ const diolog_EditFamilyDetails = (family) => {
 };
 
 const diolog_DeleteFamilyDetails = (family) => {
+    _instance_profilePagesStore.loading_screen = true
 
 
     current_table_id.value = family.id
@@ -272,7 +277,7 @@ const diolog_DeleteFamilyDetails = (family) => {
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
+                //  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Deleted', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(familydetails.dob,'YYYY-MM-DD' );
 
@@ -289,12 +294,16 @@ const diolog_DeleteFamilyDetails = (family) => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            _instance_profilePagesStore.loading_screen = false;
+            _instance_profilePagesStore.fetchEmployeeDetails();
+        })
 
 
 }
 
  const EditFamilyDetails = (user)=>{
+    _instance_profilePagesStore.loading_screen = true
             // console.log(id);
             let id = fetch_data.current_user_id
     let url =`/update-family-info/${id}`;
@@ -303,13 +312,13 @@ const diolog_DeleteFamilyDetails = (family) => {
             current_table_id: current_table_id.value,
             name: Editfamilydetails.name,
             relationship: Editfamilydetails.relationship,
-            dob: Editfamilydetails.dob,
+            dob:  dayjs( Editfamilydetails.dob ).format('YYYY-MM-DD'),
             phone_number: Editfamilydetails.phone_number
         })
         .then((res) => {
 
             if (res.data.status == "success") {
-                 window.location.reload();
+
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
                 _instance_profilePagesStore.employeeDetails.get_family_details.dob = useDateFormat(Editfamilydetails.dob,'YYYY-MM-DD' );
 
@@ -326,7 +335,10 @@ const diolog_DeleteFamilyDetails = (family) => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(()=>{
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            _instance_profilePagesStore.loading_screen = false
+        })
         // window.location.reload();
         DialogEditInfovisible.value = false;
     }

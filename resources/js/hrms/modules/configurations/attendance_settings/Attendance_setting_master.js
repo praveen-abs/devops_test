@@ -28,7 +28,10 @@ import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
 import Calendar from 'primevue/calendar';
-import Checkbox from 'primevue/checkbox'
+import Checkbox from 'primevue/checkbox';
+import MultiSelect from 'primevue/multiselect';
+import InputNumber from 'primevue/inputnumber';
+
 
 import Attendance_master from './Attendance_setting_Master.vue'
 
@@ -62,6 +65,8 @@ app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Checkbox', Checkbox)
+app.component('MultiSelect', MultiSelect)
+app.component('InputNumber', InputNumber)
 
 app.mount("#vjs_attendance_master");
 

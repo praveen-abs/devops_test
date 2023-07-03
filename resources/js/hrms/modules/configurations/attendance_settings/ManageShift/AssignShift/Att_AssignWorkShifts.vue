@@ -1,135 +1,313 @@
 <template>
-  <div class="w-full ">
-    <!-- <ConfirmDialog></ConfirmDialog> -->
-    <Toast />
-    <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-      <template #header>
-        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-          animationDuration="2s" aria-label="Custom ProgressSpinner" />
-      </template>
-      <template #footer>
-        <h5 style="text-align: center">Please wait...</h5>
-      </template>
-    </Dialog>
-    <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-      <template #header>
-        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-          animationDuration="2s" aria-label="Custom ProgressSpinner" />
-      </template>
-      <template #footer>
-        <h5 style="text-align: center">Please wait...</h5>
-      </template>
-    </Dialog>
+    <div class="w-full">
+        <!-- <ConfirmDialog></ConfirmDialog> -->
+        <Toast />
+        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" modal >
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
 
-    <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
-      :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
-      <div class="confirmation-content">
-        <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-        <span>Proceed to save the shift details?</span>
-      </div>
-      <template #footer>
-        <Button label="Yes" icon="pi pi-check" @click="saveWorkShiftDetails()" class="p-button-text" autofocus />
-        <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
-      </template>
-    </Dialog>
+        <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" modal >
+            <div class="confirmation-content">
+                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
+                <span>Proceed to save the shift details?</span>
+            </div>
+            <template #footer>
+                <Button label="Yes" icon="pi pi-check" @click="saveWorkShiftDetails()" class="p-button-text" autofocus />
+                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
+            </template>
+        </Dialog>
 
-    <div class="flex px-4 pt-6 gap-9">
+        <div class="flex px-4 pt-6 gap-9">
+            <div>
+                <span class="text-lg font-semibold">Shift Name</span>
+                <span class="mx-2">
+                    <InputText type="text" v-model="useAttendanceStore.shiftDetails.shift_name"
+                        placeholder="Enter the shift name" />
+                </span>
+            </div>
+            <div>
+                <span class="text-lg font-semibold">Shift Code</span>
+                <span class="mx-2">
+                    <InputText type="text" v-model="useAttendanceStore.shiftDetails.Shift_Code"
+                        placeholder="Enter the shift code" />
+                </span>
+            </div>
+            <div class="flex my-2">
+                <p class="text-lg font-semibold px-3">Is Default</p>
+                <Checkbox v-model="useAttendanceStore.shiftDetails.Is_Default" :binary="true" />
+            </div>
+        </div>
+        <!--  -->
 
-      <div>
-        <span class="text-lg font-semibold">Shift Name</span>
-        <span class="mx-2">
-          <InputText type="text" v-model="txt_shift_name" placeholder="Enter the shift name" />
-        </span>
-      </div>
-      <div>
-        <span class="text-lg font-semibold">Shift Code</span>
-        <span class="mx-2">
-          <InputText type="text" v-model="txt_shift_start_time" placeholder="Enter the shift code" />
-        </span>
-      </div>
-      <div class="flex my-2">
-        <p class="text-lg font-semibold">Is Default</p>
-        <Checkbox class="mx-3" :binary="true" />
+        <div class="w-full p-4 mx-5 ">
+            <div class="flex gap-4 pt-4 ">
+                <div>
+                    <input style="height: 23px;width: 23px;" value="Apply Flexible Gross Hours"
+                        class="mt-1 form-check-input" type="radio" name="leave" v-model="useAttendanceStore.change">
+                </div>
+                <div>
+                    <p class="font-semibold py-auto">Apply Flexible Gross Hours</p>
+                </div>
+                <div class="flex">
+                    <InputNumber  v-model="useAttendanceStore.shiftDetails.flexible_gross_hours" v-if="useAttendanceStore.change == 'Apply Flexible Gross Hours'" inputId="minmax" :min="0" :max="100" />
+                    <p class="mx-4 text-lg font-semibold text-gray-600 py-auto" v-if="useAttendanceStore.change == 'Apply Flexible Gross Hours'"  >Min</p>
+                </div>
+            </div>
+            <div class="p-3 my-5 rounded-lg bg-blue-50 ">
+                <div class="flex gap-4 col-12">
+                    <input style="height: 20px;width: 20px;" value="Apply Standard General Shift Timing"
+                        class="form-check-input" type="radio" name="leave" v-model="useAttendanceStore.change">
+                    <p class="font-semibold">Apply Standard General Shift Timing</p>
+                </div>
+                <div v-if="useAttendanceStore.change == 'Apply Standard General Shift Timing'">
+                    <div class="flex mx-6 my-4 row">
+                        <div class="flex gap-4 col-6 ">
+                            <div>
+                                <p class="text-lg font-semibold py-auto">Shift Start Time</p>
+                            </div>
+                            <div>
+                                <Calendar id="calendar-timeonly" v-model="useAttendanceStore.shiftDetails.Shift_start_Time"
+                                    timeOnly class="h-10 " />
+                            </div>
+                        </div>
+                        <div class="flex gap-4 col-6">
+                            <div>
+                                <p class="text-lg font-semibold py-auto">Shift End Time</p>
 
-      </div>
+                            </div>
+                            <div>
+                                <Calendar id="calendar-timeonly" v-model="useAttendanceStore.shiftDetails.Shift_End_Time"
+                                    timeOnly class="h-10 " />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="flex mx-6 my-4 row ">
+                        <div class="flex gap-1 col-6 d-flex align-items-center">
+                            <div class="">
+                                <p class="text-lg font-semibold py-auto ">Week Off</p>
+                            </div>
+                            <div class="ml-7 col-9">
+                                <MultiSelect v-model="useAttendanceStore.shiftDetails.Week_Off" :options="Week_Off_Days"
+                                    optionLabel="name" placeholder="Select Week Off" :maxSelectedLabels="3" class="h-15"
+                                    style="width:180px" />
+                            </div>
+                        </div>
+                        <div class="flex gap-1 col-6  d-flex align-items-center">
+                            <div>
+                                <p class="text-lg font-semibold py-auto">Grace Time</p>
+                            </div>
+                            <div class="ml-6 col-9">
+                                <!-- <InputText type="text" v-model="useAttendanceStore.shiftDetails.Grace_Time"  /> -->
+                                <InputNumber class="h-10 " v-model="useAttendanceStore.shiftDetails.Grace_Time"
+                                    inputId="minmax" :min="0" :max="59" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex w-full justify-content-start">
+                <DataTable :value="useAttendanceStore.Week_Off_Days" tableStyle="min-width: 95rem">
+                    <Column field="weeks" header="Days">
+                    </Column>
+
+                    <Column field="week_off_list" header="ALL Weeks">
+                        <template #body="slotProps">
+                            <!-- {{ slotProps.data.first_week }} -->
+                            <div>
+
+                                <!-- If Initial Week Off Value is 0 -->
+                                <input v-if="slotProps.data.AllWeeks == 0" @change="useAttendanceStore.updateWeekOffState(slotProps.data)" @click="slotProps.data.AllWeeks = 1,
+                                                                                                                                                    slotProps.data.first_week = 1 ,
+                                                                                                                                                    slotProps.data.sec_week = 1 ,
+                                                                                                                                                    slotProps.data.third_week = 1,
+                                                                                                                                                    slotProps.data.fourth_week = 1 ,
+                                                                                                                                                    slotProps.data.fifth_week = 1 "
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.AllWeeks" :true-value = 1 :false-value = 0  :checked=" slotProps.data.first_week == 1 ? true :
+                                                                                                                    slotProps.data.sec_week == 1 ? true :
+                                                                                                                    slotProps.data.third_week == 1 ? true :
+                                                                                                                    slotProps.data.fourth_week == 1 ? true :
+                                                                                                                   slotProps.data.fifth_week == 1 ? true : false"  >
+
+                                    <!-- If Initial Week Off Value is 1 -->
+                                  <input v-else-if="slotProps.data.AllWeeks == 1" @change="useAttendanceStore.updateWeekOffState(slotProps.data)" @click="slotProps.data.first_week = 0 ,
+                                                                                                                                                        slotProps.data.sec_week = 0 ,
+                                                                                                                                                        slotProps.data.third_week = 0,
+                                                                                                                                                        slotProps.data.fourth_week = 0 ,
+                                                                                                                                                        slotProps.data.fifth_week = 0 "
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.AllWeeks" :true-value = 1 :false-value = 0  :checked=" slotProps.data.first_week == 0 ? false :
+                                                                                                                    slotProps.data.sec_week == 0 ? false :
+                                                                                                                    slotProps.data.third_week == 0 ? false :
+                                                                                                                    slotProps.data.fourth_week == 0 ? false :
+                                                                                                                   slotProps.data.fifth_week == 0 ? false : true"  >
+
+                                <!-- If Initial Week Off Value is null -->
+                                <input v-else @change="useAttendanceStore.updateWeekOffState(slotProps.data)" @click="slotProps.data.first_week = 1 ,
+                                                                                                                    slotProps.data.sec_week = 1 ,
+                                                                                                                    slotProps.data.third_week = 1,
+                                                                                                                    slotProps.data.fourth_week = 1 ,
+                                                                                                                    slotProps.data.fifth_week = 1 "
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.AllWeeks" :true-value = 1 :false-value = 0  :checked=" slotProps.data.first_week == 1 ? true :
+                                                                                                                    slotProps.data.sec_week == 1 ? true :
+                                                                                                                    slotProps.data.third_week == 1 ? true :
+                                                                                                                    slotProps.data.fourth_week == 1 ? true :
+                                                                                                                   slotProps.data.fifth_week == 1 ? true : false"  >
+
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="first_week" header="first Week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                     @click="slotProps.data.AllWeeks == 1 ? slotProps.data.first_week = 0 : slotProps.data.first_week = 1 "
+                                    v-model="slotProps.data.first_week" :true-value=1 :false-value = 0 :checked="slotProps.data.AllWeeks ? true : false" >
+                            </div>
+
+                        </template>
+                    </Column>
+                    <Column field="sec_week" header="second week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                 @click="slotProps.data.AllWeeks == 1 ? slotProps.data.sec_week = 0 : slotProps.data.sec_week = 1 "
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.sec_week"
+                                    :false-value = 0 :true-value=1 :checked="slotProps.data.AllWeeks ? true : false" >
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="third_week" header="third week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                @click="slotProps.data.AllWeeks == 1 ? slotProps.data.third_week = 0 : slotProps.data.third_week = 1 "
+                                    style="height: 20px; width: 20px;" class="form-check-input" type="checkbox" name="" id="" v-model="slotProps.data.third_week" :true-value=1
+                                    :false-value=0 :checked="slotProps.data.AllWeeks ? true : false"  >
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="fourth_week" header="fourth week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                @click="slotProps.data.AllWeeks == 1 ? slotProps.data.fourth_week = 0 : slotProps.data.fourth_week = 1 "
+                                    style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="" id=""
+                                    v-model="slotProps.data.fourth_week" :true-value=1
+                                    :false-value=0  :checked="slotProps.data.AllWeeks ? true : false"  >
+                            </div>
+                        </template>
+                    </Column>
+                    <Column field="fifth_week" header="fifth week">
+                        <template #body="slotProps">
+                            <div>
+                                <input @change="useAttendanceStore.updateWeekOffState(slotProps.data)"
+                                 @click="slotProps.data.AllWeeks == 1 ? slotProps.data.fifth_week = 0 : slotProps.data.fifth_week = 1 "
+                                    style="height: 20px;width: 20px; " class="form-check-input" type="checkbox"  v-model="slotProps.data.fifth_week"
+                                    :true-value=1 :false-value=0  :checked="slotProps.data.AllWeeks ? true : false"  >
+                            </div>
+                        </template>
+                    </Column>
+                </DataTable>
+
+            </div>
+        </div>
+
+        <!--  -->
+
+        <div class="flex mx-4 my-6">
+            <span class="text-lg font-semibold">Assign To</span>
+            <span class="p-2 mx-4 my-auto mb-5 rounded-lg bg-red-50 fotn-bold"> <strong
+                    class="text-orange-300">Note:</strong>
+                Particular employees cannot be assigned to more than one shift unless he or she is assigned to a flexible
+                shift.</span>
+        </div>
+
+        <div class="flex justify-between mx-4">
+            <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Department"
+                class="w-full md:w-14rem text-blue-900" style="border:1px solid navy" />
+            <Dropdown v-model="selectedCity" style="border:1px solid navy" :options="cities" optionLabel="name"
+                placeholder="Designation" class="w-full md:w-14rem text-blue-900" />
+            <Dropdown v-model="selectedCity" style="border:1px solid navy" :options="cities" optionLabel="name"
+                placeholder="Location" class="w-full md:w-14rem text-blue-900" />
+            <Dropdown v-model="selectedCity" style="border:1px solid navy" :options="cities" optionLabel="name"
+                placeholder="State" class="w-full md:w-14rem text-blue-900" />
+            <Dropdown v-model="selectedCity" style="border:1px solid navy" :options="cities" optionLabel="name"
+                placeholder="Branch" class="w-full md:w-14rem text-blue-900" />
+            <Dropdown v-model="selectedCity" style="border:1px solid navy" :options="cities" optionLabel="name"
+                placeholder="Legal Entity" class="w-full md:w-14rem text-blue-900 " />
+
+        </div>
+        <div class="mx-4">
+            <InputText type="text" v-model="txt_shift_name" placeholder="Search..." class="my-4" />
+            <!-- {{useAttendanceStore.array_shiftDetails}} -->
+            <DataTable class="w-full" :value="useAttendanceStore.array_shiftDetails"
+                v-model:selection="useAttendanceStore.selectedEmployees" :paginator="true" :rows="2" dataKey="emp_code"
+                :rowsPerPageOptions="[5, 10, 25]"
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters"
+                filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']" >
+                <template #empty> No Employee found </template>
+                <template #loading> Loading employee data. Please wait. </template>
+                <Column selectionMode="multiple"></Column>
+                <Column field="emp_code" header="Employee ID" style="min-width: 2rem;">
+                    <template #body="slotProps">
+                        {{ slotProps.data.emp_code }}
+                    </template>
+
+                </Column>
+                <Column field="employee_name" header="Employee Name" style="min-width: 8rem;">
+                    <template #body="slotProps">
+                        {{ slotProps.data.employee_name }}
+                    </template>
+
+                </Column>
+                <Column field="designation" header="Designation" style="min-width: 10rem;">
+                    <template #body="slotProps">
+                        {{ slotProps.data.designation }}
+                    </template>
+
+                </Column>
+                <Column style="min-width: 10rem;" field="department_name" header="Department">
+                    <template #body="slotProps">
+                        {{ slotProps.data.department_name }}
+                    </template>
+
+                </Column>
+                <Column style="min-width: 10rem;" field="work_location" header="Location">
+                    <template #body="slotProps">
+                        {{ slotProps.data.work_location }}
+                    </template>
+                </Column>
+                <Column style="min-width: 10rem;" field="work_location" header="State">
+                    <template #body="slotProps">
+                        {{ slotProps.data.work_location }}
+                    </template>
+                </Column>
+            </DataTable>
+
+        </div>
+        <div class="my-3 text-end">
+            <button class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md"
+                @click="useAttendanceStore.manageshift_exemption_steps++">Next</button>
+        </div>
     </div>
-    <div class="flex mx-4 my-6">
-      <span class="text-lg font-semibold">Assign To</span>
-      <span class="p-2 mx-4 my-auto mb-5 rounded-lg bg-red-50 fotn-bold"> <strong class="text-orange-300">Note:</strong>
-        Particular employees cannot be assigned to more than one shift unless he or she is assigned to a flexible
-        shift.</span>
-    </div>
 
-    <div class="flex justify-between mx-4">
-      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Department"
-        class="w-full md:w-14rem" />
-      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Designation"
-        class="w-full md:w-14rem" />
-      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Location"
-        class="w-full md:w-14rem" />
-      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a State"
-        class="w-full md:w-14rem" />
-      <Dropdown v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a Legal Entity"
-        class="w-full md:w-14rem" />
-    </div>
 
-    <!-- <Calendar id="calendar-timeonly"  timeOnly hourFormat="12" /> -->
-    <div class="mx-4">
-      <InputText type="text" v-model="txt_shift_name" placeholder="Search..." class="my-4" />
-      <!-- {{ att_emp_details }} -->
-      <DataTable :value="att_emp_details" v-model:selection="selectedEmployees" :paginator="true" :rows="2"
-        dataKey="emp_code" :rowsPerPageOptions="[5, 10, 25]"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" v-model:filters="filters"
-        filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-        <template #empty> No Employee found </template>
-        <template #loading> Loading employee data. Please wait. </template>
-        <Column selectionMode="multiple"></Column>
-        <Column field="emp_code" header="Employee ID" style="min-width: 2rem;">
-          <template #body="slotProps">
-            {{ slotProps.data.emp_code }}
-          </template>
-
-        </Column>
-        <Column field="employee_name" header="Employee Name" style="min-width: 8rem;">
-          <template #body="slotProps">
-            {{ slotProps.data.employee_name }}
-          </template>
-
-        </Column>
-        <Column field="designation" header="Designation" style="min-width: 10rem;">
-          <template #body="slotProps">
-            {{ slotProps.data.designation }}
-          </template>
-
-        </Column>
-        <Column style="min-width: 10rem;" field="department_name" header="Department">
-          <template #body="slotProps">
-            {{ slotProps.data.department_name }}
-          </template>
-
-        </Column>
-        <Column style="min-width: 10rem;" field="work_location" header="Location">
-          <template #body="slotProps">
-            {{ slotProps.data.work_location }}
-          </template>
-        </Column>
-        <Column style="min-width: 10rem;" field="work_location" header="State">
-          <template #body="slotProps">
-            {{ slotProps.data.work_location }}
-          </template>
-        </Column>
-      </DataTable>
-
-    </div>
-    <div class="my-3 text-end">
-      <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4">Save</button>
-      <button
-        class="px-4 py-2 text-center text-orange-600 bg-transparent border border-orange-700 rounded-md">Next</button>
-    </div>
-  </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
@@ -138,102 +316,119 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+// import {GeneralShift} from "../GeneralShift/GeneralShift.vue"
+import { useAttendanceSettingMainStore } from '../../stores/attendanceSettingMainStore';
 
-let att_emp_details = ref();
+const useAttendanceStore = useAttendanceSettingMainStore();
+
 let canShowConfirmation = ref(false);
-let canShowLoadingScreen = ref(false);
-let selectedEmployees = ref();
-let txt_shift_name = ref();
-const confirm = useConfirm();
-const toast = useToast();
+
+// const checked =ref(false);
+
+const checkdata = ref();
+
+const checked = (data) => {
+    checkdata.value = data;
+    console.log(data);
+}
+
+
+// const isChecked = (ele)=>{
+
+// }
+
+
+
+onMounted(() => {
+    console.log(useAttendanceStore.manageshift_exemption_steps);
+
+})
+
+
+// const confirm = useConfirm();
+// const toast = useToast();
 
 const selectedCity = ref();
 const cities = ref([
-  { name: 'New York', code: 'NY' },
-  { name: 'Rome', code: 'RM' },
-  { name: 'London', code: 'LDN' },
-  { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' }
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
 ]);
 
+const select_Week_Off = ref({});
+
+
+
+
+
 const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  emp_code: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
-  employee_name: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
-  designation: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
-  department_name: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
-  location: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    emp_code: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    employee_name: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    designation: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    department_name: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    location: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
 });
 
-const loading = ref(true);
 
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
 onMounted(() => {
-  ajax_GetEmployeeDetails();
+    //   ajax_GetEmployeeDetails();
+    useAttendanceStore.fetchShiftDetails();
+    useAttendanceStore.getWeek_Off_Days();
 });
 
 function onClickGetEmployees() {
-  console.log(
-    "onClickGetEmployees() button clicked : Shift Name :: " + txt_shift_name.value
-  );
-  console.log("Selected Employees : " + JSON.stringify(selectedEmployees.value));
+    console.log(
+        "onClickGetEmployees() button clicked : Shift Name :: " + txt_shift_name.value
+    );
+    console.log("Selected Employees : " + JSON.stringify(selectedEmployees.value));
 }
 
-function ajax_GetEmployeeDetails() {
-  let url = window.location.origin + "/attendance_settings/fetch-emp-details";
 
-  console.log("AJAX URL : " + url);
-
-  axios.get(url).then((response) => {
-    console.log("Axios : " + response.data);
-    att_emp_details.value = response.data;
-    loading.value = false;
-  });
-}
 
 function showConfirmDialog() {
-  canShowConfirmation.value = true;
+    canShowConfirmation.value = true;
 
-  // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+    // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog(canClearData) {
-  canShowConfirmation.value = false;
+    canShowConfirmation.value = false;
 
-  if (canClearData) resetVars();
+    if (canClearData) resetVars();
 }
 
-function resetVars() {
-  currentlySelectedStatus = "";
-  currentlySelectedRowData = null;
-}
+
 
 ////PrimeVue ConfirmDialog code -- Keeping here for reference
 //const confirm = useConfirm();
@@ -256,13 +451,13 @@ function resetVars() {
 // }
 
 const css_statusColumn = (data) => {
-  return [
-    {
-      pending: data.status === "Pending",
-      approved: data.status === "Approved",
-      rejected: data.status === "Rejected",
-    },
-  ];
+    return [
+        {
+            pending: data.status === "Pending",
+            approved: data.status === "Approved",
+            rejected: data.status === "Rejected",
+        },
+    ];
 };
 
 /*
@@ -270,309 +465,12 @@ const css_statusColumn = (data) => {
     Output : A 1-D array of emp ids.
 
 */
-function getEmployeeIDsArray() {
-  const temp = [];
 
-  _.flatMap(selectedEmployees.value, function (data) {
-    temp.push(data.user_id);
-  });
-
-  return temp;
-  //console.log("Output : "+temp);
-}
-
-function saveWorkShiftDetails() {
-  hideConfirmDialog(false);
-
-  canShowLoadingScreen.value = true;
-
-  console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
-
-  //squash all the emp details
-  let array_assignedEmp_ids = getEmployeeIDsArray();
-
-  //Shift name
-  //Selected employees
-  axios
-    .post(window.location.origin + "/attendance_settings/save-shiftdetails", {
-      selectedEmployees: array_assignedEmp_ids,
-      workshift_name: txt_shift_name.value,
-    })
-    .then((response) => {
-      console.log(response);
-      ajax_GetEmployeeDetails();
-
-      canShowLoadingScreen.value = false;
-
-      resetVars();
-    })
-    .catch((error) => {
-      canShowLoadingScreen.value = false;
-      resetVars();
-
-      console.log(error.toJSON());
-    });
-}
-
-// function processApproveReject() {
-//   hideConfirmDialog(false);
-
-//   canShowLoadingScreen.value = true;
-
-//   console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
-
-//   axios
-//     .post(window.location.origin + "/attendance-approve-rejectleave", {
-//       leave_id: currentlySelectedRowData.id,
-//       status:
-//         currentlySelectedStatus == "Approve"
-//           ? "Approved"
-//           : currentlySelectedStatus == "Reject"
-//           ? "Rejected"
-//           : currentlySelectedStatus,
-//       leave_rejection_text: "",
-//     })
-//     .then((response) => {
-//       console.log(response);
-//       ajax_GetLeaveData();
-
-//       canShowLoadingScreen.value = false;
-
-//       resetVars();
-//     })
-//     .catch((error) => {
-//       canShowLoadingScreen.value = false;
-//       resetVars();
-
-//       console.log(error.toJSON());
-//     });
-// }
 </script>
-<style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
 
-.p-datatable .p-datatable-thead>tr>th {
-  text-align: center;
-  padding: 1.3rem 1rem;
-  border: 1px solid #dee2e6;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-width: 0 0 1px 0;
-  font-weight: 600;
-  color: #fff;
-  background: #003056;
-  transition: box-shadow 0.2s;
-  font-size: 13px;
 
-  .p-column-title {
-    font-size: 13px;
-  }
-
-  .p-column-filter {
-    width: 100%;
-  }
-
-  #pv_id_2 {
-    height: 30px;
-  }
-
-  .p-fluid .p-dropdown .p-dropdown-label {
-    margin-top: -10px;
-  }
-
-  .p-dropdown .p-dropdown-label.p-placeholder {
-    margin-top: -12px;
-  }
-
-  .p-column-filter-menu-button {
-    color: white;
-    margin-left: 10px;
-  }
-
-  .p-column-filter-menu-button:hover {
-    color: white;
-    border-color: transparent;
-    background: #023e70;
-  }
+{
+    <!--
+     -->
 }
 
-.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
-  margin-bottom: 0.5rem;
-  visibility: hidden;
-  position: absolute;
-}
-
-.p-button .p-component .p-button-sm {
-  background-color: #003056;
-}
-
-.p-datatable .p-datatable-tbody>tr {
-  font-size: 13px;
-
-  .employee_name {
-    font-weight: bold;
-    font-size: 13.5px;
-  }
-}
-
-.p-datatable .p-datatable-tbody>tr>td {
-  text-align: left;
-  border: 1px solid #dee2e6;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-width: 0 0 1px 0;
-  padding: 1rem 0.6rem;
-}
-
-// .p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-//   width: 200px;
-// }
-
-// .p-datatable .p-datatable-tbody>tr>td:nth-child(3) {
-//   width: 150px;
-// }
-
-// .p-datatable .p-datatable-tbody>tr>td:nth-child(6) {
-//   width: 200px;
-// }
-
-// .main-content {
-//   width: 105%;
-// }
-
-.pending {
-  font-weight: 700;
-}
-
-.approved {
-  font-weight: 700;
-}
-
-.p-button.p-component.p-button-success.Button {
-  padding: 8px;
-}
-
-.rejected {
-  font-weight: 700;
-  color: #ff2634;
-}
-
-.p-button.p-component.p-button-danger.Button {
-  padding: 8px;
-}
-
-.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
-  color: red;
-}
-
-.p-button.p-component.p-confirm-dialog-accept {
-  background-color: #003056;
-}
-
-.p-button.p-component.p-confirm-dialog-reject.p-button-text {
-  color: #003056;
-}
-
-.p-column-filter-overlay-menu .p-column-filter-buttonbar {
-  padding: 1.25rem;
-  position: absolute;
-  visibility: hidden;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter {
-  width: 44%;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
-  color: white;
-  border-color: transparent;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-open {
-  background: none;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-active {
-  background: none;
-}
-
-/* For Sort */
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
-  background: #003056;
-  color: white;
-}
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-  color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight {
-  background: #003056;
-  color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight:hover {
-  background: #003056;
-  color: white;
-}
-
-.p-datatable .p-sortable-column:focus {
-  box-shadow: none;
-  outline: none;
-  color: white;
-}
-
-.p-datatable .p-sortable-column .p-sortable-column-icon {
-  color: white;
-}
-
-.pi-sort-amount-down::before {
-  content: "\e9a0";
-  color: white;
-}
-
-.pi-sort-amount-up-alt::before {
-  content: "\e9a2";
-  color: white;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-title {
-  font-size: 13px;
-  margin-left: 50px;
-}
-
-.p-dialog .p-dialog-header {
-  border-bottom: 0 none;
-  background: #ffff;
-  color: #495057;
-  padding: 1.5rem;
-  border-top-right-radius: 6px;
-  border-top-left-radius: 6px;
-}
-
-.p-dialog .p-dialog-content {
-  background: #ffff;
-  color: #495057;
-  padding: 0 1.5rem 2rem 1.5rem;
-}
-
-.p-dropdown-label.p-inputtext.p-placeholder {
-  color: #003056;
-}
-
-.p-dropdown .p-dropdown-label.p-placeholder {
-  color: #003360;
-}
-
-.p-dropdown {
-  display: inline-flex;
-  cursor: pointer;
-  position: relative;
-  user-select: none;
-  border: 1px solid #003056;
-}</style>

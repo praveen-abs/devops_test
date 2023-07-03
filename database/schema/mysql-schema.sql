@@ -770,14 +770,14 @@ CREATE TABLE `vmt_employee_workshifts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `vmt_general_info`;
+DROP TABLE IF EXISTS `vmt_client_master`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vmt_general_info` (
+CREATE TABLE `vmt_client_master` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `short_name` text DEFAULT NULL,
   `login_instruction` text DEFAULT NULL,
-  `logo_img` text DEFAULT NULL,
+  `client_logo` text DEFAULT NULL,
   `background_img` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1210,7 +1210,7 @@ INSERT INTO `migrations` VALUES (8,'2022_05_22_123444_create_vmt_360_user_forms_
 INSERT INTO `migrations` VALUES (9,'2022_05_24_123444_create_vmt_360_employee_hierarchy_table',5);
 INSERT INTO `migrations` VALUES (10,'2022_05_31_100000_create_vmt_general_settings_table',6);
 INSERT INTO `migrations` VALUES (11,'2022_06_05_123456_create_vmt_employee_payslip_table',7);
-INSERT INTO `migrations` VALUES (12,'2022_06_07_123456_create_vmt_general_info_table',8);
+INSERT INTO `migrations` VALUES (12,'2022_06_07_123456_create_vmt_client_master_table',8);
 INSERT INTO `migrations` VALUES (13,'2022_06_08_123456_create_vmt_employees_table',9);
 INSERT INTO `migrations` VALUES (14,'2022_06_13_111222_create_vmt_performance_apraisal_questions_table',10);
 INSERT INTO `migrations` VALUES (15,'2022_06_22_123123_create_vmt_employee_office_details_table',11);

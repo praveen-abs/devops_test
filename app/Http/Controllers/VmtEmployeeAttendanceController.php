@@ -48,6 +48,10 @@ class VmtEmployeeAttendanceController extends Controller
         return view('reports.vmt_basic_attendance_reports',compact('attendance_available_years'));
     }
 
+    public function showDetailedAttendanceReport(Request $request){
+        return view('reports.vmt_detailed_attendance_reports');
+    }
+
     public function fetchAttendanceMonthForGivenYear(Request $request){
         $attendance_month=VmtEmployeeAttendance::whereYear('date',$request->attendance_year)
                                               ->groupBy(\DB::raw("MONTH(date)"))->pluck('date')->toArray();

@@ -37,6 +37,9 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import Tree from 'primevue/tree';
 import Skeleton from 'primevue/skeleton';
+import MultiSelect from 'primevue/multiselect';
+import TreeTable from 'primevue/treetable';
+
 
 
 import RolesPermission from './RolesPermission.vue'
@@ -78,6 +81,8 @@ app.component('Accordion',Accordion)
 app.component('AccordionTab',AccordionTab)
 app.component('Tree',Tree)
 app.component('Skeleton',Skeleton)
+app.component('MultiSelect',MultiSelect)
+app.component('TreeTable',TreeTable)
 
-app.mount("#RolesPermission");
+app.mount("#VJS_RolesPermissions");
 

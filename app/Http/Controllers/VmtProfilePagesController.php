@@ -12,14 +12,25 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeFamilyDetails;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
+use App\Models\VmtTempEmpNames;
+use App\Models\VmtTempBankAccount;
+use App\Models\VmtTempPancardDetails;
+use App\Models\VmtTempEmployeeProofDocuments;
 use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtEmployeeDocuments;
+use App\Models\VmtDocuments;
 use App\Services\VmtEmployeePayCheckService;
+
 use App\Services\VmtProfilePagesService;
 use App\Services\VmtEmployeeService;
+use App\Mail\ApproveRejectEmpDetails;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+
 
 class VmtProfilePagesController extends Controller
 {
@@ -76,72 +87,171 @@ class VmtProfilePagesController extends Controller
          ];
 
     }
+    public function updatetempEmplpoyeeName(Request $request,VmtProfilePagesService $serviceVmtProfilePagesService){
+try{
 
-    public function updateGeneralInfo(Request $request) {
+        $user_id = User::where('user_code',$request->user_code)->first()->id;
+        $employee_details = VmtTempEmpNames::where('user_id', $user_id)->first();
 
-    try{
-         $user_id = user::where('user_code', $request->user_code)->first()->id;
-         $details = VmtEmployee::where('userid', $user_id )->first();
-         $details->dob = $request->input('dob');
-         $details->gender = $request->input(['gender']);
-         $details->marital_status_id = $request->input(['marital_status_id']);
-         $details->doj=$request->input('doj');
-         $details->blood_group_id = $request->input(['blood_group_id']);
-         $details->physically_challenged = $request->input(['physically_challenged']);
+        if(!empty($employee_details)){
 
-        $details->save();
+            $details=$employee_details;
+         }else{
+            $details = new VmtTempEmpNames;
+         }
+            $details->user_id = $user_id;
+            $details->name = $request->name;
+            $details->save();
+
+        $emp_file =$serviceVmtProfilePagesService->uploadProofDocument($user_id, $request->emp_doc,$request->onboard_document_type );
 
          $response = [
             'status' => 'success',
-            'message' =>"General details updated successfully"
+            'message' => 'Employee Name updated successfully',
+            'data' => ''
          ];
-    }catch(\Exception $e){
-         $response = [
-            'status' => 'failure',
-            'message' => 'Error while updateing General Information ',
-            'error_message' => $e->getMessage()
-         ];
-    }
-         return response()->json($response);
+        } catch (\Exception $e) {
+             $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Employee Name ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+        return response()->json($response);
 
     }
+    public function updateEmplpoyeeName($user_id,$doc_id){
+     try{
 
-    public function updateContactInfo(Request $request)
-    {
-        //dd($request->all());
-    try{
-        $user_id = user::where('user_code', $request->user_code)->first()->id;
-        $user = User::find($user_id);
+        $Emp_details =VmtTempEmpNames::where('user_id', $user_id)->first();
 
-        $user->email = $request->input('email');
-        $user->save();
+        $emp_doc = VmtTempEmployeeProofDocuments::where('user_id',$user_id)->Where('doc_id',$doc_id)->first();
 
-        $employee_office_details = VmtEmployeeOfficeDetails::where('user_id', $user_id )->first();
-        $employee_office_details->officical_mail = $request->input('officical_mail');
-        $employee_office_details->official_mobile = $request->input('official_mobile_number');
-        $employee_office_details->save();
+        if(!empty($Emp_details)){
+                $details = User::where('id', $user_id)->first();
+                $details->name =$Emp_details->name;
+                $details->save();
 
-        $details = VmtEmployee::where('userid', $user_id )->first();
+        if(!empty($emp_doc)){
+            $employee_doc_data = VmtEmployeeDocuments::where('user_id', $user_id)->Where('doc_id',$emp_doc->doc_id)->first();
+            if( $employee_doc_data){
+                $employee_documents =$employee_doc_data;
+            }else{
+                $employee_documents =new VmtEmployeeDocuments;
+            }
 
-       // dd($details);
-
-        if ($details->exists()) {
-            $details->mobile_number = $request->input('mobile_number');
-            $details->save();
+            $employee_documents->user_id =$emp_doc->user_id;
+            $employee_documents->doc_id =$emp_doc->doc_id;
+            $employee_documents->doc_url =$emp_doc->doc_url;
+            $employee_documents->status =$emp_doc->status;
+            $employee_documents->save();
+            $emp_doc->delete();
+            $Emp_details->delete();
         }
 
          $response = [
             'status' => 'success',
-            'message' =>"Contact details updated successfully"
+            'message' => 'Employee Name updated successfully',
+            'data' => ''
          ];
-    }catch(\Exception $e){
-         $response = [
-            'status' => 'failure',
-            'message' => 'Error while updateing Contact Information ',
-            'error_message' => $e->getMessage()
-         ];
+        }else{
+             $response = [
+                'status' => 'success',
+                'message' => 'Employee Name uptodate for this user',
+             ];
+        }
+        } catch (\Exception $e) {
+             $response = [
+                'status' => 'failure',
+                'message' => 'Error while updateing Employee Name ',
+                'error_message' => $e->getMessage()
+            ];
+        }
+        return response()->json($response);
     }
 
+    public function updateGeneralInfo(Request $request) {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                "dob" => 'required',
+                "gender"  => 'required',
+                "marital_status_id"  => 'required|integer',
+                "blood_group_id"  => 'required|integer',
+                "physically_challenged" => 'required',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+    try {
+
+
+        $user_id = user::where('user_code', $request->user_code)->first()->id;
+        $details = VmtEmployee::where('userid', $user_id)->first();
+        $details->dob = $request->dob;
+        $details->gender = $request->gender;
+        $details->marital_status_id =$request->marital_status_id;
+        $details->blood_group_id =$request->blood_group_id;
+        $details->physically_challenged = $request->physically_challenged;
+        $details->save();
+
+        return $response = [
+            'status' => 'success',
+            'message' => "General details updated successfully",
+        ];
+    } catch (\Exception $e) {
+        return $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing General Information ',
+            'error_message' => $e->getMessage()
+        ];
+    }
+    return response()->json($response);
+}
+
+
+    public function updateContactInfo(Request $request)
+    {
+    try {
+
+        $query_user = user::where('user_code', $request->user_code)->first();
+        $query_user->email =$request->email;
+        $query_user->save();
+
+        $employee_emp_details = VmtEmployee::where('userid', $query_user->id)->first();
+        $employee_emp_details->mobile_number = $request->mobile_number;
+        $employee_emp_details->save();
+
+        $employee_office_details = VmtEmployeeOfficeDetails::where('user_id', $query_user->id)->first();
+        $employee_office_details->officical_mail = $request->officical_mail;
+         $employee_office_details->official_mobile = $request->official_mobile_number;
+        $employee_office_details->save();
+
+
+        return $response = [
+            'status' => 'success',
+            'message' => "Contact details updated successfully"
+        ];
+    } catch (\Exception $e) {
+        return $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Contact Information ',
+            'data' => $e->getMessage()
+        ];
+    }
          return response()->json($response);
 
     }
@@ -149,12 +259,12 @@ class VmtProfilePagesController extends Controller
 
     public function updateAddressInfo(Request $request)
     {
-        //  dd($request->all());
+
     try{
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $details = VmtEmployee::where('userid', $user_id)->first();
-        $details->current_address_line_1 = $request->input('current_address_line_1');
-        $details->permanent_address_line_1 = $request->input('permanent_address_line_1');
+        $details->current_address_line_1 = $request->current_address_line_1;
+        $details->permanent_address_line_1 = $request->permanent_address_line_1;
         $details->save();
 
          $response = [
@@ -184,13 +294,13 @@ class VmtProfilePagesController extends Controller
             'message' =>"Family details deleted successfully"
          ];
 
-    }catch(\Exception $e){
-         $response = [
-            'status' => 'failure',
-            'message' => 'Error while Deletining Family Information ',
-            'error_message' => $e->getMessage()
-         ];
-    }
+        }catch(\Exception $e){
+            $response = [
+                'status' => 'failure',
+                'message' => 'Error while Deletining Family Information ',
+                'error_message' => $e->getMessage()
+            ];
+        }
 
          return response()->json($response);
     }
@@ -198,17 +308,15 @@ class VmtProfilePagesController extends Controller
     public function addFamilyInfo(Request $request)
     {
     try{
-        // dd($request->all());
+
         $user_id = user::where('user_code', $request->user_code)->first()->id;
         $emp_familydetails = new VmtEmployeeFamilyDetails;
         $emp_familydetails->user_id = $user_id;
-        $emp_familydetails->name = $request->input('name');
-        $emp_familydetails->relationship = $request->input('relationship');
-        $emp_familydetails->dob = $request->input('dob');
-        $emp_familydetails->phone_number = $request->input('phone_number');
+        $emp_familydetails->name = $request->name;
+        $emp_familydetails->relationship = $request->relationship;
+        $emp_familydetails->dob = $request->dob;
+        $emp_familydetails->phone_number = $request->phone_number;
         $emp_familydetails->save();
-
-        $familyDetails = VmtEmployeeFamilyDetails::where('id',$request->current_table_id )->delete();
         $response = [
             'status' => 'success',
             'message' =>"Family details Added successfully"
@@ -258,16 +366,17 @@ public function addExperienceInfo(Request $request)
 {
 
     try{
-        //  dd($request->all());
+
         $user_id = user::where('user_code', $request->user_code)->first()->id;
             $exp = new Experience;
             $exp->user_id = $user_id;
-            $exp->company_name = $request->input('company_name');
-            $exp->location = $request->input('experience_location');
-            $exp->job_position = $request->input('job_position');
-            $exp->period_from = $request->input('period_from');
-            $exp->period_to = $request->input('period_to');
+            $exp->company_name = $request->company_name;
+            $exp->location = $request->experience_location;
+            $exp->job_position = $request->job_position;
+            $exp->period_from = $request->period_from;
+            $exp->period_to = $request->period_to;
             $exp->save();
+
         $response = [
             'status' => 'success',
             'message' =>"Experiance details Added successfully"
@@ -284,16 +393,17 @@ public function addExperienceInfo(Request $request)
     }
 
     public function updateExperienceInfo(Request $request)
-    {// dd($request->all());
+    {
+
         try{
             $user_id = user::where('user_code', $request->user_code)->first()->id;
                 $exp = Experience::where('id',$request->exp_current_table_id)->first();
                 $exp->user_id = $user_id;
-                $exp->company_name = $request->input('company_name');
-                $exp->location = $request->input('experience_location');
-                $exp->job_position = $request->input('job_position');
-                $exp->period_from = $request->input('period_from');
-                $exp->period_to = $request->input('period_to');
+                $exp->company_name = $request->company_name;
+                $exp->location = $request->experience_location;
+                $exp->job_position = $request->job_position;
+                $exp->period_from = $request->period_from;
+                $exp->period_to = $request->period_to;
                 $exp->save();
             $responseJSON = [
                 'status' => 'success',
@@ -329,18 +439,50 @@ public function addExperienceInfo(Request $request)
     }
 
 
-    public function updateBankInfo(Request $request ,VmtEmployeeService $employeeService)
+    public function updatetempBankInfo(Request $request ,VmtProfilePagesService $serviceVmtProfilePagesService)
     {
 
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code', //not used now
+                "bank_id" => 'required|integer',
+                "account_no" => 'required',
+                "bank_ifsc" =>'required',
+
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "email" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
         try{
+
             $user_id = user::where('user_code', $request->user_code)->first()->id;
-            $details = VmtEmployee::where('userid', $user_id)->first();
-            $details->bank_id = $request->input('bank_id');
-            $details->bank_ifsc_code = $request->input('bank_ifsc');
-            $details->bank_account_number = $request->input('account_no');
-            $details->pan_number = $request->input('pan_no');
-            $details->save();
-            $emp_file =$employeeService->uploadDocument($user_id, $request->PassBook,$onboard_document_type='Check' );
+            $emp_bank_details = VmtTempBankAccount::where('user_id', $user_id)->first();
+
+            if(!empty($emp_bank_details)){
+                $details=$emp_bank_details;
+            }else{
+                $details = new VmtTempBankAccount;
+            }
+                $details->user_id = $user_id;
+                $details->bank_id = $request->bank_id;
+                $details->bank_account_number = $request->account_no;
+                $details->bank_ifsc_code = $request->bank_ifsc;
+                $details->save();
+
+            $emp_file =$serviceVmtProfilePagesService->uploadProofDocument($user_id, $request->PassBook,$request->onboard_document_type );
+
             $response = [
                 'status' => 'success',
                 'message' =>"Bank details updated successfully"
@@ -349,6 +491,142 @@ public function addExperienceInfo(Request $request)
             $response = [
             'status' => 'failure',
             'message' => 'Error while updateing Bank Information ',
+            'error_message' => $e->getMessage()
+            ];
+        }
+
+         return response()->json($response);
+
+    }
+    public function updateBankInfo($user_id,$doc_id)
+    {
+        try{
+
+            $bank_details = VmtTempBankAccount::where('user_id', $user_id)->first();
+            $emp_doc = VmtTempEmployeeProofDocuments::where('user_id',$user_id)->Where('doc_id',$doc_id)->first();
+
+            if(!empty($bank_details)){
+                    $details = VmtEmployee::where('userid', $user_id)->first();
+                    $details->bank_id = $bank_details->bank_id;
+                    $details->bank_ifsc_code = $bank_details->bank_ifsc_code;
+                    $details->bank_account_number = $bank_details->bank_account_number;
+                    $details->save();
+
+            if(!empty($emp_doc)){
+                $employee_doc_data = VmtEmployeeDocuments::where('user_id', $user_id)->Where('doc_id',$emp_doc->doc_id)->first();
+                if( $employee_doc_data){
+                    $employee_documents =$employee_doc_data;
+                }else{
+                    $employee_documents =new VmtEmployeeDocuments;
+                }
+                    $employee_documents->user_id =$emp_doc->user_id;
+                    $employee_documents->doc_id =$emp_doc->doc_id;
+                    $employee_documents->doc_url =$emp_doc->doc_url;
+                    $employee_documents->status =$emp_doc->status;
+                    $employee_documents->save();
+                    $emp_doc->delete();
+                    $bank_details->delete();
+            }
+
+            $response = [
+                'status' => 'success',
+                'message' =>"Bank details updated successfully"
+            ];
+        }else{
+            $response = [
+                'status' => 'success',
+                'message' =>"Bank details uptodate for this user"
+            ];
+        }
+        }catch(\Exception $e){
+            $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Bank Information ',
+            'error_message' => $e->getMessage()
+            ];
+        }
+
+         return response()->json($response);
+
+    }
+    public function updatetempPancardInfo(Request $request ,VmtProfilePagesService $serviceVmtProfilePagesService)
+    {
+        try{
+
+            $user_id = user::where('user_code', $request->user_code)->first()->id;
+            $pancard_details = VmtTempPancardDetails::where('user_id', $user_id)->first();
+
+                if(!empty($pancard_details)){
+                    $details=$pancard_details;
+                }else{
+                    $details = new VmtTempPancardDetails;
+                }
+                    $details->user_id =$user_id;
+                    $details->pan_number =$request->pan_no;
+                    $details->save();
+
+            $emp_file =$serviceVmtProfilePagesService->uploadProofDocument($user_id, $request->pancard,$request->onboard_document_type);
+
+            $response = [
+                'status' => 'success',
+                'message' =>"Pancard details updated successfully"
+            ];
+        }catch(\Exception $e){
+            $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Pancard Information ',
+            'error_message' => $e->getMessage()
+            ];
+        }
+
+         return response()->json($response);
+
+    }
+    public function updatePancardInfo($user_id,$doc_id)
+    {
+        try{
+
+            $pancard_details = VmtTempPancardDetails::where('user_id', $user_id)->first();
+            $emp_doc = VmtTempEmployeeProofDocuments::where('user_id',$user_id)->Where('doc_id',$doc_id)->first();
+
+
+            if(!empty($pancard_details)){
+                    $details = VmtEmployee::where('userid', $user_id)->first();
+                    $details->pan_number =$pancard_details->pan_number;
+                    $details->save();
+
+
+            if(!empty($emp_doc)){
+                $employee_doc_data = VmtEmployeeDocuments::where('user_id', $user_id)->Where('doc_id',$emp_doc->doc_id)->first();
+                if( $employee_doc_data){
+                    $employee_documents =$employee_doc_data;
+                }else{
+                    $employee_documents =new VmtEmployeeDocuments;
+                }
+                    $employee_documents->user_id =$emp_doc->user_id;
+                    $employee_documents->doc_id =$emp_doc->doc_id;
+                    $employee_documents->doc_url =$emp_doc->doc_url;
+                    $employee_documents->status =$emp_doc->status;
+                    $employee_documents->save();
+                    $emp_doc->delete();
+                    $pancard_details->delete();
+            }
+
+
+            $response = [
+                'status' => 'success',
+                'message' =>"Pancard details updated successfully"
+            ];
+        }else{
+            $response = [
+                'status' => 'success',
+                'message' =>"Pancard details not Exists for this employee"
+            ];
+        }
+        }catch(\Exception $e){
+            $response = [
+            'status' => 'failure',
+            'message' => 'Error while updateing Pancard Information ',
             'error_message' => $e->getMessage()
             ];
         }
@@ -513,6 +791,185 @@ public function addExperienceInfo(Request $request)
         return $response;
 
     }
+    public function getEmpProfileProofPrivateDoc(Request $request,VmtProfilePagesService $profilepagesservice){
 
+
+        $response = $profilepagesservice->getEmpProfileProofPrivateDoc($request->emp_doc_record_id);
+        return $response;
+
+    }
+    public function SingleDocumentProofApproval(Request $request){
+
+        //Validate the request
+               $validator = Validator::make(
+                   $request->all(),
+                   $rules = [
+                       'record_id' => 'required',
+                       'status' => 'required',
+                       'approver_user_id' => 'required',
+                   ],
+                   $messages = [
+                       'required' => 'Field :attribute is missing',
+                       'exists' => 'Field :attribute is invalid',
+                       //'integer' => 'Field :attribute should be integer',
+                   ]
+               );
+
+               if ($validator->fails()) {
+                   return response()->json([
+                               'status' => 'failure',
+                               'message' => $validator->errors()->all()
+                   ]);
+               }
+
+               try
+               {
+                    $record_id =$request->record_id;
+                    $status =$request->status;
+
+                   $query_doc_data = VmtTempEmployeeProofDocuments::find($record_id);
+                   $query_doc_data->status = $status;
+                   $query_doc_data->save();
+
+
+                   $message = "";
+                   $mail_status = "";
+
+                   $VmtClientMaster = VmtClientMaster::first();
+                   $image_view = url('/') . $VmtClientMaster->client_logo;
+
+                   $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
+                   $employee_user=VmtTempEmployeeProofDocuments::find($record_id);
+                   $DocType = VmtDocuments::where('id', $employee_user->doc_id)->first()->document_name;
+                   $employee_mail = VmtEmployeeOfficeDetails::where('user_id', $employee_user->user_id)->first()->officical_mail;
+                   $obj_employee = User::where('id', $employee_user->user_id)->first();
+
+
+                   $isSent    = \Mail::to($employee_mail)->send(
+                       new ApproveRejectEmpDetails(
+                           $obj_employee->name,
+                           $obj_employee->user_code,
+                           $DocType,
+                           User::find($request->approver_user_id)->name,
+                           User::find($request->approver_user_id)->user_code,
+                           request()->getSchemeAndHttpHost(),
+                           $image_view,
+                           $emp_avatar,
+                           $status
+                       )
+                   );
+
+                   if ($isSent) {
+                       $mail_status = "success";
+                   } else {
+                       $mail_status = "failure";
+                   }
+
+
+
+
+               return response()->json([
+                   "status"=>'success',
+                   "message"=>"Document status updated successfully",
+                   'mail_status' => $mail_status,
+               ]);
+               }catch(\Exception $e){
+                $response = [
+                    'status' => 'failure',
+                    'message' => '',
+                    'error_message' => $e->getMessage()
+                    ];
+                    return   $response;
+            }
+       }
+
+
+       public function BulkDocumentProofApprovals(Request $request){
+
+           //Validate the request
+           $validator = Validator::make(
+               $request->all(),
+               $rules = [
+                   'record_ids' => 'required',// Need to check the given ids inside service class.
+                   'status' => 'required',
+                   'approver_user_id' => 'required',
+               ],
+               $messages = [
+                   'required' => 'Field :attribute is missing',
+                   'exists' => 'Field :attribute is invalid',
+                   //'integer' => 'Field :attribute should be integer',
+               ]
+           );
+
+           if ($validator->fails()) {
+               return response()->json([
+                           'status' => 'failure',
+                           'message' => $validator->errors()->all()
+               ]);
+           }
+
+           try
+               {
+                    $record_ids =$request->record_ids;
+                    $status =$request->status;
+
+
+                   $query_docs = VmtTempEmployeeProofDocuments::whereIn('id',$record_ids)->get();
+
+                   foreach($query_docs as $singleDoc)
+                   {
+                       $singleDoc->status = $status;
+                       $singleDoc->save();
+
+
+                   $message = "";
+                   $mail_status = "";
+
+                   $VmtClientMaster = VmtClientMaster::first();
+                   $image_view = url('/') . $VmtClientMaster->client_logo;
+
+                   $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
+                   $DocType = VmtDocuments::where('id', $singleDoc->doc_id)->first()->document_name;
+                   $employee_mail = VmtEmployeeOfficeDetails::where('user_id', $singleDoc->user_id)->first()->officical_mail;
+                   $obj_employee = User::where('id', $singleDoc->user_id)->first();
+
+
+                   $isSent  = \Mail::to($employee_mail)->send(
+                       new ApproveRejectEmpDetails(
+                           $obj_employee->name,
+                           $obj_employee->user_code,
+                           $DocType,
+                           User::find($request->approver_user_id)->name,
+                           User::find($request->approver_user_id)->user_code,
+                           request()->getSchemeAndHttpHost(),
+                           $image_view,
+                           $emp_avatar,
+                           $status
+                       )
+                   );
+                }
+
+                   if ($isSent) {
+                       $mail_status = "success";
+                   } else {
+                       $mail_status = "failure";
+                   }
+
+
+                   return response()->json([
+                       "status"=>'success',
+                       "message"=>"All documents status updated successfully",
+                       'mail_status' => $mail_status,
+                   ]);
+           }catch(\Exception $e){
+            $response = [
+                'status' => 'failure',
+                'message' => '',
+                'error_message' => $e->getMessage()
+                ];
+            return $response;
+       }
+
+       }
 
 }

@@ -25,7 +25,7 @@
                         <form action="" method="POST" enctype="multipart/form-data">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="mb-2 fw-bold fs-15">
+                                <h6 class="mb-2 fw-bold fs-15 z-0">
                                     Payroll Summary
 
                                 </h6>
@@ -85,8 +85,8 @@
                                                 <label>Bank Name</label>
 
                                                 <Dropdown editable :options="bankNameList" optionLabel="bank_name"
-                                                    placeholder="Select Bank Name" class="w-full form-controls "
-                                                    v-model="bank_information.bank_id" />
+                                                    optionValue="id" placeholder="Select Bank Name"
+                                                    class="w-full form-controls" v-model="bank_information.bank_id" />
 
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@
                                                 <div class="cal-icon">
 
                                                 </div>
-                                                <InputText class="form-controls onboard-form" inputId="integeronly"
+                                                <InputText class="form-controls onboard-form pl-2" inputId="integeronly"
                                                     name="account_no" :min="0" :max="100" type="number"
                                                     v-model="bank_information.bank_ac_no" />
                                             </div>
@@ -105,21 +105,20 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>IFSC Code</label>
-                                                <InputText type="text" name="bank_ifsc_" class="form-controls"
+                                                <InputText type="text" name="bank_ifsc_" class="form-controls pl-2"
                                                     v-model="bank_information.ifsc_code" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>PAN No</label>
-                                                <InputText type="text" name="pan_nos" class="form-controls"
+                                                <InputText type="text" name="pan_nos" class="form-controls pl-2"
                                                     v-model="bank_information.pan_no" />
-
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-md-6 ">
-                                            <div class="floating">
+                                            <div class="floating d-block justify-items-start al">
                                                 <label for="" class="float-label mb-2">Bank Passbook or Cheque Leaf</label>
                                                 <div class=" flex justify-content-start">
                                                     <Toast />
@@ -129,8 +128,19 @@
                                                         <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
                                                         <h1 class="text-light">Upload file</h1>
                                                     </label>
-                                                    <input type="file" name="" id="uploadPassBook" hidden
-                                                        @change="updateCheckBookPhoto($event)" />
+                                                    <div class="d-flex flex-column">
+                                                        <input type="file" name="" id="uploadPassBook" hidden
+                                                        @change="updateCheckBookPhoto($event)"
+                                                        style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                                            r$.PassBook.$error ? 'p-invalid' : '',
+                                                        ]" />
+                                                    <span v-if="r$.PassBook.$error" class="text-red-400 fs-6 font-semibold">
+                                                        {{ r$.PassBook.required.$message.replace("Value", "PassBook or Cheque Leaf") }}
+                                                    </span>
+                                                    </div>
+                                                    <div v-if="bank_information.PassBook"
+                                                        class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
+                                                        {{ bank_information.PassBook.name }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -139,7 +149,7 @@
                                     <div class="col-12">
                                         <div class="text-right">
                                             <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
-                                                @click="saveBankinfoDetails">Submit</button>
+                                                @click="submitBankForm">Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -171,14 +181,93 @@
                                 </li>
                                 <li>
                                     <div class="title">PAN No</div>
-                                    <div class="text">
+                                    <div class="text w-20">
                                         {{ _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number }}
+
+                                        <!-- personal  -->
+
+                                        <span class="personal-edit">
+                                            <a href="#" class="edit-icon" style="color:#e63b1f;">
+                                                <i class="ri-pencil-fill" @click="dialog_PanNo_visible = true"></i>
+                                            </a>
+                                        </span>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                <Dialog v-model:visible="dialog_PanNo_visible" modal header="Header"
+                    :style="{ width: '50vw', borderTop: '5px solid #002f56' }">
+                    <template #header>
+                        <div>
+                            <h5 :style="{ color: 'var(--color-blue)', borderLeft: '3px solid var(--light-orange-color', paddingLeft: '6px' }"
+                                class="fw-bold fs-5">
+                                Pancard Information</h5>
+                        </div>
+                    </template>
+                    <div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3 form-group">
+                                        <label class="mb-2 font-semibold text-lg">PAN No</label>
+                                        <InputMask @focusout="panCardExists" id="serial" mask="aaaaa9999a"
+                                            v-model="pan_information.pan_no" placeholder="AHFCS1234F"
+                                            style="text-transform: uppercase" class="form-controls pl-2" :class="[
+                                                v$.pan_no.$error ? 'p-invalid' : '',
+                                            ]" />
+                                        <span v-if="v$.pan_no.$error" class="text-red-400 fs-6 font-semibold">
+                                            {{ v$.pan_no.required.$message.replace("Value", "Pancard number") }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 d-flex flex-column ">
+                                    <!-- flex-column -->
+                                    <div class="d-flex justify-items-center  flex-column ml-10">
+                                        <label for="" class="float-label mb-2 font-semibold text-lg">Pancard</label>
+                                        <div class="d-flex  justify-items-center align-items-center">
+                                            <Toast />
+                                            <label
+                                                class="cursor-pointer text-primary d-flex align-items-center fs-5 btn bg-primary "
+                                                style="width:100px ; " id="" for="uploadPassBook">
+                                                <i class="pi pi-arrow-circle-up fs-5 mr-2"></i>
+                                                <h1 class="text-light">Upload</h1>
+                                            </label>
+
+                                            <div v-if="pan_information.Pancard"
+                                                class="p-2 bg-blue-100 rounded-lg font-semibold fs-11 mx-4">{{
+                                                    pan_information.Pancard.name }}</div>
+
+                                            <input type="file" name="" id="uploadPassBook" hidden
+                                                @change="UploadPandcardPhoto($event)" :class="[
+                                                    v$.Pancard.$error ? 'p-invalid' : '',
+                                                ]" />
+                                        </div>
+                                        <span v-if="v$.Pancard.$error" class="text-red-400 fs-6 font-semibold">
+                                            {{ v$.Pancard.required.$message.replace("Value", "Pancard attachment") }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12">
+                                <div class="text-right">
+                                    <button id="btn_submit_bank_info" class="btn btn-orange submit-btn"
+                                        @click="submitForm">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Dialog>
+
+
+
+
+
 
                 <div class="mb-2 card">
                     <div class="card-body">
@@ -323,6 +412,7 @@
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text">
+                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.account_no }}
 
                                     {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number }}
 
@@ -341,6 +431,18 @@
             </div>
         </div>
 
+
+        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
+
     </div>
 </template>
 <script setup>
@@ -350,10 +452,15 @@ import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
 import { profilePagesStore } from '../stores/ProfilePagesStore'
 import EmployeePayslips from './EmployeePayslips.vue'
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs } from '@vuelidate/validators'
 
 
 const toast = useToast();
 
+const canShowLoading = ref(false);
+
+const dialog_PanNo_visible = ref(false);
 
 
 let form = new FormData();
@@ -371,14 +478,12 @@ axios
         // updateCheckBookPhoto();
     });
 
-
-
-
 const _instance_profilePagesStore = profilePagesStore()
 
 const fetch_data = Service()
 
 const statutory = ref([])
+const bankNameList = ref();
 
 statutory.value.push(_instance_profilePagesStore.employeeDetails.get_statutory_details)
 
@@ -387,6 +492,7 @@ onMounted(() => {
     fetch_data.getBankList().then(res => {
         bankNameList.value = res.data;
     })
+    _instance_profilePagesStore.fetchEmployeeDetails();
 
 });
 
@@ -397,15 +503,19 @@ const dialog_statutory_visible = ref(false);
 const bank_info_data = ref()
 const statutory_info_data = ref()
 
-const bankNameList = ref();
-
 const bank_information = reactive({
     bank_id: '',
     bank_ac_no: '',
     ifsc_code: '',
-    pan_no: '',
     PassBook: ''
+});
+
+const pan_information = reactive({
+    pan_no: '',
+    Pancard: ''
+
 })
+
 const updateCheckBookPhoto = (e) => {
     // Check if file is selected
     if (e.target.files && e.target.files[0]) {
@@ -414,8 +524,6 @@ const updateCheckBookPhoto = (e) => {
         // Get file size
         // Print to console
         console.log(bank_information.PassBook);
-
-
     }
 }
 
@@ -432,51 +540,33 @@ const pf_applicable = computed(() => {
     else
         if (_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes";
 
-
 })
 
-
-
+// save bankdetails function
 
 const saveBankinfoDetails = () => {
 
+    canShowLoading.value = true;
+
     let id = fetch_data.current_user_id;
-
-
     let url = `/update-bank-info/${id}`;
-
-
     let form = new FormData()
 
     form.append('user_code', _instance_profilePagesStore.employeeDetails.user_code)
-    form.append('bank_id', bank_information.bank_id.id)
+    form.append('bank_id', bank_information.bank_id)
     form.append('account_no', bank_information.bank_ac_no)
     form.append('bank_ifsc', bank_information.ifsc_code)
-    form.append('pan_no', bank_information.pan_no)
     form.append('PassBook', bank_information.PassBook)
+    form.append('onboard_document_type', "Cheque leaf/Bank Passbook")
 
-    // {
-    //     // user_code: _instance_profilePagesStore.employeeDetails.user_code,
-    //     // bank_id: bank_information.bank_id.id,
-    //     // account_no: bank_information.bank_ac_no,
-    //     // bank_ifsc: bank_information.ifsc_code,
-    //     // pan_no: bank_information.pan_no,
-
-    // }
-
-    axios.post(url, form
-    )
+    axios.post(url, form)
         .then((res) => {
-
             if (res.data.status == "success") {
-                //  window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Bank information updated', life: 3000 });
-
                 _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id = bank_information.bank_id;
-                _instance_profilePagesStore.employeeDetails.get_employee_details.account_no = bank_information.bank_ac_no;
-                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc = bank_information.ifsc_code;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number = bank_information.bank_ac_no;
+                _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code = bank_information.ifsc_code;
                 _instance_profilePagesStore.employeeDetails.get_employee_details.pan_no = bank_information.pan_no;
-
 
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
@@ -484,32 +574,27 @@ const saveBankinfoDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
+        })
 
     dialog_Bankvisible.value = false;
 
 }
 
 function onClick_EditButton_BankInfo() {
-    console.log("Opening General Info Dialog");
-
     // Assign json values into dialog elements also
-
-    bank_information.bank_id = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_id;
+    bank_information.bank_id = parseInt(_instance_profilePagesStore.employeeDetails.get_employee_details.bank_id);
     bank_information.bank_ac_no = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_account_number;
     bank_information.ifsc_code = _instance_profilePagesStore.employeeDetails.get_employee_details.bank_ifsc_code;
     bank_information.pan_no = _instance_profilePagesStore.employeeDetails.get_employee_details.pan_number;
     dialog_Bankvisible.value = true;
-
-
 }
 
 
 function onClick_EditButton_Statutory_Info() {
-    console.log("Opening General Info Dialog");
-
     // Assign json values into dialog elements also
-
     statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable;
     statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number;
     statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number;
@@ -517,15 +602,12 @@ function onClick_EditButton_Statutory_Info() {
     statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number;
 
     dialog_statutory_visible.value = true;
-
 }
 
+function onClick_EditButton_PanNo_info() {
+    dialog_PanNo_visible.value = true;
 
-//
-//
-//
-
-
+}
 
 const statutory_information = reactive({
     pf_applicable: '',
@@ -537,6 +619,7 @@ const statutory_information = reactive({
 
 
 const saveinfo_statutoryDetails = () => {
+    canShowLoading.value = true;
 
     let id = fetch_data.current_user_id;
 
@@ -564,11 +647,87 @@ const saveinfo_statutoryDetails = () => {
         })
         .catch((err) => {
             console.log(err);
-        });
+        }).finally(() => {
+            _instance_profilePagesStore.fetchEmployeeDetails();
+            canShowLoading.value = false;
+        })
 
     dialog_statutory_visible.value = false;
 
 }
+
+const UploadPandcardPhoto = (e) => {
+    if (e.target.files && e.target.files[0]) {
+        pan_information.Pancard = e.target.files[0];
+        console.log(pan_information.Pancard);
+    }
+}
+
+
+const savePancardInfoDetails = () => {
+    canShowLoading.value = true
+    let id = fetch_data.current_user_id;
+    const url = `/update-Pancard-info/${id}`;
+    const form = new FormData;
+    form.append('pan_no', pan_information.pan_no);
+    form.append('pancard', pan_information.Pancard);
+    form.append('user_code', _instance_profilePagesStore.employeeDetails.user_code)
+    form.append('onboard_document_type', "Pan Card");
+    dialog_PanNo_visible.value = false;
+
+    if (pan_information.Pancard) {
+        axios.post(url, form).finally(() => {
+            canShowLoading.value = false;
+
+        })
+    }
+
+
+};
+
+const bankDetailsRules = computed(() => {
+    return {
+        PassBook: { required },
+    }
+});
+
+const r$ = useValidate(bankDetailsRules, bank_information)
+
+const submitBankForm = () => {
+    r$.value.$validate() // checks all inputs
+    if (!r$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        saveBankinfoDetails()
+    } else {
+        console.log('Form failed submitted.')
+    }
+
+}
+
+
+const rules = computed(() => {
+    return {
+        pan_no: { required },
+        Pancard: { required },
+    }
+});
+
+const v$ = useValidate(rules, pan_information)
+
+const submitForm = () => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        savePancardInfoDetails()
+    } else {
+        console.log('Form failed submitted.')
+    }
+
+}
+
+
 
 </script>
 
@@ -603,6 +762,43 @@ const toast = useToast();
 const onUpload = () => {
     toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
 };
-</script>-->
+</script>
+
+
+
+<template>
+    <div class="card flex justify-content-center">
+        <Toast />
+        <div class="flex flex-wrap gap-2">
+            <Button label="Success" severity="success" @click="showSuccess" />
+            <Button label="Info" severity="info" @click="showInfo" />
+            <Button label="Warn" severity="warning" @click="showWarn" />
+            <Button label="Error" severity="danger" @click="showError" />
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+const showSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+};
+
+const showInfo = () => {
+    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
+};
+
+const showWarn = () => {
+    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+};
+
+const showError = () => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
+};
+</script>
+
+-->
 }
 

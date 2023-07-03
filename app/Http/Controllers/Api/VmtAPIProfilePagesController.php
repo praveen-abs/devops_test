@@ -157,9 +157,6 @@ class VmtAPIProfilePagesController extends HRMSBaseAPIController
                 "dob"  => 'required',
                 "phone_number"  => 'required',
 
-
-
-
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
