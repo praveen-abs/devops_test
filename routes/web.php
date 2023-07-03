@@ -856,7 +856,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
 
 
-
+    //Testing Excel Download
+    Route::get('/download-quick-onbaord-excel',[App\Http\Controllers\VmtExcelGeneratorController::class,'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
 
     //interest free loan
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);
