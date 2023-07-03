@@ -522,14 +522,12 @@ class VmtSalaryAdvanceService
         $last_payroll_month = VmtEmployeePayroll::join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
             ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date', 'DESC')->first()->payroll_date;
         // dd( $last_payroll_month);
-        $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
-            ->orderBy('min_month_served', 'DESC')->get();
         if ($loan_type == 'InterestWithLoan') {
             $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
         } else if ($loan_type == 'InterestFreeLoan') {
             $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
-                ->orderBy('min_month_served', 'DESC')->get();
+            ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
                 // dd($avaliable_int_loans );
         } else {
             return response()->json([
