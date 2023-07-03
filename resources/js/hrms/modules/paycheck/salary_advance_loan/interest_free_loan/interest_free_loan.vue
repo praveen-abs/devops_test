@@ -25,7 +25,7 @@
                                         <h1 class="fs-5 my-2">Required Amount</h1>
                                         <InputNumber  v-model.number="useEmpStore.ifl.Ra" placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping" :useGrouping="false" />
                                         <!-- <InputText type="text"  v-model.number="useEmpStore.ifl.Ra" placeholder="&#8377; Enter The Required Amount" /> -->
-                                        <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{useEmpStore.ifl.minEligibile.ra }}</p>
+                                        <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : <span class=" fw-semibold">{{useEmpStore.ifl.minEligibile }}</span> </p>
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Monthly EMI</h1>
@@ -33,8 +33,12 @@
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        <Dropdown v-model="useEmpStore.ifl.Term" @change="selectMonth" :options="useEmpStore.ifl.minEligibile.month" optionLabel="name" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" />
-                                        <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Month</label>
+                                        {{ useEmpStore.ifl.max_tenure_months.month }}
+
+                                        <!-- <Dropdown v-model="useEmpStore.ifl.Term" @change="selectMonth" :options="useEmpStore.ifl.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
+
+                                        <Dropdown v-model="useEmpStore.ifl.Term" @change="selectMonth" :options="useEmpStore.ifl.max_tenure_months" class="w-full md:w-10rem"  optionValue="month" optionLabel="month" placeholder="Select Month" />
+                                        <label for="" class="fs-5 ml-2" >Month</label>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +53,8 @@
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
                                             <!-- <Calendar v-model="useEmpStore.ifl.EMI_Start_Month" showIcon /> -->
-                                            <Dropdown v-model="useEmpStore.ifl.EMI_Start_Month" @change="calculateMonth" :options="useEmpStore.save_Start_Month" optionLabel="Month" placeholder="Select Month"  />
+                                            <!-- {{useEmpStore.ifl.details.deduction_starting_month  }} -->
+                                            <Dropdown v-model="useEmpStore.ifl.EMI_Start_Month" @change="calculateMonth" :options="useEmpStore.ifl.details.deduction_starting_month" optionLabel="Month" placeholder="Select Month"  />
                                         </div>
 
                                         <div class="col-4 mx-2">
@@ -308,6 +313,8 @@ const submitForm = () => {
 .p-calendar .p-component .p-inputwrapper .p-calendar-w-btn{
 margin: 0;
 }
+
+
 </style>
 
 {

@@ -102,7 +102,8 @@ Travel Advance - ta
 
     // Eligible Employees and Amount
     // Deduction Method
-    const save_Start_Month = ref([]);
+
+    const max_tenure_month  = ref();
     const ifl = reactive({
         minEligibile: '',
         availPerInCtc: '',
@@ -116,6 +117,8 @@ Travel Advance - ta
         EMI_End_Month: '',
         Total_Months: '',
         Reason: '',
+        max_tenure_months:'',
+        details :'',
 
     });
 
@@ -126,18 +129,25 @@ Travel Advance - ta
         axios.post('/show-eligible-interest-free-loan-details',{
             loan_type:"InterestFreeLoan"
         }).then((res)=>{
+            console.log(res);
+            ifl.max_tenure_months = res.data.max_tenure_months;
+
+            console.log( ifl.max_tenure_months);
+            ifl.details = res.data ;
+
+            ifl.minEligibile = res.data.max_loan_amount;
+
+            console.log(res.data.max_tenure_months.month);
         })
 
-        let url = `/show-eligible-interest-free-loan-details`;
-        axios.get(url).then((res) => {
-            console.log(res.data);
-            ifl.minEligibile = res.data;
-            save_Start_Month.value = res.data.EMI_Start_Month;
-            console.log(save_Start_Month);
-            console.log(ifl.minEligibile.ra);
-        });
-
-
+        // let url = `/show-eligible-interest-free-loan-details`;
+        // axios.get(url).then((res) => {
+        //     console.log(res.data);
+        //     ifl.minEligibile = res.data;
+        //     save_Start_Month.value = res.data.EMI_Start_Month;
+        //     console.log(save_Start_Month);
+        //     console.log(ifl.minEligibile.ra);
+        // });
     }
     // const selected_date =ref();
     const fetchInterestfreeLoan = () => {
@@ -256,8 +266,6 @@ Travel Advance - ta
         EMI_END_Month: '',
         Total_Month: '',
         Reason: '',
-
-
     });
 
     const fetchInterstWithLoan = () => {
@@ -316,7 +324,7 @@ Travel Advance - ta
 
         // Interest Free Loan
 
-        dialog_NewInterestFreeLoanRequest, isInterestFreeLoaneature, ifl, save_Start_Month, saveInterestfreeLoan, fetchInterestfreeLoan,
+        dialog_NewInterestFreeLoanRequest, isInterestFreeLoaneature, ifl,max_tenure_month, saveInterestfreeLoan, fetchInterestfreeLoan,
         getinterestfreeloan,
 
         // Travel Advance Feature
