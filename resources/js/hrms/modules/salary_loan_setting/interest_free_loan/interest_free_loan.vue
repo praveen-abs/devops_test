@@ -54,6 +54,7 @@
                                     <h1 class="fs-5">The employee must have served for a minimum of
                                         <InputText type="text" v-model="salaryStore.ifl.minEligibile"
                                             style="max-width: 100px; " class="mx-2" />
+                                            months
                                     </h1>
                                 </div>
                                 <div class="col-12">
@@ -146,7 +147,7 @@
                                             loan amount
                                             <InputText type="text" v-model="salaryStore.ifl.maxTenure"
                                                 style="max-width: 100px;" class="mx-2" />
-                                            years
+                                             months
                                         </p>
                                     </div>
                                 </div>
