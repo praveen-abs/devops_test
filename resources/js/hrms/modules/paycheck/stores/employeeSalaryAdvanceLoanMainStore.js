@@ -115,18 +115,29 @@ Travel Advance - ta
         EMI_Start_Month: '',
         EMI_End_Month: '',
         Total_Months: '',
-        Reason: ''
+        Reason: '',
+
     });
 
+
+
     function getinterestfreeloan() {
-        let url = `http://localhost:3000/InterestFreeLoanDetails`;
+
+        axios.post('/show-eligible-interest-free-loan-details',{
+            loan_type:"InterestFreeLoan"
+        }).then((res)=>{
+        })
+
+        let url = `/show-eligible-interest-free-loan-details`;
         axios.get(url).then((res) => {
             console.log(res.data);
             ifl.minEligibile = res.data;
             save_Start_Month.value = res.data.EMI_Start_Month;
             console.log(save_Start_Month);
             console.log(ifl.minEligibile.ra);
-        })
+        });
+
+
     }
     // const selected_date =ref();
     const fetchInterestfreeLoan = () => {
@@ -247,7 +258,7 @@ Travel Advance - ta
         Reason: '',
 
 
-    })
+    });
 
     const fetchInterstWithLoan = () => {
 
