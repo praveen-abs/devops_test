@@ -86,19 +86,19 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveIntersetAndIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        //dd($request->all());
+
 
         $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
             $request->loan_type,
-            $request->client_id,
-            $request->loan_applicable_type,
-            $request->min_month_served,
+            $request->selectClientID,
+            $request->precent_Or_Amt,
+            $request->minEligibile,
             $request->max_loan_limit,
-            $request->percent_of_ctc,
+            $request->availPerInCtc,
             $request->loan_amt_interest,
-            $request->deduction_starting_months,
-            $request->max_tenure_months,
-            $request->approver_flow
+            $request->deductMethod,
+            $request->maxTenure,
+            $request->approvalflow
         );
 
         return $response;

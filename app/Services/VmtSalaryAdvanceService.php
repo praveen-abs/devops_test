@@ -411,6 +411,7 @@ class VmtSalaryAdvanceService
         $approver_flow
     ) {
 
+
         $validator = Validator::make(
             $data = [
                 "loan_type" => $loan_type,
@@ -446,8 +447,9 @@ class VmtSalaryAdvanceService
             ]);
         }
         $approver_flow = json_encode($approver_flow);
-        $client_id = explode(",", $client_id);
-        dd($approver_flow);
+        // $client_id = explode(",", $client_id);
+        //dd($approver_flow);
+
         foreach ($client_id as $single_cl_id) {
             try {
                 if ($loan_type == 'InterestFreeLoan') {
@@ -475,11 +477,7 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->approver_flow = $approver_flow;
                 $setting_for_loan->active = 1;
                 $setting_for_loan->save();
-                return response()->json([
-                    'status' => 'save successfully',
-                    'message' => 'Done',
 
-                ]);
             } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
@@ -490,7 +488,7 @@ class VmtSalaryAdvanceService
         }
         return response()->json([
             'status' => 'failure',
-            'message' => "Interest free loan setiings Saved Sucessfully"
+            'message' => "Interest free and int loan setiings Saved Sucessfully"
         ]);
     }
 
