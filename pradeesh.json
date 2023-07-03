@@ -1,141 +1,153 @@
-{"InterestFreeLoanDetails":
+{
+  "InterestFreeLoanDetails": {},
+  "getloan_type": {
+    "Loan_type": "InterestFreeLoan"
+  },
+  "salaryAdvance": [
     {
-        "id":1,
-        "ra":"20,000",
-        "month":[
-            {"name":1,"val":1},
-            {"name":2,"val":2},
-            {"name":3,"val":3},
-            {"name":4,"val":4},
-            {"name":5,"val":5}
-        ],
-        "EMI_Start_Month":[
-        {"Month":"12/09/2022","val":1},
-        {"Month":"21/10/2022","val":2},
-        {"Month":"31/11/2022","val":3},
-        {"Month":"1/12/2022","val":4}]
-    }
-
-    ,"salaryAdvance":[
-    {
-        "id":1,
-        "user_code":"PSC0060",
-        "name":"ARUNKUMAR",
-        "advance_amount":2000,
-        "dedction_date":"2023-06-16",
-        "status":"Pending",
-        "emp_details":[{
-            "id":2,
-            "advance_amount":"20,000",
-            "paid_on":"12/02/2023",
-            "Expected_Return":"12/02/2023",
-            "status":"Pending"
+      "id": 1,
+      "user_code": "PSC0060",
+      "name": "ARUNKUMAR",
+      "advance_amount": 2000,
+      "dedction_date": "2023-06-16",
+      "status": "Pending",
+      "emp_details": [
+        {
+          "id": 2,
+          "advance_amount": "20,000",
+          "paid_on": "12/02/2023",
+          "Expected_Return": "12/02/2023",
+          "status": "Pending"
         },
         {
-            "id":3,
-            "advance_amount":"20,000",
-            "paid_on":"12/02/2023",
-            "Expected_Return":"12/02/2023",
-            "status":"Approved"
+          "id": 3,
+          "advance_amount": "20,000",
+          "paid_on": "12/02/2023",
+          "Expected_Return": "12/02/2023",
+          "status": "Approved"
         },
         {
-            "id":4,
-            "advance_amount":"20,000",
-            "paid_on":"12/02/2023",
-            "Expected_Return":"12/02/2023",
-            "status":"Rejected"
-        }]
+          "id": 4,
+          "advance_amount": "20,000",
+          "paid_on": "12/02/2023",
+          "Expected_Return": "12/02/2023",
+          "status": "Rejected"
+        }
+      ]
     }
-],
-
-  "useRolesAndPermission":[
+  ],
+  "useRolesAndPermission": [
     {
-        "roles_id": 1,
-        "role": "superadmin",
-        "SubCategory":3,
-        "":4,
-        "accordian": [
-          {
-            "roles_id": 1,
-            "Sub_Category_Name": "Asset Privilege",
-            "user_id": 1,
-            "user_code": "SA100",
-            "Privilege": [
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"}
+      "roles_id": 1,
+      "role": "superadmin",
+      "SubCategory": 3,
+      "": 4,
+      "accordian": [
+        {
+          "roles_id": 1,
+          "Sub_Category_Name": "Asset Privilege",
+          "user_id": 1,
+          "user_code": "SA100",
+          "Privilege": [
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            }
           ]
-          },
-          {
-            "Sub_Category_Name": "Asset Privilege",
-            "Privilege": [{
-                "Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"},
-                {"Privilege_name":"View Asset Dashboard"}
+        },
+        {
+          "Sub_Category_Name": "Asset Privilege",
+          "Privilege": [
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            },
+            {
+              "Privilege_name": "View Asset Dashboard"
+            }
           ]
-          }
-        ]
-      },
-      {
-        "roles_id": 4,
-        "role": "manager",
-        "description": "uwfp8fw8egwpguiweg",
-        "assigned_emp": 19,
-        "assigned_privileged": 0,
-        "accordian": [
-          {
-            "roles_id": 4,
-            "roles_name": "manager",
-            "description": "uwfp8fw8egwpguiweg",
-            "name": "ARUNKUMAR",
-            "user_id": 144,
-            "user_code": "PSC0060",
-            "department_name": "Sales"
-          }
-        ]
-      },
-      {
-        "roles_id": 4,
-        "role": "manager",
-        "description": "uwfp8fw8egwpguiweg",
-        "assigned_emp": 19,
-        "assigned_privileged": 0,
-        "accordian": [
-          {
-            "roles_id": 4,
-            "roles_name": "manager",
-            "description": "uwfp8fw8egwpguiweg",
-            "name": "MURALI",
-            "user_id": 146,
-            "user_code": "LAL0002",
-            "department_name": "Sales"
-          }
-        ]
-      },
-      {
-        "roles_id": 4,
-        "role": "manager",
-        "description": "uwfp8fw8egwpguiweg",
-        "assigned_emp": 19,
-        "assigned_privileged": 0,
-        "accordian": [
-          {
-            "roles_id": 4,
-            "roles_name": "manager",
-            "description": "uwfp8fw8egwpguiweg",
-            "name": "RAVIKUMAR K",
-            "user_id": 149,
-            "user_code": "LAL0008",
-            "department_name": "Technical"
-          }
-        ]
-      }
+        }
+      ]
+    },
+    {
+      "roles_id": 4,
+      "role": "manager",
+      "description": "uwfp8fw8egwpguiweg",
+      "assigned_emp": 19,
+      "assigned_privileged": 0,
+      "accordian": [
+        {
+          "roles_id": 4,
+          "roles_name": "manager",
+          "description": "uwfp8fw8egwpguiweg",
+          "name": "ARUNKUMAR",
+          "user_id": 144,
+          "user_code": "PSC0060",
+          "department_name": "Sales"
+        }
+      ]
+    },
+    {
+      "roles_id": 4,
+      "role": "manager",
+      "description": "uwfp8fw8egwpguiweg",
+      "assigned_emp": 19,
+      "assigned_privileged": 0,
+      "accordian": [
+        {
+          "roles_id": 4,
+          "roles_name": "manager",
+          "description": "uwfp8fw8egwpguiweg",
+          "name": "MURALI",
+          "user_id": 146,
+          "user_code": "LAL0002",
+          "department_name": "Sales"
+        }
+      ]
+    },
+    {
+      "roles_id": 4,
+      "role": "manager",
+      "description": "uwfp8fw8egwpguiweg",
+      "assigned_emp": 19,
+      "assigned_privileged": 0,
+      "accordian": [
+        {
+          "roles_id": 4,
+          "roles_name": "manager",
+          "description": "uwfp8fw8egwpguiweg",
+          "name": "RAVIKUMAR K",
+          "user_id": 149,
+          "user_code": "LAL0008",
+          "department_name": "Technical"
+        }
+      ]
+    }
   ],
   "DeleteOnboardingFormDetails": [],
   "posts": [

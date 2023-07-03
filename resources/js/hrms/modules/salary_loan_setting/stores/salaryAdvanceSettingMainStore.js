@@ -43,6 +43,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     })
     const approvalFormat = reactive([])
 
+    const selectedOption1 = ref();
+    const selectedOption2 = ref();
+    const selectedOption3 = ref();
+
 
     // Eligible Employees
 
@@ -179,7 +183,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         cusDeductMethod: '',
         maxTenure: '',
         approvalflow: approvalFormat,
-        loan_type:'InterestFreeLoan'
+        loan_type:'InterestFreeLoan',
+        selectedOption1:selectedOption1,
+        selectedOption2:'',
+        selectedOption3:'',
     })
     const ClientsName = ref();
     // deduction_starting_months
@@ -335,9 +342,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     }
 
-    const selectedOption1 = ref();
-    const selectedOption2 = ref();
-    const selectedOption3 = ref();
+
 
 
     const toSelectoption = (flow, value) => {
