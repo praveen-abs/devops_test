@@ -541,6 +541,7 @@ class VmtSalaryAdvanceService
         foreach ($avaliable_int_loans as $single_record) {
 
             if ($single_record->min_month_served <= $exp_month) {
+
                 if ($single_record->loan_applicable_type == 'fixed') {
                     $applicable_loan_info['max_loan_amount'] = $single_record->max_loan_amount;
                 } else if ($single_record->loan_applicable_type == 'percnt') {
@@ -552,13 +553,18 @@ class VmtSalaryAdvanceService
                     $month['month'] = $i;
                      array_push($max_tenure_month,$month);
                 }
-                // dd($max_tenure_month);
+               $deduction_starting_month = array();
+               for($i=1;$i<=$single_record->deduction_starting_months;$i++){
+                $dedct_month['date']= Carbon::parse($last_payroll_month)
+                ->addMonths($i)->format('Y-m-d');
+                array_push($deduction_starting_month, $dedct_month);
+               }
                 $applicable_loan_info['max_tenure_months'] = $max_tenure_month;
-                $applicable_loan_info['deduction_starting_month'] = Carbon::parse($last_payroll_month)
-                    ->addMonth($single_record->deduction_starting_months)->format('Y-m-d');
+                $applicable_loan_info['deduction_starting_month'] =  $deduction_starting_month;
                 if ($loan_type == 'InterestWithLoan') {
                     $applicable_loan_info['loan_amt_interest'] = $single_record->loan_amt_interest;
                 }
+
                 return response()->json($applicable_loan_info);
             };
         }
