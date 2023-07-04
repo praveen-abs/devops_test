@@ -866,6 +866,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/save-int-and-int-free-loan-settings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveIntersetAndIntersetFreeLoanSettings']);
     Route::post('/show-eligible-interest-free-loan-details', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showEligibleInterestFreeLoanDetails']);
     Route::post('/apply-loan', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'applyLoan']);
+    Route::get('/employee-loan-history',[App\Http\Controllers\VmtSalaryAdvanceController::class,'EmployeeLoanHistory']);
 
     //Loan Approval
     Route::get('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
