@@ -283,13 +283,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/test_getTeamEmployeesLeaveDetails', [App\Http\Controllers\VmtTestingController::class, 'test_getTeamEmployeesLeaveDetails'])->name('test_getTeamEmployeesLeaveDetails');
 
 
-    Route::get('email-test', [App\Http\Controllers\VmtTestingController::class, 'jobsmail']);
+    Route::get('email-test', function () {
 
+        $details['email'] = 'sheltonfdo23@gmail.com';
 
         dispatch(new App\Jobs\SendEmailJob($details));
 
         dd('done');
     });
+
+    //update user details with proof
+
+    Route::get('/fetch-proof-doc', [App\Services\VmtEmployeeService::class, 'fetchAllEmployeesDocumentsProof'])->name('fetch-proof-doc');
+    Route::Post('/approvals/EmployeeProof-docs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'SingleDocumentProofApproval'])->name('SingleDocumentProofApproval');
+    Route::post('/approvals/EmployeeProof-bulkdocs-approve-reject', [App\Http\Controllers\VmtProfilePagesController::class, 'BulkDocumentProofApprovals'])->name('BulkDocumentProofApprovals');
+    Route::post('view/getEmpProfileProofPrivateDoc', [App\Http\Controllers\VmtProfilePagesController::class, 'getEmpProfileProofPrivateDoc'])->name('getEmpProfileProofPrivateDoc');
+
+
     // notifications
     Route::get('/notifications/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 
@@ -830,6 +840,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investments/TaxDeclaration', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
     Route::post('/investments/saveRegime', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
     Route::get('/investments/investment-summary', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
+    Route::get('/monthTaxDeductionDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'monthTaxDeductionDetails']);
+
 
     //Salary Advance
 
@@ -846,8 +858,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
 
 
-    //Testing Excel Download
-    Route::get('/download-quick-onbaord-excel',[App\Http\Controllers\VmtExcelGeneratorController::class,'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
+
 
     //interest free loan
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);

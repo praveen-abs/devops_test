@@ -676,6 +676,13 @@ class VmtInvestmentsController extends Controller
     }
 
 
+public function monthTaxDeductionDetails(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+{
+    //  dd($request->all());
+
+    return $serviceVmtInvestmentsService->monthTaxDeductionDetails();
+}
+
 
 
 

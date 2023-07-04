@@ -12,6 +12,7 @@ use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
 use App\Models\VmtInvForm;
 use App\Models\VmtInvFormSection;
+use App\Models\VmtOrgTimePeriod;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\VmtInvSectionImport;
 use Carbon\Carbon;
@@ -853,4 +854,47 @@ class VmtInvestmentsService
         }
 
     }
+
+public function monthTaxDeductionDetails(){
+
+            $user_id = auth()->user()->id;
+
+            $time_period = VmtOrgTimePeriod::where('status','1')->first();
+
+            $start_date  = Carbon::parse($time_period->start_date);
+
+            $end_date = Carbon::parse($time_period->end_date);
+
+            $current_date = Carbon::now();
+            $month_cal = 0;
+            $res1 = array();
+            while($start_date->lte($end_date)){
+                $start_date = Carbon::parse($start_date)->addMonth();
+
+                       $simm['dates']   =  $start_date;
+
+                if($start_date->lte($current_date)){
+                    $monthy_tax_cal = 264000 / 12;
+                    $simm['monthy_tax'] = $monthy_tax_cal;
+
+                     $month_cal += $monthy_tax_cal;
+
+                }else{
+
+                    $simm['monthy_tax'] = 0 ;
+                }
+                array_push($res1,$simm);
+            }
+
+                $mos['date'] = $res1;
+                $mos['total'] = $month_cal;
+
+                return $mos;
+
+
+
+}
+
+
+
 }
