@@ -617,20 +617,29 @@ class VmtAttendanceController extends Controller
 
                 //Need to process the checkin and checkout time based on the client.
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
+                //dd(sessionGetSelectedClientCode());
 
                 //If direction is only "in" or empty or "-"
-                if (sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC") {
+                if (sessionGetSelectedClientCode() == "DM" ||
+
+                    sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PSC" || sessionGetSelectedClientCode() == "IMA"  || sessionGetSelectedClientCode() == "LAL"
+                    || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC")
+                    {
+
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
                         ->whereDate('date', $dateString)
                         ->where('user_Id', $userCode)
                         ->first(['check_out_time']);
 
+                       // if($dateString == "2023-07-05")
+                       //     dd($dateString);
                     $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
                         ->whereDate('date', $dateString)
                         ->where('user_Id', $userCode)
                         ->first(['check_in_time']);
+
                 } else //If direction is only "in" and "out"
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
