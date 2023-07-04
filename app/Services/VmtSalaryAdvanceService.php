@@ -545,7 +545,7 @@ class VmtSalaryAdvanceService
         foreach ($avaliable_int_loans as $single_record) {
 
             if ($single_record->min_month_served <= $exp_month) {
-
+                $applicable_loan_info['loan_settings_id'] = $single_record->id;
                 if ($single_record->loan_applicable_type == 'fixed') {
                     $applicable_loan_info['max_loan_amount'] = $single_record->max_loan_amount;
                 } else if ($single_record->loan_applicable_type == 'percnt') {
@@ -565,6 +565,7 @@ class VmtSalaryAdvanceService
                 }
                 $applicable_loan_info['max_tenure_months'] = $max_tenure_month;
                 $applicable_loan_info['deduction_starting_month'] =  $deduction_starting_month;
+
                 if ($loan_type == 'InterestWithLoan') {
                     $applicable_loan_info['loan_amt_interest'] = $single_record->loan_amt_interest;
                 }
