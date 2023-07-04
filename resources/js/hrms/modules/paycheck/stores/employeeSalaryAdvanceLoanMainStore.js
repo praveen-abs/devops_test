@@ -256,7 +256,7 @@ Travel Advance - ta
         deductMethod: '',
         cusDeductMethod: '',
         maxTenure: '',
-        ra: '',
+        required_amount: '',
         Term: '',
         Interest_rate: '2.5%',
         month_EMI: '0',
@@ -278,7 +278,7 @@ Travel Advance - ta
             console.log(res.data);
 
         }).finally(() => {
-            canShowLoading.value = false
+            canShowLoading.value = false;
         })
 
 

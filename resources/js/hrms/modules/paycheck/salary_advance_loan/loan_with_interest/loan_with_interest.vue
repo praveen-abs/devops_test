@@ -103,12 +103,12 @@
                         <div class="row  ">
                             <div class="col-6   " style="margin-right: 30px;">
                                 <h1 class="fs-5 my-2 ">Required Amount</h1>
-                                <InputText type="text" v-model="useEmpStore.lwif.ra" placeholder="&#8377; Enter The Required Amount" />
+                                <InputText type="text" v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" />
                                 <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000</p>
                             </div>
                             <div class="col mx-2">
                                 <h1 class="fs-5 my-2">Term</h1>
-                                <Dropdown v-model="useEmpStore.lwif.Term" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
+                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
                                 <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
 
                         <div class="div p-4  allcenter rounded" style="background: #CEE3F4 ; ">
                             <!-- <h1 class="fw-bolder fs-4">2.5%</h1> -->
-                            <input class="fw-bolder fs-4 clr" style="width: 45px;background: #CEE3F4  ;" v-model="useEmpStore.lwif.Interest_rate"   />
+                            <input class="fw-bolder fs-4 clr" style="width: 45px;background: #CEE3F4  ;" v-model="useEmpStore.InterestWithLoan.Interest_rate"   />
                             <h1  class=" fw-bolder mt-2">Interest Rate</h1>
                         </div>
 
@@ -140,7 +140,7 @@
                             <div class="div d-flex justify-content-center align-items-center">
 
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
-                                <input class="fw-bolder fs-4 clr pl-2" style="width: 45px;background: #FDCFCF  ;" v-model="useEmpStore.lwif.month_EMI"   />
+                                <input class="fw-bolder fs-4 clr pl-2" style="width: 45px;background: #FDCFCF  ;" v-model="useEmpStore.InterestWithLoan.month_EMI"   />
 
                             </div>
 
@@ -163,16 +163,16 @@
                     <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
                         <div class="col-4">
                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                            <Calendar v-model="useEmpStore.lwif.EMI_Start_Month" showIcon />
+                            <Calendar v-model="useEmpStore.InterestWithLoan.EMI_Start_Month" showIcon />
                         </div>
 
                         <div class="col-4 mx-2">
                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                            <Calendar v-model="useEmpStore.lwif.EMI_END_Month" showIcon />
+                            <Calendar v-model="useEmpStore.InterestWithLoan.EMI_END_Month" showIcon />
                         </div>
                         <div class="col-3">
                             <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
-                            <InputText type="text" v-model="useEmpStore.lwif.Total_Month" style="width: 150px !important;" />
+                            <InputText type="text" v-model="useEmpStore.InterestWithLoan.Total_Month" style="width: 150px !important;" />
                         </div>
                 </div>
             </div>
@@ -180,7 +180,7 @@
 
         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
             <span class="font-semibold ">Reason</span>
-            <Textarea  v-model="useEmpStore.lwif.Reason" class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+            <Textarea  v-model="useEmpStore.InterestWithLoan.Reason" class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
         </div>
 
         <div class="float-right ">
@@ -230,13 +230,13 @@ const openPosition = (pos) => {
 
 function selectMonth() {
 
-useEmpStore.ifl.M_EMI = useEmpStore.lwif.ra / useEmpStore.ifl.Term;
-useEmpStore.ifl.Total_Months = useEmpStore.ifl.Term;
+useEmpStore.InterestWithLoan.M_EMI = useEmpStore.InterestWithLoan.required_amount / useEmpStore.InterestWithLoan.Term;
+useEmpStore.InterestWithLoan.Total_Months = useEmpStore.InterestWithLoan.Term;
 
 // Loan details
-var principal = useEmpStore.lwif.ra;         // Principal amount of the loan
+var principal = useEmpStore.InterestWithLoan.required_amount;         // Principal amount of the loan
 var interestRate = 0.05;      // Annual interest rate (5%)
-var loanTermInYears = useEmpStore.lwif.Term; // Loan term in years
+var loanTermInYears = useEmpStore.InterestWithLoan.Term; // Loan term in years
 
 // Calculate the interest
 var interest = principal * interestRate * loanTermInYears;
@@ -250,7 +250,7 @@ console.log("Total Repayment: " + totalRepayment);
 
 
 
-if (useEmpStore.ifl.EMI_Start_Month) {
+if (useEmpStore.InterestWithLoan.EMI_Start_Month) {
     return calculateMonth();
 }
 
