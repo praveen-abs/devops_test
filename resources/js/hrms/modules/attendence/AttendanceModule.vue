@@ -153,7 +153,7 @@
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <Timesheet :singleAttendanceDay="useTimesheet.currentEmployeeAttendance" :isemployee="true" />
+                        <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
@@ -162,7 +162,7 @@
                                 <EmployeeList :source="orgList" />
                             </div>
                             <div class="ml-2">
-                                <Timesheet :singleAttendanceDay="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                                 <EmployeeList :source="orgList" />
                             </div>
                             <div>
-                                <Timesheet :singleAttendanceDay="useTimesheet.currentlySelectedTeamMemberAttendance"  />
+                                <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance"  />
                             </div>
                         </div>
                     </div>
@@ -185,7 +185,7 @@
 
 
 <script setup>
-import Timesheet from './timesheet/timesheet.vue'
+import Timesheet from './timesheet/Timesheet.vue';
 import { useAttendanceTimesheetMainStore } from './timesheet/stores/attendanceTimesheetMainStore'
 import { useCalendarStore } from './timesheet/stores/calendar'
 import { Service } from '../Service/Service'

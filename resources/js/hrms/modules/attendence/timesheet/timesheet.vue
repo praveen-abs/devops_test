@@ -41,12 +41,13 @@
                             <p class="font-semibold text-sm">Week Off</p>
                         </div>
 
-                        <div v-if="isFutureDate(day)">
-                            <p>simma</p>
-                        </div>
 
                         <!-- If Employee is Absent  -->
                         <!-- {{ leaveStatus(singleAttendanceDay.isAbsent) }} -->
+
+                        <div v-if="isFutureDate(day)">
+
+
                         <div v-if="singleAttendanceDay.isAbsent">
 
                             <div class="bg-green-100 p-3 rounded-lg"
@@ -69,7 +70,10 @@
                                 Revoked
                             </div>
                             <div class="bg-red-100 p-3 rounded-lg" v-else-if="!isWeekEndDays(day)">
-                                <p class="font-semibold text-sm">Absent</p>
+                                <p class="font-semibold text-sm" >Absent</p>
+                            </div>
+                            <div class="p-3 rounded-lg" v-else-if="isFutureDate(day)">
+                                <p class="font-semibold text-sm" >next day</p>
                             </div>
                         </div>
 
@@ -84,8 +88,8 @@
                                         <div class="flex ">
                                             <i class="fa fa-arrow-down text-green-800  font-semibold text-sm "
                                                 style='transform: rotate(-45deg);'></i>
-                                            <p class="text-green-800 font-semibold text-sm mx-1">{{
-                                                singleAttendanceDay.checkin_time }}
+                                            <p class="text-green-800 font-semibold text-sm mx-1">
+                                                {{ singleAttendanceDay.checkin_time }}
                                             </p>
                                         </div>
                                         <div class="px-1">
@@ -117,8 +121,7 @@
                                             <i class="fa fa-arrow-down font-semibold text-sm text-red-800 "
                                                 style='transform: rotate(230deg);'></i>
                                             <p class="text-red-800 font-semibold text-sm mx-1">{{
-                                                singleAttendanceDay.checkout_time
-                                            }}
+                                                singleAttendanceDay.checkout_time }}
                                             </p>
                                         </div>
                                         <div class="px-1">
@@ -144,6 +147,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
                         </div>
                     </div>
                 </div>
@@ -324,23 +329,28 @@ const isWeekEndDays = (day) => {
     } else {
         return false;
     }
-
-
 }
 
 
-const isFutureDate = (day) => {
+const isFutureDate = (today) => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate());
 
-    var dayValue = new Date(day)
+    var dayValue = new Date(
+        calendarStore.getYear,
+        calendarStore.getMonth,
+        today
+    )
 
-    console.log(dayValue);
-
-    if (new Date() > dayValue) {
+    console.log(tomorrow);
+    console.log(today);
+    if(tomorrow > dayValue){
+        console.log('x');
         return true
-    } else {
+    }else{
+        console.log('y');
         return false
     }
-
 }
 
 
@@ -425,4 +435,5 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}</style>
+}
+</style>
