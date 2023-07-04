@@ -351,26 +351,73 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         if (flow == 1) {
             option.value = 1
             selectedOption1.value = value.name
-            let approvalflow = {
-                approver: value.name,
-                order: flow
+            let  approvalflow = ref();
+            if(value.name=="Line Manager"){
+                  approvalflow.value = {
+                 approver: 'l1_manager_code',
+                 order: flow
             }
+            }else if(value.name=="HR"){
+                approvalflow.value = {
+                    approver: 'hr_user_id',
+                    order: flow
+               }
+            }
+            else if(value.name=="Finance Admin"){
+                approvalflow.value = {
+                    approver: 'fa_user_id',
+                    order: flow
+               }
+            }
+
+            // let approvalflow = {
+            //     approver: value.name,
+            //     order: flow
+            // }
             approvalFormat.push(approvalflow)
         }
         if (flow == 2) {
             selectedOption2.value = value.name
-            let approvalflow = {
-                approver: value.name,
-                order: flow
+            let  approvalflow = ref();
+            if(value.name=="Line Manager"){
+                  approvalflow.value = {
+                 approver: 'l1_manager_code',
+                 order: flow
+            }
+            }else if(value.name=="HR"){
+                approvalflow.value = {
+                    approver: 'hr_user_id',
+                    order: flow
+               }
+            }
+            else if(value.name=="Finance Admin"){
+                approvalflow.value = {
+                    approver: 'fa_user_id',
+                    order: flow
+               }
             }
             approvalFormat.push(approvalflow)
 
         }
         if (flow == 3) {
             selectedOption3.value = value.name
-            let approvalflow = {
-                approver: value.name,
-                order: flow
+            let  approvalflow = ref();
+            if(value.name=="Line Manager"){
+                  approvalflow.value = {
+                 approver: 'l1_manager_code',
+                 order: flow
+            }
+            }else if(value.name=="HR"){
+                approvalflow.value = {
+                    approver: 'hr_user_id',
+                    order: flow
+               }
+            }
+            else if(value.name=="Finance Admin"){
+                approvalflow.value = {
+                    approver: 'fa_user_id',
+                    order: flow
+               }
             }
             approvalFormat.push(approvalflow)
         } else {
