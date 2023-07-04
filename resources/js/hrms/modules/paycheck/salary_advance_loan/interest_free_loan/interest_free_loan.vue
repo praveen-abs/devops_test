@@ -116,7 +116,7 @@
                         <template #footer>
                             <div class="float-right ">
                                 <button class="btn btn-border-orange"
-                                    @click="dialog_NewInterestFreeLoanRequest = false">Cancel</button>
+                                    @click="useEmpStore.dialog_NewInterestFreeLoanRequest = false">Cancel</button>
                                 <button class="mx-4 btn btn-orange" @click="submitForm">Submit</button>
                             </div>
                             <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />

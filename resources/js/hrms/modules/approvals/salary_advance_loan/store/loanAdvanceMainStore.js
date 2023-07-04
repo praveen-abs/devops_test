@@ -17,7 +17,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     async function getEmpDetails() {
         canShowLoadingScreen.value = true;
         // let url = "/SalAdvApproverFlow";
-        let url = "http://localhost:3000/salaryAdvance";
+         let url = "http://localhost:3000/salaryAdvance";
         await axios.get(url).then((res) => {
             arraySalaryAdvance.value = res.data;
         }).finally(() => {
