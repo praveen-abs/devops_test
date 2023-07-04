@@ -28,30 +28,30 @@
                                 <div class="row mx-2">
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Required Amount</h1>
-                                        <InputNumber v-model.number="useEmpStore.ifl.Ra"
+                                        <InputNumber v-model.number="useEmpStore.interestFreeLoan.required_amount"
                                             placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping"
                                             :useGrouping="false"
-                                            :class="[v$.Ra.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                            :class="[v$.required_amount.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                                         <br>
-                                        <span v-if="v$.Ra.$error" class="font-semibold text-red-400 fs-6">
-                                            {{ v$.Ra.$errors[0].$message }}
+                                        <span v-if="v$.required_amount.$error" class="font-semibold text-red-400 fs-6">
+                                            {{ v$.required_amount.$errors[0].$message }}
                                         </span>
                                         <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : <span
-                                                class=" fw-semibold">{{ useEmpStore.ifl.minEligibile }}</span> </p>
+                                                class=" fw-semibold">{{ useEmpStore.interestFreeLoan.minEligibile }}</span> </p>
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                        <InputText type="text" readonly v-model="useEmpStore.ifl.M_EMI"
+                                        <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.M_EMI"
                                             placeholder="&#8377; " />
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        {{ useEmpStore.ifl.max_tenure_months.month }}
+                                        {{ useEmpStore.interestFreeLoan.max_tenure_months.month }}
 
-                                        <!-- <Dropdown v-model="useEmpStore.ifl.Term" @change="selectMonth" :options="useEmpStore.ifl.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
+                                        <!-- <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth" :options="useEmpStore.interestFreeLoan.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
 
-                                        <Dropdown v-model="useEmpStore.ifl.Term" @change="selectMonth"
-                                            :options="useEmpStore.ifl.max_tenure_months" class="w-full md:w-10rem"
+                                        <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth"
+                                            :options="useEmpStore.interestFreeLoan.max_tenure_months" class="w-full md:w-10rem"
                                             optionValue="month" optionLabel="month" placeholder="Select Month"
                                             :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                                         <label for="" class="fs-5 ml-2">Month</label>
@@ -74,10 +74,10 @@
                                         Payroll</h1>
                                     <div class="col-4">
                                         <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                        <!-- <Calendar v-model="useEmpStore.ifl.EMI_Start_Month" showIcon /> -->
-                                        <!-- {{useEmpStore.ifl.details.deduction_starting_month  }} -->
-                                        <Dropdown v-model="useEmpStore.ifl.EMI_Start_Month" @change="calculateMonth"
-                                            :options="useEmpStore.ifl.details.deduction_starting_month" optionLabel="date"
+                                        <!-- <Calendar v-model="useEmpStore.interestFreeLoan.EMI_Start_Month" showIcon /> -->
+                                        <!-- {{useEmpStore.interestFreeLoan.details.deduction_starting_month  }} -->
+                                        <Dropdown v-model="useEmpStore.interestFreeLoan.EMI_Start_Month" @change="calculateMonth"
+                                            :options="useEmpStore.interestFreeLoan.details.deduction_starting_month" optionLabel="date"
                                             optionValue="date" placeholder="Select Month"
                                             :class="[v$.EMI_Start_Month.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                                         <br>
@@ -88,14 +88,14 @@
 
                                     <div class="col-4 mx-2">
                                         <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                        <!-- <InputText type="text" readonly v-model="useEmpStore.ifl.EMI_End_Month"  style="width: 150px !important;" /> -->
-                                        <Calendar v-model="useEmpStore.ifl.EMI_End_Month" readonly
+                                        <!-- <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.EMI_End_Month"  style="width: 150px !important;" /> -->
+                                        <Calendar v-model="useEmpStore.interestFreeLoan.EMI_End_Month" readonly
                                             style="width: 150px !important;" />
                                         <!-- showIcon -->
                                     </div>
                                     <div class="col-3">
                                         <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                                        <InputText type="text" readonly v-model="useEmpStore.ifl.Total_Months"
+                                        <InputText type="text" readonly v-model="useEmpStore.interestFreeLoan.Total_Months"
                                             style="width: 150px !important;" />
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
                             <span class="font-semibold ">Reason</span>
                             <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3"
-                                v-model="useEmpStore.ifl.Reason"
+                                v-model="useEmpStore.interestFreeLoan.Reason"
                                 :class="[v$.Reason.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                             <br>
                             <span v-if="v$.Reason.$error" class="font-semibold text-red-400 fs-6">
@@ -240,15 +240,15 @@ const openPosition = (pos) => {
 
 function selectMonth() {
 
-    useEmpStore.ifl.M_EMI = useEmpStore.ifl.Ra / useEmpStore.ifl.Term;
-    useEmpStore.ifl.Total_Months = useEmpStore.ifl.Term;
+    useEmpStore.interestFreeLoan.M_EMI = useEmpStore.interestFreeLoan.required_amount / useEmpStore.interestFreeLoan.Term;
+    useEmpStore.interestFreeLoan.Total_Months = useEmpStore.interestFreeLoan.Term;
 
     //
-    if (useEmpStore.ifl.EMI_Start_Month) {
+    if (useEmpStore.interestFreeLoan.EMI_Start_Month) {
         return calculateMonth();
     }
-    // useEmpStore.ifl.Ra
-    // useEmpStore.ifl.Term
+    // useEmpStore.interestFreeLoan.Ra
+    // useEmpStore.interestFreeLoan.Term
 }
 
 function calculateMonth() {
@@ -271,24 +271,24 @@ function calculateMonth() {
     addMonthsToDate();
 
     // Example usage
-    console.log(useEmpStore.ifl.EMI_Start_Month);
-    var originalDate = useEmpStore.ifl.EMI_Start_Month;
-    var modifiedDate = addMonthsToDate(originalDate, useEmpStore.ifl.Term);
+    console.log(useEmpStore.interestFreeLoan.EMI_Start_Month);
+    var originalDate = useEmpStore.interestFreeLoan.EMI_Start_Month;
+    var modifiedDate = addMonthsToDate(originalDate, useEmpStore.interestFreeLoan.Term);
 
     console.log(modifiedDate);
-    console.log( useEmpStore.ifl.Term);
+    console.log( useEmpStore.interestFreeLoan.Term);
 
-    useEmpStore.ifl.EMI_End_Month = dayjs(modifiedDate).format('YYYY-MM-DD');
+    useEmpStore.interestFreeLoan.EMI_End_Month = dayjs(modifiedDate).format('YYYY-MM-DD');
 
-    //  let values = dayjs(useEmpStore.ifl.EMI_Start_Month.Month).add(1,'month').format('YYYY/MM/DD');
+    //  let values = dayjs(useEmpStore.interestFreeLoan.EMI_Start_Month.Month).add(1,'month').format('YYYY/MM/DD');
     //  console.log(values);
 
 }
 
 const value = ref();
 
-if (useEmpStore.ifl.Term) {
-    console.log("testing ::", useEmpStore.ifl.Term);
+if (useEmpStore.interestFreeLoan.Term) {
+    console.log("testing ::", useEmpStore.interestFreeLoan.Term);
 }
 
 const selectedCity = ref();
@@ -304,7 +304,7 @@ const date = ref();
 
 
 const eligibleRequiredAmount = (value) => {
-    if (value > useEmpStore.ifl.minEligibile) {
+    if (value > useEmpStore.interestFreeLoan.minEligibile) {
         return false
     } else {
         return true
@@ -314,7 +314,7 @@ const eligibleRequiredAmount = (value) => {
 
 const rules = computed(() => {
     return {
-        Ra: { required: helpers.withMessage('Required amount is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount) },
+        required_amount: { required: helpers.withMessage('Required amount is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount) },
         Term: { required },
         EMI_Start_Month: { required },
         Reason: { required },
@@ -322,7 +322,7 @@ const rules = computed(() => {
 })
 
 
-const v$ = useValidate(rules, useEmpStore.ifl)
+const v$ = useValidate(rules, useEmpStore.interestFreeLoan)
 
 
 const submitForm = () => {
