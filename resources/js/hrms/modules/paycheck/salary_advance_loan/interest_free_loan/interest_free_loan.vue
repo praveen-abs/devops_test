@@ -254,7 +254,7 @@ function selectMonth() {
 function calculateMonth() {
 
     function addMonthsToDate(dateString, months) {
-        console.log(dateString, months);
+
         var dateParts = dayjs(dateString).format('MM/DD/YYYY').split('/'); // Split the string into an array of parts
         var month = parseInt(dateParts[0]) - 1; // Subtract 1 to get the zero-based month value
         var day = parseInt(dateParts[1]);
@@ -268,12 +268,15 @@ function calculateMonth() {
         var formattedDate = date.getFullYear() + '-' + (date.getMonth()) + '-' + date.getDate();
         return formattedDate;
     }
+    addMonthsToDate();
 
     // Example usage
-    var originalDate = useEmpStore.ifl.EMI_Start_Month.Month;
-    var modifiedDate = addMonthsToDate(dayjs(originalDate).format('MM/DD/YYYY'), useEmpStore.ifl.Term);
+    console.log(useEmpStore.ifl.EMI_Start_Month);
+    var originalDate = useEmpStore.ifl.EMI_Start_Month;
+    var modifiedDate = addMonthsToDate(originalDate, useEmpStore.ifl.Term);
 
     console.log(modifiedDate);
+    console.log( useEmpStore.ifl.Term);
 
     useEmpStore.ifl.EMI_End_Month = dayjs(modifiedDate).format('YYYY-MM-DD');
 
