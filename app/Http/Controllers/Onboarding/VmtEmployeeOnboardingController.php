@@ -827,7 +827,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict'|'unique:users,email',
+                'email' => 'nullable|email:strict|unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -888,7 +888,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'tax_regime' => 'nullable|in:old,Old,new,New',
                 'lwf_location' => 'nullable',
                 'esic_employer_contribution' => 'required|numeric',
-                 'dearness_allowance' => 'nullable|numeric',
+                 'dearness_allowance' => 'nullable',
             ];
 
             $messages = [
