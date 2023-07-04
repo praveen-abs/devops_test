@@ -314,7 +314,7 @@
                                             {{-- <span>Leaves <span
                                                     class="text-white badge bg-danger rounded-circle">{{ $approvals_leave_notif_count}}</span>
                                             </span> --}}
-                                            <span>Leaves <span </span>
+                                            <span>Leaves</span>
                                         </a>
                                     </li>
 
@@ -327,7 +327,7 @@
                                                     class="text-white badge bg-danger rounded-circle"> {{ $approvals_att_regularization_count }}</span>
                                             </span> --}}
                                             <span>
-                                                Attendance Regularization<span </span>
+                                                Attendance Regularization </span>
                                         </a>
 
                                     </li>
@@ -372,7 +372,7 @@
                                     </li>
                                     {{-- ('Employee-Details-approvals') --}}
                                     <li class="nav-item">
-                                        <a href="{{ route('page-not-found') }}" id=""
+                                        <a href="{{ route('Employee-Details-approvals') }}" id=""
                                             class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>
