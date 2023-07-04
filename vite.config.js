@@ -30,6 +30,9 @@ export default defineConfig({
                 //Reports
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
+                //Attendance Detailed Report
+                'resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js',
+
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
@@ -122,7 +125,7 @@ export default defineConfig({
 
                 // Payslip Template
 
-                'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
+                //'resources/js/hrms/modules/payroll/payslip/payslipMaster.js',
 
                 // Roles and permission
 
@@ -132,6 +135,8 @@ export default defineConfig({
 
                 // super Admin screen
               'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
+               // Admin screen roles And Permission
+              'resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js',
 
 
                 //PMS forms management

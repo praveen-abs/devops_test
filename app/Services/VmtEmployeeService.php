@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use \stdClass;
@@ -18,7 +18,7 @@ use App\Models\VmtEmployee;
 use App\Models\Department;
 use App\Models\VmtMaritalStatus;
 use App\Models\Bank;
-use App\Models\VmtClientMaster;
+
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeStatutoryDetails;
@@ -197,7 +197,7 @@ class VmtEmployeeService {
             $newUser->user_code = strtoupper($data['employee_code']);
 
             $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-            
+
                 $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
 
 
@@ -870,8 +870,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {

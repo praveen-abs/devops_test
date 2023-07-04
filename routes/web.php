@@ -64,8 +64,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/db/getAllEmployees', [App\Http\Controllers\VmtDBDataController::class, 'getAllEmployees']);
 
-    Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'showMainDashboardPage'])->name('main-dashboard');
-    Route::get('/old_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'index']);
+    Route::get('/new_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'showMainDashboardPage'])->name('new-main-dashboard');
+    Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'index']);
+    Route::get('/old_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('old-main-dashboard');
 
     //404 error page
     Route::get('/page-not-found', function () {
@@ -341,8 +342,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('create-offer');
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');
-    ;
+
     Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
+    Route::post('/getABSClientCode', [App\Http\Controllers\VmtClientController::class, 'getABSClientCode'])->name('getABSClientCode');
 
     // Permission Roles Routing
     Route::get('/roles_permissions', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'showRolesPermissionsPage'])->name('showRolesPermissionsPage');
@@ -356,6 +358,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/createPermission', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'createPermission'])->name('createPermission');
     Route::get('/assignRoleToUsers', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'assignRoleToUsers'])->name('assignRoleToUsers');
     Route::get('/removeRoleToUsers', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'removeRoleToUsers'])->name('removeRoleToUsers');
+    Route::get('/getPermissionDetails', [App\Http\Controllers\RolesPermissions\VmtRolesPermissionsController::class, 'getPermissionDetails'])->name('getPermissionDetails');
 
 
     //360 Review Module Routing
@@ -633,6 +636,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/approvals/onboarding-bulkdocs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processBulkDocumentApprovals'])->name('processBulkDocumentApprovals');
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
     Route::post('/reimbursements/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
+    Route::get('/reimbursements/getModeOfTransports', [App\Http\Controllers\VmtReimbursementController::class, 'getModeOfTransports'])->name('getModeOfTransports');
 
     Route::post('/getLocalConveyanceCost', [App\Http\Controllers\VmtReimbursementController::class, 'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
     Route::post('/testCreateLocalCovergance', [App\Http\Controllers\VmtReimbursementController::class, 'testCreateLocalCovergance'])->name('testCreateLocalCovergance');
@@ -725,6 +729,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/fetchDetailedAttendanceReport/{user_id}/{month}/{year}', [App\Http\Controllers\VmtReportsController::class, 'fetchDetailedAttendanceReport'])->name('fetchDetailedAttendanceReport'); //By Praveen April 27th
 
     Route::get('/reports/basic-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
+    Route::get('/reports/detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showDetailedAttendanceReport'])->name('showDetailedAttendanceReport');
     Route::get('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
     //Pay Check Reports
@@ -857,7 +862,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/saveTravelAdvanceSettings', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveTravelAdvanceSettings']);
 
 
-
+    //Testing Excel Download
+    Route::get('/download-quick-onbaord-excel',[App\Http\Controllers\VmtExcelGeneratorController::class,'downloadQuickOnbaordExcel'])->name('downloadQuickOnbaordExcel');
 
     //interest free loan
     Route::get('/show-interest-free-loan-employeeinfo', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showInterestFreeLoanEmployeeinfo']);

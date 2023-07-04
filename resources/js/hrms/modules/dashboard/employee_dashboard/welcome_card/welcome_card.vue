@@ -22,16 +22,16 @@
                     </div>
                     <p  class="f-12 text-muted" id="time_duration">
                         Check-in time:
-                        {{  }}
+                        {{ "--:--:--" }} &nbsp; Mode : {{ "--" }}
                     </p>
                     <p  class="f-12 text-muted" id="time_duration">
                         Check-out time:
-                        {{ }}
+                        {{ "--:--:--" }} &nbsp; Mode : {{ "--" }}
                     </p>
-                    <p class="f-12 text-muted" id="time_duration">
+                    <!-- <p class="f-12 text-muted" id="time_duration">
                         Time Duration:
                         {{  }}
-                    </p>
+                    </p> -->
                 </div>
                 <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
                     <img src="../../dashboard/girl_walk.jpg" class="" alt="girl-walk" style="height: 140px; width: 140px" />

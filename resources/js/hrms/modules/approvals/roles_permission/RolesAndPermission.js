@@ -84,4 +84,4 @@ app.component('Skeleton',Skeleton)
 app.component('MultiSelect',MultiSelect)
 app.component('TreeTable',TreeTable)
 
-app.mount("#AdminRolesPermission");
+app.mount("#SuperAdminRolesPermission");

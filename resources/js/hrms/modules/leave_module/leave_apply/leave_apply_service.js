@@ -27,6 +27,8 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         permission_start_time: "",
         permission_total_time: "",
         permission_end_time: "",
+        start_time_for_permisson: "", //here store permission time
+        end_time_for__for_permisson:"",
         compensatory_leaves:'',
         compensatory_leaves_dates:"",
         selected_compensatory_leaves:"",//This refers to comp days selected in dropdown
@@ -171,15 +173,25 @@ export const useLeaveService = defineStore("useLeaveService", () => {
     };
 
     const time_difference = () => {
-        console.log(leave_data.permission_start_time);
-        console.log(leave_data.permission_end_time);
+        let selected_date =moment(leave_data.full_day_leave_date).format("YYYY-MM-DD");
+        let start_time =leave_data.permission_start_time.toString();
+        start_time = selected_date+' '+start_time.substring(16,24);
+        let end_time =leave_data.permission_end_time.toString();
+        end_time = selected_date+' '+end_time.substring(16,24);
+
+       console.log( );
+         //console.log( start_time.substring(16,24));
+        //console.log(selected_date );
         let t1 = new Date(leave_data.permission_start_time).getTime();
         let t2 = new Date(leave_data.permission_end_time).getTime();
         console.log("start" + t1, "end" + t2);
 
         var total_hours = ((t2 - t1) / 1000 / 60 / 60).toFixed(0);
         leave_data.permission_total_time = total_hours;
+         leave_data.start_time_for_permisson =   start_time;
+         leave_data.end_time_for__for_permisson =    end_time;
         console.log(total_hours);
+       // console.log('start '+ leave_data.start_time_for_permisson+'end '+ leave_data.end_time_for__for_permisson);
     };
 
 
@@ -191,6 +203,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
             half_day_format.value = false;
             custom_format.value = false;
             compensatory_format.value = false;
+            full_day_format.value = true;
         }
          else if (leave_data.selected_leave.includes('Compensatory')) {
             compensatory_format.value = true;
@@ -365,6 +378,12 @@ export const useLeaveService = defineStore("useLeaveService", () => {
                 })
             }
 
+        }else if(leave_data.selected_leave.includes('Permissions')){
+            console.log('eeeeeeeeeee           '+leave_data.full_day_leave_date);
+            leave_Request_data.start_date = leave_data.start_time_for_permisson;
+            leave_Request_data.end_date   = leave_data.end_time_for__for_permisson;
+            leave_Request_data.hours_diff =  leave_data.permission_total_time;
+
         }
         else{
             toast.add({
@@ -400,7 +419,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
         }).then(res=>{
             data_checking.value=false
             if(res.data.status=='success'){
-                leaveApplyDailog.value = false   
+                leaveApplyDailog.value = false
                 Swal.fire(
                     'Success',
                     'leave Applied successfull!',

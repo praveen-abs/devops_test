@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\VmtPermissionModule;
 use App\Models\VmtPermodulePermission;
 use App\Models\VmtRolesDescription;
+use App\Models\VmtSubModulePermission;
 use Illuminate\Support\Collection;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Facades\Hash;
@@ -304,7 +305,7 @@ class VmtRolesPermissionsService
 
                 }
             }
-            //dd($temp_ac);
+            // dd($temp_ac);
            if(!empty($temp_ac)){
                 // array_push(  $temp_ar,$temp_ac);
                 array_push($res, $temp_ar);
@@ -628,6 +629,63 @@ class VmtRolesPermissionsService
     */
     public function getPermissionDetails()
     {
+
+            $permission = VmtPermissionModule::join('vmt_perm_sub_module','vmt_perm_sub_module.perm_module_id','=','vmt_perm_module.id')
+                                                ->join('vmt_perm_sm_link','vmt_perm_sm_link.sub_module_id','=','vmt_perm_sub_module.id')
+                                                ->join('permissions','permissions.id','=','vmt_perm_sm_link.permission_id')
+                                                ->get()->toArray();
+                                                // ->groupBy(['module_name','submodule_name']);
+
+                                                // return $permission;
+
+                              $master = VmtPermissionModule::join('vmt_perm_sub_module','vmt_perm_sub_module.perm_module_id','=','vmt_perm_module.id')
+                              ->join('vmt_perm_sm_link','vmt_perm_sm_link.sub_module_id','=','vmt_perm_sub_module.id')
+                              ->join('permissions','permissions.id','=','vmt_perm_sm_link.permission_id')
+                              ->get([
+                                'vmt_perm_module.id as module_id',
+                                'vmt_perm_module.module_name as module_name',
+                                'vmt_perm_sub_module.id as submodule_id',
+                                'vmt_perm_sub_module.submodule_name as submodule_name',
+                              ]);
+                                //   return $master;
+
+
+
+                            // $masterss  =array();
+                              $simma = array();
+            foreach($master as $single_mas){
+
+                        $temp = array(
+                                      "id"=> $single_mas['submodule_id'],
+                                      "sub_module"=>$single_mas['submodule_name'],
+                                      "Privilege"=> [],
+                        );
+
+                                // dd($temp);
+                        $res = array();
+                foreach($permission as $single_per){
+
+                    if(in_array($single_mas['submodule_name'],$single_per)){
+                         array_push($temp['Privilege'],$single_per);
+                        //  array_push($simma,$temp);
+
+                    }
+
+                }
+
+                    dd($temp);
+
+            }
+
+            // dd($temp);
+
+
+
+
+
+
+            // $permission =  Permission::all(['id','name']);
+            // return($permission);
 
     }
 

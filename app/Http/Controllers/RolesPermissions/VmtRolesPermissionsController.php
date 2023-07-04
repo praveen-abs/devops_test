@@ -94,7 +94,9 @@ class VmtRolesPermissionsController extends Controller
     /*
         Get Permission details such as description, title
     */
-    public function getPermissionDetails(Request $request){
+    public function getPermissionDetails(Request $request, VmtRolesPermissionsService $serviceVmtRolesPermissionsService){
+
+        return $serviceVmtRolesPermissionsService->getPermissionDetails();
 
     }
 
