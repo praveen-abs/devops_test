@@ -14,6 +14,7 @@
     use App\Mail\VmtPMSMail_Assignee;
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
+    use App\Models\VmtPaygroup;
 
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -238,11 +239,40 @@
 //                  VmtEmpPaygroup::destroy( $data);
 //                  VmtPaygroupComps::destroy( $data1);
 // $response=array();
-$paygroupassignempcomps =VmtEmpPaygroup::get();
-           $response['paygroupassignempcomps'] =$paygroupassignempcomps;
-           
+$paygroup_structure_comps =VmtPaygroup::get();
 
-              dd($select_employee->toarray());
+                $response =array();
+               $i=0;
+              foreach ($paygroup_structure_comps as $key => $Single_structure) {
+                $creator_user_name =User::where('id',$Single_structure->creator_user_id)->first();
+                $paygroup_structure_comps[$i]['creator_user_name']=$creator_user_name->name;
+                $paygroup_structure_comps['paygroup_comps'] =$this->fetchPaygroupAssignedEmployee();
+                $paygroup_structure_comps['paygroup_assign_employee'] =$this->fetchPaygroupAssignedComponents();
+                $paygroup_structure_comps[$i]['no_of_employees']=count($paygroup_structure_comps['paygroup_assign_employee']);
+               $i++;
+              }
+
+dd($paygroup_structure_comps);
+
+
+       function fetchPaygroupAssignedEmployee(){
+
+                    $paygroup_assigned_emp_id =VmtEmpPaygroup::where('paygroup_id','1')->pluck('user_id');
+
+                  $paygroup_assigned_employees = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+                                        ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+                                        ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
+                                        ->where('process', '<>', 'S2 Admin')
+                                        ->whereIn('users.id',$paygroup_assigned_emp_id)
+                                        ->select(
+                                            'users.name',
+                                            'users.user_code',
+                                            'vmt_department.name as department_name',
+                                            'vmt_employee_office_details.designation',
+                                            'vmt_employee_office_details.work_location',
+                                            'vmt_client_master.client_name',
+                                            )
+                                        ->get();
 
     //                     uploadDocument($client_id,$fileObject){
 

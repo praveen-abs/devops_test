@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_payroll_integrations', function (Blueprint $table) {
+        Schema::create('vmt_app_integration', function (Blueprint $table) {
             $table->id();
             $table->text('accounting_soft_name');
             $table->text('accounting_soft_logo');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vmt_payroll_integrations');
+        Schema::dropIfExists('vmt_app_integration');
     }
 };

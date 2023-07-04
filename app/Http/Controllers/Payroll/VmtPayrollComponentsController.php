@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VmtPayrollComponents;
 use App\Models\VmtPaygroup;
+use App\Models\VmtAppIntegration;
 use App\Models\VmtEmpPaygroup;
 use App\Models\User;
 use App\Models\VmtPaygroupComps;
@@ -130,9 +131,20 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
-    public function addPayrollIntegrations(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    public function fetchPayrollAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->addPayrollIntegrations(
+        $response =VmtAppIntegration::get();
+
+        return response()->json([
+                "status" => "success",
+                "message" => " ",
+                "data" => $response,
+        ]);
+
+    }
+    public function addPayrollAppIntegrations(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->addPayrollAppIntegrations(
         $request->accounting_soft_name,
         $request->accounting_soft_logo,
         $request->description,
@@ -140,70 +152,27 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
-
-
-    public function fetchPayGroupEmpComponents(Request $request)
+    public function EnableDisableAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =array();
+        $response =$serviceVmtPayrollComponentsService->EnableDisableAppIntegration(
+            $request->app_id,
+            $request->status);
+
+        return $response;
+    }
 
 
-          $paygroupassignempcomps =VmtEmpPaygroup::get();
+    public function fetchPayGroupEmpComponents(Request $request , VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
 
-              $emp_id =array();
-                foreach ($paygroupassignempcomps as $key => $singlepaygroupassignempcomps) {
-
-                    $emp_id[]=$singlepaygroupassignempcomps->user_id;
-
-                }
-
-         $payroll_assign_employees = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                                        ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                                        ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
-                                        ->where('process', '<>', 'S2 Admin')
-                                        ->whereIn('users.id',$emp_id)
-                                        ->select(
-                                            'users.name',
-                                            'users.user_code',
-                                            'vmt_department.name as department_name',
-                                            'vmt_employee_office_details.designation',
-                                            'vmt_employee_office_details.work_location',
-                                            'vmt_client_master.client_name',
-                                            )
-                                        ->get();
-
-                 $response['paygroupassignempcomps'] =$payroll_assign_employees;
-
-      $paygroupassigncomps =VmtPaygroupComps::get();
-
-              $comp_id =array();
-
-         foreach ($paygroupassigncomps as $key => $singlepaygroupassigncomps) {
-
-               $comp_id[]=$singlepaygroupassigncomps->comp_id;
-
-          }
-
-          $paygroup_assign_comps =VmtPayrollComponents::whereIn('id', $comp_id)->get();
-
-           $response['paygroupassigncomps'] =$paygroup_assign_comps;
-
-    $paygroupempstructure =VmtPaygroup::get();
-
-    $paygroup = array();
-
-    foreach ($paygroupempstructure as $key => $singlepaygroupempstructure) {
-
-          $paygroup[]=$singlepaygroupempstructure->creator_user_id;
-
-     }
-      $paygroupempstructure['no_of_employees']=count($payroll_assign_employees);
-      $creator_user_name = User::whereIn('id',$creator_user_id)->first();
-      $paygroupempstructure['creator_user_id as creator_user_name']= $creator_user_name->name;
-
-           $response['paygroupempstructure'] =$paygroupempstructure;
+        $response =$serviceVmtPayrollComponentsService->fetchPayGroupEmpComponents();
 
 
-        return response()->json($response);
+        return response()->json([
+                "status" => "success",
+                "message" => " ",
+                "data" => $response,
+            ]);
     }
 
     // public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
