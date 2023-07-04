@@ -172,7 +172,7 @@ Travel Advance - ta
         // canShowLoading.value = true
         console.log("Saving SA");
 
-        axios.post('http://localhost:3000/Interst_free_loan', ifl).finally(() => {
+        axios.post('/applyLoan', ifl).finally(() => {
             canShowLoading.value = false
 
             fetchInterestfreeLoan();
