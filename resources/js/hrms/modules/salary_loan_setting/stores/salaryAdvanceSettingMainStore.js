@@ -292,8 +292,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         maxTenure: '',
         loan_amt_interest:'',
         loan_type:'LoanWithInterest',
-        approvalflow: approvalFormat
-    })
+        approvalflow: approvalFormat,
+        selectedOption1:selectedOption1,
+    });
 
     const saveLoanWithInterest = () => {
         canShowLoading.value = true
