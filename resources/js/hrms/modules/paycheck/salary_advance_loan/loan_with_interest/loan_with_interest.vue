@@ -228,6 +228,34 @@ const openPosition = (pos) => {
     useEmpStore.dialogInterestwithLoan = true
 }
 
+function selectMonth() {
+
+useEmpStore.ifl.M_EMI = useEmpStore.lwif.ra / useEmpStore.ifl.Term;
+useEmpStore.ifl.Total_Months = useEmpStore.ifl.Term;
+
+// Loan details
+var principal = useEmpStore.lwif.ra;         // Principal amount of the loan
+var interestRate = 0.05;      // Annual interest rate (5%)
+var loanTermInYears = useEmpStore.lwif.Term; // Loan term in years
+
+// Calculate the interest
+var interest = principal * interestRate * loanTermInYears;
+
+// Calculate the total repayment amount
+var totalRepayment = principal + interest;
+
+// Print the results
+console.log("Interest: " + interest);
+console.log("Total Repayment: " + totalRepayment);
+
+
+
+if (useEmpStore.ifl.EMI_Start_Month) {
+    return calculateMonth();
+}
+
+}
+
 
 </script>
 <style>
