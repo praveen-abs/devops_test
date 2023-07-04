@@ -626,7 +626,6 @@ class VmtPayrollComponentsService{
         try{
 
             $paygroup_structure_comps =VmtPaygroup::get();
-
              $i=0;
           foreach ($paygroup_structure_comps as $key => $Single_structure) {
 
@@ -640,7 +639,8 @@ class VmtPayrollComponentsService{
 
           }
 
-                return  $paygroup_structure_comps;
+        return $paygroup_structure_comps;
+
 
 
         }catch(\Exception $e){
@@ -722,9 +722,8 @@ class VmtPayrollComponentsService{
             ],
             $rules = [
                 'accounting_soft_name' => 'required',
-                'accounting_soft_logo' => 'required',
                 'description' => 'required',
-                'status' => 'required|numeric',
+                'status' => 'nullable|numeric',
 
             ],
             $messages = [
@@ -748,7 +747,7 @@ class VmtPayrollComponentsService{
             if(empty($paygroup_components)){
                 $save_paygroup_comp =new VmtAppIntegration;
                 $save_paygroup_comp->accounting_soft_name = $accounting_soft_name;
-                $save_paygroup_comp->accounting_soft_logo =$accounting_soft_logo ;
+                $save_paygroup_comp->accounting_soft_logo =$accounting_soft_logo ?? null;
                 $save_paygroup_comp->description =$description ;
                 $save_paygroup_comp->status =$status ;
                 $save_paygroup_comp->save();
@@ -994,7 +993,9 @@ class VmtPayrollComponentsService{
               $save_paygroup_comp->esi =$esi ;
               $save_paygroup_comp->tds =$tds ;
               $save_paygroup_comp->fbp =$fbp ;
+              $save_paygroup_comp->creator_user_id =auth()->user()->id;
               $save_paygroup_comp->save();
+
               $assign_comps_to_paygroup =$this->assignComponents_to_Paygroup($sal_components,$save_paygroup_comp->id);
               $assign_paygroupcomps_to_emp =$this->assignPaygroupComponents_to_Employee($assigned_employees,$save_paygroup_comp->id);
 
@@ -1093,6 +1094,7 @@ class VmtPayrollComponentsService{
                 $save_paygroup_comp->esi =$esi ;
                 $save_paygroup_comp->tds =$tds ;
                 $save_paygroup_comp->fbp =$fbp ;
+                $save_paygroup_comp->creator_user_id =auth()->user()->id;
                 $save_paygroup_comp->save();
 
                 $assign_comps_to_paygroup =$this->assignComponents_to_Paygroup($sal_components,$paygroup_id);

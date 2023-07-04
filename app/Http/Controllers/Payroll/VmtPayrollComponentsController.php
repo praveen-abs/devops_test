@@ -168,11 +168,7 @@ class VmtPayrollComponentsController extends Controller
         $response =$serviceVmtPayrollComponentsService->fetchPayGroupEmpComponents();
 
 
-        return response()->json([
-                "status" => "success",
-                "message" => " ",
-                "data" => $response,
-            ]);
+        return response()->json($response);
     }
 
     // public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)

@@ -62,7 +62,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         isShowInPayslip: 0,
         isConsiderForEPF: 0,
         isConsiderForESI: 0,
-        category_id : 1,
+        category_id: 1,
     })
 
     const adhocComponents = ref({
@@ -79,6 +79,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         category_id: 4,
         category_type: 'reimbursement'
     })
+
 
     const salaryComponentsSource = ref()
 
@@ -122,20 +123,20 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
                 for (var key in adhocComponents.value) {
                     form_data.append(key, adhocComponents.value[key]);
                 }
-                if(adhocComponentsUpdated.value){
-                    axios.post('/Paygroup/UpdateAdhocAllowDetectComp',form_data)
-                    .finally(() => {
-                     restChars()
-                     canShowLoading.value = false
-                     getSalaryComponents()
-                 })
-                }else{
-                    axios.post(adhocUrl,form_data)
-                    .finally(() => {
-                     restChars()
-                     canShowLoading.value = false
-                     getSalaryComponents()
-                 })
+                if (adhocComponentsUpdated.value) {
+                    axios.post('/Paygroup/UpdateAdhocAllowDetectComp', form_data)
+                        .finally(() => {
+                            restChars()
+                            canShowLoading.value = false
+                            getSalaryComponents()
+                        })
+                } else {
+                    axios.post(adhocUrl, form_data)
+                        .finally(() => {
+                            restChars()
+                            canShowLoading.value = false
+                            getSalaryComponents()
+                        })
                 }
 
             } else
@@ -143,37 +144,37 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
                     for (var key in deductionComponents.value) {
                         form_data.append(key, deductionComponents.value[key]);
                     }
-                    if(adhocComponentsUpdated.value){
-                       axios.post('/Paygroup/UpdateAdhocAllowDetectComp',form_data)
-                       .finally(() => {
-                        restChars()
-                        canShowLoading.value = false
-                        getSalaryComponents()
-                    })
-                }else{
-                    axios.post(adhocUrl,form_data)
-                    .finally(() => {
-                     restChars()
-                     canShowLoading.value = false
-                     getSalaryComponents()
-                 })
-                }
+                    if (adhocComponentsUpdated.value) {
+                        axios.post('/Paygroup/UpdateAdhocAllowDetectComp', form_data)
+                            .finally(() => {
+                                restChars()
+                                canShowLoading.value = false
+                                getSalaryComponents()
+                            })
+                    } else {
+                        axios.post(adhocUrl, form_data)
+                            .finally(() => {
+                                restChars()
+                                canShowLoading.value = false
+                                getSalaryComponents()
+                            })
+                    }
                 } else
                     if (key == 4) {
                         for (var key in reimbursementComponents.value) {
                             form_data.append(key, reimbursementComponents.value[key]);
                         }
-                        axios.post(reimbursmenturl,form_data)
-                        .finally(() => {
-                            restChars()
-                            canShowLoading.value = false
-                            getSalaryComponents()
-                        })
+                        axios.post(reimbursmenturl, form_data)
+                            .finally(() => {
+                                restChars()
+                                canShowLoading.value = false
+                                getSalaryComponents()
+                            })
                     }
                     else {
                         console.log("No More options");
                     }
-           console.log(form_data);
+        console.log(form_data);
 
     }
 
@@ -196,24 +197,24 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
             salaryComponents.isConsiderForESI = data.esi
     }
 
-    const editAdhocSalaryComponents = (currentRowData,key,boolean) =>{
+    const editAdhocSalaryComponents = (currentRowData, key, boolean) => {
         console.log(currentRowData);
-        if(key == 2){
+        if (key == 2) {
             adhocComponentsUpdated.value = true
-           let type = {category_type:'deduction'}
-            deductionComponents.value = {...type, ...currentRowData}
-        }else
-        if(key == 3){
-            adhocComponentsUpdated.value = true
-            let type = {category_type:'allowance'}
-            adhocComponents.value = {...type,...currentRowData}
-        }else
-        if(key == 4){
-            adhocComponentsUpdated.value = true
-            reimbursementComponents.value = {...currentRowData}
-        }else{
-            console.log("No More options");
-        }
+            let type = { category_type: 'deduction' }
+            deductionComponents.value = { ...type, ...currentRowData }
+        } else
+            if (key == 3) {
+                adhocComponentsUpdated.value = true
+                let type = { category_type: 'allowance' }
+                adhocComponents.value = { ...type, ...currentRowData }
+            } else
+                if (key == 4) {
+                    adhocComponentsUpdated.value = true
+                    reimbursementComponents.value = { ...currentRowData }
+                } else {
+                    console.log("No More options");
+                }
     }
 
 
@@ -244,6 +245,29 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     }
 
 
+    // Accounting Code
+
+    const accountingCodeSource = ref()
+    const accountingCode = ref({})
+
+    const getAccountingSoftware = () => {
+        let accountingSoftwareUrl = `/Paygroup/fetchPayrollAppIntegrations`
+        axios.get(accountingSoftwareUrl).then(res => {
+            accountingCodeSource.value = res.data.data
+            console.log(res.data.data);
+        })
+    }
+
+    const saveAccountingCode = (data) => {
+        console.log(data);
+        axios.post('/Paygroup/addPayrollAppIntegrations',data)
+    }
+
+    const enableAccountingSoftware = (data,checked) =>{
+        console.log(data,checked);
+    }
+
+
     // Salary structure
 
     const dailogNewSalaryStructure = ref(false);
@@ -263,9 +287,9 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     const employeeSource = ref()
 
     const getsalaryStructure = (async () => {
-        let salaryyStructureUrl = `/Paygroup/fetchPayRollComponents`
+        let salaryyStructureUrl = `/Paygroup/fetchPayGroupEmpComponents`
         await axios.get(salaryyStructureUrl).then(res => {
-            salaryComponentsSource.value = res.data
+            salaryStructureSource.value = Object.values(res.data)
         })
     })
 
@@ -306,10 +330,14 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     return {
         // Varaible Declaration
         canShowLoading,
+
         // Salary Components - Earnings
         dailogNewSalaryComponents, salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent, editNewSalaryComponent, deleteSalaryComponent,
         // Salary Components - Adhoc Components and Deduction and Reimbursement Components
-        adhocComponents, deductionComponents, reimbursementComponents,editAdhocSalaryComponents,
+        adhocComponents, deductionComponents, reimbursementComponents, editAdhocSalaryComponents,
+        // Salary Components - Accounting Code
+        getAccountingSoftware, saveAccountingCode,accountingCode,accountingCodeSource,enableAccountingSoftware,
+
 
         // Salary Structure - Paygroup
         dailogNewSalaryStructure, salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure, addsalaryComponents,

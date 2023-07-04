@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('vmt_app_integration', function (Blueprint $table) {
             $table->id();
             $table->text('accounting_soft_name');
-            $table->text('accounting_soft_logo');
-            $table->text('description');
-            $table->integer('status');
+            $table->text('accounting_soft_logo')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

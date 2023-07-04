@@ -1,6 +1,6 @@
 <template>
     <div class="w-full p-3">
-        <div v-if="route.params.name == undefined || route.params.name == '' ">
+        <div v-if="route.params.name == undefined || route.params.name == ''">
             <section id="header" class="flex mx-2 my-5">
                 <div class="w-10">
                     <p class="font-semibold text-gray-800 fs-5"> Salary Structure <span
@@ -13,21 +13,20 @@
             </section>
             <div class="grid gap-4 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 mx-1"
                 style="display: grid;">
-                <div
-                    class="p-0.5 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100 ">
+                <div class="p-0.5 rounded-lg shadow-md tw-card dynamic-card hover:bg-slate-100 ">
                     <p class="text-lg font-semibold text-center ">Earings</p>
                     <p class="my-0.5 text-xl font-bold text-center">
                         <!-- <span v-if="leave_balance.leave_balance == ''">0</span> -->
-                        <span >10</span>
+                        <span>10</span>
                     </p>
                 </div>
             </div>
             <div id="table-responsive" class="my-4">
                 <DataTable :value="usePayroll.salaryStructureSource">
-                    <Column field="Components" header="Salary structure name"></Column>
-                    <Column field="lastYearSale" header="No of assigned employees"></Column>
-                    <Column field="lastYearSale" header="Created at"></Column>
-                    <Column field="lastYearSale" header="Last modified"></Column>
+                    <Column field="paygroup_name" header="Salary structure name"></Column>
+                    <Column field="no_of_employees" header="No of assigned employees"></Column>
+                    <Column field="created_at" header="Created at"></Column>
+                    <Column field="updated_at" header="Last modified"></Column>
                     <Column header="Action">
                         <template #body>
                             <button class="p-1 mx-4 bg-green-200 border-green-500 rounded-xl">
@@ -50,7 +49,7 @@
 
             </div>
         </div>
-        <NewSalaryStructure  v-if="route.params.name == 'create'" />
+        <NewSalaryStructure v-if="route.params.name == 'create'" />
     </div>
 </template>
 
@@ -67,7 +66,7 @@ const route = useRoute();
 const usePayroll = usePayrollMainStore()
 const helper = usePayrollHelper()
 
-onMounted(()=>{
+onMounted(() => {
     console.log(route.params.name);
 })
 
