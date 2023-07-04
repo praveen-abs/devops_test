@@ -119,7 +119,8 @@ Travel Advance - ta
         Reason: '',
         max_tenure_months:'',
         details :'',
-
+        loan_type:'InterestFreeLoan',
+        loan_setting_id: ''
     });
 
 
@@ -134,6 +135,7 @@ Travel Advance - ta
 
             console.log( ifl.max_tenure_months);
             ifl.details = res.data ;
+            ifl.loan_setting_id = res.data.loan_setting_id;
 
             ifl.minEligibile = res.data.max_loan_amount;
 
