@@ -96,17 +96,20 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     */
 
-    const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord) => {
+    const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
 
         let AttendanceRegularizeFormat = {
-            user_id: selectedDayRegularizationRecord.user_id,
-            date: selectedDayRegularizationRecord.date,
-            actualTime: selectedDayRegularizationRecord.checkin_time,
-            regularizeTime: '9.30 AM',
+            attendance_user: selectedDayRegularizationRecord.user_id,
+            regularization_type: selectedAttendanceRegularizationType,
+            attendance_date: selectedDayRegularizationRecord.date,
+            user_time: selectedDayRegularizationRecord.checkin_time,
+            regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? '9:30:00' :
+                selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? '6:30:00' : '',
             reason: selectedDayRegularizationRecord.reason,
             custom_reason: selectedDayRegularizationRecord.custom_reason,
         }
         console.log(AttendanceRegularizeFormat);
+        return AttendanceRegularizeFormat
     }
 
 
@@ -119,13 +122,25 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyLcRegularization = () => {
-        AttendanceRegularizationApplyFormat(lcDetails.value);
 
-        Swal.fire(
-            'Good job!',
-            'Attendance Regularized Successful',
-            'success'
-        )
+        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
+            .then((res) => {
+                let message = res.data.message
+                console.log(message);
+                if (res.status == 'success') {
+                    Swal.fire(
+                        'Good job!',
+                        'Attendance Regularized Successful',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Fill!',
+                        `${message}`,
+                        'error'
+                    )
+                }
+            })
 
     }
 
@@ -135,14 +150,24 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const applyEgRegularization = () => {
-        console.log(egDetails.value);
-        AttendanceRegularizationApplyFormat(egDetails.value);
-
-        Swal.fire(
-            'Good job!',
-            'Attendance Regularized Successful',
-            'success'
-        )
+        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
+        .then((res) => {
+            let message = res.data.message
+            console.log(message);
+            if (res.status == 'success') {
+                Swal.fire(
+                    'Good job!',
+                    'Attendance Regularized Successful',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Fill!',
+                    `${message}`,
+                    'error'
+                )
+            }
+        })
 
     }
 
@@ -156,13 +181,24 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyMipRegularization = () => {
-        AttendanceRegularizationApplyFormat(mipDetails.value);
-
-        Swal.fire(
-            'Good job!',
-            'Attendance Regularized Successful',
-            'success'
-        )
+        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
+        .then((res) => {
+            let message = res.data.message
+            console.log(message);
+            if (res.status == 'success') {
+                Swal.fire(
+                    'Good job!',
+                    'Attendance Regularized Successful',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Fill!',
+                    `${message}`,
+                    'error'
+                )
+            }
+        })
 
     }
 
@@ -172,14 +208,24 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const applyMopRegularization = () => {
-        console.log(mopDetails.value);
-        AttendanceRegularizationApplyFormat(mopDetails.value);
-
-        Swal.fire(
-            'Good job!',
-            'Attendance Regularized Successful',
-            'success'
-        )
+        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
+        .then((res) => {
+            let message = res.data.message
+            console.log(message);
+            if (res.status == 'success') {
+                Swal.fire(
+                    'Good job!',
+                    'Attendance Regularized Successful',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Fill!',
+                    `${message}`,
+                    'error'
+                )
+            }
+        })
 
     }
 
@@ -241,13 +287,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         // Attendance Regularization
 
         //   MOP
-        onClickShowLcRegularization,applyMopRegularization, mopDetails, dialog_Mop,
+        onClickShowLcRegularization, applyMopRegularization, mopDetails, dialog_Mop,
         //   MIP
-        onClickShowEgRegularization,applyMipRegularization, mipDetails, dialog_Mip,
+        onClickShowEgRegularization, applyMipRegularization, mipDetails, dialog_Mip,
         //   LC
-        onClickShowMipRegularization,applyLcRegularization, lcDetails, dialog_Lc,
+        onClickShowMipRegularization, applyLcRegularization, lcDetails, dialog_Lc,
         //   EG
-        onClickShowMopRegularization,applyEgRegularization, egDetails, dialog_Eg,
+        onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
         dialog_Selfie, viewSelfie
 

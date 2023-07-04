@@ -64,14 +64,14 @@
                 <div class="row ">
                     <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fas fa-fingerprint me-2 text-success "></i>Biometric
+                        <p class="fw-bold textColor fs-12"><i class="fas fa-fingerprint me-2 text-success "></i>Biometric
                         </p>
 
                     </div>
 
                     <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i
+                        <p class="fw-bold textColor fs-12"><i
                                 class="fa fa-exclamation-circle text-warning fs-15 me-2"></i>Not
                             Applied</p>
 
@@ -79,26 +79,26 @@
 
                     <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-primary rounded-pill me-2 ">LC</i>Late
+                        <p class="fw-bold textColor fs-12"><i class="badge bg-primary rounded-pill me-2 ">LC</i>Late
                             Coming
                         </p>
 
                     </div>
                     <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-info rounded-pill me-2 ">MOP</i>Missed
+                        <p class="fw-bold textColor fs-12"><i class="badge bg-info rounded-pill me-2 ">MOP</i>Missed
                             Out
                             Punch</p>
 
                     </div>
                     <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-laptop me-2 text-info"></i>Web </p>
+                        <p class="fw-bold textColor fs-12"><i class="fa fa-laptop me-2 text-info"></i>Web </p>
 
                     </div>
                     <div class="mb-2 col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-3">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-times-circle me-2 text-danger"></i>Rejected
+                        <p class="fw-bold textColor fs-12"><i class="fa fa-times-circle me-2 text-danger"></i>Rejected
                         </p>
 
                     </div>
@@ -108,38 +108,37 @@
 
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class='fa fa-check-circle text-success me-1'></i> Approved
+                        <p class="fw-bold textColor fs-12"><i class='fa fa-check-circle text-success me-1'></i> Approved
                         </p>
 
                     </div>
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i
-                                class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
+                        <p class="fw-bold textColor fs-12"><i class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
 
                     </div>
 
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4 ">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-orange rounded-pill me-2 ">EG</i>Early
+                        <p class="fw-bold textColor fs-12"><i class="badge bg-orange rounded-pill me-2 ">EG</i>Early
                             Going
                         </p>
 
                     </div>
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="badge bg-dark rounded-pill me-3 ">MIP</i>Missed In
+                        <p class="fw-bold textColor fs-12"><i class="badge bg-dark rounded-pill me-3 ">MIP</i>Missed In
                             Punch</p>
 
                     </div>
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-mobile text-dark fs-15 me-3 "></i>Mobile</p>
+                        <p class="fw-bold textColor fs-12"><i class="fa fa-mobile text-dark fs-15 me-3 "></i>Mobile</p>
 
                     </div>
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold text-primary fs-12"><i class="fa fa-picture-o me-2" aria-hidden="true"></i>View
+                        <p class="fw-bold textColor fs-12"><i class="fa fa-picture-o me-2" aria-hidden="true"></i>View
                             Image</p>
 
                     </div>
@@ -161,7 +160,7 @@
                             <div class="min-w-fit">
                                 <EmployeeList :source="orgList" />
                             </div>
-                            <div class="ml-2">
+                            <div class="ml-2 overflow-x">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
@@ -180,16 +179,25 @@
             </div>
         </div>
     </div>
-
+    <MopRegularization />
+    <MipRegularization />
+    <LcRegularization />
+    <EgRegularization />
+    <ViewSelfieImage />
 </template>
 
 
 <script setup>
-import Timesheet from './timesheet/Timesheet.vue';
+import Timesheet from './timesheet/timesheet.vue';
 import { useAttendanceTimesheetMainStore } from './timesheet/stores/attendanceTimesheetMainStore'
 import { useCalendarStore } from './timesheet/stores/calendar'
 import { Service } from '../Service/Service'
 import EmployeeList from './timesheet/components/EmployeeList.vue';
+import MopRegularization from './timesheet/components/MopRegularization.vue'
+import MipRegularization from './timesheet/components/MipRegularization.vue';
+import LcRegularization from './timesheet/components/LcRegularization.vue';
+import EgRegularization from './timesheet/components/EgRegularization.vue';
+import ViewSelfieImage from './timesheet/components/ViewSelfieImage.vue'
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
 
@@ -202,7 +210,7 @@ const service = Service()
 onMounted(() => {
     Service()
 
-    useTimesheet.getSelectedEmployeeAttendance(141, useCalendar.getMonth, useCalendar.getYear).then(res => {
+    useTimesheet.getSelectedEmployeeAttendance(142, useCalendar.getMonth, useCalendar.getYear).then(res => {
         useTimesheet.currentEmployeeAttendance = Object.values(res.data)
     })
 
@@ -235,3 +243,12 @@ const emp = ref([
     },
 ])
 </script>
+
+
+<style>
+
+.textColor{
+    color: #003056;
+}
+
+</style>
