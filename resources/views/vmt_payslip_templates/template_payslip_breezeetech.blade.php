@@ -33,18 +33,20 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
             background-color: #fff;
             white-space: nowrap;
             font-size: .9em;
+            border-collapse: collapse
         }
 
-        .paySlip_template tr td {
-            /* padding-top: .7em;
-            padding-bottom: .7em; */
-
+        .paySlip_template tr td p {
+            margin: 0;
         }
 
         /* .paySlip_template , */
-        .paySlip_template td {
+        .paySlip_template tr td {
             border: 0;
             whhite-space: nowrap;
+            padding-top: .5em;
+            padding-bottom: .5em;
+
         }
 
         .text-bolder {
@@ -84,24 +86,23 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
         <tbody>
             <tr>
                 <td colspan="6" class="" align="">
-                    <p class="text-bolder " style="margin:0;font-size:1.3em;">
+                    <p class="text-bolder " style="font-size:1.3em;padding-bottom:.5em;">
                         BREEZEETECH COOLING SYSTEM PRIVATE LIMITED
                     </p>
-                    <span class="text-right">
+                    <p class="" style="text-align:left;">
                         Plot No. T 352, SIDCO Women’s Industrial Estate, Kattur,Avadi, <br>
                         Thirumullaivoyal, Chennai,TamilNadu,600062,India.
-                    </span>
-
+                    </p>
                 </td>
                 <td colspan="6" class=" " align="right">
-                    <div class="text-right" style="height: 50px;width:100px;max-height:100%;">
+                    <div style="height: 4em;width:10em">
                         <img src="{{ $client_logo }}" class="" alt="" style="height:100%;width:100%;">
                     </div>
                 </td>
             </tr>
             <tr class="">
                 <td colspan="12" class="" style="border-top:.1em solid #4b48fb;">
-                    <p class="text-bolder " style="margin: 0;padding:.7em 0;font-size:1.2em;">
+                    <p class="text-bolder " style="margin: 0;padding:.5em 0;font-size:1.2em;">
                         Payslip For the Month of :
                         {{ strtoupper(date('F-Y', strtotime($emp_payroll_month->payroll_date))) }}
                     </p>
@@ -109,7 +110,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
             </tr>
             <tr class="">
                 <td colspan="12" class="">
-                    <p class="text-bolder " style="margin: 0;padding:.6em 0 0 0;font-size:.9em;">
+                    <p class="text-bolder " style="font-size:.9em;">
                         EMPLOYEE PAY SUMMARY
                     </p>
                 </td>
@@ -119,66 +120,66 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                     <table class="paySlip_template">
                         <tbody>
                             <tr>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class=""  >
                                     <p class="" style="font-weight:600"> Employee Name</p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class=""  >
                                     <p> {{ $employee_name }}</p>
                                 </td>
-                                <td colspan="1" class="" style="padding:.4em .2em">
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="">
                                     <p class="" style="font-weight:600">Employee No</p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="">
                                     <p> {{ $employee_code }}</p>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p class="" style="font-weight:600">Designation </p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p> {{ $employee_office_details->designation }}</p>
                                 </td>
-                                <td colspan="1" class="" style="padding:.4em .2em">
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p class="" style="font-weight:600">UAN Number </p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p>{{ $employee_statutory_details->uan_number }}</p>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p class="" style="font-weight:600"> Date of Joining</p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p> {{ date('d-M-Y', strtotime($employee_details->doj)) }}</p>
                                 </td>
-                                <td colspan="1" class="" style="padding:.4em .2em">
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p class="" style="font-weight:600">ESIC Number No</p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p>{{ $employee_statutory_details->esic_number ?? '-' }}</p>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p class="" style="font-weight:600">PF A/C Number</p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p>{{ $employee_statutory_details->epf_number }}</p>
                                 </td>
-                                <td colspan="1" class="" style="padding:.4em .2em">
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p class="" style="font-weight:600">Bank Account No </p>
                                 </td>
-                                <td colspan="2" class="" style="padding:.4em .2em">
+                                <td colspan="2" class="" >
                                     <p>{{ $employee_details->bank_account_number }}</p>
                                 </td>
                             </tr>
@@ -268,7 +269,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_basic), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->earned_basic), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>EPF Contribution</p>
@@ -288,14 +290,16 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_hra), 2) }}</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_hra), 2) }}
+                                    </p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em ;">
                                     <p>ESIC Contribution</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->employee_esic), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->employee_esic), 2) }}</p>
                                 </td>
                             </tr>
 
@@ -305,18 +309,21 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->spl_alw), 2) }}</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->spl_alw), 2) }}
+                                    </p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_spl_alw), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->earned_spl_alw), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Income Tax</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->income_tax), 2) }}</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->income_tax), 2) }}
+                                    </p>
                                 </td>
                             </tr>
                             <tr>
@@ -329,14 +336,16 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->overtime), 2) }}</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->overtime), 2) }}
+                                    </p>
                                 </td>
                                 <td colspan="3" class="" align="" style="padding:.5em .2em;">
                                     <p>Professional Tax</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->prof_tax), 2) }}</p>
+                                    <p class="text-right">{{ number_format(round($employee_payslip->prof_tax), 2) }}
+                                    </p>
                                 </td>
                             </tr>
 
@@ -357,7 +366,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->other_deduc), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->other_deduc), 2) }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -367,11 +377,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->total_fixed_gross), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->total_fixed_gross), 2) }}</p>
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->total_earned_gross), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->total_earned_gross), 2) }}</p>
                                 </td>
                                 <td colspan="3" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
@@ -379,14 +391,15 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 </td>
                                 <td colspan="2" class="" align=""
                                     style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
-                                    <p class="text-right">{{ number_format(round($employee_payslip->total_deductions), 2) }}</p>
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->total_deductions), 2) }}</p>
                                 </td>
                             </tr>
 
                             <tr>
                                 <td colspan="12" class="" align="" style="padding-top:1em">
                                     <div
-                                        style="padding:1.3em 2em;border:.1em dashed #015e1c;border-radius:1em;text-align:center;">
+                                        style="font-size:1em;line-height:1.8em;padding:1.3em 2em;border:.1em dashed #015e1c;border-radius:1em;text-align:center;">
                                         Total Net Payable <b style="font-size:1.3em;color:#015e1c;">₹
                                             {{ number_format(round($employee_payslip->net_take_home), 2) }}</b>
                                         ({{ $employee_payslip->rupees }}) </br>
@@ -406,7 +419,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_log
                                 <td colspan="8" class="" align="">
                                     Note - Please reach out to us for any payroll queries at -payroll@ardens.in
                                 </td>
-                                <td colspan="4" class="" align="">
+                                <td colspan="4" class="" align="right">
                                     <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
                                         width="100px" height="18px" alt="" class="">
                                 </td>
