@@ -76,7 +76,7 @@ class VmtOrgTreeController extends Controller
         }
 
 
-        $client_logo = VmtGeneralInfo::first()->logo_img;
+        $client_logo = VmtGeneralInfo::first()->client_logo;
 
         if( file_exists(public_path($client_logo)) ){
             $logoSrc     = \URL::asset($client_logo);

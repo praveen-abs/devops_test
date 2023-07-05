@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use \stdClass;
@@ -90,8 +90,8 @@ class VmtLoginService {
             $passwordResetLink =  URL::temporarySignedRoute( 'vmt-signed-passwordresetlink', now()->addMinutes(30), ['uid' => $query_user->id] );
 
             //Then, send mail to that email
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
             $isSent    = \Mail::to($query_user->email)->send(new PasswordResetLinkMail($query_user->name, $query_user->user_code, $passwordResetLink, $image_view));
 
