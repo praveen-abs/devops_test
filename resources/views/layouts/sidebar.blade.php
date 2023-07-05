@@ -570,12 +570,12 @@
                                             Reports</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ route('showPayrollSetup') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>
                                             Setup</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
 
                             </ul>
