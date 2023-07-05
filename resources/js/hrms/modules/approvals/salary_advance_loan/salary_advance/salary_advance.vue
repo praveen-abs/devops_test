@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- v-if="!useEmpData" -->
-            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
+            {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
                     :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -103,28 +103,6 @@
                             </OverlayPanel>
                         </template>
                     </Column>
-                    <!-- <template #expansion="slotProps">
-                        <div>
-                            <DataTable :value="slotProps.data.emp_details" responsiveLayout="scroll"
-                                v-model:selection="selectedAllEmployee" :selectAll="selectAll"
-                                @select-all-change="onSelectAllChange">
-                                <Column field="request_Id" header="request ID">{{ slotProps.data.doc_name }}</Column>
-                                <Column field="Advance_Amount" header="Advance Amount"></Column>
-                                <Column field="paid_on" header="Paid On"></Column>
-                                <Column field="" header="Expected Return"> </Column>
-                                <Column field="" header="Action">
-                                    <template #body="slotProps">
-                                        <div>
-                                            <Button type="button" icon="pi pi-eye" class="p-button-success Button"
-                                                label="view" @click="showConfirmDialog(slotProps.data)"
-                                                style="height: 2.5em" />
-                                        </div>
-                                    </template>
-                                </Column>
-                            </DataTable>
-                        </div>
-                    </template> -->
-
                 </DataTable>
 
                 <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class="" dataKey="id"
@@ -194,7 +172,7 @@
             <div class="border w-full h-28 rounded bg-slate-50 p-2 ">Lorem ipsum dolor sit.</div>
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
-            <span class="font-semibold ">your Comments</span>
+            <span class="font-semibold ">Your Comments</span>
             <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments" autoResize type="text"
                 rows="3" style="border:none; outline-: none;" />
         </div>

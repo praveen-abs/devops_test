@@ -5,15 +5,22 @@
             <div class="px-5 row d-flex justify-content-start align-items-center card-body">
                 <div class="flex justify-between gap-6 my-2">
                     <div class=" fs-4">
-                        <p class="text-xl font-medium text-justify">Five Team members are eligible for the Interest Free
+                        <!-- <p class="text-xl font-medium text-justify">Five Team members are eligible for the Interest Free
                             Loan as per the
                             <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span>
-                        </p>
+                        </p> -->
+                        <p class="text-xl font-medium" v-if="useEmpData == ''">Five Team members are eligible for the Interest Free
+                            Loan as per the
+                            <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span> </p>
+                    <p v-if="useEmpData != ''" class=" fs-4 fw-semibold text-blue-900 font-sans">Employee ID : <span
+                            class=" fs-4 fw-semibold font-sans mr-5">{{ CurrentUser_code }} </span> <span
+                            class="ml-5 pl-14 fs-4 fw-semibold text-blue-900 font-sans"
+                            style="border-left: 2px solid black;">Employee Name : {{ CurrentName }}</span></p>
                     </div>
 
                     <div class="float-right ">
-                        <button class="btn btn-border-orange">View Report</button>
-                        <button class="mx-2 btn btn-orange" @click="ShowDialogApprovalAll">
+                        <button class="btn btn-border-orange" v-if="useEmpData != ''" @click="useEmpData = ''">View Report</button>
+                        <button class="mx-2 btn btn-orange" v-if="useEmpData == ''" @click="ShowDialogApprovalAll">
                             Approval All
                         </button>
 
@@ -44,14 +51,14 @@
                                     <div class="row mx-2">
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Required Amount</h1>
-                                            <InputText type="text" v-model="interestWithLoan.Advance_Amount"
+                                            <InputText type="text"
                                                 placeholder="&#8377; Enter The Required Amount" />
                                             <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000
                                             </p>
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                            <InputText type="text" v-model="interestWithLoan.Monthly_EMI"
+                                            <InputText type="text"
                                                 placeholder="&#8377; " />
                                         </div>
                                         <div class="col mx-2">
@@ -59,7 +66,7 @@
                                             <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
                                                 class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
                                             <InputText class="w-full md:w-10rem" type="text"
-                                                v-model="interestWithLoan.Term_year" placeholder="&#8377; " />
+                                                placeholder="&#8377; " />
                                             <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                                         </div>
                                     </div>
@@ -78,18 +85,18 @@
                                             Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon v-model="interestWithLoan.EMI_start_month"
+                                            <Calendar showIcon
                                                 dateFormat="dd/mm/yy" />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                            <Calendar showIcon v-model="interestWithLoan.EMI_End_month"
+                                            <Calendar showIcon
                                                 dateFormat="dd/mm/yy" />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                                            <InputText type="text" v-model="interestWithLoan.Total_Months"
+                                            <InputText type="text"
                                                 style="width: 150px !important;" />
                                         </div>
                                     </div>
@@ -107,7 +114,6 @@
                                     autoResize type="text" rows="3" style="border:none; outline-: none;" />
                                 <!-- {{ SA_Request_comments }} -->
                             </div>
-
 
                             <template #footer>
                                 <div class="float-right ">
@@ -149,81 +155,93 @@
                     </div>
                 </div>
 
+                <!-- {{ useEmpStore.isInterestFreeLoaneature }} -->
+                <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
+                {{ UseInterestFreeLoan.arraySalaryAdvance }}
                 <div class="table-responsive">
-                    <!-- {{ useEmpStore.isInterestFreeLoaneature }} -->
-                    <DataTable :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true" :rows="10" class="" dataKey="id"
-                        @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
-                        v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                    <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arraySalaryAdvance" :paginator="true"
+                        :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                        v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
                         @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
                         :rowsPerPageOptions="[5, 10, 25]"
                         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                        <Column :expander="true" />
-                        <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column>
-                        <Column field="request_Id" header="Request ID" sortable></Column>
-                        <Column field="Emp_Id" header="Employee ID">
+                        <!-- <Column :expander="true" /> -->
+                        <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
+                        <Column field="id" header="Request ID" sortable></Column>
+                        <Column field="user_code" header="Employee ID">
                         </Column>
-                        <Column field="Employee_Name" header="Employee Name" :sortable="false">
-                            <!-- <template #body="{ data }">
-                    {{ data.doc_status }}
-                </template> -->
-                        </Column>
-                        <Column field="Advance_Amount" header="Advance Amount">
-                        </Column>
-                        <Column field="Date" header="Date">
-
-                        </Column>
-                        <Column field="Status" header="Status">
+                        <Column field="name" header="Employee Name" :sortable="false">
                             <template #body="slotProps">
-                                <!-- {{ slotProps.data.Status }} -->
-                                <h6 v-if="slotProps.data.Status == 'Pending'" class="text-orange-500">
-                                    {{ slotProps.data.Status }}
+                                <button class="fw-semibold text-primary"
+                                    @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">
+                                    {{ slotProps.data.name }} </button>
+                            </template>
+                        </Column>
+                        <Column field="advance_amount" header="Loan Amount"></Column>
+                        <Column field="dedction_date" header="Monthly EMI"> </Column>
+                        <Column field="dedction_date" header="Tenure"> </Column>
+                        <Column field="status" header="Status">
+                            <template #body="slotProps">
+                                <h6 v-if="slotProps.data.status == 'Pending'" class="text-orange-500">
+                                    {{ slotProps.data.status }}
                                 </h6>
-                                <h6 v-if="slotProps.data.Status == 'Approved'" class=" text-green-500">
-                                    {{ slotProps.data.Status }}
+                                <h6 v-if="slotProps.data.status == 'Approved'" class=" text-green-500">
+                                    {{ slotProps.data.status }}
                                 </h6>
-                                <h6 v-if="slotProps.data.Status == 'Rejected'" class="text-red-500">
-                                    {{ slotProps.data.Status }}
+                                <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
+                                    {{ slotProps.data.status }}
                                 </h6>
                             </template>
                         </Column>
-                        <template #expansion="slotProps">
-                            <div>
-                                <DataTable :value="slotProps.data.emp_details" responsiveLayout="scroll"
-                                    v-model:selection="selectedAllEmployee" :selectAll="selectAll"
-                                    @select-all-change="onSelectAllChange">
-                                    <Column field="request_Id" header="request ID">{{ slotProps.data.doc_name }}</Column>
-                                    <Column field="Advance_Amount" header="Advance Amount">
-                                    </Column>
-                                    <Column field="paid_on" header="Paid On">
-
-                                    </Column>
-                                    <Column field="" header="Expected Return">
-                                    </Column>
-
-                                    <Column field="" header="Action">
-                                        <template #body="slotProps">
-                                            <div>
-                                                <Button type="button" icon="pi pi-eye" class="p-button-success Button"
-                                                    label="view" @click="showConfirmDialog(slotProps.data)"
-                                                    style="height: 2.5em" />
-                                            </div>
-                                        </template>
-                                    </Column>
-                                </DataTable>
-                            </div>
-                        </template>
-
+                        <Column field="" header="Action">
+                            <template #body="slotProps">
+                                <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
+                                </button>
+                                <OverlayPanel ref="op"
+                                    style="width: 160px;margin-top:12px !important;margin-right: 20px !important;"
+                                    class="p-0 m-0">
+                                    <div class=" d-flex flex-column p-0 m-0">
+                                        <!-- bg-green-200 -->
+                                        <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                            @click="showConfirmDialog(slotProps.data)">view</button>
+                                        <!-- bg-blue-500 -->
+                                        <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                            @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">passed
+                                            Transaction</button>
+                                    </div>
+                                </OverlayPanel>
+                            </template>
+                        </Column>
                     </DataTable>
 
+                    <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class=""
+                        dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                        v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                        @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+
+                        <Column field="id" header="Request ID" sortable></Column>
+                        <Column field="advance_amount" header="Advance Amount">
+                        </Column>
+                        <Column field="paid_on" header="Paid On">
+                        </Column>
+                        <Column field="Expected_Return" header="Expected Return">
+                        </Column>
+                        <Column field="status" header="Expected Return">
+                        </Column>
+                    </DataTable>
                 </div>
+
 
             </div>
         </div>
 
 
-<!--
+        <!--
         <Dialog header="Header" v-model:visible="UseInterestFreeLoan.canShowLoadingScreen"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
             :closeOnEscape="false">
@@ -248,7 +266,10 @@ import dayjs from 'dayjs';
 const UseInterestFreeLoan = UseSalaryAdvanceApprovals();
 
 onMounted(async () => {
-    await UseInterestFreeLoan.getInterestFreeLoanDetails()
+    // await UseInterestFreeLoan.getInterestFreeLoanDetails()
+
+    // testing
+     UseInterestFreeLoan.getEmpDetails();
 })
 
 
@@ -259,6 +280,12 @@ const canshowInterestFLR = ref(false);
 const currentlySelectedRowData = ref();
 const currentlySelectedStatus = ref();
 const canShowConfirmationAll = ref(false);
+const useEmpData = ref([""]);
+const CurrentName = ref();
+const CurrentUser_code = ref();
+const required_Amount = reactive({
+    required_Amount: ""
+});
 // const
 
 
@@ -272,13 +299,27 @@ const interestWithLoan = ref();
 // reason:""
 
 
+// function showConfirmDialog(selectedRowData, status) {
+//     console.log(selectedRowData);
+//     canshowInterestFLR.value = true;
+//     currentlySelectedStatus.value = status;
+//     currentlySelectedRowData.value = selectedRowData;
+//     interestWithLoan.value = selectedRowData;
+//     // required_Amount.required_Amount = selectedRowData.Advance_Amount
+// }
+
+const op = ref();
+const toggle = (event) => {
+    op.value.toggle(event);
+}
+
 function showConfirmDialog(selectedRowData, status) {
     console.log(selectedRowData);
     canshowInterestFLR.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
-    interestWithLoan.value = selectedRowData;
-    // required_Amount.required_Amount = selectedRowData.Advance_Amount
+    required_Amount.required_Amount = selectedRowData.Advance_Amount
+    console.log(required_Amount.required_Amount);
 }
 
 function hideBulkConfirmDialog() {
@@ -311,10 +352,21 @@ async function approveAndReject(status) {
     currentlySelectedStatus.value = status;
 }
 
-async function processBulkApproveReject(status){
+async function processBulkApproveReject(status) {
 
-    currentlySelectedStatus.value= status;
-    await UseInterestFreeLoan.IFLbulkApproveAndReject(currentlySelectedStatus.value,UseInterestFreeLoan.arrayIFL_List);
+    currentlySelectedStatus.value = status;
+    await UseInterestFreeLoan.IFLbulkApproveAndReject(currentlySelectedStatus.value, UseInterestFreeLoan.arrayIFL_List);
+}
+
+
+function view_more(selectedRowData, user_code, currentName) {
+    console.log(selectedRowData);
+    // currentlySelectedStatus.value  = selectedRowData;
+    useEmpData.value = selectedRowData;
+    CurrentName.value = currentName;
+    CurrentUser_code.value = user_code
+    console.log(user_code);
+    console.log(currentName);
 }
 
 

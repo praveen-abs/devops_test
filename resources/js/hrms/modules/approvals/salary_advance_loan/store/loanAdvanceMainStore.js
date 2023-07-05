@@ -14,6 +14,9 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     // functions
 
+    const salaryAdvance =reactive({
+    });
+
     async function getEmpDetails() {
         canShowLoadingScreen.value = true;
         // let url = "/SalAdvApproverFlow";
@@ -142,6 +145,7 @@ console.log(reviewer_comments);
 
     return {
         // Salary Advance
+        salaryAdvance,
         arraySalaryAdvance,
         currentlySelectedStatus
         ,Request_comments,
