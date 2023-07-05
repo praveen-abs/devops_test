@@ -351,7 +351,7 @@ class VmtSalaryAdvanceService
             unset($ordered_approver_flow);
         }
 
-        return ($temp_ar);
+        //return ($temp_ar);
 
         $pending = array();
         foreach ($temp_ar as $all_pending_advance) {
@@ -719,11 +719,35 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function fetchEmployeeForLoanApprovals()
+    public function fetchEmployeeForLoanApprovals($loan_type)
     {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+            ],
+            $rules = [
+                "loan_type" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
         $user_id = auth()->user()->id;
         $temp_ar = array();
-        $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts', 0)->get();
+        if ($loan_type == 'InterestFreeLoan') {
+            $all_pending_loans = VmtEmployeeInterestFreeLoanDetails::where('loan_crd_sts', 0)->get();
+        } else if ($loan_type == 'InterestWithLoan') {
+            $all_pending_loans = VmtEmpInterestLoanDetails::where('loan_crd_sts', 0)->get();
+        }
+
         foreach ($all_pending_loans as $single_record) {
             //dd($single_record);
             $approver_flow = collect(json_decode($single_record->approver_flow, true))->sortBy('order');
@@ -761,7 +785,23 @@ class VmtSalaryAdvanceService
 
             unset($ordered_approver_flow);
         }
-        return $temp_ar;
+        $emp_loan_history = array();
+        $loan_history = array();
+        foreach ($temp_ar as $single_record) {
+            $loan_history['id'] = $single_record['id'];
+            $loan_history['request_id'] = $single_record['request_id'];
+            $loan_history['user_code'] = User::where('id', $single_record['user_id'])->first()->user_code;
+            $loan_history['name'] = User::where('id', $single_record['user_id'])->first()->name;
+            $loan_history['loan_amount'] = $single_record['borrowed_amount'];
+            $loan_history['tenure'] = $single_record['tenure_months'];
+            $loan_history['status'] = $single_record['loan_crd_sts'];
+            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'],$loan_type,);
+
+            array_push($emp_loan_history,  $loan_history);
+            unset($loan_history);
+        }
+
+        return $emp_loan_history;
     }
 
     public function rejectOrApproveLoan(
@@ -856,15 +896,17 @@ class VmtSalaryAdvanceService
     }
 
 
-    public function EmployeeLoanHistory($loan_type)
+    public function EmployeeLoanHistory($user_id, $loan_type)
     {
 
         $validator = Validator::make(
             $data = [
                 "loan_type" => $loan_type,
+                "user_id" => $user_id,
             ],
             $rules = [
                 "loan_type" => "required",
+                "user_id" => "required"
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
@@ -878,21 +920,15 @@ class VmtSalaryAdvanceService
             ]);
         }
 
-        $user_id = auth()->user()->id;
-
         try {
+            $loan_history ='';
             if ($loan_type == 'InterestFreeLoan') {
-                $loan_history =VmtEmployeeInterestFreeLoanDetails::where('user_id',$user_id)->get();
+                $loan_history = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->get();
             } else if ($loan_type == 'InterestWithLoan') {
-                $loan_history = VmtEmpInterestLoanDetails::where('user_id',$user_id)->get();
+                $loan_history = VmtEmpInterestLoanDetails::where('user_id', $user_id)->get();
             }
 
-            return response()->json([
-                'status' => 'Sucess',
-                'message' => 'Loan Approved Or Rejected',
-                'data'=>$loan_history
-
-            ]);
+            return $loan_history;
         } catch (Exception $e) {
             return response()->json([
                 "status" => "failure",
