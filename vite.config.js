@@ -49,7 +49,7 @@ export default defineConfig({
                 ////Reimbursements Module
 
                 //Employee Reimbursements
-                'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
+                'resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js',
 
                 //Configurations
                 //Attendance settings
