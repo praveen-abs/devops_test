@@ -1661,6 +1661,7 @@ class VmtAttendanceService
 
         //Web/mobile attendance
         try {
+            $response = null;
 
             $query_web_mobile_response = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
                 ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_attendance.vmt_employee_workshift_id')
