@@ -788,14 +788,16 @@ class VmtSalaryAdvanceService
         $emp_loan_history = array();
         $loan_history = array();
         foreach ($temp_ar as $single_record) {
+
             $loan_history['id'] = $single_record['id'];
             $loan_history['request_id'] = $single_record['request_id'];
             $loan_history['user_code'] = User::where('id', $single_record['user_id'])->first()->user_code;
             $loan_history['name'] = User::where('id', $single_record['user_id'])->first()->name;
             $loan_history['loan_amount'] = $single_record['borrowed_amount'];
+            $loan_history['monthly_emi'] = $single_record[' emi_per_month '];
             $loan_history['tenure'] = $single_record['tenure_months'];
             $loan_history['status'] = $single_record['loan_crd_sts'];
-            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'],$loan_type,);
+            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type,);
 
             array_push($emp_loan_history,  $loan_history);
             unset($loan_history);
@@ -921,7 +923,7 @@ class VmtSalaryAdvanceService
         }
 
         try {
-            $loan_history ='';
+            $loan_history = '';
             if ($loan_type == 'InterestFreeLoan') {
                 $loan_history = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->get();
             } else if ($loan_type == 'InterestWithLoan') {
