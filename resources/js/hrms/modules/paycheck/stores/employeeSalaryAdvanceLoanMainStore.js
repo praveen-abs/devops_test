@@ -251,19 +251,20 @@ Travel Advance - ta
     const InterestWithLoanData = ref();
 
     const InterestWithLoan = reactive({
-        minEligibile: '',
+        minEligibile: '2000',
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
         maxTenure: '',
         required_amount: '',
         Term: '',
-        Interest_rate: '2.5%',
+        Interest_rate: 3000,
         month_EMI: '0',
         EMI_Start_Month: '',
         EMI_END_Month: '',
         Total_Month: '',
         Reason: '',
+        total_amount:5
     });
 
     const fetchInterstWithLoan = () => {

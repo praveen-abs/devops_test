@@ -103,8 +103,9 @@
                         <div class="row  ">
                             <div class="col-6   " style="margin-right: 30px;">
                                 <h1 class="fs-5 my-2 ">Required Amount</h1>
-                                <InputText type="text" v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" />
-                                <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000</p>
+                                <!-- <InputText type="text" v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" /> -->
+                                <InputNumber v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping" :useGrouping="false" />
+                                <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{useEmpStore.InterestWithLoan.minEligibile }}</p>
                             </div>
                             <div class="col mx-2">
                                 <h1 class="fs-5 my-2">Term</h1>
@@ -114,7 +115,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 pr-5">
-                                <button class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded">Calculate EMI</button>
+                                <button class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded hover:bg-red-500 shadow-md">Calculate EMI</button>
                             </div>
                         </div>
                     </div>
@@ -125,30 +126,39 @@
             <div class="col">
                 <div class="row">
                     <div class="col-12 pl-8 pr-8 " >
-
-                        <div class="div p-4  allcenter rounded" style="background: #CEE3F4 ; ">
-                            <!-- <h1 class="fw-bolder fs-4">2.5%</h1> -->
-                            <input class="fw-bolder fs-4 clr" style="width: 45px;background: #CEE3F4  ;" v-model="useEmpStore.InterestWithLoan.Interest_rate"   />
-                            <h1  class=" fw-bolder mt-2">Interest Rate</h1>
+                        <div class="div p-2 d-flex justify-items-center align-items-center flex-column rounded bg-blue-100 shadow-md" >
+                            <!-- disabled -->
+                            <input class="fw-bolder fs-4 text-blue-900 p-2 ml-2 d-flex justify-items-center text-center bg-blue-100" placeholder="%"   style="width: 100px;" disabled v-model="useEmpStore.InterestWithLoan.Interest_rate"   />
+                            <h1  class=" fw-semibold  mt-1 fs-5">Interest Rate</h1>
                         </div>
 
                     </div>
 
                     <div class="col  pl-8 pr-8 " >
-                        <div class="div allcenter p-4 rounded " style="background: #FDCFCF;" >
+                        <div class="div allcenter p-2 rounded shadow-md" style="background: #FDCFCF;" >
 
                             <div class="div d-flex justify-content-center align-items-center">
 
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
-                                <input class="fw-bolder fs-4 clr pl-2" style="width: 45px;background: #FDCFCF  ;" v-model="useEmpStore.InterestWithLoan.month_EMI"   />
+                                <input class="fw-bolder fs-4  pl-2" style="width: 45px;background: #FDCFCF  ;" disabled v-model="useEmpStore.InterestWithLoan.month_EMI"   />
 
                             </div>
-
-                            <h1 class="fw-bolder mt-2" >Month EMI</h1>
-
+                            <h1 class=" fw-semibold mt-2 fs-5" >Monthly payment</h1>
                         </div>
 
                     </div>
+
+                    <div class="col  pl-8 pr-8 " >
+                        <div class="div allcenter p-2 rounded bg-green-100 shadow-md"   >
+                            <div class="div d-flex justify-content-center align-items-center">
+                                <h1 class="fw-bolder fs-4">&#8377; </h1>
+                                <input class="fw-bolder fs-4  pl-2 bg-green-100" style="width: 45px;" disabled v-model="useEmpStore.InterestWithLoan.total_amount"   />
+                            </div>
+                            <h1 class=" fw-semibold mt-2 fs-5" >Total loan amount</h1>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
 
@@ -228,6 +238,10 @@ const openPosition = (pos) => {
     useEmpStore.dialogInterestwithLoan = true
 }
 
+const monthly = ref({
+
+})
+
 function selectMonth() {
 
 useEmpStore.InterestWithLoan.M_EMI = useEmpStore.InterestWithLoan.required_amount / useEmpStore.InterestWithLoan.Term;
@@ -255,6 +269,30 @@ if (useEmpStore.InterestWithLoan.EMI_Start_Month) {
 }
 
 }
+
+function calculateLoanDetails(principal, rate, time) {
+  var monthlyInterestRate = rate / 12;  // Convert the annual interest rate to a monthly rate
+  var numberOfPayments = time * 12;     // Convert the loan period to the number of monthly payments
+
+  var monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+  var totalLoanAmount = monthlyPayment * numberOfPayments;
+
+  return {
+    monthlyPayment: monthlyPayment,
+    totalLoanAmount: totalLoanAmount
+  };
+}
+
+// Example usage
+var loanPrincipal = 5000;  // The principal amount of the loan
+var loanRate = 0.05;      // The annual interest rate (5% in this case)
+var loanTime = 2;         // The time period in years
+
+var loanDetails = calculateLoanDetails(loanPrincipal, loanRate, loanTime);
+console.log("Monthly payment amount: " + loanDetails.monthlyPayment);
+console.log("Total loan amount: " + loanDetails.totalLoanAmount);
+
+
 
 
 </script>
