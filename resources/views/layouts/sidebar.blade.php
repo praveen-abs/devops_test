@@ -392,7 +392,7 @@
                 @endif
 
                 <!-- PMS module -->
-                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines']))
+                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines','BREEZEE TECH']))
 
                     <li class="mb-1 nav-item">
                         <a class="pt-0 nav-link sidebar menu-link" href="#PerformanceDrop-Down"
