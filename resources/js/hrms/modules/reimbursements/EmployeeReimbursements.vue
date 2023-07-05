@@ -39,7 +39,7 @@
                             <div class="col-2 d-flex justify-content-end ">
                                 <button class="my-auto btn btn-primary z-0"
                                     :disabled="employee_service.data_local_convergance == '' ? true : false"
-                                    severity="success" style="height: 33px;" @click="toggle"><i
+                                    severity="success" style="height: 33px;"  @click="employee_service.download_ajax"><i
                                         class="fas fa-file-download me-2"></i>Download</button>
                             </div>
                             <div class="col-2 d-flex justify-content-end align-content-center ">
