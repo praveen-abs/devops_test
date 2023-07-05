@@ -16,6 +16,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const mipDetails = ref({})
     const lcDetails = ref({})
     const egDetails = ref({})
+    const selfieDetails = ref({})
 
 
     const dialog_Mop = ref(false)
@@ -232,8 +233,9 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     // View check in and out selfie Images
 
-    const viewSelfie = (value) => {
+    const onClickSViewSelfie = (attendance) => {
         dialog_Selfie.value = true
+        selfieDetails.value = attendance
     }
 
 
@@ -295,7 +297,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         //   EG
         onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie, viewSelfie
+        dialog_Selfie, onClickSViewSelfie,selfieDetails,
 
 
     }

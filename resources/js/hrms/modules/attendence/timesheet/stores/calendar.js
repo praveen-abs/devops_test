@@ -32,7 +32,7 @@ export const useCalendarStore = defineStore("calendar", () => {
 
         month.value = month.value + val;
 
-        useTimesheet.getSelectedEmployeeAttendance(141, month.value, year.value).then(res => {
+        useTimesheet.getSelectedEmployeeAttendance(174, month.value, year.value).then(res => {
             useTimesheet.currentEmployeeAttendance = Object.values(res.data)
         })
 
@@ -45,7 +45,7 @@ export const useCalendarStore = defineStore("calendar", () => {
         }
         month.value = month.value - val;
 
-        useTimesheet.getSelectedEmployeeAttendance(141, month.value, year.value).then(res => {
+        useTimesheet.getSelectedEmployeeAttendance(174, month.value, year.value).then(res => {
             useTimesheet.currentEmployeeAttendance = Object.values(res.data)
         })
 

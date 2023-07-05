@@ -160,7 +160,7 @@
                             <div class="min-w-fit">
                                 <EmployeeList :source="orgList" />
                             </div>
-                            <div class="ml-2 overflow-x">
+                            <div class="">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
@@ -183,7 +183,7 @@
     <MipRegularization />
     <LcRegularization />
     <EgRegularization />
-    <ViewSelfieImage />
+    <ViewSelfieImage  />
 </template>
 
 
@@ -210,7 +210,7 @@ const service = Service()
 onMounted(() => {
     Service()
 
-    useTimesheet.getSelectedEmployeeAttendance(142, useCalendar.getMonth, useCalendar.getYear).then(res => {
+    useTimesheet.getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear).then(res => {
         useTimesheet.currentEmployeeAttendance = Object.values(res.data)
     })
 
