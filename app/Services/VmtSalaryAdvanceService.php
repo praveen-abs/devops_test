@@ -854,4 +854,51 @@ class VmtSalaryAdvanceService
             ]);
         }
     }
+
+
+    public function EmployeeLoanHistory($loan_type)
+    {
+
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+            ],
+            $rules = [
+                "loan_type" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $user_id = auth()->user()->id;
+
+        try {
+            if ($loan_type == 'InterestFreeLoan') {
+                $loan_history =VmtEmployeeInterestFreeLoanDetails::where('user_id',$user_id)->get();
+            } else if ($loan_type == 'InterestWithLoan') {
+                $loan_history = VmtEmpInterestLoanDetails::where('user_id',$user_id)->get();
+            }
+
+            return response()->json([
+                'status' => 'Sucess',
+                'message' => 'Loan Approved Or Rejected',
+                'data'=>$loan_history
+
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Employee Loan History",
+                "data" => $e->getMessage(),
+            ]);
+        }
+    }
 }
