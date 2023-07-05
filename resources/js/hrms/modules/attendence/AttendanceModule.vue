@@ -160,17 +160,19 @@
                             <div class="min-w-fit">
                                 <EmployeeList :source="orgList" />
                             </div>
-                            <div class="">
+                            <div class="overflow-x-auto ml-2">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+
                             </div>
+
                         </div>
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
-                            <div class="min-w-fit">
+                            <div class="min-w-max">
                                 <EmployeeList :source="orgList" />
                             </div>
-                            <div>
+                            <div class="overflow-x-auto ml-2">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance"  />
                             </div>
                         </div>

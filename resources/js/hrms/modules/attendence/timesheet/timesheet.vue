@@ -1,6 +1,6 @@
 <template>
-    <div ref="calendarContainer" class="min-h-full w-full text-gray-800 card" v-if="singleAttendanceDay">
-        <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
+    <div ref="calendarContainer" class="min-h-full min-w-fit text-gray-800 card" v-if="singleAttendanceDay">
+        <div class="min-w-max border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
 
