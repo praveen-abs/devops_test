@@ -1014,8 +1014,9 @@ class VmtInvestmentsService
     }
 
     public function taxableIncomeFromAllHeads(){
+          $simma11   = $this->grossEarningsFromEmployment()['total'][0];
 
-
+            dd($simma11);
 
     }
 
