@@ -80,10 +80,12 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     async function getInterestFreeLoanDetails(){
         canShowLoadingScreen.value = true;
         arrayIFL_List.value = ""
-
-
-        await axios.get('http://localhost:3000/InterestFreeloan').then((res)=>{
+         axios.post('/fetch-employee-for-loan-approval',{
+              loan_type:"InterestFreeLoan",
+        }).then((res)=>{
+            console.log( res.data);
             arrayIFL_List.value = res.data
+            console.log(arrayIFL_List);
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -99,12 +101,12 @@ console.log(reviewer_comments);
         await axios.post('http://localhost:3000/submitApproveAndReject', {
             record_id: data,
             status:
-                currentlySelectedStatus == "Approve"
-                    ? "Approved"
-                    : currentlySelectedStatus == "Reject"
-                        ? "Rejected"
+                currentlySelectedStatus == 1
+                    ? 1
+                    : currentlySelectedStatus == -1
+                        ? 1
                         : currentlySelectedStatus,
-            reviewer_comments: "",
+            reviewer_comments: reviewer_comments,
         }).then(() => {
         }).finally(()=>{
             canShowLoadingScreen.value = false;

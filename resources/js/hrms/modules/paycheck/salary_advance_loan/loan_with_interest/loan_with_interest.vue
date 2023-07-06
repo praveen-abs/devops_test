@@ -109,7 +109,7 @@
                             </div>
                             <div class="col mx-2">
                                 <h1 class="fs-5 my-2">Term</h1>
-                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="cities" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
+                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="useEmpStore.InterestWithLoan" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
                                 <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                             </div>
                         </div>
@@ -141,7 +141,6 @@
 
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
                                 <input class="fw-bolder fs-4  pl-2" style="width: 45px;background: #FDCFCF  ;" disabled v-model="useEmpStore.InterestWithLoan.month_EMI"   />
-
                             </div>
                             <h1 class=" fw-semibold mt-2 fs-5" >Monthly payment</h1>
                         </div>
@@ -225,6 +224,7 @@ const useEmpStore = useEmpSalaryAdvanceStore()
 
 onMounted(() => {
     useEmpStore.fetchInterstWithLoan();
+    useEmpStore.getinterestwithloan();
 })
 
 const value = ref();

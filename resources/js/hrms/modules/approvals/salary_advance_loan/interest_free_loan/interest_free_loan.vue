@@ -46,19 +46,21 @@
                                         Interest Free Loan Request</h1>
                                 </div>
                             </template>
-                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none">
+                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none" v-for="(items, index ) in required_Amount.eligible_amount" :key="index">
                                 <div class="card-body">
                                     <div class="row mx-2">
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Required Amount</h1>
+                                            <!-- {{ items }} -->
+                                           {{ items.emi_per_month}}
                                             <InputText type="text"
-                                                placeholder="&#8377; Enter The Required Amount" />
-                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000
+                                                placeholder="&#8377; Enter The Required Amount" v-model="required_Amount.required_Amount" />
+                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount :{{ items.eligible_amount }}
                                             </p>
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                            <InputText type="text"
+                                            <InputText type="text" v-model="items.emi_per_month"
                                                 placeholder="&#8377; " />
                                         </div>
                                         <div class="col mx-2">
@@ -66,8 +68,8 @@
                                             <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
                                                 class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
                                             <InputText class="w-full md:w-10rem" type="text"
-                                                placeholder="&#8377; " />
-                                            <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
+                                                placeholder="&#8377; " v-model="items.tenure_months" />
+                                            <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Months</label>
                                         </div>
                                     </div>
 
@@ -76,7 +78,7 @@
                                 </div>
                             </div>
 
-                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
+                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none " v-for="(items, index ) in required_Amount.eligible_amount" :key="index" >
                                 <div class="card-body mx-4">
                                     <div class="row">
                                         <!-- fw-bolder -->
@@ -85,13 +87,13 @@
                                             Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon
+                                            <Calendar showIcon v-model="items.deduction_starting_month"
                                                 dateFormat="dd/mm/yy" />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                            <Calendar showIcon
+                                            <Calendar showIcon v-model="items.deduction_ending_month"
                                                 dateFormat="dd/mm/yy" />
                                         </div>
                                         <div class="col-3">
@@ -103,10 +105,10 @@
                                 </div>
                             </div>
 
-                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6" v-for="(items,index) in  required_Amount.eligible_amount " :key="index" >
                                 <span class="font-semibold ">Reason</span>
-                                <Textarea v-model="interestWithLoan.reviewer_comments"
-                                    class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+                                <Textarea
+                                    class="my-3 capitalize form-control textbox" v-model="items.reason" autoResize type="text" rows="3" />
                             </div>
                             <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
                                 <span class="font-semibold ">your Comments</span>
@@ -118,9 +120,9 @@
                             <template #footer>
                                 <div class="float-right ">
                                     <button class="btn bg-red-500 text-white px-5"
-                                        @click="approveAndReject('Reject')">Reject</button>
+                                        @click="approveAndReject(-1)">Reject</button>
                                     <button class="mx-4 btn bg-green-500  text-white px-5"
-                                        @click="approveAndReject('Approve')">Approve</button>
+                                        @click="approveAndReject(1)">Approve</button>
                                 </div>
                                 <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
                             <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
@@ -157,9 +159,9 @@
 
                 <!-- {{ useEmpStore.isInterestFreeLoaneature }} -->
                 <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
-                {{ UseInterestFreeLoan.arraySalaryAdvance }}
+                {{ UseInterestFreeLoan.arrayIFL_List }}
                 <div class="table-responsive">
-                    <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arraySalaryAdvance" :paginator="true"
+                    <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
                         v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
                         @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
@@ -175,23 +177,32 @@
                         <Column field="name" header="Employee Name" :sortable="false">
                             <template #body="slotProps">
                                 <button class="fw-semibold text-primary"
-                                    @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">
+                                    @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">
                                     {{ slotProps.data.name }} </button>
                             </template>
                         </Column>
-                        <Column field="advance_amount" header="Loan Amount"></Column>
-                        <Column field="dedction_date" header="Monthly EMI"> </Column>
-                        <Column field="dedction_date" header="Tenure"> </Column>
+                        <Column field="loan_amount" header="Loan Amount"></Column>
+                        <Column field="emi_per_month" header="Monthly EMI">
+
+                            <template #body="slotProps">
+                                <div>
+                                    <h1 v-if="slotProps.data.monthly_emi == null">-</h1>
+                                    <h1 v-else>{{slotProps.data.monthly_emi}}</h1>
+                                </div>
+                            </template>
+
+                        </Column>
+                        <Column field="tenure" header="Tenure"> </Column>
                         <Column field="status" header="Status">
                             <template #body="slotProps">
-                                <h6 v-if="slotProps.data.status == 'Pending'" class="text-orange-500">
-                                    {{ slotProps.data.status }}
+                                <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
+                                    Pending
                                 </h6>
-                                <h6 v-if="slotProps.data.status == 'Approved'" class=" text-green-500">
-                                    {{ slotProps.data.status }}
+                                <h6 v-if="slotProps.data.status == 1 " class=" text-green-500">
+                                    Approved
                                 </h6>
-                                <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
-                                    {{ slotProps.data.status }}
+                                <h6 v-if="slotProps.data.status == -1 " class="text-red-500">
+                                    Rejected
                                 </h6>
                             </template>
                         </Column>
@@ -208,7 +219,7 @@
                                             @click="showConfirmDialog(slotProps.data)">view</button>
                                         <!-- bg-blue-500 -->
                                         <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
-                                            @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">passed
+                                            @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">passed
                                             Transaction</button>
                                     </div>
                                 </OverlayPanel>
@@ -224,14 +235,37 @@
                         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                        <Column field="id" header="Request ID" sortable></Column>
-                        <Column field="advance_amount" header="Advance Amount">
+                        <Column field="request_id" header="Request ID" sortable></Column>
+                        <Column field="loan_amount" header="Loan Amount">
                         </Column>
-                        <Column field="paid_on" header="Paid On">
+                        <Column field="loan_amount" header="Advance Amount">
                         </Column>
-                        <Column field="Expected_Return" header="Expected Return">
+                        <Column field="emi_per_month" header="Monthly EMI">
+                            <template #body="slotProps">
+                                <div>
+                                    <h1 v-if="slotProps.data.emi_per_month == null">-</h1>
+                                    <h1 v-else>{{slotProps.data.emi_per_month}}</h1>
+                                </div>
+                            </template>
                         </Column>
-                        <Column field="status" header="Expected Return">
+                        <Column field="tenure_months" header="Tenure">
+                        </Column>
+                        <Column field="deduction_starting_month" header="EMI Start Date">
+                        </Column>
+                        <Column field="deduction_ending_month" header="EMI Start Date">
+                        </Column>
+                        <Column field="status" header="Status">
+                            <template #body="slotProps">
+                                <h6 v-if="slotProps.data.loan_crd_sts == 0" class="text-orange-500">
+                                    Pending
+                                </h6>
+                                <h6 v-if="slotProps.data.loan_crd_sts == 1 " class=" text-green-500">
+                                    Approved
+                                </h6>
+                                <h6 v-if="slotProps.data.loan_crd_sts == 'Rejected'" class="text-red-500">
+                                    <!-- {{ slotProps.data.status }} -->
+                                </h6>
+                            </template>
                         </Column>
                     </DataTable>
                 </div>
@@ -266,10 +300,10 @@ import dayjs from 'dayjs';
 const UseInterestFreeLoan = UseSalaryAdvanceApprovals();
 
 onMounted(async () => {
-    // await UseInterestFreeLoan.getInterestFreeLoanDetails()
+    await UseInterestFreeLoan.getInterestFreeLoanDetails()
 
     // testing
-     UseInterestFreeLoan.getEmpDetails();
+    //  UseInterestFreeLoan.getEmpDetails();
 })
 
 
@@ -284,7 +318,14 @@ const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
 const required_Amount = reactive({
-    required_Amount: ""
+    required_Amount: "",
+    borrowed_amount:'',
+    eligible_amount:"",
+    emi_per_month:"",
+    tenure_months:"",
+    deduction_starting_month:"",
+    deduction_ending_month:"",
+    reason:"",
 });
 // const
 
@@ -313,13 +354,29 @@ const toggle = (event) => {
     op.value.toggle(event);
 }
 
-function showConfirmDialog(selectedRowData, status) {
+function showConfirmDialog(selectedRowData) {
     console.log(selectedRowData);
+
     canshowInterestFLR.value = true;
-    currentlySelectedStatus.value = status;
+    // currentlySelectedStatus.value = status;
+    required_Amount.value = selectedRowData;
     currentlySelectedRowData.value = selectedRowData;
-    required_Amount.required_Amount = selectedRowData.Advance_Amount
-    console.log(required_Amount.required_Amount);
+
+    required_Amount.required_Amount = selectedRowData.loan_amount;
+    required_Amount.borrowed_amount = selectedRowData.borrowed_amount;
+    required_Amount.eligible_amount = selectedRowData.emp_prevdetails;
+    required_Amount.emi_per_month = selectedRowData.emi_per_month;
+    required_Amount.tenure_months = selectedRowData.tenure_months;
+    required_Amount.deduction_starting_month = selectedRowData.deduction_starting_month;
+    required_Amount.deduction_ending_month = selectedRowData.deduction_ending_month;
+    required_Amount.reason = selectedRowData.reason;
+
+
+    console.log( selectedRowData.loan_amount);
+    console.log( required_Amount.eligible_amount );
+    console.log( selectedRowData.borrowed_amount);
+
+
 }
 
 function hideBulkConfirmDialog() {
@@ -367,6 +424,7 @@ function view_more(selectedRowData, user_code, currentName) {
     CurrentUser_code.value = user_code
     console.log(user_code);
     console.log(currentName);
+
 }
 
 
