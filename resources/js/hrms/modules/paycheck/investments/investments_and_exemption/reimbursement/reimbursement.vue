@@ -54,7 +54,7 @@
                             <div v-else-if="slotProps.data.select_option">
                                 <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted"/>
                             </div>
                             <div v-else>
                                 <p style="font-weight: 501;">--</p>
@@ -63,12 +63,12 @@
                         <div v-else>
                             <InputNumber class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted"/>
                         </div>
                     </template>
                     <template #editor="{ data, field }">
                         <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                            class="text-lg font-semibold w-7" />
+                            class="text-lg font-semibold w-7" :readonly="!investmentStore.isSubmitted"/>
                     </template>
                 </Column>
                 <Column field="Status" header="Status" style="min-width: 12rem">

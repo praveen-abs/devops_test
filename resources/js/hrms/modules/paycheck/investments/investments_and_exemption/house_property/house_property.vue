@@ -30,7 +30,7 @@
                                 <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.getSopSlotData(slotProps.data)"
+                                <button @click="investmentStore.getSopSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                             </div>
@@ -40,7 +40,7 @@
                                 <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.getLopSlotData(slotProps.data)"
+                                <button @click="investmentStore.getLopSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                             </div>
@@ -51,7 +51,7 @@
                                 <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.getDlopSlotData(slotProps.data)"
+                                <button @click="investmentStore.getDlopSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                             </div>
