@@ -544,6 +544,7 @@ class HomeController extends Controller
             //$attendance->date = date('Y-m-d');
             $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
             $attendance->checkout_time = $currentTime;
+            $attendance->checkout_date= Carbon::today()->toDateString();
             $attendance->attendance_mode_checkout = "web";
             $attendance->save();
 
