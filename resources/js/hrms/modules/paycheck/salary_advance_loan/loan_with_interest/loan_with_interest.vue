@@ -109,7 +109,8 @@
                             </div>
                             <div class="col mx-2">
                                 <h1 class="fs-5 my-2">Term</h1>
-                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="useEmpStore.InterestWithLoan" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
+                              {{useEmpStore.InterestWithLoan.max_tenure_months}}
+                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="useEmpStore.InterestWithLoan.max_tenure_months" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
                                 <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                             </div>
                         </div>
@@ -288,7 +289,7 @@ var loanPrincipal = 5000;  // The principal amount of the loan
 var loanRate = 0.05;      // The annual interest rate (5% in this case)
 var loanTime = 2;         // The time period in years
 
-var loanDetails = calculateLoanDetails(loanPrincipal, loanRate, loanTime);
+var loanDetails = calculateLoanDetails(useEmpStore.InterestWithLoan.required_amount, loanRate, loanTime);
 console.log("Monthly payment amount: " + loanDetails.monthlyPayment);
 console.log("Total loan amount: " + loanDetails.totalLoanAmount);
 
