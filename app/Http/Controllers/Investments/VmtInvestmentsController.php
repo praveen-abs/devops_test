@@ -684,6 +684,21 @@ public function monthTaxDeductionDetails(Request $request, VmtInvestmentsService
 }
 
 
+public function grossEarningsFromEmployment(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+{
+    //  dd($request->all());
+
+    return $serviceVmtInvestmentsService->grossEarningsFromEmployment();
+}
+
+public function taxableIncomeFromAllHeads(Request $request, VmtInvestmentsService $serviceVmtInvestmentsService)
+{
+    //  dd($request->all());
+
+    return $serviceVmtInvestmentsService->taxableIncomeFromAllHeads();
+}
+
+
 
 
 

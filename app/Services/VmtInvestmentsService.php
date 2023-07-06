@@ -63,7 +63,7 @@ class VmtInvestmentsService
 
             $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-            $query_is_sumbitted = VmtInvFEmpAssigned::where('user_id' , $user_id)->first();
+            $query_is_sumbitted = VmtInvFEmpAssigned::where('user_id', $user_id)->first();
 
             $query_doj = VmtEmployee::where('userid', $user_id)->first();
 
@@ -96,7 +96,7 @@ class VmtInvestmentsService
                     ]
                 )->toArray();
 
-             // dd($query_inv_form_template);
+            // dd($query_inv_form_template);
 
             // employee declaration amount
             $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
@@ -119,7 +119,8 @@ class VmtInvestmentsService
                 $rentalDetail['json_popups_value'] = (json_decode($details_tem["json_popups_value"], true));
                 array_push($popdecode, $rentalDetail);
 
-            };
+            }
+            ;
 
 
 
@@ -190,7 +191,7 @@ class VmtInvestmentsService
         Get the emp investment form details
 
     */
-    public function SaveInvDetails($user_code , $form_id , $is_submitted, $formDataSource)
+    public function SaveInvDetails($user_code, $form_id, $is_submitted, $formDataSource)
     {
 
         //Validate
@@ -293,7 +294,7 @@ class VmtInvestmentsService
 
                 }
 
-               // return "sumbit";
+                // return "sumbit";
             }
 
 
@@ -302,12 +303,10 @@ class VmtInvestmentsService
             return response()->json([
                 "status" => "success",
                 "message" => "",
-                "data" =>"submit successfully",
+                "data" => "submit successfully",
             ]);
 
-        }
-
-         catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "Error while fetching investments form template",
@@ -319,13 +318,13 @@ class VmtInvestmentsService
     }
 
 
-    public function saveSectionPopups($id, $user_code, $fs_id, $from_month,$to_month, $city, $total_rent_paid ,$landlord_name, $landlord_PAN, $address)
+    public function saveSectionPopups($id, $user_code, $fs_id, $from_month, $to_month, $city, $total_rent_paid, $landlord_name, $landlord_PAN, $address)
     {
 
 
         $validator = Validator::make(
             $data = [
-                'id'=> $id,
+                'id' => $id,
                 'user_code' => $user_code,
                 'fs_id' => $fs_id,
                 'from_month' => $from_month,
@@ -360,110 +359,108 @@ class VmtInvestmentsService
             ]);
         }
 
-        try{
+        try {
 
-              $json_decodeHra =  json_encode($data);
+            $json_decodeHra = json_encode($data);
 
-             $current_date = date("Y-m-d");
+            $current_date = date("Y-m-d");
 
             //   dd($json_decodeHra);
 
-             $form_id = "1";
+            $form_id = "1";
 
             //  $fs_id = $request->fs_id;
 
-             // dd($fs_id);
-             $user_id = User::where('user_code', $user_code)->first()->id;
+            // dd($fs_id);
+            $user_id = User::where('user_code', $user_code)->first()->id;
 
-             $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
+            $query_femp = VmtInvFEmpAssigned::where('user_id', $user_id);
 
 
-             if ($query_femp->exists()) {
-                 $query_assign = $query_femp->first();
+            if ($query_femp->exists()) {
+                $query_assign = $query_femp->first();
 
-             } else {
+            } else {
 
-                 $emp_assign_form = new VmtInvFEmpAssigned;
-                 $emp_assign_form->user_id = $user_id;
-                 $emp_assign_form->form_id = $form_id;
-                 $emp_assign_form->year = $current_date;
-                 $emp_assign_form->save();
-                 $query_assign = $emp_assign_form;
-             }
+                $emp_assign_form = new VmtInvFEmpAssigned;
+                $emp_assign_form->user_id = $user_id;
+                $emp_assign_form->form_id = $form_id;
+                $emp_assign_form->year = $current_date;
+                $emp_assign_form->save();
+                $query_assign = $emp_assign_form;
+            }
 
-             if (empty($id)) {
+            if (empty($id)) {
 
-                 $Hra_save = new VmtInvEmpFormdata;
-                 $Hra_save->fs_id = $fs_id;
-                 $Hra_save->f_emp_id = $query_assign->id;
-                 $Hra_save->dec_amount = "0";
-                 $Hra_save->json_popups_value = $json_decodeHra;
-                 $Hra_save->save();
+                $Hra_save = new VmtInvEmpFormdata;
+                $Hra_save->fs_id = $fs_id;
+                $Hra_save->f_emp_id = $query_assign->id;
+                $Hra_save->dec_amount = "0";
+                $Hra_save->json_popups_value = $json_decodeHra;
+                $Hra_save->save();
 
-             } else {
+            } else {
 
-                 $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+                $assigned_form_user_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-                 $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('id', $id)->first();
+                $emp_formdata = VmtInvEmpFormdata::where('f_emp_id', $assigned_form_user_id)->where('id', $id)->first();
 
-                 $emp_formdata->f_emp_id = $query_assign->id;
-                 $emp_formdata->fs_id = $fs_id;
-                 $emp_formdata->dec_amount = "0";
-                 $emp_formdata->json_popups_value = $json_decodeHra;
+                $emp_formdata->f_emp_id = $query_assign->id;
+                $emp_formdata->fs_id = $fs_id;
+                $emp_formdata->dec_amount = "0";
+                $emp_formdata->json_popups_value = $json_decodeHra;
 
-                 $emp_formdata->save();
+                $emp_formdata->save();
 
-             }
+            }
 
-         return response()->json([
-            'status' => 'success',
-            'message' =>"submit successfully",
-            'data' => "",
-        ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "submit successfully",
+                'data' => "",
+            ]);
 
-}
-
-    catch (\Exception $e) {
-        return response()->json([
-            "status" => "failure",
-            "message" => "Error while fetching investments form template",
-            "data" => $e,
-        ]);
-    }
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching investments form template",
+                "data" => $e,
+            ]);
+        }
 
     }
 
-/*
- "user_code" => "LAL0013"
-  "fs_id" => 30
-  "loan_sanction_date" => "2017-03-15T18:30:00.000Z"
-  "lender_type" => "Financial Institution"
-  "property_value" => 600
-  "loan_amount" => 700
-  "interest_amount_paid" => 5000
-  "section" => "80EE"
+    /*
+     "user_code" => "LAL0013"
+      "fs_id" => 30
+      "loan_sanction_date" => "2017-03-15T18:30:00.000Z"
+      "lender_type" => "Financial Institution"
+      "property_value" => 600
+      "loan_amount" => 700
+      "interest_amount_paid" => 5000
+      "section" => "80EE"
 
-   "user_code" => "LAL0013"
-  "fs_id" => 31
-  "loan_sanction_date" => "2020-03-17T18:30:00.000Z"
-  "lender_type" => "Others"
-  "property_value" => 300
-  "loan_amount" => 900
-  "interest_amount_paid" => 900
-  "section" => "80EEA"
+       "user_code" => "LAL0013"
+      "fs_id" => 31
+      "loan_sanction_date" => "2020-03-17T18:30:00.000Z"
+      "lender_type" => "Others"
+      "property_value" => 300
+      "loan_amount" => 900
+      "interest_amount_paid" => 900
+      "section" => "80EEA"
 
-   "user_code" => "LAL0013"
-  "fs_id" => 32
-  "loan_sanction_date" => "2023-03-14T18:30:00.000Z"
-  "lender_type" => null
-  "property_value" => null
-  "loan_amount" => null
-  "interest_amount_paid" => 777777
-  "vechicle_brand" => "Hyundai"
-  "vechicle_model" => "Hyundai IONIQ 5"
-  "section" => "80EEB"
-*/
-    public function saveSection80($user_code, $fs_id, $loan_sanction_date,$lender_type, $property_value, $loan_amount ,$interest_amount_paid, $section)
+       "user_code" => "LAL0013"
+      "fs_id" => 32
+      "loan_sanction_date" => "2023-03-14T18:30:00.000Z"
+      "lender_type" => null
+      "property_value" => null
+      "loan_amount" => null
+      "interest_amount_paid" => 777777
+      "vechicle_brand" => "Hyundai"
+      "vechicle_model" => "Hyundai IONIQ 5"
+      "section" => "80EEB"
+    */
+    public function saveSection80($user_code, $fs_id, $loan_sanction_date, $lender_type, $property_value, $loan_amount, $interest_amount_paid, $section)
     {
 
         $validator = Validator::make(
@@ -499,7 +496,7 @@ class VmtInvestmentsService
             ]);
         }
 
-        try{
+        try {
 
             $json_decodeHra = json_encode($data);
             $current_date = date("Y-m-d");
@@ -507,9 +504,9 @@ class VmtInvestmentsService
 
             $form_id = "1";
 
-           // $dec_amount = $request->interest_amount_paid;
+            // $dec_amount = $request->interest_amount_paid;
 
-          //  $fs_id = $request->fs_id;
+            //  $fs_id = $request->fs_id;
 
             $user_id = User::where('user_code', $user_code)->first()->id;
 
@@ -558,12 +555,10 @@ class VmtInvestmentsService
 
             return response()->json([
                 'status' => 'success',
-                'message' =>"save successfully",
+                'message' => "save successfully",
                 'data' => "",
             ]);
-        }
-
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => "failure",
                 "message" => "don't save details",
@@ -601,47 +596,46 @@ class VmtInvestmentsService
             ]);
         }
 
-        try{
+        try {
 
-        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+            $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
 
-        $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+            $form_assignrd_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-        $rentalDetails = VmtInvEmpFormdata::where('fs_id', $fs_id)->where('f_emp_id', $form_assignrd_id)->get();
+            $rentalDetails = VmtInvEmpFormdata::where('fs_id', $fs_id)->where('f_emp_id', $form_assignrd_id)->get();
 
-        $sumOfHra = 0;
-        $res = array();
+            $sumOfHra = 0;
+            $res = array();
 
-        foreach($rentalDetails as $item){
+            foreach ($rentalDetails as $item) {
 
-            $hraDecAmt = (json_decode($item->json_popups_value, true));
-            $sumOfHra += $hraDecAmt['total_rent_paid'];
-            $sumosRentPaid['sumofRentPaid'] = $sumOfHra;
+                $hraDecAmt = (json_decode($item->json_popups_value, true));
+                $sumOfHra += $hraDecAmt['total_rent_paid'];
+                $sumosRentPaid['sumofRentPaid'] = $sumOfHra;
+            }
+            array_push($res, $sumosRentPaid);
+
+
+            $popupjson = $rentalDetails->map(function ($item, $key) {
+                $rentalDetail['id'] = $item->id;
+                $rentalDetail['f_emp_id'] = $item->f_emp_id;
+                $rentalDetail['fs_id'] = $item->fs_id;
+                $rentalDetail['dec_amount'] = $item->dec_amount;
+                $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
+
+
+                return $rentalDetail;
+            });
+
+            return ["rent_details" => $popupjson, "dec_amt" => $res];
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching investments form template",
+                "data" => $e,
+            ]);
         }
-        array_push($res,$sumosRentPaid);
-
-
-        $popupjson = $rentalDetails->map(function ($item, $key) {
-            $rentalDetail['id'] = $item->id;
-            $rentalDetail['f_emp_id'] = $item->f_emp_id;
-            $rentalDetail['fs_id'] = $item->fs_id;
-            $rentalDetail['dec_amount'] = $item->dec_amount;
-            $rentalDetail['json_popups_value'] = (json_decode($item->json_popups_value, true));
-
-
-            return $rentalDetail;
-        });
-
-        return ["rent_details" =>$popupjson,"dec_amt"=>$res] ;
-
-        }
-    catch (\Exception $e) {
-        return response()->json([
-            "status" => "failure",
-            "message" => "Error while fetching investments form template",
-            "data" => $e,
-        ]);
-    }
 
 
 
@@ -675,38 +669,37 @@ class VmtInvestmentsService
             ]);
         }
 
-        try{
+        try {
 
-        $user_id = User::where('user_code', $user_code)->first()->id;
+            $user_id = User::where('user_code', $user_code)->first()->id;
 
-        $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
+            $form_assigned_id = VmtInvFEmpAssigned::where('user_id', $user_id)->first()->id;
 
-        $res = array();
-        foreach ($fs_id as $single_fs_id) {
-            $query_rentalDetails = VmtInvEmpFormdata::where('fs_id', $single_fs_id)->where('f_emp_id', $form_assigned_id);
+            $res = array();
+            foreach ($fs_id as $single_fs_id) {
+                $query_rentalDetails = VmtInvEmpFormdata::where('fs_id', $single_fs_id)->where('f_emp_id', $form_assigned_id);
 
-            if ($query_rentalDetails->exists()) {
-                $rentalDetails = $query_rentalDetails->first();
-                $rentalDetail['id'] = $rentalDetails->id;
-                $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
-                $rentalDetail['fs_id'] = $rentalDetails->fs_id;
-                $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
-                $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
-                array_push($res, $rentalDetail);
+                if ($query_rentalDetails->exists()) {
+                    $rentalDetails = $query_rentalDetails->first();
+                    $rentalDetail['id'] = $rentalDetails->id;
+                    $rentalDetail['f_emp_id'] = $rentalDetails->f_emp_id;
+                    $rentalDetail['fs_id'] = $rentalDetails->fs_id;
+                    $rentalDetail['dec_amount'] = $rentalDetails->dec_amount;
+                    $rentalDetail['json_popups_value'] = (json_decode($rentalDetails->json_popups_value, true));
+                    array_push($res, $rentalDetail);
+                }
+
             }
+            return $res;
 
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching investments form template",
+                "data" => $e,
+            ]);
         }
-        return $res;
-
-
-    }
-    catch (\Exception $e) {
-        return response()->json([
-            "status" => "failure",
-            "message" => "Error while fetching investments form template",
-            "data" => $e,
-        ]);
-    }
 
 
     }
@@ -717,7 +710,7 @@ class VmtInvestmentsService
         $validator = Validator::make(
             $data = [
 
-            'currentTableId' => $currentTableId,
+                'currentTableId' => $currentTableId,
 
             ],
             $rules = [
@@ -746,7 +739,7 @@ class VmtInvestmentsService
             ];
 
         } catch (\Exception $e) {
-           return $response = [
+            return $response = [
                 'status' => 'failure',
                 'message' => 'Error while Deleting Rental Information ',
                 'error_message' => $e->getMessage()
@@ -761,7 +754,7 @@ class VmtInvestmentsService
         $validator = Validator::make(
             $data = [
 
-            'currentTableId' => $currentTableId,
+                'currentTableId' => $currentTableId,
 
             ],
             $rules = [
@@ -783,13 +776,13 @@ class VmtInvestmentsService
         try {
             $houseProperty = VmtInvEmpFormdata::where('id', $currentTableId)->delete();
 
-           return $response = [
+            return $response = [
                 'status' => 'success',
                 'message' => "Rental details deleted successfully"
             ];
 
         } catch (\Exception $e) {
-           return $response = [
+            return $response = [
                 'status' => 'failure',
                 'message' => 'Error while Deleting Rental Information ',
                 'error_message' => $e->getMessage()
@@ -855,45 +848,176 @@ class VmtInvestmentsService
 
     }
 
-public function monthTaxDeductionDetails(){
+    public function monthTaxDeductionDetails()
+    {
 
-            $user_id = auth()->user()->id;
+        $user_id = auth()->user()->id;
 
-            $time_period = VmtOrgTimePeriod::where('status','1')->first();
+        $time_period = VmtOrgTimePeriod::where('status', '1')->first();
 
-            $start_date  = Carbon::parse($time_period->start_date);
+        $start_date = Carbon::parse($time_period->start_date);
 
-            $end_date = Carbon::parse($time_period->end_date);
+        $end_date = Carbon::parse($time_period->end_date);
 
-            $current_date = Carbon::now();
-            $month_cal = 0;
-            $res1 = array();
-            while($start_date->lte($end_date)){
-                $start_date = Carbon::parse($start_date)->addMonth();
+        $current_date = Carbon::now();
+        $month_cal = 0;
+        $res1 = array();
+        while ($start_date->lte($end_date)) {
+            $start_date = Carbon::parse($start_date)->addMonth();
 
-                       $simm['dates']   =  $start_date;
+            $simm['dates'] = $start_date;
 
-                if($start_date->lte($current_date)){
-                    $monthy_tax_cal = 264000 / 12;
-                    $simm['monthy_tax'] = $monthy_tax_cal;
+            if ($start_date->lte($current_date)) {
+                $monthy_tax_cal = 264000 / 12;
+                $simm['monthy_tax'] = $monthy_tax_cal;
 
-                     $month_cal += $monthy_tax_cal;
+                $month_cal += $monthy_tax_cal;
 
-                }else{
+            } else {
 
-                    $simm['monthy_tax'] = 0 ;
+                $simm['monthy_tax'] = 0;
+            }
+            array_push($res1, $simm);
+        }
+
+        $mos['date'] = $res1;
+        $mos['total'] = $month_cal;
+
+        return $mos;
+
+    }
+
+
+
+    public function grossEarningsFromEmployment()
+    {
+
+        $user_id = auth()->user()->id;
+
+        $time_period = VmtOrgTimePeriod::where('status', '1')->first();
+
+        $start_date = Carbon::parse($time_period->start_date);
+
+        $end_date = Carbon::parse($time_period->end_date);
+
+        $current_date = Carbon::now();
+
+        // $month_cal = 0;
+        $res1 = array();
+        $res9 = array();
+        $res2 = array('total' => []);
+
+
+        while ($start_date->lte($end_date)) {
+            $start_date = Carbon::parse($start_date)->addMonth();
+
+            $simm['date'] = $start_date->format('M y');
+
+            if ($start_date->lte($current_date)) {
+
+                $payslip_data = User::join('vmt_emp_payroll', 'vmt_emp_payroll.user_id', '=', 'users.id')
+                    ->join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
+                    ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+                    ->where('vmt_emp_payroll.user_id', $user_id)
+                    ->where('payroll_date', $start_date)
+                    ->get([
+                        'vmt_employee_payslip_v2.basic',
+                        'vmt_employee_payslip_v2.hra',
+                        'vmt_employee_payslip_v2.spl_alw as special_allowance',
+                        'vmt_employee_payslip_v2.travel_conveyance as transport_allowance',
+                        'vmt_employee_payslip_v2.canteen_dedn as food_coupon',
+
+                    ]);
+
+                $total_earnings = 0;
+
+                foreach ($payslip_data as $single_payslip) {
+
+                    $basic = $single_payslip['basic'];
+                    $hra = $single_payslip['hra'];
+                    $spl_alw = $single_payslip['special_allowance'];
+                    $travel_conveyance = $single_payslip['transport_allowance'];
+                    $canteen_dedn = $single_payslip['food_coupon'];
+
+                    $total_earnings += $basic + $hra + $spl_alw + $travel_conveyance + $canteen_dedn;
+
+                    $simm['all'] = $payslip_data;
+                    $simm['total_earnings'] = $total_earnings;
+
                 }
-                array_push($res1,$simm);
+
+
+            } else {
+
+                $compensatory_details = User::join('vmt_employee_compensatory_details', 'vmt_employee_compensatory_details.user_id', '=', 'users.id')
+                    ->where('user_id', $user_id)->get([
+                            'vmt_employee_compensatory_details.basic',
+                            'vmt_employee_compensatory_details.hra',
+                            'vmt_employee_compensatory_details.special_allowance',
+                            'vmt_employee_compensatory_details.transport_allowance',
+                            'vmt_employee_compensatory_details.food_coupon',
+                        ])->toarray();
+
+                 $total_earnings1 = 0;
+                foreach ($compensatory_details as $single_compensatory) {
+
+                    $basic = $single_compensatory['basic'];
+                    $hra = $single_compensatory['hra'];
+                    $spl_alw = $single_compensatory['special_allowance'];
+                    $travel_conveyance = $single_compensatory['transport_allowance'];
+                    $canteen_dedn = $single_compensatory['food_coupon'];
+
+                    $total_earnings1 += $basic + $hra + $spl_alw + $travel_conveyance + $canteen_dedn;
+
+                $simm['all'] = $compensatory_details;
+                $simm['total_earnings'] = $total_earnings1;
+
+                }
+
             }
 
-                $mos['date'] = $res1;
-                $mos['total'] = $month_cal;
+            array_push($res1, $simm['all'][0]);
 
-                return $mos;
+            $single_basic = 0;
+            $single_hra = 0;
+            $single_special_allowance = 0;
+            $single_transport_allowance = 0;
+            $single_food_coupon = 0;
+            $total_earnings =0;
+
+            foreach ($res1 as $single_all) {
+
+                $single_basic += $single_all['basic'];
+                $single_hra += $single_all['hra'];
+                $single_special_allowance += $single_all['special_allowance'];
+                $single_transport_allowance += $single_all['transport_allowance'];
+                $single_food_coupon += $single_all['food_coupon'];
+
+                $total_cal['single_basic'] = $single_basic;
+                $total_cal['single_hra'] = $single_hra;
+                $total_cal['single_special_allowance'] = $single_special_allowance;
+                $total_cal['single_transport_allowance'] = $single_transport_allowance;
+                $total_cal['single_food_coupon'] = $single_food_coupon;
+
+                $total_earnings +=  $single_basic + $single_hra + $single_special_allowance + $single_transport_allowance +  $single_food_coupon ;
+
+                $total_cal['total_earnings'] = $total_earnings;
+
+            }
+
+            array_push($res2, $simm);
+        }
+
+        array_push($res2['total'], $total_cal);
+
+        return ($res2);
+    }
+
+    public function taxableIncomeFromAllHeads(){
 
 
 
-}
+    }
 
 
 
