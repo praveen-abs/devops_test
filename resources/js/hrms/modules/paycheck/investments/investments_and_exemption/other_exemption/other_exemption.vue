@@ -129,7 +129,7 @@
                                 <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else class="px-auto">
-                                <button @click="investmentStore.get80EESlotData(slotProps.data)"
+                                <button @click="investmentStore.get80EESlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EE</button>
                             </div>
@@ -141,7 +141,7 @@
 
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.get80EEASlotData(slotProps.data)"
+                                <button @click="investmentStore.get80EEASlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EEA</button>
                             </div>
@@ -152,7 +152,7 @@
                                 <p style="font-weight: 501;">{{ investmentStore.formatCurrency(slotProps.data.dec_amount) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.get80EEBSlotData(slotProps.data)"
+                                <button @click="investmentStore.get80EEBSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 text-center text-white bg-orange-700 rounded-md ">Add
                                     80EEB</button>
                             </div>
@@ -164,7 +164,7 @@
                             <div v-else-if="slotProps.data.select_option">
                                 <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted"/>
                             </div>
                             <div v-else>
                                 <p style="font-weight: 501;">--</p>
@@ -177,7 +177,7 @@
                             <div v-else-if="slotProps.data.select_option">
                                 <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted"/>
                             </div>
                             <div v-else>
                                 <p style="font-weight: 501;">--</p>
@@ -190,7 +190,7 @@
                             <div v-else-if="slotProps.data.select_option">
                                 <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted"/>
                             </div>
                             <div v-else>
                                 <p style="font-weight: 501;">--</p>
@@ -202,7 +202,7 @@
                         <div v-else>
                             <InputNumber class="mx-auto text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted"/>
                         </div>
                     </template>
                     <template #editor="{ data, field }">
@@ -220,7 +220,7 @@
                         </div> -->
                         <div>
                             <InputNumber v-model="data[field]" mode="currency" currency="INR" locale="en-US"
-                                class="text-lg font-semibold w-7" />
+                                class="text-lg font-semibold w-7" :readonly="!investmentStore.isSubmitted"/>
                         </div>
 
 
