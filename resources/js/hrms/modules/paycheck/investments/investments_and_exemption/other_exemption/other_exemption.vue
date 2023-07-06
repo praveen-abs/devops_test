@@ -243,7 +243,12 @@
             </DataTable>
 
         </div>
-        <div class="my-4 table-responsive">
+
+        <div class="my-4 table-responsive" v-if="investmentStore.otherExeSectionData[0] == 'failure'">
+
+       </div>
+
+        <div class="my-4 table-responsive" v-else>
 
             <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="investmentStore.otherExeSectionData"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
