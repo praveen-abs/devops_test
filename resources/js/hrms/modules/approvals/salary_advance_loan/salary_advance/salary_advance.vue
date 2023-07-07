@@ -97,7 +97,7 @@
                                         @click="showConfirmDialog(slotProps.data)">view</button>
                                             <!-- bg-blue-500 -->
                                     <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
-                                        @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">passed
+                                        @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">passed
                                         Transaction</button>
                                 </div>
                             </OverlayPanel>
@@ -112,14 +112,25 @@
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                    <Column field="id" header="Request ID" sortable></Column>
-                    <Column field="advance_amount" header="Advance Amount">
+                    <Column field="request_id" header="Request ID" sortable></Column>
+                    <Column field="borrowed_amount" header="Advance Amount">
                     </Column>
-                    <Column field="paid_on" header="Paid On">
+                    <Column field="requested_date" header="Paid On">
                     </Column>
-                    <Column field="Expected_Return" header="Expected Return">
+                    <Column field="dedction_date" header="Expected Return">
                     </Column>
                     <Column field="status" header="Status">
+                        <template #body="slotProps">
+                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
+                                Pending
+                            </h6>
+                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
+                                Approved
+                            </h6>
+                            <h6 v-if="slotProps.data.status == -1" class="text-red-500">
+                                Rejected
+                            </h6>
+                        </template>
                     </Column>
                 </DataTable>
 
@@ -155,21 +166,21 @@
                 {{ currentlySelectedRowData.Advance_Amount }}
                 <input id="rentFrom_month"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="required_Amount.required_Amount" disabled >
-                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount :{{ required_Amount }}</p>
+                    v-model="required_Amount.advance_amount" disabled >
+                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ SAAdvReq.eligible_amount }}</p>
             </div>
             <div class="w-5 p-4 mx-4 ">
                 <span class="font-semibold">Required Amount</span>
                 <div class="w-full">
                     <p class="my-2 text-gray-600 fs-5 text-md text-clip">The advance amount will be deducted from the next
                         month's
-                        salary <strong class="text-black fs-5">(ie, March 31, 2023)</strong> </p>
+                        salary <strong class="text-black fs-5">(ie,{{ SAAdvReq.dedction_date }})</strong> </p>
                 </div>
             </div>
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
-            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">Lorem ipsum dolor sit.</div>
+            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{SAAdvReq.reason }}</div>
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
@@ -207,7 +218,9 @@ const reviewer_comments = ref();
 const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
-const required_Amount = ref({
+
+const SAAdvReq =ref();
+const required_Amount = reactive({
     required_Amount: "",
     reason:"",
     advance_amount:"",
@@ -236,7 +249,11 @@ function showConfirmDialog(selectedRowData, status) {
     showAppoverDialog.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
-    required_Amount.eligible_amount = selectedRowData.eligible_amount;
+    SAAdvReq.value = selectedRowData;
+    required_Amount.advance_amount = selectedRowData.advance_amount;
+    // required_Amount.required_Amount = selectedRowData.borrowed_amount;
+    // required_Amount.borrowed_amount = selectedRowData.borrowed_amount;
+    // required_Amount.eligible_amount = selectedRowData.eligible_amount;
 
     console.log(selectedRowData.eligible_amount);
 }

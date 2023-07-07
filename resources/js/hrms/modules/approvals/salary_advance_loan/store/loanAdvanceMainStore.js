@@ -57,7 +57,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
         canShowLoadingScreen.value = true;
 
         let data = val;
-        await axios.post('/reject-or-approve-loan', {
+        await axios.post('/rejectOrApprovedSaladv', {
             record_id: data,
             status:
             status == 1 ? 1
