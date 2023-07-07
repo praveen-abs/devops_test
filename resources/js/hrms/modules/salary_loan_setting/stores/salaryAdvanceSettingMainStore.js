@@ -41,7 +41,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         state: '',
         client_name: '',
     })
-    const approvalFormat = reactive([])
+    const approvalFormat = reactive([]);
 
     const selectedOption1 = ref();
     const selectedOption2 = ref();
@@ -115,13 +115,16 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Deduction Method
 
     const sa = reactive({
+        SA:'',
         isSalaryAdvanceEnabled: 0,
         eligibleEmployee: '',
         perOfSalAdvance: '',
         cusPerOfSalAdvance: '',
         deductMethod: '',
         cusDeductMethod: '',
-        approvalflow: approvalFormat
+        approvalflow: approvalFormat,
+        selectClientID:'',
+        payroll_cycle:''
     })
 
     // Approval Flow
@@ -351,20 +354,20 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         if (flow == 1) {
             option.value = 1
             selectedOption1.value = value.name
-            let  approvalflow = ref();
+            let  approvalflow = '';
             if(value.name=="Line Manager"){
-                  approvalflow.value = {
+                  approvalflow = {
                  approver: 'l1_manager_code',
                  order: flow
             }
             }else if(value.name=="HR"){
-                approvalflow.value = {
+                approvalflow = {
                     approver: 'hr_user_id',
                     order: flow
                }
             }
             else if(value.name=="Finance Admin"){
-                approvalflow.value = {
+                approvalflow = {
                     approver: 'fa_user_id',
                     order: flow
                }
@@ -378,20 +381,20 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
         if (flow == 2) {
             selectedOption2.value = value.name
-            let  approvalflow = ref();
+            let  approvalflow = '';
             if(value.name=="Line Manager"){
-                  approvalflow.value = {
+                  approvalflow = {
                  approver: 'l1_manager_code',
                  order: flow
             }
             }else if(value.name=="HR"){
-                approvalflow.value = {
+                approvalflow = {
                     approver: 'hr_user_id',
                     order: flow
                }
             }
             else if(value.name=="Finance Admin"){
-                approvalflow.value = {
+                approvalflow = {
                     approver: 'fa_user_id',
                     order: flow
                }
@@ -401,20 +404,20 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
         if (flow == 3) {
             selectedOption3.value = value.name
-            let  approvalflow = ref();
+            let  approvalflow = '';
             if(value.name=="Line Manager"){
-                  approvalflow.value = {
+                  approvalflow = {
                  approver: 'l1_manager_code',
                  order: flow
             }
             }else if(value.name=="HR"){
-                approvalflow.value = {
+                approvalflow = {
                     approver: 'hr_user_id',
                     order: flow
                }
             }
             else if(value.name=="Finance Admin"){
-                approvalflow.value = {
+                approvalflow = {
                     approver: 'fa_user_id',
                     order: flow
                }
