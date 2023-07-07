@@ -162,8 +162,20 @@ class VmtSalaryAdvanceService
                 $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
                     ->where('vmt_emp_assign_salary_adv_setting.user_id', $current_user_id)->first();
 
+                       $get_salary_emp =  VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
+
+                       $sal_borrowed = 0;
+                       foreach($get_salary_emp as $single_salary_emmp){
+                           $sal_borrowed += $single_salary_emmp['borrowed_amount'];
+                       }
+                        // dd($sal_borrowed);
 
                 $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100;
+
+
+                 $calculate_max = $calculatevalue - $sal_borrowed;
+
+                //  dd($calculate_max);
 
 
                 $multiple_months = array();
@@ -172,12 +184,13 @@ class VmtSalaryAdvanceService
                     $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
                     $dates['date'] = $repayment_months;
                     array_push($multiple_months, $dates);
+
                 }
 
                 // dd( $repayment_months);
 
                 $salary_adv['your_monthly_income'] = $emp_compensatory->net_income;
-                $salary_adv['max_eligible_amount'] = $calculatevalue;
+                $salary_adv['max_eligible_amount'] = $calculate_max;
                 $salary_adv['Repayment_date'] = $multiple_months;
                 $salary_adv['eligible'] = "0";
                 $salary_adv['percent_salary_amt'] = $employee_salary_adv->percent_salary_adv;
@@ -205,18 +218,18 @@ class VmtSalaryAdvanceService
 
         $current_user_id = auth()->user()->id;
 
-        $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
-            ->where('user_id', $current_user_id)
-            ->whereYear('requested_date', date("Y"))
-            ->whereMonth('requested_date', date("m"))
-            ->first();
+        // $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
+        //     ->where('user_id', $current_user_id)
+        //     ->whereYear('requested_date', date("Y"))
+        //     ->whereMonth('requested_date', date("m"))
+        //     ->first();
 
-        if (!empty($already_applied)) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "Already applied this month",
-            ]);
-        } else {
+        // if (!empty($already_applied)) {
+        //     return response()->json([
+        //         "status" => "failure",
+        //         "message" => "Already applied this month",
+        //     ]);
+        // } else {
 
             $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
                 ->where('user_id', $current_user_id)->first();
@@ -258,7 +271,7 @@ class VmtSalaryAdvanceService
                 'message' => 'Done',
 
             ]);
-        }
+        // }
     }
 
 
