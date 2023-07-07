@@ -5,7 +5,8 @@
                 <p class=" fw-semibold text-gray-600 fs-14">Payroll and attendance end date settings</p>
             </div>
             <div class="">
-                <i class="pi pi-pencil text-gray-600 pr-6" style="font-size: 1rem" @click="active_Btn"></i>
+                <i class="pi pi-pencil text-gray-600 pr-6 cursor-pointer" style="font-size: 1rem"
+                    @click="active_Btn = !active_Btn"></i>
             </div>
         </div>
         <div class="flex grid-cols-2 gap-6 mx-6">
@@ -51,10 +52,12 @@
             </div>
 
             <div class="w-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="p-2 bg-orange-100 rounded mt-2" v-if="active == 2">
-                    This change is of most importance and has a widespread impact on the salaries of all employees. We
-                    strongly advise you to reach out to the support team for further clarification.
-                </div>
+                <Transition>
+                    <div class="p-2 bg-orange-100 rounded mt-2" v-if="active_Btn">
+                        This change is of most importance and has a widespread impact on the salaries of all employees. We
+                        strongly advise you to reach out to the support team for further clarification.
+                    </div>
+                </Transition>
 
                 <h6 class="my-2 font-extralight fw-semibold text-gray-500 tracking-widest ">
                     The finalized payroll peroid is <span class=" fs-6 text-black fw-semibold tracking-widest ml-2">JAN 1 -
@@ -80,7 +83,7 @@
             <div class="flex w-4 pt-4">
                 <p class="fs-14 text-gray-600">Attendance cut-off cycle</p>
                 <div>
-                    <i class="pi pi-pencil mr-3" style="font-size: 1rem" @click='active_Btn2'></i>
+                    <i class="pi pi-pencil mr-3 cursor-pointer" style="font-size: 1rem" @click='active_Btn2 = !active_Btn2'></i>
                 </div>
             </div>
         </div>
@@ -123,10 +126,9 @@
                 <div class="my-2 w-100">
                     <div class="d-flex  align-items-center">
                         <div class="">
-                            <input type="checkbox" name="" class="rounded-sm mr-2" id=""
-                                style="width: 18px; height: 18px;">
+                            <input type="checkbox" name="" class="rounded-sm mr-2" id="" style="width: 18px; height: 18px;">
                         </div>
-                        <div class="fs-13 text-left" >
+                        <div class="fs-13 text-left">
                             The employee's attendance cut-off date differs from their pay peroid end
                             date
                             <span class="text-blue-400 underline">what is Attendance cut-off date?</span>
@@ -136,12 +138,15 @@
             </div>
 
             <div class="w-8 px-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="bg-orange-100 p-2 rounded " v-if="active2 == 2">
-                    <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true"></i>
-                    The edit option has been disabled. Please contact the ABShrms Support Team for assistance.
-                </div>
+                <Transition>
+                    <div class="bg-orange-100 p-2 rounded mt-4  " v-if="active_Btn2">
+                        <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true"></i>
+                        The edit option has been disabled. Please contact the ABShrms Support Team for assistance.
+                    </div>
+                </Transition>
                 <h1 class=" mt-4 text-gray-600 fs-13 ">
-                    The finalized payroll peroid is <span class=" text-black-alpha-80 fs-13 line-height-2 ">26th - 25th</span>
+                    The finalized payroll peroid is <span class=" text-black-alpha-80 fs-13 line-height-2 ">26th -
+                        25th</span>
                 </h1>
                 <div class="mb-6 mt-4 w-full">
                     <DataTable :value="products">
@@ -153,13 +158,13 @@
                 </div>
             </div>
         </div>
-        <div class="mx-6">
-            <p>Pay Peroid Calculation</p>
+        <div class="mx-6 mt-4">
+            <p class="fs-14 text-gray-600">Pay Peroid Calculation</p>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6 my-4">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">Pay days in month</h5>
+        <div class="flex grid-cols-2 gap-6 mx-6 my-2">
+            <div class="w-4 p-4  bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+                <div class="">
+                    <h5 class="my-1 text-lg font-semibold text-black-alpha-70">Pay days in month</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
                             <InputText class="w-full h-11" placeholder="Actual days in a month " />
@@ -218,7 +223,7 @@
                         calculate loss of pay based on a 30-day month, the deduction would be INR
                         30,000/30 = INR 1000.
                     </p>
-                    <p style="line-height: 25px;" class=" text-gray-600  fs-13" >
+                    <p style="line-height: 25px;" class=" text-gray-600  fs-13">
                         However, if we exclude weekends from the calculation,
                         assuming 8 Saturdays and Sundays in the month, the effective number of working
                         days would be 30-8 = 22 days. In this case, the deduction for one day of loss
@@ -227,12 +232,12 @@
                 </div>
             </div>
         </div>
-        <div class="mx-6 ">
-            <p>Currency and Compensation</p>
+        <div class="mx-6 mt-4 ">
+            <p class=" text-gray-600 fs-14">Currency and Compensation</p>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6 my-4">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="my-4">
+        <div class="flex grid-cols-2 gap-6 mx-6  mb-40">
+            <div class="w-4 p-4 my-2 bg-gray-100  rounded-lg shadow-md border-1">
+                <div class="">
                     <h5 class="my-2 text-lg font-semibold">Currency</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
@@ -241,7 +246,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-column justify-evenly">
-                    <h5 class="text-lg font-semibold w-7">Description</h5>
+                    <h5 class="text-lg font-semibold w-7 mt-4">Remuneration Types</h5>
                     <div class="flex flex-column w-6 my-3">
                         <div class="d-flex  ">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
@@ -257,18 +262,18 @@
                 </div>
             </div>
 
-            <div class="w-6 p-4 my-4 ">
+            <div class="w-6 p-4 my-4">
                 <div class="my-2">
                     <strong>EXPLANATION :</strong>
-                    <p class="my-3">
-                        <strong class="mr-2">Monthly :</strong>Monthly remuneration refers to the compensation paid to an
+                    <p class="my-2 text-gray-600">
+                        <strong class="mr-2 text-black-70">Monthly :</strong>Monthly remuneration refers to the compensation paid to an
                         employee
                         in exchange for their services, which is calculated and defined on a monthly
                         basis. This compensation serves as a form of payment for the employee's work
                         performed throughout the month.
                     </p>
-                    <p class="my-3">
-                        <strong class="mr-2">Daily :</strong>Daily remuneration refers to the compensation paid to an
+                    <p class="my-3 text-gray-600">
+                        <strong class="mr-2 text-black-70">Daily :</strong>Daily remuneration refers to the compensation paid to an
                         employee for
                         their services, which is calculated on a per-day basis. It is the amount that
                         an employee is entitled to receive for each day of work performed as per the
@@ -310,14 +315,17 @@ const products = ref([
 const active = ref(1);
 const active2 = ref(1);
 
-function active_Btn() {
-    active.value = 2;
-    console.log(active.value);
-}
-function active_Btn2() {
-    active2.value = 2;
-    console.log(active2);
-}
+const active_Btn = ref(false);
+const active_Btn2 = ref(false);
+
+// function active_Btn() {
+//     active.value = 2;
+//     console.log(active.value);
+// }
+// function active_Btn2() {
+//     active2.value = 2;
+//     console.log(active2);
+// }
 
 
 
@@ -330,4 +338,15 @@ function active_Btn2() {
 <style>
 .fs-13 {
     font-size: 13.2px !important;
-}</style>
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>
