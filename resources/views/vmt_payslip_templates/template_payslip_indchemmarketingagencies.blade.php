@@ -379,7 +379,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <td colspan="2" class="">
                         <p class="txt-right"><img height="8.5" width="12"
                                 src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
-                                style="padding-right:0px;">{{ number_format(round($employee_payslip->EMPLOYEE_ESIC), 2) }}
+                                style="padding-right:0px;">{{ number_format(round($employee_payslip->employee_esic), 2) }}
                         </p>
                     </td>
 
@@ -506,7 +506,10 @@ $bank_names = \DB::table('vmt_banks')->get();
                         </p>
                     </td>
                     <td colspan="2" class="bg-ash">
-                        <p class="txt-right"></p>
+                        <p class="txt-right"><img height="8.5" width="12"
+                            src="{{ URL::asset('assets/images/inr_png.png') }}" class="txt-right" alt=""
+                            style="padding-right:0px;">{{ number_format(round(($employee_payslip->basic_arrear + $employee_payslip->hra_arrear + $employee_payslip->spl_alw_arrear  )), 2) }}
+                    </p>
                     </td>
 
                     <td colspan="2" class="bg-ash">
@@ -546,7 +549,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                         <p class="txt-left text-strong">NET PAY IN WORDS</p>
                     </td>
                     <td colspan="8" class="">
-                        <p class="txt-center ">{{ $employee_payslip->Rupees }}</p>
+                        <p class="txt-center ">{{ $employee_payslip->rupees }}</p>
                     </td>
                 </tr>
                 <tr>
