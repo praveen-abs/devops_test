@@ -13,10 +13,10 @@
 
     <?php
 
-    $logoObj = \DB::table('vmt_general_info')->first();
+    $logoObj = \DB::table('vmt_client_master')->first();
 
     if ($logoObj) {
-        $logoSrc = $logoObj->logo_img;
+        $logoSrc = $logoObj->client_logo;
     } else {
         $logoSrc = 'assets/images/vasa.jpg';
     }
@@ -95,7 +95,7 @@
                                     <form action="#}" method="POST" class="login-form">
                                         <div class="d-flex align-items-center justify-content-center mb-3 ">
                                             <div class="login-top-img">
-                                                <img src="{{ URL::asset($generalInfo->logo_img) }}" alt=""
+                                                <img src="{{ URL::asset($logoSrc) }}" alt=""
                                                     class="">
                                                     <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                                             </div>

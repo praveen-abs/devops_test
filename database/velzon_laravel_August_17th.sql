@@ -670,7 +670,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2022_05_24_123444_create_vmt_360_employee_hierarchy_table', 5),
 (10, '2022_05_31_100000_create_vmt_general_settings_table', 6),
 (11, '2022_06_05_123456_create_vmt_employee_payslip_table', 7),
-(12, '2022_06_07_123456_create_vmt_general_info_table', 8),
+(12, '2022_06_07_123456_create_vmt_client_master_table', 8),
 (13, '2022_06_08_123456_create_vmt_employees_table', 9),
 (14, '2022_06_13_111222_create_vmt_performance_apraisal_questions_table', 10),
 (15, '2022_06_22_123123_create_vmt_employee_office_details_table', 11),
@@ -1847,24 +1847,24 @@ CREATE TABLE `vmt_employee_pms_goals_table` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vmt_general_info`
+-- Table structure for table `vmt_client_master`
 --
 
-CREATE TABLE `vmt_general_info` (
+CREATE TABLE `vmt_client_master` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `short_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `login_instruction` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo_img` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `client_logo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `background_img` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `vmt_general_info`
+-- Dumping data for table `vmt_client_master`
 --
 
-INSERT INTO `vmt_general_info` (`id`, `short_name`, `login_instruction`, `logo_img`, `background_img`, `created_at`, `updated_at`) VALUES
+INSERT INTO `vmt_client_master` (`id`, `short_name`, `login_instruction`, `client_logo`, `background_img`, `created_at`, `updated_at`) VALUES
 (1, NULL, NULL, '/generalinfo/client-logo.png', '/generalinfo/1656890592-bg.jpg', '2022-06-08 00:24:40', '2022-08-16 13:42:46'),
 (2, 'Hello', 'adfasdfasdf', '/generalinfo/1654667695-logo.png', '/generalinfo/1654667695-bg.jpg', '2022-06-08 00:24:55', '2022-06-08 00:24:55');
 
@@ -2484,9 +2484,9 @@ ALTER TABLE `vmt_employee_pms_goals_table`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `vmt_general_info`
+-- Indexes for table `vmt_client_master`
 --
-ALTER TABLE `vmt_general_info`
+ALTER TABLE `vmt_client_master`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2734,9 +2734,9 @@ ALTER TABLE `vmt_employee_pms_goals_table`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
--- AUTO_INCREMENT for table `vmt_general_info`
+-- AUTO_INCREMENT for table `vmt_client_master`
 --
-ALTER TABLE `vmt_general_info`
+ALTER TABLE `vmt_client_master`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --

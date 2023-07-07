@@ -12,7 +12,7 @@ use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployee;
 use Illuminate\Http\Request;
 use App\Models\VmtEmployeeFamilyDetails;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtTempEmpNames;
@@ -835,8 +835,8 @@ public function addExperienceInfo(Request $request)
                    $message = "";
                    $mail_status = "";
 
-                   $VmtGeneralInfo = VmtGeneralInfo::first();
-                   $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                   $VmtClientMaster = VmtClientMaster::first();
+                   $image_view = url('/') . $VmtClientMaster->client_logo;
 
                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
                    $employee_user=VmtTempEmployeeProofDocuments::find($record_id);
@@ -890,7 +890,7 @@ public function addExperienceInfo(Request $request)
            $validator = Validator::make(
                $request->all(),
                $rules = [
-                   'record_ids' => 'required',// Need to check the given ids inside service class.
+                   'record_id' => 'required',// Need to check the given ids inside service class.
                    'status' => 'required',
                    'approver_user_id' => 'required',
                ],
@@ -910,7 +910,7 @@ public function addExperienceInfo(Request $request)
 
            try
                {
-                    $record_ids =$request->record_ids;
+                    $record_ids =$request->record_id;
                     $status =$request->status;
 
 
@@ -925,8 +925,8 @@ public function addExperienceInfo(Request $request)
                    $message = "";
                    $mail_status = "";
 
-                   $VmtGeneralInfo = VmtGeneralInfo::first();
-                   $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                   $VmtClientMaster = VmtClientMaster::first();
+                   $image_view = url('/') . $VmtClientMaster->client_logo;
 
                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($request->approver_user_id));
                    $DocType = VmtDocuments::where('id', $singleDoc->doc_id)->first()->document_name;

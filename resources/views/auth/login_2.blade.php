@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="pt-5 auth-page-wrapper">
-   
+
     <!-- auth page content -->
     <div class="auth-page-content">
         <div class="container">
@@ -22,7 +22,7 @@
                     <div class="p-4 mb-2 mt-sm-5">
                         <div class="text-center ">
                             <a href="index" class="d-inline-block auth-logo">
-                                <img src="{{ URL::asset($generalInfo->logo_img)}}" alt="" style="width:100%;height: auto;">
+                                <img src="{{ URL::asset($generalInfo->client_logo)}}" alt="" style="width:100%;height: auto;">
                             </a>
                         </div>
                         <p class="mt-3 text-left fs-15 fw-medium">{{$generalInfo->short_name}}<!-- Performance Management System --></p>
@@ -30,7 +30,7 @@
                     </div>
                 <!-- <div class="row "> -->
                     <!-- <div class="col-md-12 col-lg-12 col-xl-12"> -->
-                        <div class="p-4 mb-4 sm-5">                       
+                        <div class="p-4 mb-4 sm-5">
                                 <!-- <div class="mt-2 text-center">
                                     <h5 class="text-primary">Welcome Back !</h5>
                                     <p class="text-muted"></p>
@@ -75,7 +75,7 @@
 
                                     </form>
                                 </div>
-                            
+
                                 <div class="mt-4 text-center">
                                     <p class="mb-0">Don't have an account ? <a href="register" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
                                 </div>
@@ -87,7 +87,7 @@
             </div>
             <!-- end row -->
 
-           
+
         </div>
         <!-- end container -->
     </div>

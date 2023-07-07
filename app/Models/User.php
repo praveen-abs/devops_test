@@ -13,6 +13,7 @@ use App\Models\VmtEmployeeEmergencyContactDetails;
 use App\Models\Experience;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtEmployeePaySlipV2;
 
 
 class User extends Authenticatable
