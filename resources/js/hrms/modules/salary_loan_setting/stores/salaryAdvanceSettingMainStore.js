@@ -358,18 +358,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             if(value.name=="Line Manager"){
                   approvalflow = {
                  approver: 'l1_manager_code',
-                 order: flow
+                 order: flow,
+                 name:'Line Manager'
             }
             }else if(value.name=="HR"){
                 approvalflow = {
                     approver: 'hr_user_id',
-                    order: flow
+                    order: flow,
+                    name:'HR'
                }
             }
             else if(value.name=="Finance Admin"){
                 approvalflow = {
                     approver: 'fa_user_id',
-                    order: flow
+                    order: flow,
+                    name:'Finance Admin'
                }
             }
 
@@ -385,18 +388,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             if(value.name=="Line Manager"){
                   approvalflow = {
                  approver: 'l1_manager_code',
-                 order: flow
+                 order: flow ,
+                 name:'Line Manager'
             }
             }else if(value.name=="HR"){
                 approvalflow = {
                     approver: 'hr_user_id',
-                    order: flow
+                    order: flow,
+                    name:'HR'
                }
             }
             else if(value.name=="Finance Admin"){
                 approvalflow = {
                     approver: 'fa_user_id',
-                    order: flow
+                    order: flow,
+                    name:'Finance Admin'
                }
             }
             approvalFormat.push(approvalflow)
@@ -408,18 +414,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             if(value.name=="Line Manager"){
                   approvalflow = {
                  approver: 'l1_manager_code',
-                 order: flow
+                 order: flow,
+                 name:'Line Manager'
             }
             }else if(value.name=="HR"){
                 approvalflow = {
                     approver: 'hr_user_id',
-                    order: flow
+                    order: flow ,
+                    name:'HR'
                }
             }
             else if(value.name=="Finance Admin"){
                 approvalflow = {
                     approver: 'fa_user_id',
-                    order: flow
+                    order: flow ,
+                    name:'Finance Admin'
                }
             }
             approvalFormat.push(approvalflow)

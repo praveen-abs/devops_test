@@ -46,6 +46,7 @@ Travel Advance - ta
         repdate: '',
         reason: '',
         isEligibleEmp: '',
+        storeRepDate:''
     })
 
     const arraySalaryDetails = ref();
@@ -70,7 +71,7 @@ Travel Advance - ta
             salaryAdvanceEmployeeData.value = res.data
             sa.ymi = res.data.your_monthly_income
             sa.mxe = res.data.max_eligible_amount
-            sa.repdate = res.data.Repayment_date
+            sa.storeRepDate = res.data.Repayment_date
             sa.isEligibleEmp = res.data.eligible
         }).finally(() => {
             canShowLoading.value = false

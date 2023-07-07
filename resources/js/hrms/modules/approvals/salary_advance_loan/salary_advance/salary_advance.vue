@@ -75,14 +75,14 @@
                     <Column field="dedction_date" header="Date"> </Column>
                     <Column field="status" header="Status">
                         <template #body="slotProps">
-                            <h6 v-if="slotProps.data.status == 'Pending'" class="text-orange-500">
-                                {{ slotProps.data.status }}
+                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
+                                Pending
                             </h6>
-                            <h6 v-if="slotProps.data.status == 'Approved'" class=" text-green-500">
-                                {{ slotProps.data.status }}
+                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
+                                Approved
                             </h6>
-                            <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
-                                {{ slotProps.data.status }}
+                            <h6 v-if="slotProps.data.status == -1" class="text-red-500">
+                                Rejected
                             </h6>
                         </template>
                     </Column>
@@ -119,7 +119,7 @@
                     </Column>
                     <Column field="Expected_Return" header="Expected Return">
                     </Column>
-                    <Column field="status" header="Expected Return">
+                    <Column field="status" header="Status">
                     </Column>
                 </DataTable>
 
@@ -155,8 +155,8 @@
                 {{ currentlySelectedRowData.Advance_Amount }}
                 <input id="rentFrom_month"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="required_Amount.required_Amount">
-                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : 20,000</p>
+                    v-model="required_Amount.required_Amount" disabled >
+                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount :{{ required_Amount }}</p>
             </div>
             <div class="w-5 p-4 mx-4 ">
                 <span class="font-semibold">Required Amount</span>
@@ -177,8 +177,8 @@
                 rows="3" style="border:none; outline-: none;" />
         </div>
         <div class="float-right ">
-            <button class="btn bg-red-500 text-white px-5" @click="approveAndReject('Reject')">Reject</button>
-            <button class="mx-4 btn bg-green-500  text-white px-5" @click="approveAndReject('Approve')">Approve</button>
+            <button class="btn bg-red-500 text-white px-5" @click="approveAndReject(-1)">Reject</button>
+            <button class="mx-4 btn bg-green-500  text-white px-5" @click="approveAndReject(1)">Approve</button>
         </div>
     </Dialog>
 </template>
@@ -207,8 +207,12 @@ const reviewer_comments = ref();
 const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
-const required_Amount = reactive({
-    required_Amount: ""
+const required_Amount = ref({
+    required_Amount: "",
+    reason:"",
+    advance_amount:"",
+    eligible_amount:"",
+    borrowed_amount:"",
 });
 
 onMounted(() => {
@@ -232,8 +236,9 @@ function showConfirmDialog(selectedRowData, status) {
     showAppoverDialog.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
-    required_Amount.required_Amount = selectedRowData.Advance_Amount
-    console.log(required_Amount.required_Amount);
+    required_Amount.eligible_amount = selectedRowData.eligible_amount;
+
+    console.log(selectedRowData.eligible_amount);
 }
 
 async function approveAndReject(status) {

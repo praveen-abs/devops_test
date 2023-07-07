@@ -20,7 +20,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     async function getEmpDetails() {
         canShowLoadingScreen.value = true;
         // let url = "/SalAdvApproverFlow";
-         let url = "http://localhost:3000/salaryAdvance";
+         let url = "/SalAdvApproverFlow";
         await axios.get(url).then((res) => {
             arraySalaryAdvance.value = res.data;
         }).finally(() => {
@@ -53,18 +53,17 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     async function SAapproveAndReject(val, Status,reviewer_comments) {
         currentlySelectedStatus.value=Status;
+        let status = Status
         canShowLoadingScreen.value = true;
 
         let data = val;
-        await axios.post('http://localhost:3000/submitApproveAndReject', {
+        await axios.post('/reject-or-approve-loan', {
             record_id: data,
             status:
-                currentlySelectedStatus == "Approve"
-                    ? "Approved"
-                    : currentlySelectedStatus == "Reject"
-                        ? "Rejected"
-                        : currentlySelectedStatus,
-            reviewer_comments: "",
+            status == 1 ? 1
+            : status == -1 ? -1
+                        : status,
+            reviewer_comments: reviewer_comments,
         }).then(() => {
         }).finally(()=>{
             canShowLoadingScreen.value = false;
