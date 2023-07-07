@@ -162,18 +162,18 @@ class VmtSalaryAdvanceService
                 $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
                     ->where('vmt_emp_assign_salary_adv_setting.user_id', $current_user_id)->first();
 
-                       $get_salary_emp =  VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
+                $get_salary_emp = VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
 
-                       $sal_borrowed = 0;
-                       foreach($get_salary_emp as $single_salary_emmp){
-                           $sal_borrowed += $single_salary_emmp['borrowed_amount'];
-                       }
-                        // dd($sal_borrowed);
+                $sal_borrowed = 0;
+                foreach ($get_salary_emp as $single_salary_emmp) {
+                    $sal_borrowed += $single_salary_emmp['borrowed_amount'];
+                }
+                // dd($sal_borrowed);
 
                 $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100;
 
 
-                 $calculate_max = $calculatevalue - $sal_borrowed;
+                $calculate_max = $calculatevalue - $sal_borrowed;
 
                 //  dd($calculate_max);
 
@@ -231,59 +231,66 @@ class VmtSalaryAdvanceService
         //     ]);
         // } else {
 
-            $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
-                ->where('user_id', $current_user_id)->first();
+        $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
+            ->where('user_id', $current_user_id)->first();
 
-            $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
-            $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett->id;
 
-            $get_lasting = VmtEmpSalAdvDetails::get()->sortByDesc('id')->first();
-            if (empty($get_lasting)) {
-                $EmpApplySalaryAmt->request_id = "ABSSA001";
+        $employee_sal_sett_id = VmtEmpAssignSalaryAdvSettings::where('user_id', $current_user_id)->first();
+
+
+
+        $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
+        $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett_id->id;
+
+        $get_lasting = VmtEmpSalAdvDetails::get()->sortByDesc('id')->first();
+        if (empty($get_lasting)) {
+            $EmpApplySalaryAmt->request_id = "ABSSA001";
+        } else {
+            $substrid = substr($get_lasting->request_id, 5);
+            $add1 = ($substrid + 1);
+            $tostring = ((string) ($add1));
+            $strlenth = strlen($tostring);
+
+            if ($strlenth == 1) {
+                $requestid = "ABSSA" . "00" . $add1;
+                $EmpApplySalaryAmt->request_id = $requestid;
+            } else if ($strlenth == 2) {
+                $requestid = "ABSSA" . "0" . $add1;
+                $EmpApplySalaryAmt->request_id = $requestid;
             } else {
-                $substrid = substr($get_lasting->request_id, 5);
-                $add1 = ($substrid + 1);
-                $tostring = ((string)($add1));
-                $strlenth = strlen($tostring);
-
-                if ($strlenth == 1) {
-                    $requestid = "ABSSA" . "00" . $add1;
-                    $EmpApplySalaryAmt->request_id = $requestid;
-                } else if ($strlenth == 2) {
-                    $requestid = "ABSSA" . "0" . $add1;
-                    $EmpApplySalaryAmt->request_id = $requestid;
-                } else {
-                    $requestid = "ABSSA" . $add1;
-                    $EmpApplySalaryAmt->request_id = $requestid;
-                }
+                $requestid = "ABSSA" . $add1;
+                $EmpApplySalaryAmt->request_id = $requestid;
             }
-            $EmpApplySalaryAmt->eligible_amount = $mxe;
-            $EmpApplySalaryAmt->borrowed_amount = $ra;
-            $EmpApplySalaryAmt->requested_date = date('Y-m-d');
-            $EmpApplySalaryAmt->dedction_date  = $repdate;
-            $EmpApplySalaryAmt->reason = $reason;
-            $EmpApplySalaryAmt->emp_approver_flow = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
-            $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
-            $EmpApplySalaryAmt->save();
+        }
+        $EmpApplySalaryAmt->eligible_amount = $mxe;
+        $EmpApplySalaryAmt->borrowed_amount = $ra;
+        $EmpApplySalaryAmt->requested_date = date('Y-m-d');
+        $EmpApplySalaryAmt->dedction_date = $repdate;
+        $EmpApplySalaryAmt->reason = $reason;
+        $EmpApplySalaryAmt->emp_approver_flow = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
+        $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
+        $EmpApplySalaryAmt->save();
 
-            return response()->json([
-                'status' => 'save successfully',
-                'message' => 'Done',
+        return response()->json([
+            'status' => 'save successfully',
+            'message' => 'Done',
 
-            ]);
+        ]);
         // }
     }
 
 
-    public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow)
+    public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow, $payroll_cycle, $SA)
     {
         $json_approvalflow = json_encode($approvalflow);
         try {
 
             $saveSettingSALaryAdv = new VmtSalaryAdvSettings;
+            $saveSettingSALaryAdv->settings_name = $SA;
             $saveSettingSALaryAdv->percent_salary_adv = $perOfSalAdvance ?? $cusPerOfSalAdvance;
             $saveSettingSALaryAdv->deduction_period_of_months = $deductMethod ?? $cusDeductMethod;
             $saveSettingSALaryAdv->approver_flow = $json_approvalflow;
+            $saveSettingSALaryAdv->can_borrowed_multiple = $payroll_cycle;
             $saveSettingSALaryAdv->save();
 
             $SalaryAdvSettings = $saveSettingSALaryAdv;
@@ -390,11 +397,11 @@ class VmtSalaryAdvanceService
     public function getEmpsaladvDetails($user_id)
     {
 
-        // $user_id = auth()->user()->id;
+        $user_id = auth()->user()->id;
 
 
-        $getempdetails  =   VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
-            ->where('user_id', $user_id)
+        $getempdetails = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
+            ->where('vmt_emp_assign_salary_adv_setting.user_id', $user_id)
             ->get(
                 [
                     'vmt_emp_sal_adv_details.request_id',
@@ -405,6 +412,8 @@ class VmtSalaryAdvanceService
 
                 ]
             );
+
+        // dd($getempdetails);
 
         return $getempdetails;
     }
@@ -577,14 +586,15 @@ class VmtSalaryAdvanceService
                     array_push($deduction_starting_month, $dedct_month);
                 }
                 $applicable_loan_info['max_tenure_months'] = $max_tenure_month;
-                $applicable_loan_info['deduction_starting_month'] =  $deduction_starting_month;
+                $applicable_loan_info['deduction_starting_month'] = $deduction_starting_month;
 
                 if ($loan_type == 'InterestWithLoan') {
                     $applicable_loan_info['loan_amt_interest'] = $single_record->loan_amt_interest;
                 }
 
                 return response()->json($applicable_loan_info);
-            };
+            }
+            ;
         }
         return null;
     }
@@ -641,9 +651,9 @@ class VmtSalaryAdvanceService
         }
         $user_id = auth()->user()->id;
 
-        $getallintrestfreeemp =  VmtEmployeeInterestFreeLoanDetails::get()->sortByDesc('id')->first();
+        $getallintrestfreeemp = VmtEmployeeInterestFreeLoanDetails::get()->sortByDesc('id')->first();
 
-        $getallintrestwithemp =  VmtEmpInterestLoanDetails::get()->sortByDesc('id')->first();
+        $getallintrestwithemp = VmtEmpInterestLoanDetails::get()->sortByDesc('id')->first();
 
 
 
@@ -658,7 +668,7 @@ class VmtSalaryAdvanceService
                 } else {
                     $substrid = substr($getallintrestfreeemp->request_id, 5);
                     $add1 = ($substrid + 1);
-                    $tostring = ((string)($add1));
+                    $tostring = ((string) ($add1));
                     $strlenth = strlen($tostring);
 
                     if ($strlenth == 1) {
@@ -682,7 +692,7 @@ class VmtSalaryAdvanceService
                 } else {
                     $substrid = substr($getallintrestwithemp->request_id, 5);
                     $add1 = ($substrid + 1);
-                    $tostring = ((string)($add1));
+                    $tostring = ((string) ($add1));
                     $strlenth = strlen($tostring);
 
                     if ($strlenth == 1) {
@@ -810,9 +820,9 @@ class VmtSalaryAdvanceService
             $loan_history['monthly_emi'] = $single_record[' emi_per_month '];
             $loan_history['tenure'] = $single_record['tenure_months'];
             $loan_history['status'] = $single_record['loan_crd_sts'];
-            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type,);
+            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type, );
 
-            array_push($emp_loan_history,  $loan_history);
+            array_push($emp_loan_history, $loan_history);
             unset($loan_history);
         }
 
@@ -883,7 +893,7 @@ class VmtSalaryAdvanceService
 
             $user_id = auth()->user()->id;
 
-            $loan_details =  VmtEmpSalAdvDetails::where('id', $record_id)->first();
+            $loan_details = VmtEmpSalAdvDetails::where('id', $record_id)->first();
 
             $approver_flow = json_decode($loan_details->emp_approver_flow, true);
 

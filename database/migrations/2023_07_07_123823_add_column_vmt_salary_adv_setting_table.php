@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::table('vmt_salary_adv_setting', function (Blueprint $table) {
             $table->text('can_borrowed_multiple')->after('approver_flow');
+            $table->text('settings_name')->after('id');
         });
 
     }
@@ -27,6 +28,7 @@ return new class extends Migration
     public function down()
     {
         dropColumnIfExists("vmt_salary_adv_setting",'can_borrowed_multiple');
+        dropColumnIfExists("vmt_salary_adv_setting",'settings_name');
 
     }
 };
