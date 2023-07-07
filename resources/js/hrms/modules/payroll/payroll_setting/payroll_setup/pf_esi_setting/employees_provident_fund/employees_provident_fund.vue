@@ -1,12 +1,13 @@
 <template>
-    <!-- <div class="flex justify-between mx-5 my-4">
+    <div class="flex justify-between mx-5 my-4">
         <div>
         </div>
         <div>
-            <button class="mx-4 btn btn-border-orange">Non PF employee</button>
-            <button class="btn btn-orange">
+            <button>
+                <router-link class=" mx-4 btn btn-border-orange" :to="`/employees_provident_fundVue/non_pf_employees`">Non PF employee</router-link>
+            </button>
+            <button class="btn btn-orange">Add new</button>
 
-                Add new</button>
         </div>
     </div>
 
@@ -19,10 +20,10 @@
             <Column field="thisYearProfit" header="Quantity"></Column>
         </DataTable>
 
-    </div> -->
+    </div>
 
-    <non_pf_employees />
-    <add_new_employee_provident_fund />
+    <!-- <non_pf_employees />
+    <add_new_employee_provident_fund /> -->
 </template>
 
 
@@ -30,6 +31,12 @@
 import { ref, onMounted } from 'vue';
 import add_new_employee_provident_fund from './add_new_employee_provident_fund/add_new_employee_provident_fund.vue';
 import non_pf_employees from './non_pf_employees/non_pf_employees.vue';
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+
+
+
 
 const products = ref([
     { product: 'Bamboo Watch', lastYearSale: 51, thisYearSale: 40, lastYearProfit: 54406, thisYearProfit: 43342 },
