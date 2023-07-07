@@ -184,7 +184,6 @@ class VmtSalaryAdvanceService
                     $repayment_months = Carbon::now()->addMonths($i)->format('Y-m-d');
                     $dates['date'] = $repayment_months;
                     array_push($multiple_months, $dates);
-
                 }
 
                 // dd( $repayment_months);
@@ -595,8 +594,7 @@ class VmtSalaryAdvanceService
                 }
 
                 return response()->json($applicable_loan_info);
-            }
-            ;
+            };
         }
         return null;
     }
@@ -730,7 +728,7 @@ class VmtSalaryAdvanceService
             $loan_details->reason = $reason;
             $loan_details->approver_flow = $this->getEmpapproverjson($settings_flow, $user_id);
             $loan_details->loan_crd_sts = 0;
-            $loan_details->loan_status='Pending';
+            $loan_details->loan_status = 'Pending';
             $loan_details->save();
             return response()->json([
                 'status' => 'save successfully',
@@ -824,7 +822,7 @@ class VmtSalaryAdvanceService
             $loan_history['monthly_emi'] = $single_record[' emi_per_month '];
             $loan_history['tenure'] = $single_record['tenure_months'];
             $loan_history['status'] = $single_record['loan_crd_sts'];
-            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type, );
+            $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type,);
 
             array_push($emp_loan_history, $loan_history);
             unset($loan_history);
@@ -863,23 +861,29 @@ class VmtSalaryAdvanceService
 
         try {
             $user_id = auth()->user()->id;
-          //  dd($loan_type);
+            //  dd($loan_type);
             if ($loan_type == 'InterestFreeLoan') {
-               // dd($record_id);
+                // dd($record_id);
                 $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $record_id)->first();
                 $loan_settings_id =  $loan_details->vmt_int_free_loan_id;
-                $loan_settings_approver_flow = VmtInterestFreeLoanSettings::where('id',$loan_settings_id)->first()->approver_flow;
+                $loan_settings_approver_flow = VmtInterestFreeLoanSettings::where('id', $loan_settings_id)->first()->approver_flow;
             } else if ($loan_type == 'InterestWithLoan') {
                 $loan_details = VmtEmpInterestLoanDetails::where('id', $record_id)->first();
                 $loan_settings_id =  $loan_details->vmt_int_loan_id;
-                $loan_settings_approver_flow = VmtLoanInterestSettings::where('id',$loan_settings_id)->first()->approver_flow;
+                $loan_settings_approver_flow = VmtLoanInterestSettings::where('id', $loan_settings_id)->first()->approver_flow;
             }
             $approver_flow = json_decode($loan_details->approver_flow, true);
-            $loan_settings_approver_flow = json_decode( $loan_settings_approver_flow,true);
-          //  dd(  $loan_settings_approver_flow);
+            $loan_settings_approver_flow = json_decode($loan_settings_approver_flow, true);
+            //dd(  $loan_settings_approver_flow);
             for ($i = 0; $i < count($approver_flow); $i++) {
                 if ($approver_flow[$i]['approver'] == $user_id) {
-                    $approver_flow[$i]['status'] = $status;
+                    if ($status == 1) {
+                        $approver_flow[$i]['status'] = $status;
+                        $loan_details->loan_status =  'Approved By ' . $loan_settings_approver_flow[$i]['name'];
+                    } else if ($status == -1) {
+                        $approver_flow[$i]['status'] = $status;
+                        $loan_details->loan_status =  'Rejected By ' . $loan_settings_approver_flow[$i]['name'];
+                    }
                 }
             }
 
