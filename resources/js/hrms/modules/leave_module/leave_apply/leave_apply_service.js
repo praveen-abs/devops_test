@@ -422,7 +422,7 @@ export const useLeaveService = defineStore("useLeaveService", () => {
                 leaveApplyDailog.value = false
                 Swal.fire(
                     'Success',
-                    'leave Applied successfull!',
+                    'Leave Applied successfull!',
                     'success'
                   )
             }else
