@@ -958,7 +958,7 @@ class VmtInvestmentsService
                             'vmt_employee_compensatory_details.food_coupon',
                         ])->toarray();
 
-                 $total_earnings1 = 0;
+                $total_earnings1 = 0;
                 foreach ($compensatory_details as $single_compensatory) {
 
                     $basic = $single_compensatory['basic'];
@@ -969,8 +969,8 @@ class VmtInvestmentsService
 
                     $total_earnings1 += $basic + $hra + $spl_alw + $travel_conveyance + $canteen_dedn;
 
-                $simm['all'] = $compensatory_details;
-                $simm['total_earnings'] = $total_earnings1;
+                    $simm['all'] = $compensatory_details;
+                    $simm['total_earnings'] = $total_earnings1;
 
                 }
 
@@ -983,7 +983,7 @@ class VmtInvestmentsService
             $single_special_allowance = 0;
             $single_transport_allowance = 0;
             $single_food_coupon = 0;
-            $total_earnings =0;
+            $total_earnings = 0;
 
             foreach ($res1 as $single_all) {
 
@@ -999,7 +999,7 @@ class VmtInvestmentsService
                 $total_cal['single_transport_allowance'] = $single_transport_allowance;
                 $total_cal['single_food_coupon'] = $single_food_coupon;
 
-                $total_earnings +=  $single_basic + $single_hra + $single_special_allowance + $single_transport_allowance +  $single_food_coupon ;
+                $total_earnings += $single_basic + $single_hra + $single_special_allowance + $single_transport_allowance + $single_food_coupon;
 
                 $total_cal['total_earnings'] = $total_earnings;
 
@@ -1013,12 +1013,133 @@ class VmtInvestmentsService
         return ($res2);
     }
 
-    public function taxableIncomeFromAllHeads(){
-          $simma11   = $this->grossEarningsFromEmployment()['total'][0];
+    public function taxableIncomeFromAllHeads()
+    {
 
-            dd($simma11);
+        //   $simma11   = $this->grossEarningsFromEmployment()['total'][0];
+
+        //     dd($simma11);
+
+
+        $user_id = User::where('user_code', auth()->user()->user_code)->first()->id;
+
+
+        //Get the form template
+        $query_inv_form_template = VmtInvFormSection::leftjoin('vmt_inv_section', 'vmt_inv_section.id', '=', 'vmt_inv_formsection.section_id')
+            ->leftjoin('vmt_inv_section_group', 'vmt_inv_section_group.id', '=', 'vmt_inv_section.sectiongroup_id')
+            ->get(
+                [
+                    // 'vmt_inv_formsection.section_id',
+                    'vmt_inv_section.section',
+                    'vmt_inv_section.particular',
+                    // 'vmt_inv_section.reference',
+                    'vmt_inv_section.max_amount',
+                    'vmt_inv_section_group.section_group',
+                    'vmt_inv_formsection.id as fs_id',
+                    // 'vmt_inv_section.section_option_1',
+                    // 'vmt_inv_section.section_option_2',
+                    // 'vmt_inv_formsection.form_id',
+
+                ]
+            )->toArray();
+
+        // dd($query_inv_form_template);
+
+        // employee declaration amount
+        $inv_emp_value = VmtInvFEmpAssigned::leftjoin('vmt_inv_emp_formdata', 'vmt_inv_emp_formdata.f_emp_id', '=', 'vmt_inv_f_emp_assigned.id')
+            ->where('vmt_inv_f_emp_assigned.user_id', $user_id)->get()->toArray();
+
+        $arr = array();
+        foreach ($query_inv_form_template as $single_template) {
+            foreach ($inv_emp_value as $single_emp_env_value) {
+                if ($single_template['fs_id'] == $single_emp_env_value['fs_id']) {
+                    // $single_template['id'] = $single_emp_env_value['id'];
+                    $single_template['user_id'] = $single_emp_env_value['user_id'];
+                    // $single_template['form_id'] = $single_emp_env_value['form_id'];
+                    // $single_template['year'] = $single_emp_env_value['year'];
+                    // $single_template['f_emp_id'] = $single_emp_env_value['f_emp_id'];
+                    $single_template['dec_amount'] = $single_emp_env_value['dec_amount'];
+                    $single_template['json_popups_value'] = (json_decode($single_emp_env_value["json_popups_value"], true));
+                    // $single_template['is_submit'] = $single_emp_env_value['is_sumbit'];
+                    // $single_template['selected_section_options'] = $single_emp_env_value['selected_section_options'];
+                }
+            }
+            array_push($arr, $single_template);
+        }
+
+        // dd($arr);
+
+        foreach($arr as $single_arr){
+
+        //  if($single_arr['particular'] == "Employee PF (Payroll Deduction)"){
+
+
+
+        //         dd($single_arr);
+        //  }
+            $res= array('dec_amount'=>0);
+        if($single_arr['section_group'] == "Other Excemptions " ){
+
+                     $simma['dec_amount']  = $single_arr['dec_amount'];
+
+                // $simma['total'] =  $single_arr['max_amount'] - $single_arr['dec_amount'];
+
+                array_push($res, $simma);
+             }
+        }
+
+        dd($res);
+// dd();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // $query_inv_form_template = $arr;
+
+
+        // $count = 0;
+        // foreach ($query_inv_form_template as $single_inv_form_template) {
+
+        //     if (!array_key_exists($single_inv_form_template["section_group"], $query_inv_form_template)) {
+        //         $query_inv_form_template[$single_inv_form_template["section_group"]] = array();
+        //         array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+        //     } else {
+        //         array_push($query_inv_form_template[$single_inv_form_template["section_group"]], $single_inv_form_template);
+
+        //     }
+
+        //     //remove from outer json
+        //     unset($query_inv_form_template[$count]);
+
+        //     $count++;
+
+        // }
+        //  dd($query_inv_form_template);
+
 
     }
+
+
 
 
 
