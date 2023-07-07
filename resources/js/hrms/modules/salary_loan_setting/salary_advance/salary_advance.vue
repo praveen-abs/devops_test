@@ -31,7 +31,7 @@
                     <div class="d-flex justify-content-between align-items-center mt-5  w-6"  >
                         <h1 class="fs-4 fw-bolder" >Select organization</h1>
                         <div class="d-flex justify-items-center position-relative ">
-                            <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.ClientsName" optionLabel="client_name"  optionValue="id"
+                            <MultiSelect v-model="salaryStore.sa.selectClientID" :options="salaryStore.ClientsName" optionLabel="client_name"  optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
                                                 v$.selectClientID.$error ? 'p-invalid' : '',
                                             ]" />
@@ -54,9 +54,9 @@
                     </div>
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
                         <h1 class="fs-4 fw-bolder" >Payroll Cycle</h1>
-                        <div class="w-5" style="height: 40px;">
-                            <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle= 0" :class="[salaryStore.sa.payroll_cycle == 0 ? ' text-white bg-orange-500 border-none' :'']" >Single</button>
-                            <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle=1" :class="[salaryStore.sa.payroll_cycle == 1 ? ' text-white bg-orange-500 border-none' :'']" >Multiple</button>
+                        <div class="w-5" style="height: 40px;"  >
+                            <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle= 0" :class="[salaryStore.sa.payroll_cycle == 0 ? ' text-white bg-orange-500 border-none' :'']" > Single</button>
+                            <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle=1" :class="[salaryStore.sa.payroll_cycle == 1 ? ' text-white bg-orange-500 border-none' :'' ]"> Multiple</button>
                         </div>
                     </div>
                     <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees</h1>
@@ -77,10 +77,8 @@
                                         <InputText placeholder="Search" v-model="filters['global'].value"
                                             class="border-color " style="height: 3em" />
                                     </span>
-
                                 </div>
                                 <div class="col-12">
-
                                     <div class="col-12">
                                         <div class="px-2 row">
                                             <div class="col">
@@ -395,6 +393,15 @@ const custDeduct = (value) => {
     }
 }
 
+// const eligibleRequiredAmount = (value) => {
+//     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
+//         console.log(value);
+//         return false
+//     } else {
+//         return true
+//     }
+// }
+
 const rules = computed(() => {
     return {
         perOfSalAdvance: { required: helpers.withMessage('Percentage of salary advance is required', required) },
@@ -404,7 +411,7 @@ const rules = computed(() => {
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
         selectClientID:{ required: helpers.withMessage('Select Client ID Flow is required', required)},
-
+        // payroll_cycle:{ required: helpers.withMessage('salary Advance Name is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount)}
     }
 })
 
