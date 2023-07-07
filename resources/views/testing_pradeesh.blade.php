@@ -55,8 +55,12 @@ use App\Models\VmtClientMaster;
     @vite('resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.js')
     {{-- <div class="mt-6" id="SalaryAdvanceLoan"></div> --}}
 
-    @vite('resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js')
-    {{-- <div id="SuperAdminRolesPermission"></div> --}}
+    <!-- @vite('resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js')
+    <div id="AdminRolesPermission"></div> -->
+
+    @vite('resources/js/hrms/modules/leave_module/LeaveModule.js')
+        <div id="LeaveModule"></div>
+
 
     @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')
     {{-- <div id="approvals_salary_advance"></div> --}}

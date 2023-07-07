@@ -19,7 +19,7 @@
                 <Column field="thisYearSale" header="Category"></Column>
                 <Column field="thisYearProfit" header="Quantity"></Column>
             </DataTable>
-            
+
         </div>
     </div>
 </template>

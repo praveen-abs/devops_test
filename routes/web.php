@@ -509,7 +509,7 @@ Route::middleware(['auth'])->group(function () {
     //Paygroup module
     Route::get('/Paygroup/fetchPayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayRollComponents'])->name('fetchPayRollComponents');
     Route::post('/Paygroup/CreatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayRollComponents'])->name('CreatePayRollComponents');
-    Route::post('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
+    Route::post('/Paygroup/UpdatePayRollEarningsComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollEarningsComponents'])->name('UpdatePayRollEarningsComponents');
     Route::post('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
     Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
 
@@ -521,8 +521,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/AddReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddReimbursementComponents'])->name('AddReimbursementComponents');
     Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
 
+  // Salary software integration
+    Route::get('/Paygroup/fetchPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
+    Route::post('/Paygroup/addPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollAppIntegrations'])->name('addPayrollAppIntegrations');
+    Route::post('/Paygroup/EnableDisableAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableAppIntegration'])->name('EnableDisableAppIntegration');
+
 
     //paygroup structure
+    Route::get('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
+    //Route::get('/Paygroup/ShowAssignEmployeelist', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'ShowAssignEmployeelist'])->name('ShowAssignEmployeelist');
+   // Route::get('/Paygroup/getAllDropdownFilterSetting', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');

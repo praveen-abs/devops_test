@@ -27,7 +27,7 @@
                         </Column>
                         <Column header="Actions">
                             <template #body="{data}">
-                                <i @click="usePayroll.editAdhocSalaryComponents(data,3),dailogAdhocComponents = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
+                                <i @click="usePayroll.editAdhocSalaryComponents(data,3,true),dailogAdhocComponents = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
                                 <i class="pi pi-trash mx-3 cursor-pointer" style="font-size: 1rem"></i>
                             </template>
                         </Column>
@@ -51,7 +51,7 @@
                             </Column>
                             <Column header="Actions">
                                 <template #body="{data}">
-                                    <i @click="usePayroll.editAdhocSalaryComponents(data,2),dailogDeduction = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
+                                    <i @click="usePayroll.editAdhocSalaryComponents(data,2,true),dailogDeduction = true" class="pi pi-pencil cursor-pointer" style="font-size: 1rem"></i>
                                     <i class="pi pi-trash mx-3" style="font-size: 1rem"></i>
                                 </template>
                             </Column>
