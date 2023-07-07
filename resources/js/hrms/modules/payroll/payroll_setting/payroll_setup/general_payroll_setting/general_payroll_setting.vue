@@ -1,15 +1,17 @@
 <template>
-    <div class="w-full">
-        <div class="flex w-4 pt-4 mx-6">
-            <p class="w-10">Payroll and attendance end date settings</p>
-            <div>
-                <i class="pi pi-pencil" style="font-size: 1rem" @click="active_Btn"></i>
+    <div class="w-full  border">
+        <div class="flex mt-3 w-4 d-flex justify-content-between align-items-center pt-4 ml-6 ">
+            <div class="">
+                <p class=" fw-semibold text-gray-600 fs-14">Payroll and attendance end date settings</p>
+            </div>
+            <div class="">
+                <i class="pi pi-pencil text-gray-600 pr-6" style="font-size: 1rem" @click="active_Btn"></i>
             </div>
         </div>
         <div class="flex grid-cols-2 gap-6 mx-6">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="my-1">
-                    <h5 class="my-2 text-lg font-semibold">Pay Frequency</h5>
+            <div class="w-4 p-4 my-2 bg-gray-100 shadow-md rounded-lg  border-1 ">
+                <div class="my-2">
+                    <h5 class="my-2 font-semibold fs-13">Pay Frequency</h5>
                     <div class="flex gap-8 justify-evenly">
                         <div class="w-full">
                             <InputText class="w-full h-11" placeholder="Monthly" />
@@ -17,7 +19,7 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">
+                    <h5 class="my-2 font-semibold fs-13">
                         When would you like to start using the ABShrms payroll?
                     </h5>
                     <div class="flex gap-8 justify-evenly">
@@ -27,7 +29,7 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">
+                    <h5 class="my-2 font-semibold fs-13">
                         On which date did the pay peroid end in november ?
                     </h5>
                     <div class="flex gap-8 justify-evenly">
@@ -37,7 +39,7 @@
                     </div>
                 </div>
                 <div class="my-4">
-                    <h5 class="my-2 text-lg font-semibold">
+                    <h5 class="my-2 fs-13 font-semibold">
                         The payment date for the peroid of nov 1st to nov 30th is
                     </h5>
                     <div class="flex gap-8 justify-evenly">
@@ -50,14 +52,15 @@
 
             <div class="w-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="p-2 bg-orange-100 rounded mt-2" v-if="active == 2">
-                    This change is of most importance and has a widespread impact on the salaries of all employees. We strongly advise you to reach out to the support team for further clarification.
+                    This change is of most importance and has a widespread impact on the salaries of all employees. We
+                    strongly advise you to reach out to the support team for further clarification.
                 </div>
 
-                <h6 class="my-2 font-extralight">
-                    The finalized payroll peroid is <strong>JAN 1 - JAN 31</strong>
+                <h6 class="my-2 font-extralight fw-semibold text-gray-500 tracking-widest ">
+                    The finalized payroll peroid is <span class=" fs-6 text-black fw-semibold tracking-widest ml-2">JAN 1 -
+                        JAN 31</span>
                 </h6>
-
-                <div class="mb-6  mt-4 w-full" >
+                <div class="mb-6  mt-4 w-full">
                     <DataTable :value="products" style="background-color: none;">
                         <Column field="product" header=""></Column>
                         <Column field="lastYearSale" header="Feb"></Column>
@@ -65,26 +68,28 @@
                         <Column field="thisYearProfit" header="Apr"></Column>
                     </DataTable>
                 </div>
-                <div class="mx-4">
-                    <p>Please Note that for month of February, the number of pay days will be adjusted to 28 days unstead of
+                <div class="mx-3 text-center">
+                    <p class="text-gray-600">Please Note that for month of February, the number of pay days will be
+                        adjusted to 28 days unstead of
                         the standard 30 0r 31 days ,As a result salary for employees will be calculated using the formula
                         SALARY * 28/28</p>
                 </div>
             </div>
         </div>
-        <div class="mx-6 my-4">
+        <div class="mx-6 ">
             <div class="flex w-4 pt-4">
-            <p>Attendance cut-off cycle</p>
-            <div>
-                <i class="pi pi-pencil mr-3" style="font-size: 1rem" @click='active_Btn2' ></i>
+                <p class="fs-14 text-gray-600">Attendance cut-off cycle</p>
+                <div>
+                    <i class="pi pi-pencil mr-3" style="font-size: 1rem" @click='active_Btn2'></i>
+                </div>
             </div>
         </div>
-        </div>
 
-        <div class="flex grid-cols-2 gap-6 mx-6 my-4">
-            <div class="w-4 p-4 my-4 bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+        <div class="flex grid-cols-2 gap-6 mx-6">
+            <div class="w-4 p-4 my-2 bg-gray-100 rounded-lg  border-1 shadow-sm">
                 <div class="my-4">
-                    <h6 class="my-2 text-lg font-semibold">
+                    <!-- <h1 style="color: #4E4E4E;">4E4E4E</h1> -->
+                    <h6 class="my-2 fs-14 font-semibold text-black-alpha-70">
                         Select the attendance cut-off peroid in a month
                     </h6>
                     <div class="flex gap-8 justify-evenly">
@@ -94,34 +99,34 @@
                     </div>
                 </div>
 
-                <div class="my-4">
-                    <div class="flex gap-3 justify-evenly ">
-                        <h5 class="my-2 fs-6 font-semibold" style="line-height: 22px;">
-                            Do you want to consider new joinee post attendance cut off date ?
-                        </h5>
-                        <div class="flex w-4 my-4  mr-3">
-                            <div class="mx-4 d-flex ">
-                                <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
+                <div class="my-4 ">
+                    <div class="flex gap-3 w-100 d-flex justify-content-between align-items-center">
+                        <div class="w-70">
+                            <h5 class="my-2 fs-13 font-semibold" style="line-height: 16px;">
+                                Do you want to consider new joinee post attendance cut off date ?
+                            </h5>
+                        </div>
+                        <div class=" w-30 d-flex justify-content-center align-items-center">
+                            <div class="mx-2 d-flex justify-content-between align-items-center ">
+                                <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
+                                <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">Yes</label>
                             </div>
-                            <div class="d-flex ">
-                                <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
+                            <div class="d-flex justify-content-between align-items-center ">
+                                <input style="height: 18px; width: 18px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">No</label>
+                                <label class="ml-2 font-bold form-check-label leave_type fs-13" for="">No</label>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="my-4">
-                    <div class=" d-flex justify-self-center align-items-center">
+                <div class="my-2 w-100">
+                    <div class="d-flex  align-items-center">
                         <div class="">
-                            <input type="checkbox" name="" class="form-check-input mr-3" id=""
-                                style="width: 20px; height: 20px;">
-                            <Checkbox class="mx-2" :binary="true" />
+                            <input type="checkbox" name="" class="rounded-sm mr-2" id=""
+                                style="width: 18px; height: 18px;">
                         </div>
-                        <div class="fs-6">
+                        <div class="fs-13 text-left" >
                             The employee's attendance cut-off date differs from their pay peroid end
                             date
                             <span class="text-blue-400 underline">what is Attendance cut-off date?</span>
@@ -130,13 +135,13 @@
                 </div>
             </div>
 
-            <div class="w-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
-                <div class="bg-orange-100 p-2 rounded " v-if="active2 == 2 " >
-                    <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true" ></i>
+            <div class="w-8 px-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+                <div class="bg-orange-100 p-2 rounded " v-if="active2 == 2">
+                    <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true"></i>
                     The edit option has been disabled. Please contact the ABShrms Support Team for assistance.
                 </div>
-                <h1 class=" mt-4 font-extralight">
-                    The finalized payroll peroid is <strong>26th - 25th</strong>
+                <h1 class=" mt-4 text-gray-600 fs-13 ">
+                    The finalized payroll peroid is <span class=" text-black-alpha-80 fs-13 line-height-2 ">26th - 25th</span>
                 </h1>
                 <div class="mb-6 mt-4 w-full">
                     <DataTable :value="products">
@@ -200,20 +205,20 @@
                 </div>
             </div>
 
-            <div class="w-6 p-4 my-4 leading-8 ">
-                <div class="my-6">
-                    <p style="line-height: 25px;">
+            <div class="w-6 leading-8">
+                <div class="my-">
+                    <p style="line-height: 25px;" class=" text-gray-600  fs-13">
                         <strong class="mr-2">NOTE :</strong>
                         Please note that calculating the number of days for a given pay period can
                         significantly impact salary deductions for loss of pay due to leave or other
                         reasons. For instance, consider the example of an employee whose monthly
                         salary is INR 30,000 and who takes one day of leave without pay.
                     </p>
-                    <p style="line-height: 25px;">If we
+                    <p style="line-height: 25px;" class=" text-gray-600  fs-13">If we
                         calculate loss of pay based on a 30-day month, the deduction would be INR
                         30,000/30 = INR 1000.
                     </p>
-                    <p style="line-height: 25px;">
+                    <p style="line-height: 25px;" class=" text-gray-600  fs-13" >
                         However, if we exclude weekends from the calculation,
                         assuming 8 Saturdays and Sundays in the month, the effective number of working
                         days would be 30-8 = 22 days. In this case, the deduction for one day of loss
@@ -222,7 +227,7 @@
                 </div>
             </div>
         </div>
-        <div class="mx-6">
+        <div class="mx-6 ">
             <p>Currency and Compensation</p>
         </div>
         <div class="flex grid-cols-2 gap-6 mx-6 my-4">
@@ -303,14 +308,14 @@ const products = ref([
 ]);
 
 const active = ref(1);
-const active2 =ref(1);
+const active2 = ref(1);
 
-function active_Btn(){
+function active_Btn() {
     active.value = 2;
     console.log(active.value);
 }
-function active_Btn2(){
-    active2.value = 2 ;
+function active_Btn2() {
+    active2.value = 2;
     console.log(active2);
 }
 
@@ -318,4 +323,11 @@ function active_Btn2(){
 
 
 
+
+
 </script>
+
+<style>
+.fs-13 {
+    font-size: 13.2px !important;
+}</style>

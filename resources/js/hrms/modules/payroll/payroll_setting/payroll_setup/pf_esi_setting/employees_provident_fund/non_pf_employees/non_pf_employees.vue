@@ -13,7 +13,7 @@
                                 employee status, nut the reverse is possible
                             </p>
                         </div>
-                        <div class="mx-4 ">
+                        <div class="mx-2 col-4">
                             <button class="mx-4 btn btn-border-orange shadow-sm px-4">Cancel</button>
                             <button class="btn btn-orange shadow-sm px-4" @click="AddMore">Add More</button>
                         </div>

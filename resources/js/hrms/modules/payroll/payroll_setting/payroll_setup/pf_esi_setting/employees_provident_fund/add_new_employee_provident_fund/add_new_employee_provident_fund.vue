@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="w-6 pl-4 pt-6">
-                    <input type="checkbox" class="mr-3" style="width: 18px ; height: 20px;" name="" id=""
+                    <input type="checkbox" class="mr-3 rounded-sm" style="width: 18px ; height: 20px;" name="" id=""
                         >
                     <label for="" class=" text-gray-600 fs-5">Is Default</label>
                     <p class=" text-gray-600 w-full mt-1">
@@ -58,19 +58,19 @@
 
             <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
                 <div class="mx-2 my-4 d-flex align-center">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;">
                     <label for="" class="fs-6  text-gray-600">Employer's Contribution is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;">
                     <label for="" class=" text-gray-600">Employer's EDLI Contribution is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;">
                     <label for="" class=" text-gray-600">Admin Charges is included in the CTC.</label>
                 </div>
                 <div class="mx-2 my-4">
-                    <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                    <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;">
                     <label for="" class=" text-gray-600">Override PF Contribution rate at employee level</label>
                 </div>
             </div>
