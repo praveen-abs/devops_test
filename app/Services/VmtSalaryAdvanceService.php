@@ -382,8 +382,10 @@ class VmtSalaryAdvanceService
             $sal_adv['user_id'] = $all_pending_advance['user_id'];
             $sal_adv['name'] = $all_pending_advance['name'];
             $sal_adv['user_code'] = $all_pending_advance['user_code'];
+            $sal_adv['eligible_amount'] = $all_pending_advance['eligible_amount'];
             $sal_adv['advance_amount'] = $all_pending_advance['borrowed_amount'];
             $sal_adv['dedction_date'] = $all_pending_advance['dedction_date'];
+            $sal_adv['reason'] = $all_pending_advance['reason'];
             $sal_adv['status'] = $all_pending_advance['sal_adv_crd_sts'];
             $sal_adv['emp_prevdetails'] = $this->getEmpsaladvDetails($all_pending_advance['user_id']);
 
