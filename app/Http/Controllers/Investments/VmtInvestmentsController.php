@@ -323,7 +323,7 @@ class VmtInvestmentsController extends Controller
                 ]
             )->toArray();
 
-        //dd( $v_form_template);
+        // dd( $v_form_template);
 
 
         $res = array();
@@ -386,7 +386,7 @@ class VmtInvestmentsController extends Controller
                 if ($sumOfSec > 150000) {
                     $section80['amount_accepted'] = $sumOfSec - abs(150000 - $sumOfSec);
                 } else {
-                    $section80['amount_accepted'] = 0;
+                    $section80['amount_accepted'] = $sumOfSec;
                 }
 
             }
@@ -507,6 +507,15 @@ class VmtInvestmentsController extends Controller
 
 
         $res = array();
+        $total_gross = array('sno' => 'a', 'section' => 'Total Gross Income', 'old_regime' => 0, 'new_regime' => 0 );
+        $Other_Source = array('sno' => 'b', 'section' => 'Other Source of Income', 'old_regime' => 0, 'new_regime' => 0 );
+        $Reimbursement = array('sno' => 'c', 'section' => 'Reimbursement Exemptions', 'old_regime' => 0, 'new_regime' => 0 );
+        $allowance_tax = array('sno' => 'd', 'section' => 'Allowance Exemptions (Sec 10)', 'old_regime' => 0, 'new_regime' => 0 );
+        $tax_on_emp = array('sno' => 'e', 'section' => 'Tax on Employment (Sec 16)', 'old_regime' => 0, 'new_regime' => 0 );
+        $exemption =array('sno' => 'f', 'section' => 'Exemptions under Sec 80', 'old_regime' => 0, 'new_regime' => 0 );
+        $total_tax_income =array('sno' => 'g', 'section' => 'Total Taxable Income', 'old_regime' => 0, 'new_regime' => 0 );
+        $total_tax_laibilty =array('sno' => 'h', 'section' =>'Total Tax Laibility', 'old_regime' => 0, 'new_regime' => 0 );
+
         $sumOfHra = 0;
         $sumOfReimbersument = 0;
         $sumOfOtherSourceOfIncome = 0;

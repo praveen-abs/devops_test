@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Validator;
 class VmtPayrollService{
 
 
-   public Function getCurrentPayrollMonth(){
+ public Function getCurrentPayrollMonth(){
 
   // start date and end date of current payroll month from the payroll table
 

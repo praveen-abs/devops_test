@@ -314,7 +314,7 @@
                                             {{-- <span>Leaves <span
                                                     class="text-white badge bg-danger rounded-circle">{{ $approvals_leave_notif_count}}</span>
                                             </span> --}}
-                                            <span>Leaves <span </span>
+                                            <span>Leaves</span>
                                         </a>
                                     </li>
 
@@ -327,7 +327,7 @@
                                                     class="text-white badge bg-danger rounded-circle"> {{ $approvals_att_regularization_count }}</span>
                                             </span> --}}
                                             <span>
-                                                Attendance Regularization<span </span>
+                                                Attendance Regularization </span>
                                         </a>
 
                                     </li>
@@ -347,8 +347,8 @@
                                         </a>
                                         PMS forms are approved here. Redirect to PMS dashboard
                                     </li> --}}
-                                    {{-- @if (!Str::contains(getCurrentClientName(), 'Vasa')) --}}
 
+                                      @if(!Str::contains(getCurrentClientName(),'Brand avatar'))
                                     <li class="nav-item">
                                         <a href="{{ route('showReimbursementApprovalPage') }}" id=""
                                             class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
@@ -357,6 +357,7 @@
                                         {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="py-1 nav-link sidebar"><span>Dashboard</span></a> --}}
 
                                     </li>
+                                    @endif
                                     <li class="nav-item">
                                         <a href="{{ route('page-not-found') }}" id=""
                                             class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
@@ -372,7 +373,7 @@
                                     </li>
                                     {{-- ('Employee-Details-approvals') --}}
                                     <li class="nav-item">
-                                        <a href="{{ route('page-not-found') }}" id=""
+                                        <a href="{{ route('Employee-Details-approvals') }}" id=""
                                             class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
                                             aria-expanded="false">
                                             {{-- <span>
@@ -392,7 +393,7 @@
                 @endif
 
                 <!-- PMS module -->
-                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines']))
+                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines','BREEZEE TECH']))
 
                     <li class="mb-1 nav-item">
                         <a class="pt-0 nav-link sidebar menu-link" href="#PerformanceDrop-Down"
@@ -570,12 +571,12 @@
                                             Reports</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ route('showPayrollSetup') }}" class="py-1 nav-link sidebar"
                                         role="button"><span>
                                             Setup</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
 
                             </ul>
@@ -664,10 +665,12 @@
                                 <a href="{{ route('paycheckDashboard') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Dashboard</span></a>
                             </li> --}}
+                            @if(!Str::contains(getCurrentClientName(),'Brand avatar'))
                             <li class="nav-item">
                                 <a href="{{ route('showReimbursementsPage') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Reimbursements</span></a>
                             </li>
+                            @endif
                         </ul>
                     </div>
                 </li>

@@ -890,7 +890,7 @@ public function addExperienceInfo(Request $request)
            $validator = Validator::make(
                $request->all(),
                $rules = [
-                   'record_ids' => 'required',// Need to check the given ids inside service class.
+                   'record_id' => 'required',// Need to check the given ids inside service class.
                    'status' => 'required',
                    'approver_user_id' => 'required',
                ],
@@ -910,7 +910,7 @@ public function addExperienceInfo(Request $request)
 
            try
                {
-                    $record_ids =$request->record_ids;
+                    $record_ids =$request->record_id;
                     $status =$request->status;
 
 

@@ -242,6 +242,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
                 $newEmployee->userid   =    $user_id;
                 $newEmployee->gender   =    $row["gender"] ?? '';
+                $newEmployee->location   =    $row["location"] ?? '';
                 $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
