@@ -152,7 +152,9 @@
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="overflow-x-auto">
                         <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                        </div>
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">

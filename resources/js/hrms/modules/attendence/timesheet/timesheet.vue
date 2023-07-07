@@ -1,6 +1,6 @@
 <template>
     <div ref="calendarContainer" class="min-h-full min-w-fit text-gray-800 card" v-if="singleAttendanceDay">
-        <div class="min-w-max border  grid grid-cols-7 gap-1 card-body ">
+        <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
 
@@ -19,7 +19,7 @@
             <!-- singleAttendanceDay Timesheet Data from current month  -->
 
             <div v-for="day in daysInCurrentMonth" :key="day"
-                class=" h-full py-3 shadow-sm  md: w-full border align-top rounded-lg " :class="{
+                class=" h-16 py-3 shadow-sm  md:h-36 w-full border align-top rounded-lg " :class="{
                     'bg-slate-50 text-gray-600 font-medium': isToday(day),
                     'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
                     'bg-gray-200': isWeekEndDays(day)

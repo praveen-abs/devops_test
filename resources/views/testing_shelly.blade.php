@@ -18,4 +18,4 @@
 
 @vite('resources/js/hrms/modules/attendence/AttendanceModule.js')
 <div id="AttendanceModule"></div>
-</html>
+@endsection

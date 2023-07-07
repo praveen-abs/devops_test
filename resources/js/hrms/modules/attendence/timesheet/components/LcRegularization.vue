@@ -80,8 +80,9 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
                         </div>
                         <div class="col-6">
-                            <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
-                                id="txt_reason_noneditable"  readonly v-model="useTimesheet.lcDetails.reason">
+                            {{ useTimesheet.lcDetails.reason }}
+                            <!-- <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
+                                id="txt_reason_noneditable"  readonly v-model="useTimesheet.lcDetails.reason"> -->
                         </div>
                     </div>
                 </div>
@@ -91,8 +92,9 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                         </div>
                         <div class="col-6">
-                            <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
-                                id="txt_customreason_noneditable"  readonly v-model="useTimesheet.lcDetails.custom_reason">
+                            {{ useTimesheet.lcDetails.custom_reason }}
+                            <!-- <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
+                                id="txt_customreason_noneditable"  readonly v-model="useTimesheet.lcDetails.custom_reason"> -->
                         </div>
                     </div>
                 </div>
