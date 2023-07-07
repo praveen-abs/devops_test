@@ -615,6 +615,7 @@ class VmtSalaryAdvanceService
         $reason
     ) {
 
+
         $validator = Validator::make(
             $data = [
                 "loan_type" => $loan_type,
@@ -729,6 +730,7 @@ class VmtSalaryAdvanceService
             $loan_details->reason = $reason;
             $loan_details->approver_flow = $this->getEmpapproverjson($settings_flow, $user_id);
             $loan_details->loan_crd_sts = 0;
+            $loan_details->loan_status='Pending';
             $loan_details->save();
             return response()->json([
                 'status' => 'save successfully',
@@ -861,17 +863,26 @@ class VmtSalaryAdvanceService
 
         try {
             $user_id = auth()->user()->id;
+          //  dd($loan_type);
             if ($loan_type == 'InterestFreeLoan') {
+               // dd($record_id);
                 $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $record_id)->first();
+                $loan_settings_id =  $loan_details->vmt_int_free_loan_id;
+                $loan_settings_approver_flow = VmtInterestFreeLoanSettings::where('id',$loan_settings_id)->first()->approver_flow;
             } else if ($loan_type == 'InterestWithLoan') {
                 $loan_details = VmtEmpInterestLoanDetails::where('id', $record_id)->first();
+                $loan_settings_id =  $loan_details->vmt_int_loan_id;
+                $loan_settings_approver_flow = VmtLoanInterestSettings::where('id',$loan_settings_id)->first()->approver_flow;
             }
             $approver_flow = json_decode($loan_details->approver_flow, true);
+            $loan_settings_approver_flow = json_decode( $loan_settings_approver_flow,true);
+          //  dd(  $loan_settings_approver_flow);
             for ($i = 0; $i < count($approver_flow); $i++) {
                 if ($approver_flow[$i]['approver'] == $user_id) {
                     $approver_flow[$i]['status'] = $status;
                 }
             }
+
             $loan_details->approver_flow = json_encode($approver_flow, true);
             $loan_details->save();
             return response()->json([
