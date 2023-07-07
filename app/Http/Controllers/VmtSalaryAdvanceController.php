@@ -60,14 +60,14 @@ class VmtSalaryAdvanceController extends Controller
     public function SalAdvEmpSaveSalaryAmt(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
-          dd($request->all());
+        //   dd($request->all());
         return $vmtSalaryAdvanceService->SalAdvEmpSaveSalaryAmt($request->mxe, $request->ra, $request->repdate, $request->reason);
     }
     public function saveSalaryAdvanceSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
-          dd($request->all());
-        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow);
+        //   dd($request->all());
+        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow, $request->payroll_cycle, $request->SA);
     }
 
     public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
