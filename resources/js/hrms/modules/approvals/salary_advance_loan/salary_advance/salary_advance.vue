@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- v-if="!useEmpData" -->
-            {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
+            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
                     :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -163,7 +163,6 @@
         <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
             <div class="w-4 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
-                {{ currentlySelectedRowData.Advance_Amount }}
                 <input id="rentFrom_month"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     v-model="required_Amount.advance_amount" disabled >
