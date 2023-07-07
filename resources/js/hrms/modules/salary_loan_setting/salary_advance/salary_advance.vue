@@ -27,9 +27,42 @@
                 <div class="col-10">
 
                     <p class="fs-5">Please click the "Disable" button to deactivate the salary advance feature.</p>
-                    <h1 class="mt-12 fs-4 fw-bolder">Eligible Employees</h1>
+
+                    <div class="d-flex justify-content-between align-items-center mt-5  w-6"  >
+                        <h1 class="fs-4 fw-bolder" >Select organization</h1>
+                        <div class="d-flex justify-items-center position-relative ">
+                            <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.ClientsName" optionLabel="client_name"  optionValue="id"
+                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
+                                                v$.selectClientID.$error ? 'p-invalid' : '',
+                                            ]" />
+                                        <span v-if="v$.selectClientID.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                                            {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
+                                        </span>
+                        </div>
+
+                    </div>
+                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
+                        <h1 class="fs-4 fw-bolder" >Name of the Salary Advance</h1>
+                        <div class=" position-relative ">
+                            <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA" class="w-full d-flex justify-items-center md:w-18rem" :class="[
+                                                v$.SA.$error ? 'p-invalid ' : '',
+                                            ]" />
+                                        <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                                            {{ v$.SA.required.$message.replace("Value", "Client Name") }}
+                                        </span>
+                        </div>
+                    </div>
+                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
+                        <h1 class="fs-4 fw-bolder" >Payroll Cycle</h1>
+                        <div class="w-5" style="height: 40px;">
+                            <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle= 0" :class="[salaryStore.sa.payroll_cycle == 0 ? ' text-white bg-orange-500 border-none' :'']" >Single</button>
+                            <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle=1" :class="[salaryStore.sa.payroll_cycle == 1 ? ' text-white bg-orange-500 border-none' :'']" >Multiple</button>
+                        </div>
+                    </div>
+                    <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees</h1>
                     <p class="my-2 fs-5">Kindly choose the employees who are eligible for the salary advance.</p>
                 </div>
+
                 <div class=" col-12">
                     <div class="rounded-lg shadow-sm card">
                         <div class="card-body " style="border-top:4px solid var(--navy) ; border-radius: 4px 4px 0 0 ;">
@@ -365,10 +398,12 @@ const custDeduct = (value) => {
 const rules = computed(() => {
     return {
         perOfSalAdvance: { required: helpers.withMessage('Percentage of salary advance is required', required) },
+        SA:{ required: helpers.withMessage('salary Advance Name is required', required)},
         cusPerOfSalAdvance: { custPercent: helpers.withMessage('Custom percentage of salary advance is required', custPercent) },
         deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
+        selectClientID:{ required: helpers.withMessage('Select Client ID Flow is required', required)},
 
     }
 })
@@ -398,6 +433,7 @@ onMounted(() => {
     opt3.value = "State"
     opt4.value = "Branch"
     opt5.value = "Legal Entity"
+    salaryStore.getClientsName();
 })
 
 

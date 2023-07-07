@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 class=" fw-semibold fs-4 mb-5">Employee Details </h1>
 
         <Dialog header="Header" v-model:visible="EmpDetailStore.canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">

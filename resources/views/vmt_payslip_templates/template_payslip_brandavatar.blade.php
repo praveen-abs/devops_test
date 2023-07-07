@@ -1,9 +1,9 @@
 <?php
 
-$general_info = \DB::table('vmt_general_info')->first();
-//$employee_name =  \DB::table('users')->where('user_code','=',$employee_payslip->EMP_NO)->first('name');
-//$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
-// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+$client_data = \DB::table('vmt_client_master')->first();
+//$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
+$client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_logo;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->client_logo);
 $bank_names = \DB::table('vmt_banks')->get();
 
 ?>
@@ -99,7 +99,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     <td colspan="5" class="border-less">
 
                         <div class="header-img txt-right" style="">
-                            <img src="{{ URL::asset('assets/clients/brandavatar/logos/logo_brandavatar.png') }}" style="height: 60px;width:200px;margin:10px" title="">
+                            <img src="{{  $client_logo }}" style="height: 60px;width:200px;margin:10px" title="">
                         </div>
 
 

@@ -16,7 +16,7 @@ use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
-use App\Models\VmtGeneralInfo;
+
 use App\Models\VmtStaffAttendanceDevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -379,8 +379,8 @@ class VmtAttendanceController extends Controller
         $message = "";
         $mail_status = "";
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         // dd($request->leave_type_id);
         if (!empty($request->notifications_users_id))
@@ -617,20 +617,29 @@ class VmtAttendanceController extends Controller
 
                 //Need to process the checkin and checkout time based on the client.
                 //Since some client's biometric data has "in/out" direction and some will have only "in" direction
+                //dd(sessionGetSelectedClientCode());
 
                 //If direction is only "in" or empty or "-"
-                if (sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC") {
+                if (sessionGetSelectedClientCode() == "DM" ||
+
+                    sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PSC" || sessionGetSelectedClientCode() == "IMA"  || sessionGetSelectedClientCode() == "LAL"
+                    || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC")
+                    {
+
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
                         ->whereDate('date', $dateString)
                         ->where('user_Id', $userCode)
                         ->first(['check_out_time']);
 
+                       // if($dateString == "2023-07-05")
+                       //     dd($dateString);
                     $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
                         ->whereDate('date', $dateString)
                         ->where('user_Id', $userCode)
                         ->first(['check_in_time']);
+
                 } else //If direction is only "in" and "out"
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -1206,8 +1215,8 @@ class VmtAttendanceController extends Controller
         //dd($manager_details);
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
@@ -1294,8 +1303,8 @@ class VmtAttendanceController extends Controller
         //dd($employee_details->officical_mail);
 
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(

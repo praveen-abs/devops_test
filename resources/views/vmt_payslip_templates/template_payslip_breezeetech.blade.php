@@ -1,9 +1,9 @@
 <?php
 
-$general_info = \DB::table('vmt_client_master')->first();
+$client_data = \DB::table('vmt_client_master')->first();
 //$employee_name =  \DB::table('users')->where('user_code','=',$employee->EMP_NO)->first('name');
-$client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
-// dd(request()->getSchemeAndHttpHost()."".$general_info->logo_img);
+$client_logo = request()->getSchemeAndHttpHost() . '' . $client_data->client_logo;
+// dd(request()->getSchemeAndHttpHost()."".$general_info->client_logo);
 // $bank_names = \DB::table('vmt_banks')->get();
 ?>
 <?php
@@ -33,18 +33,20 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
             background-color: #fff;
             white-space: nowrap;
             font-size: .9em;
+            border-collapse: collapse
         }
 
-        .paySlip_template tr td {
-            /* padding-top: .7em;
-            padding-bottom: .7em; */
-
+        .paySlip_template tr td p {
+            margin: 0;
         }
 
         /* .paySlip_template , */
-        .paySlip_template td {
+        .paySlip_template tr td {
             border: 0;
             whhite-space: nowrap;
+            padding-top: .5em;
+            padding-bottom: .5em;
+
         }
 
         .text-bolder {
@@ -83,201 +85,146 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
     <table class="paySlip_template">
         <tbody>
             <tr>
-                <td colspan="4" class=" ">
-                    <div class="">
-                        <img src="{{ $client_logo }}" class="" alt=""
-                            style="height: 40px;width:250px;max-height:100%;">
-                    </div>
-
-                </td>
-
-                <td colspan="3" class="text-rignt" align="right">
-                    <p class="text-bolder text-right" style="margin:0">
-                        eTeam Infoservices Pvt Ltd
+                <td colspan="6" class="" align="">
+                    <p class="text-bolder " style="font-size:1.3em;padding-bottom:.5em;">
+                        BREEZEETECH COOLING SYSTEM PRIVATE LIMITED
                     </p>
-                    <span class="text-right">
-                        208/W, Seth B. N. Agarwal,<br>
-                        Shyamkamal A CHS Ltd, Tejpal Road,<br>
-                        Vile Parle East, Mumbai-400057, India
-                    </span>
-
+                    <p class="" style="text-align:left;">
+                        Plot No. T 352, SIDCO Women’s Industrial Estate, Kattur,Avadi, <br>
+                        Thirumullaivoyal, Chennai,TamilNadu,600062,India.
+                    </p>
                 </td>
-
+                <td colspan="6" class=" " align="right">
+                    <div style="height: 4em;width:10em">
+                        <img src="{{ $client_logo }}" class="" alt="" style="height:100%;width:100%;">
+                    </div>
+                </td>
             </tr>
             <tr class="">
-                <td colspan="7" class="  border-t-b">
-                    <p class="text-bolder " style="margin: 0;padding:.7em 0;">
+                <td colspan="12" class="" style="border-top:.1em solid #4b48fb;">
+                    <p class="text-bolder " style="margin: 0;padding:.5em 0;font-size:1.2em;">
                         Payslip For the Month of :
                         {{ strtoupper(date('F-Y', strtotime($emp_payroll_month->payroll_date))) }}
                     </p>
                 </td>
             </tr>
+            <tr class="">
+                <td colspan="12" class="">
+                    <p class="text-bolder " style="font-size:.9em;">
+                        EMPLOYEE PAY SUMMARY
+                    </p>
+                </td>
+            </tr>
             <tr>
-                <td colspan="7" style="padding-bottom:1em;">
+                <td colspan="9" style="padding-bottom:1em;">
                     <table class="paySlip_template">
                         <tbody>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Employee code
+                                <td colspan="2" class=""  >
+                                    <p class="" style="font-weight:600"> Employee Name</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_code }}
+                                <td colspan="2" class=""  >
+                                    <p> {{ $employee_name }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Designation
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_office_details->designation }}
+                                <td colspan="2" class="">
+                                    <p class="" style="font-weight:600">Employee No</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;" class="text-bolder ">
-                                    LeaveType
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;" class="text-bolder">
-                                    Leave Taken
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;" class="text-bolder">
-                                    Available Leave
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Employee Name
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_name }}
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Bank Name
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_name }}
-                                </td>
-
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    PL
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    1.00
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    1.50
+                                <td colspan="2" class="">
+                                    <p> {{ $employee_code }}</p>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    UAN
+                                <td colspan="2" class="" >
+                                    <p class="" style="font-weight:600">Designation </p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_statutory_details->uan_number }}
+                                <td colspan="2" class="" >
+                                    <p> {{ $employee_office_details->designation }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Bank Account No
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ $employee_details->bank_account_number }}
+                                <td colspan="2" class="" >
+                                    <p class="" style="font-weight:600">UAN Number </p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
+                                <td colspan="2" class="" >
+                                    <p>{{ $employee_statutory_details->uan_number }}</p>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Location
+                                <td colspan="2" class="" >
+                                    <p class="" style="font-weight:600"> Date of Joining</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    <p>{{ $employee_payslip->LOCATION ?? "-"}}</p>
+                                <td colspan="2" class="" >
+                                    <p> {{ date('d-M-Y', strtotime($employee_details->doj)) }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    PAN No
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    <p>{{ $employee_details->pan_number ?? "-" }}</p>
+                                <td colspan="2" class="" >
+                                    <p class="" style="font-weight:600">ESIC Number No</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
+                                <td colspan="2" class="" >
+                                    <p>{{ $employee_statutory_details->esic_number ?? '-' }}</p>
                                 </td>
                             </tr>
-
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    PF No
+                                <td colspan="2" class="" >
+                                    <p class="" style="font-weight:600">PF A/C Number</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    <p>{{ $employee_statutory_details->epf_number ?? "-" }}</p>
+                                <td colspan="2" class="" >
+                                    <p>{{ $employee_statutory_details->epf_number }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Joining Date
+                                <td colspan="1" class="" >
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    {{ date('d-M-Y', strtotime($employee_details->doj)) }}
+                                <td colspan="2" class="" >
+                                    <p class="" style="font-weight:600">Bank Account No </p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
+                                <td colspan="2" class="" >
+                                    <p>{{ $employee_details->bank_account_number }}</p>
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td colspan="1" style="padding-bottom:1em;">
 
+                </td>
+                <td colspan="2" style="padding-bottom:1em;">
+                    <table class="paySlip_template">
+                        <tbody>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Paid Days
+                                <td colspan="1" class=""
+                                    style="border:.1em dashed #b2ff78;padding:.4em .2em">
+                                    <p>Paid Days</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    <p class="txt-center">{{ $employee_payslip->worked_Days }}</p>
+                                <td colspan="1" class=""
+                                    style="border:.1em dashed #b2ff78;padding:.4em .2em">
+                                    <p>{{ $employee_payslip->worked_Days }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    ESI No
+                            </tr>
+                            <tr>
+                                <td colspan="1" class=""
+                                    style="border:.1em dashed #b2ff78;padding:.4em .2em">
+                                    LOP Days
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    <p>{{ $employee_statutory_details->esic_number ?? "-" }}</p>
+                                <td colspan="1" class=""
+                                    style="border:.1em dashed #b2ff78;padding:.4em .2em">
+                                    <p>{{ $employee_payslip->lop }}</p>
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                            </tr>
+                            <tr>
+                                <td colspan="1" class="" style="padding:.4em .2em">
 
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" class="" style="padding:.4em .2em">
 
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1" style="padding-bottom: .3em;font-weight:600;">
-                                    Leave Balance
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    28.00
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    Arrear Days
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-                                    <p class="txt-center">{{ $employee_payslip->arrears_Days }}</p>
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" class="" style="padding:.4em .2em">
 
                                 </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
-
-                                </td>
-                                <td colspan="1" style="padding-bottom: .3em;">
+                                <td colspan="1" class="" style="padding:.4em .2em">
 
                                 </td>
                             </tr>
@@ -286,178 +233,201 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                 </td>
             </tr>
             <tr>
-                <td colspan="7" class="border-t-b" style="padding:.3em 0">
-                </td>
-            </tr>
-            <tr class="">
-                <td colspan="4" style="padding-right:1em;padding-top:0.3em;">
+                <td colspan="12">
                     <table class="paySlip_template">
-                        <tr>
-                            <td colspan="4">
-                                <p class="text-bolder " style="font-weight:600;">
-                                    Earnings
-                                </p>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" class="" align=""
+                                    style="padding:.5em .2em;background-color:#bce2c78c;border-bottom-left-radius: 0px;padding-left:1.5em;">
+                                    <p style="color:#015e1c;">EARNINGS</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em .2em;background-color:#bce2c78c;">
+                                    <p style="color:#015e1c;">FIXED GROSS</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em .2em;background-color:#bce2c78c;">
+                                    <p style="color:#015e1c;">EARNED GROSS</p>
+                                </td>
+                                <td colspan="3" class="" align=""
+                                    style="padding:.5em .2em;background-color:#bce2c78c;">
+                                    <p style="color:#015e1c;">DEDUCTIONS</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em .2em;background-color:#bce2c78c;border-bottom-right-radius: 0px;">
+                                    <p style="color:#015e1c;">AMOUNT</p>
+                                </td>
+                            </tr>
 
-                        <tr class="border-b">
-                            <td class="border-b" style="padding-bottom: .3em;font-weight:600;" colspan="1">
-                                Description
-                            </td>
-                            <td class="border-b" style="padding-bottom: .3em;font-weight:600;" colspan="1">
-                                Fixed Gross
-                            </td>
-                            <td class="border-b" style="padding-bottom: .3em;font-weight:600;" colspan="1">
-                                Earned Gross
-                            </td>
-                            <td class="border-b" style="padding-bottom: .3em;padding-right:1em;font-weight:600;
-                             " colspan="1">
-                                Arrear
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">Basic</td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->basic), 2) }}
-                            </td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->earned_basic), 2) }}
-                            </td>
-                            <td colspan="1" style="padding-bottom: .3em;padding-right:1em ">
-                                {{ number_format(round($employee_payslip->basic_arrear), 2) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">HRA</td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->hra), 2) }}
-                            </td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->earned_hra), 2) }}
-                            </td>
-                            <td colspan="1" style="padding-bottom: .3em;padding-right:1em ">
-                                {{ number_format(round($employee_payslip->hra_arrear), 2) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">Spl_Allowance
-                            </td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->spl_alw), 2) }}</td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->earned_spl_alw), 2) }}</td>
-                            <td colspan="1" style="padding-bottom: .3em;padding-right:1em ">
-                                {{ number_format(round($employee_payslip->spl_alw_arrear), 2) }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">Statutory Bonus
-                            </td>
-                            <td colspan="1" style="padding-bottom: .3em;">11600.00</td>
-                            <td colspan="1" style="padding-bottom: .3em;">11600.00</td>
-                            <td colspan="1" style="padding-bottom: .3em;">0.00</td>
-                        </tr>
-                        <tr class="border-t-b">
-                            <td colspan="1" style="padding:.5em 0;" class="border-t-b">
-                            </td>
-                            <td colspan="1" style="padding:.5em 0;" class="border-t-b">11600.00</td>
-                            <td colspan="1" style="padding:.5em 0;" class="border-t-b">11600.00</td>
-                            <td colspan="1" style="padding:.5em 0;" class="border-t-b"></td>
-                        </tr>
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em">
+                                    <p>Basic</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->basic), 2) }}</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->earned_basic), 2) }}</p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>EPF Contribution</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->epfr), 2) }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>HRA</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->hra), 2) }}</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->earned_hra), 2) }}
+                                    </p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em ;">
+                                    <p>ESIC Contribution</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->employee_esic), 2) }}</p>
+                                </td>
+                            </tr>
 
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Special Allowance</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->spl_alw), 2) }}
+                                    </p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->earned_spl_alw), 2) }}</p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Income Tax</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->income_tax), 2) }}
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Overtime Earnings</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">-</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->overtime), 2) }}
+                                    </p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Professional Tax</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">{{ number_format(round($employee_payslip->prof_tax), 2) }}
+                                    </p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>-</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">-</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">-</p>
+                                </td>
+                                <td colspan="3" class="" align="" style="padding:.5em .2em;">
+                                    <p>Other Deduction</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->other_deduc), 2) }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="" align=""
+                                    style="padding:.5em .2em;border-top:.2em solid #bce2c78c ">
+                                    <p>GROSS EARNINGS</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->total_fixed_gross), 2) }}</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->total_earned_gross), 2) }}</p>
+                                </td>
+                                <td colspan="3" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
+                                    <p>Total Deduction</p>
+                                </td>
+                                <td colspan="2" class="" align=""
+                                    style="padding:.5em 1.5em .2em .5em;border-top:.2em solid #bce2c78c ">
+                                    <p class="text-right">
+                                        {{ number_format(round($employee_payslip->total_deductions), 2) }}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="12" class="" align="" style="padding-top:1em">
+                                    <div
+                                        style="font-size:1em;line-height:1.8em;padding:1.3em 2em;border:.1em dashed #015e1c;border-radius:1em;text-align:center;">
+                                        Total Net Payable <b style="font-size:1.3em;color:#015e1c;">₹
+                                            {{ number_format(round($employee_payslip->net_take_home), 2) }}</b>
+                                        ({{ $employee_payslip->rupees }}) </br>
+                                        **Total Net Payable = Gross Earnings - Total Deductions
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" class="" align="" style="padding-bottom:1.3em;">
+                                    <p class="text-center">-- This is a system-generatedpayslip, hence the signature is
+                                        not required. –
+
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" class="" align="">
+                                    Note - Please reach out to us for any payroll queries at -payroll@ardens.in
+                                </td>
+                                <td colspan="4" class="" align="right">
+                                    <img src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}"
+                                        width="100px" height="18px" alt="" class="">
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </td>
-                <td colspan="3" style="padding-left:1em;padding-top:0.3em;">
-                    <table class="paySlip_template">
-                        <tr>
-                            <td colspan="3">
-                                <p class="text-bolder" style="margin:">
-                                    Deductions
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border-b" style="padding-bottom: .3em;" colspan="1">Deductions
-                            </td>
-                            <td class="border-b" style="padding-bottom: .3em;" colspan="1">Monthly
-                            </td>
-                            <td class="border-b" style="padding-bottom: .3em;" colspan="1">Arrear</td>
-
-
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">PF</td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ $employee_payslip->epfr ?? '-' }}</td>
-                            <td colspan="1" style="padding-bottom: .3em;">1800.00</td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">PT</td>
-                            <td colspan="1" style="padding-bottom: .3em;">
-                                {{ number_format(round($employee_payslip->prof_tax), 2) }}</td>
-                            <td colspan="1" style="padding-bottom: .3em;">1800.00</td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">&nbsp;</td>
-                            <td colspan="1" style="padding-bottom: .3em;">&nbsp;</td>
-                            <td colspan="1" style="padding-bottom: .3em;">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1" style="padding-bottom: .3em;">&nbsp;</td>
-                            <td colspan="1" style="padding-bottom: .3em;">&nbsp;</td>
-                            <td colspan="1" style="padding-bottom: .3em;">&nbsp;</td>
-                        </tr>
-                        <tr class="border-t-b">
-                            <td colspan="1" style="padding:.6em 0;" class="border-t-b">Total Deductions</td>
-                            <td colspan="1" style="padding:.6em 0;" class="border-t-b">
-                                {{ number_format(round($employee_payslip->total_deductions), 2) }}</td>
-                            <td colspan="1" style="padding:.6em 0;" class="border-t-b"></td>
-                        </tr>
-
-                    </table>
-                </td>
             </tr>
-
-            <tr>
-                <td colspan="7">
-                    <p class="margin-0">
-                        <span  class=" text-bolder">Payable Salary &nbsp;
-                            {{ number_format(round($employee_payslip->total_earned_gross), 2) }}
-                        </span>
-                        <br>
-                        <span style="padding:.2em 0">
-                            Net Amount in words:
-                            {{ $employee_payslip->rupees }} Only
-                        </span>
-                    </p>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="7">
-                    <p class=" text-bolder" style="margin:.1em 0">THIS IS A SYSTEM GENERATED PAYSLIP, DOES
-                        NOT REQUIRE ANY
-                        SIGNATURE AND/OR COMPANY SEAL</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5">
-
-                </td>
-                <td colspan="1" class=" " style="padding-right:.2em">
-
-                </td>
-                <td colspan="1" class="text-right" align="right" style="padding:.3em 0">
-
-                    <span>Generated By</span>
-                    <img style="display: revert"
-                        src="{{ URL::asset('assets/images/client_logos/ardens/evangelist.png') }}" width="80px"
-                        height="18px" alt="logo" class="">
-
-                </td>
-            </tr>
-
         </tbody>
     </table>
 </body>

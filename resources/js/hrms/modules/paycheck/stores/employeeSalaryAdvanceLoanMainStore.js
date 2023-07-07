@@ -103,7 +103,7 @@ Travel Advance - ta
     // Eligible Employees and Amount
     // Deduction Method
 
-    const max_tenure_month  = ref();
+    const max_tenure_month = ref();
     const interestFreeLoan = reactive({
         minEligibile: '',
         availPerInCtc: '',
@@ -117,9 +117,9 @@ Travel Advance - ta
         EMI_End_Month: '',
         Total_Months: '',
         Reason: '',
-        max_tenure_months:'',
-        details :'',
-        loan_type:'InterestFreeLoan',
+        max_tenure_months: '',
+        details: '',
+        loan_type: 'InterestFreeLoan',
         loan_setting_id: ''
     });
 
@@ -127,13 +127,13 @@ Travel Advance - ta
 
     function getinterestfreeloan() {
 
-        axios.post('/show-eligible-interest-free-loan-details',{
-            loan_type:"InterestFreeLoan"
-        }).then((res)=>{
+        axios.post('/show-eligible-interest-free-loan-details', {
+            loan_type: "InterestFreeLoan"
+        }).then((res) => {
             console.log(res);
             interestFreeLoan.max_tenure_months = res.data.max_tenure_months;
 
-            console.log( interestFreeLoan.max_tenure_months);
+            console.log(interestFreeLoan.max_tenure_months);
             interestFreeLoan.details = res.data;
             interestFreeLoan.loan_setting_id = res.data.loan_setting_id;
 
@@ -149,7 +149,7 @@ Travel Advance - ta
 
         console.log("fetching SA");
 
-        axios.post('/employee-loan-history',{  loan_type:"InterestFreeLoan"}).then(res => {
+        axios.post('/employee-loan-history', { loan_type: "InterestFreeLoan" }).then(res => {
 
             isInterestFreeLoanFeature.value = res.data
             console.log(res.data);
@@ -255,11 +255,17 @@ Travel Advance - ta
         EMI_END_Month: '',
         Total_Month: '',
         Reason: '',
-        total_amount:5,
-        max_tenure_months:'',
-        details:''
+        total_amount: 5,
+        max_tenure_months: '',
+        details: ''
 
     });
+
+    const getLoanDetails = (type) => {
+        return axios.post('/show-eligible-interest-free-loan-details', {
+            loan_type: type
+        })
+    }
 
     const fetchInterstWithLoan = () => {
 
@@ -267,7 +273,7 @@ Travel Advance - ta
 
         // canShowLoading.value = true;
 
-        axios.post('/employee-loan-history',{
+        axios.post('/employee-loan-history', {
 
         }).then(res => {
             InterestWithLoanData.value = res.data
@@ -279,19 +285,19 @@ Travel Advance - ta
     }
 
     // get max eligible amount
-    function getinterestwithloan(){
+    function getinterestwithloan() {
 
-        axios.get('http://localhost:3000/interestWithloanDetails',{
+        axios.get('http://localhost:3000/interestWithloanDetails', {
             // loan_type:"InterestFreeLoan"
-        }).then((res)=>{
+        }).then((res) => {
             console.log(res.data);
             InterestWithLoan.details = res.data;
 
             InterestWithLoan.max_tenure_months = res.data.Months;
             InterestWithLoan.minEligibile = res.data.minEligibile;
             InterestWithLoan.Interest_rate = res.data.Interest_rate;
-            console.log( InterestWithLoan.details );
-            console.log( InterestWithLoan.max_tenure_months);
+            console.log(InterestWithLoan.details);
+            console.log(InterestWithLoan.max_tenure_months);
         });
     }
 
@@ -299,7 +305,7 @@ Travel Advance - ta
 
         // canShowLoading.value = true;
 
-        axios.post(' http://localhost:3000/InterestWithLoan', InterestWithLoan).finally(() => {
+        axios.post('/InterestWithLoan', InterestWithLoan).finally(() => {
             canShowLoading.value = false
 
             fetchInterstWithLoan();
@@ -310,6 +316,58 @@ Travel Advance - ta
 
 
     }
+
+
+    // Calculating Interest
+
+    // function calculateLoanDetails(principal, rate, time) {
+    //     console.log("Principal:" + principal);
+    //     console.log("Rate:" + rate);
+    //     console.log("Time:" + time);
+
+
+    //     var monthlyInterestRate = rate / 12;
+    //     var numberOfPayments = time * 12;
+
+    //     var monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+    //     var totalLoanAmount = monthlyPayment * numberOfPayments;
+
+    //     console.log("Monthly Pending:" + monthlyPayment);
+    //     console.log("Total Loan Amount:" + totalLoanAmount);
+
+    //     return {
+    //         monthlyPayment: monthlyPayment,
+    //         totalLoanAmount: totalLoanAmount
+    //     };
+    // }
+
+    const calculateLoanDetails = (amount, interest_rate, months) => {
+
+        const interest = amount * interest_rate / 100;
+
+        console.log(interest);
+
+        let finalAmount = amount + interest
+
+        console.log(finalAmount);
+
+        let payment = (finalAmount / months);
+
+        console.log(payment);
+
+        let loanDetails = {
+            monthlyDue: (payment).toFixed(0),
+            totalDue: finalAmount
+        }
+
+        InterestWithLoan.month_EMI = loanDetails.monthlyDue
+        InterestWithLoan.total_amount = loanDetails.totalDue
+    }
+
+    // Example usage
+    // var loanPrincipal = 5000;   The principal amount of the loan
+    // var loanRate = 0.05;      The annual interest rate (5% in this case)
+    // var j = 2;          The time period in years
 
 
     // Loan With interest Feature Ends
@@ -332,7 +390,7 @@ Travel Advance - ta
 
         // Interest Free Loan
 
-        dialog_NewInterestFreeLoanRequest, isInterestFreeLoanFeature, interestFreeLoan,max_tenure_month, saveInterestfreeLoan, fetchInterestfreeLoan,
+        dialog_NewInterestFreeLoanRequest, isInterestFreeLoanFeature, interestFreeLoan, max_tenure_month, saveInterestfreeLoan, fetchInterestfreeLoan,
         getinterestfreeloan,
 
         // Travel Advance Feature
@@ -341,7 +399,8 @@ Travel Advance - ta
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, InterestWithLoan, dialogInterestwithLoan, saveinterestWithLoan, InterestWithLoanData, fetchInterstWithLoan,getinterestwithloan
+        isLoanWithInterestFeature, InterestWithLoan, dialogInterestwithLoan, saveinterestWithLoan, InterestWithLoanData, fetchInterstWithLoan, getinterestwithloan,
+        calculateLoanDetails, getLoanDetails
 
 
     };

@@ -157,7 +157,7 @@
 
 
     <div class="card flex justify-content-center inline-flex">
-        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="payslip" :style="{ width: '50vw' }">
+        <Dialog v-model:visible="canShowPayslipHTMLView" modal header="Payslip" :style="{ width: '50vw' }">
             <div v-html="managePayslipStore.paySlipHTMLView">
 
             </div>

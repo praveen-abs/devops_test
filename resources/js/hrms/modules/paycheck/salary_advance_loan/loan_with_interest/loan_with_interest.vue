@@ -4,13 +4,13 @@
             <div class="flex justify-between gap-6 my-2">
                 <div class=" fs-4">
                     <p class="text-xl font-medium">You are eligible for the Loan with Interest as per the
-                        <span  class="text-lg text-primary text-decoration-underline"> Company's Loan Policy </span>
+                        <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy </span>
                     </p>
                 </div>
 
                 <div class="float-right ">
                     <button class="btn btn-border-orange">View Report</button>
-                    <button class="mx-4 btn btn-orange" @click="openPosition('top')" >
+                    <button class="mx-4 btn btn-orange" @click="openPosition('top')">
                         <i class="mx-2 fa fa-plus" aria-hidden="true"></i>
                         New Request
                     </button>
@@ -92,10 +92,12 @@
     <Dialog v-model:visible="useEmpStore.dialogInterestwithLoan" modal header="Header" :style="{ width: '60vw' }">
         <template #header>
             <div>
-                <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New interest With Loan Request</h1>
+                <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New interest With Loan
+                    Request</h1>
             </div>
         </template>
-        <div class="row p-2">
+        <div class="row p-2" v-for="loan of loanDetails" :key="loan">
+
             <div class="col-7">
 
                 <div class="card border-0">
@@ -104,18 +106,25 @@
                             <div class="col-6   " style="margin-right: 30px;">
                                 <h1 class="fs-5 my-2 ">Required Amount</h1>
                                 <!-- <InputText type="text" v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" /> -->
-                                <InputNumber v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping" :useGrouping="false" />
-                                <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{useEmpStore.InterestWithLoan.minEligibile }}</p>
+                                <InputNumber v-model="useEmpStore.InterestWithLoan.required_amount"
+                                    placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping"
+                                    :useGrouping="false" />
+                                <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount :
+                                    {{ loan.max_loan_amount }}
+                                </p>
                             </div>
                             <div class="col mx-2">
                                 <h1 class="fs-5 my-2">Term</h1>
-                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="useEmpStore.InterestWithLoan" optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
+                                <Dropdown v-model="useEmpStore.InterestWithLoan.Term" :options="loan.max_tenure_months"
+                                    optionLabel="month" optionValue="month" placeholder="select month" class="w-full md:w-10rem" />
                                 <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 pr-5">
-                                <button class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded hover:bg-red-500 shadow-md">Calculate EMI</button>
+                                <button @click="useEmpStore.calculateLoanDetails(useEmpStore.InterestWithLoan.required_amount,loan.loan_amt_interest,useEmpStore.InterestWithLoan.Term)"
+                                    class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded hover:bg-red-500 shadow-md">Calculate
+                                    EMI</button>
                             </div>
                         </div>
                     </div>
@@ -125,35 +134,40 @@
             </div>
             <div class="col">
                 <div class="row">
-                    <div class="col-12 pl-8 pr-8 " >
-                        <div class="div p-2 d-flex justify-items-center align-items-center flex-column rounded bg-blue-100 shadow-md" >
+                    <div class="col-12 pl-8 pr-8 ">
+                        <div
+                            class="div p-2 d-flex justify-items-center align-items-center flex-column rounded bg-blue-100 shadow-md">
                             <!-- disabled -->
-                            <input class="fw-bolder fs-4 text-blue-900 p-2 ml-2 d-flex justify-items-center text-center bg-blue-100" placeholder="%"   style="width: 100px;" disabled v-model="useEmpStore.InterestWithLoan.Interest_rate"   />
-                            <h1  class=" fw-semibold  mt-1 fs-5">Interest Rate</h1>
+                            <input
+                                class="fw-bolder fs-4 text-blue-900 p-2 ml-2 d-flex justify-items-center text-center bg-blue-100"
+                                placeholder="%" style="width: 100px;" disabled v-model="loan.loan_amt_interest" />
+                            <h1 class=" fw-semibold  mt-1 fs-5">Interest Rate</h1>
                         </div>
 
                     </div>
 
-                    <div class="col  pl-8 pr-8 " >
-                        <div class="div allcenter p-2 rounded shadow-md" style="background: #FDCFCF;" >
+                    <div class="col  pl-8 pr-8 ">
+                        <div class="div allcenter p-2 rounded shadow-md" style="background: #FDCFCF;">
 
                             <div class="div d-flex justify-content-center align-items-center">
 
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
-                                <input class="fw-bolder fs-4  pl-2" style="width: 45px;background: #FDCFCF  ;" disabled v-model="useEmpStore.InterestWithLoan.month_EMI"   />
+                                <input class="fw-bolder fs-4  pl-2" style="width: 100px;background: #FDCFCF  ;" disabled
+                                    v-model="useEmpStore.InterestWithLoan.month_EMI" />
                             </div>
-                            <h1 class=" fw-semibold mt-2 fs-5" >Monthly payment</h1>
+                            <h1 class=" fw-semibold mt-2 fs-5">Monthly payment</h1>
                         </div>
 
                     </div>
 
-                    <div class="col  pl-8 pr-8 " >
-                        <div class="div allcenter p-2 rounded bg-green-100 shadow-md"   >
+                    <div class="col  pl-8 pr-8 ">
+                        <div class="div allcenter p-2 rounded bg-green-100 shadow-md">
                             <div class="div d-flex justify-content-center align-items-center">
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
-                                <input class="fw-bolder fs-4  pl-2 bg-green-100" style="width: 45px;" disabled v-model="useEmpStore.InterestWithLoan.total_amount"   />
+                                <input class="fw-bolder fs-4  pl-2 bg-green-100" style="width: 100px;" disabled
+                                    v-model="useEmpStore.InterestWithLoan.total_amount" />
                             </div>
-                            <h1 class=" fw-semibold mt-2 fs-5" >Total loan amount</h1>
+                            <h1 class=" fw-semibold mt-2 fs-5">Total loan amount</h1>
                         </div>
 
                     </div>
@@ -164,37 +178,42 @@
         </div>
 
 
-        <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
+        <div class="card bg-gray-100 bottom-0 my-4" style="border:none "  v-for="loan of loanDetails" :key="loan">
             <div class="card-body mx-4">
                 <div class="row">
                     <!-- fw-bolder -->
                     <h1 class="fs-4 my-2  ">EMI Dedution</h1>
                     <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
-                        <div class="col-4">
-                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                            <Calendar v-model="useEmpStore.InterestWithLoan.EMI_Start_Month" showIcon />
-                        </div>
+                    <div class="col-4">
+                        <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
+                        <Dropdown v-model="useEmpStore.InterestWithLoan.EMI_Start_Month" :options="loan.deduction_starting_month"
+                            optionLabel="date" placeholder="select date" class="w-full md:w-10rem" />
+                        <!-- <Calendar v-model="useEmpStore.InterestWithLoan.EMI_Start_Month" showIcon /> -->
+                    </div>
 
-                        <div class="col-4 mx-2">
-                            <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                            <Calendar v-model="useEmpStore.InterestWithLoan.EMI_END_Month" showIcon />
-                        </div>
-                        <div class="col-3">
-                            <h1 class="fs-5 my-2 ml-2" >Total Months</h1>
-                            <InputText type="text" v-model="useEmpStore.InterestWithLoan.Total_Month" style="width: 150px !important;" />
-                        </div>
+                    <div class="col-4 mx-2">
+                        <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
+                        <Calendar v-model="useEmpStore.InterestWithLoan.EMI_END_Month" showIcon />
+                    </div>
+                    <div class="col-3">
+                        <h1 class="fs-5 my-2 ml-2">Total Months</h1>
+                        <InputText type="text" v-model="useEmpStore.InterestWithLoan.Total_Month"
+                            style="width: 150px !important;" />
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
             <span class="font-semibold ">Reason</span>
-            <Textarea  v-model="useEmpStore.InterestWithLoan.Reason" class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
+            <Textarea v-model="useEmpStore.InterestWithLoan.Reason" class="my-3 capitalize form-control textbox" autoResize
+                type="text" rows="3" />
         </div>
 
         <div class="float-right ">
-          <button class="btn btn-border-dark border-dark px-5" @click="useEmpStore.dialogInterestwithLoan = false">Cancel</button>
-          <button  class="mx-4 btn btn-orange px-5" @click="useEmpStore.saveinterestWithLoan " >Submit</button>
+            <button class="btn btn-border-dark border-dark px-5"
+                @click="useEmpStore.dialogInterestwithLoan = false">Cancel</button>
+            <button class="mx-4 btn btn-orange px-5" @click="useEmpStore.saveinterestWithLoan">Submit</button>
         </div>
 
     </Dialog>
@@ -203,28 +222,30 @@
 
 
 
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
-    :modal="true" :closable="false" :closeOnEscape="false">
-    <template #header>
-      <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-        animationDuration="2s" aria-label="Custom ProgressSpinner" />
-    </template>
-    <template #footer>
-      <h5 style="text-align: center">Please wait...</h5>
-    </template>
-  </Dialog>
-
-
+    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+        <template #header>
+            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                animationDuration="2s" aria-label="Custom ProgressSpinner" />
+        </template>
+        <template #footer>
+            <h5 style="text-align: center">Please wait...</h5>
+        </template>
+    </Dialog>
 </template>
 <script setup>
-import { ref, reactive ,onMounted} from 'vue';
-import {useEmpSalaryAdvanceStore} from '../../stores/employeeSalaryAdvanceLoanMainStore'
+import { ref, reactive, onMounted } from 'vue';
+import { useEmpSalaryAdvanceStore } from '../../stores/employeeSalaryAdvanceLoanMainStore'
 
 const useEmpStore = useEmpSalaryAdvanceStore()
+const loanDetails = ref([])
 
 onMounted(() => {
-    useEmpStore.fetchInterstWithLoan();
-    useEmpStore.getinterestwithloan();
+    // useEmpStore.fetchInterstWithLoan();
+    // useEmpStore.getinterestwithloan();
+    useEmpStore.getLoanDetails('InterestWithLoan').then(res => {
+        loanDetails.value.push(res.data)
+    })
 })
 
 const value = ref();
@@ -238,59 +259,15 @@ const openPosition = (pos) => {
     useEmpStore.dialogInterestwithLoan = true
 }
 
-const monthly = ref({
-
-})
-
-function selectMonth() {
-
-useEmpStore.InterestWithLoan.M_EMI = useEmpStore.InterestWithLoan.required_amount / useEmpStore.InterestWithLoan.Term;
-useEmpStore.InterestWithLoan.Total_Months = useEmpStore.InterestWithLoan.Term;
-
-// Loan details
-var principal = useEmpStore.InterestWithLoan.required_amount;         // Principal amount of the loan
-var interestRate = 0.05;      // Annual interest rate (5%)
-var loanTermInYears = useEmpStore.InterestWithLoan.Term; // Loan term in years
-
-// Calculate the interest
-var interest = principal * interestRate * loanTermInYears;
-
-// Calculate the total repayment amount
-var totalRepayment = principal + interest;
-
-// Print the results
-console.log("Interest: " + interest);
-console.log("Total Repayment: " + totalRepayment);
 
 
 
-if (useEmpStore.InterestWithLoan.EMI_Start_Month) {
-    return calculateMonth();
-}
 
-}
 
-function calculateLoanDetails(principal, rate, time) {
-  var monthlyInterestRate = rate / 12;  // Convert the annual interest rate to a monthly rate
-  var numberOfPayments = time * 12;     // Convert the loan period to the number of monthly payments
 
-  var monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
-  var totalLoanAmount = monthlyPayment * numberOfPayments;
-
-  return {
-    monthlyPayment: monthlyPayment,
-    totalLoanAmount: totalLoanAmount
-  };
-}
-
-// Example usage
-var loanPrincipal = 5000;  // The principal amount of the loan
-var loanRate = 0.05;      // The annual interest rate (5% in this case)
-var loanTime = 2;         // The time period in years
-
-var loanDetails = calculateLoanDetails(loanPrincipal, loanRate, loanTime);
-console.log("Monthly payment amount: " + loanDetails.monthlyPayment);
-console.log("Total loan amount: " + loanDetails.totalLoanAmount);
+// var loanDetails = calculateLoanDetails(useEmpStore.InterestWithLoan.required_amount, loanRate, loanTime);
+// console.log("Monthly payment amount: " + loanDetails.monthlyPayment);
+// console.log("Total loan amount: " + loanDetails.totalLoanAmount);
 
 
 
@@ -323,11 +300,12 @@ console.log("Total loan amount: " + loanDetails.totalLoanAmount);
     border-radius: 4px 0 0 4px;
 
 }
-.allcenter{
+
+.allcenter {
     display: flex;
-     flex-direction: column;
-      justify-content: center;
-       align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 </style>
 
