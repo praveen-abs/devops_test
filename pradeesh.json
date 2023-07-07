@@ -1,4 +1,14 @@
-{
+{"interestWithloanDetails":[{
+"minEligibile":9000,
+"Months":[{"month":1},
+{"month":2},
+{"month":3},
+{"month":4},
+{"month":5},
+{"month":6}],
+"Interest_rate":2.5
+}],
+
   "InterestFreeLoanDetails": {},
   "getloan_type": {
     "Loan_type": "InterestFreeLoan"
