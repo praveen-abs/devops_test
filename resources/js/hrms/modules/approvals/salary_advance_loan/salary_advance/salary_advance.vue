@@ -48,8 +48,8 @@
                     </div>
                 </div>
             </div>
-            <!-- v-if="!useEmpData" -->
-            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
+            {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
+
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
                     :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -236,7 +236,7 @@ const filters = ref({
 
 
 function showConfirmDialog(selectedRowData, status) {
-    console.log(selectedRowData);
+
     showAppoverDialog.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
@@ -246,7 +246,6 @@ function showConfirmDialog(selectedRowData, status) {
 
 async function approveAndReject(status) {
     showAppoverDialog.value = false;
-    console.log(currentlySelectedRowData.value, status);
     await SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
     currentlySelectedStatus.value = status;
 }
@@ -267,19 +266,12 @@ async function processBulkApproveReject(status) {
 
 
 function view_more(selectedRowData, user_code, currentName) {
-    console.log(selectedRowData);
-    // currentlySelectedStatus.value  = selectedRowData;
+
     useEmpData.value = selectedRowData;
     CurrentName.value = currentName;
     CurrentUser_code.value = user_code
-    console.log(user_code);
-    console.log(currentName);
+
 }
-
-
-// function emp_details()
-
-
 
 </script>
 

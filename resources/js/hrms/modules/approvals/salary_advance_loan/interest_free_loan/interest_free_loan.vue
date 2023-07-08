@@ -56,21 +56,21 @@
                                            <!-- {{ items.emi_per_month}} -->
 
                                             <InputText type="text"
-                                                placeholder="&#8377; Enter The Required Amount" v-model="val.loan_amount"  />
+                                                placeholder="&#8377; Enter The Required Amount" disabled  v-model="val.loan_amount"  />
                                             <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{ val.eligible_amount }}
                                             </p>
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Monthly EMI</h1>
                                             <InputText type="text"
-                                                placeholder="&#8377; " v-model="val.monthly_emi" />
+                                                placeholder="&#8377; " disabled  v-model="val.monthly_emi" />
                                         </div>
                                         <div class="col mx-2" >
                                             <h1 class="fs-5 my-2">Term</h1>
                                             <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
                                                 class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
                                             <InputText class="w-full md:w-10rem" type="text"
-                                                placeholder="&#8377; " v-model="val.tenure"  />
+                                                placeholder="&#8377; " disabled  v-model="val.tenure"  />
                                             <label for="" class="fs-5 ml-2" style="color:var(--navy); ">Months</label>
                                         </div>
                                     </div>
@@ -90,18 +90,18 @@
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
                                             <Calendar showIcon
-                                                dateFormat="dd/mm/yy" v-model="val.deduction_starting_month" />
+                                                dateFormat="dd/mm/yy" disabled v-model="val.deduction_starting_month" />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
                                             <Calendar showIcon
-                                                dateFormat="dd/mm/yy" v-model="val.deduction_ending_month" />
+                                                dateFormat="dd/mm/yy" disabled v-model="val.deduction_ending_month" />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2">Total Months</h1>
                                             <InputText type="text"
-                                                style="width: 150px !important;" v-model="val.tenure"  />
+                                                style="width: 150px !important;" disabled v-model="val.tenure"  />
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                             <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6"  >
                                 <span class="font-semibold ">Reason</span>
                                 <Textarea
-                                    class="my-3 capitalize form-control textbox" v-model="val.reason" autoResize type="text" rows="3" />
+                                    class="my-3 capitalize form-control textbox" disabled v-model="val.reason" autoResize type="text" rows="3" />
                             </div>
                             <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
                                 <span class="font-semibold ">your Comments</span>
@@ -158,10 +158,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- {{ useEmpStore.isInterestFreeLoaneature }} -->
-                <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
-                <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -304,8 +300,6 @@ const UseInterestFreeLoan = UseSalaryAdvanceApprovals();
 onMounted(async () => {
     await UseInterestFreeLoan.getInterestFreeLoanDetails()
 
-    // testing
-    //  UseInterestFreeLoan.getEmpDetails();
 })
 
 
