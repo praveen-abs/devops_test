@@ -71,8 +71,8 @@
                 <Button label="OK" @click="toggleDialog" class="p-button-text" />
             </div>
         </template>
-    </Dialog>
-    <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    </Dialog> -->
+    <Dialog header="Header" v-model:visible="service.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
         <template #header>
             <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
@@ -81,7 +81,7 @@
         <template #footer>
             <h5 style="text-align: center">Please wait...</h5>
         </template>
-    </Dialog> -->
+    </Dialog>
 </template>
 
 <script setup>

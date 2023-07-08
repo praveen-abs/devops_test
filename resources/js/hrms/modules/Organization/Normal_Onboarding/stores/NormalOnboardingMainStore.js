@@ -11,6 +11,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const service = Service()
 
+    const canShowLoading = ref(false)
+
 
     // variable declaration
 
@@ -141,8 +143,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         RelievingLetterDoc: "",
         PassportDoc: "",
 
-        save_draft_messege: "",
-        test: ""
+        save_draft_messege: ""
     });
 
     const CopyAddresschecked = ref(false);
@@ -318,8 +319,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const rules = computed(() => {
         return {
-
-            test: { required },
             employee_code: {},
             employee_name: { required },
             dob: {},
@@ -337,7 +336,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             },
 
             aadhar_number: {
-                required:helpers.withMessage('Aadhar number is required',required),
+                required: helpers.withMessage('Aadhar number is required', required),
                 validateAadhar: helpers.withMessage('Invalid aadhar number', (value) => {
                     const regex = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
                     return regex.test(value);
@@ -351,9 +350,9 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 required,
             },
             pan_number: {
-                required:helpers.withMessage('Pan number is required',required),
-                ValidatePan:helpers.withMessage('Invalid Pan number ',(value) => {
-                    const regex =/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/;
+                required: helpers.withMessage('Pan number is required', required),
+                ValidatePan: helpers.withMessage('Invalid Pan number ', (value) => {
+                    const regex = /^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/;
                     return regex.test(value);
                 }),
             },
@@ -374,8 +373,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 maxLength: 10,
             },
             bank_ifsc: {
-                required:helpers.withMessage('Ifsc code is required',required),
-                ValidateIfscNo:helpers.withMessage('Invalid Ifsc code' ,(value) => {
+                required: helpers.withMessage('Ifsc code is required', required),
+                ValidateIfscNo: helpers.withMessage('Invalid Ifsc code', (value) => {
                     const regex = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
                     return regex.test(value);
                 }),
@@ -477,6 +476,15 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             dob_spouse: { required },
 
             // Personal Documents
+
+            AadharCardFront: {required},
+            AadharCardBack: {required},
+            PanCardDoc: {required},
+            DrivingLicenseDoc: {required},
+            EductionDoc:{required},
+            VoterIdDoc: {required},
+            RelievingLetterDoc: {required},
+            PassportDoc: {required},
         }
 
 
@@ -634,6 +642,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         console.log(formData);
 
+        canShowLoading.value = true
 
         axios
             .post("/vmt-employee-onboard", formData)
@@ -663,6 +672,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             .catch(function (error) {
                 // currentObj.output = error;
                 console.log(error);
+            }).finally(() => {
+                canShowLoading.value = false
             })
     };
 
@@ -670,14 +681,12 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const submitForm = (isEmployeeOnboard) => {
 
         employee_onboarding.can_onboard_employee = isEmployeeOnboard
-
-        // submit();
         v$.value.$validate() // checks all inputs
         console.log(v$.value);
         if (!v$.value.$error) {
             // if ANY fail validation
             console.log('Form successfully submitted.')
-            // submit()
+            submit()
             v$.value.$reset()
         } else {
             console.log('Form failed validation')
@@ -1209,6 +1218,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     return {
 
+        canShowLoading,
         compensatory_calculation, net_calculation, gross_calculation, statutory_bonus, special_allowance_cal, child_allowance, food_coupon, lta, other_allowance, insurance, graduity,
 
         employee_onboarding, getBasicDeps,

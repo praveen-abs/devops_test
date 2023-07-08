@@ -13,6 +13,10 @@
                         <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront" id="formFile"
                             class="onboard-form form-control file"
                             @change="service.getPersonalDocuments($event, 'AadharFront')" />
+                        <span v-if="v$.AadharCardFront.$error" class="font-medium text-red-600 fs-6">
+                            {{ v$.AadharCardFront.required.$message.replace("Value", "Aadhar card front is required") }}
+                        </span>
+
 
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6" id="aadhar_card_backend_content">
@@ -21,6 +25,10 @@
                         <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
                             @change="service.getPersonalDocuments($event, 'AadharBack')"
                             class="onboard-form form-control file" />
+                        <span v-if="v$.AadharCardBack.$error" class="font-medium text-red-600 fs-6">
+                            {{ v$.AadharCardBack.required.$message.replace("Value", "Aadhar card back is required") }}
+                        </span>
+
 
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
@@ -30,6 +38,10 @@
                             name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
                             @change="service.getPersonalDocuments($event, 'Pancard')"
                             class="onboard-form form-control file" />
+                        <span v-if="v$.PanCardDoc.$error" class="font-medium text-red-600 fs-6">
+                            {{ v$.PanCardDoc.required.$message.replace("Value", "Pan card is required") }}
+                        </span>
+
 
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
@@ -61,6 +73,10 @@
                             name="education_certificate_file"
                             @change="service.getPersonalDocuments($event, 'EducationCertificate')"
                             id="education_certificate_file" ref="EductionDoc" class="onboard-form form-control file " />
+                        <span v-if="v$.EductionDoc.$error" class="font-medium text-red-600 fs-6">
+                            {{ v$.EductionDoc.required.$message.replace("Value", "Education certificate is required") }}
+                        </span>
+
 
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
