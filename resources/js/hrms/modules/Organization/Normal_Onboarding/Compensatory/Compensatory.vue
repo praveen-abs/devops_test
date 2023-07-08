@@ -1,10 +1,10 @@
 <template>
     <div class="p-2 my-6 shadow card profile-box card-top-border">
         <div class="card-body justify-content-center align-items-center">
-            <div class="flex header-card-text">
-                <!-- <img src="../../../assests/images/wages.png" class="w-1 h-14" alt=""> -->
-                <h6 class="m-2"><i class="fa fa-money" aria-hidden="true"></i> Compensatory</h6>
-            </div>
+          <div class="flex header-card-text">
+            <!-- <img src="../../../assests/images/wages.png" class="w-1 h-14" alt=""> -->
+            <h6 class="m-2"><i class="fa fa-money" aria-hidden="true"></i> Compensatory</h6>
+          </div>
 
 
 

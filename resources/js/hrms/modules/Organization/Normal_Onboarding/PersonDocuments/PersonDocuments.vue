@@ -1,10 +1,10 @@
 <template>
     <div class="p-2 my-6 mb-0 shadow card profile-box card-top-border">
         <div class="card-body justify-content-center align-items-center">
-            <div class="flex header-card-text">
-                <!-- <img src="../../../assests/images/folder.png" class="w-1 h-14" alt=""> -->
-                <h6 class="my-2"><i class="fa fa-file-image-o" aria-hidden="true"></i> Personal Documents</h6>
-            </div>
+          <div class="flex header-card-text">
+            <!-- <img src="../../../assests/images/folder.png" class="w-1 h-14" alt=""> -->
+            <h6 class="my-2"><i class="fa fa-file-image-o" aria-hidden="true"></i> Personal Documents</h6>
+          </div>
 
             <div class="mb-2 form-card">
                 <div class="mt-1 row">

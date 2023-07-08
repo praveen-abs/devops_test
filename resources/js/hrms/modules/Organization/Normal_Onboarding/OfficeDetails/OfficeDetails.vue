@@ -2,6 +2,7 @@
     <div class="p-2 shadow card profile-box card-top-border">
         <div class="card-body justify-content-center align-items-center">
             <div class="flex header-card-text">
+                <!-- <img src="../../../assests/images/office-building.png" class="w-1 h-14" alt=""> -->
                 <h6 class="my-2 "><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details</h6>
             </div>
 
@@ -62,8 +63,9 @@
                         <div class="floating">
                             <label for="" class="float-label">Cost Center</label>
 
-                            <InputText type="number" placeholder="Cost Center" v-model="service.employee_onboarding.cost_center"
-                                name="cost_center" class="onboard-form form-control textbox" />
+                            <InputText type="number" placeholder="Cost Center"
+                                v-model="service.employee_onboarding.cost_center" name="cost_center"
+                                class="onboard-form form-control textbox" />
                         </div>
                     </div>
 
@@ -90,9 +92,9 @@
                             <label for="" class="float-label">Reporting Manager Name<span
                                     class="text-danger">*</span></label>
                             <!-- {{employee_onboarding.l1_manager_code.user_code}} -->
-                            <Dropdown editable :readonly="service.readonly.l1_code" :options="service.Managerdetails" optionLabel="name"
-                                placeholder="Reporting Manager Name" v-model="service.employee_onboarding.l1_manager_code"
-                                class="p-error" :class="{
+                            <Dropdown editable :readonly="service.readonly.l1_code" :options="service.Managerdetails"
+                                optionLabel="name" placeholder="Reporting Manager Name"
+                                v-model="service.employee_onboarding.l1_manager_code" class="p-error" :class="{
                                     'p-invalid':
                                         v$.l1_manager_code.$error,
                                 }">
@@ -156,7 +158,7 @@
                                 }" />
                         </div>
                     </div>
-
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                     <div class="floating">
                         <label for="" class="float-label">Date of confirmation<span class="text-danger">*</span></label>
                         <InputText class="onboard-form form-control" type="text" placeholder="Date of confirmation"
@@ -174,6 +176,7 @@
                                     "Date Of Confirmation"
                                 )
                             }}</span>
+                    </div>
                     </div>
                 </div>
             </div>

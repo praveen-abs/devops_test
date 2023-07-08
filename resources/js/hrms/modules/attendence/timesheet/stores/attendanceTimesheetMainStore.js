@@ -107,7 +107,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? '9:30:00' :
                 selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? '6:30:00' : '',
             reason: selectedDayRegularizationRecord.reason,
-            custom_reason: selectedDayRegularizationRecord.custom_reason,
+            custom_reason:selectedDayRegularizationRecord.custom_reason  ? selectedDayRegularizationRecord.custom_reason : '',
         }
         console.log(AttendanceRegularizeFormat);
         return AttendanceRegularizeFormat

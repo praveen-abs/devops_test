@@ -8,6 +8,7 @@
                     Attendance regularization</h5>
             </div>
         </template>
+        {{ useTimesheet.lcDetails }}
         <div class="row">
             <div class="mb-2 col-12">
                 <div class="row">

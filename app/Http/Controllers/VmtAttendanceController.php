@@ -1200,7 +1200,7 @@ class VmtAttendanceController extends Controller
                 "regularize_time" => "required",
 
                 "reason" => "required", //
-                "custom_reason" => "required_with:reason",
+                "custom_reason" => "nullable",
             ],
             $messages = [
                 "required" => "Field :attribute is missing",

@@ -4,13 +4,15 @@ import { computed, reactive, ref } from "vue";
 import useValidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 import axios from "axios";
+import { inject } from "vue";
+
 
 
 
 export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMainStore", () => {
 
     const service = Service()
-
+    const swal = inject("$swal");
     const canShowLoading = ref(false)
 
 
@@ -477,14 +479,14 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
             // Personal Documents
 
-            AadharCardFront: {required},
-            AadharCardBack: {required},
-            PanCardDoc: {required},
-            DrivingLicenseDoc: {required},
-            EductionDoc:{required},
-            VoterIdDoc: {required},
-            RelievingLetterDoc: {required},
-            PassportDoc: {required},
+            AadharCardFront: { required },
+            AadharCardBack: { required },
+            PanCardDoc: { required },
+            DrivingLicenseDoc: { required },
+            EductionDoc: { required },
+            VoterIdDoc: { required },
+            RelievingLetterDoc: { required },
+            PassportDoc: { required },
         }
 
 

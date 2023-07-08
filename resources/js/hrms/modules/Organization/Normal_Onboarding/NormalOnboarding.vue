@@ -5,7 +5,9 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <div id="msform">
-                        <form class="p-fluid">
+                        <form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid" enctype="multipart/form-data">
+                            <input type="hidden" name="user_id" id="user_id" value="" />
+                            <input type="hidden" name="can_redirect" id="can_redirect" value="0" />
                             <PersonDetails />
                             <Address />
                             <FamilyDetails />
@@ -97,25 +99,9 @@ import Compensatory from './Compensatory/Compensatory.vue'
 
 
 
-import { useToast } from "primevue/usetoast";
-import axios from "axios";
-import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { ref } from "@vue/runtime-core";
-import { inject } from "vue";
-import moment from 'moment';
 
-
-import {
-    getBankList,
-    getCountryList,
-    getStateList,
-    ManagerDetails,
-    DepartmentDetails,
-    getMaritalStatus,
-    getBloodGroups,
-    fetchQuickOnboardedEmployeeDetails,
-} from "./NormalOnboardingService";
 
 
 import { useNormalOnboardingMainStore } from './stores/NormalOnboardingMainStore'
@@ -124,7 +110,6 @@ import { useNormalOnboardingMainStore } from './stores/NormalOnboardingMainStore
 const service = useNormalOnboardingMainStore()
 
 
-const swal = inject("$swal");
 
 onMounted(() => {
 
@@ -167,134 +152,6 @@ onMounted(() => {
 //         console.log("unmarried");
 //     }
 // };
-
-
-
-
-
-//  File Upload Function Declaration
-
-
-
-
-
-const aadhar_card_exists = ref(false);
-const invalid_aadhar_check = ref(false)
-
-const AadharCardExits = () => {
-    console.log("working");
-    let aadhar_no = employee_onboarding.aadhar_number;
-
-    var regexp = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
-
-    if (regexp.test(employee_onboarding.aadhar_number)) {
-        console.log("Valid Aadhar no.");
-        axios
-            .get(`/aadhar-no-exists/${aadhar_no}`)
-            .then((res) => {
-                console.log(res.data);
-                aadhar_card_exists.value = res.data;
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                console.log("completed");
-            });
-
-        invalid_aadhar_check.value = false
-
-
-    }
-    else {
-        console.log("Invalid Aadhar no.");
-        invalid_aadhar_check.value = true
-
-    }
-
-};
-
-
-
-const pan_card_exists = ref(false);
-const invalid_pan_no = ref(false)
-
-const panCardExists = () => {
-    console.log("pan card checking");
-
-    let pan_no = employee_onboarding.pan_number;
-
-    var regep = /^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/;
-
-    if (regep.test(employee_onboarding.pan_number)) {
-        console.log("Valid pan no.");
-        axios
-            .get(`/pan-no-exists/${pan_no}`)
-            .then((res) => {
-                console.log(res.data);
-                pan_card_exists.value = res.data;
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-            .finally(() => {
-                console.log("completed");
-            });
-
-        invalid_pan_no.value = false
-
-    }
-    else {
-        console.log("Invalid pan no.");
-        invalid_pan_no.value = true
-
-    }
-    console.log("checking");
-
-};
-
-
-const is_ac_no_exists = ref(false)
-
-const ValidateAccountNo = () => {
-
-    let Ac_no = employee_onboarding.AccountNumber
-    axios
-        .get(`/ac-no-exists/${Ac_no}`)
-        .then((res) => {
-            console.log(res.data);
-            is_ac_no_exists.value = res.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-        .finally(() => {
-            console.log("completed");
-        });
-
-}
-
-const ifsc = ref(false)
-const ValidateIfscNo = () => {
-    const ifscck = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
-    if (ifscck.test(employee_onboarding.bank_ifsc)) {
-        ifsc.value = false
-        console.log("valid");
-    } else {
-        console.log("invalid");
-        ifsc.value = true
-    }
-}
-
-
-
-
-
-
-
-
-
-
 
 
 const Sampledata = () => {
