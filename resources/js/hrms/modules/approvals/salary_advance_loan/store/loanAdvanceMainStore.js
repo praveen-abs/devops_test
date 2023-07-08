@@ -82,9 +82,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
          axios.post('/fetch-employee-for-loan-approval',{
               loan_type:"InterestFreeLoan",
         }).then((res)=>{
-            console.log( res.data);
             arrayIFL_List.value = res.data
-            console.log(arrayIFL_List);
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -93,12 +91,9 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     // Interest free loan Datatable function Approval and Rejected
 
     async function IFLapproveAndReject(val, Status,reviewer_comments) {
-        currentlySelectedStatus.value=Status;
         let status = Status
         canShowLoadingScreen.value = true;
-        console.log(reviewer_comments);
         let data = val.id;
-        console.log(data);
         await axios.post('/reject-or-approve-loan', {
             loan_type : 'InterestFreeLoan',
             record_id: data,
@@ -106,10 +101,9 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
             status == 1
                     ? 1
                     : status == -1
-                        ? 1
+                        ? -1
                         : status,
             reviewer_comments: reviewer_comments,
-        }).then(() => {
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -120,7 +114,6 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     async function IFLbulkApproveAndReject(Status, val) {
         canShowLoadingScreen.value = true;
-
         currentlySelectedStatus.value = Status;
         let data = val;
         await axios.post('http://localhost:3000/submitApproveAndReject', {
@@ -138,8 +131,41 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
         })
     }
 
+    // interest with loan
 
+    const arrayIWL = ref();
 
+    async function getInterestWithLoanDetails(){
+        canShowLoadingScreen.value = true;
+        let url = `/fetch-employee-for-loan-approval`;
+    await  axios.post(url,{
+            loan_type:"InterestWithLoan",
+        }).then((res)=>{
+            arrayIWL.value = res.data;
+        }).finally(()=>{
+            canShowLoadingScreen.value = false;
+        })
+    }
+
+    async function IWL_ApproveAndReject(val, Status,reviewer_comments){
+        canShowLoadingScreen.value = true;
+        let status = Status
+        let data = val.id;
+        await axios.post('/reject-or-approve-loan', {
+            loan_type : 'InterestWithLoan',
+            record_id: data,
+            status:
+            status == 1
+                    ? 1
+                    : status == -1
+                        ? -1
+                        : status,
+            reviewer_comments: reviewer_comments,
+        }).finally(()=>{
+            canShowLoadingScreen.value = false;
+        })
+
+    }
 
 
 
@@ -166,7 +192,12 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
         //  functions
         getInterestFreeLoanDetails,
         IFLapproveAndReject,
-        IFLbulkApproveAndReject
+        IFLbulkApproveAndReject,
+
+        // interest with loan function and variables
+        arrayIWL,
+        getInterestWithLoanDetails,
+        IWL_ApproveAndReject
 
 
     }

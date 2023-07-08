@@ -153,7 +153,7 @@
             </div>
 
             <div class="table-responsive">
-                <!-- {{ useEmpStore.isInterestFreeLoanFeature }} -->
+                {{ useEmpStore.isInterestFreeLoanFeature }}
                 <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="10" :value="useEmpStore.isInterestFreeLoanFeature"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -161,52 +161,31 @@
                     responsiveLayout="scroll">
 
                     <Column header="Request ID" field="request_id" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="borrowed_amount" header="Loan Amount" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="emi_per_month" header="Monthly EMI" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="tenure_months" header="Tenure" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
 
 
                     <Column field="deduction_starting_month" header="EMI Start Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="deduction_ending_month" header="EMI End Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
-                    <Column field="loan_crd_sts" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.loan_crd_sts == 0 " class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.loan_crd_sts == 1 " class=" text-green-500">
-                                Approved
-                            <!-- <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
-                                {{ slotProps.data.status }}-->
-                             </h6>
-                        </template>
+                    <Column field="loan_status" header="Status" style="min-width: 12rem">
+                        {{ slotProps.data.loan_status }}
                     </Column>
 
                 </DataTable>

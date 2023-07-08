@@ -132,15 +132,12 @@ Travel Advance - ta
             loan_type: "InterestFreeLoan"
         }).then((res) => {
             console.log(res);
-            interestFreeLoan.max_tenure_months = res.data.max_tenure_months;
+            // interestFreeLoan.max_tenure_months = res.data.max_tenure_months;
 
             console.log(interestFreeLoan.max_tenure_months);
             interestFreeLoan.details = res.data;
             interestFreeLoan.loan_setting_id = res.data.loan_setting_id;
-
             interestFreeLoan.minEligibile = res.data.max_loan_amount;
-
-            console.log(res.data.max_tenure_months.month);
         })
     }
     // const selected_date =ref();
@@ -308,9 +305,7 @@ Travel Advance - ta
 
         axios.post('/InterestWithLoan', InterestWithLoan).finally(() => {
             canShowLoading.value = false
-
             fetchInterstWithLoan();
-
         })
 
         dialogInterestwithLoan.value = false;

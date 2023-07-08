@@ -52,34 +52,22 @@
                     {{ useEmpStore.salaryAdvanceEmployeeData }}
 
                     <Column header="Request ID" field="section" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="particular" header="Advance Amount" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="ref" header="Paid On " style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="max_limit" header="Expected Return" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
-
-
-                    <Column field="Status" header="Status" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+                    <Column field="loan_status" header="Status" style="min-width: 12rem">
+                        {{slotProps.data.loan_status}}
                     </Column>
 
                 </DataTable>
