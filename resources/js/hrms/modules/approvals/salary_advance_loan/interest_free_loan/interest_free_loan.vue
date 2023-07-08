@@ -196,8 +196,8 @@
 
                         </Column>
                         <Column field="tenure" header="Tenure"> </Column>
-                        <Column field="loan_status" header="Status" style="min-width: 12rem">
-                            {{ slotProps.data.loan_status }}
+                        <Column field="status" header="Status" style="min-width: 12rem">
+                            {{ slotProps.data.status }}
                         </Column>
                         <Column field="" header="Action">
                             <template #body="slotProps">

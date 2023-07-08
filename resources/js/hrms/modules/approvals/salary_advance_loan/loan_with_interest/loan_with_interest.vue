@@ -204,19 +204,8 @@
                         </Column>
                         <Column field="deduction_ending_month" header="EMI Start Date">
                         </Column>
-                        <Column field="status" header="Status">
-                            <template #body="slotProps">
-                                <h6 v-if="slotProps.data.loan_crd_sts == 0" class="text-orange-500">
-                                    <!-- {{ slotProps.data.loan_crd_sts }} -->
-                                    Pending
-                                </h6>
-                                <h6 v-if="slotProps.data.loan_crd_sts == 1" class=" text-green-500">
-                                    Approved
-                                </h6>
-                                <h6 v-if="slotProps.data.loan_crd_sts == 'Rejected'" class="text-red-500">
-                                    <!-- {{ slotProps.data.status }} -->
-                                </h6>
-                            </template>
+                        <Column field="status" header="Status" style="min-width: 12rem">
+                            {{ slotProps.data.status }}
                         </Column>
                     </DataTable>
 
