@@ -201,10 +201,12 @@ class VmtSalaryAdvanceController extends Controller
         $request['record_id'] = 1;
         $request['loan_type'] = 'InterestFreeLoan';
         $request['status'] = -1;
+        $request['reason'] ='kfjkjkjafkjfkfkjajjkjkfa';
         $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
             $request->loan_type,
             $request->record_id,
             $request->status,
+            $request->reason
         );
 
         return $response;
@@ -217,7 +219,10 @@ class VmtSalaryAdvanceController extends Controller
         // $request->status = 1;
         // dd($request->all());
 
-        return $vmtSalaryAdvanceService->rejectOrApprovedSaladv($request->record_id, $request->status);
+        return $vmtSalaryAdvanceService->rejectOrApprovedSaladv(
+            $request->record_id,
+            $request->status,
+            $request->reason);
     }
 
     public function EmployeeLoanHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
