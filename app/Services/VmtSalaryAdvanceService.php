@@ -172,12 +172,9 @@ class VmtSalaryAdvanceService
 
                 $calculatevalue = ($emp_compensatory->net_income) * ($employee_salary_adv->percent_salary_adv) / 100;
 
-
                 $calculate_max = $calculatevalue - $sal_borrowed;
 
                 //  dd($calculate_max);
-
-
                 $multiple_months = array();
                 for ($i = 1; $i <= $employee_salary_adv->deduction_period_of_months; $i++) {
 
@@ -218,24 +215,12 @@ class VmtSalaryAdvanceService
 
         $current_user_id = auth()->user()->id;
 
-        // $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
-        //     ->where('user_id', $current_user_id)
-        //     ->whereYear('requested_date', date("Y"))
-        //     ->whereMonth('requested_date', date("m"))
-        //     ->first();
-
-        // if (!empty($already_applied)) {
-        //     return response()->json([
-        //         "status" => "failure",
-        //         "message" => "Already applied this month",
-        //     ]);
-        // } else {
-
         $employee_sal_sett = VmtEmpAssignSalaryAdvSettings::join('vmt_salary_adv_setting', 'vmt_salary_adv_setting.id', '=', 'vmt_emp_assign_salary_adv_setting.salary_adv_id')
             ->where('user_id', $current_user_id)->first();
 
+            $employee_sal_sett_id = VmtEmpAssignSalaryAdvSettings::where('user_id', $current_user_id)->first();
 
-        $employee_sal_sett_id = VmtEmpAssignSalaryAdvSettings::where('user_id', $current_user_id)->first();
+            if($employee_sal_sett->can_borrowed_multiple == "1"){
 
 
 
@@ -276,13 +261,84 @@ class VmtSalaryAdvanceService
             'message' => 'Done',
 
         ]);
-        // }
+
+      }else if($employee_sal_sett->can_borrowed_multiple == "0"){
+
+          $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
+            ->where('user_id', $current_user_id)
+            ->whereYear('requested_date', date("Y"))
+            ->whereMonth('requested_date', date("m"))
+            ->first();
+
+
+
+        if (!empty($already_applied)) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Already applied this month",
+            ]);
+        } else {
+
+            $EmpApplySalaryAmt = new VmtEmpSalAdvDetails;
+            $EmpApplySalaryAmt->vmt_emp_assign_salary_adv_id = $employee_sal_sett_id->id;
+
+            $get_lasting = VmtEmpSalAdvDetails::get()->sortByDesc('id')->first();
+            if (empty($get_lasting)) {
+                $EmpApplySalaryAmt->request_id = "ABSSA001";
+            } else {
+                $substrid = substr($get_lasting->request_id, 5);
+                $add1 = ($substrid + 1);
+                $tostring = ((string) ($add1));
+                $strlenth = strlen($tostring);
+
+                if ($strlenth == 1) {
+                    $requestid = "ABSSA" . "00" . $add1;
+                    $EmpApplySalaryAmt->request_id = $requestid;
+                } else if ($strlenth == 2) {
+                    $requestid = "ABSSA" . "0" . $add1;
+                    $EmpApplySalaryAmt->request_id = $requestid;
+                } else {
+                    $requestid = "ABSSA" . $add1;
+                    $EmpApplySalaryAmt->request_id = $requestid;
+                }
+            }
+            $EmpApplySalaryAmt->eligible_amount = $mxe;
+            $EmpApplySalaryAmt->borrowed_amount = $ra;
+            $EmpApplySalaryAmt->requested_date = date('Y-m-d');
+            $EmpApplySalaryAmt->dedction_date = $repdate;
+            $EmpApplySalaryAmt->reason = $reason;
+            $EmpApplySalaryAmt->emp_approver_flow = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
+            $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
+            $EmpApplySalaryAmt->save();
+
+            return response()->json([
+                'status' => 'save successfully',
+                'message' => 'Done',
+
+            ]);
+        }
+      }
     }
 
 
     public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow, $payroll_cycle, $SA)
     {
         $json_approvalflow = json_encode($approvalflow);
+
+        // $res = array();
+        // foreach ($eligibleEmployee as $emplo){
+
+        // $user_detailss = User::where('user_code', $emplo['user_code'])->first();
+        //  $simma_iddd = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
+
+        //  if($simma_iddd->exists()){
+
+        //  }
+        // // $user_name  =  User::where('id', $simma_iddd->user_id)->first();
+        // //  array_push($res, $user_name->name);
+        // }
+        // dd($res);
+
         try {
 
             $saveSettingSALaryAdv = new VmtSalaryAdvSettings;
