@@ -46,30 +46,32 @@
                                         Interest Free Loan Request</h1>
                                 </div>
                             </template>
-                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none" v-for="(items, index ) in required_Amount.eligible_amount" :key="index">
+                            <!-- v-for="(items, index ) in required_Amount.eligible_amount" :key="index" -->
+                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none" >
                                 <div class="card-body">
                                     <div class="row mx-2">
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Required Amount</h1>
                                             <!-- {{ items }} -->
                                            <!-- {{ items.emi_per_month}} -->
+
                                             <InputText type="text"
-                                                placeholder="&#8377; Enter The Required Amount" v-model="required_Amount.required_Amount" />
-                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount :{{ items.eligible_amount }}
+                                                placeholder="&#8377; Enter The Required Amount" v-model="val.loan_amount"  />
+                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{ val.eligible_amount }}
                                             </p>
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                            <InputText type="text" v-model="items.emi_per_month"
-                                                placeholder="&#8377; " />
+                                            <InputText type="text"
+                                                placeholder="&#8377; " v-model="val.monthly_emi" />
                                         </div>
-                                        <div class="col mx-2" v-for="(items, index ) in required_Amount.eligible_amount" :key="index">
+                                        <div class="col mx-2" >
                                             <h1 class="fs-5 my-2">Term</h1>
                                             <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
                                                 class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
                                             <InputText class="w-full md:w-10rem" type="text"
-                                                placeholder="&#8377; " v-model="items.tenure_months" />
-                                            <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Months</label>
+                                                placeholder="&#8377; " v-model="val.tenure"  />
+                                            <label for="" class="fs-5 ml-2" style="color:var(--navy); ">Months</label>
                                         </div>
                                     </div>
 
@@ -78,7 +80,7 @@
                                 </div>
                             </div>
 
-                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none " v-for="(items, index ) in required_Amount.eligible_amount" :key="index" >
+                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none " >
                                 <div class="card-body mx-4">
                                     <div class="row">
                                         <!-- fw-bolder -->
@@ -87,28 +89,28 @@
                                             Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon v-model="items.deduction_starting_month"
-                                                dateFormat="dd/mm/yy" />
+                                            <Calendar showIcon
+                                                dateFormat="dd/mm/yy" v-model="val.deduction_starting_month" />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                            <Calendar showIcon v-model="items.deduction_ending_month"
-                                                dateFormat="dd/mm/yy" />
+                                            <Calendar showIcon
+                                                dateFormat="dd/mm/yy" v-model="val.deduction_ending_month" />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2">Total Months</h1>
                                             <InputText type="text"
-                                                style="width: 150px !important;" v-model="items.tenure_months "  />
+                                                style="width: 150px !important;" v-model="val.tenure"  />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6" v-for="(items,index) in  required_Amount.eligible_amount " :key="index" >
+                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6"  >
                                 <span class="font-semibold ">Reason</span>
                                 <Textarea
-                                    class="my-3 capitalize form-control textbox" v-model="items.reason" autoResize type="text" rows="3" />
+                                    class="my-3 capitalize form-control textbox" v-model="val.reason" autoResize type="text" rows="3" />
                             </div>
                             <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
                                 <span class="font-semibold ">your Comments</span>
@@ -159,7 +161,7 @@
 
                 <!-- {{ useEmpStore.isInterestFreeLoaneature }} -->
                 <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
-                {{ UseInterestFreeLoan.arrayIFL_List }}
+                <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -317,37 +319,11 @@ const canShowConfirmationAll = ref(false);
 const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
-const required_Amount = reactive({
-    required_Amount: "",
-    borrowed_amount:'',
-    eligible_amount:"",
-    emi_per_month:"",
-    tenure_months:"",
-    deduction_starting_month:"",
-    deduction_ending_month:"",
-    reason:"",
-});
+
+const val = ref();
 // const
 
-
 const interestWithLoan = ref();
-// EMI_start_month:"",
-// EMI_End_month:"",
-// Monthly_EMI:"",
-// Term_year:"",
-// Advance_Amount:"",
-// Total_Months:"",
-// reason:""
-
-
-// function showConfirmDialog(selectedRowData, status) {
-//     console.log(selectedRowData);
-//     canshowInterestFLR.value = true;
-//     currentlySelectedStatus.value = status;
-//     currentlySelectedRowData.value = selectedRowData;
-//     interestWithLoan.value = selectedRowData;
-//     // required_Amount.required_Amount = selectedRowData.Advance_Amount
-// }
 
 const op = ref();
 const toggle = (event) => {
@@ -355,28 +331,9 @@ const toggle = (event) => {
 }
 
 function showConfirmDialog(selectedRowData) {
-    console.log(selectedRowData);
-
     canshowInterestFLR.value = true;
-    // currentlySelectedStatus.value = status;
-    required_Amount.value = selectedRowData;
     currentlySelectedRowData.value = selectedRowData;
-
-    required_Amount.required_Amount = selectedRowData.loan_amount;
-    required_Amount.borrowed_amount = selectedRowData.borrowed_amount;
-    required_Amount.eligible_amount = selectedRowData.emp_prevdetails;
-    required_Amount.emi_per_month = selectedRowData.emi_per_month;
-    required_Amount.tenure_months = selectedRowData.tenure_months;
-    required_Amount.deduction_starting_month = selectedRowData.deduction_starting_month;
-    required_Amount.deduction_ending_month = selectedRowData.deduction_ending_month;
-    required_Amount.reason = selectedRowData.reason;
-
-
-    console.log( selectedRowData.loan_amount);
-    console.log( required_Amount.eligible_amount );
-    console.log( selectedRowData.borrowed_amount);
-
-
+    val.value = selectedRowData;
 }
 
 function hideBulkConfirmDialog() {
@@ -403,8 +360,6 @@ function ShowDialogApprovalAll() {
 
 async function approveAndReject(status) {
     hideBulkConfirmDialog()
-    // showAppoverDialog.value = false;
-    console.log(currentlySelectedRowData.value, status);
     await UseInterestFreeLoan.IFLapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
     currentlySelectedStatus.value = status;
 }
@@ -417,14 +372,9 @@ async function processBulkApproveReject(status) {
 
 
 function view_more(selectedRowData, user_code, currentName) {
-    console.log(selectedRowData);
-    // currentlySelectedStatus.value  = selectedRowData;
     useEmpData.value = selectedRowData;
     CurrentName.value = currentName;
     CurrentUser_code.value = user_code
-    console.log(user_code);
-    console.log(currentName);
-
 }
 
 
