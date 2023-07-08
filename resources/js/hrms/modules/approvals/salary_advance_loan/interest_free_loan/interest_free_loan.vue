@@ -52,7 +52,7 @@
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Required Amount</h1>
                                             <!-- {{ items }} -->
-                                           {{ items.emi_per_month}}
+                                           <!-- {{ items.emi_per_month}} -->
                                             <InputText type="text"
                                                 placeholder="&#8377; Enter The Required Amount" v-model="required_Amount.required_Amount" />
                                             <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount :{{ items.eligible_amount }}
@@ -63,7 +63,7 @@
                                             <InputText type="text" v-model="items.emi_per_month"
                                                 placeholder="&#8377; " />
                                         </div>
-                                        <div class="col mx-2">
+                                        <div class="col mx-2" v-for="(items, index ) in required_Amount.eligible_amount" :key="index">
                                             <h1 class="fs-5 my-2">Term</h1>
                                             <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
                                                 class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
@@ -99,7 +99,7 @@
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2">Total Months</h1>
                                             <InputText type="text"
-                                                style="width: 150px !important;" />
+                                                style="width: 150px !important;" v-model="items.tenure_months "  />
                                         </div>
                                     </div>
                                 </div>
