@@ -245,6 +245,24 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
+    public function CreatePayrollEsi(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        // dd($request->all());
+
+            $response = $serviceVmtPayrollComponentsService->CreatePayrollEsi(
+            $request->esi_number,
+            $request->esi_deduction_cycle,
+            $request->state,
+            $request->location,
+            $request->employee_contribution_rate,
+            $request->employer_contribution_rate,
+            $request->employer_contribution_in_ctc,
+            $request->override_pf_contrib_rate,
+            $request->status,
+        );
+
+        return $response;
+    }
 
     // public function ShowPaySlipTemplateMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     // {

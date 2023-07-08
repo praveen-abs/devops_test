@@ -1352,5 +1352,72 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
 
         }
 }
+    public function CreatePayrollEsi( $epf_number, $epf_deduction_cycle, $is_epf_num_default, $epf_rule, $epf_contrib_type, $pro_rated_lop_status, $can_consider_salcomp_pf, $employer_contrib_in_ctc,
+                                      $employer_edli_contri_in_ctc,$admin_charges_in_ctc,$override_pf_contrib_rate,$status)
+    {
+        $validator = Validator::make(
+            $data = [
+                'epf_number' => $epf_number,
+                'epf_deduction_cycle' => $epf_deduction_cycle,
+                'is_epf_num_default' => $is_epf_num_default,
+                'epf_rule' =>$epf_rule,
+                'epf_contrib_type' =>$epf_contrib_type,
+                'pro_rated_lop_status' => $pro_rated_lop_status,
+                'can_consider_salcomp_pf' => $can_consider_salcomp_pf,
+                'employer_contrib_in_ctc' => $employer_contrib_in_ctc,
+                'employer_edli_contri_in_ctc' => $employer_edli_contri_in_ctc,
+                'admin_charges_in_ctc' => $admin_charges_in_ctc,
+                'override_pf_contrib_rate' => $override_pf_contrib_rate,
+                'status' => $status,
+            ],
+            $rules = [
+                'epf_number' => 'required',
+                'epf_deduction_cycle' => 'required',
+                'is_epf_num_default' => 'required',
+                'epf_rule' => 'required',
+                'epf_contrib_type' => 'required',
+                'pro_rated_lop_status' => 'required',
+                'can_consider_salcomp_pf' => 'required',
+                'employer_contrib_in_ctc' => 'required',
+                'employer_edli_contri_in_ctc' => 'required',
+                'admin_charges_in_ctc' => 'required',
+                'override_pf_contrib_rate' => 'required',
+                'status' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+            $save_payroll_epf_data = new VmtPayrollEpf;
+            $save_payroll_epf_data->client_id = auth()->user()->client_id;
+            $save_payroll_epf_data->epf_number = $epf_number;
+            $save_payroll_epf_data->epf_deduction_cycle =$epf_deduction_cycle ;
+            $save_payroll_epf_data->is_epf_num_default =$is_epf_num_default ;
+            $save_payroll_epf_data->epf_rule =$epf_rule ;
+            $save_payroll_epf_data->epf_contrib_type = $epf_contrib_type;
+            $save_payroll_epf_data->pro_rated_lop_status =$pro_rated_lop_status ;
+            $save_payroll_epf_data->can_consider_salcomp_pf = $can_consider_salcomp_pf;
+            $save_payroll_epf_data->employer_contrib_in_ctc =$employer_contrib_in_ctc ;
+            $save_payroll_epf_data->employer_edli_contri_in_ctc =$employer_edli_contri_in_ctc ;
+            $save_payroll_epf_data->admin_charges_in_ctc =$admin_charges_in_ctc ;
+            $save_payroll_epf_data->override_pf_contrib_rate =$override_pf_contrib_rate ;
+            $save_payroll_epf_data->status = $status;
+            $save_payroll_epf_data->save();
+
+         }catch(Exception $e){
+
+        }
+}
 
 }
