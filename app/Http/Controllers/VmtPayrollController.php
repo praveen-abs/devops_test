@@ -16,7 +16,7 @@ use PDF;
 use App\Services\VmtPayrollService;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 
 use App\Services\VmtEmployeePayCheckService;
 

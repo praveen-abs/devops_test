@@ -12,7 +12,7 @@ use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\Department;
 
