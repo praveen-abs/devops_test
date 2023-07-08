@@ -71,19 +71,11 @@
                     </Column>
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
-                    <Column field="status" header="Status">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
-                                Approved
-                            </h6>
-                            <h6 v-if="slotProps.data.status == -1" class="text-red-500">
-                                Rejected
-                            </h6>
-                        </template>
+
+                    <Column field="loan_status" header="Status" style="min-width: 12rem">
+                        {{slotProps.data.loan_status}}
                     </Column>
+
                     <Column field="" header="Action">
                         <template #body="slotProps">
                             <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>

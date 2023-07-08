@@ -101,7 +101,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
             status == 1
                     ? 1
                     : status == -1
-                        ? 1
+                        ? -1
                         : status,
             reviewer_comments: reviewer_comments,
         }).finally(()=>{
