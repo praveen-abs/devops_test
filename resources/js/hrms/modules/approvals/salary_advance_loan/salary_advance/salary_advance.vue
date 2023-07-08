@@ -48,8 +48,8 @@
                     </div>
                 </div>
             </div>
-            <!-- v-if="!useEmpData" -->
             {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
+
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
                     :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -59,8 +59,6 @@
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
                     responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                    <!-- <Column :expander="true" /> -->
-                    <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
                     <Column field="request_id" header="Request ID" sortable></Column>
                     <Column field="user_code" header="Employee ID">
                     </Column>
@@ -165,21 +163,21 @@
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="required_Amount.advance_amount" disabled >
-                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ SAAdvReq.eligible_amount }}</p>
+                    v-model="val.advance_amount" disabled >
+                <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ val.eligible_amount }}</p>
             </div>
             <div class="w-5 p-4 mx-4 ">
                 <span class="font-semibold">Required Amount</span>
                 <div class="w-full">
                     <p class="my-2 text-gray-600 fs-5 text-md text-clip">The advance amount will be deducted from the next
                         month's
-                        salary <strong class="text-black fs-5">(ie,{{ SAAdvReq.dedction_date }})</strong> </p>
+                        salary <strong class="text-black fs-5">(ie,{{ val.dedction_date }})</strong> </p>
                 </div>
             </div>
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
-            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{SAAdvReq.reason }}</div>
+            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{val.reason }}</div>
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
@@ -218,14 +216,8 @@ const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
 
-const SAAdvReq =ref();
-const required_Amount = reactive({
-    required_Amount: "",
-    reason:"",
-    advance_amount:"",
-    eligible_amount:"",
-    borrowed_amount:"",
-});
+const val =ref();
+
 
 onMounted(() => {
     SalaryAdvanceApprovals.getEmpDetails();
@@ -244,22 +236,16 @@ const filters = ref({
 
 
 function showConfirmDialog(selectedRowData, status) {
-    console.log(selectedRowData);
+
     showAppoverDialog.value = true;
     currentlySelectedStatus.value = status;
     currentlySelectedRowData.value = selectedRowData;
-    SAAdvReq.value = selectedRowData;
-    required_Amount.advance_amount = selectedRowData.advance_amount;
-    // required_Amount.required_Amount = selectedRowData.borrowed_amount;
-    // required_Amount.borrowed_amount = selectedRowData.borrowed_amount;
-    // required_Amount.eligible_amount = selectedRowData.eligible_amount;
+    val.value = selectedRowData;
 
-    console.log(selectedRowData.eligible_amount);
 }
 
 async function approveAndReject(status) {
     showAppoverDialog.value = false;
-    console.log(currentlySelectedRowData.value, status);
     await SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
     currentlySelectedStatus.value = status;
 }
@@ -280,19 +266,12 @@ async function processBulkApproveReject(status) {
 
 
 function view_more(selectedRowData, user_code, currentName) {
-    console.log(selectedRowData);
-    // currentlySelectedStatus.value  = selectedRowData;
+
     useEmpData.value = selectedRowData;
     CurrentName.value = currentName;
     CurrentUser_code.value = user_code
-    console.log(user_code);
-    console.log(currentName);
+
 }
-
-
-// function emp_details()
-
-
 
 </script>
 

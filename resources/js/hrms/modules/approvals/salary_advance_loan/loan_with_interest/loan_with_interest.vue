@@ -113,49 +113,71 @@
 
             <div class="table-responsive">
                 <!-- {{ useEmpStore.salaryAdvanceEmployeeData }} -->
-                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    :rowsPerPageOptions="[5, 10, 25]"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                    responsiveLayout="scroll">
+                <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
+                        :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                        v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                        @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
-                    <Column header="Request ID" field="section" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
-                    </Column>
+                        <!-- <Column :expander="true" /> -->
+                        <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
+                        <Column field="request_id" header="Request ID" sortable></Column>
+                        <Column field="user_code" header="Employee ID">
+                        </Column>
+                        <Column field="name" header="Employee Name" :sortable="false">
+                            <template #body="slotProps">
+                                <button class="fw-semibold text-primary"
+                                    @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">
+                                    {{ slotProps.data.name }} </button>
+                            </template>
+                        </Column>
+                        <Column field="loan_amount" header="Loan Amount"></Column>
+                        <Column field="emi_per_month" header="Monthly EMI">
 
-                    <Column field="particular" header="Employee ID" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
-                    </Column>
+                            <template #body="slotProps">
+                                <div>
+                                    <h1 v-if="slotProps.data.monthly_emi == null">-</h1>
+                                    <h1 v-else>{{slotProps.data.monthly_emi}}</h1>
+                                </div>
+                            </template>
 
-                    <Column field="" header="Employee Name" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
-                    </Column>
-
-                    <Column field="max_limit" header="Advance Amount" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                    </Column>
-
-                    <Column field="max_limit" header="Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                    </Column>
-
-                    <Column field="Status" header="Status" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
-                    </Column>
-
-                </DataTable>
+                        </Column>
+                        <Column field="tenure" header="Tenure"> </Column>
+                        <Column field="status" header="Status">
+                            <template #body="slotProps">
+                                <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
+                                    Pending
+                                </h6>
+                                <h6 v-if="slotProps.data.status == 1 " class=" text-green-500">
+                                    Approved
+                                </h6>
+                                <h6 v-if="slotProps.data.status == -1 " class="text-red-500">
+                                    Rejected
+                                </h6>
+                            </template>
+                        </Column>
+                        <Column field="" header="Action">
+                            <template #body="slotProps">
+                                <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
+                                </button>
+                                <OverlayPanel ref="op"
+                                    style="width: 160px;margin-top:12px !important;margin-right: 20px !important;"
+                                    class="p-0 m-0">
+                                    <div class=" d-flex flex-column p-0 m-0">
+                                        <!-- bg-green-200 -->
+                                        <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
+                                            @click="showConfirmDialog(slotProps.data)">view</button>
+                                        <!-- bg-blue-500 -->
+                                        <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
+                                            @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">passed
+                                            Transaction</button>
+                                    </div>
+                                </OverlayPanel>
+                            </template>
+                        </Column>
+                    </DataTable>
 
             </div>
 
@@ -182,3 +204,20 @@
 
     </div>
 </template>
+
+<script setup>
+import { onMounted, ref, reactive } from "vue";
+import { FilterMatchMode, FilterOperator } from "primevue/api";
+import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
+import dayjs from 'dayjs';
+
+const useEmpData = ref([""]);
+const op = ref();
+const toggle = (event) => {
+    op.value.toggle(event);
+}
+
+
+
+
+</script>
