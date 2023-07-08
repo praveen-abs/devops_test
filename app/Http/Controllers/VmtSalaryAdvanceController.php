@@ -211,8 +211,9 @@ class VmtSalaryAdvanceController extends Controller
     public function rejectOrApprovedSaladv(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
-        $request->record_id = 17;
-        $request->status = 1;
+        // $request->record_id = 17;
+        // $request->status = 1;
+        // dd($request->all());
 
         return $vmtSalaryAdvanceService->rejectOrApprovedSaladv($request->record_id, $request->status);
     }
