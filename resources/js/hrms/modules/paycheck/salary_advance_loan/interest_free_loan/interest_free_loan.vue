@@ -153,7 +153,7 @@
             </div>
 
             <div class="table-responsive">
-                <!-- {{ useEmpStore.isInterestFreeLoanFeature }} -->
+                {{ useEmpStore.isInterestFreeLoanFeature }}
                 <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="10" :value="useEmpStore.isInterestFreeLoanFeature"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"

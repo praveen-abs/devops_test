@@ -198,7 +198,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function rejectOrApproveLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-
+         dd($request->all());
         $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
             $request->loan_type,
             $request->record_id,

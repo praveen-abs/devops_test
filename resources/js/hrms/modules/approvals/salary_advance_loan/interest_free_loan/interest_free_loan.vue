@@ -118,17 +118,22 @@
                             </div>
                             <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
                                 <span class="font-semibold ">your Comments</span>
-                                <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments"
-                                    autoResize type="text" rows="3" style="border:none; outline-: none;" />
+                                <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments.reviewer_comments"
+                                    autoResize type="text" rows="3" style="border:none; outline-: none;"
+                                    :class="[v$.reviewer_comments.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                            <br>
+                            <span v-if="v$.reviewer_comments.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.reviewer_comments.$errors[0].$message }}
+                            </span>
                                 <!-- {{ SA_Request_comments }} -->
                             </div>
 
                             <template #footer>
                                 <div class="float-right ">
                                     <button class="btn bg-red-500 text-white px-5"
-                                        @click="approveAndReject(-1)">Reject</button>
+                                        @click="submitForm(-1)">Reject</button>
                                     <button class="mx-4 btn bg-green-500  text-white px-5"
-                                        @click="approveAndReject(1)">Approve</button>
+                                        @click="submitForm(1)">Approve</button>
                                 </div>
                                 <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
                             <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
@@ -162,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-                {{ UseInterestFreeLoan.arrayIFL_List }}
+                <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -286,10 +291,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive ,computed} from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
 import dayjs from 'dayjs';
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
+import { useNow, useDateFormat } from '@vueuse/core'
 
 const UseInterestFreeLoan = UseSalaryAdvanceApprovals();
 
@@ -301,7 +309,9 @@ onMounted(async () => {
 
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
-const reviewer_comments = ref();
+const reviewer_comments = reactive({
+    reviewer_comments:""
+});
 const canshowInterestFLR = ref(false);
 const currentlySelectedRowData = ref();
 const currentlySelectedStatus = ref();
@@ -350,7 +360,7 @@ function ShowDialogApprovalAll() {
 
 async function approveAndReject(status) {
     hideBulkConfirmDialog()
-    await UseInterestFreeLoan.IFLapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    await UseInterestFreeLoan.IFLapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.reviewer_comments)
     currentlySelectedStatus.value = status;
 }
 
@@ -367,6 +377,27 @@ function view_more(selectedRowData, user_code, currentName) {
     CurrentUser_code.value = user_code
 }
 
+
+const rules = computed(() => {
+    return {
+        reviewer_comments: { required },
+    }
+})
+
+
+const v$ = useValidate(rules, reviewer_comments )
+
+
+const submitForm = (val) => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        approveAndReject(val);
+    } else {
+        console.log('Form failed validation')
+    }
+}
 
 
 

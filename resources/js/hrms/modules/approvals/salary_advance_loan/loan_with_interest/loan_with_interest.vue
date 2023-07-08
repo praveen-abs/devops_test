@@ -81,8 +81,8 @@
 
                             <template #footer>
                                 <div class="float-right ">
-                                    <button class="btn btn-border-orange">Cancel</button>
-                                    <button class="mx-4 btn btn-orange">Submit</button>
+                                    <button class="btn btn-border-orange" @click="approveAndReject(1)">Reject</button>
+                                    <button class="mx-4 btn btn-orange" @click="approveAndReject(-1)">Approved</button>
                                 </div>
                                 <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
                             <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
