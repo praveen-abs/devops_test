@@ -384,18 +384,18 @@ class VmtSalaryAdvanceService
             ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')
             ->where('sal_adv_crd_sts', 0)->get([
 
-                   'vmt_emp_sal_adv_details.id',
-                    'vmt_emp_assign_salary_adv_setting.user_id',
-                    'users.name',
-                    'users.user_code',
-                    'vmt_emp_sal_adv_details.request_id',
-                    'vmt_emp_sal_adv_details.eligible_amount',
-                    'vmt_emp_sal_adv_details.borrowed_amount',
-                    'vmt_emp_sal_adv_details.requested_date',
-                    'vmt_emp_sal_adv_details.dedction_date',
-                    'vmt_emp_sal_adv_details.reason',
-                    'vmt_emp_sal_adv_details.emp_approver_flow',
-                    'vmt_emp_sal_adv_details.sal_adv_crd_sts',
+                'vmt_emp_sal_adv_details.id',
+                'vmt_emp_assign_salary_adv_setting.user_id',
+                'users.name',
+                'users.user_code',
+                'vmt_emp_sal_adv_details.request_id',
+                'vmt_emp_sal_adv_details.eligible_amount',
+                'vmt_emp_sal_adv_details.borrowed_amount',
+                'vmt_emp_sal_adv_details.requested_date',
+                'vmt_emp_sal_adv_details.dedction_date',
+                'vmt_emp_sal_adv_details.reason',
+                'vmt_emp_sal_adv_details.emp_approver_flow',
+                'vmt_emp_sal_adv_details.sal_adv_crd_sts',
 
             ]);
 
@@ -900,7 +900,7 @@ class VmtSalaryAdvanceService
             $loan_history['deduction_ending_month'] = $single_record['deduction_ending_month'];
             $loan_history['monthly_emi'] = $single_record['emi_per_month'];
             $loan_history['tenure'] = $single_record['tenure_months'];
-            $loan_history['status'] = $single_record['loan_crd_sts'];
+            $loan_history['status'] = $single_record['loan_status'];
             $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type,);
 
             array_push($emp_loan_history, $loan_history);
