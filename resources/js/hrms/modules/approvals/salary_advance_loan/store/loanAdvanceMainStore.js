@@ -56,8 +56,8 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
         let status = Status
         canShowLoadingScreen.value = true;
 
-        let data = val;
-        await axios.post('/reject-or-approve-loan', {
+        let data = val.id;
+        await axios.post('/rejectOrApprovedSaladv', {
             record_id: data,
             status:
             status == 1 ? 1
@@ -94,19 +94,20 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     async function IFLapproveAndReject(val, Status,reviewer_comments) {
         currentlySelectedStatus.value=Status;
+        let status = Status
         canShowLoadingScreen.value = true;
         console.log(reviewer_comments);
         let data = val.id;
         console.log(data);
-        await axios.post('http://localhost:3000/submitApproveAndReject', {
+        await axios.post('/reject-or-approve-loan', {
             loan_type : 'InterestFreeLoan',
             record_id: data,
             status:
-                currentlySelectedStatus == 1
+            status == 1
                     ? 1
-                    : currentlySelectedStatus == -1
+                    : status == -1
                         ? 1
-                        : currentlySelectedStatus,
+                        : status,
             reviewer_comments: reviewer_comments,
         }).then(() => {
         }).finally(()=>{
