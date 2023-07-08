@@ -49,7 +49,7 @@
                 </div>
             </div>
             <!-- v-if="!useEmpData" -->
-            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
+            {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
                     :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -61,7 +61,7 @@
 
                     <!-- <Column :expander="true" /> -->
                     <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
-                    <Column field="id" header="Request ID" sortable></Column>
+                    <Column field="request_id" header="Request ID" sortable></Column>
                     <Column field="user_code" header="Employee ID">
                     </Column>
                     <Column field="name" header="Employee Name" :sortable="false">

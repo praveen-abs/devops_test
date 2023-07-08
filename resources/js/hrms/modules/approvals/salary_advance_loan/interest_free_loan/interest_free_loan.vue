@@ -171,7 +171,7 @@
 
                         <!-- <Column :expander="true" /> -->
                         <!-- <Column selectionMode="multiple" style="width: 1rem" :exportable="false"></Column> -->
-                        <Column field="id" header="Request ID" sortable></Column>
+                        <Column field="request_id" header="Request ID" sortable></Column>
                         <Column field="user_code" header="Employee ID">
                         </Column>
                         <Column field="name" header="Employee Name" :sortable="false">
