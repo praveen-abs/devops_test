@@ -6,7 +6,7 @@
     use App\Models\VmtEmployee;
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
-    use App\Models\VmtGeneralInfo;
+    use App\Models\VmtClientMaster;
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
