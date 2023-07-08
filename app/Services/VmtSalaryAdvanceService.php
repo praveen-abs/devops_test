@@ -435,6 +435,7 @@ class VmtSalaryAdvanceService
 
             $sal_adv['id'] = $all_pending_advance['id'];
             $sal_adv['user_id'] = $all_pending_advance['user_id'];
+            $sal_adv['request_id'] = $all_pending_advance['request_id'];
             $sal_adv['name'] = $all_pending_advance['name'];
             $sal_adv['user_code'] = $all_pending_advance['user_code'];
             $sal_adv['eligible_amount'] = $all_pending_advance['eligible_amount'];
