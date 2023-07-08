@@ -158,6 +158,7 @@
                         </div>
                     </div>
                 </div>
+             {{   UseInterestFreeLoan.arrayIFL_List}}
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -255,6 +256,7 @@
                         <Column field="status" header="Status">
                             <template #body="slotProps">
                                 <h6 v-if="slotProps.data.loan_crd_sts == 0" class="text-orange-500">
+                                    <!-- {{ slotProps.data.loan_crd_sts }} -->
                                     Pending
                                 </h6>
                                 <h6 v-if="slotProps.data.loan_crd_sts == 1 " class=" text-green-500">

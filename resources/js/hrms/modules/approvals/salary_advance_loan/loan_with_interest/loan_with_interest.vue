@@ -112,8 +112,8 @@
             </div>
 
             <div class="table-responsive">
-                <!-- {{ useEmpStore.salaryAdvanceEmployeeData }} -->
-                <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
+                {{ useData.arrayIWL }}
+                <DataTable v-if="useEmpData == ''" :value="useData.arrayIWL"  :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
                         v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
                         @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
@@ -209,13 +209,32 @@
 import { onMounted, ref, reactive } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
+
+const useData = UseSalaryAdvanceApprovals();
 import dayjs from 'dayjs';
 
 const useEmpData = ref([""]);
+
+const expandedRows = ref([]);
+const selectedAllEmployee = ref();
+const reviewer_comments = ref();
+const canshowInterestFLR = ref(false);
+const currentlySelectedRowData = ref();
+const currentlySelectedStatus = ref();
+const canShowConfirmationAll = ref(false);
+const CurrentName = ref();
+const CurrentUser_code = ref();
+
+const val = ref();
 const op = ref();
 const toggle = (event) => {
     op.value.toggle(event);
 }
+
+onMounted(()=>{
+    useData.getInterestWithLoanDetails();
+
+})
 
 
 
