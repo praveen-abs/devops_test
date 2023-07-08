@@ -383,8 +383,25 @@ class VmtSalaryAdvanceService
         $temp_ar = array();
         $all_pending_loans = VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
             ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')
-            ->where('sal_adv_crd_sts', 0)->get();
+            ->where('sal_adv_crd_sts', 0)->get([
+
+                   'vmt_emp_sal_adv_details.id',
+                    'vmt_emp_assign_salary_adv_setting.user_id',
+                    'users.name',
+                    'users.user_code',
+                    'vmt_emp_sal_adv_details.request_id',
+                    'vmt_emp_sal_adv_details.eligible_amount',
+                    'vmt_emp_sal_adv_details.borrowed_amount',
+                    'vmt_emp_sal_adv_details.requested_date',
+                    'vmt_emp_sal_adv_details.dedction_date',
+                    'vmt_emp_sal_adv_details.reason',
+                    'vmt_emp_sal_adv_details.emp_approver_flow',
+                    'vmt_emp_sal_adv_details.sal_adv_crd_sts',
+
+            ]);
+
         // dd($all_pending_loans);
+
         foreach ($all_pending_loans as $single_record) {
             //dd($single_record);
             $approver_flow = collect(json_decode($single_record->emp_approver_flow, true))->sortBy('order');
@@ -871,12 +888,18 @@ class VmtSalaryAdvanceService
         $loan_history = array();
         foreach ($temp_ar as $single_record) {
 
+            // dd($single_record);
+
             $loan_history['id'] = $single_record['id'];
             $loan_history['request_id'] = $single_record['request_id'];
             $loan_history['user_code'] = User::where('id', $single_record['user_id'])->first()->user_code;
             $loan_history['name'] = User::where('id', $single_record['user_id'])->first()->name;
+            $loan_history['eligible_amount'] = $single_record['eligible_amount'];
             $loan_history['loan_amount'] = $single_record['borrowed_amount'];
-            $loan_history['monthly_emi'] = $single_record[' emi_per_month '];
+            $loan_history['reason'] = $single_record['reason'];
+            $loan_history['deduction_starting_month'] = $single_record['deduction_starting_month'];
+            $loan_history['deduction_ending_month'] = $single_record['deduction_ending_month'];
+            $loan_history['monthly_emi'] = $single_record['emi_per_month'];
             $loan_history['tenure'] = $single_record['tenure_months'];
             $loan_history['status'] = $single_record['loan_crd_sts'];
             $loan_history['emp_prevdetails'] = $this->EmployeeLoanHistory($single_record['user_id'], $loan_type,);
@@ -969,7 +992,11 @@ class VmtSalaryAdvanceService
 
             $loan_details = VmtEmpSalAdvDetails::where('id', $record_id)->first();
 
+            // dd($loan_details);
+
             $approver_flow = json_decode($loan_details->emp_approver_flow, true);
+
+            // dd($approver_flow);
 
             for ($i = 0; $i < count($approver_flow); $i++) {
                 if ($approver_flow[$i]['approver'] == $user_id) {

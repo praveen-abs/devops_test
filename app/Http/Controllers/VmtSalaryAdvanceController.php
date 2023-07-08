@@ -190,6 +190,8 @@ class VmtSalaryAdvanceController extends Controller
     public function fetchEmployeeForLoanApprovals(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         $loan_type = $request->loan_type;
+        // $loan_type = 'InterestFreeLoan';
+
         $response = $vmtSalaryAdvanceService->fetchEmployeeForLoanApprovals($loan_type);
         return $response;
     }
