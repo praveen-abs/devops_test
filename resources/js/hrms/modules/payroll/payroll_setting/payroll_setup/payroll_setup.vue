@@ -74,6 +74,7 @@ const usePayroll = usePayrollMainStore()
 
 onMounted(() => {
     usePayroll.getSalaryComponents()
+    usePayroll.getsalaryStructure()
 })
 
 </script>

@@ -152,7 +152,9 @@
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="overflow-x-auto">
                         <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                        </div>
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
@@ -160,17 +162,19 @@
                             <div class="min-w-fit">
                                 <EmployeeList :source="orgList" />
                             </div>
-                            <div class="ml-2 overflow-x">
+                            <div class="overflow-x-auto ml-2">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+
                             </div>
+
                         </div>
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
-                            <div class="min-w-fit">
+                            <div class="min-w-max">
                                 <EmployeeList :source="orgList" />
                             </div>
-                            <div>
+                            <div class="overflow-x-auto ml-2">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance"  />
                             </div>
                         </div>
@@ -183,7 +187,7 @@
     <MipRegularization />
     <LcRegularization />
     <EgRegularization />
-    <ViewSelfieImage />
+    <ViewSelfieImage  />
 </template>
 
 
@@ -210,7 +214,7 @@ const service = Service()
 onMounted(() => {
     Service()
 
-    useTimesheet.getSelectedEmployeeAttendance(142, useCalendar.getMonth, useCalendar.getYear).then(res => {
+    useTimesheet.getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear).then(res => {
         useTimesheet.currentEmployeeAttendance = Object.values(res.data)
     })
 

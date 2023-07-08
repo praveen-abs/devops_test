@@ -10,7 +10,7 @@ use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployeePayroll;
 use App\Models\VmtClientMaster;
 use App\Models\VmtPayroll;
-use App\Models\VmtEmployeePayslipV2;
+use App\Models\VmtEmployeePaySlipV2;
 use App\Models\VmtEmployeePaySlip;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtStaffAttendanceDevice;
@@ -147,9 +147,9 @@ class VmtCorrectionController extends Controller
             $emp_payroll_id = VmtEmployeePayroll::where('user_id', $singlepayslipdetails->user_id)->where('payroll_id', $payroll_id)->first()->id;
 
             /*get payroll id from vmt_emp_payroll in order to filter payroll_date and find emp_payroll_id */
-            $emp_payslip_data = VmtEmployeePayslipV2::where('emp_payroll_id', $emp_payroll_id)->first();
+            $emp_payslip_data = VmtEmployeePaySlipV2::where('emp_payroll_id', $emp_payroll_id)->first();
             if (empty($emp_payslip_data)) {
-                $emppayslip = new VmtEmployeePayslipV2;
+                $emppayslip = new VmtEmployeePaySlipV2;
                 $emppayslip->emp_payroll_id = $emp_payroll_id;
                 $emppayslip->basic = $singlepayslipdetails->BASIC;
                 $emppayslip->hra = $singlepayslipdetails->HRA;

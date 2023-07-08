@@ -138,9 +138,8 @@
                         <div class="row">
                             <div class="col-3">
                                 <ul class=' list-style-circle px-4'>
-                                    <li class=""><a href="#" class="">Detailed Report</a></li>
-                                    <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic
-                                            Report</a></li>
+                                    <li class=""><a href="{{ route('showBasicAttendanceReport') }}">Basic Report</a></li>
+                                    <li class=""><a href="{{ route('showDetailedAttendanceReport') }}">Detailed Report</a></li>
                                 </ul>
                             </div>
                         </div>

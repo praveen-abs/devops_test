@@ -23,7 +23,7 @@ if ($query_clientMaster) {
                 </span>
             </button>
             <div class="topbar-logo mx-2 ">
-                <img src=" {{ URL::asset(session()->get('client_logo_url')) }}" alt="" class=""
+                <img src=" {{$logoSrc }}" alt="" class=""
                     style="height: 40px;width:140px;">
             </div>
         </div>

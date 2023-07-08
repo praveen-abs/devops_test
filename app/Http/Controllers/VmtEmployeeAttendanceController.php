@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
-use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
@@ -46,6 +45,10 @@ class VmtEmployeeAttendanceController extends Controller
 
         $attendance_available_years = array_unique($attendance_year);
         return view('reports.vmt_basic_attendance_reports',compact('attendance_available_years'));
+    }
+
+    public function showDetailedAttendanceReport(Request $request){
+        return view('reports.vmt_detailed_attendance_reports');
     }
 
     public function fetchAttendanceMonthForGivenYear(Request $request){

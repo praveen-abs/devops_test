@@ -2,12 +2,12 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-
-import './bootstrap';
+import './hrms/assests/tailwind.css'
 import '../../public/assets/css/app.css';
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import AccordionTab from 'primevue/accordiontab';
@@ -109,11 +109,14 @@ import VirtualScroller from 'primevue/virtualscroller';
 import leave from './testings/leave.vue'
 
 const app = createApp(leave);
+const pinia=createPinia()
+
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
@@ -121,7 +124,6 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
-app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete)
 app.component('Avatar', Avatar);

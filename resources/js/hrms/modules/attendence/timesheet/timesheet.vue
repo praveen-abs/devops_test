@@ -1,5 +1,5 @@
 <template>
-    <div ref="calendarContainer" class="min-h-full w-full text-gray-800 card" v-if="singleAttendanceDay">
+    <div ref="calendarContainer" class="min-h-full min-w-fit text-gray-800 card" v-if="singleAttendanceDay">
         <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
@@ -19,7 +19,7 @@
             <!-- singleAttendanceDay Timesheet Data from current month  -->
 
             <div v-for="day in daysInCurrentMonth" :key="day"
-                class=" h-full py-3 shadow-sm  md: w-full border align-top rounded-lg " :class="{
+                class=" h-16 py-3 shadow-sm  md:h-36 w-full border align-top rounded-lg " :class="{
                     'bg-slate-50 text-gray-600 font-medium': isToday(day),
                     'hover:bg-gray-100 hover:text-gray-700': !isToday(day),
                     'bg-gray-200': isWeekEndDays(day)
@@ -46,7 +46,8 @@
                             <!-- Week end -->
 
                             <div v-if="isWeekEndDays(day)">
-                                <p class="font-semibold text-sm">Week Off</p>
+                                <p v-if="singleAttendanceDay.isAbsent" class="font-bold text-sm text-orange-400">Week Off
+                                </p>
                             </div>
 
 
@@ -57,25 +58,40 @@
 
                                 <div class="bg-green-100 p-3 rounded-lg"
                                     v-if="singleAttendanceDay.absent_status.includes('Approved')">
-                                    <p class="font-semibold text-sm"> {{ singleAttendanceDay.leave_type }} Approved</p>
+                                    <p class="font-semibold fs-6 text-green-900 text-center"> {{
+                                        singleAttendanceDay.leave_type }}
+                                    </p>
+                                    <p class="text-center">Approved
+                                        <i class='fa fa-check-circle text-success mx-2' v-tooltip="'Approved'"
+                                            title="Not Applied"></i>
+                                    </p>
                                 </div>
                                 <div class="bg-red-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Rejected')">
-                                    {{ singleAttendanceDay.leave_type }}
-                                    Rejected
+                                    <p class="font-semibold fs-6 text-red-900 text-center"> {{
+                                        singleAttendanceDay.leave_type }} </p>
+                                    <p class="text-center">Rejected <i class="fa fa-times-circle mx-2 text-danger"></i></p>
                                 </div>
                                 <div class="bg-yellow-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Pending')">
-                                    {{ singleAttendanceDay.leave_type }}
-                                    Pending
+                                    <p class="font-semibold fs-6 text-yellow-600 text-center"> {{
+                                        singleAttendanceDay.leave_type }}
+                                    </p>
+                                    <p class="text-center">Pending<i class="fa fa-question-circle fs-15 text-secondary mx-2"
+                                            v-tooltip="'Pending'"></i></p>
                                 </div>
                                 <div class="bg-slate-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Revoked')">
-                                    {{ singleAttendanceDay.leave_type }}
-                                    Revoked
+                                    <p class="font-semibold fs-6 text-slate-600 text-center"> {{
+                                        singleAttendanceDay.leave_type }}
+                                    </p>
+                                    <p class="text-center">Revoked</p>
                                 </div>
                                 <div class="bg-red-100 p-3 rounded-lg" v-else-if="!isWeekEndDays(day)">
-                                    <p class="font-semibold text-sm">Absent</p>
+                                    <p class="font-semibold fs-6 text-red-900 text-center">Absent <i
+                                            class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                            v-tooltip="'Not Applied'"></i></p>
+
                                 </div>
                             </div>
 
@@ -83,21 +99,22 @@
                             <!-- If Employee is Present -->
                             <div v-else
                                 class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
-                                <div class="w-full">
-                                    <div class="text-xs tracking-tight text-clip overflow-hidden p-1">
+                                <div class="w-full ">
+                                    <div class="text-xs tracking-tight text-clip overflow-hidden p-1 overflow-y-auto">
                                         <!-- singleAttendanceDay Check in  -->
                                         <div class="flex">
                                             <div class="flex ">
                                                 <i class="fa fa-arrow-down text-green-800  font-semibold text-sm "
                                                     style='transform: rotate(-45deg);'></i>
-                                                <p class="text-green-800 font-semibold text-sm mx-1">
-                                                    {{ singleAttendanceDay.checkin_time }}
+                                                <p class="text-green-800 font-semibold text-sm mx-1" style="width: 40px;">
+                                                    {{ getSession(singleAttendanceDay.checkin_time) }}
                                                 </p>
                                             </div>
                                             <div class="px-1">
                                                 <i class="text-green-800 font-semibold text-sm"
                                                     :class="useTimesheet.findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
-                                                <button @click="useTimesheet.viewSelfie"
+                                                <button
+                                                    @click="useTimesheet.onClickSViewSelfie(singleAttendanceDay.selfie_checkin)"
                                                     v-if="singleAttendanceDay.attendance_mode_checkin == 'mobile'"
                                                     class="mx-2">
                                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -126,7 +143,7 @@
                                                         class="fa fa-times-circle mx-2 text-danger"></i>
 
                                                     <i v-else class="fa fa-exclamation-circle text-warning fs-15 mx-2"
-                                                        v-tooltip="'Rejected'"></i>
+                                                        v-tooltip="'Not Applied'"></i>
                                                 </button>
 
                                                 <button v-if="singleAttendanceDay.isMIP">
@@ -156,14 +173,15 @@
                                             <div class="flex">
                                                 <i class="fa fa-arrow-down font-semibold text-sm text-red-800 "
                                                     style='transform: rotate(230deg);'></i>
-                                                <p class="text-red-800 font-semibold text-sm mx-1">
-                                                    {{ singleAttendanceDay.checkout_time }}
+                                                <p class="text-red-800 font-semibold text-sm mx-1" style="width: 40px;">
+                                                    {{ getSession(singleAttendanceDay.checkout_time) }}
                                                 </p>
                                             </div>
                                             <div class="px-1">
                                                 <i class="text-red-800 font-semibold text-sm"
                                                     :class="useTimesheet.findAttendanceMode(singleAttendanceDay.attendance_mode_checkout)"></i>
-                                                <button @click="useTimesheet.viewSelfie"
+                                                <button
+                                                    @click="useTimesheet.onClickSViewSelfie(singleAttendanceDay.selfie_checkout)"
                                                     v-if="singleAttendanceDay.attendance_mode_checkout == 'mobile'"
                                                     class="mx-2">
                                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -269,6 +287,7 @@ import { useCalendarStore } from "./stores/calendar";
 import { useAttendanceTimesheetMainStore } from './stores/attendanceTimesheetMainStore'
 import { Service } from '../../Service/Service'
 import dayjs from "dayjs";
+import moment from "moment";
 
 
 
@@ -400,6 +419,13 @@ const isFutureDate = (today) => {
     }
 }
 
+const getSession = (time) => {
+
+    let timeFormat = time == null ? "--:--:--" : moment(
+        time, ["HH:mm"]).format('h:mm a');
+
+    return timeFormat
+};
 
 
 /**

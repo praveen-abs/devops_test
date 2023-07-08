@@ -22,7 +22,7 @@ use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
-use App\Models\VmtGeneralInfo;
+
 use App\Models\Compensatory;
 use App\Models\VmtEmployeePMSGoals;
 use App\Models\VmtAppraisalQuestion;
@@ -850,15 +850,15 @@ class VmtEmployeeOnboardingController extends Controller
                 'mother_gender' => 'nullable|in:Male,male,Female,female,other',
                 'mother_dob' => 'nullable|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
+                'spouse_dob' => 'nullable',
                 'no_of_child' => 'nullable|numeric',
-                'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable|required_unless:no_of_child,null,0|date',
+                'child_name' => 'nullable',
+                'child_dob' => 'nullable',
                 'department' => 'required|exists:vmt_department,name',
                 'process' => 'nullable',
                 'designation' => 'required',
                 'cost_center' => 'nullable',
-                'confirmation_period' => 'nullable|date',
+                'confirmation_period' => 'nullable',
                 'holiday_location' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                 'l1_manager_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -888,7 +888,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'tax_regime' => 'nullable|in:old,Old,new,New',
                 'lwf_location' => 'nullable',
                 'esic_employer_contribution' => 'required|numeric',
-                 'dearness_allowance' => 'nullable|numeric',
+                 'dearness_allowance' => 'nullable',
             ];
 
             $messages = [
@@ -974,8 +974,8 @@ class VmtEmployeeOnboardingController extends Controller
 
 
                    //  $message = "Employee OnBoard was Created   ";
-                //      $VmtGeneralInfo = VmtGeneralInfo::first();
-                //      $image_view = url('/') . $VmtGeneralInfo->logo_img;
+                //      $VmtClientMaster = VmtClientMaster::first();
+                //      $image_view = url('/') . $VmtClientMaster->client_logo;
                 //    $mail_send = \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 
                     return  $rowdata_response = [
@@ -1189,8 +1189,8 @@ class VmtEmployeeOnboardingController extends Controller
            $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
 
-           $VmtGeneralInfo = VmtGeneralInfo::first();
-           $image_view = url('/') . $VmtGeneralInfo->logo_img;
+           $VmtClientMaster = VmtClientMaster::first();
+           $image_view = url('/') . $VmtClientMaster->client_logo;
            $appoinmentPath = "";
 
            if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -1253,7 +1253,7 @@ class VmtEmployeeOnboardingController extends Controller
            //For validation
            $isAllRecordsValid = true;
 
-           $VmtGeneralInfo = VmtGeneralInfo::first();
+           $VmtClientMaster = VmtClientMaster::first();
 
            $rules = [];
            $responseJSON = [
@@ -1409,8 +1409,8 @@ class VmtEmployeeOnboardingController extends Controller
                     $message =  $row['employee_code']  . ' has failed';
 
                //Sending mail
-               $VmtGeneralInfo = VmtGeneralInfo::first();
-               $image_view = url('/') . $VmtGeneralInfo->logo_img;
+               $VmtClientMaster = VmtClientMaster::first();
+               $image_view = url('/') . $VmtClientMaster->client_logo;
 
                \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 

@@ -33,6 +33,9 @@ export default defineConfig({
                 //Reports
                 'resources/js/hrms/modules/reports/pms/PMSFormsDownloadTable.js',
 
+                //Attendance Detailed Report
+                'resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js',
+
                 //Organization Module
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Payroll;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VmtPayrollComponents;
+use App\Models\VmtPaygroup;
+use App\Models\VmtAppIntegration;
+use App\Models\VmtEmpPaygroup;
+use App\Models\User;
+use App\Models\VmtPaygroupComps;
 use App\Services\VmtPayrollComponentsService;
 
 class VmtPayrollComponentsController extends Controller
@@ -18,15 +23,18 @@ class VmtPayrollComponentsController extends Controller
     }
     public function CreatePayRollComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        // dd($request->all());
+         //dd($request->all());
 
         $response =$serviceVmtPayrollComponentsService->CreatePayRollComponents(
             $request->name,
             $request->typeOfComp,
             $request->typeOfCalc,
+            $request->amount,
+            $request->percentage,
             $request->nameInPayslip,
             $request->isConsiderForEPF,
             $request->isConsiderForESI,
+            $request->category_id,
             $request->isPartOfEmpSalStructure,
             $request->isTaxable,
             $request->isCalcShowProBasis,
@@ -38,14 +46,18 @@ class VmtPayrollComponentsController extends Controller
     }
     public function UpdatePayRollEarningsComponents(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        $response =$serviceVmtPayrollComponentsService->UpdatePayRollComponents(
+
+        $response =$serviceVmtPayrollComponentsService->UpdatePayRollEarningsComponents(
             $request->id,
             $request->name,
             $request->typeOfComp,
             $request->typeOfCalc,
+            $request->amount,
+            $request->percentage,
             $request->nameInPayslip,
             $request->isConsiderForEPF,
             $request->isConsiderForESI,
+            $request->category_id,
             $request->isPartOfEmpSalStructure,
             $request->isTaxable,
             $request->isCalcShowProBasis,
@@ -72,7 +84,7 @@ class VmtPayrollComponentsController extends Controller
 
     public function AddAdhocAllowanceDetectionComp(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        // dd($request->all());
+        //dd($request->all());
         $response =$serviceVmtPayrollComponentsService->AddAdhocAllowanceDetectionComp(
             $request->comp_name,
             $request->category_id,
@@ -85,11 +97,13 @@ class VmtPayrollComponentsController extends Controller
     }
     public function UpdateAdhocAllowanceDetectionComp(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
+
+
         $response =$serviceVmtPayrollComponentsService->UpdateAdhocAllowanceDetectionComp(
-            $request->comp_id,
+            $request->id,
             $request->comp_name,
             $request->is_taxable,
-            $request->category,
+            $request->category_id,
             $request->category_type,
             $request->impact_on_gross);
 
@@ -110,7 +124,6 @@ class VmtPayrollComponentsController extends Controller
     {
         $response =$serviceVmtPayrollComponentsService->UpdateReimbursementComponents(
         $request->comp_id,
-        $request->comp_id,
         $request->comp_name,
         $request->category_id,
         $request->maximum_limit,
@@ -118,7 +131,59 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
+    public function fetchPayrollAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =VmtAppIntegration::get();
 
+        return response()->json([
+                "status" => "success",
+                "message" => " ",
+                "data" => $response,
+        ]);
+
+    }
+    public function addPayrollAppIntegrations(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->addPayrollAppIntegrations(
+        $request->accounting_soft_name,
+        $request->accounting_soft_logo,
+        $request->description,
+        $request->status);
+
+        return $response;
+    }
+    public function EnableDisableAppIntegration(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->EnableDisableAppIntegration(
+            $request->app_id,
+            $request->status);
+
+        return $response;
+    }
+
+
+    public function fetchPayGroupEmpComponents(Request $request , VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+
+        $response =$serviceVmtPayrollComponentsService->fetchPayGroupEmpComponents();
+
+
+        return response()->json($response);
+    }
+
+    // public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    // {
+
+    //     return $vmtSalaryAdvanceService->getAllDropdownFilterSetting();
+    // }
+
+
+    // public function ShowAssignEmployeelist(Request $request, VmtPayrollComponentsService $VmtPayrollComponentsService)
+    // {
+    //     // dd($request->all());
+
+    //     return $VmtPayrollComponentsService->ShowAssignEmployeelist($request->department_id, $request->designation, $request->work_location, $request->client_name);
+    // }
 
     public function addPaygroupCompStructure(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
