@@ -137,9 +137,9 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     async function getInterestWithLoanDetails(){
         canShowLoadingScreen.value = true;
-        let url = `http://localhost:3000/getinterestwithloan`;
-    await  axios.get(url,{
-            // loan_type:"InterestWithLoan",
+        let url = `/fetch-employee-for-loan-approval`;
+    await  axios.post(url,{
+            loan_type:"InterestWithLoan",
         }).then((res)=>{
             arrayIWL.value = res.data;
         }).finally(()=>{
@@ -158,7 +158,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
             status == 1
                     ? 1
                     : status == -1
-                        ? 1
+                        ? -1
                         : status,
             reviewer_comments: reviewer_comments,
         }).finally(()=>{

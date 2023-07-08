@@ -308,9 +308,7 @@ Travel Advance - ta
 
         axios.post('/InterestWithLoan', InterestWithLoan).finally(() => {
             canShowLoading.value = false
-
             fetchInterstWithLoan();
-
         })
 
         dialogInterestwithLoan.value = false;

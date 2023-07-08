@@ -66,8 +66,6 @@
                     <Column field="max_limit" header="Expected Return" style="min-width: 12rem">
 
                     </Column>
-
-
                     <Column field="loan_status" header="Status" style="min-width: 12rem">
                         {{slotProps.data.loan_status}}
                     </Column>

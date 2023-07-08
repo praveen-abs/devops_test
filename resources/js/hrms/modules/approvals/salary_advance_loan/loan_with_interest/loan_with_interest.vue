@@ -11,13 +11,13 @@
                     </div>
 
                     <div class="float-right">
-                        <button class="btn btn-border-orange">View Report</button>
-                        <button class="mx-4 btn btn-orange">
-                            <!-- <i class="mx-2 fa fa-plus" aria-hidden="true"></i> -->
+                        <button class="btn btn-border-orange" v-if="useEmpData != ''" @click="useEmpData = ''">View
+                            Report</button>
+                        <button class="mx-2 btn btn-orange" v-if="useEmpData == ''" @click="ShowDialogApprovalAll">
                             Approval All
                         </button>
 
-                        <Dialog header="Header" :style="{ width: '58vw' }" modal>
+                        <Dialog header="Header" :style="{ width: '58vw' }" modal v-model:visible="canShowInterestWithLoan" >
                             <template #header>
                                 <div>
                                     <h1 style="border-left: 3px solid var( --orange);padding-left: 5px ;" class="fs-4">New
@@ -175,6 +175,53 @@
                         </Column>
                     </DataTable>
 
+
+
+                    <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class=""
+                        dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
+                        v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
+                        @select-all-change="onSelectAllChange" @row-select="onRowSelect" @row-unselect="onRowUnselect"
+                        :rowsPerPageOptions="[5, 10, 25]"
+                        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
+
+                        <Column field="request_id" header="Request ID" sortable></Column>
+                        <Column field="loan_amount" header="Loan Amount">
+                        </Column>
+                        <Column field="loan_amount" header="Advance Amount">
+                        </Column>
+                        <Column field="emi_per_month" header="Monthly EMI">
+                            <template #body="slotProps">
+                                <div>
+                                    <h1 v-if="slotProps.data.emi_per_month == null">-</h1>
+                                    <h1 v-else>{{ slotProps.data.emi_per_month }}</h1>
+                                </div>
+                            </template>
+                        </Column>
+                        <Column field="tenure_months" header="Tenure">
+                        </Column>
+                        <Column field="deduction_starting_month" header="EMI Start Date">
+                        </Column>
+                        <Column field="deduction_ending_month" header="EMI Start Date">
+                        </Column>
+                        <Column field="status" header="Status">
+                            <template #body="slotProps">
+                                <h6 v-if="slotProps.data.loan_crd_sts == 0" class="text-orange-500">
+                                    <!-- {{ slotProps.data.loan_crd_sts }} -->
+                                    Pending
+                                </h6>
+                                <h6 v-if="slotProps.data.loan_crd_sts == 1" class=" text-green-500">
+                                    Approved
+                                </h6>
+                                <h6 v-if="slotProps.data.loan_crd_sts == 'Rejected'" class="text-red-500">
+                                    <!-- {{ slotProps.data.status }} -->
+                                </h6>
+                            </template>
+                        </Column>
+                    </DataTable>
+
+
+
                 </div>
 
             </div>
@@ -214,7 +261,7 @@ const useEmpData = ref([""]);
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
 const reviewer_comments = ref();
-const canshowInterestFLR = ref(false);
+const canShowInterestWithLoan = ref(false);
 const currentlySelectedRowData = ref();
 const currentlySelectedStatus = ref();
 const canShowConfirmationAll = ref(false);
@@ -231,6 +278,33 @@ onMounted(() => {
     useData.getInterestWithLoanDetails();
 
 })
+
+function showConfirmDialog(selectedRowData) {
+    canShowInterestWithLoan.value = true;
+    currentlySelectedRowData.value = selectedRowData;
+    val.value = selectedRowData;
+}
+
+function hideBulkConfirmDialog() {
+    canShowConfirmationAll.value = false;
+    canShowInterestWithLoan.value = false;
+}
+
+function ShowDialogApprovalAll() {
+    canShowConfirmationAll.value = true;
+}
+
+async function approveAndReject(status) {
+    hideBulkConfirmDialog()
+    await useData.IFLapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    currentlySelectedStatus.value = status;
+}
+
+function view_more(selectedRowData, user_code, currentName) {
+    useEmpData.value = selectedRowData;
+    CurrentName.value = currentName;
+    CurrentUser_code.value = user_code
+}
 
 
 
