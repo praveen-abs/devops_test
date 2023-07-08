@@ -69,19 +69,8 @@
                     <Column field="dedction_date" header="Expected Return" style="min-width: 12rem">
                     </Column>
 
-
-                    <Column field="status" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
-                                Approved
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 2" class="text-red-500">
-                              Rejected
-                            </h6>
-                        </template>
+                    <Column field="loan_status" header="Status" style="min-width: 12rem">
+                        {{slotProps.data.loan_status}}
                     </Column>
 
                 </DataTable>

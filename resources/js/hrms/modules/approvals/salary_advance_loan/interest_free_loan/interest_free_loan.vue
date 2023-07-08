@@ -9,17 +9,20 @@
                             Loan as per the
                             <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span>
                         </p> -->
-                        <p class="text-xl font-medium" v-if="useEmpData == ''">Five Team members are eligible for the Interest Free
+                        <p class="text-xl font-medium" v-if="useEmpData == ''">Five Team members are eligible for the
+                            Interest Free
                             Loan as per the
-                            <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span> </p>
-                    <p v-if="useEmpData != ''" class=" fs-4 fw-semibold text-blue-900 font-sans">Employee ID : <span
-                            class=" fs-4 fw-semibold font-sans mr-5">{{ CurrentUser_code }} </span> <span
-                            class="ml-5 pl-14 fs-4 fw-semibold text-blue-900 font-sans"
-                            style="border-left: 2px solid black;">Employee Name : {{ CurrentName }}</span></p>
+                            <span class="text-lg text-primary text-decoration-underline"> Company's Loan Policy</span>
+                        </p>
+                        <p v-if="useEmpData != ''" class=" fs-4 fw-semibold text-blue-900 font-sans">Employee ID : <span
+                                class=" fs-4 fw-semibold font-sans mr-5">{{ CurrentUser_code }} </span> <span
+                                class="ml-5 pl-14 fs-4 fw-semibold text-blue-900 font-sans"
+                                style="border-left: 2px solid black;">Employee Name : {{ CurrentName }}</span></p>
                     </div>
 
                     <div class="float-right ">
-                        <button class="btn btn-border-orange" v-if="useEmpData != ''" @click="useEmpData = ''">View Report</button>
+                        <button class="btn btn-border-orange" v-if="useEmpData != ''" @click="useEmpData = ''">View
+                            Report</button>
                         <button class="mx-2 btn btn-orange" v-if="useEmpData == ''" @click="ShowDialogApprovalAll">
                             Approval All
                         </button>
@@ -47,30 +50,31 @@
                                 </div>
                             </template>
                             <!-- v-for="(items, index ) in required_Amount.eligible_amount" :key="index" -->
-                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none" >
+                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none">
                                 <div class="card-body">
                                     <div class="row mx-2">
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Required Amount</h1>
                                             <!-- {{ items }} -->
-                                           <!-- {{ items.emi_per_month}} -->
+                                            <!-- {{ items.emi_per_month}} -->
 
-                                            <InputText type="text"
-                                                placeholder="&#8377; Enter The Required Amount" disabled  v-model="val.loan_amount"  />
-                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{ val.eligible_amount }}
+                                            <InputText type="text" placeholder="&#8377; Enter The Required Amount" disabled
+                                                v-model="val.loan_amount" />
+                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : {{
+                                                val.eligible_amount }}
                                             </p>
                                         </div>
                                         <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                            <InputText type="text"
-                                                placeholder="&#8377; " disabled  v-model="val.monthly_emi" />
+                                            <InputText type="text" placeholder="&#8377; " disabled
+                                                v-model="val.monthly_emi" />
                                         </div>
-                                        <div class="col mx-2" >
+                                        <div class="col mx-2">
                                             <h1 class="fs-5 my-2">Term</h1>
                                             <!-- <Dropdown :options="cities" optionLabel="name" placeholder="1.5"
                                                 class="w-full md:w-10rem" v-model="interestWithLoan.Term_year" /> -->
-                                            <InputText class="w-full md:w-10rem" type="text"
-                                                placeholder="&#8377; " disabled  v-model="val.tenure"  />
+                                            <InputText class="w-full md:w-10rem" type="text" placeholder="&#8377; " disabled
+                                                v-model="val.tenure" />
                                             <label for="" class="fs-5 ml-2" style="color:var(--navy); ">Months</label>
                                         </div>
                                     </div>
@@ -80,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none " >
+                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
                                 <div class="card-body mx-4">
                                     <div class="row">
                                         <!-- fw-bolder -->
@@ -89,28 +93,28 @@
                                             Payroll</h1>
                                         <div class="col-4">
                                             <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon
-                                                dateFormat="dd/mm/yy" disabled v-model="val.deduction_starting_month" />
+                                            <Calendar showIcon dateFormat="dd/mm/yy" disabled
+                                                v-model="val.deduction_starting_month" />
                                         </div>
 
                                         <div class="col-4 mx-2">
                                             <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                                            <Calendar showIcon
-                                                dateFormat="dd/mm/yy" disabled v-model="val.deduction_ending_month" />
+                                            <Calendar showIcon dateFormat="dd/mm/yy" disabled
+                                                v-model="val.deduction_ending_month" />
                                         </div>
                                         <div class="col-3">
                                             <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                                            <InputText type="text"
-                                                style="width: 150px !important;" disabled v-model="val.tenure"  />
+                                            <InputText type="text" style="width: 150px !important;" disabled
+                                                v-model="val.tenure" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6"  >
+                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
                                 <span class="font-semibold ">Reason</span>
-                                <Textarea
-                                    class="my-3 capitalize form-control textbox" disabled v-model="val.reason" autoResize type="text" rows="3" />
+                                <Textarea class="my-3 capitalize form-control textbox" disabled v-model="val.reason"
+                                    autoResize type="text" rows="3" />
                             </div>
                             <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
                                 <span class="font-semibold ">your Comments</span>
@@ -158,7 +162,7 @@
                         </div>
                     </div>
                 </div>
-             {{   UseInterestFreeLoan.arrayIFL_List}}
+                {{ UseInterestFreeLoan.arrayIFL_List }}
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -186,24 +190,14 @@
                             <template #body="slotProps">
                                 <div>
                                     <h1 v-if="slotProps.data.monthly_emi == null">-</h1>
-                                    <h1 v-else>{{slotProps.data.monthly_emi}}</h1>
+                                    <h1 v-else>{{ slotProps.data.monthly_emi }}</h1>
                                 </div>
                             </template>
 
                         </Column>
                         <Column field="tenure" header="Tenure"> </Column>
-                        <Column field="status" header="Status">
-                            <template #body="slotProps">
-                                <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
-                                    Pending
-                                </h6>
-                                <h6 v-if="slotProps.data.status == 1 " class=" text-green-500">
-                                    Approved
-                                </h6>
-                                <h6 v-if="slotProps.data.status == -1 " class="text-red-500">
-                                    Rejected
-                                </h6>
-                            </template>
+                        <Column field="loan_status" header="Status" style="min-width: 12rem">
+                            {{ slotProps.data.loan_status }}
                         </Column>
                         <Column field="" header="Action">
                             <template #body="slotProps">
@@ -243,7 +237,7 @@
                             <template #body="slotProps">
                                 <div>
                                     <h1 v-if="slotProps.data.emi_per_month == null">-</h1>
-                                    <h1 v-else>{{slotProps.data.emi_per_month}}</h1>
+                                    <h1 v-else>{{ slotProps.data.emi_per_month }}</h1>
                                 </div>
                             </template>
                         </Column>
@@ -259,7 +253,7 @@
                                     <!-- {{ slotProps.data.loan_crd_sts }} -->
                                     Pending
                                 </h6>
-                                <h6 v-if="slotProps.data.loan_crd_sts == 1 " class=" text-green-500">
+                                <h6 v-if="slotProps.data.loan_crd_sts == 1" class=" text-green-500">
                                     Approved
                                 </h6>
                                 <h6 v-if="slotProps.data.loan_crd_sts == 'Rejected'" class="text-red-500">
