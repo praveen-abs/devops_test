@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/db/getAllEmployees', [App\Http\Controllers\VmtDBDataController::class, 'getAllEmployees']);
 
     Route::get('/new_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'showMainDashboardPage'])->name('new-main-dashboard');
-    Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index');
+    Route::get('/', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('index')->name('index');
     Route::get('/old_main_dashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'index'])->name('old-main-dashboard');
 
     //404 error page
