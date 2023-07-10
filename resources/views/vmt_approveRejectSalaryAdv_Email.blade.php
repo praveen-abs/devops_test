@@ -56,7 +56,15 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                     style="padding:10px ;">
 
                                                     <p class="text-strong " style="margin: 0px 0px 0px ">Dear
-                                                        {{-- {{ $employeeName }},</p> --}}
+
+                                                       emp name {{ $EmpName }},
+                                                       emp code {{$EmpCode}}
+                                                        {{-- {{ $EmpCode }}, --}}
+                                                   approver      {{ $curntStatus }},
+                                                      approver name   is {{ $ApproverName }},
+
+
+                                                    </p>
                                                     <p class="" style="  ">
                                                         This is to inform you that your leave request has been
                                                         {{-- {{ $leave_status }} --}}
@@ -136,7 +144,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                         <p style="padding-bottom:10px; "> Kindly visit the HRMS portal
                                                             for more details.</p>
                                                         <a class="" type="button"
-                                                            {{-- href="{{ $loginLink }}/attendance-leave" --}}
+                                                            href="{{ $loginLink }}/showSAapprovalView"
                                                             style="text-decoration:none;cursor: pointer;font-weight:600;border:1px solid #ff8f1b;color:#fa9530;background:transparent;padding: 4px;
                                                             border-radius: 5px;">
                                                             Click Here

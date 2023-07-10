@@ -257,11 +257,45 @@ class VmtSalaryAdvanceService
             $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
             $EmpApplySalaryAmt->save();
 
-            return response()->json([
-                'status' => 'save successfully',
-                'message' => 'Done',
 
-            ]);
+            // $approver_details = User::where('id', $current_user_id)->first();
+
+            $emp_details =  User::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.user_id','=','users.id')
+                                ->join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
+                                ->where('vmt_emp_sal_adv_details.id',$EmpApplySalaryAmt->id)
+                                ->first();
+
+                          $simm =  json_decode(($emp_details->emp_approver_flow),true);
+
+                          foreach($simm as $single_simma){
+                                if($single_simma['order'] == 1){
+                                    $approver_details = User::where('id', $single_simma['approver'])->first();
+                                }
+                          }
+
+
+            $isSent    = \Mail::to($approver_details->email)
+            ->send(new ApproveRejectLoanAndSaladvMail(
+                $approver_details->name,
+                $emp_details->name,
+                $emp_details->user_code,
+                request()->getSchemeAndHttpHost(),
+                $emp_details->sal_adv_status,
+            ));
+
+            if($isSent){
+                $sima = "success";
+            }else{
+                $sima = "failure";
+            }
+
+            dd($sima);
+
+            // return response()->json([
+            //     'status' => 'save successfully',
+            //     'message' => 'Done',
+
+            // ]);
         } else if ($employee_sal_sett->can_borrowed_multiple == "0") {
 
             $already_applied = VmtEmpAssignSalaryAdvSettings::join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
@@ -325,19 +359,29 @@ class VmtSalaryAdvanceService
     {
         $json_approvalflow = json_encode($approvalflow);
 
-        // $res = array();
-        // foreach ($eligibleEmployee as $emplo){
+        $res = array();
+        foreach ($eligibleEmployee as $emplo){
 
-        // $user_detailss = User::where('user_code', $emplo['user_code'])->first();
-        //  $simma_iddd = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
+        $user_detailss = User::where('user_code', $emplo['user_code'])->first();
 
-        //  if($simma_iddd->exists()){
+         $simma_iddd = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
 
-        //  }
-        // // $user_name  =  User::where('id', $simma_iddd->user_id)->first();
-        // //  array_push($res, $user_name->name);
-        // }
-        // dd($res);
+         if(!empty($simma_iddd)){
+
+               $user_name  =  User::where('id', $simma_iddd->user_id)->first();
+               array_push($res, $user_name->name);
+         }
+    }
+
+    if(!empty($res)){
+
+        return response()->json([
+            'status' => 'already assigned another setting',
+            'message' => $res,
+
+        ]);
+    }
+
 
         try {
 
@@ -990,7 +1034,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function rejectOrApprovedSaladv($record_id, $status, $reason)
+    public function rejectOrApprovedSaladv($record_id, $status, $reviewer_comments)
     {
 
         // try {
@@ -1011,11 +1055,11 @@ class VmtSalaryAdvanceService
                 if ($approver_flow[$i]['approver'] == $user_id) {
                     if ($status == 1) {
                         $approver_flow[$i]['status'] = $status;
-                        $approver_flow[$i]['reason'] = $reason;
+                        $approver_flow[$i]['reason'] = $reviewer_comments;
                         $sal_adv_details->sal_adv_status =  'Approved By ' .  $sal_adv_settings_approver_flow[$i]['name'];
                     } else if ($status == -1) {
                         $approver_flow[$i]['status'] = $status;
-                        $approver_flow[$i]['reason'] = $reason;
+                        $approver_flow[$i]['reason'] = $reviewer_comments;
                         $sal_adv_details->sal_adv_status =  'Rejected By ' . $sal_adv_settings_approver_flow[$i]['name'];
                         $sal_adv_details->sal_adv_crd_sts = -1;
                     }
@@ -1025,8 +1069,21 @@ class VmtSalaryAdvanceService
             $sal_adv_details->emp_approver_flow = json_encode($approver_flow, true);
             $sal_adv_details->save();
 
+            $approver_details = User::where('id', $user_id)->first();
 
-            $isSent    = \Mail::to('simmasrfc1330@gmail.com')->send(new ApproveRejectLoanAndSaladvMail());
+            $emp_details =  User::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.user_id','=','users.id')
+                                ->join('vmt_emp_sal_adv_details','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id','=','vmt_emp_assign_salary_adv_setting.id')
+                                ->where('vmt_emp_sal_adv_details.id',$record_id)
+                                ->first();
+
+            $isSent    = \Mail::to($emp_details->email)
+            ->send(new ApproveRejectLoanAndSaladvMail(
+                $approver_details->name,
+                $emp_details->name,
+                $emp_details->user_code,
+                request()->getSchemeAndHttpHost(),
+                $emp_details->sal_adv_status,
+            ));
 
             if($isSent){
                 $sima = "success";

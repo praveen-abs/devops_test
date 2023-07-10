@@ -219,7 +219,7 @@ class VmtSalaryAdvanceController extends Controller
         return $vmtSalaryAdvanceService->rejectOrApprovedSaladv(
             $request->record_id,
             $request->status,
-            $request->reason);
+            $request->reviewer_comments);
     }
 
     public function EmployeeLoanHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
