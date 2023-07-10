@@ -230,7 +230,7 @@ Travel Advance - ta
     // Travel Advance Feature Ends
 
     // dialog box varible
-    const dialogInterestwithLoan = ref(true);
+    const dialogInterestwithLoan = ref(false);
 
 
     // Loan With interest Feature Begins
@@ -253,15 +253,24 @@ Travel Advance - ta
         EMI_END_Month: '',
         Total_Month: '',
         Reason: '',
-        total_amount: 5,
+        total_amount:'0' ,
         max_tenure_months: '',
-        details: ''
+        details: '',
+        loan_type: 'InterestFreeLoan',
+        loan_settings_id:''
 
     });
 
-    const getLoanDetails = (type) => {
-        return axios.post('/show-eligible-interest-free-loan-details', {
-            loan_type: type
+    const getLoanDetails = () => {
+         axios.post('/show-eligible-interest-free-loan-details', {
+            loan_type: "InterestWithLoan",
+        }).then((res)=>{
+            InterestWithLoan.details =res.data;
+            InterestWithLoan.Interest_rate = res.data.loan_amt_interest;
+            InterestWithLoan.minEligibile  = res.data.max_loan_amount;
+            InterestWithLoan.loan_settings_id =res.data.loan_settings_id;
+            InterestWithLoan.max_tenure_months = res.data.max_tenure_months;
+
         })
     }
 
@@ -270,47 +279,27 @@ Travel Advance - ta
         console.log(InterestWithLoan);
 
         // canShowLoading.value = true;
-
         axios.post('/employee-loan-history', {
-
         }).then(res => {
             InterestWithLoanData.value = res.data
             console.log(res.data);
 
         }).finally(() => {
-            canShowLoading.value = false;
+            // canShowLoading.value = false;
         })
     }
 
-    // get max eligible amount
-    function getinterestwithloan() {
 
-        axios.get('http://localhost:3000/interestWithloanDetails', {
-            // loan_type:"InterestFreeLoan"
-        }).then((res) => {
-            console.log(res.data);
-            InterestWithLoan.details = res.data;
-
-            InterestWithLoan.max_tenure_months = res.data.Months;
-            InterestWithLoan.minEligibile = res.data.minEligibile;
-            InterestWithLoan.Interest_rate = res.data.Interest_rate;
-            console.log(InterestWithLoan.details);
-            console.log(InterestWithLoan.max_tenure_months);
-        });
-    }
-
-    const saveinterestWithLoan = () => {
+    const saveInterestWithLoan = () => {
 
         // canShowLoading.value = true;
 
-        axios.post('/InterestWithLoan', InterestWithLoan).finally(() => {
+        axios.post('/apply-loan', InterestWithLoan).finally(() => {
             canShowLoading.value = false
             fetchInterstWithLoan();
         })
 
         dialogInterestwithLoan.value = false;
-
-
     }
 
 
@@ -395,7 +384,7 @@ Travel Advance - ta
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, InterestWithLoan, dialogInterestwithLoan, saveinterestWithLoan, InterestWithLoanData, fetchInterstWithLoan, getinterestwithloan,
+        isLoanWithInterestFeature, InterestWithLoan, dialogInterestwithLoan, saveInterestWithLoan, InterestWithLoanData, fetchInterstWithLoan,
         calculateLoanDetails, getLoanDetails
 
 
