@@ -106,10 +106,7 @@ class VmtSalaryAdvanceController extends Controller
 
         return $response;
     }
-    public function showInterestFreeLoanEmployeeinfo(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
-        return $vmtSalaryAdvanceService->showInterestFreeLoanEmployeeinfo();
-    }
+
 
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
@@ -198,7 +195,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function rejectOrApproveLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-         dd($request->all());
+        dd($request->all());
         $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
             $request->loan_type,
             $request->record_id,

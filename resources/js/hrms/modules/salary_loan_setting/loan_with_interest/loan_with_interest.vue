@@ -122,7 +122,7 @@
                                                 <!-- <InputText type="text" v-model="salaryStore.lwif.loan_amt_interest"
                                                     style="width: 150px;" /> -->
                                                     <InputNumber  inputId="withoutgrouping"
-                                                    v-model="salaryStore.lwif.loan_amt_interest" style="width: 100px;" class="mx-2" :useGrouping="false" :class="[
+                                                    v-model="salaryStore.lwif.loan_amt_interest" style="width: 100px;" class="mx-2"  :minFractionDigits="1" :maxFractionDigits="5" :class="[
                                                 v$.loan_amt_interest.$error ? 'p-invalid' : '',
                                             ]" />
                                         <span v-if="v$.loan_amt_interest.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">

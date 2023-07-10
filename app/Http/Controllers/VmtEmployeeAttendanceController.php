@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtLeaves;
-use App\Models\VmtGeneralInfo;
 use App\Models\VmtStaffAttendanceDevice;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeAttendanceRegularization;
