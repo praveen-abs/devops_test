@@ -44,7 +44,7 @@
             </div>
 
             <div class="table-responsive">
-                {{useEmpStore.InterestWithLoanData}}
+                <!-- {{useEmpStore.InterestWithLoanData}} -->
                 <DataTable :value="useEmpStore.InterestWithLoanData" ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -230,20 +230,6 @@
 
     </Dialog>
 
-
-
-
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
@@ -257,7 +243,7 @@ const useEmpStore = useEmpSalaryAdvanceStore()
 const loanDetails = ref([])
 
 onMounted(() => {
-    // useEmpStore.fetchInterstWithLoan();
+    useEmpStore.fetchInterstWithLoan();
     useEmpStore.getLoanDetails();
     // useEmpStore.getLoanDetails('InterestWithLoan').then(res => {
     //     loanDetails.value.push(res.data)

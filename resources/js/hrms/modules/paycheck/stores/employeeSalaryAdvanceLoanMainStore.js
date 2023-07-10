@@ -133,8 +133,6 @@ Travel Advance - ta
         }).then((res) => {
             console.log(res);
             // interestFreeLoan.max_tenure_months = res.data.max_tenure_months;
-
-            console.log(interestFreeLoan.max_tenure_months);
             interestFreeLoan.details = res.data;
             interestFreeLoan.loan_setting_id = res.data.loan_setting_id;
             interestFreeLoan.minEligibile = res.data.max_loan_amount;
@@ -142,8 +140,7 @@ Travel Advance - ta
     }
     // const selected_date =ref();
     const fetchInterestfreeLoan = () => {
-
-        // canShowLoading.value = true
+        canShowLoading.value = true
 
         console.log("fetching SA");
 
@@ -163,7 +160,7 @@ Travel Advance - ta
 
         axios.post('/apply-loan', interestFreeLoan).finally(() => {
             canShowLoading.value = false;
-            // fetchInterestfreeLoan();
+            fetchInterestfreeLoan();
         })
         dialog_NewInterestFreeLoanRequest.value = false
     }
@@ -265,6 +262,7 @@ Travel Advance - ta
          axios.post('/show-eligible-interest-free-loan-details', {
             loan_type: "InterestWithLoan",
         }).then((res)=>{
+
             InterestWithLoan.details =res.data;
             InterestWithLoan.Interest_rate = res.data.loan_amt_interest;
             InterestWithLoan.minEligibile  = res.data.max_loan_amount;
@@ -278,20 +276,20 @@ Travel Advance - ta
 
         console.log(InterestWithLoan);
 
-        // canShowLoading.value = true;
-        axios.post( { loan_type: "InterestWithLoan" }).then(res => {
+        canShowLoading.value = true;
+        axios.post('/employee-loan-history', { loan_type: "InterestWithLoan" }).then(res => {
             InterestWithLoanData.value = res.data
             console.log(res.data);
 
         }).finally(() => {
-            // canShowLoading.value = false;
+            canShowLoading.value = false;
         })
     }
 
 
     const saveInterestWithLoan = () => {
 
-        // canShowLoading.value = true;
+        canShowLoading.value = true;
 
         axios.post('/apply-loan', InterestWithLoan).finally(() => {
             canShowLoading.value = false
