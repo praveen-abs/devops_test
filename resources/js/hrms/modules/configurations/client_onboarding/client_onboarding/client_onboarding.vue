@@ -14,7 +14,7 @@
                                     v$.client_code.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.client_code.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.client_code.required.$message.replace("Value", "Address") }}
+                                {{ v$.client_code.required.$message.replace("Value", "Client Code") }}
                             </span>
 
                         </div>
@@ -29,7 +29,7 @@
                                     v$.client_name.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.client_name.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.client_name.required.$message.replace("Value", "Address") }}
+                                {{ v$.client_name.required.$message.replace("Value", "Legal Name of the Company") }}
                             </span>
 
                             <!-- <label for="" class="float-label">Legal Name of the Company</label> -->
@@ -45,7 +45,7 @@
                                     v$.contract_start_date.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.contract_start_date.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.contract_start_date.required.$message.replace("Value", "Address") }}
+                                {{ v$.contract_start_date.required.$message.replace("Value", "Contract Start Date") }}
                             </span>
                             <!-- <label for="" class="float-label">Contract Start Date</label> -->
                         </div>
@@ -60,7 +60,7 @@
                                     v$.contract_end_date.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.contract_end_date.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.contract_end_date.required.$message.replace("Value", "Address") }}
+                                {{ v$.contract_end_date.required.$message.replace("Value", "Contract End Date") }}
                             </span>
                             <!-- <label for="" class="float-label">Contract End Date</label> -->
                         </div>
@@ -76,7 +76,7 @@
                                     v$.cin_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.cin_number.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.cin_number.required.$message.replace("Value", "Address") }}
+                                {{ v$.cin_number.required.$message.replace("Value", "Company Identification Number") }}
                             </span>
                             <label class="error cin_no_label" for="cin_no" style="display: none;"></label>
                             <!-- <label for="" class="float-label">Company Identification Number</label> -->
@@ -92,7 +92,7 @@
                                     v$.company_tan.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.company_tan.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.company_tan.required.$message.replace("Value", "Address") }}
+                                {{ v$.company_tan.required.$message.replace("Value", "Company TAN") }}
                             </span>
                             <label class="error com_tan_label" for="com_tan" style="display: none;"></label>
                             <!-- <label for="" class="float-label">Company TAN</label> -->
@@ -108,7 +108,7 @@
                                     v$.company_pan.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.company_pan.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.company_pan.required.$message.replace("Value", "Address") }}
+                                {{ v$.company_pan.required.$message.replace("Value", "Company PAN") }}
                             </span>
                             <label class="error com_pan_label" for="com_pan" style="display: none;"></label>
                             <span id="pan_err" style="display: none; color: darkred;" class="text-danger">
@@ -125,7 +125,7 @@
                                     v$.gst_no.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.gst_no.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.gst_no.required.$message.replace("Value", "Address") }}
+                                {{ v$.gst_no.required.$message.replace("Value", "GST No") }}
                             </span>
                             <label class="error gst_no_label" for="gst_no" style="display: none;"></label>
                             <!-- <label for="" class="float-label">GST No</label> -->
@@ -141,7 +141,7 @@
                                     v$.epf_reg_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.epf_reg_number.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.epf_reg_number.required.$message.replace("Value", "Address") }}
+                                {{ v$.epf_reg_number.required.$message.replace("Value", "EPF Registration Number") }}
                             </span>
                             <label class="error epf_label" for="epf" style="display: none;"></label>
                             <!-- <label for="" class="float-label">EPF Registration Number</label> -->
@@ -158,7 +158,7 @@
                                     v$.esic_reg_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.esic_reg_number.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.esic_reg_number.required.$message.replace("Value", "Address") }}
+                                {{ v$.esic_reg_number.required.$message.replace("Value", "ESIC Registration Number") }}
                             </span>
                             <label class="error esic_label" for="esic" style="display: none;"></label>
 
@@ -177,7 +177,7 @@
                                     v$.prof_tax_reg_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.prof_tax_reg_number.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.prof_tax_reg_number.required.$message.replace("Value", "Address") }}
+                                {{ v$.prof_tax_reg_number.required.$message.replace("Value", "Professional Tax Registration Number") }}
                             </span>
                             <label class="error professional_tax_label" for="professional_tax"
                                 style="display: none;"></label>
@@ -195,7 +195,7 @@
                                     v$.lwf_reg_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.lwf_reg_number.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.lwf_reg_number.required.$message.replace("Value", "Address") }}
+                                {{ v$.lwf_reg_number.required.$message.replace("Value", "LWF Registration Number") }}
                             </span>
                             <label class="error lwf_label" for="lwf" style="display: none;"></label>
                             <!-- <label for="" class="float-label">LWF Registration Number</label> -->
@@ -224,7 +224,7 @@
                                     v$.authorised_person_name.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.authorised_person_name.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.authorised_person_name.required.$message.replace("Value", "Address") }}
+                                {{ v$.authorised_person_name.required.$message.replace("Value", "Authorized Person Name") }}
                             </span>
                             <label class="error auth_person_name_label" for="auth_person_name"
                                 style="display: none;"></label>
@@ -242,7 +242,7 @@
                                     v$.authorised_person_designation.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.authorised_person_designation.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.authorised_person_designation.required.$message.replace("Value", "Address") }}
+                                {{ v$.authorised_person_designation.required.$message.replace("Value", "Authorized Person Designation") }}
                             </span>
                             <label class="error auth_person_desig_label" for="auth_person_desig"
                                 style="display: none;"></label>
@@ -261,7 +261,7 @@
                                     v$.authorised_person_contact_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.authorised_person_contact_number.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.authorised_person_contact_number.required.$message.replace("Value", "Address") }}
+                                {{ v$.authorised_person_contact_number.required.$message.replace("Value", "Authorized Person Contact Number") }}
                             </span>
                             <!-- <label for="" class="float-label">Authorized Person Contact Number</label> -->
                         </div>
@@ -277,7 +277,7 @@
                                     v$.authorised_person_contact_mail.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.authorised_person_contact_mail.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.authorised_person_contact_mail.required.$message.replace("Value", "Address") }}
+                                {{ v$.authorised_person_contact_mail.required.$message.replace("Value", "Authorized Person Contact Email") }}
                             </span>
                             <!-- <label for="" class="float-label">Authorized Person Contact Email</label> -->
                         </div>
@@ -292,7 +292,7 @@
                                     v$.billing_address.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.billing_address.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.billing_address.required.$message.replace("Value", "Address") }}
+                                {{ v$.billing_address.required.$message.replace("Value", "Billing Address") }}
                             </span>
                             <!-- <label for="" class="float-label">Billing Address</label> -->
                         </div>
@@ -308,7 +308,7 @@
                                     v$.shipping_address.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.shipping_address.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.shipping_address.required.$message.replace("Value", "Address") }}
+                                {{ v$.shipping_address.required.$message.replace("Value", "Shipping Address") }}
                             </span>
                             <!-- <label for="" class="float-label">Shipping Address</label> -->
                         </div>
@@ -337,7 +337,7 @@
                                 <option value="Patent Right">Patent Right</option>
                             </select>
                             <span v-if="v$.product.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.product.required.$message.replace("Value", "Address") }}
+                                {{ v$.product.required.$message.replace("Value", "Select Product") }}
                             </span>
                             <!-- <label for="" class="float-label">Select Product</label> -->
                         </div>
@@ -361,7 +361,7 @@
                                 <option value="Annually">Annually</option>
                             </select>
                             <span v-if="v$.subscription_type.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.subscription_type.required.$message.replace("Value", "Address") }}
+                                {{ v$.subscription_type.required.$message.replace("Value", "Subscription Type") }}
                             </span>
                             <!-- <label for="" class="float-label">Subscription Type</label> -->
                         </div>
@@ -379,7 +379,7 @@
                                     v$.doc_uploads.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.doc_uploads.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.doc_uploads.required.$message.replace("Value", "Address") }}
+                                {{ v$.doc_uploads.required.$message.replace("Value", "Document") }}
                             </span>
                               </div>
                     </div>

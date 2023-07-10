@@ -77,26 +77,35 @@ class VmtClientController extends Controller
 
             $image_view = url('/').$VmtClientMaster->client_logo;
 
-            if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
+            \Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
                                                             $request->authorised_person_contact_email,
                                                             'Abs@123123',
                                                              request()->getSchemeAndHttpHost() ,
                                                              "",
                                                              $image_view)
-                                                        )
-                ) {
+            );
                 return "Saved";
-            } else {
-                return "Error";
-            }
         }
-        catch (\TransportException $e) {
+        catch (TransportException $e) {
 
-            return response()->json(['status' =>'Mail_error' , 'message' =>'mail error','error_verbose' => $e->getMessage()]);
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'client onboarded successfully.',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
         }
         catch (\Throwable $e) {
-            return "Error".$e;
+            return response()->json(
+                [
+                    'status' => 'failure',
+                    'error' => $e->getMessage(),
+                ]
+            );
         }
     }
 
