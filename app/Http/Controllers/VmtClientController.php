@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
 use App\Mail\WelcomeClientMail;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 use Illuminate\Support\Facades\Validator;
 use App\Services\VmtClientService;
@@ -75,6 +76,7 @@ class VmtClientController extends Controller
 
 
             $image_view = url('/').$VmtClientMaster->client_logo;
+
             if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
                                                             $request->authorised_person_contact_email,
@@ -88,6 +90,10 @@ class VmtClientController extends Controller
             } else {
                 return "Error";
             }
+        }
+        catch (\TransportException $e) {
+
+            return response()->json(['status' =>'Mail_error' , 'message' =>'mail error','error_verbose' => $e->getMessage()]);
         }
         catch (\Throwable $e) {
             return "Error".$e;

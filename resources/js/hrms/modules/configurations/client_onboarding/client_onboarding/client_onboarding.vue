@@ -10,9 +10,13 @@
                             <label for="" class=" float-label">Client Code</label>
                             <input type="text" placeholder="Client Code" name="client_code"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.client_code" />
-                            <!-- <label for="" class="float-label">Client Code</label> -->
-                            <!-- id="client_code" placeholder="Autogenerate from Company Legal Name" -->
+                                v-model="client_onboarding.client_code" :class="[
+                                    v$.client_code.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.client_code.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.client_code.required.$message.replace("Value", "Address") }}
+                            </span>
+
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 dashBoard">
@@ -21,7 +25,12 @@
                             <label for="" class="float-label">Legal Name of the Company</label>
                             <input type="text" placeholder="Legal Name of the Company" name="client_name" id="client_name"
                                 class="onboard-form form-control textbox" v-model="client_onboarding.client_name"
-                                required />
+                                required :class="[
+                                    v$.client_name.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.client_name.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.client_name.required.$message.replace("Value", "Address") }}
+                            </span>
 
                             <!-- <label for="" class="float-label">Legal Name of the Company</label> -->
                         </div>
@@ -32,7 +41,12 @@
                             <label for="" class=" float-label">Contract Start Date</label>
                             <input type="text" max="9999-12-31" placeholder="Contract Start Date" name="csd"
                                 class="onboard-form form-control textbox" onfocus="(this.type='date')" required
-                                v-model="client_onboarding.contract_start_date" />
+                                v-model="client_onboarding.contract_start_date" :class="[
+                                    v$.contract_start_date.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.contract_start_date.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.contract_start_date.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Contract Start Date</label> -->
                         </div>
                     </div>
@@ -42,7 +56,12 @@
                             <label for="" class="float-label">Contract End Date</label>
                             <input type="text" max="9999-12-31" placeholder="Contract End Date" name="ced"
                                 class="onboard-form form-control textbox" onfocus="(this.type='date')" required
-                                v-model="client_onboarding.contract_end_date" />
+                                v-model="client_onboarding.contract_end_date" :class="[
+                                    v$.contract_end_date.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.contract_end_date.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.contract_end_date.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Contract End Date</label> -->
                         </div>
                     </div>
@@ -53,7 +72,12 @@
                                 Number</label>
                             <input type="text" placeholder="Company Identification Number" name="cin_no"
                                 class="onboard-form form-control textbox" pattern="alp-num" required
-                                v-model="client_onboarding.cin_number" />
+                                v-model="client_onboarding.cin_number" :class="[
+                                    v$.cin_number.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.cin_number.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.cin_number.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error cin_no_label" for="cin_no" style="display: none;"></label>
                             <!-- <label for="" class="float-label">Company Identification Number</label> -->
                         </div>
@@ -64,7 +88,12 @@
                             <label for="" class="float-label">Company TAN</label>
                             <input type="text" placeholder="Company TAN" name="com_tan"
                                 class="onboard-form form-control textbox" pattern="alp-num"
-                                v-model="client_onboarding.company_tan" required />
+                                v-model="client_onboarding.company_tan" required :class="[
+                                    v$.company_tan.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.company_tan.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.company_tan.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error com_tan_label" for="com_tan" style="display: none;"></label>
                             <!-- <label for="" class="float-label">Company TAN</label> -->
                         </div>
@@ -75,7 +104,12 @@
                             <label for="" class="float-label">Company PAN</label>
                             <input type="text" placeholder="Company PAN" name="com_pan" id="com_pan"
                                 class="onboard-form form-control textbox" pattern="alp-num" required
-                                v-model="client_onboarding.company_pan" />
+                                v-model="client_onboarding.company_pan" :class="[
+                                    v$.company_pan.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.company_pan.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.company_pan.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error com_pan_label" for="com_pan" style="display: none;"></label>
                             <span id="pan_err" style="display: none; color: darkred;" class="text-danger">
                                 Please Enter Valid Pan Number</span>
@@ -87,7 +121,12 @@
                         <div class="floating">
                             <label for="" class="float-label">GST No</label>
                             <input type="text" placeholder="GST No" name="gst_no" class="onboard-form form-control textbox"
-                                pattern="gst" required v-model="client_onboarding.gst_no" />
+                                pattern="gst" required v-model="client_onboarding.gst_no" :class="[
+                                    v$.gst_no.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.gst_no.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.gst_no.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error gst_no_label" for="gst_no" style="display: none;"></label>
                             <!-- <label for="" class="float-label">GST No</label> -->
                         </div>
@@ -98,7 +137,12 @@
                             <label for="" class="float-label">EPF Registration Number</label>
                             <input type="text" placeholder="EPF Registration Number" name="epf"
                                 class="onboard-form form-control textbox" pattern="alp-num"
-                                v-model="client_onboarding.epf_reg_number" required />
+                                v-model="client_onboarding.epf_reg_number" required :class="[
+                                    v$.epf_reg_number.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.epf_reg_number.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.epf_reg_number.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error epf_label" for="epf" style="display: none;"></label>
                             <!-- <label for="" class="float-label">EPF Registration Number</label> -->
                         </div>
@@ -110,7 +154,12 @@
 
                             <input type="text" placeholder="ESIC Registration Number" name="esic"
                                 class="onboard-form form-control textbox" pattern="alp-num" required
-                                v-model="client_onboarding.esic_reg_number" />
+                                v-model="client_onboarding.esic_reg_number" :class="[
+                                    v$.esic_reg_number.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.esic_reg_number.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.esic_reg_number.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error esic_label" for="esic" style="display: none;"></label>
 
                             <!-- <label for="" class="float-label">ESIC Registration Number</label> -->
@@ -124,7 +173,12 @@
 
                             <input type="text" placeholder="Professional Tax Registration Number" name="professional_tax"
                                 class="onboard-form form-control textbox" pattern="alp-num" required
-                                v-model="client_onboarding.prof_tax_reg_number" />
+                                v-model="client_onboarding.prof_tax_reg_number" :class="[
+                                    v$.prof_tax_reg_number.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.prof_tax_reg_number.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.prof_tax_reg_number.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error professional_tax_label" for="professional_tax"
                                 style="display: none;"></label>
                             <!-- <label for="" class="float-label">Professional Tax Registration Number</label> -->
@@ -137,7 +191,12 @@
 
                             <input type="text" placeholder="LWF Registration Number" name="lwf"
                                 v-model="client_onboarding.lwf_reg_number" class="onboard-form form-control textbox"
-                                pattern="alp-num" required />
+                                pattern="alp-num" required :class="[
+                                    v$.lwf_reg_number.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.lwf_reg_number.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.lwf_reg_number.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error lwf_label" for="lwf" style="display: none;"></label>
                             <!-- <label for="" class="float-label">LWF Registration Number</label> -->
                         </div>
@@ -161,7 +220,12 @@
                             <label for="" class="float-label">Authorized Person Name</label>
                             <input type="text" placeholder="Authorized Person Name" name="auth_person_name"
                                 class="onboard-form form-control textbox" pattern="alpha" required
-                                v-model="client_onboarding.authorised_person_name" />
+                                v-model="client_onboarding.authorised_person_name" :class="[
+                                    v$.authorised_person_name.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.authorised_person_name.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.authorised_person_name.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error auth_person_name_label" for="auth_person_name"
                                 style="display: none;"></label>
                             <!-- <label for="" class="float-label">Authorized Person Name</label> -->
@@ -174,7 +238,12 @@
                                 Designation</label>
                             <input type="text" placeholder="Authorized Person Designation" name="auth_person_desig"
                                 class="onboard-form form-control " pattern="alpha" required
-                                v-model="client_onboarding.authorised_person_designation" />
+                                v-model="client_onboarding.authorised_person_designation" :class="[
+                                    v$.authorised_person_designation.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.authorised_person_designation.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.authorised_person_designation.required.$message.replace("Value", "Address") }}
+                            </span>
                             <label class="error auth_person_desig_label" for="auth_person_desig"
                                 style="display: none;"></label>
                             <!-- <label for="" class="float-label">Authorized Person Designation</label> -->
@@ -188,7 +257,12 @@
                             <input type="number" minlength="10" maxlength="10"
                                 placeholder="Authorized Person Contact Number" name="auth_person_contact"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.authorised_person_contact_number" />
+                                v-model="client_onboarding.authorised_person_contact_number" :class="[
+                                    v$.authorised_person_contact_number.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.authorised_person_contact_number.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.authorised_person_contact_number.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Authorized Person Contact Number</label> -->
                         </div>
                     </div>
@@ -199,7 +273,12 @@
                                 Email</label>
                             <input type="email" placeholder="Authorized Person Contact Email" name="auth_person_email"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.authorised_person_contact_mail" />
+                                v-model="client_onboarding.authorised_person_contact_mail" :class="[
+                                    v$.authorised_person_contact_mail.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.authorised_person_contact_mail.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.authorised_person_contact_mail.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Authorized Person Contact Email</label> -->
                         </div>
                     </div>
@@ -209,7 +288,12 @@
                             <label for="" class="float-label">Billing Address</label>
                             <input type="text" placeholder="Billing Address" name="billing_add"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.billing_address" />
+                                v-model="client_onboarding.billing_address" :class="[
+                                    v$.billing_address.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.billing_address.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.billing_address.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Billing Address</label> -->
                         </div>
                     </div>
@@ -220,7 +304,12 @@
 
                             <input type="text" placeholder="Shipping Address" name="shipping_add"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.shipping_address" />
+                                v-model="client_onboarding.shipping_address" :class="[
+                                    v$.shipping_address.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.shipping_address.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.shipping_address.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Shipping Address</label> -->
                         </div>
                     </div>
@@ -230,7 +319,10 @@
                         <div class="floating">
                             <label for="" class="float-label">Select Product</label>
                             <select placeholder="Product" name="product" id="product"
-                                class="form-select onboard-form form-control" required v-model="client_onboarding.product">
+                                class="form-select onboard-form form-control" required v-model="client_onboarding.product" :class="[
+                                    v$.product.$error ? 'border border-red-500' : '',
+                                ]" >
+
                                 <option value="" class="text-muted" hidden selected disabled>
                                     Select
                                     Product</option>
@@ -244,6 +336,9 @@
                                 <option value="Trade Mark">Trade Mark</option>
                                 <option value="Patent Right">Patent Right</option>
                             </select>
+                            <span v-if="v$.product.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.product.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Select Product</label> -->
                         </div>
                     </div>
@@ -253,7 +348,10 @@
                             <label for="" class="float-label">Subscription Type</label>
                             <select placeholder="Subscription Type" name="subscription_type" id="subscription_type"
                                 v-model="client_onboarding.subscription_type" class="form-select form-control" aria-label=""
-                                required>
+                                required :class="[
+                                    v$.subscription_type.$error ? 'border border-red-500' : '',
+                                ]" >
+
                                 <option value="" disabled selected hidden>Select Subscription
                                     Type
                                 </option>
@@ -262,6 +360,9 @@
                                 <option value="BiAnnually">BiAnnually</option>
                                 <option value="Annually">Annually</option>
                             </select>
+                            <span v-if="v$.subscription_type.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.subscription_type.required.$message.replace("Value", "Address") }}
+                            </span>
                             <!-- <label for="" class="float-label">Subscription Type</label> -->
                         </div>
                     </div>
@@ -274,12 +375,17 @@
                            /> -->
                             <div class="mb-3">
                                 <!-- <label for="formFile" class="form-label btn btn-primary">Upload</label> -->
-                                <input class="form-control" @change="client_onboarding_document($event)" type="file"  id="formFile"   accept=".doc,.docx,.pdf,image/*">
+                                <input class="form-control" @change="client_onboarding_document($event)" type="file"  id="formFile"   accept=".doc,.docx,.pdf,image/*" :class="[
+                                    v$.doc_uploads.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.doc_uploads.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.doc_uploads.required.$message.replace("Value", "Address") }}
+                            </span>
                               </div>
                     </div>
                     <div class="text-right col-12">
 
-                        <button type="button" @click="submit" class="text-center btn btn-orange"
+                        <button type="button" @click="submitForm" class="text-center btn btn-orange"
                             value="Submit">Submit</button>
                     </div>
                 </div>
@@ -287,12 +393,30 @@
 
         </div>
     </div>
+    <Dialog header="Header" v-model:visible="canShowLoading"
+    :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+    :closeOnEscape="false">
+    <template #header>
+        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+            animationDuration="2s" aria-label="Custom ProgressSpinner" />
+    </template>
+    <template #footer>
+        <h5 style="text-align: center">Please wait...</h5>
+    </template>
+</Dialog>
 </template>
 
 
 <script setup>
 import axios from "axios";
-import { reactive, ref } from "vue";
+import { computed, inject, reactive, ref } from "vue";
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
+
+const swal = inject("$swal");
+
+const canShowLoading = ref(false)
+
 
 const client_onboarding = reactive({
     client_code: "",
@@ -302,6 +426,7 @@ const client_onboarding = reactive({
     cin_number: "",
     company_tan: "",
     company_pan: "",
+    product:"",
     gst_no: "",
     epf_reg_number: "",
     esic_reg_number: "",
@@ -319,9 +444,52 @@ const client_onboarding = reactive({
 })
 
 
+const rules = computed(() => {
+    return {
+        client_code: {required},
+    client_name: {required},
+    contract_start_date: {required},
+    contract_end_date: {required},
+    cin_number: {required},
+    company_tan: {required},
+    company_pan: {required},
+    gst_no: {required},
+    epf_reg_number: {required},
+    esic_reg_number: {required},
+    prof_tax_reg_number: {required},
+    lwf_reg_number: {required},
+    authorised_person_name: {required},
+    authorised_person_designation: {required},
+    authorised_person_contact_number: {required},
+    authorised_person_contact_mail: {required},
+    billing_address: {required},
+    shipping_address: {required},
+    subscription_type :{required},
+    doc_uploads:{required},
+    product:{required}
+    }
+})
+
+const v$ = useValidate(rules,client_onboarding)
+
+const submitForm = () => {
+    console.log(v$.value);
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        submit()
+        v$.value.$reset()
+    } else {
+        console.log('Form failed validation')
+    }
+}
+
+
 
 const submit = () => {
 
+    canShowLoading.value = true
 
     const config = {
         headers: { "content-type": "multipart/form-data" },
@@ -355,10 +523,25 @@ const submit = () => {
 
     axios.post('vmt_clientOnboarding', formData,config).then(res => {
         console.log("onboarding successfully");
+        if(res.data == 'Saved'){
+            Swal.fire(
+            'Success!',
+            'Client onboard successfully!',
+            'success'
+         )
+        }else{
+            Swal.fire(
+            'Error!',
+            '!',
+            'error'
+         )
+        }
     }).catch(err => console.log(err)).finally(() => {
-        console.log("axios completed");
+        canShowLoading.value = false
     })
+
 }
+
 
 
 const client_onboarding_document = (e) => {
