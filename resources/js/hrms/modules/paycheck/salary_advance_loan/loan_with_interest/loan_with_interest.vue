@@ -44,12 +44,12 @@
             </div>
 
             <div class="table-responsive">
-                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
+                {{useEmpStore.InterestWithLoanData}}
+                <DataTable :value="useEmpStore.InterestWithLoanData" ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
-                    {{ useEmpStore.salaryAdvanceEmployeeData }}
 
                     <Column header="Request ID" field="section" style="min-width: 8rem">
 
@@ -143,7 +143,7 @@
                             <input
                                 class="fw-bolder fs-4 text-blue-900 p-2 ml-2 d-flex justify-items-center text-center bg-blue-100"
                                 placeholder="%" style="width: 100px;" v-model="useEmpStore.InterestWithLoan.Interest_rate"
-                                disabled />
+                                disabled prefix="%" />
                             <h1 class=" fw-semibold  mt-1 fs-5">Interest Rate</h1>
                         </div>
 

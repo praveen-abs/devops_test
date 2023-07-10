@@ -279,8 +279,7 @@ Travel Advance - ta
         console.log(InterestWithLoan);
 
         // canShowLoading.value = true;
-        axios.post('/employee-loan-history', {
-        }).then(res => {
+        axios.post( { loan_type: "InterestWithLoan" }).then(res => {
             InterestWithLoanData.value = res.data
             console.log(res.data);
 
