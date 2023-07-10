@@ -255,7 +255,7 @@ Travel Advance - ta
         total_amount:'0' ,
         max_tenure_months: '',
         details: '',
-        loan_type: 'InterestFreeLoan',
+        loan_type: 'InterestWithLoan',
         loan_settings_id:''
 
     });
