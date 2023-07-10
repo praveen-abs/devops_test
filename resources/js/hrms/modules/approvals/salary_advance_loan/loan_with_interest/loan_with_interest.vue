@@ -17,79 +17,146 @@
                             Approval All
                         </button>
 
-                        <Dialog header="Header" :style="{ width: '58vw' }" modal v-model:visible="canShowInterestWithLoan" >
-                            <template #header>
-                                <div>
-                                    <h1 style="border-left: 3px solid var( --orange);padding-left: 5px ;" class="fs-4">New
-                                        Interest Free Loan Request</h1>
-                                </div>
-                            </template>
-                            <div class="card bg-gray-100 bottom-0 mb-10" style="border:none">
-                                <div class="card-body">
-                                    <div class="row mx-2">
-                                        <div class="col mx-2">
-                                            <h1 class="fs-5 my-2">Required Amount</h1>
-                                            <InputText type="text" placeholder="&#8377; Enter The Required Amount" />
-                                            <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount : 20,000
-                                            </p>
-                                        </div>
-                                        <div class="col mx-2">
-                                            <h1 class="fs-5 my-2">Monthly EMI</h1>
-                                            <InputText type="text" placeholder="&#8377; " />
-                                        </div>
-                                        <div class="col mx-2">
-                                            <h1 class="fs-5 my-2">Term</h1>
-                                            <Dropdown optionLabel="name" placeholder="1.5" class="w-full md:w-10rem" />
-                                            <label for="" class="fs-5 ml-2" style="color:var(--navy) ; ">Years</label>
-                                        </div>
-                                    </div>
 
-
-
-                                </div>
-                            </div>
-
-                            <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
-                                <div class="card-body mx-4">
-                                    <div class="row">
-                                        <!-- fw-bolder -->
-                                        <h1 class="fs-4 my-2  ">EMI Dedution</h1>
-                                        <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming
-                                            Payroll</h1>
-                                        <div class="col-4">
-                                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon />
-                                        </div>
-
-                                        <div class="col-4 mx-2">
-                                            <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
-                                            <Calendar showIcon />
-                                        </div>
-                                        <div class="col-3">
-                                            <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                                            <InputText type="text" style="width: 150px !important;" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
-                                <span class="font-semibold ">Reason</span>
-                                <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" />
-                            </div>
-
-
-                            <template #footer>
-                                <div class="float-right ">
-                                    <button class="btn btn-border-orange" @click="approveAndReject(1)">Reject</button>
-                                    <button class="mx-4 btn btn-orange" @click="approveAndReject(-1)">Approved</button>
-                                </div>
-                                <!-- <Button label="" icon="pi pi-times" @click="visible = false" text />
-                            <Button label="Yes" icon="pi pi-check" @click="visible = false" text /> -->
-                            </template>
-                        </Dialog>
                     </div>
                 </div>
+
+
+                <Dialog v-model:visible="canShowInterestWithLoan" modal header="Header" :style="{ width: '60vw' }">
+        <template #header>
+            <div>
+                <h1 style="border-left: 3px solid var( --orange);padding-left: 10px ;" class="fs-4">New interest With Loan
+                    Request</h1>
+            </div>
+        </template>
+        <div class="row p-2">
+            <!-- {{ useEmpStore.InterestWithLoan.details }} -->
+            <div class="col-7">
+
+                <div class="card border-0">
+                    <div class="card-body bg-gray-100 ">
+                        <div class="row  ">
+                            <div class="col-6   " style="margin-right: 30px;">
+                                <h1 class="fs-5 my-2 ">Required Amount</h1>
+                                <!-- <InputText type="text" v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" /> -->
+                                <InputNumber v-model="val.loan_amount"
+                                    placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping"
+                                    :useGrouping="false"  />
+                                <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount :
+                                    {{ val.eligible_amount }}
+                                </p>
+                            </div>
+                            <!-- {{ useEmpStore.InterestWithLoan.max_tenure_months }} -->
+                            <div class="col mx-2">
+                                <h1 class="fs-5 my-2">Term</h1>
+                                <InputText type="text" style="width: 100px !important;" disabled
+                                                v-model="val.tenure" />
+                                                <label for="" class="fs-5 ml-1" style="color:var(--navy) ; " >Month</label>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12 pr-5">
+                                <!-- <button
+                                    @click="useEmpStore.calculateLoanDetails(useEmpStore.InterestWithLoan.required_amount, useEmpStore.InterestWithLoan.Interest_rate, useEmpStore.InterestWithLoan.Term)"
+                                    class="bg-danger text-light pt-2 pl-4 pr-4 pb-2  float-right rounded hover:bg-red-500 shadow-md">Calculate
+                                    EMI</button> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-12 pl-8 pr-8 ">
+                        <div
+                            class="div p-2 d-flex justify-items-center align-items-center flex-column rounded bg-blue-100 shadow-md">
+                            <!-- disabled -->
+                            <input
+                                class="fw-bolder fs-4 text-blue-900 p-2 ml-2 d-flex justify-items-center text-center bg-blue-100"
+                                placeholder="%" style="width: 100px;" v-model="val.interest_rate"
+                                disabled prefix="%" />
+                            <h1 class=" fw-semibold  mt-1 fs-5">Interest Rate</h1>
+                        </div>
+
+                    </div>
+
+                    <div class="col  pl-8 pr-8 ">
+                        <div class="div allcenter p-2 rounded shadow-md" style="background: #FDCFCF;">
+
+                            <div class="div d-flex justify-content-center align-items-center">
+
+                                <h1 class="fw-bolder fs-4">&#8377; </h1>
+                                <input class="fw-bolder fs-4  pl-2 text-center" style="width: 100px;background: #FDCFCF  ;"
+                                    v-model="val.monthly_emi" disabled />
+                            </div>
+                            <h1 class=" fw-semibold mt-2 fs-5">Monthly payment</h1>
+                        </div>
+
+                    </div>
+
+                    <div class="col  pl-8 pr-8 ">
+                        <div class="div allcenter p-2 rounded bg-green-100 shadow-md">
+                            <div class="div d-flex justify-content-center align-items-center">
+                                <h1 class="fw-bolder fs-4">&#8377; </h1>
+                                <input v-model="val.total_amount"
+                                    class="fw-bolder fs-4  pl-2 bg-green-100 text-center" style="width: 100px;" disabled />
+                            </div>
+                            <h1 class=" fw-semibold mt-2 fs-5 mx-3">Total loan amount</h1>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card bg-gray-100 bottom-0 my-4" style="border:none ">
+            <div class="card-body mx-4">
+                <div class="row">
+                    <!-- fw-bolder -->
+                    <h1 class="fs-4 my-2  ">EMI Dedution</h1>
+                    <h1 class="fs-5 text-gray-600 mb-3">The EMI Dedution Will begin from the Upcoming Payroll</h1>
+                    <div class="col-4">
+                        <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
+                            <Calendar v-model="val.deduction_starting_month" showIcon class="w-full md:w-10rem"  />
+                    </div>
+
+                    <div class="col-4 mx-2">
+                        <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
+                        <Calendar v-model="val.deduction_ending_month" showIcon />
+                    </div>
+                    <div class="col-3">
+                        <h1 class="fs-5 my-2 ml-2">Total Months</h1>
+                        <InputText type="text" v-model="val.tenure"
+                            style="width: 150px !important;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
+            <span class="font-semibold ">Reason</span>
+            <Textarea v-model="reviewer_comments.reviewer_comments" class="my-3 capitalize form-control textbox" autoResize
+                type="text" rows="3"
+                :class="[v$.reviewer_comments.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+            <br>
+            <span v-if="v$.reviewer_comments.$error" class="font-semibold text-red-400 fs-6">
+                {{ v$.reviewer_comments.$errors[0].$message }}
+            </span>
+        </div>
+
+        <div class="float-right ">
+            <button class="btn bg-red-500 px-5 text-white"
+                @click="submitForm(-1)">Rejected</button>
+            <button class="mx-4 btn btn-orange px-5 bg-green-500 text-white" @click="submitForm(1)">Approved</button>
+        </div>
+
+    </Dialog>
 
                 <div class="my-6 widget-card">
                     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5 lg:grid-cols-5">
@@ -118,7 +185,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    {{ useData.arrayIWL }}
+                    <!-- {{ useData.arrayIWL }} -->
                     <DataTable v-if="useEmpData == ''" :value="useData.arrayIWL" :paginator="true" :rows="10" class=""
                         dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
                         v-model:expandedRows="expandedRows" v-model:selection="selectedAllEmployee" :selectAll="selectAll"
@@ -151,8 +218,8 @@
 
                         </Column>
                         <Column field="tenure" header="Tenure"> </Column>
-                        <Column field="loan_status" header="Status" style="min-width: 12rem">
-                            {{ slotProps.data.loan_status }}
+                        <Column field="status" header="Status" style="min-width: 12rem">
+                            {{ slotProps.data.status }}
                         </Column>
                         <Column field="" header="Action">
                             <template #body="slotProps">
@@ -176,6 +243,7 @@
                     </DataTable>
 
 
+                   <EmployeePayable :source="sample"/>
 
                     <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class=""
                         dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -186,9 +254,9 @@
                         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
                         <Column field="request_id" header="Request ID" sortable></Column>
-                        <Column field="loan_amount" header="Loan Amount">
+                        <Column field="borrowed_amount" header="Loan Amount">
                         </Column>
-                        <Column field="loan_amount" header="Advance Amount">
+                        <Column field="eligible_amount" header="Advance Amount">
                         </Column>
                         <Column field="emi_per_month" header="Monthly EMI">
                             <template #body="slotProps">
@@ -204,8 +272,8 @@
                         </Column>
                         <Column field="deduction_ending_month" header="EMI Start Date">
                         </Column>
-                        <Column field="status" header="Status" style="min-width: 12rem">
-                            {{ slotProps.data.status }}
+                        <Column field="loan_status" header="Status" style="min-width: 12rem">
+                            {{ slotProps.data.loan_status }}
                         </Column>
                     </DataTable>
 
@@ -238,24 +306,38 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive } from "vue";
+import EmployeePayable from '../../../Shared/EmployeePayable.vue';
+
+import { onMounted, ref, reactive ,computed } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
 
-const useData = UseSalaryAdvanceApprovals();
 import dayjs from 'dayjs';
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
+import { useNow, useDateFormat } from '@vueuse/core';
+
+
+const sample = ref([
+    {id:1,name:"vishu"}
+])
+
+const useData = UseSalaryAdvanceApprovals();
+
 
 const useEmpData = ref([""]);
 
 const expandedRows = ref([]);
 const selectedAllEmployee = ref();
-const reviewer_comments = ref();
 const canShowInterestWithLoan = ref(false);
 const currentlySelectedRowData = ref();
 const currentlySelectedStatus = ref();
 const canShowConfirmationAll = ref(false);
 const CurrentName = ref();
 const CurrentUser_code = ref();
+const reviewer_comments = reactive({
+    reviewer_comments:""
+});
 
 const val = ref();
 const op = ref();
@@ -285,7 +367,7 @@ function ShowDialogApprovalAll() {
 
 async function approveAndReject(status) {
     hideBulkConfirmDialog()
-    await useData.IFLapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    await useData.IWL_ApproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
     currentlySelectedStatus.value = status;
 }
 
@@ -295,6 +377,27 @@ function view_more(selectedRowData, user_code, currentName) {
     CurrentUser_code.value = user_code
 }
 
+
+const rules = computed(() => {
+    return {
+        reviewer_comments: { required },
+    }
+})
+
+
+const v$ = useValidate(rules, reviewer_comments )
+
+
+const submitForm = (val) => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        approveAndReject(val);
+    } else {
+        console.log('Form failed validation')
+    }
+}
 
 
 

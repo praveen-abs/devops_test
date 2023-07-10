@@ -51,19 +51,23 @@
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
 
-                    <Column header="Request ID" field="section" style="min-width: 8rem">
+                    <Column header="Request ID" field="request_id" style="min-width: 8rem">
+
+                    </Column>
+                    <Column header="Loan Amount" field="borrowed_amount" style="min-width: 8rem">
+                    </Column>
+
+                    <Column field="emi_per_month" header="Monthly EMI" style="min-width: 12rem">
 
                     </Column>
 
-                    <Column field="particular" header="Advance Amount" style="min-width: 12rem">
+                    <Column field="tenure_months" header="Tenure" style="min-width: 12rem">
 
                     </Column>
-
-                    <Column field="ref" header="Paid On " style="min-width: 12rem">
+                    <Column field="deduction_starting_month" header="EMI Start Date" style="min-width: 12rem">
 
                     </Column>
-
-                    <Column field="max_limit" header="Expected Return" style="min-width: 12rem">
+                    <Column field="deduction_ending_month" header="EMI End Date" style="min-width: 12rem">
 
                     </Column>
                     <Column field="loan_status" header="Status" style="min-width: 12rem">

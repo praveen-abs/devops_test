@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            {{ SalaryAdvanceApprovals.arraySalaryAdvance }}
+            <!-- {{ SalaryAdvanceApprovals.arraySalaryAdvance }} -->
 
             <div class="table-responsive">
                 <DataTable v-if="useEmpData == ''" :value="SalaryAdvanceApprovals.arraySalaryAdvance" :paginator="true"
@@ -65,27 +65,34 @@
                     <Column field="name" header="Employee Name" :sortable="false">
                         <template #body="slotProps">
                             <button class="fw-semibold text-primary"
-                                @click="view_more(slotProps.data.emp_details, slotProps.data.user_code, slotProps.data.name)">
+                                @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">
                                 {{ slotProps.data.name }} </button>
                         </template>
                     </Column>
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
 
-                    <Column field="loan_status" header="Status" style="min-width: 12rem">
-                        {{slotProps.data.loan_status}}
+                    <Column field="status" header="Status" style="min-width: 12rem">
+                        <template #body="slotProps">
+                            <div>
+                                <!-- {{slotProps.data.status}} -->
+                                <h1 v-if="slotProps.data.status = 0" class=" text-orange-400">Pending</h1>
+                            </div>
+                        </template>
                     </Column>
 
                     <Column field="" header="Action">
                         <template #body="slotProps">
                             <button class="" type="button" @click="toggle"> <i class="pi pi-ellipsis-v"></i>
                             </button>
-                            <OverlayPanel ref="op" style="width: 160px;margin-top:12px !important;margin-right: 20px !important;" class="p-0 m-0">
-                                <div class=" d-flex flex-column p-0 m-0" >
+                            <OverlayPanel ref="op"
+                                style="width: 160px;margin-top:12px !important;margin-right: 20px !important;"
+                                class="p-0 m-0">
+                                <div class=" d-flex flex-column p-0 m-0">
                                     <!-- bg-green-200 -->
                                     <button class="fw-semibold text-black hover:bg-gray-200 border-bottom-1 p-2"
                                         @click="showConfirmDialog(slotProps.data)">view</button>
-                                            <!-- bg-blue-500 -->
+                                    <!-- bg-blue-500 -->
                                     <button class=" fw-semibold text-black  hover:bg-gray-200 p-2"
                                         @click="view_more(slotProps.data.emp_prevdetails, slotProps.data.user_code, slotProps.data.name)">passed
                                         Transaction</button>
@@ -94,6 +101,7 @@
                         </template>
                     </Column>
                 </DataTable>
+                <EmployeePayable :source="sample"/>
 
                 <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class="" dataKey="id"
                     @rowExpand="onRowExpand" @rowCollapse="onRowCollapse" v-model:expandedRows="expandedRows"
@@ -109,19 +117,10 @@
                     </Column>
                     <Column field="dedction_date" header="Expected Return">
                     </Column>
-                    <Column field="status" header="Status">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
-                                Approved
-                            </h6>
-                            <h6 v-if="slotProps.data.status == -1" class="text-red-500">
-                                Rejected
-                            </h6>
-                        </template>
+                    <Column field="sal_adv_status" header="Status">
+
                     </Column>
+                    <!-- {{ useEmpData }} -->
                 </DataTable>
 
 
@@ -129,6 +128,8 @@
             </div>
         </div>
     </div>
+
+
 
     <Dialog header="Confirmation" v-model:visible="canShowConfirmationAll"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '400px' }" :modal="true">
@@ -155,7 +156,7 @@
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month"
                     class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                    v-model="val.advance_amount" disabled >
+                    v-model="val.advance_amount" disabled>
                 <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ val.eligible_amount }}</p>
             </div>
             <div class="w-5 p-4 mx-4 ">
@@ -169,7 +170,7 @@
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
-            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{val.reason }}</div>
+            <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{ val.reason }}</div>
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
@@ -186,6 +187,7 @@
 
 
 <script setup>
+import EmployeePayable from '../../../Shared/EmployeePayable.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
@@ -208,7 +210,12 @@ const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
 
-const val =ref();
+const val = ref();
+
+
+const sample = ref([
+    {id:1,name:"simma"}
+])
 
 
 onMounted(() => {
@@ -275,7 +282,7 @@ function view_more(selectedRowData, user_code, currentName) {
 .dropdown:hover .dropdown-content {
     display: block !important;
 }
-.p-overlaypanel .p-overlaypanel-content{
+
+.p-overlaypanel .p-overlaypanel-content {
     padding: 0;
-}
-</style>
+}</style>
