@@ -810,9 +810,8 @@ class VmtSalaryAdvanceService
             } else if ($loan_type = 'InterestWithLoan') {
                 $loan_details = new VmtEmpInterestLoanDetails;
                 $loan_details->vmt_int_loan_id = $loan_setting_id;
-
                 if (empty($getallintrestwithemp)) {
-                    $$loan_details->request_id = "ABSIL001";
+                    $loan_details->request_id = "ABSIL001";
                 } else {
                     $substrid = substr($getallintrestwithemp->request_id, 5);
                     $add1 = ($substrid + 1);
@@ -840,7 +839,6 @@ class VmtSalaryAdvanceService
                 ]);
             }
             $loan_details->user_id = $user_id;
-
             $loan_details->eligible_amount = $eligible_amount;
             $loan_details->borrowed_amount = $borrowed_amount;
             $loan_details->requested_date = Carbon::now();
