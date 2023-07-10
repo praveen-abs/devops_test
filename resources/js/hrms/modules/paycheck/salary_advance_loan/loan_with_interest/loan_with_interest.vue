@@ -156,7 +156,7 @@
 
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
                                 <input class="fw-bolder fs-4  pl-2 text-center" style="width: 100px;background: #FDCFCF  ;"
-                                    v-model="useEmpStore.InterestWithLoan.month_EMI" disabled />
+                                    v-model="useEmpStore.InterestWithLoan.M_EMI" disabled />
                             </div>
                             <h1 class=" fw-semibold mt-2 fs-5">Monthly payment</h1>
                         </div>
@@ -200,7 +200,7 @@
 
                     <div class="col-4 mx-2">
                         <h1 class="fs-5 my-2 ml-2">EMI End Month</h1>
-                        <Calendar v-model="useEmpStore.InterestWithLoan.EMI_END_Month" showIcon />
+                        <Calendar v-model="useEmpStore.InterestWithLoan.EMI_End_Month" showIcon />
                     </div>
                     <div class="col-3">
                         <h1 class="fs-5 my-2 ml-2">Total Months</h1>
@@ -295,7 +295,7 @@ function calculateMonth() {
     console.log(modifiedDate);
     console.log(useEmpStore.interestFreeLoan.Term);
 
-    useEmpStore.InterestWithLoan.EMI_END_Month = dayjs(modifiedDate).format('YYYY-MM-DD');
+    useEmpStore.InterestWithLoan.EMI_End_Month = dayjs(modifiedDate).format('YYYY-MM-DD');
 
     //  let values = dayjs(useEmpStore.interestFreeLoan.EMI_Start_Month.Month).add(1,'month').format('YYYY/MM/DD');
     //  console.log(values);

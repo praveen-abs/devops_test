@@ -247,9 +247,9 @@ Travel Advance - ta
         required_amount: '',
         Term: '',
         Interest_rate: '',
-        month_EMI: '0',
+        M_EMI: '0',
         EMI_Start_Month: '',
-        EMI_END_Month: '',
+        EMI_End_Month: '',
         Total_Month: '',
         Reason: '',
         total_amount:'0' ,
@@ -344,7 +344,7 @@ Travel Advance - ta
             totalDue: finalAmount
         }
 
-        InterestWithLoan.month_EMI = loanDetails.monthlyDue
+        InterestWithLoan.M_EMI = loanDetails.monthlyDue
         InterestWithLoan.total_amount = loanDetails.totalDue
     }
 
