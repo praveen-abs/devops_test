@@ -167,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- {{ UseInterestFreeLoan.arrayIFL_List }} -->
+                {{ UseInterestFreeLoan.arrayIFL_List }}
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -234,7 +234,7 @@
                         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}">
 
                         <Column field="request_id" header="Request ID" sortable></Column>
-                        <Column field="loan_amount" header="Loan Amount">
+                        <Column field="borrowed_amount" header="Loan Amount">
                         </Column>
                         <Column field="loan_amount" header="Advance Amount">
                         </Column>
