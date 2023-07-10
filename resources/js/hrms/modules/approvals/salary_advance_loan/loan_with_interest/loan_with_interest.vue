@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="col  pl-8 pr-8 ">
-                        <div class="div allcenter p-2 rounded shadow-md" style="background: #FDCFCF;">
+                        <div class="div d-flex justify-items-center align-items-center flex-column p-2 rounded shadow-md" style="background: #FDCFCF;">
 
                             <div class="div d-flex justify-content-center align-items-center">
 
@@ -98,13 +98,15 @@
                     </div>
 
                     <div class="col  pl-8 pr-8 ">
-                        <div class="div allcenter p-2 rounded bg-green-100 shadow-md">
+                        <div class="div d-flex justify-items-center align-items-center flex-column p-2 rounded bg-green-100 shadow-md">
                             <div class="div d-flex justify-content-center align-items-center">
                                 <h1 class="fw-bolder fs-4">&#8377; </h1>
                                 <input v-model="val.total_amount"
                                     class="fw-bolder fs-4  pl-2 bg-green-100 text-center" style="width: 100px;" disabled />
+
                             </div>
                             <h1 class=" fw-semibold mt-2 fs-5 mx-3">Total loan amount</h1>
+
                         </div>
 
                     </div>
@@ -132,7 +134,7 @@
                     </div>
                     <div class="col-3">
                         <h1 class="fs-5 my-2 ml-2">Total Months</h1>
-                        <InputText type="text" v-model="val.tenure"
+                        <InputText type="text" v-model="val.tenure" disabled
                             style="width: 150px !important;" />
                     </div>
                 </div>
