@@ -1352,32 +1352,28 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
 
         }
 }
-    public function CreatePayrollEsi( $epf_number, $epf_deduction_cycle, $is_epf_num_default, $epf_rule, $epf_contrib_type, $pro_rated_lop_status, $can_consider_salcomp_pf, $employer_contrib_in_ctc,
-                                      $employer_edli_contri_in_ctc,$admin_charges_in_ctc,$override_pf_contrib_rate,$status)
+    public function CreatePayrollEsi( $esi_number,$esi_deduction_cycle,$state,$location,$employee_contribution_rate,$employer_contribution_rate,$employer_contribution_in_ctc,$override_pf_contrib_rate,$status)
     {
         $validator = Validator::make(
             $data = [
-                'epf_number' => $epf_number,
-                'epf_deduction_cycle' => $epf_deduction_cycle,
-                'is_epf_num_default' => $is_epf_num_default,
-                'epf_rule' =>$epf_rule,
-                'epf_contrib_type' =>$epf_contrib_type,
-                'pro_rated_lop_status' => $pro_rated_lop_status,
-                'can_consider_salcomp_pf' => $can_consider_salcomp_pf,
-                'employer_contrib_in_ctc' => $employer_contrib_in_ctc,
-                'employer_edli_contri_in_ctc' => $employer_edli_contri_in_ctc,
-                'admin_charges_in_ctc' => $admin_charges_in_ctc,
+                'esi_number' => $esi_number,
+                'esi_deduction_cycle' => $esi_deduction_cycle,
+                'state' => $state,
+                'location' =>$location,
+                'employee_contribution_rate' =>$employee_contribution_rate,
+                'employer_contribution_rate' => $employer_contribution_rate,
+                'employer_contribution_in_ctc' => $employer_contribution_in_ctc,
                 'override_pf_contrib_rate' => $override_pf_contrib_rate,
                 'status' => $status,
             ],
             $rules = [
-                'epf_number' => 'required',
-                'epf_deduction_cycle' => 'required',
-                'is_epf_num_default' => 'required',
-                'epf_rule' => 'required',
-                'epf_contrib_type' => 'required',
-                'pro_rated_lop_status' => 'required',
-                'can_consider_salcomp_pf' => 'required',
+                'esi_number' => 'required',
+                'esi_deduction_cycle' => 'required',
+                'state' => 'required',
+                'location' => 'required',
+                'employee_contribution_rate' => 'required',
+                'employer_contribution_rate' => 'required',
+                'employer_contribution_in_ctc' => 'required',
                 'employer_contrib_in_ctc' => 'required',
                 'employer_edli_contri_in_ctc' => 'required',
                 'admin_charges_in_ctc' => 'required',
