@@ -162,7 +162,7 @@ class VmtSalaryAdvanceController extends Controller
         $loan_setting_id = $request->details['loan_settings_id'];
         $eligible_amount = $request->minEligibile;
         $borrowed_amount = $request->required_amount;
-        $interest_rate = $request->interest_rate;
+        $interest_rate = $request->Interest_rate;
         $deduction_starting_month = $request->EMI_Start_Month;
         $deduction_ending_month = $request->EMI_End_Month;
         $emi_per_month = $request->M_EMI;
