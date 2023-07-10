@@ -10,13 +10,14 @@
                         <div class="floating">
                             <label for="" class="float-label">Employee Code</label>
                             <div class="p-inputgroup flex-1">
-                                <span class="p-inputgroup-addon font-semibold text-sm text-black ">{{ service.clientCode }}</span>
+                                <span class="p-inputgroup-addon font-semibold text-sm text-black ">{{ service.clientCode
+                                }}</span>
                                 <InputText
                                     :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '', user_code_exists ? 'p-invalid' : '']"
                                     class="capitalize form-onboard-form form-control textbox" type="text"
                                     :readonly="service.readonly.is_emp_code_quick"
                                     v-model="service.employee_onboarding.employee_code" placeholder="Employee Code"
-                                    @input="userCodeExists" />
+                                    @input="userCodeExists" @keypress="isSpecialChars($event)" />
                             </div>
                             <span v-if="user_code_exists" class="p-error">Employee code Already Exists</span>
 
@@ -51,10 +52,13 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Date of Birth</label>
-                            <Calendar inputId="icon" dropzone="true" :manualInput="true" :maxDate="dobFormat"
-                                v-model="service.employee_onboarding.dob" showIcon editable dateFormat="dd-mm-yy"
-                                placeholder="Date of birth" style="width: 350px;" @date-select="datePicker" class="" />
-                            <span class="error" id="error_pan_no"></span>
+                            <Calendar inputId="icon" dropzone="true" v-model="service.employee_onboarding.dob" showIcon
+                                editable dateFormat="dd-mm-yy" placeholder="Date of birth" style="width: 350px;" class=""
+                                @date-select="service.afterYears(service.employee_onboarding.dob)" />
+
+                            <!-- <span v-if="v$.dob.$error" class="font-medium text-red-600 fs-6">
+                                {{ v$.dob.$errors[0].$message }}
+                            </span> -->
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -358,6 +362,21 @@ import axios from 'axios';
 import { reactive, ref } from 'vue';
 
 
+const validateAge = (value) => {
+    console.log(value);
+    var birthDate = new Date(value);
+    console.log(" birthDate" + birthDate);
+    var difference = Date.now() - birthDate.getTime();
+    var ageDate = new Date(difference);
+    var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+    console.log("calculated Age" + calculatedAge);
+
+    if (calculatedAge > 18) {
+        console.log('valid');
+    } else {
+        console.log('in');
+    }
+}
 
 const service = useNormalOnboardingMainStore()
 
@@ -475,8 +494,6 @@ const AadharCardExits = () => {
                 console.log("completed");
             });
 
-
-
     }
     else {
         console.log("Invalid Aadhar no.");
@@ -555,12 +572,15 @@ const ValidateIfscNo = () => {
 
 
 
-
-
-
 const isLetter = (e) => {
     let char = String.fromCharCode(e.keyCode); // Get the character
     if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const isSpecialChars = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z0-9]+$/.test(char)) return true; // Match with regex
     else e.preventDefault(); // If not match, don't add to input text
 }
 

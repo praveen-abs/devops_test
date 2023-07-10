@@ -101,7 +101,7 @@
                         Save
                     </button>
 
-                    <button type="submit" data="row-6" next="row-6" placeholder="" name="submit_form" id="msform"
+                    <button type="button" data="row-6" next="row-6" placeholder="" name="submit_form" id="msform"
                         class="text-center btn btn-orange processOnboardForm" value="button" @click="service.submitForm(1)">
                         Submit
                     </button>

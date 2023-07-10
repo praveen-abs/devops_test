@@ -311,12 +311,41 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     }
 
+    const validateAge = (value) => {
+        console.log(value);
+        var birthDate = new Date(value);
+        console.log(" birthDate" + birthDate);
+        var difference = Date.now() - birthDate.getTime();
+        var ageDate = new Date(difference);
+        var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+        console.log("calculated Age" + calculatedAge);
+
+        if (calculatedAge > 18) {
+            return true
+        } else {
+            return false
+
+        }
+    }
+
+    function addYears(date, years) {
+        date.setFullYear(date.getFullYear() + years);
+        return date;
+    }
+
+    const afterYears = (value) => {
+        console.log(value);
+        const newDate = addYears(value, 18);
+        console.log(newDate);
+    }
+
     const rules = computed(() => {
 
         return {
             employee_code: {},
             employee_name: { required },
-            dob: {},
+            dob: {
+            },
             gender: {},
             passport_number: {},
             passport_date: {},
@@ -676,7 +705,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         employee_onboarding.can_onboard_employee = isEmployeeOnboard
         v$.value.$validate() // checks all inputs
 
-        if(isEmployeeOnboard ==  0){
+        if (isEmployeeOnboard == 0) {
             if (!v$.value.$error) {
                 // if ANY fail validation
                 console.log('Form successfully submitted.')
@@ -685,7 +714,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             } else {
                 console.log('Form failed validation')
             }
-        }else{
+        } else {
             if (!v$.value.$error) {
                 // if ANY fail validation
                 console.log('Form successfully submitted.')
@@ -867,6 +896,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 employee_onboarding.dob = ''
             }
         }
+
 
     };
 
@@ -1226,7 +1256,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         canShowLoading,
         compensatory_calculation, net_calculation, gross_calculation, statutory_bonus, special_allowance_cal, child_allowance, food_coupon, lta, other_allowance, insurance, graduity,
 
-        employee_onboarding, getBasicDeps,clientCode,
+        employee_onboarding, getBasicDeps, clientCode,
 
         // basic
 
@@ -1245,7 +1275,10 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         Sampledata, compensatoryCalWhileQuick, rules, submitForm,
 
-        getPersonalDocuments, readonly
+        getPersonalDocuments, readonly,
+
+        afterYears
+
 
 
     }
