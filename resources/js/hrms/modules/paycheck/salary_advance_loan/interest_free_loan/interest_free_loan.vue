@@ -153,7 +153,7 @@
             </div>
 
             <div class="table-responsive">
-                {{ useEmpStore.isInterestFreeLoanFeature }}
+                <!-- {{ useEmpStore.isInterestFreeLoanFeature }} -->
                 <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="10" :value="useEmpStore.isInterestFreeLoanFeature"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -196,17 +196,6 @@
     </div>
 
 
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 
 <script setup>
@@ -220,7 +209,7 @@ import { useNow, useDateFormat } from '@vueuse/core'
 const useEmpStore = useEmpSalaryAdvanceStore();
 
 onMounted(() => {
-    useEmpStore.fetchInterestfreeLoan()
+    useEmpStore.fetchInterestfreeLoan();
     useEmpStore.getinterestfreeloan();
 })
 
@@ -327,7 +316,8 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        useEmpStore.saveInterestfreeLoan()
+        useEmpStore.saveInterestfreeLoan();
+        useEmpStore.fetchInterestfreeLoan();
         v$.value.$reset()
     } else {
         console.log('Form failed validation')

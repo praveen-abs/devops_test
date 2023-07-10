@@ -4,7 +4,7 @@
             <div class="flex justify-between gap-6 my-2">
                 <div class="w-8 fs-4">
                     <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
-                            class="text-lg"> 100%</strong> of their monthly salary.</p>
+                            class="text-lg"> {{useEmpStore.percent_salary_amt}}%</strong> of their monthly salary.</p>
                 </div>
 
                 <div class="float-right ">
@@ -43,7 +43,7 @@
             <div class="table-responsive">
                 <!-- {{ useEmpStore.salaryAdvanceEmployeeData }} -->
                 <!-- {{ useEmpStore.arraySalaryDetails }} -->
-              {{  useEmpStore.arraySalaryDetails}}
+              <!-- {{  useEmpStore.arraySalaryDetails}} -->
                 <DataTable :value="useEmpStore.arraySalaryDetails" ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -69,8 +69,8 @@
                     <Column field="dedction_date" header="Expected Return" style="min-width: 12rem">
                     </Column>
 
-                    <Column field="loan_status" header="Status" style="min-width: 12rem">
-                        {{slotProps.data.loan_status}}
+                    <Column field="sal_adv_status" header="Status" style="min-width: 12rem">
+                        {{slotProps.data.sal_adv_status}}
                     </Column>
 
                 </DataTable>
@@ -134,17 +134,6 @@
         </div>
 
     </Dialog>
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
-    :modal="true" :closable="false" :closeOnEscape="false">
-    <template #header>
-      <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-        animationDuration="2s" aria-label="Custom ProgressSpinner" />
-    </template>
-    <template #footer>
-      <h5 style="text-align: center">Please wait...</h5>
-    </template>
-  </Dialog>
 </template>
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
@@ -184,7 +173,7 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         useEmpStore.saveSalaryAdvance()
-        v$.value.$reset()
+        v$.value.$reset();
     } else {
         console.log('Form failed validation')
     }

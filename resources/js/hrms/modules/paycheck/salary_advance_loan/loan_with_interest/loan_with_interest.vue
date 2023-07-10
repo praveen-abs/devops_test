@@ -44,12 +44,12 @@
             </div>
 
             <div class="table-responsive">
-                <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="sample"
+                <!-- {{useEmpStore.InterestWithLoanData}} -->
+                <DataTable :value="useEmpStore.InterestWithLoanData" ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                     responsiveLayout="scroll">
-                    {{ useEmpStore.salaryAdvanceEmployeeData }}
 
                     <Column header="Request ID" field="section" style="min-width: 8rem">
 
@@ -143,7 +143,7 @@
                             <input
                                 class="fw-bolder fs-4 text-blue-900 p-2 ml-2 d-flex justify-items-center text-center bg-blue-100"
                                 placeholder="%" style="width: 100px;" v-model="useEmpStore.InterestWithLoan.Interest_rate"
-                                disabled />
+                                disabled prefix="%" />
                             <h1 class=" fw-semibold  mt-1 fs-5">Interest Rate</h1>
                         </div>
 
@@ -230,20 +230,6 @@
 
     </Dialog>
 
-
-
-
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
@@ -257,7 +243,7 @@ const useEmpStore = useEmpSalaryAdvanceStore()
 const loanDetails = ref([])
 
 onMounted(() => {
-    // useEmpStore.fetchInterstWithLoan();
+    useEmpStore.fetchInterstWithLoan();
     useEmpStore.getLoanDetails();
     // useEmpStore.getLoanDetails('InterestWithLoan').then(res => {
     //     loanDetails.value.push(res.data)
@@ -343,7 +329,7 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         useEmpStore.saveInterestWithLoan()
-        v$.value.$reset()
+        v$.value.$reset();
     } else {
         console.log('Form failed validation')
     }

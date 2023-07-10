@@ -18,9 +18,24 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
-    {
 
+     protected $ApproverName;
+     protected $Empname;
+     protected $Empcode;
+     protected $loginLink;
+     protected $curntStatus;
+
+    public function __construct($ApproverName,$Empname,$Empcode,$loginLink,$curntStatus)
+    {
+        $this->ApproverName = $ApproverName;
+
+        $this->Empname = $Empname;
+
+        $this->Empcode = $Empcode;
+
+        $this->loginLink = $loginLink;
+
+        $this->curntStatus = $curntStatus;
     }
 
     public function build()
@@ -28,11 +43,13 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
         //
         // $subject = "Your ".$this->leaveType." has been ";
 
-        $output = $this->view('vmt_approveRejectSalaryAdv_Email');
+        $output = $this->view('vmt_approveRejectSalaryAdv_Email')
                     // ->subject($subject.$this->leave_status)
-                    // ->with('employeeName', $this->employeeName)
-                    // ->with('empCode', $this->empCode)
-                    // ->with('leaveType', $this->leaveType)
+                    ->with('ApproverName', $this->ApproverName)
+                    ->with('EmpName', $this->Empname)
+                    ->with('EmpCode', $this->Empcode)
+                    ->with('loginLink', $this->loginLink)
+                    ->with('curntStatus', $this->curntStatus);
                     // ->with('managerName', $this->managerName)
                     // ->with('managerCode', $this->managerCode)
                     // ->with('loginLink', $this->loginLink)
