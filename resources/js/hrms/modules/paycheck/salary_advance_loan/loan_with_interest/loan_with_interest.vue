@@ -329,7 +329,7 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         useEmpStore.saveInterestWithLoan()
-        v$.value.$reset()
+        v$.value.$reset();
     } else {
         console.log('Form failed validation')
     }

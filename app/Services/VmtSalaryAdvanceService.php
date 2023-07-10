@@ -529,6 +529,7 @@ class VmtSalaryAdvanceService
                     'vmt_emp_sal_adv_details.requested_date',
                     'vmt_emp_sal_adv_details.dedction_date',
                     'vmt_emp_sal_adv_details.sal_adv_crd_sts as status',
+                    'vmt_emp_sal_adv_details.sal_adv_status',
 
                 ]
             );

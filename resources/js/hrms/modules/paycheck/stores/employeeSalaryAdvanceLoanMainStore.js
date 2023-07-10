@@ -38,6 +38,7 @@ Travel Advance - ta
     // Eligible Employees
 
     const salaryAdvanceEmployeeData = ref()
+    const percent_salary_amt =ref();
 
     const sa = reactive({
         ymi: '',
@@ -46,7 +47,7 @@ Travel Advance - ta
         repdate: '',
         reason: '',
         isEligibleEmp: '',
-        storeRepDate:''
+        storeRepDate:'',
     })
 
     const arraySalaryDetails = ref();
@@ -72,7 +73,8 @@ Travel Advance - ta
             sa.ymi = res.data.your_monthly_income
             sa.mxe = res.data.max_eligible_amount
             sa.storeRepDate = res.data.Repayment_date
-            sa.isEligibleEmp = res.data.eligible
+            sa.isEligibleEmp = res.data.eligible;
+            percent_salary_amt.value = res.data.percent_salary_amt;
         }).finally(() => {
             canShowLoading.value = false
         })
@@ -365,7 +367,7 @@ Travel Advance - ta
 
         // SalaryAdvanceFeature
 
-        dailogSalaryAdvance, salaryAdvanceEmployeeData, sa, fetchSalaryAdvance, saveSalaryAdvance,
+        dailogSalaryAdvance,percent_salary_amt ,salaryAdvanceEmployeeData, sa, fetchSalaryAdvance, saveSalaryAdvance,
         arraySalaryDetails,
         getSalaryDetails,
 
