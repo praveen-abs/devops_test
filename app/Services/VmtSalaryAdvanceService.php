@@ -943,6 +943,10 @@ class VmtSalaryAdvanceService
             $loan_history['name'] = User::where('id', $single_record['user_id'])->first()->name;
             $loan_history['eligible_amount'] = $single_record['eligible_amount'];
             $loan_history['loan_amount'] = $single_record['borrowed_amount'];
+            if ($loan_type == 'InterestWithLoan'){
+                $loan_history['interest_rate'] = $single_record['interest_rate'];
+                $loan_history['total amount'] = $single_record['borrowed_amount']+($single_record['borrowed_amount']* $single_record['interest_rate'])/100;
+            }
             $loan_history['reason'] = $single_record['reason'];
             $loan_history['deduction_starting_month'] = $single_record['deduction_starting_month'];
             $loan_history['deduction_ending_month'] = $single_record['deduction_ending_month'];
