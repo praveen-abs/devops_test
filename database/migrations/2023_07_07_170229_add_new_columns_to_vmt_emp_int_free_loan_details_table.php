@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('vmt_emp_int_free_loan_details', function (Blueprint $table) {
             $table->text('loan_status')->after('loan_crd_sts');
-            $table->text('reviewer_cmds')->after('loan_status');
+            $table->text('reviewer_cmds')->nullable()->after('loan_status');
             $table->date('paid_date')->after('reviewer_cmds');
             $table->text('UTR_number')->after('paid_date');
         });
@@ -28,8 +28,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('vmt_emp_int_free_loan_details', function (Blueprint $table) {
-            //
-        });
+        dropColumnIfExists("vmt_emp_int_free_loan_details",'loan_status');
+        dropColumnIfExists("vmt_emp_int_free_loan_details",'reviewer_cmds');
+        dropColumnIfExists("vmt_emp_int_free_loan_details",'paid_date');
+        dropColumnIfExists("vmt_emp_int_free_loan_details",'UTR_number');
     }
 };

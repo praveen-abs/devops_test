@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('vmt_emp_sal_adv_details', function (Blueprint $table) {
             $table->text('sal_adv_status')->after('sal_adv_crd_sts');
-            $table->text('reviewer_cmds')->after('sal_adv_status');
+            $table->text('reviewer_cmds')->nullable()->after('sal_adv_status');
             $table->date('paid_date')->after('reviewer_cmds');
             $table->text('UTR_number')->after('paid_date');
         });
@@ -28,8 +28,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('vmt_emp_sal_adv_details', function (Blueprint $table) {
-            //
-        });
+        dropColumnIfExists("vmt_emp_sal_adv_details",'sal_adv_status');
+        dropColumnIfExists("vmt_emp_sal_adv_details",'reviewer_cmds');
+        dropColumnIfExists("vmt_emp_sal_adv_details",'paid_date');
+        dropColumnIfExists("vmt_emp_sal_adv_details",'UTR_number');
     }
 };

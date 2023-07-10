@@ -28,17 +28,17 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
         //
         // $subject = "Your ".$this->leaveType." has been ";
 
-        $output = $this->view('')
+        $output = $this->view('vmt_approveRejectSalaryAdv_Email');
                     // ->subject($subject.$this->leave_status)
-                    ->with('employeeName', $this->employeeName)
-                    ->with('empCode', $this->empCode)
-                    ->with('leaveType', $this->leaveType)
-                    ->with('managerName', $this->managerName)
-                    ->with('managerCode', $this->managerCode)
-                    ->with('loginLink', $this->loginLink)
-                    ->with('image_view', $this->image_view)
-                    ->with('leave_status', $this->leave_status)
-                    ->with('empAvatar', $this->empAvatar);
+                    // ->with('employeeName', $this->employeeName)
+                    // ->with('empCode', $this->empCode)
+                    // ->with('leaveType', $this->leaveType)
+                    // ->with('managerName', $this->managerName)
+                    // ->with('managerCode', $this->managerCode)
+                    // ->with('loginLink', $this->loginLink)
+                    // ->with('image_view', $this->image_view)
+                    // ->with('leave_status', $this->leave_status)
+                    // ->with('empAvatar', $this->empAvatar);
         return $output;
     }
 

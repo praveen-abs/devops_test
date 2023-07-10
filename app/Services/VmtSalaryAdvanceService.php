@@ -25,6 +25,8 @@ use App\Models\Department;
 use App\Models\State;
 use Exception;
 use App\Models\VmtClientMaster;
+use Mail;
+use App\Mail\ApproveRejectLoanAndSaladvMail;
 
 
 
@@ -971,9 +973,9 @@ class VmtSalaryAdvanceService
                     }
                 }
             }
-
             $loan_details->approver_flow = json_encode($approver_flow, true);
             $loan_details->save();
+
             return response()->json([
                 'status' => 'Sucess',
                 'message' => 'Loan Approved Or Rejected',
@@ -991,7 +993,7 @@ class VmtSalaryAdvanceService
     public function rejectOrApprovedSaladv($record_id, $status, $reason)
     {
 
-        try {
+        // try {
 
             $user_id = auth()->user()->id;
 
@@ -1023,18 +1025,30 @@ class VmtSalaryAdvanceService
             $sal_adv_details->emp_approver_flow = json_encode($approver_flow, true);
             $sal_adv_details->save();
 
+
+            $isSent    = \Mail::to('simmasrfc1330@gmail.com')->send(new ApproveRejectLoanAndSaladvMail());
+
+            if($isSent){
+                $sima = "success";
+            }else{
+                $sima = "failure";
+            }
+
+            dd($sima);
+
+
             return response()->json([
                 'status' => 'Sucess',
                 'message' => 'Loan Approved Or Rejected',
 
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                "status" => "failure",
-                "message" => "Approve Or Reject salary_adv  Failed",
-                "data" => $e->getMessage(),
-            ]);
-        }
+        // } catch (Exception $e) {
+        //     return response()->json([
+        //         "status" => "failure",
+        //         "message" => "Approve Or Reject salary_adv  Failed",
+        //         "data" => $e->getMessage(),
+        //     ]);
+        // }
     }
 
 
