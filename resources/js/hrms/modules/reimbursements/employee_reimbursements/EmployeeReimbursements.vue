@@ -339,6 +339,11 @@
                                         {{ slotProps.data.user_comments }}
                                     </template>
                                 </Column>
+                                <Column field="entry_mode" header="Entry mode" style="min-width: 12rem">
+                                    <template #body="slotProps">
+                                        {{ slotProps.data.entry_mode }}
+                                    </template>
+                                </Column>
                                 <!-- <template #footer>
                   <div
                     class="text-center"
