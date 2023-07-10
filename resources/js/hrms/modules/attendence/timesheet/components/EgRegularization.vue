@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div id="div_reason_editable">
+            <div id="div_reason_editable" v-if="useTimesheet.egDetails.eg_status.includes('None')">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
@@ -72,14 +72,13 @@
                 </div>
             </div>
 
-            <div id="div_reason_noneditable" v-if="false">
+            <div id="div_reason_noneditable" v-if="!useTimesheet.egDetails.eg_status.includes('None')">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
                         </div>
                         <div class="col-6">
-                            <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
-                                id="txt_reason_noneditable" value="EMPTY" readonly>
+                          {{ useTimesheet.egDetails.eg_reason }}
                         </div>
                     </div>
                 </div>
@@ -89,8 +88,8 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                         </div>
                         <div class="col-6">
-                            <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
-                                id="txt_customreason_noneditable" value="EMPTY" readonly>
+                            {{ useTimesheet.egDetails.eg_reason_custom }}
+
                         </div>
                     </div>
                 </div>
@@ -100,16 +99,19 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
                         </div>
                         <div class="col-6">
-                            <input class="text-ash-medium form-control fs-15" name="txt_apply_status"
-                                id="txt_apply_status" value="EMPTY" readonly>
+                            <span v-if="useTimesheet.egDetails.eg_status.includes('Approved')"
+                            class="inline-flex items-center px-5 py-2 fs-6 font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Approved</span>
+                        <span v-if="useTimesheet.egDetails.eg_status.includes('Pending')"
+                            class="inline-flex items-center px-5 py-2 fs-6 font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                        <span v-if="useTimesheet.egDetails.eg_status.includes('Rejected')"
+                            class="inline-flex items-center px-5 py-2 fs-6 font-semibold text-red-800 rounded-md bg-red-50 ring-1 ring-inset ring-yellow-100/20">Rejected</span>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-
+        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize" v-if="useTimesheet.egDetails.eg_status.includes('None')">
             <button type="button" class="btn btn-orange " @click="useTimesheet.applyEgRegularization(), useTimesheet.dialog_Eg = false ">Apply</button>
         </div>
 

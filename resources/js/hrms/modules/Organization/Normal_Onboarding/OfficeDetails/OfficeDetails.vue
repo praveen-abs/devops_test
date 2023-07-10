@@ -2,7 +2,6 @@
     <div class="p-2 shadow card profile-box card-top-border">
         <div class="card-body justify-content-center align-items-center">
             <div class="flex header-card-text">
-                <!-- <img src="../../../assests/images/office-building.png" class="w-1 h-14" alt=""> -->
                 <h6 class="my-2 "><i class="fa fa-briefcase" aria-hidden="true"></i> Official Details</h6>
             </div>
 

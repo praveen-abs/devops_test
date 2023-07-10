@@ -14,7 +14,7 @@
                                 </div>
                                 <div class=" col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5">
 
-                                    <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab"
+                                    <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed justify-center" id="pills-tab"
                                         role="tablist">
                                         <li class="mx-4 nav-item ember-view" role="presentation">
                                             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill"
@@ -22,17 +22,17 @@
                                                 aria-selected="true">
                                                 Timesheet</a>
                                         </li>
-                                        <li class=" nav-item ember-view" role="presentation">
+                                        <li class=" nav-item ember-view" role="presentation" v-if="service.current_user_role == 2 || service.current_user_role == 4 ">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#team" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Team Timesheet</a>
                                         </li>
-                                        <li class=" nav-item ember-view" role="presentation">
+                                        <li class=" nav-item ember-view" role="presentation"  v-if="service.current_user_role == 2">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#org" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
-                                                Org TImesheet</a>
+                                                Org Timesheet</a>
                                         </li>
 
                                     </ul>
@@ -114,7 +114,8 @@
                     </div>
                     <div class="col-xl-2 col-xxl-2 col-lg-2 col-md-3 col-sm-4">
 
-                        <p class="fw-bold textColor fs-12"><i class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
+                        <p class="fw-bold textColor fs-12"><i
+                                class="fa fa-question-circle fs-15 text-secondary me-2"></i>Pending</p>
 
                     </div>
 
@@ -153,16 +154,16 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="overflow-x-auto">
-                        <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                            <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                         </div>
                     </div>
 
-                    <div class="tab-pane fade " id="team" role="tabpanel">
+                    <div class="tab-pane fade " id="team" role="tabpanel"  >
                         <div class="flex">
-                            <div class="min-w-fit">
-                                <EmployeeList :source="orgList" />
+                            <div class="min-w-max">
+                                <EmployeeList :source="teamList" :is-team="true" />
                             </div>
-                            <div class="overflow-x-auto ml-2">
+                            <div class="overflow-x-auto ml-2 w-100 rounded-lg">
                                 <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
 
                             </div>
@@ -172,10 +173,10 @@
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-max">
-                                <EmployeeList :source="orgList" />
+                                <EmployeeList :source="orgList" :is-team="false" />
                             </div>
-                            <div class="overflow-x-auto ml-2">
-                                <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance"  />
+                            <div class="overflow-x-auto ml-2 w-100 rounded-lg">
+                                <Timesheet :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
                             </div>
                         </div>
                     </div>
@@ -187,7 +188,7 @@
     <MipRegularization />
     <LcRegularization />
     <EgRegularization />
-    <ViewSelfieImage  />
+    <ViewSelfieImage />
 </template>
 
 
@@ -214,9 +215,6 @@ const service = Service()
 onMounted(() => {
     Service()
 
-    useTimesheet.getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear).then(res => {
-        useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-    })
 
     useTimesheet.getTeamList(service.current_user_code).then(res => {
         console.log(res.data);
@@ -227,12 +225,14 @@ onMounted(() => {
         orgList.value = Object.values(res.data)
     })
 
-    // setTimeout(async () => {
-    //     await useTimesheet.getSelectedEmployeeAttendance(1,useCalendar.getMonth,useCalendar.getYear).then(res => {
-    //     useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-    // })
-    // },
-    // 3000);
+    setTimeout(() => {
+        useTimesheet.getSelectedEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+        }).finally(() => {
+            useTimesheet.canShowLoading = false
+        })
+    }, 400);
+
 
 })
 
@@ -250,9 +250,7 @@ const emp = ref([
 
 
 <style>
-
-.textColor{
+.textColor {
     color: #003056;
 }
-
 </style>

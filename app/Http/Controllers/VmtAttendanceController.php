@@ -611,7 +611,7 @@ class VmtAttendanceController extends Controller
 
         $user = User::find($request->user_id);
         $userCode = $user->user_code;
-
+        //$userCode = 144;
 
 
         $requestedDate = $request->year . '-' . $request->month . '-01';
@@ -892,10 +892,16 @@ class VmtAttendanceController extends Controller
                         $attendanceResponseArray[$key]["isLC"] = true;
 
                         //check whether regularization applied.
-                        $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
+                        $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'LC');
 
                         //check regularization status
-                        $attendanceResponseArray[$key]["lc_status"] = $regularization_status;
+                        //dd(  $regularization_record['reason']);
+                        $status = $regularization_record['status'];
+                        $reason =$regularization_record['reason'];
+                        $cst_reason = $regularization_record['cst_reason'];
+                        $attendanceResponseArray[$key]["lc_status"] =    $status ;
+                        $attendanceResponseArray[$key]["lc_reason"] =    $reason ;
+                        $attendanceResponseArray[$key]["lc_reason_custom"] =     $cst_reason ;
                     }
                 }
 
@@ -916,10 +922,14 @@ class VmtAttendanceController extends Controller
                         $attendanceResponseArray[$key]["isEG"] = true;
 
                         //check whether regularization applied.
-                        $regularization_status = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
-
+                        $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
                         //check regularization status
-                        $attendanceResponseArray[$key]["eg_status"] = $regularization_status;
+                        $status = $regularization_record['status'];
+                        $reason =  $regularization_record['reason'];
+                        $cst_reason = $regularization_record['cst_reason'];
+                        $attendanceResponseArray[$key]["eg_status"] =   $status  ;
+                        $attendanceResponseArray[$key]["eg_reason"] =   $reason  ;
+                        $attendanceResponseArray[$key]["eg_reason_custom"] =   $reason  ;
                     } else {
                         //employee left late
 
@@ -950,7 +960,8 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isMOP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP');
+
+                $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP')['status'];
 
                 if ($attendanceResponseArray[$key]["mop_status"] == "Approved") {
 
@@ -966,7 +977,7 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isMIP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP');
+                $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP')['status'];
 
                 if ($attendanceResponseArray[$key]["mip_status"] == "Approved") {
 
@@ -979,7 +990,7 @@ class VmtAttendanceController extends Controller
             }
         } //for each
 
-        // dd($attendanceResponseArray);
+       // dd($attendanceResponseArray);
 
         return $attendanceResponseArray;
     }
@@ -1032,12 +1043,27 @@ class VmtAttendanceController extends Controller
             ->where('user_id',  $user_id)->where('regularization_type', $regularizeType);
 
         // dd($user_id ." , ". $attendance_date." , ".$regularizeType);
-
+        $record = array();
         if ($regularize_record->exists()) {
-            return $regularize_record->value('status');
+           unset(   $record);
+           $record['status']=$regularize_record->value('status');
+          // dd($regularize_record->value('reason_type'));
+            if($regularize_record->value('reason_type')=='Others'){
+                $record['reason']=$regularize_record->value('reason_type');
+                $record['cst_reason']=$regularize_record->value('custom_reason');
+            }else{
+                $record['reason']=$regularize_record->value('reason_type');
+                $record['cst_reason'] = null;
+            }
+
         } else {
-            return "None";
+            unset(   $record);
+            $record['status']="None";
+            $record['reason']="None";
+            $record['cst_reason'] = null;
+
         }
+        return   $record;
     }
 
     /*
@@ -1269,25 +1295,25 @@ class VmtAttendanceController extends Controller
             //dd($manager_details);
 
 
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
 
 
-            $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                auth::user()->name,
-                auth::user()->user_code,
-                $emp_avatar,
-                $request->attendance_date,
-                $manager_details->name,
-                $manager_details->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $request->custom_reason,
-                "Pending"
-            ));
+            // $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+            //     auth::user()->name,
+            //     auth::user()->user_code,
+            //     $emp_avatar,
+            //     $request->attendance_date,
+            //     $manager_details->name,
+            //     $manager_details->user_code,
+            //     request()->getSchemeAndHttpHost(),
+            //     $image_view,
+            //     $request->custom_reason,
+            //     "Pending"
+            // ));
             if ($request->regularization_type == 'LC') {
 
                 $attendance_regularization_type = 'employee_applies_lc';
@@ -1309,11 +1335,11 @@ class VmtAttendanceController extends Controller
             );
 
 
-            if ($isSent) {
-                $mail_status = "Mail sent successfully";
-            } else {
-                $mail_status = "There was one or more failures.";
-            }
+            // if ($isSent) {
+            //     $mail_status = "Mail sent successfully";
+            // } else {
+            //     $mail_status = "There was one or more failures.";
+            // }
 
             return $responseJSON = [
                 'status' => 'success',
@@ -1328,7 +1354,7 @@ class VmtAttendanceController extends Controller
             return $responseJSON = [
                 'status' => 'failure',
                 'message' => 'Error while processing the request. Please contact the admin',
-                'data' => $e
+                'data' => $e->getmessage()
             ];
         }
     }

@@ -3,7 +3,6 @@
         <div class="card-body justify-content-center align-items-center">
             <div class="form-card">
                 <div class="flex my-2 header-card-text">
-                    <!-- <img src="../../../assests/images/gps.png" class="w-1 h-14" alt=""> -->
                     <h6 class="my-2"><i class="fa fa-address-card" aria-hidden="true"></i> Current Address</h6>
                 </div>
                 <div class="mt-1 row">

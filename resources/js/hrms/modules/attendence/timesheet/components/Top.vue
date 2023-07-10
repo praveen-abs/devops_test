@@ -1,8 +1,15 @@
 <template>
     <div class="col-span-7">
-        <div class="w-full flex justify-between items-center">
-            <!-- Current month and year -->
-            <div class="w-1/3 p-2 md:p-4">
+        <div class="w-full flex justify-center items-center py-4">
+            <button @click="calendarStore.decrementMonth(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-10 h-10 hover:text-gray-800 cursor-pointer hover:h-6 hover:w-6 transition-all">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <div class="px-9">
                 <div
                     class="w-full inline-flex space-x-1 text-lg md:text-2xl lg:text-2xl text-left  md:font-semibold font-semibold">
                     <span class="font-semibold text-lg md:hidden">{{ shortMonthStr }}</span><span
@@ -10,11 +17,20 @@
                         class="font-semibold text-lg">{{ calendarStore.getYear }}</span>
                 </div>
             </div>
-            <!-- -------------------------- -->
+            <button @click="calendarStore.incrementMonth(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-10 h-10 hover:text-gray-800 cursor-pointer hover:h-6 hover:w-6 transition-all">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        </div>
 
-            <!-- Navigation -->
-            <div class="hidden md:flex w-1/3 items-center justify-center text-gray-600">
-                <div class="flex space-x-8 items-center">
+        <div class="w-full flex px-auto" v-if="false">
+
+            <div class="hidden md:flex px-auto items-center justify-center text-gray-600 ">
+                <div class="flex space-x-12  items-center justify-center">
                     <button @click="calendarStore.decrementMonth(1)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor"
@@ -23,6 +39,14 @@
                                 d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
                         </svg>
                     </button>
+                    <div class="w-1/3 p-2 md:p-4">
+                        <div
+                            class="w-full inline-flex space-x-1 text-lg md:text-2xl lg:text-2xl text-left  md:font-semibold font-semibold">
+                            <span class="font-semibold text-lg md:hidden">{{ shortMonthStr }}</span><span
+                                class=" font-semibold text-lg hidden md:block">{{ monthStr }}</span><span
+                                class="font-semibold text-lg">{{ calendarStore.getYear }}</span>
+                        </div>
+                    </div>
                     <button @click="calendarStore.incrementMonth(1)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor"

@@ -1,5 +1,5 @@
 <template>
-    <Dialog header="Header"  v-model:visible="useTimesheet.dialog_Lc"  :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    <Dialog header="Header" v-model:visible="useTimesheet.dialog_Lc" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '35vw', borderTop: '5px solid #002f56' }" :modal="true" :closable="true" :closeOnEscape="true">
         <template #header>
             <div>
@@ -8,13 +8,12 @@
                     Attendance regularization</h5>
             </div>
         </template>
-        {{ useTimesheet.lcDetails }}
         <div class="row">
             <div class="mb-2 col-12">
                 <div class="row">
                     <div class="col-6"><label class="text-ash-medium fs-15">Date</label></div>
                     <div class="col-6">
-                        <span class="text-ash-medium fs-15" id="current_date">{{useTimesheet.lcDetails.date}}</span>
+                        <span class="text-ash-medium fs-15" id="current_date">{{ useTimesheet.lcDetails.date }}</span>
 
                         <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
                             id="attendance_date">
@@ -29,7 +28,8 @@
                         </label>
                     </div>
                     <div class="col-6">
-                        <span class="text-ash-medium fs-15" id="actual_user_time">{{useTimesheet.lcDetails.checkin_time}}</span>
+                        <span class="text-ash-medium fs-15" id="actual_user_time">{{ useTimesheet.lcDetails.checkin_time
+                        }}</span>
                     </div>
                 </div>
             </div>
@@ -43,12 +43,13 @@
                     </div>
                 </div>
             </div>
-            <div id="div_reason_editable" v-if="!useTimesheet.lcDetails.lc_status.includes('Approved')">
+            <div id="div_reason_editable" v-if="useTimesheet.lcDetails.lc_status.includes('None')">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                         <div class="col-6">
-                            <select name="reason" class="form-select btn-line-orange" id="reason_lc" v-model="useTimesheet.lcDetails.reason">
+                            <select name="reason" class="form-select btn-line-orange" id="reason_lc"
+                                v-model="useTimesheet.lcDetails.reason">
                                 <option selected hidden disabled>
                                     Choose Reason for LC
                                 </option>
@@ -65,9 +66,8 @@
                     <div class="row">
                         <div class="col-12">
                             <textarea v-if="useTimesheet.lcDetails.reason == 'Others'" name="custom_reason"
-                            v-model="useTimesheet.lcDetails.custom_reason"
-                            id="reasonBox" cols="30" rows="3" class="form-control "
-                                placeholder="Reason here...." ></textarea>
+                                v-model="useTimesheet.lcDetails.custom_reason" id="reasonBox" cols="30" rows="3"
+                                class="form-control " placeholder="Reason here...."></textarea>
                         </div>
                     </div>
                 </div>
@@ -75,13 +75,13 @@
 
             <!-- After manager Applied -->
 
-            <div id="div_reason_noneditable" v-if="useTimesheet.lcDetails.lc_status.includes('Approved')" >
+            <div id="div_reason_noneditable" v-if="!useTimesheet.lcDetails.lc_status.includes('None')">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
                         </div>
                         <div class="col-6">
-                            {{ useTimesheet.lcDetails.reason }}
+                            {{ useTimesheet.lcDetails.lc_reason }}
                             <!-- <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
                                 id="txt_reason_noneditable"  readonly v-model="useTimesheet.lcDetails.reason"> -->
                         </div>
@@ -93,7 +93,7 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                         </div>
                         <div class="col-6">
-                            {{ useTimesheet.lcDetails.custom_reason }}
+                            {{ useTimesheet.lcDetails.lc_reason_custom }}
                             <!-- <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
                                 id="txt_customreason_noneditable"  readonly v-model="useTimesheet.lcDetails.custom_reason"> -->
                         </div>
@@ -105,17 +105,21 @@
                         <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
                         </div>
                         <div class="col-6">
-                            <input class="text-ash-medium form-control fs-15" name="txt_apply_status" id="txt_apply_status"
-                                 readonly v-model="useTimesheet.lcDetails.lc_status">
+                            <span v-if="useTimesheet.lcDetails.lc_status.includes('Approved')"
+                                class="inline-flex items-center px-5 py-2 fs-6 font-semibold text-green-800 rounded-md bg-green-50 ring-1 ring-inset ring-green-100/20">Approved</span>
+                            <span v-if="useTimesheet.lcDetails.lc_status.includes('Pending')"
+                                class="inline-flex items-center px-5 py-2 fs-6 font-semibold text-yellow-800 rounded-md bg-yellow-50 ring-1 ring-inset ring-yellow-100/20">Pending</span>
+                            <span v-if="useTimesheet.lcDetails.lc_status.includes('Rejected')"
+                                class="inline-flex items-center px-5 py-2 fs-6 font-semibold text-red-800 rounded-md bg-red-50 ring-1 ring-inset ring-yellow-100/20">Rejected</span>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-
-            <button type="button" class="btn btn-orange" @click="useTimesheet.applyLcRegularization(),useTimesheet.dialog_Lc = false">Apply</button>
+        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"  v-if="useTimesheet.lcDetails.lc_status.includes('None')">
+            <button type="button" class="btn btn-orange"
+                @click="useTimesheet.applyLcRegularization(), useTimesheet.dialog_Lc = false">Apply</button>
         </div>
 
     </Dialog>

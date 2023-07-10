@@ -2,7 +2,7 @@
     <div class="p-2 my-6 shadow card profile-box card-top-border">
         <div class="card-body justify-content-center align-items-center">
             <div class="flex header-card-text">
-                <img src="../../../assests/images/family_image.png" alt="" style="height: 20px;">
+                <img src="../../../../assests/images/family.png" alt="" style="height: 20px;">
                 <h6 class="mx-2 my-2">Family Details</h6>
             </div>
 

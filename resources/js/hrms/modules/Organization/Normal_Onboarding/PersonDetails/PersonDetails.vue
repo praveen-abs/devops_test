@@ -4,14 +4,13 @@
             <div class=" header-card-text">
                 <h6 class="my-2"><i class="fa fa-user" aria-hidden="true"></i> Personal Details</h6>
             </div>
-
             <div class="form-card">
                 <div class="mt-1 row">
                     <div class="mb-2 col-md -6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Employee Code</label>
                             <div class="p-inputgroup flex-1">
-                                <span class="p-inputgroup-addon">{{ service.employee_onboarding.employee_code }}</span>
+                                <span class="p-inputgroup-addon font-semibold text-sm text-black ">{{ service.clientCode }}</span>
                                 <InputText
                                     :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '', user_code_exists ? 'p-invalid' : '']"
                                     class="capitalize form-onboard-form form-control textbox" type="text"

@@ -153,6 +153,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const isNationalityVisible = ref(false);
     const checkIsQuickOrNormal = ref()
     const family_details_disable = ref(false)
+    const clientCode = ref()
 
 
 
@@ -191,14 +192,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     }
 
 
-    const validateAadhar = () => {
-        const regex = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
-        if (regex.test(employee_onboarding.pan_number)) {
-            return true
-        } else {
-            return false
-        }
-    }
+
 
 
     const bankList = ref();
@@ -500,7 +494,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const submit = () => {
 
         let formData = new FormData();
-        formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
+        formData.append("can_onboard_employee", `${clientCode.value}${employee_onboarding.can_onboard_employee}`);
         formData.append("employee_code", employee_onboarding.employee_code);
         formData.append("doj", moment(employee_onboarding.doj).format('YYYY-MM-DD'));
         formData.append("aadhar_number", employee_onboarding.aadhar_number);
@@ -711,7 +705,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             console.log("UID not found in req params");
             axios.get('/get-client-code').then(res => {
                 console.log(res.data);
-                employee_onboarding.employee_code = res.data
+                clientCode.value = res.data
             })
         }
     }
@@ -1223,7 +1217,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         canShowLoading,
         compensatory_calculation, net_calculation, gross_calculation, statutory_bonus, special_allowance_cal, child_allowance, food_coupon, lta, other_allowance, insurance, graduity,
 
-        employee_onboarding, getBasicDeps,
+        employee_onboarding, getBasicDeps,clientCode,
 
         // basic
 

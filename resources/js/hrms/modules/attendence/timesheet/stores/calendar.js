@@ -32,8 +32,20 @@ export const useCalendarStore = defineStore("calendar", () => {
 
         month.value = month.value + val;
 
-        useTimesheet.getSelectedEmployeeAttendance(174, month.value, year.value).then(res => {
+        useTimesheet.canShowLoading = true
+
+        useTimesheet.getSelectedEmployeeAttendance(service.current_user_id, month.value, year.value).then(res => {
             useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+        }).finally(() => {
+            useTimesheet.canShowLoading = false
+        })
+        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedTeamMemberUserId, month.value, year.value).then(res => {
+            useTimesheet.currentlySelectedTeamMemberAttendance = Object.values(res.data)
+        })
+        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedOrgMemberUserId, month.value, year.value).then(res => {
+            useTimesheet.currentlySelectedOrgMemberAttendance = Object.values(res.data)
+        }).finally(() => {
+            useTimesheet.canShowLoading = false
         })
 
     }
@@ -44,9 +56,20 @@ export const useCalendarStore = defineStore("calendar", () => {
             return;
         }
         month.value = month.value - val;
+        useTimesheet.canShowLoading = true
 
-        useTimesheet.getSelectedEmployeeAttendance(174, month.value, year.value).then(res => {
+        useTimesheet.getSelectedEmployeeAttendance(service.current_user_id, month.value, year.value).then(res => {
             useTimesheet.currentEmployeeAttendance = Object.values(res.data)
+        }).finally(() => {
+            useTimesheet.canShowLoading = false
+        })
+        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedTeamMemberUserId, month.value, year.value).then(res => {
+            useTimesheet.currentlySelectedTeamMemberAttendance = Object.values(res.data)
+        })
+        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedOrgMemberUserId, month.value, year.value).then(res => {
+            useTimesheet.currentlySelectedOrgMemberAttendance = Object.values(res.data)
+        }).finally(() => {
+            useTimesheet.canShowLoading = false
         })
 
 

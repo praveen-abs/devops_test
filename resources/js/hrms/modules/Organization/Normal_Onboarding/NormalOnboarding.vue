@@ -96,6 +96,7 @@ import Address from './Address/Address.vue';
 import FamilyDetails from "./FamilyDetails/FamilyDetails.vue";
 import OfficeDetails from './OfficeDetails/OfficeDetails.vue'
 import Compensatory from './Compensatory/Compensatory.vue'
+import QuickOnboarding from '../QuickOnboarding/QuickOnboarding.vue'
 
 
 

@@ -2,17 +2,15 @@
     <div class="card h-screen overflow-x-auto">
         <div class="card-body">
             <button class="list_employee_attendance  p-3 px-1 flex hover:bg-gray-300 rounded-lg w-full focus:bg-gray-300"
-             v-for="employee in source"
-             @click="useTimesheet.getSelectedEmployeeDetails(employee)" >
+                v-for="employee in source" @click="useTimesheet.getSelectedEmployeeTeamDetails(employee, isTeam)">
                 <div class="col-auto me-2">
-                    <div
-                        class="color_disco-600 rounded-full  text-center mx-0 p-2">
-                        <span class="text-white fw-bold">MU</span>
+                    <div class="color_disco-600 rounded-full  text-center mx-0 p-2">
+                        <span class="text-white fw-bold">{{JSON.parse(employee.employee_avatar).data}}</span>
                     </div>
                 </div>
                 <div class="user_content text-start ">
-                    <p class="fw-bold text-primary text-capitalize">{{employee.name}}</p>
-                    <p class=" text-muted f-11 text-capitalize">{{employee.designation}}</p>
+                    <p class="fw-bold text-blue-900 text-capitalize">{{ employee.name }}</p>
+                    <p class=" text-muted f-11 text-capitalize">{{ employee.designation }}</p>
                 </div>
             </button>
         </div>
@@ -33,6 +31,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    isTeam: {
+        type: Boolean,
+        required: true,
+    }
 });
 
 

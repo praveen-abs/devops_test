@@ -1,6 +1,6 @@
 <template>
     <div ref="calendarContainer" class="min-h-full min-w-fit text-gray-800 card" v-if="singleAttendanceDay">
-        <div class="w-full border  grid grid-cols-7 gap-1 card-body ">
+        <div class="min-w-max border  grid grid-cols-7 gap-1 card-body ">
             <!-- Top navigation bar  -->
             <Top />
 
@@ -121,7 +121,6 @@
                                                 </button>
                                             </div>
                                             <div class="">
-
                                                 <button v-if="singleAttendanceDay.isMIP"
                                                     class="regualarization_button bg-orange-600 text-white"
                                                     @click="useTimesheet.onClickShowMipRegularization(singleAttendanceDay)">MIP</button>
@@ -142,14 +141,14 @@
                                                     <i v-if="singleAttendanceDay.lc_status.includes('Rejected')"
                                                         class="fa fa-times-circle mx-2 text-danger"></i>
 
-                                                    <i v-else class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.lc_status.includes('None')" class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
 
                                                 <button v-if="singleAttendanceDay.isMIP">
                                                     <i v-if="singleAttendanceDay.mip_status.includes('Approved')"
-                                                        class='fa fa-check-circle text-success mx-2' v-tooltip="'Approved'"
-                                                        title="Not Applied"></i>
+                                                        class='fa fa-check-circle text-success mx-2'
+                                                        v-tooltip="'Approved'"></i>
 
                                                     <i v-if="singleAttendanceDay.mip_status.includes('Pending')"
                                                         class="fa fa-question-circle fs-15 text-secondary mx-2"
@@ -159,7 +158,7 @@
                                                         class="fa fa-times-circle mx-2 text-danger"
                                                         v-tooltip="'Rejected'"></i>
 
-                                                    <i v-else class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.mip_status.includes('None')" class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
 
@@ -205,7 +204,7 @@
                                                     <i v-if="singleAttendanceDay.eg_status.includes('Rejected')"
                                                         v-tooltip="'Rejected'"
                                                         class="fa fa-times-circle mx-2 text-danger"></i>
-                                                    <i v-else class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.eg_status.includes('None')"  class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
 
@@ -221,7 +220,7 @@
                                                         v-tooltip="'Rejected'"
                                                         class="fa fa-times-circle  text-danger mx-2"></i>
 
-                                                    <i v-else class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i  v-if="singleAttendanceDay.mop_status.includes('None')" class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
                                             </div>
@@ -261,12 +260,6 @@
             </div>
         </div>
     </div>
-    <div ref="calendarContainer" class="min-h-full min-w-full text-gray-800 card" v-else>
-        <div class="card-body">
-            <p class="font-semibold fs-6">select Employee</p>
-        </div>
-    </div>
-
     <Dialog header="Header" v-model:visible="useTimesheet.canShowLoading"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
         :closeOnEscape="false">
@@ -426,6 +419,10 @@ const getSession = (time) => {
 
     return timeFormat
 };
+
+const isAbesent = (date) => {
+
+}
 
 
 /**

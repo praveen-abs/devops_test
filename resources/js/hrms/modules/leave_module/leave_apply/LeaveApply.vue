@@ -62,7 +62,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <div class="form-group">
-                            <Dropdown editable @change="service.Permission" style="  height: 38px;font-weight: 500;"
+                            <Dropdown  @change="service.Permission" style="  height: 38px;font-weight: 500;"
                                 class="w-full" v-model="service.leave_data.selected_leave" :options="service.leave_types"
                                 optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" :class="[
                                     v$.selected_leave.$error ? 'p-invalid' : '',
@@ -118,7 +118,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
+                            :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
                                 f$.full_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
                         <span v-if="f$.full_day_leave_date.$error" class="font-semibold text-red-400 fs-6">
@@ -138,7 +138,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
+                            :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
                                 h$.half_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
                         <span v-if="h$.half_day_leave_date.$error" class="font-semibold text-red-400 fs-6">

@@ -26,7 +26,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const dialog_Selfie = ref(false)
 
     const currentEmployeeAttendance = ref()
+    const currentlySelectedTeamMemberUserId = ref()
     const currentlySelectedTeamMemberAttendance = ref()
+    const currentlySelectedOrgMemberUserId = ref()
+    const currentlySelectedOrgMemberAttendance = ref()
 
 
     const getSelectedEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
@@ -36,8 +39,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             month: currentlySelectedMonth + 1,
             year: currentlySelectedYear,
             user_id: currentlySelectedUser,
-        }).finally(() => {
-            canShowLoading.value = false
         })
     }
 
@@ -51,14 +52,23 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         return axios.get('/fetch-org-members')
     }
 
-    const getSelectedEmployeeDetails = (data) => {
+    const getSelectedEmployeeTeamDetails = (data, isTeam) => {
+        console.log(isTeam);
         let user_id = data.id;
         getSelectedEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log(Object.values(res.data));
-            currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
+            if (isTeam) {
+                currentlySelectedTeamMemberUserId.value = data.id
+                currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
+            } else {
+                currentlySelectedOrgMemberUserId.value = data.id
+                currentlySelectedOrgMemberAttendance.value = Object.values(res.data)
+            }
+        }).finally(() => {
+            canShowLoading.value = false
         })
-
     }
+
 
 
 
@@ -107,7 +117,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? '9:30:00' :
                 selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? '6:30:00' : '',
             reason: selectedDayRegularizationRecord.reason,
-            custom_reason:selectedDayRegularizationRecord.custom_reason  ? selectedDayRegularizationRecord.custom_reason : '',
+            custom_reason: selectedDayRegularizationRecord.custom_reason ? selectedDayRegularizationRecord.custom_reason : '',
         }
         console.log(AttendanceRegularizeFormat);
         return AttendanceRegularizeFormat
@@ -123,8 +133,73 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyLcRegularization = () => {
-
+        canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
+            .then((res) => {
+                let message = res.data.message
+                console.log(message);
+                if (res.data.status == 'success') {
+                    Swal.fire(
+                        'Good job!',
+                        'Attendance Regularized Successful',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Fill!',
+                        `${message}`,
+                        'error'
+                    )
+                }
+            }).finally(() => {
+                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
+                canShowLoading.value = false
+
+
+            })
+
+    }
+
+    const onClickShowEgRegularization = (attendance) => {
+        dialog_Eg.value = true
+        egDetails.value = { ...attendance }
+    }
+
+    const applyEgRegularization = () => {
+        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
+            .then((res) => {
+                let message = res.data.message
+                console.log(message);
+                if (res.status == 'success') {
+                    Swal.fire(
+                        'Success!',
+                        'Attendance Regularized Successful',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Error',
+                        `${message}`,
+                        'error'
+                    )
+                }
+            }).finally(() => {
+                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
+            })
+
+    }
+
+
+    //  Applying for Missed In and  Out Punches
+
+    const onClickShowMipRegularization = (attendance) => {
+        dialog_Mip.value = true
+        mipDetails.value = { ...attendance }
+    }
+
+
+    const applyMipRegularization = () => {
+        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
             .then((res) => {
                 let message = res.data.message
                 console.log(message);
@@ -141,65 +216,9 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                         'error'
                     )
                 }
+            }).finally(() => {
+                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
             })
-
-    }
-
-    const onClickShowEgRegularization = (attendance) => {
-        dialog_Eg.value = true
-        egDetails.value = { ...attendance }
-    }
-
-    const applyEgRegularization = () => {
-        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
-        .then((res) => {
-            let message = res.data.message
-            console.log(message);
-            if (res.status == 'success') {
-                Swal.fire(
-                    'Good job!',
-                    'Attendance Regularized Successful',
-                    'success'
-                )
-            } else {
-                Swal.fire(
-                    'Fill!',
-                    `${message}`,
-                    'error'
-                )
-            }
-        })
-
-    }
-
-
-    //  Applying for Missed In and  Out Punches
-
-    const onClickShowMipRegularization = (attendance) => {
-        dialog_Mip.value = true
-        mipDetails.value = { ...attendance }
-    }
-
-
-    const applyMipRegularization = () => {
-        axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
-        .then((res) => {
-            let message = res.data.message
-            console.log(message);
-            if (res.status == 'success') {
-                Swal.fire(
-                    'Good job!',
-                    'Attendance Regularized Successful',
-                    'success'
-                )
-            } else {
-                Swal.fire(
-                    'Fill!',
-                    `${message}`,
-                    'error'
-                )
-            }
-        })
 
     }
 
@@ -210,23 +229,25 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const applyMopRegularization = () => {
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
-        .then((res) => {
-            let message = res.data.message
-            console.log(message);
-            if (res.status == 'success') {
-                Swal.fire(
-                    'Good job!',
-                    'Attendance Regularized Successful',
-                    'success'
-                )
-            } else {
-                Swal.fire(
-                    'Fill!',
-                    `${message}`,
-                    'error'
-                )
-            }
-        })
+            .then((res) => {
+                let message = res.data.message
+                console.log(message);
+                if (res.status == 'success') {
+                    Swal.fire(
+                        'Good job!',
+                        'Attendance Regularized Successful',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Fill!',
+                        `${message}`,
+                        'error'
+                    )
+                }
+            }).finally(() => {
+                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
+            })
 
     }
 
@@ -278,9 +299,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     return {
         // Timesheet Data source
         getSelectedEmployeeAttendance, currentEmployeeAttendance,
-        getTeamList, getOrgList, getSelectedEmployeeDetails,
+        getTeamList, getOrgList, getSelectedEmployeeTeamDetails,
 
-        currentlySelectedTeamMemberAttendance, canShowLoading, isManager,
+        currentlySelectedTeamMemberUserId,
+        currentlySelectedTeamMemberAttendance,
+        currentlySelectedOrgMemberUserId,
+        currentlySelectedOrgMemberAttendance,
+        canShowLoading, isManager,
 
 
         // Finding Attendance Mode
@@ -297,7 +322,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         //   EG
         onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie, onClickSViewSelfie,selfieDetails,
+        dialog_Selfie, onClickSViewSelfie, selfieDetails,
 
 
     }
