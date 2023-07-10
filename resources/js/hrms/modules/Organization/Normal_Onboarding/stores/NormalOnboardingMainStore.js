@@ -193,8 +193,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
 
-
-
     const bankList = ref();
     const country = ref();
     const departmentDetails = ref();
@@ -314,6 +312,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     }
 
     const rules = computed(() => {
+
         return {
             employee_code: {},
             employee_name: { required },
@@ -482,8 +481,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             RelievingLetterDoc: { required },
             PassportDoc: { required },
         }
-
-
 
 
     })
@@ -678,15 +675,27 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         employee_onboarding.can_onboard_employee = isEmployeeOnboard
         v$.value.$validate() // checks all inputs
-        console.log(v$.value);
-        if (!v$.value.$error) {
-            // if ANY fail validation
-            console.log('Form successfully submitted.')
-            submit()
-            v$.value.$reset()
-        } else {
-            console.log('Form failed validation')
+
+        if(isEmployeeOnboard ==  0){
+            if (!v$.value.$error) {
+                // if ANY fail validation
+                console.log('Form successfully submitted.')
+                submit()
+                v$.value.$reset()
+            } else {
+                console.log('Form failed validation')
+            }
+        }else{
+            if (!v$.value.$error) {
+                // if ANY fail validation
+                console.log('Form successfully submitted.')
+                submit()
+                v$.value.$reset()
+            } else {
+                console.log('Form failed validation')
+            }
         }
+
     }
 
     //If the URL has hashed param, then it means quick-onboarded user is accessing this page.So, fetch his existing data
@@ -807,17 +816,17 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             console.log("0" + employee_onboarding.gender);
             employee_onboarding.spouse_gender = 'Female'
             console.log(employee_onboarding.spouse_gender);
-            // readonly.spouse = true
+            readonly.spouse = true
         }
 
         if (value == 'Female' || value == 'female') {
             employee_onboarding.spouse_gender = 'Male'
             console.log("1" + employee_onboarding.gender);
             console.log(employee_onboarding.spouse_gender);
-            // readonly.spouse = true
+            readonly.spouse = true
         }
         if (value == 'Others' || value == 'others') {
-            // readonly.spouse = false
+            readonly.spouse = false
         }
 
     }
