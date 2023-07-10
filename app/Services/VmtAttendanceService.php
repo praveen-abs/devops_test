@@ -704,6 +704,7 @@ class VmtAttendanceService
                 $emp_avatar,
                 $status
             )
+
         );
 
         if ($isSent) {
@@ -1776,7 +1777,7 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
                     }
             $response =$query_web_mobile_response;
         }else{
-            
+
             $response = $query_web_mobile_response;
         }
 
