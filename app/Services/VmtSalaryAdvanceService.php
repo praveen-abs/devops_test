@@ -588,9 +588,7 @@ class VmtSalaryAdvanceService
         ]);
     }
 
-    public function showInterestFreeLoanEmployeeinfo()
-    {
-    }
+
 
     public function showEligibleInterestFreeLoanDetails($loan_type)
     {
@@ -617,12 +615,17 @@ class VmtSalaryAdvanceService
         //dd($user_id);
         $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
         $last_payroll_month = VmtEmployeePayroll::join('vmt_payroll', 'vmt_payroll.id', '=', 'vmt_emp_payroll.payroll_id')
-            ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date', 'DESC')->first()->payroll_date;
+            ->where('user_id', $user_id)->orderBy('vmt_payroll.payroll_date', 'DESC')->first();
+
         if (empty($last_payroll_month)) {
-            $last_payroll_month = VmtPayroll::orderBy('payroll_date', 'DESC')->first()->payroll_date;
+            $last_payroll_month = VmtPayroll::orderBy('payroll_date', 'DESC')->first();
             if (empty($last_payroll_month)) {
                 $last_payroll_month = Carbon::now()->addMonth()->format('Y-m-d');
+            } else {
+                $last_payroll_month = $last_payroll_month->payroll_date;
             }
+        } else {
+            $last_payroll_month = $last_payroll_month->payroll_date;
         }
         if ($loan_type == 'InterestWithLoan') {
             $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
@@ -995,53 +998,53 @@ class VmtSalaryAdvanceService
 
         // try {
 
-            $user_id = auth()->user()->id;
+        $user_id = auth()->user()->id;
 
-            $sal_adv_details = VmtEmpSalAdvDetails::where('id', $record_id)->first();
-            $sal_adv_settings_id = VmtEmpAssignSalaryAdvSettings::where('id', $sal_adv_details->vmt_emp_assign_salary_adv_id)->first();
-            $sal_adv_settings = VmtSalaryAdvSettings::where('id', $sal_adv_settings_id->salary_adv_id)->first();
+        $sal_adv_details = VmtEmpSalAdvDetails::where('id', $record_id)->first();
+        $sal_adv_settings_id = VmtEmpAssignSalaryAdvSettings::where('id', $sal_adv_details->vmt_emp_assign_salary_adv_id)->first();
+        $sal_adv_settings = VmtSalaryAdvSettings::where('id', $sal_adv_settings_id->salary_adv_id)->first();
 
-            $approver_flow = json_decode($sal_adv_details->emp_approver_flow, true);
-            $sal_adv_settings_approver_flow = json_decode($sal_adv_settings->approver_flow, true);
+        $approver_flow = json_decode($sal_adv_details->emp_approver_flow, true);
+        $sal_adv_settings_approver_flow = json_decode($sal_adv_settings->approver_flow, true);
 
-            // dd($approver_flow);
+        // dd($approver_flow);
 
-            for ($i = 0; $i < count($approver_flow); $i++) {
+        for ($i = 0; $i < count($approver_flow); $i++) {
 
-                if ($approver_flow[$i]['approver'] == $user_id) {
-                    if ($status == 1) {
-                        $approver_flow[$i]['status'] = $status;
-                        $approver_flow[$i]['reason'] = $reason;
-                        $sal_adv_details->sal_adv_status =  'Approved By ' .  $sal_adv_settings_approver_flow[$i]['name'];
-                    } else if ($status == -1) {
-                        $approver_flow[$i]['status'] = $status;
-                        $approver_flow[$i]['reason'] = $reason;
-                        $sal_adv_details->sal_adv_status =  'Rejected By ' . $sal_adv_settings_approver_flow[$i]['name'];
-                        $sal_adv_details->sal_adv_crd_sts = -1;
-                    }
+            if ($approver_flow[$i]['approver'] == $user_id) {
+                if ($status == 1) {
+                    $approver_flow[$i]['status'] = $status;
+                    $approver_flow[$i]['reason'] = $reason;
+                    $sal_adv_details->sal_adv_status =  'Approved By ' .  $sal_adv_settings_approver_flow[$i]['name'];
+                } else if ($status == -1) {
+                    $approver_flow[$i]['status'] = $status;
+                    $approver_flow[$i]['reason'] = $reason;
+                    $sal_adv_details->sal_adv_status =  'Rejected By ' . $sal_adv_settings_approver_flow[$i]['name'];
+                    $sal_adv_details->sal_adv_crd_sts = -1;
                 }
             }
+        }
 
-            $sal_adv_details->emp_approver_flow = json_encode($approver_flow, true);
-            $sal_adv_details->save();
-
-
-            $isSent    = \Mail::to('simmasrfc1330@gmail.com')->send(new ApproveRejectLoanAndSaladvMail());
-
-            if($isSent){
-                $sima = "success";
-            }else{
-                $sima = "failure";
-            }
-
-            dd($sima);
+        $sal_adv_details->emp_approver_flow = json_encode($approver_flow, true);
+        $sal_adv_details->save();
 
 
-            return response()->json([
-                'status' => 'Sucess',
-                'message' => 'Loan Approved Or Rejected',
+        $isSent    = \Mail::to('simmasrfc1330@gmail.com')->send(new ApproveRejectLoanAndSaladvMail());
 
-            ]);
+        if ($isSent) {
+            $sima = "success";
+        } else {
+            $sima = "failure";
+        }
+
+        dd($sima);
+
+
+        return response()->json([
+            'status' => 'Sucess',
+            'message' => 'Loan Approved Or Rejected',
+
+        ]);
         // } catch (Exception $e) {
         //     return response()->json([
         //         "status" => "failure",
