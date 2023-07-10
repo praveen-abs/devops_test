@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use \stdClass;

@@ -194,7 +194,7 @@
 
                     if (data.image_exist) {
                         if (data.className != "logo-level")
-                            nodeHtml = '<div class="title">' + '<span>' + data.name + data.user_code +' </span>' + '</div>';
+                            nodeHtml = '<div class="title">' + '<span>' + data.name +' ( '+data.user_code+' )' +' </span>' + '</div>';
 
                         var imageHtml = '<img class="user-avatar" src="' + data.image + '" />';
 
