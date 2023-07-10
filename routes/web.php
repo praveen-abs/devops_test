@@ -343,7 +343,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');
 
-    Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
+    Route::get('/clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
     Route::post('/getABSClientCode', [App\Http\Controllers\VmtClientController::class, 'getABSClientCode'])->name('getABSClientCode');
 
     // Permission Roles Routing

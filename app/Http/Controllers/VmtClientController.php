@@ -39,7 +39,7 @@ class VmtClientController extends Controller
      */
     public function store(Request $request)
     {
-           // dd($request->all());
+        //    dd($request->all());
        $VmtClientMaster = VmtClientMaster::where('id','1')->orderBy('created_at', 'DESC')->first();
        try
        {
@@ -62,7 +62,7 @@ class VmtClientController extends Controller
             $vmtClient->authorised_person_contact_email  = $request->authorised_person_contact_email;
             $vmtClient->billing_address  = $request->billing_address;
             $vmtClient->shipping_address  = $request->shipping_address;
-            if (request()->has('doc_uploads')) {
+            if ($request->doc_uploads) {
                 $docUploads = request()->file('doc_uploads');
                 $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
                 $docUploadsPath = public_path('/images/');
@@ -72,6 +72,7 @@ class VmtClientController extends Controller
             $vmtClient->product  = $request->product;
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
+
 
             $image_view = url('/').$VmtClientMaster->client_logo;
             if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(

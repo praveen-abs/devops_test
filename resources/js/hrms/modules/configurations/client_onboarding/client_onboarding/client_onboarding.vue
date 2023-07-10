@@ -273,7 +273,7 @@
                             class="onboard-form form-control textbox " required
                            /> -->
                             <div class="mb-3">
-                                <label for="formFile" class="form-label btn btn-primary">Upload</label>
+                                <!-- <label for="formFile" class="form-label btn btn-primary">Upload</label> -->
                                 <input class="form-control" @change="client_onboarding_document($event)" type="file"  id="formFile"   accept=".doc,.docx,.pdf,image/*">
                               </div>
                     </div>
