@@ -1,7 +1,17 @@
 <template>
     <div style="position: relative;">
-        <h1 class="mb-4 fs-3 d-flex align-items-center fw-bolder" style="color: #003056; "><i
-                class='mr-3 fas fa-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
+       <div class="row">
+        <div class="col-6">
+            <h1 class="mb-4 fs-3 d-flex align-items-center " style="color: #003056; "><i
+                class='mr-3 pi pi-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
+        </div>
+        <div class="col-6 px-4 border">
+            <button class=" underline fs-5 text-blue-700 float-right mx-2">View Details</button>
+            <button class=" underline fs-5 text-blue-700 float-right mx-2" >History</button>
+        </div>
+       </div>
+
+
 
         <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line">
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">

@@ -33,7 +33,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Initially Disabled
     const create_new_from = ref(1);
-    const isSalaryAdvanceFeatureEnabled = ref(1)
+    const isSalaryAdvanceFeatureEnabled = ref(0)
     const dropdownFilter = ref()
     const selectedFilterOptions = reactive({
         department_id: '',
@@ -42,6 +42,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         state: '',
         client_name: '',
     })
+    const client_name_status = ref([]);
     const approvalFormat = reactive([]);
 
     const selectedOption1 = ref();
@@ -59,7 +60,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         // canShowLoading.value = true
         let url = '/getAllDropdownFilter'
         await axios.get(url).then(res => {
-            dropdownFilter.value = res.data
+            dropdownFilter.value = res.data.legalEntity
         }).finally(() => {
             // canShowLoading.value = false
         })
@@ -69,17 +70,18 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // const currentStatus = ref();
 
-    const getCurrentStatus = (Status)=>{
-        let status = Status
-        axios.post('/loan-and-salAdv-current-status',{
+    const getCurrentStatus = async(Status)=>{
+        let status = Status;
+      await  axios.post('/loan-and-salAdv-current-status',{
             Status:status
         }).then((res)=>{
-            if(res.data = 'sal_adv'){
-                isSalaryAdvanceFeatureEnabled.value = res.data;
-            }else if(res.data = 'int_free_loan'){
+            if(status === 'sal_adv'){
+                isSalaryAdvanceFeatureEnabled.value = res.data.status;
+                console.log("testing", isSalaryAdvanceFeatureEnabled.value);
+            }else if(status === 'int_free_loan'){
                 isInterestFreeLoaneature.res.data;
             }
-            else if(res.data = 'loan_with_int'){
+            else if(status=== 'loan_with_int'){
                 isLoanWithInterestFeature.res.data;
             }
         });
@@ -251,9 +253,12 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     //
 
-    async function getClientsName(){
-        await axios.get('/get-clients-for-loan-adv').then((res)=>{
-            ClientsName.value=  res.data;
+    async function getClientsName(Status){
+        let status = Status;
+        await axios.post('/get-clients-for-loan-adv',{
+            status:status
+        }).then((res)=>{
+            ClientsName.value  =  res.data;
         })
     }
 
