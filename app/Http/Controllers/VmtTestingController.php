@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestEmail;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
@@ -272,6 +273,40 @@ class VmtTestingController extends Controller
             dd("Error : " . $e);
         }
     }
+
+    public function sendHTMLEmail(Request $request) {
+
+        try{
+
+            $validator = Validator::make(
+                $request->all(),
+                $rules = [
+                    "email" => 'required',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                ]
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
+
+            $isSent = \Mail::to($request->email)->send(new TestEmail($request->email));
+
+            return $isSent;
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $response,
+            ]);
+        }
+     }
 
     public function exportattenance(Request $request)
     {
