@@ -1,62 +1,68 @@
 <template>
     <div class="px-1">
         <div class="row d-flex justify-content-start align-items-center">
-            <div class="d-flex " v-if="salaryStore.create_new_from=='1'">
+            <div class="d-flex " v-if="salaryStore.create_new_from == '1'">
                 <div class="col-3 fs-4" style="position: relative; left: -8px;">
                     <h1 class="">Salary Advance Feature</h1>
                 </div>
                 <div class="col">
                     <button class="orange_btn"
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 1 ? 'bg-white text-black border-1 border-black' : 'text-white']"
-                        @click="salaryStore.isSalaryAdvanceFeatureEnabled = 0" >Disabled</button>
+                        @click="salaryStore.isSalaryAdvanceFeatureEnabled = 0">Disabled</button>
                     <button class="Enable_btn"
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 1 ? 'bg-green-700 text-white' : '']"
                         @click="salaryStore.isSalaryAdvanceFeatureEnabled = 1">Enable</button>
                 </div>
                 <div class="col">
-                    <button @click="salaryStore.create_new_from = 2" v-if="salaryStore.create_new_from=='1'" class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right" >
-                         <i class="pi pi-plus mx-1"></i> Create New From
+                    <button @click="salaryStore.create_new_from = 2" v-if="salaryStore.create_new_from == '1'"
+                        class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right">
+                        <i class="pi pi-plus mx-1"></i> Create New From
                     </button>
                 </div>
             </div>
             <div class="col" v-if="salaryStore.create_new_from == '1'">
                 <div>
-                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled =='0'" >Please click the "Enable" button to activate the salary advance feature for use within
+                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0'">Please click the "Enable" button
+                        to activate the salary advance feature for use within
                         your
                         organization.</p>
                 </div>
             </div>
-            <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '1' && salaryStore.create_new_from=='1' ">Please click the "Disable" button to deactivate the salary advance feature.</p>
+            <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '1' && salaryStore.create_new_from == '1'">
+                Please click the "Disable" button to deactivate the salary advance feature.</p>
 
             <!-- active from details -->
-            <div class="" v-if="salaryStore.create_new_from == '1' && salaryStore.isSalaryAdvanceFeatureEnabled == '1'  " >
-                <div class="row d-flex justify-items-center align-items-center" >
-                <div class="col-3">
-                    <h1 class="fs-4 " >Select organization</h1>
-                </div>
+            <div class="" v-if="salaryStore.create_new_from == '1' && salaryStore.isSalaryAdvanceFeatureEnabled == '1'">
+                <div class="row d-flex justify-items-center align-items-center">
+                    <div class="col-3">
+                        <h1 class="fs-4 ">Select organization</h1>
+                    </div>
 
-                <div class="col">
-                    <!-- v-model="salaryStore.sa.selectClientID" -->
-                    <MultiSelect v-model="salaryStore.client_name_status"  :options="salaryStore.ClientsName"  optionLabel="client_name" value="status" :trueValue="1" :falseValue="0" optionValue="status"
+                    <div class="col">
+                        <!-- v-model="salaryStore.sa.selectClientID" -->
+                        <!-- {{ salaryStore.client_name_status }} -->
+                        <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
+                            optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" />
+                    </div>
                 </div>
-               </div>
-               <div class="row ml-1 mr-3 mt-2 ">
-                        <div class="col border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm">
-                            <div class="w-100 d-flex justify-content-between align-items-center">
-                                <h1 class="  fs-5">Salary Advance - 2023</h1>
-                                <button class=" underline text-blue-400 fs-5 " @click="viewDetails(data)" >View Details</button>
-                            </div>
-                            <div class="w-100 d-flex justify-content-between align-items-center">
-                                <h1 class=" fs-5">Deduct the amount in the Upcomming Payroll</h1>
-                                <h1 class=" fs-5">Percentage of Salary Advance: 100%</h1>
-                                <h1 class=" fs-5">Employee Count : 120</h1>
-                            </div>
+                <div class="row ml-1 mr-3 mt-2 ">
+                    <div
+                        class="col border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <h1 class="  fs-5">Salary Advance - 2023</h1>
+                            <button class=" underline text-blue-400 fs-5 " @click="viewDetails(data)">View Details</button>
                         </div>
-               </div>
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <h1 class=" fs-5">Deduct the amount in the Upcomming Payroll</h1>
+                            <h1 class=" fs-5">Percentage of Salary Advance: 100%</h1>
+                            <h1 class=" fs-5">Employee Count : 120</h1>
+                        </div>
+                    </div>
+                </div>
 
 
-               <!-- <div class="even-card">1</div>
+                <!-- <div class="even-card">1</div>
                <div class="even-card">1</div>
                <div class="even-card">1</div>
                <div class="even-card">1</div>
@@ -68,38 +74,47 @@
 
 
 
-            <div v-if="salaryStore.create_new_from=='2'" class="row">
+            <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
 
-                    <div class="d-flex justify-content-between align-items-center mt-5  w-6"  >
-                        <h1 class="fs-4 " >Select organization</h1>
-                        <div class="d-flex justify-items-center position-relative" >
-                            <MultiSelect v-model="salaryStore.sa.selectClientID" :options="salaryStore.dropdownFilter" optionLabel="client_name"  optionValue="id"
-                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
-                                                v$.selectClientID.$error ? 'p-invalid' : '',
-                                            ]" />
-                                        <span v-if="v$.selectClientID.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
-                                            {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
-                                        </span>
+                    <div class="d-flex justify-content-between align-items-center mt-5  w-6">
+                        <h1 class="fs-4 ">Select organization</h1>
+                        <div class="d-flex justify-items-center position-relative">
+                            <MultiSelect v-model="salaryStore.sa.selectClientID"
+                                :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
+                                placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
+                                    v$.selectClientID.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="v$.selectClientID.$error"
+                                class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                                {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
+                            </span>
                         </div>
 
                     </div>
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4" >Name of the Salary Advance</h1>
+                        <h1 class="fs-4">Name of the Salary Advance</h1>
                         <div class=" position-relative ">
-                            <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA" class="w-full d-flex justify-items-center md:w-18rem" :class="[
-                                                v$.SA.$error ? 'p-invalid ' : '',
-                                            ]" />
-                                        <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
-                                            {{ v$.SA.required.$message.replace("Value", "Client Name") }}
-                                        </span>
+                            <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
+                                class="w-full d-flex justify-items-center md:w-18rem" :class="[
+                                    v$.SA.$error ? 'p-invalid ' : '',
+                                ]" />
+                            <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                                {{ v$.SA.required.$message.replace("Value", "Client Name") }}
+                            </span>
                         </div>
                     </div>
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4" >Payroll Cycle</h1>
-                        <div class="w-5" style="height: 40px;"  >
-                            <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle= 0" :class="[salaryStore.sa.payroll_cycle == 0 ? ' text-white bg-orange-500 border-none' :'']" > Single</button>
-                            <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500" @click="salaryStore.sa.payroll_cycle=1" :class="[salaryStore.sa.payroll_cycle == 1 ? ' text-white bg-orange-500 border-none' :'' ]"> Multiple</button>
+                        <h1 class="fs-4">Payroll Cycle</h1>
+                        <div class="w-5" style="height: 40px;">
+                            <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500"
+                                @click="salaryStore.sa.payroll_cycle = 0"
+                                :class="[salaryStore.sa.payroll_cycle == 0 ? ' text-white bg-orange-500 border-none' : '']">
+                                Single</button>
+                            <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500"
+                                @click="salaryStore.sa.payroll_cycle = 1"
+                                :class="[salaryStore.sa.payroll_cycle == 1 ? ' text-white bg-orange-500 border-none' : '']">
+                                Multiple</button>
                         </div>
                     </div>
                     <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees</h1>
@@ -234,8 +249,8 @@
                                     </div>
                                     <div class="flex" v-if="salaryStore.sa.perOfSalAdvance == 'custom'">
                                         <div class="flex align-items-center">
-                                            <InputNumber v-model="salaryStore.sa.cusPerOfSalAdvance"
-                                                name="percofsaladvance" class="w-1 mx-2" style="  width: 80px;"  :class="[
+                                            <InputNumber v-model="salaryStore.sa.cusPerOfSalAdvance" name="percofsaladvance"
+                                                class="w-1 mx-2" style="  width: 80px;" :class="[
                                                     v$.cusPerOfSalAdvance.$error ? 'p-invalid' : '',
                                                 ]" />
                                         </div>
@@ -436,6 +451,10 @@ const custDeduct = (value) => {
     }
 }
 
+
+
+
+
 // const eligibleRequiredAmount = (value) => {
 //     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
 //         console.log(value);
@@ -448,12 +467,12 @@ const custDeduct = (value) => {
 const rules = computed(() => {
     return {
         perOfSalAdvance: { required: helpers.withMessage('Percentage of salary advance is required', required) },
-        SA:{ required: helpers.withMessage('salary Advance Name is required', required)},
+        SA: { required: helpers.withMessage('salary Advance Name is required', required) },
         cusPerOfSalAdvance: { custPercent: helpers.withMessage('Custom percentage of salary advance is required', custPercent) },
         deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
-        selectClientID:{ required: helpers.withMessage('Select Client ID Flow is required', required)},
+        selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
         // payroll_cycle:{ required: helpers.withMessage('salary Advance Name is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount)}
     }
 })
@@ -475,9 +494,9 @@ const submitForm = () => {
 }
 
 
-function viewDetails(data){
+function viewDetails(data) {
 
-    salaryStore.create_new_from = 2 ;
+    salaryStore.create_new_from = 2;
 
 
 }
@@ -495,8 +514,7 @@ onMounted(() => {
     salaryStore.getCurrentStatus('sal_adv');
     salaryStore.getDropdownFilterDetails();
 
-})
-
+});
 
 </script>
 <style>
@@ -570,10 +588,10 @@ input[type=radio] {
     ;
 
 }
-.p-inputtext.p-component.p-inputnumber-input{
+
+.p-inputtext.p-component.p-inputnumber-input {
     width: 75px;
-}
-</style>
+}</style>
 
 {
 

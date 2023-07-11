@@ -5,8 +5,7 @@
             <h1 class="mb-4 fs-3 d-flex align-items-center " style="color: #003056; "><i
                 class='mr-3 pi pi-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
         </div>
-        <div class="col-6 px-4 border">
-            <button class=" underline fs-5 text-blue-700 float-right mx-2">View Details</button>
+        <div class="col-6 px-4 ">
             <button class=" underline fs-5 text-blue-700 float-right mx-2" >History</button>
         </div>
        </div>
