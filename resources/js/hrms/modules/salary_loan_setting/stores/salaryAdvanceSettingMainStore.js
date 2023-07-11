@@ -34,7 +34,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Initially Disabled
     const create_new_from = ref(1);
     const isSalaryAdvanceFeatureEnabled = ref(0)
-    const dropdownFilter = ref()
+    const dropdownFilter = ref();
     const selectedFilterOptions = reactive({
         department_id: '',
         designation: '',
@@ -60,7 +60,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         // canShowLoading.value = true
         let url = '/getAllDropdownFilter'
         await axios.get(url).then(res => {
-            dropdownFilter.value = res.data.legalEntity
+            dropdownFilter.value = res.data
         }).finally(() => {
             // canShowLoading.value = false
         })
