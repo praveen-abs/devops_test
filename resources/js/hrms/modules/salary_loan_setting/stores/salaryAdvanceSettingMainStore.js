@@ -32,6 +32,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
     // Initially Disabled
+    const create_new_from = ref(1);
     const isSalaryAdvanceFeatureEnabled = ref(1)
     const dropdownFilter = ref()
     const selectedFilterOptions = reactive({
@@ -512,7 +513,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // SalaryAdvanceFeature
 
-        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature,
+        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from ,
 
         // Interest Free Loan
 

@@ -7,23 +7,27 @@
                 </div>
                 <div class="col">
 
-                    <button class="orange_btn "
+                    <button class="orange_btn"
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
                         @click="salaryStore.isSalaryAdvanceFeatureEnabled = 1">Disabled</button>
                     <button class="Enable_btn"
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 2 ? 'bg-green-700 text-white' : '']"
                         @click="salaryStore.isSalaryAdvanceFeatureEnabled = 2">Enable</button>
-
+                </div>
+                <div class="col">
+                    <button @click="salaryStore.create_new_from = 2" v-if="salaryStore.create_new_from=='1'" class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right" >
+                         <i class="pi pi-plus mx-1"></i> Create New From
+                    </button>
                 </div>
             </div>
-            <div class="col" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '1'">
+            <div class="col" v-if="salaryStore.create_new_from == '1'">
                 <div>
                     <p class="fs-5">Please click the "Enable" button to activate the salary advance feature for use within
                         your
                         organization.</p>
                 </div>
             </div>
-            <div v-else class="row">
+            <div v-if="salaryStore.create_new_from=='2'" class="row">
                 <div class="col-10">
 
                     <p class="fs-5">Please click the "Disable" button to deactivate the salary advance feature.</p>
@@ -336,8 +340,8 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="float-right" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '2'">
-                    <button class="btn btn-border-primary">Cancel</button>
+                <div class="float-right" v-if="salaryStore.create_new_from == '2'">
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1">Cancel</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm">Save Changes</button>
                 </div>
             </div>
