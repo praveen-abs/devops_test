@@ -1,7 +1,7 @@
 <template>
     <div class="px-1">
         <div class="row d-flex justify-content-start align-items-center">
-            <div class="d-flex ">
+            <div class="d-flex " v-if="salaryStore.create_new_from=='1'">
                 <div class="col-3 fs-4" style="position: relative; left: -8px;">
                     <h1 class="fw-bolder">Salary Advance Feature</h1>
                 </div>
@@ -22,19 +22,49 @@
             </div>
             <div class="col" v-if="salaryStore.create_new_from == '1'">
                 <div>
-                    <p class="fs-5">Please click the "Enable" button to activate the salary advance feature for use within
+                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled=='1'">Please click the "Enable" button to activate the salary advance feature for use within
                         your
                         organization.</p>
                 </div>
             </div>
+            <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '2' && salaryStore.create_new_from=='1' ">Please click the "Disable" button to deactivate the salary advance feature.</p>
+
+            <!-- active from details -->
+            <div class="" v-if="salaryStore.create_new_from == '1' && salaryStore.isSalaryAdvanceFeatureEnabled == '2'  " >
+                <div class="row d-flex justify-items-center align-items-center" >
+                <div class="col-3">
+                    <h1 class="fs-4 fw-bolder" >Select organization</h1>
+                </div>
+
+                <div class="col">
+                    <MultiSelect v-model="salaryStore.sa.selectClientID" :options="salaryStore.ClientsName" optionLabel="client_name"  optionValue="id"
+                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" />
+                </div>
+               </div>
+               <div class="row ml-1 mr-3 mt-2">
+                        <div class="col border-1 bg-blue-100 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3">
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h1 class=" fw-semibold fs-5">Salary Advance - 2023</h1>
+                                <button class=" underline text-blue-400 fs-5 ">View Details</button>
+                            </div>
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h1 class="fw-semibold fs-5">Deduct the amount in the Upcomming Payroll</h1>
+                                <h1 class="fw-semibold fs-5">Percentage of Salary Advance: 100%</h1>
+                                <h1 class="fw-semibold fs-5">Employee Count : 120</h1>
+                            </div>
+                        </div>
+               </div>
+
+            </div>
+
+
+
             <div v-if="salaryStore.create_new_from=='2'" class="row">
                 <div class="col-10">
 
-                    <p class="fs-5">Please click the "Disable" button to deactivate the salary advance feature.</p>
-
                     <div class="d-flex justify-content-between align-items-center mt-5  w-6"  >
                         <h1 class="fs-4 fw-bolder" >Select organization</h1>
-                        <div class="d-flex justify-items-center position-relative ">
+                        <div class="d-flex justify-items-center position-relative" >
                             <MultiSelect v-model="salaryStore.sa.selectClientID" :options="salaryStore.ClientsName" optionLabel="client_name"  optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
                                                 v$.selectClientID.$error ? 'p-invalid' : '',
@@ -445,6 +475,7 @@ onMounted(() => {
     opt4.value = "Branch"
     opt5.value = "Legal Entity"
     salaryStore.getClientsName();
+    salaryStore.getCurrentStatus('sal_adv');
 })
 
 

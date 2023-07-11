@@ -344,6 +344,7 @@ const op = ref([
 onMounted(() => {
     opt.value = "Department";
     salaryStore.getClientsName();
+    salaryStore.getCurrentStatus('loan_with_int');
 })
 
 

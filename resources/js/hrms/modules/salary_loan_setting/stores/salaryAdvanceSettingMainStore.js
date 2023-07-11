@@ -51,7 +51,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Eligible Employees
 
-    const eligbleEmployeeSource = ref()
+    const eligbleEmployeeSource = ref();
 
     // Get filter
 
@@ -63,6 +63,26 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }).finally(() => {
             // canShowLoading.value = false
         })
+    }
+
+    // get loan and salary advance current status
+
+    // const currentStatus = ref();
+
+    const getCurrentStatus = (Status)=>{
+        let status = Status
+        axios.post('/loan-and-salAdv-current-status',{
+            Status:status
+        }).then((res)=>{
+            if(res.data = 'sal_adv'){
+                isSalaryAdvanceFeatureEnabled.value = res.data;
+            }else if(res.data = 'int_free_loan'){
+                isInterestFreeLoaneature.res.data;
+            }
+            else if(res.data = 'loan_with_int'){
+                isLoanWithInterestFeature.res.data;
+            }
+        });
     }
 
     const getSelectoption = (key, filter) => {
@@ -176,6 +196,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Deduction Method
     const  deduction_starting_months =  ref();
     const ifl = reactive({
+        name:'',
         isInterestFreeLoanIsEnabled: 0,
         selectClientID:'',
         minEligibile: '',
@@ -281,9 +302,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Loan With interest Feature Begins
 
-    const isLoanWithInterestFeature = ref(1)
+    const isLoanWithInterestFeature = ref();
 
     const lwif = reactive({
+        name:"",
         LoanWithInterestFeature:'',
         selectClientID:'',
         minEligibile: '',
@@ -513,7 +535,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // SalaryAdvanceFeature
 
-        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from ,
+        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from ,getCurrentStatus,
 
         // Interest Free Loan
 

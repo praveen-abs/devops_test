@@ -284,6 +284,7 @@ const salaryStore = salaryAdvanceSettingMainStore()
 
 onMounted(()=>{
     salaryStore.getClientsName();
+    salaryStore.getCurrentStatus('int_free_loan');
 })
 const value = ref();
 const options = ref(['Off', 'On']);
