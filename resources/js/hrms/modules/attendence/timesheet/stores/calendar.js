@@ -32,45 +32,39 @@ export const useCalendarStore = defineStore("calendar", () => {
 
         month.value = month.value + val;
 
-        useTimesheet.canShowLoading = true
+        console.log(useTimesheet.isTeamOrg);
 
-        useTimesheet.getSelectedEmployeeAttendance(service.current_user_id, month.value, year.value).then(res => {
-            useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-        }).finally(() => {
-            useTimesheet.canShowLoading = false
-        })
-        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedTeamMemberUserId, month.value, year.value).then(res => {
-            useTimesheet.currentlySelectedTeamMemberAttendance = Object.values(res.data)
-        })
-        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedOrgMemberUserId, month.value, year.value).then(res => {
-            useTimesheet.currentlySelectedOrgMemberAttendance = Object.values(res.data)
-        }).finally(() => {
-            useTimesheet.canShowLoading = false
-        })
+        if (useTimesheet.isTeamOrg == true) {
+            useTimesheet.getSelectedEmployeeTeamDetails(useTimesheet.currentlySelectedTeamMemberUserId)
+        } else
+            if (useTimesheet.isTeamOrg == false) {
+                useTimesheet.getSelectedEmployeeOrgDetails(useTimesheet.currentlySelectedOrgMemberUserId)
+            } else {
+                useTimesheet.getSelectedEmployeeAttendance()
+
+            }
 
     }
     function decrementMonth(val) {
+        console.log(useTimesheet.isTeamOrg);
+
         if (month.value == 0) {
             decrementYear(1);
             month.value = 11;
             return;
         }
         month.value = month.value - val;
-        useTimesheet.canShowLoading = true
 
-        useTimesheet.getSelectedEmployeeAttendance(service.current_user_id, month.value, year.value).then(res => {
-            useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-        }).finally(() => {
-            useTimesheet.canShowLoading = false
-        })
-        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedTeamMemberUserId, month.value, year.value).then(res => {
-            useTimesheet.currentlySelectedTeamMemberAttendance = Object.values(res.data)
-        })
-        useTimesheet.getSelectedEmployeeAttendance(useTimesheet.currentlySelectedOrgMemberUserId, month.value, year.value).then(res => {
-            useTimesheet.currentlySelectedOrgMemberAttendance = Object.values(res.data)
-        }).finally(() => {
-            useTimesheet.canShowLoading = false
-        })
+        if (useTimesheet.isTeamOrg == true) {
+            useTimesheet.getSelectedEmployeeTeamDetails(useTimesheet.currentlySelectedTeamMemberUserId)
+        } else
+            if (useTimesheet.isTeamOrg == false) {
+                useTimesheet.getSelectedEmployeeOrgDetails(useTimesheet.currentlySelectedOrgMemberUserId)
+            } else {
+                useTimesheet.getSelectedEmployeeAttendance()
+
+            }
+
 
 
     }

@@ -157,6 +157,9 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
 
         let url_all_local_convergance = '/reimbursements/saveReimbursementsData';
 
+        localconvergance_dailog.value = false;
+        loading_spinner.value = true
+
         axios.post(url_all_local_convergance, {
             "user_code": service.current_user_code,
             "reimbursement_type": 'Local Conveyance',
@@ -217,6 +220,7 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
             .finally(res => {
                 console.log(res);
                 generate_ajax();
+                loading_spinner.value = false
             });
 
 

@@ -2,15 +2,18 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, inject, ref } from "vue";
 import { useCalendarStore } from './calendar'
+import { Service } from "../../../Service/Service";
 const swal = inject("$swal");
 
 
 export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const useCalendar = useCalendarStore()
+    const service = Service()
 
     const canShowLoading = ref(false)
     const isManager = ref(false)
+    const isTeamOrg = ref('single')
 
     const mopDetails = ref({})
     const mipDetails = ref({})
@@ -32,13 +35,47 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const currentlySelectedOrgMemberAttendance = ref()
 
 
-    const getSelectedEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
+    const getEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
         canShowLoading.value = true
         let url = '/fetch-attendance-user-timesheet'
         return axios.post(url, {
             month: currentlySelectedMonth + 1,
             year: currentlySelectedYear,
             user_id: currentlySelectedUser,
+        })
+    }
+
+
+    const getSelectedEmployeeAttendance = () => {
+
+        canShowLoading.value = true
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            currentEmployeeAttendance.value = Object.values(res.data)
+        }).finally(() => {
+            canShowLoading.value = false
+        })
+    }
+
+    const getSelectedEmployeeTeamDetails = (user_id, isteam) => {
+        isTeamOrg.value = isteam
+        currentlySelectedTeamMemberUserId.value = user_id
+        getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
+
+        }).finally(() => {
+            canShowLoading.value = false
+        })
+    }
+
+
+    const getSelectedEmployeeOrgDetails = (user_id, isteam) => {
+        isTeamOrg.value = isteam
+        currentlySelectedOrgMemberUserId.value = user_id
+        getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            console.log(Object.values(res.data));
+            currentlySelectedOrgMemberAttendance.value = Object.values(res.data)
+        }).finally(() => {
+            canShowLoading.value = false
         })
     }
 
@@ -52,22 +89,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         return axios.get('/fetch-org-members')
     }
 
-    const getSelectedEmployeeTeamDetails = (data, isTeam) => {
-        console.log(isTeam);
-        let user_id = data.id;
-        getSelectedEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-            console.log(Object.values(res.data));
-            if (isTeam) {
-                currentlySelectedTeamMemberUserId.value = data.id
-                currentlySelectedTeamMemberAttendance.value = Object.values(res.data)
-            } else {
-                currentlySelectedOrgMemberUserId.value = data.id
-                currentlySelectedOrgMemberAttendance.value = Object.values(res.data)
-            }
-        }).finally(() => {
-            canShowLoading.value = false
-        })
-    }
+
 
 
 
@@ -136,6 +158,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
+                getSelectedEmployeeAttendance()
                 let message = res.data.message
                 console.log(message);
                 if (res.data.status == 'success') {
@@ -168,9 +191,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyEgRegularization = () => {
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(egDetails.value, 'EG'))
             .then((res) => {
+                getSelectedEmployeeAttendance()
                 let message = res.data.message
                 console.log(message);
-                if (res.status == 'success') {
+                if (res.data.status == 'success') {
                     Swal.fire(
                         'Success!',
                         'Attendance Regularized Successful',
@@ -201,9 +225,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyMipRegularization = () => {
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mipDetails.value, 'MIP'))
             .then((res) => {
+                getSelectedEmployeeAttendance()
                 let message = res.data.message
                 console.log(message);
-                if (res.status == 'success') {
+                if (res.data.status == 'success') {
                     Swal.fire(
                         'Good job!',
                         'Attendance Regularized Successful',
@@ -230,9 +255,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyMopRegularization = () => {
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(mopDetails.value, 'MOP'))
             .then((res) => {
+                getSelectedEmployeeAttendance()
                 let message = res.data.message
                 console.log(message);
-                if (res.status == 'success') {
+                if (res.data.status == 'success') {
                     Swal.fire(
                         'Good job!',
                         'Attendance Regularized Successful',
@@ -298,14 +324,14 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     return {
         // Timesheet Data source
-        getSelectedEmployeeAttendance, currentEmployeeAttendance,
-        getTeamList, getOrgList, getSelectedEmployeeTeamDetails,
+        getEmployeeAttendance, currentEmployeeAttendance, getSelectedEmployeeOrgDetails,
+        getTeamList, getOrgList, getSelectedEmployeeTeamDetails, getSelectedEmployeeAttendance,
 
         currentlySelectedTeamMemberUserId,
         currentlySelectedTeamMemberAttendance,
         currentlySelectedOrgMemberUserId,
         currentlySelectedOrgMemberAttendance,
-        canShowLoading, isManager,
+        canShowLoading, isManager, isTeamOrg,
 
 
         // Finding Attendance Mode

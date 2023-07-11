@@ -13,8 +13,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Father Name<span class="text-danger">*</span></label>
 
-                            <InputText class="capitalize nboard-form form-control textbox" type="text"
-                                placeholder="Father Name" name="father_name" id="father_name" :class="{
+                            <InputText class="capitalize nboard-form form-control textbox" @keypress="isLetter($event)"
+                                type="text" placeholder="Father Name" name="father_name" id="father_name" :class="{
                                     'p-invalid': v$.father_name.$error,
                                 }" v-model="service.employee_onboarding.father_name" />
                             <span v-if="(v$.father_name.$error) ||
@@ -33,7 +33,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
 
-                            <Calendar inputId="icon" :maxDate="parentFormat" showIcon
+                            <Calendar inputId="icon"
+                                :maxDate="service.beforeYears(new Date(service.employee_onboarding.dob))" showIcon
                                 v-model="service.employee_onboarding.dob_father" editable dateFormat="dd-mm-yy"
                                 placeholder="Date of birth" style="width: 350px;" :class="{
                                     'p-invalid': v$.dob_father.$error,
@@ -55,8 +56,9 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Gender</label>
-                            <InputText :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']" type="text"
-                                class="form-control" name="father_gender" id="father_gender" value="Male" readonly />
+                            <InputText :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                                type="text" class="form-control" name="father_gender" id="father_gender" value="Male"
+                                readonly />
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -73,8 +75,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Mother Name <span class="text-danger">*</span></label>
 
-                            <InputText class="onboard-form form-control textbox" type="text" placeholder="Mother Name"
-                                name="mother_name" :class="{
+                            <InputText class="capitalize onboard-form form-control textbox" type="text" placeholder="Mother Name"
+                                @keypress="isLetter($event)" name="mother_name" :class="{
                                     'p-invalid': v$.mother_name.$error,
                                 }" v-model="service.employee_onboarding.mother_name" />
 
@@ -95,7 +97,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Date of Birth <span class="text-danger">*</span></label>
 
-                            <Calendar inputId="icon" :maxDate="parentFormat" showIcon
+                            <Calendar inputId="icon"
+                                :maxDate="service.beforeYears(new Date(service.employee_onboarding.dob))" showIcon
                                 v-model="service.employee_onboarding.dob_mother" editable dateFormat="dd-mm-yy"
                                 placeholder="Date of birth" style="width: 350px;" :class="{
                                     'p-invalid': v$.dob_mother.$error,
@@ -117,8 +120,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Gender</label>
 
-                            <InputText :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']" type="text"
-                                class="form-control" name="mother_gender" id="" value="Female" readonly />
+                            <InputText :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                                type="text" class="form-control" name="mother_gender" id="" value="Female" readonly />
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -134,7 +137,7 @@
                     <div v-if="service.isSpouseDisable" class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Spouse Name <span class="text-danger">*</span></label>
-                            <InputText class="onboard-form form-control textbox" type="text"
+                            <InputText @keypress="isLetter($event)" class="capitalize onboard-form form-control textbox" type="text"
                                 placeholder="Spouse Name" name="spouse_name" :class="{
                                     'p-invalid': v$.spouse_name.$error,
                                 }" v-model="service.employee_onboarding.spouse_name" />
@@ -177,8 +180,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Gender <span class="text-danger">*</span></label>
 
-                            <InputText v-if="service.readonly.spouse" class="onboard-form form-control textbox" type="text" readonly
-                                placeholder="Select Spouse Gender" name="spouse_gender" :class="[{
+                            <InputText v-if="service.readonly.spouse" class="onboard-form form-control textbox" type="text"
+                                readonly placeholder="Select Spouse Gender" name="spouse_gender" :class="[{
                                     'is-invalid': v$.spouse_gender.$error,
                                 }, service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 v-model="service.employee_onboarding.spouse_gender" />
@@ -261,6 +264,11 @@ const service = useNormalOnboardingMainStore()
 
 const v$ = useValidate(service.rules, service.employee_onboarding);
 
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
 
 
 

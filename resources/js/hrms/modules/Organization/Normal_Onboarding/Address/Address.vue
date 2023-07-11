@@ -52,7 +52,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Country<span class="text-danger">*</span></label>
-                            <Dropdown editable v-model="service.employee_onboarding.current_country" :class="{
+                            <Dropdown  v-model="service.employee_onboarding.current_country" :class="{
                                 'p-invalid': v$.current_country.$error,
                             }" :options="service.country" optionValue="id" optionLabel="country_name"
                                 placeholder="Select Country Name" class="p-error" @keypress="isLetter($event)" />
@@ -74,7 +74,7 @@
                         <div class="floating">
                             <label for="" class="float-label">State<span class="text-danger">*</span></label>
 
-                            <Dropdown editable v-model="service.employee_onboarding.current_state" :class="{
+                            <Dropdown  v-model="service.employee_onboarding.current_state" :class="{
                                 'p-invalid': v$.current_state.$error,
                             }" :options="service.state" optionValue="id" optionLabel="state_name"
                                 placeholder="Select State Name" class="p-error" @keypress="isLetter($event)" />
@@ -181,7 +181,7 @@
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                                 <div class="floating">
                                     <label for="" class="float-label">Country<span class="text-danger">*</span></label>
-                                    <Dropdown editable optionValue="id"
+                                    <Dropdown  optionValue="id"
                                         v-model="service.employee_onboarding.permanent_country" :class="{
                                             'p-invalid': v$.permanent_country.$error,
                                         }" :options="service.country" optionLabel="country_name"
@@ -201,7 +201,7 @@
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                                 <div class="floating">
                                     <label for="" class="float-label">State<span class="text-danger">*</span></label>
-                                    <Dropdown editable optionValue="id"
+                                    <Dropdown  optionValue="id"
                                         v-model="service.employee_onboarding.permanent_state" :class="{
                                             'p-invalid': v$.permanent_state.$error,
                                         }" :options="service.state" optionLabel="state_name"

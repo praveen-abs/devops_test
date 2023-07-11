@@ -12,9 +12,9 @@
                         <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront" id="formFile"
                             class="onboard-form form-control file"
                             @change="service.getPersonalDocuments($event, 'AadharFront')" />
-                        <span v-if="v$.AadharCardFront.$error" class="font-medium text-red-600 fs-6">
-                            {{ v$.AadharCardFront.required.$message.replace("Value", "Aadhar card front is required") }}
-                        </span>
+                            <span v-if="v$.AadharCardFront.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.AadharCardFront.$errors[0].$message }}
+                            </span>
 
 
                     </div>
@@ -24,9 +24,9 @@
                         <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
                             @change="service.getPersonalDocuments($event, 'AadharBack')"
                             class="onboard-form form-control file" />
-                        <span v-if="v$.AadharCardBack.$error" class="font-medium text-red-600 fs-6">
-                            {{ v$.AadharCardBack.required.$message.replace("Value", "Aadhar card back is required") }}
-                        </span>
+                            <span v-if="v$.AadharCardBack.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.AadharCardBack.$errors[0].$message }}
+                            </span>
 
 
                     </div>
@@ -37,9 +37,9 @@
                             name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
                             @change="service.getPersonalDocuments($event, 'Pancard')"
                             class="onboard-form form-control file" />
-                        <span v-if="v$.PanCardDoc.$error" class="font-medium text-red-600 fs-6">
-                            {{ v$.PanCardDoc.required.$message.replace("Value", "Pan card is required") }}
-                        </span>
+                            <span v-if="v$.PanCardDoc.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.PanCardDoc.$errors[0].$message }}
+                            </span>
 
 
                     </div>
@@ -50,6 +50,9 @@
                             placeholder="Passport" name="passport_file" id="passport_file"
                             @change="service.getPersonalDocuments($event, 'Passport')"
                             class="onboard-form form-control file" />
+                            <span v-if="v$.PassportDoc.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.PanCardDoc.$errors[0].$message }}
+                            </span>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Voter ID</label>
@@ -58,6 +61,9 @@
                             placeholder="Voters ID" name="voters_id_file" id="voters_id_file"
                             @change="service.getPersonalDocuments($event, 'VoterId')"
                             class="onboard-form form-control file" />
+                            <span v-if="v$.VoterIdDoc.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.VoterIdDoc.$errors[0].$message }}
+                            </span>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> Driving License</label>
@@ -65,6 +71,9 @@
                         <input type="file" accept="image/png, image/gif, image/jpeg" placeholder="Driving License"
                             name="dl_file" id="dl_file" @change="service.getPersonalDocuments($event, 'DrivingLicense')"
                             ref="DrivingLicenseDoc" class="onboard-form form-control file" />
+                            <span v-if="v$.DrivingLicenseDoc.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.DrivingLicenseDoc.$errors[0].$message }}
+                            </span>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Educations Certificate<span class="text-danger">*</span></label>
@@ -72,9 +81,9 @@
                             name="education_certificate_file"
                             @change="service.getPersonalDocuments($event, 'EducationCertificate')"
                             id="education_certificate_file" ref="EductionDoc" class="onboard-form form-control file " />
-                        <span v-if="v$.EductionDoc.$error" class="font-medium text-red-600 fs-6">
-                            {{ v$.EductionDoc.required.$message.replace("Value", "Education certificate is required") }}
-                        </span>
+                            <span v-if="v$.EductionDoc.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.EductionDoc.$errors[0].$message }}
+                            </span>
 
 
                     </div>
@@ -84,6 +93,9 @@
                             name="reliving_letter_file" id="reliving_letter_file"
                             @change="service.getPersonalDocuments($event, 'RelievingLetter')" ref="ReleivingLetterDoc"
                             class="onboard-form form-control file" />
+                            <span v-if="v$.RelievingLetterDoc.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.RelievingLetterDoc.$errors[0].$message }}
+                            </span>
                     </div>
                 </div>
             </div>

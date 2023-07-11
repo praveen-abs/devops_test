@@ -11,10 +11,9 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3 col-xxl-3">
                         <div class="floating">
                             <label for="" class="float-label">Department</label>
-
-                            <Dropdown editable v-model="service.employee_onboarding.department" :class="{
+                            <Dropdown  v-model="service.employee_onboarding.department" :class="{
                                 'p-invalid': v$.department.$error,
-                            }" :options="departmentDetails" optionLabel="name" optionValue="id"
+                            }" :options="service.departmentDetails" optionLabel="name" optionValue="id"
                                 placeholder="Department" name="department" id="department" class="p-error" />
                         </div>
                     </div>
@@ -23,7 +22,9 @@
                             <label for="" class="float-label">Process
                                 <!-- <span class="text-danger">*</span> -->
                             </label>
-                            <InputText class="onboard-form form-control" type="text" :class="{
+                            <InputText class="onboard-form form-control"
+                            @keypress="isLetter($event)"
+                            type="text" :class="{
                                 'p-invalid': v$.process.$error,
                             }" v-model="service.employee_onboarding.process" placeholder="Process" />
 
@@ -40,7 +41,8 @@
                             <label for="" class="float-label">Designation<span class="text-danger">*</span>
                             </label>
 
-                            <InputText class="onboard-form form-control" type="text" :readonly="readonly.designation"
+                            <InputText @keypress="isLetter($event)"
+                            class="onboard-form form-control" type="text" :readonly="readonly.designation"
                                 placeholder="Designation" :class="[{
                                     'p-invalid': v$.designation.$error,
                                 }, readonly.designation ? 'bg-gray-200' : '']"
@@ -71,7 +73,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Work Location<span class="text-danger">*</span></label>
-                            <InputText class="onboard-form form-control" type="text" placeholder="Work Location" :class="{
+                            <InputText @keypress="isLetter($event)"  class="onboard-form form-control" type="text" placeholder="Work Location" :class="{
                                 'p-invalid': v$.work_location.$error,
                             }" v-model="service.employee_onboarding.work_location" />
                             <span v-if="(v$.work_location.$error) ||
@@ -91,7 +93,7 @@
                             <label for="" class="float-label">Reporting Manager Name<span
                                     class="text-danger">*</span></label>
                             <!-- {{employee_onboarding.l1_manager_code.user_code}} -->
-                            <Dropdown editable :readonly="service.readonly.l1_code" :options="service.Managerdetails"
+                            <Dropdown  :readonly="service.readonly.l1_code" :options="service.Managerdetails"
                                 optionLabel="name" placeholder="Reporting Manager Name"
                                 v-model="service.employee_onboarding.l1_manager_code" class="p-error" :class="{
                                     'p-invalid':
@@ -136,14 +138,11 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Official Email </label>
-                            <InputText type="email" placeholder="Official E-Mail Id" name="officical_mail"
+                            <InputText type="email" placeholder="Official E-Mail Id" name="officical_mail" @keypress="isEmail($event)"
                                 class="textbox form-control" v-model="service.employee_onboarding.officical_mail" />
-                            <span v-if="(v$.officical_mail.$error) ||
-                                v$.officical_mail.$pending.$response
-                                " class="p-error">
-                                {{
-                                    v$.officical_mail.required.$message.replace("Value", "Email")
-                                }}</span>
+                                <span v-if="v$.officical_mail.$error" class="font-medium text-red-600 fs-6">
+                                    {{ v$.officical_mail.$errors[0].$message }}
+                                </span>
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -210,6 +209,19 @@ const readonly = reactive({
     spouse: false
 
 })
+
+const isEmail = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z0-9@.]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
 
 
 </script>

@@ -5,6 +5,9 @@ import useValidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
 import axios from "axios";
 import { inject } from "vue";
+import { useToast } from "primevue/usetoast";
+
+
 
 
 
@@ -14,6 +17,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const service = Service()
     const swal = inject("$swal");
     const canShowLoading = ref(false)
+    const toast = useToast();
+
 
 
     // variable declaration
@@ -160,34 +165,52 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const getPersonalDocuments = (e, filename) => {
 
-        console.log(e.target.files[0]);
+        let selectedDocument = e.target.files[0]
+        // Get uploaded file
 
-        if (filename == 'AadharFront') {
-            employee_onboarding.AadharCardFront = e.target.files[0]
-        } else
-            if (filename == 'AadharBack') {
-                employee_onboarding.AadharCardBack = e.target.files[0]
-            } else
-                if (filename == 'Pancard') {
-                    employee_onboarding.PanCardDoc = e.target.files[0]
+        if (selectedDocument) {
+            if (selectedDocument.type == 'image/jpeg' || selectedDocument.type == 'image/png') {
+                if (filename == 'AadharFront') {
+                    employee_onboarding.AadharCardFront = e.target.files[0]
                 } else
-                    if (filename == 'DrivingLicense') {
-                        employee_onboarding.DrivingLicenseDoc = e.target.files[0]
+                    if (filename == 'AadharBack') {
+                        employee_onboarding.AadharCardBack = e.target.files[0]
                     } else
-                        if (filename == 'Passport') {
-                            employee_onboarding.PassportDoc = e.target.files[0]
+                        if (filename == 'Pancard') {
+                            employee_onboarding.PanCardDoc = e.target.files[0]
                         } else
-                            if (filename == 'VoterId') {
-                                employee_onboarding.VoterIdDoc = e.target.files[0]
+                            if (filename == 'DrivingLicense') {
+                                employee_onboarding.DrivingLicenseDoc = e.target.files[0]
                             } else
-                                if (filename == 'EducationCertificate') {
-                                    employee_onboarding.EductionDoc = e.target.files[0]
+                                if (filename == 'Passport') {
+                                    employee_onboarding.PassportDoc = e.target.files[0]
                                 } else
-                                    if (filename == 'RelievingLetter') {
-                                        employee_onboarding.RelievingLetterDoc = e.target.files[0]
-                                    } else {
-                                        console.log("No more files");
-                                    }
+                                    if (filename == 'VoterId') {
+                                        employee_onboarding.VoterIdDoc = e.target.files[0]
+                                    } else
+                                        if (filename == 'EducationCertificate') {
+                                            employee_onboarding.EductionDoc = e.target.files[0]
+                                        } else
+                                            if (filename == 'RelievingLetter') {
+                                                employee_onboarding.RelievingLetterDoc = e.target.files[0]
+                                            } else {
+                                                console.log("No more files");
+                                            }
+
+            } else {
+                console.log(selectedDocument);
+                delete selectedDocument.name
+                toast.add({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "Upload Valid File format",
+                    life: 3000,
+                });
+            }
+
+
+        }
+
 
     }
 
@@ -333,10 +356,33 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         return date;
     }
 
+    function subYears(date, years) {
+        date.setFullYear(date.getFullYear() - years);
+        return date;
+    }
+
     const afterYears = (value) => {
         console.log(value);
         const newDate = addYears(value, 18);
         console.log(newDate);
+        return newDate;
+    }
+
+    const beforeYears = (value) => {
+        console.log(value);
+        const newDate = subYears(value, 18);
+        console.log(newDate);
+        return newDate;
+    }
+
+
+    const validateFile = (value) => {
+
+        if (value.type == 'image/jpeg' || value.type == 'image/png') {
+            return true
+        } else {
+            return false
+        }
     }
 
     const rules = computed(() => {
@@ -471,7 +517,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             holiday_location: {},
             officical_mail: {
                 // required,
-                email
+                email:helpers.withMessage('Enter valid email',email)
             },
             official_mobile: {},
             probation_period: {},
@@ -501,14 +547,14 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
             // Personal Documents
 
-            AadharCardFront: { required },
-            AadharCardBack: { required },
-            PanCardDoc: { required },
-            DrivingLicenseDoc: { required },
-            EductionDoc: { required },
-            VoterIdDoc: { required },
-            RelievingLetterDoc: { required },
-            PassportDoc: { required },
+            AadharCardFront: { required: helpers.withMessage('Aadhar front is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            AadharCardBack: { required: helpers.withMessage('Aadhar back is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            PanCardDoc: { required: helpers.withMessage('Pancard is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            DrivingLicenseDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            EductionDoc: { required: helpers.withMessage('Education document is required', required), validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            VoterIdDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            RelievingLetterDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
+            PassportDoc: { validateFile: helpers.withMessage('Upload Valid format', validateFile) },
         }
 
 
@@ -1277,7 +1323,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         getPersonalDocuments, readonly,
 
-        afterYears
+        afterYears, beforeYears
 
 
 

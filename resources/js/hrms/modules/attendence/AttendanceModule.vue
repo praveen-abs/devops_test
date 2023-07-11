@@ -14,21 +14,23 @@
                                 </div>
                                 <div class=" col-sm-5 col-md-5 col-xl-5 col-lg-5 col-xxl-5">
 
-                                    <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed justify-center" id="pills-tab"
-                                        role="tablist">
+                                    <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed justify-center"
+                                        id="pills-tab" role="tablist">
                                         <li class="mx-4 nav-item ember-view" role="presentation">
                                             <a class="nav-link active ember-view " id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#timesheet" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Timesheet</a>
                                         </li>
-                                        <li class=" nav-item ember-view" role="presentation" v-if="service.current_user_role == 2 || service.current_user_role == 4 ">
+                                        <li class=" nav-item ember-view" role="presentation"
+                                            v-if="service.current_user_role == 2 || service.current_user_role == 4">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#team" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
                                                 Team Timesheet</a>
                                         </li>
-                                        <li class=" nav-item ember-view" role="presentation"  v-if="service.current_user_role == 2">
+                                        <li class=" nav-item ember-view" role="presentation"
+                                            v-if="service.current_user_role == 2">
                                             <a class="mx-2 nav-link ember-view" id="pills-home-tab" data-bs-toggle="pill"
                                                 href="" data-bs-target="#org" role="tab" aria-controls="pills-home"
                                                 aria-selected="true">
@@ -158,7 +160,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade " id="team" role="tabpanel"  >
+                    <div class="tab-pane fade " id="team" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-max">
                                 <EmployeeList :source="teamList" :is-team="true" />
@@ -226,11 +228,7 @@ onMounted(() => {
     })
 
     setTimeout(() => {
-        useTimesheet.getSelectedEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-            useTimesheet.currentEmployeeAttendance = Object.values(res.data)
-        }).finally(() => {
-            useTimesheet.canShowLoading = false
-        })
+        useTimesheet.getSelectedEmployeeAttendance()
     }, 400);
 
 

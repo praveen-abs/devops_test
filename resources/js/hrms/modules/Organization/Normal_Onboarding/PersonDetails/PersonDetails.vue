@@ -54,7 +54,8 @@
                             <label for="" class="float-label">Date of Birth</label>
                             <Calendar inputId="icon" dropzone="true" v-model="service.employee_onboarding.dob" showIcon
                                 editable dateFormat="dd-mm-yy" placeholder="Date of birth" style="width: 350px;" class=""
-                                @date-select="service.afterYears(service.employee_onboarding.dob)" />
+                                :maxDate="service.beforeYears(new Date())"
+                                />
 
                             <!-- <span v-if="v$.dob.$error" class="font-medium text-red-600 fs-6">
                                 {{ v$.dob.$errors[0].$message }}
@@ -84,7 +85,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Date of Joining<span class="text-danger">*</span></label>
-                            <Calendar inputId="icon" dropzone="true" :manualInput="true" :minDate="dojFormat"
+                            <Calendar inputId="icon" dropzone="true" :manualInput="true" :maxDate="new Date()"
                                 v-model="service.employee_onboarding.doj" editable dateFormat="dd-mm-yy"
                                 placeholder="Date of Joining" style="width: 350px;"
                                 :readonly="service.readonly.is_doj_quick" showIcon :class="[{
@@ -146,6 +147,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Email<span class="text-danger">*</span></label>
                             <InputText type="text" :readonly="service.readonly.is_email_quick" placeholder="Email ID"
+                            @keypress="isEmail($event)"
                                 :class="[{
                                     'p-invalid': v$.email.$error,
                                 }, service.readonly.is_email_quick ? 'bg-gray-200' : '', personal_mail_exists ? 'p-invalid' : '']"
@@ -216,7 +218,7 @@
                         <div class="floating">
                             <label for="" class="float-label">DL Number</label>
                             <InputText class="onboard-form form-control textbox" type="text" v-model="v$.dl_no.$model"
-                                placeholder="DL Number" minlength="16" maxlength="16" />
+                                placeholder="DL Number" minlength="16" maxlength="16"  @keypress="isSpecialChars($event)"/>
                             <label class="error star_error dl_no_label" for="dl_no" style="display: none"></label>
 
                             <span class="error" id="error_dl_no"></span>
@@ -308,7 +310,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Bank Account Number<span class="text-danger">*</span></label>
-                            <InputText placeholder="Account Number" minlength="10" :class="{
+                            <InputText placeholder="Account Number" minlength="10" @keypress="isNumber($event)"  :class="{
                                         'p-invalid': v$.AccountNumber.$error,
                                     }" maxlength="18" @focusout="ValidateAccountNo"
                                 class="onboard-form form-control textbox" type="text"
@@ -332,7 +334,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Bank IFSC Code<span class="text-danger">*</span></label>
-                            <InputText type="text" v-model="service.employee_onboarding.bank_ifsc" :class="[{
+                            <InputText @keypress="isSpecialChars($event)" type="text" v-model="service.employee_onboarding.bank_ifsc" :class="[{
                                 'p-invalid': v$.bank_ifsc.$error,
                             }, ifsc ? 'p-invalid' : '']" class=" onboard-form form-control textbox" minlength="11"
                                 maxlength="11" style="text-transform: uppercase" placeholder="Bank IFSC Code" />
@@ -581,6 +583,18 @@ const isLetter = (e) => {
 const isSpecialChars = (e) => {
     let char = String.fromCharCode(e.keyCode); // Get the character
     if (/^[A-Za-z0-9]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const isNumber = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[0-9]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const isEmail = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z0-9@.]+$/.test(char)) return true; // Match with regex
     else e.preventDefault(); // If not match, don't add to input text
 }
 
