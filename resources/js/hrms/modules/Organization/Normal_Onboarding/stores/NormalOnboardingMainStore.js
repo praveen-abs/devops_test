@@ -198,8 +198,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                                             }
 
             } else {
-                console.log(selectedDocument);
-                delete selectedDocument.name
                 toast.add({
                     severity: "error",
                     summary: "Error",
@@ -312,44 +310,29 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const compensatoryCalWhileQuick = () => {
-        //   compen_disable.value = false
+        compen_disable.value = false
 
         family_details_disable.value = true
 
         let gross = parseInt(employee_onboarding.basic) + parseInt(employee_onboarding.hra) + parseInt(employee_onboarding.special_allowance);
         employee_onboarding.gross = Math.floor(gross);
-        console.log(employee_onboarding.gross);
+        // console.log(employee_onboarding.gross);
 
         let net = employee_onboarding.gross - employee_onboarding.epf_employee - employee_onboarding.esic_employee;
 
         employee_onboarding.net_income = net
-        console.log(net);
+        // console.log(net);
 
         let ctc = parseInt(employee_onboarding.gross) + parseInt(employee_onboarding.epf_employer_contribution) + parseInt(employee_onboarding.esic_employer_contribution) + parseInt(employee_onboarding.insurance) + parseInt(employee_onboarding.graduity)
 
         employee_onboarding.total_ctc = ctc
 
-        console.log(ctc);
+        // console.log(ctc);
 
 
     }
 
-    const validateAge = (value) => {
-        console.log(value);
-        var birthDate = new Date(value);
-        console.log(" birthDate" + birthDate);
-        var difference = Date.now() - birthDate.getTime();
-        var ageDate = new Date(difference);
-        var calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
-        console.log("calculated Age" + calculatedAge);
 
-        if (calculatedAge > 18) {
-            return true
-        } else {
-            return false
-
-        }
-    }
 
     function addYears(date, years) {
         date.setFullYear(date.getFullYear() + years);
@@ -362,16 +345,12 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     }
 
     const afterYears = (value) => {
-        console.log(value);
         const newDate = addYears(value, 18);
-        console.log(newDate);
         return newDate;
     }
 
     const beforeYears = (value) => {
-        console.log(value);
         const newDate = subYears(value, 18);
-        console.log(newDate);
         return newDate;
     }
 
@@ -517,7 +496,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             holiday_location: {},
             officical_mail: {
                 // required,
-                email:helpers.withMessage('Enter valid email',email)
+                email: helpers.withMessage('Enter valid email', email)
             },
             official_mobile: {},
             probation_period: {},
@@ -716,8 +695,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             .post("/vmt-employee-onboard", formData)
             .then((response) => {
                 // currentObj.success = response.data.success;
-                console.log("response" + response.data);
-                console.log(Object(response.data));
+                // console.log("response" + response.data);
+                // console.log(Object(response.data));
                 Swal.fire({
                     title: response.data.status = "success",
                     text: response.data.message,
@@ -782,7 +761,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         if (url_param_UID) {
             fetchQuickOnboardedEmployeeDetails(url_param_UID).then((result) => {
                 populateQuickOnboardData(result.data);
-                console.log("result" + result.data);
+                // console.log("result" + result.data);
             });
         }
         else {
@@ -1300,30 +1279,28 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     return {
 
         canShowLoading,
-        compensatory_calculation, net_calculation, gross_calculation, statutory_bonus, special_allowance_cal, child_allowance, food_coupon, lta, other_allowance, insurance, graduity,
 
         employee_onboarding, getBasicDeps, clientCode,
 
         // basic
 
         bankList, country, state, departmentDetails, Managerdetails, maritalDetails, bloodGroups, checkIsQuickOrNormal, family_details_disable,
-
-
-        isSpouseDisable, spouseDisable, ForCopyAdrress, spouseGenderCheck, fnCalculateAge,
+        isSpouseDisable, spouseDisable, ForCopyAdrress, spouseGenderCheck, fnCalculateAge, isNationalityVisible, NationalityCheck,
 
 
 
+        // Checking is quick or bulk onboarding
         isQuickOrBulkOnboarding, populateQuickOnboardData,
 
+        // Compensatory
+        compensatory_calculation, net_calculation, gross_calculation, statutory_bonus, special_allowance_cal, child_allowance, food_coupon, lta, other_allowance, insurance, graduity, compensatoryCalWhileQuick,
 
-        isNationalityVisible, NationalityCheck,
-
-
-        Sampledata, compensatoryCalWhileQuick, rules, submitForm,
-
+        // Onboarding  form validation and sample data
+        Sampledata, rules, submitForm,
         getPersonalDocuments, readonly,
 
-        afterYears, beforeYears
+        // /Helper functions
+        afterYears, beforeYears, compen_disable
 
 
 

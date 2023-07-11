@@ -53,16 +53,11 @@
                 </div>-->
 
                         <div class="my-2 mb-3 col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12 mb-md-0">
-                            <div class="mt-2 form-check form-check-inline" v-if="compen_disable">
+                            <div class="mt-2 form-check form-check-inline" v-if="service.compen_disable">
                                 <label class="-ml-4 font-bold form-check-label leave_type" for="compensation_monthly">
                                     Enter Monthly Gross</label>
                             </div>
-                            <div class=" form-check form-check-inline" v-if="compen_disable">
-                                <input type="number" placeholder="Enter Monthly Gross" name="cic"
-                                    v-model="employee_onboarding.cic" id="cic" @input="compensatory_calculation"
-                                    class=" onboard-form form-control textbox" step="0.01" />
-                            </div>
-                            <div class=" form-check form-check-inline">
+                            <div class=" form-check form-check-inline" v-if="service.compen_disable">
                                 <InputText type="number" placeholder="Enter Monthly Gross" name="cic"
                                     @keypress="isNumber($event)" v-model="service.employee_onboarding.cic" id="cic"
                                     @input="service.compensatory_calculation" class=" onboard-form form-control textbox"
