@@ -33,16 +33,10 @@ export const useCalendarStore = defineStore("calendar", () => {
         month.value = month.value + val;
 
         console.log(useTimesheet.isTeamOrg);
+        useTimesheet.getSelectedEmployeeTeamDetails(useTimesheet.currentlySelectedTeamMemberUserId)
+        useTimesheet.getSelectedEmployeeOrgDetails(useTimesheet.currentlySelectedOrgMemberUserId)
+        useTimesheet.getSelectedEmployeeAttendance()
 
-        if (useTimesheet.isTeamOrg == true) {
-            useTimesheet.getSelectedEmployeeTeamDetails(useTimesheet.currentlySelectedTeamMemberUserId)
-        } else
-            if (useTimesheet.isTeamOrg == false) {
-                useTimesheet.getSelectedEmployeeOrgDetails(useTimesheet.currentlySelectedOrgMemberUserId)
-            } else {
-                useTimesheet.getSelectedEmployeeAttendance()
-
-            }
 
     }
     function decrementMonth(val) {
@@ -55,15 +49,9 @@ export const useCalendarStore = defineStore("calendar", () => {
         }
         month.value = month.value - val;
 
-        if (useTimesheet.isTeamOrg == true) {
-            useTimesheet.getSelectedEmployeeTeamDetails(useTimesheet.currentlySelectedTeamMemberUserId)
-        } else
-            if (useTimesheet.isTeamOrg == false) {
-                useTimesheet.getSelectedEmployeeOrgDetails(useTimesheet.currentlySelectedOrgMemberUserId)
-            } else {
-                useTimesheet.getSelectedEmployeeAttendance()
-
-            }
+        useTimesheet.getSelectedEmployeeTeamDetails(useTimesheet.currentlySelectedTeamMemberUserId)
+        useTimesheet.getSelectedEmployeeOrgDetails(useTimesheet.currentlySelectedOrgMemberUserId)
+        useTimesheet.getSelectedEmployeeAttendance()
 
 
 

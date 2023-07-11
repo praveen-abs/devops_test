@@ -20,6 +20,7 @@
             </div>
         </div>
     </div>
+
     <!-- <p>{{ employee_onboarding.save_draft_messege }}</p> -->
 
     <!-- <Dialog v-if="!employee_onboarding.employee_code.length > 0 &&
@@ -96,8 +97,6 @@ import Address from './Address/Address.vue';
 import FamilyDetails from "./FamilyDetails/FamilyDetails.vue";
 import OfficeDetails from './OfficeDetails/OfficeDetails.vue'
 import Compensatory from './Compensatory/Compensatory.vue'
-import QuickOnboarding from '../QuickOnboarding/QuickOnboarding.vue'
-
 
 
 import { onMounted } from "@vue/runtime-core";
@@ -134,25 +133,6 @@ onMounted(() => {
 
 
 });
-
-
-
-
-// variableDeclarations
-
-
-
-// const spouseEnable = () => {
-//     console.log("status checking");
-//     console.log(employee_onboarding.marital_status);
-//     if (employee_onboarding.marital_status.includes('married') || employee_onboarding.marital_status.includes('Married')) {
-//         console.log("married");
-//         sposeData.value = true;
-//     } else {
-//         sposeData.value = false;
-//         console.log("unmarried");
-//     }
-// };
 
 
 const Sampledata = () => {

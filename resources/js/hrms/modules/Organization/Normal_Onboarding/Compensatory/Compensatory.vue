@@ -83,7 +83,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Basic Salary</label>
                             <InputText type="number" placeholder="Basic Salary" name="basic" @keypress="isNumber($event)"
-                                :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                                :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 v-model="service.employee_onboarding.basic"
                                 class="textbox onboard-form form-control calculation_data gross_data" step="0.01"
                                 readonly />
@@ -97,7 +97,7 @@
                             <InputText type="number" placeholder="HRA" name="hra" v-model="service.employee_onboarding.hra"
                                 @keypress="isNumber($event)"
                                 class="onboard-form form-control textbox calculation_data gross_data" step="0.01"
-                                :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']" readonly />
+                                :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']" readonly />
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -145,7 +145,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Special Allowance</label>
-                            <InputText :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']" type="number"
+                            <InputText :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']" type="number"
                                 placeholder="Special Allowance" name="special_allowance" @keypress="isNumber($event)"
                                 v-model="service.employee_onboarding.special_allowance"
                                 class="onboard-form form-control textbox calculation_data gross_data" step="0.01"
@@ -169,7 +169,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Gross Salary</label>
 
-                            <InputText type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            <InputText type="number" :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 placeholder="Gross Salary" name="gross" v-model="service.employee_onboarding.gross"
                                 class="textbox onboard-form form-control" step="0.01" readonly
                                 @keypress="isNumber($event)" />
@@ -180,7 +180,7 @@
                         <div class="floating">
                             <label for="" class="float-label">EPF employer contribution</label>
 
-                            <InputText type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            <InputText type="number" :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 placeholder="EPF employer contribution" name="epf_employer_contribution"
                                 v-model="service.employee_onboarding.epf_employer_contribution" @keypress="isNumber($event)"
                                 class="textbox onboard-form form-control calculation_data cic_data" step="0.01" readonly />
@@ -189,7 +189,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">ESIC employer contribution</label>
-                            <InputText type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            <InputText type="number" :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 placeholder="ESIC employer contribution" name="esic_employer_contribution"
                                 v-model="service.employee_onboarding.esic_employer_contribution"
                                 @keypress="isNumber($event)"
@@ -200,7 +200,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Insurance</label>
                             <InputText type="number" placeholder="Insurance" name="insurance"
-                                :class="[is_emp_code_quick ? 'bg-gray-200' : '']" @keypress="isNumber($event)"
+                                :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '']" @keypress="isNumber($event)"
                                 v-model="service.employee_onboarding.insurance" @input="service.insurance"
                                 class="onboard-form form-control textbox calculation_data cic_data" step="0.01" />
                         </div>
@@ -209,7 +209,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Graduity</label>
                             <InputText type="number" placeholder="Graduity" name="graduity"
-                                :class="[is_emp_code_quick ? 'bg-gray-200' : '']" @keypress="isNumber($event)"
+                                :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '']" @keypress="isNumber($event)"
                                 v-model="service.employee_onboarding.graduity" @input="service.graduity"
                                 class="onboard-form form-control textbox calculation_data cic_data" step="0.01" />
                         </div>
@@ -218,7 +218,7 @@
                         <div class="floating">
                             <label for="" class="float-label">EPF Employee</label>
 
-                            <InputText type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            <InputText type="number" :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 placeholder="EPF Employee" name="epf_employee" @keypress="isNumber($event)"
                                 v-model="service.employee_onboarding.epf_employee"
                                 class="onboard-form form-control calculation_data net_data textbox" step="0.01" readonly />
@@ -229,7 +229,7 @@
                             <label for="" class="float-label">ESIC Employee</label>
 
                             <InputText type="number" placeholder="ESIC Employee" name="esic_employee"
-                                :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                                :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 v-model="service.employee_onboarding.esic_employee" @keypress="isNumber($event)"
                                 class="textbox onboard-form form-control calculation_data net_data" step="0.01" readonly />
                         </div>
@@ -239,7 +239,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Net Income</label>
 
-                            <InputText type="number" :class="[is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
+                            <InputText type="number" :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : 'bg-gray-200']"
                                 placeholder="Net Income" name="net_income" v-model="service.employee_onboarding.net_income"
                                 class="onboard-form form-control textbox" step="0.01" readonly
                                 @keypress="isNumber($event)" />

@@ -2,7 +2,6 @@
 @section('css')
     <link href="{{ URL::asset('assets/libs/jsvectormap/jsvectormap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
-    <link href="{{ URL::asset('assets/css/employee_bulk.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/hr_dashboard.css') }}" rel="stylesheet">
 
 
