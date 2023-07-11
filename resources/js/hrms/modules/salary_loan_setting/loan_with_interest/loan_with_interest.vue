@@ -7,15 +7,20 @@
                 </div>
                 <div class="col">
                     <button class="orange_btn "
-                        :class="[salaryStore.isLoanWithInterestFeature === 2 ? 'bg-white text-black border-1 border-black' : 'text-white']"
-                        @click="salaryStore.isLoanWithInterestFeature = 1">Disabled</button>
+                        :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-white text-black border-1 border-black' : 'text-white']"
+                        @click="salaryStore.isLoanWithInterestFeature = 0">Disabled</button>
                     <button class="Enable_btn"
-                        :class="[salaryStore.isLoanWithInterestFeature === 2 ? 'bg-green-700 text-white' : '']"
-                        @click="salaryStore.isLoanWithInterestFeature = 2">Enable</button>
+                        :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-green-700 text-white' : '']"
+                        @click="salaryStore.isLoanWithInterestFeature = 1">Enable</button>
+                </div>
+                <div class="col">
+                    <button @click="salaryStore.createIflNewFrom = 2" v-if="salaryStore.createIflNewFrom == '1' && salaryStore.isLoanWithInterestFeature == '0' " class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right" >
+                         <i class="pi pi-plus mx-1"></i> Create New From
+                    </button>
                 </div>
             </div>
 
-            <div class="col" v-if="salaryStore.isLoanWithInterestFeature == '1'">
+            <div class="col" v-if="salaryStore.isLoanWithInterestFeature == '0'">
                 <p class="fs-5 ">Please click the "Enable" button to activate the Loan With interest Feature for use within
                     your
                     organization.</p>
@@ -23,10 +28,10 @@
 
                 </div>
             </div>
-            <div v-else class="row">
+            <div v-if="salaryStore.isLoanWithInterestFeature == '1'" class="row">
+
 
                 <div>
-
                     <div class="col-10 ">
                         <p class="fs-5 ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
 
@@ -343,7 +348,7 @@ const op = ref([
 
 onMounted(() => {
     opt.value = "Department";
-    salaryStore.getClientsName();
+    salaryStore.getClientsName('loan_with_int');
     salaryStore.getCurrentStatus('loan_with_int');
 })
 
