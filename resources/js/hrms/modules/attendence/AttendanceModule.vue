@@ -156,17 +156,19 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="overflow-x-auto">
-                            <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                            <!-- <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" /> -->
+                            <second :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+
                         </div>
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-max">
-                                <EmployeeList :source="teamList" :is-team="true" />
+                                <!-- <EmployeeList :source="teamList" :is-team="true" /> -->
                             </div>
                             <div class="overflow-x-auto ml-2 w-100 rounded-lg">
-                                <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                <!-- <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" /> -->
 
                             </div>
 
@@ -175,10 +177,10 @@
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-max">
-                                <EmployeeList :source="orgList" :is-team="false" />
+                                <!-- <EmployeeList :source="orgList" :is-team="false" /> -->
                             </div>
                             <div class="overflow-x-auto ml-2 w-100 rounded-lg">
-                                <Timesheet :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
+                                <!-- <Timesheet :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" /> -->
                             </div>
                         </div>
                     </div>
@@ -195,6 +197,7 @@
 
 
 <script setup>
+import second from '../../../testings/second.vue';
 import Timesheet from './timesheet/timesheet.vue';
 import { useAttendanceTimesheetMainStore } from './timesheet/stores/attendanceTimesheetMainStore'
 import { useCalendarStore } from './timesheet/stores/calendar'

@@ -49,7 +49,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(156, useCalendar.getMonth, useCalendar.getYear).then(res => {
             currentEmployeeAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false

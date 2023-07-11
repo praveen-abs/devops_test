@@ -9,6 +9,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
+import Sidebar from 'primevue/sidebar';
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
@@ -36,6 +37,8 @@ import InputNumber from 'primevue/inputnumber'
 import InputMask from 'primevue/inputmask'
 import OverlayPanel from 'primevue/overlaypanel';
 import Tag from 'primevue/tag'
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 
 import AttendanceModule from './AttendanceModule.vue'
 
@@ -74,6 +77,9 @@ app.component('InputNumber', InputNumber)
 app.component('InputMask', InputMask)
 app.component('OverlayPanel',OverlayPanel)
 app.component('Tag',Tag)
+app.component('Sidebar',Sidebar)
+app.component('Accordion',Accordion)
+app.component('AccordionTab',AccordionTab)
 
 app.mount("#AttendanceModule");
 
