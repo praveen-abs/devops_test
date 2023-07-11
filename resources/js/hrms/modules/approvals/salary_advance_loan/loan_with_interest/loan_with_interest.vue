@@ -369,7 +369,7 @@ function ShowDialogApprovalAll() {
 
 async function approveAndReject(status) {
     hideBulkConfirmDialog()
-    await useData.IWL_ApproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    await useData.IWL_ApproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.reviewer_comments)
     currentlySelectedStatus.value = status;
 }
 
