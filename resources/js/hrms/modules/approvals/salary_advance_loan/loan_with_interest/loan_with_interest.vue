@@ -245,7 +245,7 @@
                     </DataTable>
 
 
-                   <EmployeePayable :source="sample"/>
+                   <!-- <EmployeePayable :source="sample"/> -->
 
                     <DataTable v-if="useEmpData != ''" :value="useEmpData" :paginator="true" :rows="10" class=""
                         dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
@@ -308,7 +308,7 @@
 </template>
 
 <script setup>
-import EmployeePayable from '../../../Shared/EmployeePayable.vue';
+// import EmployeePayable from '../../../Shared/EmployeePayable.vue';
 
 import { onMounted, ref, reactive ,computed } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
@@ -320,9 +320,9 @@ import { required, email, minLength, sameAs, helpers } from '@vuelidate/validato
 import { useNow, useDateFormat } from '@vueuse/core';
 
 
-const sample = ref([
-    {id:1,name:"vishu"}
-])
+// const sample = ref([
+//     {id:1,name:"vishu"}
+// ])
 
 const useData = UseSalaryAdvanceApprovals();
 
