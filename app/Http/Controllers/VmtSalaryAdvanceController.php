@@ -118,13 +118,35 @@ class VmtSalaryAdvanceController extends Controller
     //Gettings Clients Based on Login
     public function getClientForLoanAndAdv(Request $request)
     {
+        dd($request->all());
+        $column = 'vmt_loan_sal_adv_master.sal_adv';
         if (VmtClientMaster::count() == 1) {
-            return VmtClientMaster::where('id', sessionGetSelectedClientid())->get();
+            return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
+                    'vmt_client_master.id as id',
+                    'vmt_client_master.abs_client_code as abs_client_code',
+                    'vmt_client_master.client_code as client_code',
+                    'vmt_client_master.client_name as client_name',
+                    $column . ' as status',
+                ]);
         } else {
             if (sessionGetSelectedClientid() == 1) {
-                return VmtClientMaster::all();
+                return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->get([
+                    'vmt_client_master.id as id',
+                    'vmt_client_master.abs_client_code as abs_client_code',
+                    'vmt_client_master.client_code as client_code',
+                    'vmt_client_master.client_name as client_name',
+                    $column . ' as status',
+                ]);
             } else {
-                return VmtClientMaster::where('id', sessionGetSelectedClientid())->get();
+                return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                    ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
+                        'vmt_client_master.id as id',
+                        'vmt_client_master.abs_client_code as abs_client_code',
+                        'vmt_client_master.client_code as client_code',
+                        'vmt_client_master.client_name as client_name',
+                        $column . ' as status',
+                    ]);
             }
         }
     }
@@ -195,7 +217,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function rejectOrApproveLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        dd($request->all());
+        // dd($request->all());
         $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
             $request->loan_type,
             $request->record_id,
@@ -216,7 +238,8 @@ class VmtSalaryAdvanceController extends Controller
         return $vmtSalaryAdvanceService->rejectOrApprovedSaladv(
             $request->record_id,
             $request->status,
-            $request->reviewer_comments);
+            $request->reviewer_comments
+        );
     }
 
     public function EmployeeLoanHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
