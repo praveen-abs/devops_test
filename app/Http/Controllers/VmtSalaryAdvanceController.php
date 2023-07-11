@@ -94,6 +94,7 @@ class VmtSalaryAdvanceController extends Controller
         $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
             $request->loan_type,
             $request->selectClientID,
+            $request->name,
             $request->precent_Or_Amt,
             $request->minEligibile,
             $request->max_loan_limit,
@@ -156,22 +157,26 @@ class VmtSalaryAdvanceController extends Controller
         $column = 'sal_adv';
 
         if (VmtClientMaster::count() == 1) {
-            return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+            $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                 ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
         } else {
             if (sessionGetSelectedClientid() == 1) {
                 $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->pluck($column);
                 foreach ($setting_status as $single_sts) {
                     if ($single_sts == 1) {
-                        return 1;
+                        $setting_status =1;
                     }
                 }
-                return 0;
+                return    $setting_status = 0;
             } else {
-                return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                     ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
             }
         }
+
+        return response()->json([
+            'status' =>  $setting_status,
+        ]);
     }
 
     public function loanAndAvanceMasterSettings(Request $request)

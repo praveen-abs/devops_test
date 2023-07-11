@@ -543,6 +543,7 @@ class VmtSalaryAdvanceService
     public function saveIntersetAndIntersetFreeLoanSettings(
         $loan_type,
         $client_id,
+        $name,
         $loan_applicable_type,
         $min_month_served,
         $max_loan_limit,
@@ -558,6 +559,7 @@ class VmtSalaryAdvanceService
             $data = [
                 "loan_type" => $loan_type,
                 "client_id" => $client_id,
+                "name"=>$name,
                 'loan_applicable_type' => $loan_applicable_type,
                 "min_month_served" => $min_month_served,
                 "max_loan_limit" => $max_loan_limit,
@@ -570,6 +572,7 @@ class VmtSalaryAdvanceService
             $rules = [
                 "loan_type" => "required",
                 "client_id" => "required",
+                "name"=>"required",
                 'loan_applicable_type' => "required",
                 "min_month_served" => "required",
                 "deduction_starting_months" => "required",
