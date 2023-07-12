@@ -24,7 +24,13 @@
         </div>
         <div class="tab-content " id="pills-tabContent">
             <div class="tab-pane fade active show" id="client-list" role="tabpanel" aria-labelledby="">
-                <ClientList />
+              <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <ClientList />
+                    </div>
+                </div>
+              </div>
             </div>
             <div class="tab-pane fade " id="client-onboarding" role="tabpanel" aria-labelledby="">
                 <ClientOnboarding />
