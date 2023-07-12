@@ -47,6 +47,7 @@ use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
 use App\Jobs\sendemailjobs;
+use Illuminate\Support\Facades\Validator;
 
 
 class VmtTestingController extends Controller
@@ -297,13 +298,13 @@ class VmtTestingController extends Controller
 
             $isSent = \Mail::to($request->email)->send(new TestEmail($request->email));
 
-            return $isSent;
+            return "success";
         }
         catch(\Exception $e){
             return response()->json([
                 "status" => "failure",
                 "message" => "",
-                "data" => $response,
+                "data" => $e->getMessage(),
             ]);
         }
      }
