@@ -285,5 +285,6 @@ class VmtSalaryAdvanceController extends Controller
 
     public function changeClientIdStsForLoan(Request $request)
     {
+        dd($request->all());
     }
 }
