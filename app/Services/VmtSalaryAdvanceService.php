@@ -606,8 +606,8 @@ class VmtSalaryAdvanceService
                     if ($existing_record->where('name', $name)->exists()) {
                         // Sending The Reord id and break One loop here
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Alreay Exist';
-                        $temp['Message'] = 'This Setting Name Alreay Exist  For Another Settings Please Change The Setting Name';
+                        $temp['heading'] = 'This Setting Name Already Exist';
+                        $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->where('name', $name)->first()->id;
                         array_push($sucess_msg, $temp);
                         unset($temp);
@@ -621,8 +621,8 @@ class VmtSalaryAdvanceService
                     if ($existing_record->where('name', $name)->exists()) {
                         // Sending The Reord id and break One loop here
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Alreay Exist';
-                        $temp['Message'] = 'This Setting Name Alreay Exist  For Another Settings Please Change The Setting Name';
+                        $temp['heading'] = 'This Setting Name Already Exist';
+                        $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->first()->id;
                         array_push($sucess_msg, $temp);
                         unset($temp);
@@ -648,8 +648,8 @@ class VmtSalaryAdvanceService
                     ->where('approver_flow', $approver_flow);
                 if ($existing_record->exists()) {
                     $temp = array();
-                    $temp['heading'] = 'This Setting Alreay Exist';
-                    $temp['Message'] = 'This Setting Alreay Exist Please Change The Settings';
+                    $temp['heading'] = 'This Setting Already Exist';
+                    $temp['Message'] = 'This Setting Already Exist Please Change The Settings';
                     $temp['record_id'] = $existing_record->first()->id;
                     array_push($sucess_msg, $temp);
                     unset($temp);
