@@ -43,7 +43,7 @@
                         <!-- {{ salaryStore.client_name_status }} -->
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
-                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" @change="selectClientId" />
+                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" @change="selectClientId('sal_adv')" />
                     </div>
                 </div>
                 <div class="row ml-1 mr-3 mt-2 ">
@@ -501,8 +501,8 @@ function viewDetails(data) {
 
 }
 
-function selectClientId(){
-    salaryStore.sendClient_code();
+function selectClientId(data){
+    salaryStore.sendClient_code(data);
 }
 
 
