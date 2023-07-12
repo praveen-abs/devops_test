@@ -251,7 +251,10 @@ class VmtTestingController extends Controller
 
         $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
 
-        $VmtClientMaster = VmtClientMaster::first();
+        $client_id=User::where('user_code',$user_code)->first();
+
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+        
         $image_view = url('/') . $VmtClientMaster->client_logo;
 
         $response = array();
