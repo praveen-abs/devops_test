@@ -317,8 +317,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     const isLoanWithInterestFeature = ref();
 
-    const CreateLoanWithNewFrom = ref();
-
     const lwif = reactive({
         name: "",
         LoanWithInterestFeature: '',
@@ -591,7 +589,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest,CreateLoanWithNewFrom
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest
 
     };
 });

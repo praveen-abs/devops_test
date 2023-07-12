@@ -22,7 +22,7 @@
             </div>
             <div class="col" v-if="salaryStore.create_new_from == '1'">
                 <div>
-                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0'">Please click the "Enable" button
+                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0' || salaryStore.isSalaryAdvanceFeatureEnabled == null ">Please click the "Enable" button
                         to activate the salary advance feature for use within
                         your
                         organization.</p>
