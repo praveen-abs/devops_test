@@ -47,9 +47,10 @@
                     </div>
                 </div>
                 <div class="row ml-1 mr-3 mt-2 ">
+                    <!-- :class="[ id ==  ?'blink':'' ]" -->
                     <div
-                        class="col border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm">
-                        <div class="w-100 d-flex justify-content-between align-items-center">
+                        class="col border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm" v-for="(item, index) in items" :key="index" >
+                        <div class="w-100 d-flex justify-content-between align-items-center" >
                             <h1 class="  fs-5">Salary Advance - 2023</h1>
                             <button class=" underline text-blue-400 fs-5 " @click="viewDetails(data)">View Details</button>
                         </div>
@@ -486,7 +487,8 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        salaryStore.saveSalaryAdvanceFeature()
+        salaryStore.saveSalaryAdvanceFeature();
+        salaryStore.create_new_from = 1 ;
         v$.value.$reset()
     } else {
         console.log('Form failed validation')
@@ -517,6 +519,7 @@ onMounted(() => {
     salaryStore.getClientsName('sal_adv');
     salaryStore.getCurrentStatus('sal_adv');
     salaryStore.getDropdownFilterDetails();
+    salaryStore.salaryAdvanceHistory();
 
 });
 
@@ -595,7 +598,25 @@ input[type=radio] {
 
 .p-inputtext.p-component.p-inputnumber-input {
     width: 75px;
-}</style>
+}
+
+
+.blink {
+        animation: blink-animation 1s steps(5, start) infinite;
+        -webkit-animation: blink-animation 1s steps(5, start) infinite;
+      }
+      @keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
+      @-webkit-keyframes blink-animation {
+        to {
+          visibility: hidden;
+        }
+      }
+
+</style>
 
 {
 
