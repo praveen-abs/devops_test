@@ -447,22 +447,48 @@ class VmtSalaryAdvanceService
     public function settingDetails()
     {
 
-        $getsetting   = VmtSalaryAdvSettings::all()->toArray();
+        $getsetting   = VmtSalaryAdvSettings::get(['id','settings_name','percent_salary_adv','deduction_period_of_months','can_borrowed_multiple'])->toArray();
 
         // dd($getsetting );
 
         $res = array();
         foreach ($getsetting  as $single_settings) {
 
-            $data['sattings'] = $single_settings;
+            $data['settings'] = $single_settings;
 
-            $data['sattings']['emp_count'] =  VmtEmpAssignSalaryAdvSettings::where('salary_adv_id', $single_settings['id'])->get()->count();
+            $data['settings']['emp_count'] =  VmtEmpAssignSalaryAdvSettings::where('salary_adv_id', $single_settings['id'])->get()->count();
 
-            $data['sattings']['view_details'] = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
+            $getsetting_details = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
                 ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])->get()->toArray();
+
+          $getdetails = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
+                     ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])->get()->toArray();
+
+
+                foreach($getsetting_details as $single_arr){
+
+                    $res1 = array('settings_name'=>$single_arr['settings_name'],
+                    'percent_salary_adv'=>$single_arr['percent_salary_adv'],
+                    'deduction_period_of_months'=>$single_arr['deduction_period_of_months'],
+                    'approver_flow' =>json_decode($single_arr['approver_flow'], true),
+                    'can_borrowed_multiple'=>$single_arr['can_borrowed_multiple'],
+                    'assigned_emp'=>[],
+                );
+
+                foreach($getdetails as $get_single){
+
+                    if(in_array($get_single['settings_name'],$get_single)){
+
+                        array_push($res1['assigned_emp'],$get_single['name']);
+                    }
+                }
+            }
+
+                 $data['settings']['view_details'] = $res1;
 
             array_push($res, $data);
         }
+
         return ($res);
     }
 
@@ -885,7 +911,6 @@ class VmtSalaryAdvanceService
         $getallintrestwithemp = VmtEmpInterestLoanDetails::get()->sortByDesc('id')->first();
 
 
-
         try {
             if ($loan_type == 'InterestFreeLoan') {
 
@@ -959,37 +984,39 @@ class VmtSalaryAdvanceService
 
             if ($loan_type == 'InterestFreeLoan') {
 
-               $loan_settings_mail =  VmtInterestFreeLoanSettings::where('request_id',$loan_details->request_id)->first();
+               $loan_settings_mail =  VmtEmployeeInterestFreeLoanDetails::where('request_id',$loan_details->request_id)->first();
 
             } else if ($loan_type = 'InterestWithLoan') {
 
-                $loan_settings_mail = VmtEmployeeInterestFreeLoanDetails::where('request_id', $loan_details->request_id)->first();
+                $loan_settings_mail = VmtEmpInterestLoanDetails::where('request_id', $loan_details->request_id)->first();
 
             }
 
-                foreach($loan_settings_mail as $single_settingsmail){
+                $simm =  json_decode(($loan_settings_mail->approver_flow), true);
 
-                    dd($single_settingsmail);
+                foreach ($simm as $single_simma) {
+                    if ($single_simma['order'] == 1) {
+                        $approver_details = User::where('id', $single_simma['approver'])->first();
+                    }
                 }
 
 
+                $isSent    = \Mail::to($approver_details->email)
+                    ->send(new ApproveRejectLoanAndSaladvMail(
+                        $approver_details->name,
+                        // $emp_details->name,
+                        // $emp_details->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        // $emp_details->sal_adv_status,
+                    ));
 
-        //     $isSent    = \Mail::to()
-        //     ->send(new ApproveRejectLoanAndSaladvMail(
-        //         $approver_details->name,
-        //         $emp_details->name,
-        //         $emp_details->user_code,
-        //         request()->getSchemeAndHttpHost(),
-        //         $emp_details->sal_adv_status,
-        //     ));
+                if ($isSent) {
+                    $sima = "success";
+                } else {
+                    $sima = "failure";
+                }
 
-        // if ($isSent) {
-        //     $sima = "success";
-        // } else {
-        //     $sima = "failure";
-        // }
-
-        // dd($sima);
+                dd($sima);
 
 
             // return response()->json([
