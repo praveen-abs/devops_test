@@ -169,11 +169,13 @@ class VmtSalaryAdvanceController extends Controller
                         $setting_status = 1;
                     }
                 }
-                return $setting_status;
+
             } else {
                 $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                     ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
             }
+            $response['status']=$setting_status;
+            return $response;
         }
 
         return response()->json([
