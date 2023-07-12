@@ -70,6 +70,12 @@ class VmtSalaryAdvanceController extends Controller
         return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow, $request->payroll_cycle, $request->SA);
     }
 
+    public function settingDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        //   dd($request->all());
+        return $vmtSalaryAdvanceService->settingDetails();
+    }
+
     public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
@@ -169,12 +175,11 @@ class VmtSalaryAdvanceController extends Controller
                         $setting_status = 1;
                     }
                 }
-
             } else {
                 $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                     ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
             }
-            $response['status']=$setting_status;
+            $response['status'] = $setting_status;
             return $response;
         }
 
@@ -285,6 +290,37 @@ class VmtSalaryAdvanceController extends Controller
 
     public function changeClientIdStsForLoan(Request $request)
     {
-        dd($request->all());
+        $column = $request->loanType;
+        $client_id = $request->client_status;
+        $all_client_id = VmtSalaryAdvanceMasterModel::pluck('client_id');
+        try {
+            foreach ($all_client_id as $single_id) {
+                if (in_array($single_id,  $client_id)) {
+                    $loan_and_sal_adv_settings = VmtSalaryAdvanceMasterModel::where('client_id', $single_id)->first();
+                    $loan_and_sal_adv_settings->$column =  1;
+                    $loan_and_sal_adv_settings->save();
+                } else {
+                    $loan_and_sal_adv_settings = VmtSalaryAdvanceMasterModel::where('client_id', $single_id)->first();
+                    $loan_and_sal_adv_settings->$column =  0;
+                    $loan_and_sal_adv_settings->save();
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "changeClientIdStsForLoan",
+                "data" => $e->getMessage(),
+            ]);
+        }
+        return response()->json([
+            "status" => "Sucess",
+            "message" => "changeClientIdStsForLoan",
+
+        ]);
+    }
+
+    public function interestAndInterestfreeLoanDetilsHistory(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanDetilsHistory();
+        return  $response;
     }
 }

@@ -280,6 +280,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/retrive-files', [App\Http\Controllers\VmtTestingController::class, 'retriveFiles'])->name('retriveFiles');
     Route::get('/testSendBulkMail', [App\Http\Controllers\VmtTestingController::class, 'testSendBulkMail'])->name('testSendBulkMail');
+    Route::get('/testSendHTMLEmail', [App\Http\Controllers\VmtTestingController::class, 'sendHTMLEmail'])->name('sendHTMLEmail');
     Route::get('/test_getTeamEmployeesLeaveDetails', [App\Http\Controllers\VmtTestingController::class, 'test_getTeamEmployeesLeaveDetails'])->name('test_getTeamEmployeesLeaveDetails');
 
 
@@ -343,7 +344,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('clients', 'App\Http\Controllers\VmtClientController@showAllClients')->name('vmt-clients-route');
 
-    Route::get('clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
+    Route::get('/clients-fetchAll', 'App\Http\Controllers\VmtClientController@fetchAllClients')->name('vmt-clients-fetchall');
     Route::post('/getABSClientCode', [App\Http\Controllers\VmtClientController::class, 'getABSClientCode'])->name('getABSClientCode');
 
     // Permission Roles Routing
@@ -855,6 +856,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/showSAapprovalView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAapprovalView']);
     Route::get('/showSAsettingsView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAsettingsView']);
     Route::post('/rejectOrApprovedSaladv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'rejectOrApprovedSaladv']);
+    Route::get('/settingDetails', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'settingDetails']);
 
     //Travel Advance
 
@@ -872,6 +874,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/employee-loan-history',[App\Http\Controllers\VmtSalaryAdvanceController::class,'EmployeeLoanHistory']);
     Route::post('/loan-and-salAdv-current-status',[App\Http\Controllers\VmtSalaryAdvanceController::class,'loanAndSalAdvCurrentStatus']);
     Route::post('/change-client-id-sts-for-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'changeClientIdStsForLoan']);
+    Route::post('/interest-and-interest-free-loan-detils-history',[App\Http\Controllers\VmtSalaryAdvanceController::class,'interestAndInterestfreeLoanDetilsHistory']);
     //Loan Approval changeClientIdStsForLoan
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
