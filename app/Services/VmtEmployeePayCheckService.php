@@ -188,6 +188,7 @@ $i=array_keys($excelRowdata_row);
             $messages = [
                             'required' => 'Field <b>:attribute</b> is required',
                             'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist',
+                            'regex' =>  'Field <b>:attribute</b> is invalid',
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);

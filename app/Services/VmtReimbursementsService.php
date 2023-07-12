@@ -263,7 +263,7 @@ class VmtReimbursementsService {
                                                                       ->whereYear('date',$year)
                                                                       ->whereMonth('date',$month)
                                                                       ->get(['date','vmt_reimbursements.reimbursement_type','from','to','vmt_reimbursement_vehicle_types.vehicle_type','vmt_reimbursement_vehicle_types.cost_per_km',
-                                                                       'distance_travelled','total_expenses','user_comments']);
+                                                                       'distance_travelled','total_expenses','user_comments','entry_mode']);
 
             return $employee_reimbursement_data_query;
     }

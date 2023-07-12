@@ -1227,8 +1227,10 @@ class VmtEmployeeController extends Controller
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
+        $client_id=User::where('user_code',$employeeData['employee_name'])->first();
 
-        $VmtClientMaster = VmtClientMaster::first();
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+        
         $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
@@ -1263,7 +1265,7 @@ class VmtEmployeeController extends Controller
         $message = "Employee Bulk OnBoard was Created   ";
 
         Notification::send($notification_user ,new ViewNotification($message.$employeeData['employee_name']));
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$client_code->abs_client_code));
 
         return $isSent;
     }

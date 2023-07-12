@@ -6,7 +6,7 @@
                 class='mr-3 pi pi-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
         </div>
         <div class="col-6 px-4 ">
-            <button class=" underline fs-5 text-blue-700 float-right mx-2" >History</button>
+            <button class=" underline fs-5 text-blue-700 float-right mx-2" @click="viewHistory(data)" >History</button>
         </div>
        </div>
 

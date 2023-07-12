@@ -1845,10 +1845,10 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
             }
 
             return $response;
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
         return response()->json([
             'status' => 'success',
-            'message' => 'Error while get latest attedance status',
+            'message' => 'Error while getting latest attendance status',
             'data'   => $e->getmessage(),
         ]);
     }

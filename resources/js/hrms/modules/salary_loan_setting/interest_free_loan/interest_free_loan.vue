@@ -30,7 +30,7 @@
                     <div class="d-flex justify-content-between align-items-center mt-5 "  style="width: 480px;">
                         <h1 class="fs-4 fw-bolder" >Select organization</h1>
                         <div class="d-flex flex-col position-relative">
-                            <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.ClientsName" optionLabel="client_name"  optionValue="id"
+                            <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name"  optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
                                                 v$.selectClientID.$error ? 'p-invalid' : '',
                                             ]" />

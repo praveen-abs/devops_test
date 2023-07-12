@@ -70,12 +70,6 @@ class VmtSalaryAdvanceController extends Controller
         return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow, $request->payroll_cycle, $request->SA);
     }
 
-    public function settingDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
-        //   dd($request->all());
-        return $vmtSalaryAdvanceService->settingDetails();
-    }
-
     public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
@@ -317,5 +311,12 @@ class VmtSalaryAdvanceController extends Controller
             "message" => "changeClientIdStsForLoan",
 
         ]);
+    }
+
+    public function interestAndInterestfreeLoanDetilsHistory(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        //$loan_type = $request->loan_type;
+          $loan_type = 'InterestFreeLoan';
+        $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanDetilsHistory($loan_type);
+        return  $response;
     }
 }

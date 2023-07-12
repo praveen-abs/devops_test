@@ -561,10 +561,15 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         })
     }
 
+    const salaryAdvanceSettingsDetails = ref();
 
-
-
-
+    async function salaryAdvanceHistory(){
+        // console.log();
+        await axios.get('/settingDetails').then((res)=>{
+            salaryAdvanceSettingsDetails =  res.data;
+            console.log(salaryAdvanceSettingsDetails.value);
+        })
+    }
 
     return {
 
@@ -577,7 +582,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // SalaryAdvanceFeature
 
-        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from, getCurrentStatus, client_name_status,sendClient_code,
+        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from, getCurrentStatus, client_name_status,sendClient_code,salaryAdvanceHistory,salaryAdvanceSettingsDetails,
 
         // Interest Free Loan
 
