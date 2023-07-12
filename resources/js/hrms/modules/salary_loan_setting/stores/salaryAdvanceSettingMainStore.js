@@ -256,10 +256,12 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     }
 
 
-    async function sendClient_code(){
-        let url = `/change-client-id-sts-forLoan`;
+    async function sendClient_code(loanType){
+        let loantype = loanType
+        let url = `/change-client-id-sts-for-loan`;
         await axios.post(url,{
             client_status:client_name_status.value,
+            loanType:loantype
         }).then((res)=>{
 
         })
@@ -316,8 +318,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Loan With interest Feature Begins
 
     const isLoanWithInterestFeature = ref();
-
-    const CreateLoanWithNewFrom = ref();
 
     const lwif = reactive({
         name: "",
@@ -591,7 +591,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest,CreateLoanWithNewFrom
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest
 
     };
 });

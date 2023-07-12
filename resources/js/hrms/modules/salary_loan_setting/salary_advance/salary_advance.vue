@@ -22,7 +22,7 @@
             </div>
             <div class="col" v-if="salaryStore.create_new_from == '1'">
                 <div>
-                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0'">Please click the "Enable" button
+                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0' || salaryStore.isSalaryAdvanceFeatureEnabled == null ">Please click the "Enable" button
                         to activate the salary advance feature for use within
                         your
                         organization.</p>
@@ -43,7 +43,7 @@
                         <!-- {{ salaryStore.client_name_status }} -->
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
-                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" @change="selectClientId" />
+                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" @change="selectClientId('sal_adv')" />
                     </div>
                 </div>
                 <div class="row ml-1 mr-3 mt-2 ">
@@ -501,8 +501,8 @@ function viewDetails(data) {
 
 }
 
-function selectClientId(){
-    salaryStore.sendClient_code();
+function selectClientId(data){
+    salaryStore.sendClient_code(data);
 }
 
 

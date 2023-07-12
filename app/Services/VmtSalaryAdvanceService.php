@@ -600,6 +600,7 @@ class VmtSalaryAdvanceService
         $max_tenure_months,
         $approver_flow
     ) {
+        $sucess_msg = array();
 
 
         $validator = Validator::make(
@@ -646,9 +647,34 @@ class VmtSalaryAdvanceService
             try {
                 if ($loan_type == 'InterestFreeLoan') {
                     $setting_for_loan = new VmtInterestFreeLoanSettings;
+
+                    //Here Checking This setting Name Already Exists in table
+                    $existing_record = VmtInterestFreeLoanSettings::where('client_id', $single_cl_id);
+                    if ($existing_record->where('name', $name)->exists()) {
+                        // Sending The Reord id and break One loop here
+                        $temp = array();
+                        $temp['heading'] = 'This Setting Name Already Exist';
+                        $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
+                        $temp['record_id'] = $existing_record->where('name', $name)->first()->id;
+                        array_push($sucess_msg, $temp);
+                        unset($temp);
+                        continue;
+                    }
                 } else if ($loan_type = 'InterestWithLoan') {
                     $setting_for_loan = new VmtLoanInterestSettings;
                     $setting_for_loan->loan_amt_interest = $loan_amt_interest;
+                    //Here Checking This setting Name Already Exists in table
+                    $existing_record =  VmtLoanInterestSettings::where('client_id', $single_cl_id);
+                    if ($existing_record->where('name', $name)->exists()) {
+                        // Sending The Reord id and break One loop here
+                        $temp = array();
+                        $temp['heading'] = 'This Setting Name Already Exist';
+                        $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
+                        $temp['record_id'] = $existing_record->first()->id;
+                        array_push($sucess_msg, $temp);
+                        unset($temp);
+                        continue;
+                    }
                 } else {
                     return response()->json([
                         'status' => 'failure',
@@ -656,7 +682,30 @@ class VmtSalaryAdvanceService
                     ]);
                 }
 
+                $existing_record = $existing_record->where('loan_applicable_type', $loan_applicable_type)->where('name', $name);
+
+                if ($loan_applicable_type == 'percnt') {
+                    $existing_record = $existing_record->where('percent_of_ctc', $percent_of_ctc);
+                } else if ($loan_applicable_type == 'fixed') {
+                    $existing_record = $existing_record->where('max_loan_amount', $max_loan_limit);
+                }
+                $existing_record =  $existing_record->where('min_month_served', $min_month_served)
+                    ->where('deduction_starting_months', $deduction_starting_months)
+                    ->where('max_tenure_months', $max_tenure_months)
+                    ->where('approver_flow', $approver_flow);
+                if ($existing_record->exists()) {
+                    $temp = array();
+                    $temp['heading'] = 'This Setting Already Exist';
+                    $temp['Message'] = 'This Setting Already Exist Please Change The Settings';
+                    $temp['record_id'] = $existing_record->first()->id;
+                    array_push($sucess_msg, $temp);
+                    unset($temp);
+                    continue;
+                }
+
+
                 $setting_for_loan->client_id = $single_cl_id;
+                $setting_for_loan->name = $name;
                 $setting_for_loan->loan_applicable_type = $loan_applicable_type;
                 if ($loan_applicable_type == 'percnt') {
                     $setting_for_loan->percent_of_ctc = $percent_of_ctc;
@@ -677,10 +726,18 @@ class VmtSalaryAdvanceService
                 ]);
             }
         }
-        return response()->json([
-            'status' => 'failure',
-            'message' => "Interest free and int loan setiings Saved Sucessfully"
-        ]);
+
+        if (empty($sucess_msg)) {
+            return response()->json([
+                'status' => 'Sucesss',
+                'message' => "Interest free and int loan setiings Saved Sucessfully"
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'Sucesss',
+                'message' => $sucess_msg
+            ]);
+        }
     }
 
 
