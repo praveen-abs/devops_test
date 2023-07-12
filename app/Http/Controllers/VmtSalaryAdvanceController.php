@@ -318,4 +318,9 @@ class VmtSalaryAdvanceController extends Controller
 
         ]);
     }
+
+    public function interestAndInterestfreeLoanDetilsHistory(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanDetilsHistory();
+        return  $response;
+    }
 }

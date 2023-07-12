@@ -1263,4 +1263,26 @@ class VmtSalaryAdvanceService
             ]);
         }
     }
+
+    public function interestAndInterestfreeLoanDetilsHistory($loan_type)
+    {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+            ],
+            $rules = [
+                "loan_type" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+    }
 }
