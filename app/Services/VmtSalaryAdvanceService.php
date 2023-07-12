@@ -357,6 +357,32 @@ class VmtSalaryAdvanceService
 
     public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow, $payroll_cycle, $SA)
     {
+
+        $salary_adv_name = VmtSalaryAdvSettings::where('settings_name', $SA)->first();
+
+        if ($salary_adv_name){
+
+            $simma1 = VmtSalaryAdvSettings::where('percent_salary_adv', $perOfSalAdvance)
+                    ->where('deduction_period_of_months', $deductMethod)
+                    ->where('can_borrowed_multiple', $payroll_cycle)->first();
+
+            if ($simma1){
+
+                $json_approvalflow = json_encode($approvalflow);
+
+                $master = VmtSalaryAdvSettings::where('approver_flow', $json_approvalflow)->first();
+
+                if ($master){
+
+                    return response()->json([
+                        'status' => 'already using the settings',
+                    ]);
+
+                }
+            }
+
+        }
+
         $json_approvalflow = json_encode($approvalflow);
 
         $res = array();
@@ -420,6 +446,27 @@ class VmtSalaryAdvanceService
         }
     }
 
+    public function settingDetails(){
+
+        $getsetting   = VmtSalaryAdvSettings::all()->toArray();
+
+        // dd($getsetting );
+
+        $res = array();
+        foreach($getsetting  as $single_settings){
+
+           $data['sattings'] = $single_settings;
+
+           $data['sattings']['emp_count'] =  VmtEmpAssignSalaryAdvSettings::where('salary_adv_id', $single_settings['id'])->get()->count();
+
+           $data['sattings']['view_details'] = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.salary_adv_id','=','vmt_salary_adv_setting.id')
+                                                        ->join('users','users.id','=','vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id',$single_settings['id'])->get()->toArray();
+
+        array_push($res, $data);
+
+        }
+        return ($res);
+    }
 
     public function SalAdvApproverFlow()
     {
