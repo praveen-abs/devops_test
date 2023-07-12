@@ -161,13 +161,15 @@ class VmtSalaryAdvanceController extends Controller
                 ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
         } else {
             if (sessionGetSelectedClientid() == 1) {
-                $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->pluck($column);
-                foreach ($setting_status as $single_sts) {
+                $setting_status_query = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->pluck($column);
+                $setting_status = 0;
+                foreach ($setting_status_query as $single_sts) {
+
                     if ($single_sts == 1) {
-                        $setting_status =1;
+                        $setting_status = 1;
                     }
                 }
-                return    $setting_status = 0;
+                return $setting_status;
             } else {
                 $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                     ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
@@ -279,7 +281,7 @@ class VmtSalaryAdvanceController extends Controller
         return $response;
     }
 
-    public function changeClientIdStsForLoan(Request $request){
-
+    public function changeClientIdStsForLoan(Request $request)
+    {
     }
 }
