@@ -13,27 +13,30 @@
                         :class="[salaryStore.isLoanWithInterestFeature === 1 ? 'bg-green-700 text-white' : '']"
                         @click="salaryStore.isLoanWithInterestFeature = 1">Enable</button>
                 </div>
-                <div class="col">
-                    <button @click="salaryStore.createIflNewFrom = 2" v-if="salaryStore.createIflNewFrom == '1' && salaryStore.isLoanWithInterestFeature == '0' " class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right" >
+                <div class="col" >
+                    <button @click="salaryStore.CreateLoanWithNewFrom = 1"  v-if="salaryStore.CreateLoanWithNewFrom == '0' || salaryStore.CreateLoanWithNewFrom==null  " class=" rounded-md text-white bg-blue-800 px-4 py-2 float-right" >
                          <i class="pi pi-plus mx-1"></i> Create New From
                     </button>
                 </div>
             </div>
 
-            <div class="col" v-if="salaryStore.isLoanWithInterestFeature == '0'">
-                <p class="fs-5 ">Please click the "Enable" button to activate the Loan With interest Feature for use within
+            <div class="col" >
+                <p class="fs-5 " v-if="salaryStore.isLoanWithInterestFeature == '0'  ">Please click the "Enable" button to activate the Loan With interest Feature for use within
                     your
                     organization.</p>
+                    <p class="fs-5 " v-if="salaryStore.isLoanWithInterestFeature == '1'  ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
+
                 <div>
 
                 </div>
-            </div>
-            <div v-if="salaryStore.isLoanWithInterestFeature == '1'" class="row">
 
+            </div>
+
+            <div v-if="salaryStore.CreateLoanWithNewFrom == '1'" class="row">
 
                 <div>
                     <div class="col-10 ">
-                        <p class="fs-5 ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
+
 
                         <div class="d-flex justify-content-between align-items-center mt-5 " style="width: 480px;">
                             <h1 class="fs-4 fw-bolder">Select organization</h1>
@@ -317,8 +320,8 @@
 
                 <div class="row">
                     <div class="col">
-                        <div class="float-right" v-if="salaryStore.isLoanWithInterestFeature == '2'">
-                            <button class="btn btn-border-primary">Cancel</button>
+                        <div class="float-right"  v-if="salaryStore.isLoanWithInterestFeature == '1'">
+                            <button class="btn btn-border-primary"  v-if="salaryStore.CreateLoanWithNewFrom = 0" >Cancel</button>
                             <!-- submitForm -->
                             <button class="mx-4 btn btn-primary" @click="submitForm">Save
                                 Changes</button>
