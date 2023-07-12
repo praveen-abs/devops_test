@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestEmail;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
@@ -46,6 +47,7 @@ use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
 use App\Jobs\sendemailjobs;
+use Illuminate\Support\Facades\Validator;
 
 
 class VmtTestingController extends Controller
@@ -251,7 +253,10 @@ class VmtTestingController extends Controller
 
         $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
 
-        $VmtClientMaster = VmtClientMaster::first();
+        $client_id=User::where('user_code',$user_code)->first();
+
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+        
         $image_view = url('/') . $VmtClientMaster->client_logo;
 
         $response = array();
@@ -272,6 +277,40 @@ class VmtTestingController extends Controller
             dd("Error : " . $e);
         }
     }
+
+    public function sendHTMLEmail(Request $request) {
+
+        try{
+
+            $validator = Validator::make(
+                $request->all(),
+                $rules = [
+                    "email" => 'required',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                ]
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
+
+            $isSent = \Mail::to($request->email)->send(new TestEmail($request->email));
+
+            return "success";
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $e->getMessage(),
+            ]);
+        }
+     }
 
     public function exportattenance(Request $request)
     {

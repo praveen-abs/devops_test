@@ -6,13 +6,14 @@
     use App\Models\VmtEmployee;
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
-    use App\Models\VmtClientMaster;
+
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
     use App\Mail\VmtPMSMail_Assignee;
     use App\Models\User;
+    use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
     use App\Models\VmtEmployeePaySlipV2;
@@ -332,38 +333,47 @@ dd($query_docs);
     //     return "success";
 
 
-$flowCheck	="1";
+// $flowCheck	="1";
 
-$assignment_period_year =	"2023";
-$calendar_type	="financial_year";
-$hidden_calendar_year=	"April+-+2022+to+March+-+2023";
-$frequency	="quarterly";
-$assignment_period_start=	"q3";
-$department=	"6";
-$employees =['246','247','248'];
-$reviewer[]="245";
-$hr_id	="245";
-$selected_kpi_form_id=	"1";
+// $assignment_period_year =	"2023";
+// $calendar_type	="financial_year";
+// $hidden_calendar_year=	"April+-+2022+to+March+-+2023";
+// $frequency	="quarterly";
+// $assignment_period_start=	"q3";
+// $department=	"6";
+// $employees =['246','247','248'];
+// $reviewer[]="245";
+// $hr_id	="245";
+// $selected_kpi_form_id=	"1";
 
-    //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
-     $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
-    //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-               $comments_employee = '';
-    $login_Link = request()->getSchemeAndHttpHost();
+//     //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
+//      $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
+//     //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
+//                $comments_employee = '';
+//     $login_Link = request()->getSchemeAndHttpHost();
 
 
-     $is_sent=\Mail::to('vvishva185@gmail.com')
-                        ->send(new VmtPMSMail_Assignee("none",$flowCheck,
-                                                       $assigneeName,
-                                                       $hidden_calendar_year." - ".strtoupper($assignment_period_start),
-                                                       'vishnu',
-                                                       $comments_employee,
-                                                       $login_Link));
-if($is_sent){
-    echo 'hii';
-}else{
-    echo 'bye';
-}
+//      $is_sent=\Mail::to('vvishva185@gmail.com')
+//                         ->send(new VmtPMSMail_Assignee("none",$flowCheck,
+//                                                        $assigneeName,
+//                                                        $hidden_calendar_year." - ".strtoupper($assignment_period_start),
+//                                                        'vishnu',
+//                                                        $comments_employee,
+//                                                        $login_Link));
+// if($is_sent){
+//     echo 'hii';
+// }else{
+//     echo 'bye';
+// }
+
+
+$client_id=User::where('user_code','PLIPL068')->first();
+
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+
+        $image_view = url('/') . $VmtClientMaster->client_logo;
+dd();
+
 
     ?>
 
