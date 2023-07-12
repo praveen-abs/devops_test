@@ -958,11 +958,47 @@ class VmtSalaryAdvanceService
             $loan_details->loan_crd_sts = 0;
             $loan_details->loan_status = 'Pending';
             $loan_details->save();
-            return response()->json([
-                'status' => 'save successfully',
-                'message' => 'Done',
 
-            ]);
+            if ($loan_type == 'InterestFreeLoan') {
+
+               $loan_settings_mail =  VmtInterestFreeLoanSettings::where('request_id',$loan_details->request_id)->first();
+
+            } else if ($loan_type = 'InterestWithLoan') {
+
+                $loan_settings_mail = VmtEmployeeInterestFreeLoanDetails::where('request_id', $loan_details->request_id)->first();
+
+            }
+
+                foreach($loan_settings_mail as $single_settingsmail){
+
+                    dd($single_settingsmail);
+                }
+
+
+
+        //     $isSent    = \Mail::to()
+        //     ->send(new ApproveRejectLoanAndSaladvMail(
+        //         $approver_details->name,
+        //         $emp_details->name,
+        //         $emp_details->user_code,
+        //         request()->getSchemeAndHttpHost(),
+        //         $emp_details->sal_adv_status,
+        //     ));
+
+        // if ($isSent) {
+        //     $sima = "success";
+        // } else {
+        //     $sima = "failure";
+        // }
+
+        // dd($sima);
+
+
+            // return response()->json([
+            //     'status' => 'save successfully',
+            //     'message' => 'Done',
+
+            // ]);
         } catch (Exception $e) {
             return response()->json([
                 "status" => "failure",
