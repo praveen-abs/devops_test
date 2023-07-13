@@ -3,7 +3,8 @@
         <div class="card-body justify-content-center align-items-center">
             <div class="form-card">
                 <div class="flex my-2 header-card-text">
-                    <h6 class="my-2"><i class="fa fa-address-card" aria-hidden="true"></i> Current Address</h6>
+                    <h6 class="my-2"><i class="pi pi-home mx-1 font-semibold" style="font-size: 1rem"></i>Current Address
+                    </h6>
                 </div>
                 <div class="mt-1 row">
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6">
@@ -52,7 +53,7 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Country<span class="text-danger">*</span></label>
-                            <Dropdown  v-model="service.employee_onboarding.current_country" :class="{
+                            <Dropdown v-model="service.employee_onboarding.current_country" :class="{
                                 'p-invalid': v$.current_country.$error,
                             }" :options="service.country" optionValue="id" optionLabel="country_name"
                                 placeholder="Select Country Name" class="p-error" @keypress="isLetter($event)" />
@@ -74,7 +75,7 @@
                         <div class="floating">
                             <label for="" class="float-label">State<span class="text-danger">*</span></label>
 
-                            <Dropdown  v-model="service.employee_onboarding.current_state" :class="{
+                            <Dropdown v-model="service.employee_onboarding.current_state" :class="{
                                 'p-invalid': v$.current_state.$error,
                             }" :options="service.state" optionValue="id" optionLabel="state_name"
                                 placeholder="Select State Name" class="p-error" @keypress="isLetter($event)" />
@@ -108,12 +109,13 @@
                         <div class="floating">
                             <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
 
-                            <InputText class="form-control" type="number" minlength="6" maxlength="6" :class="{
+                            <InputMask class="form-control" mask="999999" :class="{
                                 'p-invalid': v$.current_pincode.$error,
-                            }" v-model="service.employee_onboarding.current_pincode" placeholder="Pincode" @keypress="isNumber($event)" />
+                            }" v-model="service.employee_onboarding.current_pincode" placeholder="Pincode"
+                                @keypress="isNumber($event)" />
                             <span v-if="(v$.current_pincode.$error) ||
                                 v$.current_pincode.$pending.$response
-                                " class="p-error" >
+                                " class="p-error">
                                 {{
                                     v$.current_pincode.required.$message.replace(
                                         "Value",
@@ -126,7 +128,8 @@
 
                 <div class="row">
                     <div class="my-3 col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
-                        <Checkbox inputId="" @click="service.ForCopyAdrress" v-model="service.CopyAddresschecked" :binary="true" />
+                        <Checkbox inputId="" @click="service.ForCopyAdrress" v-model="service.CopyAddresschecked"
+                            :binary="true" />
                         <label style="margin-left: 10px" for="current_address_copy">Copy current address to the permanent
                             address</label>
                     </div>
@@ -135,7 +138,7 @@
 
                     <!-- Permanent Address Start -->
                     <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
-                        <h6><i class="fa fa-address-card" aria-hidden="true"></i> Permanent Address</h6>
+                        <h6><i class="pi pi-home mx-1 font-semibold" style="font-size: 1rem"></i>Permanent Address</h6>
                         <div class="mt-1 row">
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-6 col-lg-6 col-xxl-6">
                                 <div class="floating">
@@ -181,8 +184,8 @@
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                                 <div class="floating">
                                     <label for="" class="float-label">Country<span class="text-danger">*</span></label>
-                                    <Dropdown  optionValue="id"
-                                        v-model="service.employee_onboarding.permanent_country" :class="{
+                                    <Dropdown optionValue="id" v-model="service.employee_onboarding.permanent_country"
+                                        :class="{
                                             'p-invalid': v$.permanent_country.$error,
                                         }" :options="service.country" optionLabel="country_name"
                                         placeholder="Select Country Name" class="p-error" @keypress="isLetter($event)" />
@@ -201,10 +204,9 @@
                             <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                                 <div class="floating">
                                     <label for="" class="float-label">State<span class="text-danger">*</span></label>
-                                    <Dropdown  optionValue="id"
-                                        v-model="service.employee_onboarding.permanent_state" :class="{
-                                            'p-invalid': v$.permanent_state.$error,
-                                        }" :options="service.state" optionLabel="state_name"
+                                    <Dropdown optionValue="id" v-model="service.employee_onboarding.permanent_state" :class="{
+                                        'p-invalid': v$.permanent_state.$error,
+                                    }" :options="service.state" optionLabel="state_name"
                                         placeholder="Select State Name" class="p-error" @keypress="isLetter($event)" />
 
                                     <span v-if="(v$.permanent_state.$error) ||
@@ -244,11 +246,10 @@
                                 <div class="floating">
                                     <label for="" class="float-label">Pincode<span class="text-danger">*</span></label>
 
-                                    <InputText class="capitalize onboard-form form-control textbox" type="number"
-                                        minlength="6" maxlength="6" :class="{
-                                            'p-invalid': v$.permanent_pincode.$error,
-                                        }" v-model="service.employee_onboarding.permanent_pincode"
-                                        placeholder="Pincode"   @keypress="isNumber($event)"/>
+                                    <InputMask class="capitalize onboard-form form-control textbox" mask="999999" :class="{
+                                        'p-invalid': v$.permanent_pincode.$error,
+                                    }" v-model="service.employee_onboarding.permanent_pincode" placeholder="Pincode"
+                                        @keypress="isNumber($event)" />
                                     <span v-if="(v$.permanent_pincode.$error) ||
                                         v$.permanent_pincode.$pending.$response
                                         " class="p-error">

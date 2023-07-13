@@ -23,40 +23,42 @@
 
     <!-- <p>{{ employee_onboarding.save_draft_messege }}</p> -->
 
-    <!-- <Dialog v-if="!employee_onboarding.employee_code.length > 0 &&
-        !employee_onboarding.aadhar_number.length > 0 ||
-        !employee_onboarding.employee_name.length > 0 &&
-        !employee_onboarding.email.length > 0 ||
-        !employee_onboarding.mobile_number.length > 0 &&
-        !employee_onboarding.dob.length > 0
-        " header="Information Required" v-model:visible="RequiredDocument"
+     <Dialog v-if="!service.employee_onboarding.employee_code.length > 0 &&
+        !service.employee_onboarding.aadhar_number.length > 0 ||
+        !service.employee_onboarding.employee_name.length > 0 &&
+        !service.employee_onboarding.email.length > 0 ||
+        !service.employee_onboarding.mobile_number.length > 0 &&
+        !service.employee_onboarding.dob.length > 0
+        " header="Information Required" v-model:visible="service.RequiredDocument"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '50vw' }">
 
-        <div class="flex my-4" v-if="employee_onboarding.employee_code == '' ||
-            employee_onboarding.employee_code.length < 0
+        <div class="flex my-4" v-if="service.employee_onboarding.employee_code == '' ||
+        service.employee_onboarding.employee_code.length < 0
             ">
             <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span
                 class="my-auto">Employee Code is Required </span>
         </div>
-        <div class="flex my-4" v-if="employee_onboarding.employee_name == '' ||
-            employee_onboarding.employee_name.length < 0
+        <div class="flex my-4" v-if="service.employee_onboarding.employee_name == '' ||
+        service.employee_onboarding.employee_name.length < 0
             ">
             <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span
                 class="my-auto">Employee Name As Per Aadhar is Required</span>
         </div>
-        <div class="flex my-4" v-if="employee_onboarding.mobile_number == '' ||
-            employee_onboarding.mobile_number.length < 0
+        <div class="flex my-4" v-if="service.employee_onboarding.mobile_number == '' ||
+        service.employee_onboarding.mobile_number.length < 0
             ">
             <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span
                 class="my-auto">Mobile Number is Required</span>
         </div>
-        <div class="flex my-4" v-if="employee_onboarding.email == '' ||
-            employee_onboarding.email.length < 0
+        <div class="flex my-4" v-if="service.employee_onboarding.email == '' ||
+        service.employee_onboarding.email.length < 0
             ">
             <img src="../../../assests/images/requirement.png" style="height: 25px;width: 38px;" alt=""><span
                 class="my-auto">Email is Required</span>
         </div>
     </Dialog>
+
+    <!--
 
     <Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="center">
         <div class="flex px-3 pt-6 text-center align-items-center flex-column">
@@ -115,8 +117,6 @@ onMounted(() => {
 
     service.getBasicDeps()
     service.isQuickOrBulkOnboarding()
-
-    service.employee_onboarding.nationality = 'Indian'
     service.NationalityCheck()
 
 

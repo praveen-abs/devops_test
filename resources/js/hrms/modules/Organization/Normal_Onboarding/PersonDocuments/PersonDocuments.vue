@@ -9,7 +9,7 @@
                 <div class="mt-1 row">
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Aadhar Card Front<span class="text-danger">*</span></label>
-                        <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardFront" id="formFile"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" ref="AadharCardFront" id="formFile"
                             class="onboard-form form-control file"
                             @change="service.getPersonalDocuments($event, 'AadharFront')" />
                             <span v-if="v$.AadharCardFront.$error" class="font-semibold text-red-400 fs-6">
@@ -21,7 +21,7 @@
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6" id="aadhar_card_backend_content">
                         <label for="" class="float-label">
                             Aadhar Card Back<span class="text-danger">*</span></label>
-                        <input type="file" accept="image/png, image/gif, image/jpeg" ref="AadharCardBack"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" ref="AadharCardBack"
                             @change="service.getPersonalDocuments($event, 'AadharBack')"
                             class="onboard-form form-control file" />
                             <span v-if="v$.AadharCardBack.$error" class="font-semibold text-red-400 fs-6">
@@ -33,7 +33,7 @@
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">
                             Pan Card<span class="text-danger">*</span></label>
-                        <input type="file" accept="image/png, image/gif, image/jpeg" placeholder="Pan Card"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" placeholder="Pan Card"
                             name="pan_card_file" id="pan_card_file" ref="PanCardDoc"
                             @change="service.getPersonalDocuments($event, 'Pancard')"
                             class="onboard-form form-control file" />
@@ -46,7 +46,7 @@
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> Passport</label>
 
-                        <input type="file" accept="image/png, image/gif, image/jpeg" ref="PassportDoc"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" ref="PassportDoc"
                             placeholder="Passport" name="passport_file" id="passport_file"
                             @change="service.getPersonalDocuments($event, 'Passport')"
                             class="onboard-form form-control file" />
@@ -57,7 +57,7 @@
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Voter ID</label>
 
-                        <input type="file" accept="image/png, image/gif, image/jpeg" ref="VoterIdDoc"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" ref="VoterIdDoc"
                             placeholder="Voters ID" name="voters_id_file" id="voters_id_file"
                             @change="service.getPersonalDocuments($event, 'VoterId')"
                             class="onboard-form form-control file" />
@@ -68,7 +68,7 @@
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> Driving License</label>
 
-                        <input type="file" accept="image/png, image/gif, image/jpeg" placeholder="Driving License"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" placeholder="Driving License"
                             name="dl_file" id="dl_file" @change="service.getPersonalDocuments($event, 'DrivingLicense')"
                             ref="DrivingLicenseDoc" class="onboard-form form-control file" />
                             <span v-if="v$.DrivingLicenseDoc.$error" class="font-semibold text-red-400 fs-6">
@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label">Educations Certificate<span class="text-danger">*</span></label>
-                        <input type="file" accept="image/png, image/gif, image/jpeg" placeholder="Educations Certificate"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" placeholder="Educations Certificate"
                             name="education_certificate_file"
                             @change="service.getPersonalDocuments($event, 'EducationCertificate')"
                             id="education_certificate_file" ref="EductionDoc" class="onboard-form form-control file " />
@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
                         <label for="" class="float-label"> Relieving Letter</label>
-                        <input type="file" accept="image/png, image/gif, image/jpeg" placeholder="Relieving Letter"
+                        <input type="file" accept="image/png, image/gif, image/jpeg,application/pdf" placeholder="Relieving Letter"
                             name="reliving_letter_file" id="reliving_letter_file"
                             @change="service.getPersonalDocuments($event, 'RelievingLetter')" ref="ReleivingLetterDoc"
                             class="onboard-form form-control file" />

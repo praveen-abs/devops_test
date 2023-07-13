@@ -50,7 +50,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(141, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             currentEmployeeAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
@@ -150,7 +150,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     //  Applying for Late Coming and Early Going
 
     const onClickShowLcRegularization = (attendance) => {
-        dialog_Lc.value = true
+        // dialog_Lc.value = true
         lcDetails.value = { ...attendance }
     }
 
@@ -176,16 +176,13 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                     )
                 }
             }).finally(() => {
-                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
                 canShowLoading.value = false
-
-
             })
 
     }
 
     const onClickShowEgRegularization = (attendance) => {
-        dialog_Eg.value = true
+        // dialog_Eg.value = true
         egDetails.value = { ...attendance }
     }
 
@@ -218,7 +215,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     //  Applying for Missed In and  Out Punches
 
     const onClickShowMipRegularization = (attendance) => {
-        dialog_Mip.value = true
+        // dialog_Mip.value = true
         mipDetails.value = { ...attendance }
     }
 
@@ -249,7 +246,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const onClickShowMopRegularization = (attendance) => {
-        dialog_Mop.value = true
+        // dialog_Mop.value = true
         mopDetails.value = { ...attendance }
     }
 
@@ -349,7 +346,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         //   EG
         onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie, onClickSViewSelfie, selfieDetails,switchTimesheet
+        dialog_Selfie, onClickSViewSelfie, selfieDetails, switchTimesheet
 
 
     }

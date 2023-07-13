@@ -1,6 +1,6 @@
 <template>
     <div class="col-span-7 flex">
-        <div class="my-auto w-3 ml-3">
+        <div class="my-auto w-3 ml-1">
             <SelectButton v-model="useTimesheet.switchTimesheet" :options="options" aria-labelledby="basic" />
         </div>
         <div class="w-full flex justify-center items-center py-4">
@@ -119,7 +119,7 @@ import { ref, onMounted } from "vue";
 import { useCalendarStore } from "../stores/calendar";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
-import {useAttendanceTimesheetMainStore} from '../stores/attendanceTimesheetMainStore.js'
+import { useAttendanceTimesheetMainStore } from '../stores/attendanceTimesheetMainStore.js'
 
 // Store initialization and subscription
 const calendarStore = useCalendarStore();
@@ -186,4 +186,24 @@ onMounted(() => {
 
 
 <style>
+.p-button.p-component.p-highlight {
+    height: 30px;
+}
+
+.p-button.p-component {
+    height: 30px;
+
+}
+
+.p-selectbutton .p-button.p-highlight {
+    background: #071f53;
+    border-color: #071f53;
+    color: #ffffff;
+}
+
+.p-selectbutton .p-button.p-highlight:hover {
+    background: #071f53;
+    border-color: #071f53;
+    color: #ffffff;
+}
 </style>

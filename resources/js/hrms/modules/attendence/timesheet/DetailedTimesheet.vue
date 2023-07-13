@@ -30,7 +30,7 @@
                 <div v-if="currentMonthsingleAttendanceDay(day, singleAttendanceDay).length"
                     v-for="singleAttendanceDay in currentMonthsingleAttendanceDay(day, singleAttendanceDay)"
                     class="hidden md:block">
-                    <div v-if="isFutureDate(day)">
+                    <div v-if="isFutureDate(day)" style="max-width: 140px;">
                         <div
                             class="w-full h-full text-xs md:text-sm lg:text-base text-left px-2 transition-colors font-semibold ">
                             <div class="flex justify-center">
@@ -99,7 +99,7 @@
                             <!-- If Employee is Present -->
                             <div v-else
                                 class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
-                                <div class="w-full ">
+                                <div class="w-full " >
                                     <div class="text-xs tracking-tight text-clip overflow-hidden p-1 overflow-y-auto">
                                         <!-- singleAttendanceDay Check in  -->
                                         <div class="flex">

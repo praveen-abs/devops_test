@@ -13,13 +13,13 @@
                                 <span class="p-inputgroup-addon font-semibold text-sm text-black ">{{ service.clientCode
                                 }}</span>
                                 <InputText
-                                    :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '', user_code_exists ? 'p-invalid' : '']"
+                                    :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '', service.user_code_exists ? 'p-invalid' : '']"
                                     class="capitalize form-onboard-form form-control textbox" type="text"
                                     :readonly="service.readonly.is_emp_code_quick"
                                     v-model="service.employee_onboarding.employee_code" placeholder="Employee Code"
                                     @input="userCodeExists" @keypress="isSpecialChars($event)" />
                             </div>
-                            <span v-if="user_code_exists" class="p-error">Employee code Already Exists</span>
+                            <span v-if="service.user_code_exists" class="p-error">Employee code Already Exists</span>
 
                         </div>
                     </div>
@@ -54,8 +54,7 @@
                             <label for="" class="float-label">Date of Birth</label>
                             <Calendar inputId="icon" dropzone="true" v-model="service.employee_onboarding.dob" showIcon
                                 editable dateFormat="dd-mm-yy" placeholder="Date of birth" style="width: 350px;" class=""
-                                :maxDate="service.beforeYears(new Date())"
-                                />
+                                :maxDate="service.beforeYears(new Date())" />
 
                             <!-- <span v-if="v$.dob.$error" class="font-medium text-red-600 fs-6">
                                 {{ v$.dob.$errors[0].$message }}
@@ -126,11 +125,11 @@
                                 placeholder="Mobile Number" style="text-transform: uppercase" class="form-control textbox"
                                 :class="[{
                                     'p-invalid': v$.mobile_number.$error,
-                                }, service.readonly.mobile ? 'bg-gray-200' : '', is_mobile_no_exists ? 'p-invalid' : '']" />
+                                }, service.readonly.mobile ? 'bg-gray-200' : '', service.is_mobile_no_exists ? 'p-invalid' : '']" />
 
                         </div>
 
-                        <span class="text-danger" v-if="is_mobile_no_exists">
+                        <span class="text-danger" v-if="service.is_mobile_no_exists">
                             Mobile Number Is Already Exists
                         </span>
                         <span v-if="(v$.mobile_number.$error) ||
@@ -147,14 +146,14 @@
                         <div class="floating">
                             <label for="" class="float-label">Email<span class="text-danger">*</span></label>
                             <InputText type="text" :readonly="service.readonly.is_email_quick" placeholder="Email ID"
-                            @keypress="isEmail($event)"
+                                @keypress="isEmail($event)"
                                 :class="[{
                                     'p-invalid': v$.email.$error,
-                                }, service.readonly.is_email_quick ? 'bg-gray-200' : '', personal_mail_exists ? 'p-invalid' : '']"
+                                }, service.readonly.is_email_quick ? 'bg-gray-200' : '', service.personal_mail_exists ? 'p-invalid' : '']"
                                 @focusout="personalMailExists" v-model="service.employee_onboarding.email"
                                 class="form-control textbox" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
 
-                            <span v-if="personal_mail_exists" class="p-error">Email is already exists</span>
+                            <span v-if="service.personal_mail_exists" class="p-error">Email is already exists</span>
 
                             <span v-if="(v$.email.$error) ||
                                 v$.email.$pending.$response
@@ -171,23 +170,11 @@
                             <InputMask @focusout="AadharCardExits" id="ssn" mask="9999 9999 9999"
                                 placeholder="9999 9999 9999" v-model="service.employee_onboarding.aadhar_number" :class="[{
                                     'p-invalid': v$.aadhar_number.$error,
-                                }, aadhar_card_exists ? 'p-invalid' : '', invalid_aadhar_check ? 'p-invalid' : '']" />
+                                }, service.aadhar_card_exists ? 'p-invalid' : '']" />
 
-                            <span v-if="aadhar_card_exists" class="text-danger">
+                            <span v-if="service.aadhar_card_exists" class="text-danger">
                                 Aadhar Number Is Already Exists
                             </span>
-                            <!-- <span v-if="invalid_aadhar_check" class="text-danger">
-                                Invalid Aadhar Number
-                            </span> -->
-                            <!-- <span v-if="(v$.aadhar_number.$error) ||
-                                v$.aadhar_number.$pending.$response
-                                " class="p-error">
-                                {{
-                                    v$.aadhar_number.required.$message.replace(
-                                        "Value",
-                                        "Aadhaar Number"
-                                    )
-                                }}</span> -->
 
                             <span v-if="v$.aadhar_number.$error" class="font-medium text-red-600 fs-6">
                                 {{ v$.aadhar_number.$errors[0].$message }}
@@ -203,9 +190,9 @@
                                 v-model="service.employee_onboarding.pan_number" placeholder="AHFCS1234F"
                                 style="text-transform: uppercase" class="form-control textbox" :class="[{
                                     'p-invalid': v$.pan_number.$error,
-                                }, pan_card_exists ? 'p-invalid' : '',]" />
+                                }, service.pan_card_exists ? 'p-invalid' : '',]" />
 
-                            <span v-if="pan_card_exists" class="text-danger">
+                            <span v-if="service.pan_card_exists" class="text-danger">
                                 Pan Number Is Already Exixts
                             </span>
 
@@ -218,7 +205,7 @@
                         <div class="floating">
                             <label for="" class="float-label">DL Number</label>
                             <InputText class="onboard-form form-control textbox" type="text" v-model="v$.dl_no.$model"
-                                placeholder="DL Number" minlength="16" maxlength="16"  @keypress="isSpecialChars($event)"/>
+                                placeholder="DL Number" minlength="16" maxlength="16" @keypress="isSpecialChars($event)" />
                             <label class="error star_error dl_no_label" for="dl_no" style="display: none"></label>
 
                             <span class="error" id="error_dl_no"></span>
@@ -229,7 +216,7 @@
                             <label for="" class="float-label">Choose nationality<span class="text-danger">*</span></label>
                             <Dropdown v-model="service.employee_onboarding.nationality" :options="Nationality"
                                 optionLabel="name" optionValue="name" placeholder="Select Nationality"
-                                @change="NationalityCheck()" class="p-error" :class="{
+                                @change="service.NationalityCheck()" class="p-error" :class="{
                                     'p-invalid':
                                         v$.nationality.$error,
                                 }" />
@@ -310,13 +297,13 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Bank Account Number<span class="text-danger">*</span></label>
-                            <InputText placeholder="Account Number" minlength="10" @keypress="isNumber($event)"  :class="{
+                            <InputText placeholder="Account Number" minlength="10" @keypress="isNumber($event)" :class="{
                                         'p-invalid': v$.AccountNumber.$error,
                                     }" maxlength="18" @focusout="ValidateAccountNo"
                                 class="onboard-form form-control textbox" type="text"
                                 v-model="service.employee_onboarding.AccountNumber" />
 
-                            <span v-if="is_ac_no_exists" class="text-danger">
+                            <span v-if="service.is_ac_no_exists" class="text-danger">
                                 Account Number Is Already Exixts
                             </span>
 
@@ -334,14 +321,11 @@
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Bank IFSC Code<span class="text-danger">*</span></label>
-                            <InputText @keypress="isSpecialChars($event)" type="text" v-model="service.employee_onboarding.bank_ifsc" :class="[{
-                                'p-invalid': v$.bank_ifsc.$error,
-                            }, ifsc ? 'p-invalid' : '']" class=" onboard-form form-control textbox" minlength="11"
-                                maxlength="11" style="text-transform: uppercase" placeholder="Bank IFSC Code" />
-
-                            <span class="p-error" v-if="ifsc">Invalid Ifsc Code</span>
-
-
+                            <InputText @keypress="isSpecialChars($event)" type="text"
+                                v-model="service.employee_onboarding.bank_ifsc" :class="[{
+                                    'p-invalid': v$.bank_ifsc.$error,
+                                }]" class=" onboard-form form-control textbox" minlength="11" maxlength="11"
+                                style="text-transform: uppercase" placeholder="Bank IFSC Code" />
 
                             <span v-if="v$.bank_ifsc.$error" class="font-medium text-red-600 fs-6">
                                 {{ v$.bank_ifsc.$errors[0].$message }}
@@ -387,7 +371,6 @@ const v$ = useValidate(service.rules, service.employee_onboarding);
 
 
 
-const user_code_exists = ref(false);
 const userCodeExists = () => {
     let user_code = service.employee_onboarding.employee_code;
     axios
@@ -398,7 +381,7 @@ const userCodeExists = () => {
                 console.log("quick onboarding");
                 service.family_details_disable = true
             } else {
-                user_code_exists = res.data;
+                service.user_code_exists = res.data;
                 console.log("working");
 
             }
@@ -413,7 +396,6 @@ const userCodeExists = () => {
 };
 
 
-const personal_mail_exists = ref(false);
 const personalMailExists = () => {
     let mail = service.employee_onboarding.email;
 
@@ -424,7 +406,7 @@ const personalMailExists = () => {
                 console.log("quick onboarding");
                 // compensatoryCalWhileQuick()
             } else {
-                personal_mail_exists.value = res.data;
+                service.personal_mail_exists = res.data;
             }
 
 
@@ -441,7 +423,6 @@ const personalMailExists = () => {
 
 
 
-const is_mobile_no_exists = ref(false)
 const mobileNoExists = () => {
 
     let mobile = service.employee_onboarding.mobile_number
@@ -456,7 +437,7 @@ const mobileNoExists = () => {
             if (service.checkIsQuickOrNormal == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk') {
                 console.log("quick onboarding");
             } else {
-                is_mobile_no_exists.value = res.data;
+                service.is_mobile_no_exists = res.data;
             }
 
         })
@@ -472,8 +453,6 @@ const mobileNoExists = () => {
 
 
 
-const aadhar_card_exists = ref(false);
-const invalid_aadhar_check = ref(false)
 
 const AadharCardExits = () => {
     console.log("working");
@@ -487,7 +466,7 @@ const AadharCardExits = () => {
             .get(`/aadhar-no-exists/${aadhar_no}`)
             .then((res) => {
                 console.log(res.data);
-                aadhar_card_exists.value = res.data;
+                service.aadhar_card_exists = res.data;
             })
             .catch((err) => {
                 console.log(err);
@@ -506,7 +485,6 @@ const AadharCardExits = () => {
 
 
 
-const pan_card_exists = ref(false);
 
 const panCardExists = () => {
     console.log("pan card checking");
@@ -521,7 +499,7 @@ const panCardExists = () => {
             .get(`/pan-no-exists/${pan_no}`)
             .then((res) => {
                 console.log(res.data);
-                pan_card_exists.value = res.data;
+                service.pan_card_exists = res.data;
             })
             .catch((err) => {
                 console.log(err);
@@ -540,7 +518,6 @@ const panCardExists = () => {
 };
 
 
-const is_ac_no_exists = ref(false)
 
 const ValidateAccountNo = () => {
 
@@ -549,7 +526,7 @@ const ValidateAccountNo = () => {
         .get(`/ac-no-exists/${Ac_no}`)
         .then((res) => {
             console.log(res.data);
-            is_ac_no_exists.value = res.data;
+            service.is_ac_no_exists = res.data;
         })
         .catch((err) => {
             console.log(err);
@@ -560,17 +537,7 @@ const ValidateAccountNo = () => {
 
 }
 
-const ifsc = ref(false)
-const ValidateIfscNo = () => {
-    const ifscck = /^[A-Za-z]{4}0[A-Za-z0-9]{6}$/;
-    if (ifscck.test(service.employee_onboarding.bank_ifsc)) {
-        ifsc.value = false
-        console.log("valid");
-    } else {
-        console.log("invalid");
-        ifsc.value = true
-    }
-}
+
 
 
 

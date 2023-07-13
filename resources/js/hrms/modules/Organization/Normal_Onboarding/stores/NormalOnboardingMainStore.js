@@ -159,17 +159,22 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const checkIsQuickOrNormal = ref()
     const family_details_disable = ref(false)
     const clientCode = ref()
-
-
+    const RequiredDocument = ref(false)
+    const user_code_exists = ref(false);
+    const personal_mail_exists = ref(false);
+    const is_mobile_no_exists = ref(false)
+    const is_ac_no_exists = ref(false)
+    const pan_card_exists = ref(false);
 
 
     const getPersonalDocuments = (e, filename) => {
 
         let selectedDocument = e.target.files[0]
+        console.log(selectedDocument);
         // Get uploaded file
 
         if (selectedDocument) {
-            if (selectedDocument.type == 'image/jpeg' || selectedDocument.type == 'image/png') {
+            if (selectedDocument.type == 'image/jpeg' || selectedDocument.type == 'image/png' || selectedDocument.type == 'application/pdf') {
                 if (filename == 'AadharFront') {
                     employee_onboarding.AadharCardFront = e.target.files[0]
                 } else
@@ -357,7 +362,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const validateFile = (value) => {
 
-        if (value.type == 'image/jpeg' || value.type == 'image/png') {
+        if (value.type == 'image/jpeg' || value.type == 'image/png' || value.type == 'application/pdf') {
             return true
         } else {
             return false
@@ -727,27 +732,37 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const submitForm = (isEmployeeOnboard) => {
 
+
         employee_onboarding.can_onboard_employee = isEmployeeOnboard
         v$.value.$validate() // checks all inputs
 
-        if (isEmployeeOnboard == 0) {
-            if (!v$.value.$error) {
-                // if ANY fail validation
-                console.log('Form successfully submitted.')
-                submit()
-                v$.value.$reset()
-            } else {
-                console.log('Form failed validation')
+        if (!user_code_exists.value && !personal_mail_exists.value) {
+            if (!is_mobile_no_exists.value && !is_ac_no_exists.value) {
+                if (isEmployeeOnboard == 0) {
+                    if (employee_onboarding.employee_code && employee_onboarding.employee_name) {
+                        if (employee_onboarding.mobile_number && employee_onboarding.email) {
+                            submit()
+                            v$.value.$reset()
+                        } else {
+                            RequiredDocument.value = true
+                        }
+                    } else {
+                        RequiredDocument.value = true
+                    }
+                } else {
+                    if (!v$.value.$error) {
+                        // if ANY fail validation
+                        console.log('Form successfully submitted.')
+                        submit()
+                        v$.value.$reset()
+                    } else {
+                        console.log('Form failed validation')
+                    }
+                }
             }
+
         } else {
-            if (!v$.value.$error) {
-                // if ANY fail validation
-                console.log('Form successfully submitted.')
-                submit()
-                v$.value.$reset()
-            } else {
-                console.log('Form failed validation')
-            }
+            console.log("invalid");
         }
 
     }
@@ -938,10 +953,10 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const NationalityCheck = () => {
-        if (employee_onboarding.nationality == "Indian") {
-            isNationalityVisible.value = false;
-        } else {
+        if (employee_onboarding.nationality == "Other Nationality") {
             isNationalityVisible.value = true;
+        } else {
+            isNationalityVisible.value = false;
         }
     };
 
@@ -1285,8 +1300,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         // basic
 
         bankList, country, state, departmentDetails, Managerdetails, maritalDetails, bloodGroups, checkIsQuickOrNormal, family_details_disable,
-        isSpouseDisable, spouseDisable, ForCopyAdrress, spouseGenderCheck, fnCalculateAge, isNationalityVisible, NationalityCheck,
-
+        isSpouseDisable, spouseDisable, ForCopyAdrress, spouseGenderCheck, fnCalculateAge, isNationalityVisible, NationalityCheck, RequiredDocument,
+        user_code_exists, is_ac_no_exists, is_mobile_no_exists, personal_mail_exists, pan_card_exists,
 
 
         // Checking is quick or bulk onboarding
