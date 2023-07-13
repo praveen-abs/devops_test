@@ -719,7 +719,7 @@ class VmtSalaryAdvanceService
                         // Sending The Reord id and break One loop here
 
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Already Exist For ' . $client_name;
+                        $temp['heading'] = $client_name;
                         $temp['Message'] = 'This Setting Name Already Exist  For Another Settings in ' . $client_name . ' Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->where('name', $name)->first()->id;
                         array_push($sucess_msg, $temp);
@@ -734,7 +734,7 @@ class VmtSalaryAdvanceService
                     if ($existing_record->where('name', $name)->exists()) {
                         // Sending The Reord id and break One loop here
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Already Exist';
+                        $temp['heading'] = $client_name;
                         $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->first()->id;
                         array_push($sucess_msg, $temp);
@@ -761,7 +761,7 @@ class VmtSalaryAdvanceService
                     ->where('approver_flow', $approver_flow);
                 if ($existing_record->exists()) {
                     $temp = array();
-                    $temp['heading'] = 'This Setting Already Exist';
+                    $temp['heading'] = $client_name;
                     $temp['Message'] = 'This Setting Already Exist Please Change The Settings';
                     $temp['record_id'] = $existing_record->first()->id;
                     array_push($sucess_msg, $temp);
@@ -785,7 +785,7 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->active = 1;
                 $setting_for_loan->save();
                 $temp = array();
-                $temp['heading'] = 'Setting Saved Sucessfully';
+                $temp['heading'] = $client_name;
                 $temp['Message'] = 'This Setting Assigned For ' . $client_name;
                 array_push($sucess_msg, $temp);
                 unset($temp);
