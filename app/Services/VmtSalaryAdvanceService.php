@@ -553,6 +553,7 @@ class VmtSalaryAdvanceService
                 'vmt_emp_sal_adv_details.reason',
                 'vmt_emp_sal_adv_details.emp_approver_flow',
                 'vmt_emp_sal_adv_details.sal_adv_crd_sts',
+                'vmt_emp_sal_adv_details.sal_adv_status',
 
             ]);
 
@@ -616,6 +617,7 @@ class VmtSalaryAdvanceService
             $sal_adv['dedction_date'] = $all_pending_advance['dedction_date'];
             $sal_adv['reason'] = $all_pending_advance['reason'];
             $sal_adv['status'] = $all_pending_advance['sal_adv_crd_sts'];
+            $sal_adv['status_flow'] = $all_pending_advance['sal_adv_status'];
             $sal_adv['emp_prevdetails'] = $this->getEmpsaladvDetails($all_pending_advance['user_id']);
 
             array_push($pending, $sal_adv);
@@ -706,7 +708,7 @@ class VmtSalaryAdvanceService
         $approver_flow = json_encode($approver_flow);
         // $client_id = explode(",", $client_id);
         //dd($approver_flow);
-       
+
         foreach ($client_id as $single_cl_id) {
             try {
                 $client_name = VmtClientMaster::where('id', $single_cl_id)->first()->client_name;
@@ -1306,6 +1308,12 @@ class VmtSalaryAdvanceService
             $sal_adv_details->emp_approver_flow = json_encode($approver_flow, true);
             $sal_adv_details->save();
 
+            if ($status == -1) {
+                $result = "Rejected successfully";
+            } else if ($status == 1) {
+                $result = "Approved successfully";
+            }
+
             // $approver_details = User::where('id', $user_id)->first();
 
             // $emp_details =  User::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
@@ -1333,7 +1341,7 @@ class VmtSalaryAdvanceService
 
             return response()->json([
                 'status' => 'Sucess',
-                'message' => 'Loan Approved Or Rejected',
+                'message' => $result,
 
             ]);
         } catch (Exception $e) {
