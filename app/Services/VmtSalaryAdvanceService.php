@@ -644,7 +644,7 @@ class VmtSalaryAdvanceService
             $rules = [
                 "loan_type" => "required",
                 "client_id" => "required",
-                "name" => "required",
+               // "name" => "required",
                 'loan_applicable_type' => "required",
                 "min_month_served" => "required",
                 "deduction_starting_months" => "required",
@@ -666,9 +666,10 @@ class VmtSalaryAdvanceService
         $approver_flow = json_encode($approver_flow);
         // $client_id = explode(",", $client_id);
         //dd($approver_flow);
-
+          $name = 'testing';
         foreach ($client_id as $single_cl_id) {
             try {
+                $client_name=VmtClientMaster::where('id',$single_cl_id)->first()->client_fullname;
                 if ($loan_type == 'InterestFreeLoan') {
                     $setting_for_loan = new VmtInterestFreeLoanSettings;
 
@@ -676,9 +677,10 @@ class VmtSalaryAdvanceService
                     $existing_record = VmtInterestFreeLoanSettings::where('client_id', $single_cl_id);
                     if ($existing_record->where('name', $name)->exists()) {
                         // Sending The Reord id and break One loop here
+                        
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Already Exist';
-                        $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
+                        $temp['heading'] = 'This Setting Name Already Exist For '.$client_name;
+                        $temp['Message'] = 'This Setting Name Already Exist  For Another Settings in '.$client_name.' Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->where('name', $name)->first()->id;
                         array_push($sucess_msg, $temp);
                         unset($temp);
@@ -742,6 +744,12 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->approver_flow = $approver_flow;
                 $setting_for_loan->active = 1;
                 $setting_for_loan->save();
+                $temp = array();
+                $temp['heading'] = 'Setting Saved Sucessfully';
+                $temp['Message'] = 'This Setting Assigned For '.$client_name;
+                array_push($sucess_msg, $temp);
+                unset($temp);
+                continue;
             } catch (Exception $e) {
                 return response()->json([
                     "status" => "failure",
