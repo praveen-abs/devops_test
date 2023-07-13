@@ -3,6 +3,7 @@ import { constant, functions } from "lodash";
 import { defineStore } from "pinia";
 import dayjs from 'dayjs';
 import { reactive, ref } from "vue";
+import { inject } from "vue";
 
 /*
     This Pinia code will store the ajax values of the
@@ -18,6 +19,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     // Loading Screen
 
     const canShowLoading = ref(false)
+    const swal = inject("$swal");
 
 
     /*
@@ -83,8 +85,29 @@ Travel Advance - ta
     const saveSalaryAdvance = () => {
         dailogSalaryAdvance.value = false
         canShowLoading.value = true;
-        axios.post('/EmpSaveSalaryAmt', sa).finally(() => {
-            canShowLoading.value = false
+        axios.post('/EmpSaveSalaryAmt', sa).then((res)=>{
+            if(res.data.status == "success"){
+                Swal.fire({
+                    title: res.data.status = "success",
+                    text: res.data.message,
+                    icon: "success",
+                }).then((res)=>{
+                    getSalaryDetails();
+                })
+            }
+            else if(res.data.status == "failure"){
+                Swal.fire({
+                    title: res.data.status = "failure",
+                    text: res.data.message,
+
+                    icon: "error",
+                    showCancelButton: false,
+                }).then((res)=>{
+                })
+            }
+
+        }).finally(() => {
+            canShowLoading.value = false;
         })
     }
 
