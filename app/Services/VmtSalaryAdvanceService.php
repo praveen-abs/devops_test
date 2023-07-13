@@ -360,27 +360,25 @@ class VmtSalaryAdvanceService
 
         $salary_adv_name = VmtSalaryAdvSettings::where('settings_name', $SA)->first();
 
-        if ($salary_adv_name){
+        if ($salary_adv_name) {
 
             $simma1 = VmtSalaryAdvSettings::where('percent_salary_adv', $perOfSalAdvance)
-                    ->where('deduction_period_of_months', $deductMethod)
-                    ->where('can_borrowed_multiple', $payroll_cycle)->first();
+                ->where('deduction_period_of_months', $deductMethod)
+                ->where('can_borrowed_multiple', $payroll_cycle)->first();
 
-            if ($simma1){
+            if ($simma1) {
 
                 $json_approvalflow = json_encode($approvalflow);
 
                 $master = VmtSalaryAdvSettings::where('approver_flow', $json_approvalflow)->first();
 
-                if ($master){
+                if ($master) {
 
                     return response()->json([
                         'status' => 'already using the settings',
                     ]);
-
                 }
             }
-
         }
 
         $json_approvalflow = json_encode($approvalflow);
@@ -446,25 +444,51 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function settingDetails(){
+    public function settingDetails()
+    {
 
-        $getsetting   = VmtSalaryAdvSettings::all()->toArray();
+        $getsetting   = VmtSalaryAdvSettings::get(['id','settings_name','percent_salary_adv','deduction_period_of_months','can_borrowed_multiple'])->toArray();
 
         // dd($getsetting );
 
         $res = array();
-        foreach($getsetting  as $single_settings){
+        foreach ($getsetting  as $single_settings) {
 
-           $data['sattings'] = $single_settings;
+            $data['settings'] = $single_settings;
 
-           $data['sattings']['emp_count'] =  VmtEmpAssignSalaryAdvSettings::where('salary_adv_id', $single_settings['id'])->get()->count();
+            $data['settings']['emp_count'] =  VmtEmpAssignSalaryAdvSettings::where('salary_adv_id', $single_settings['id'])->get()->count();
 
-           $data['sattings']['view_details'] = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.salary_adv_id','=','vmt_salary_adv_setting.id')
-                                                        ->join('users','users.id','=','vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id',$single_settings['id'])->get()->toArray();
+            $getsetting_details = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
+                ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])->get()->toArray();
 
-        array_push($res, $data);
+          $getdetails = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
+                     ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])->get()->toArray();
 
+
+                foreach($getsetting_details as $single_arr){
+
+                    $res1 = array('settings_name'=>$single_arr['settings_name'],
+                    'percent_salary_adv'=>$single_arr['percent_salary_adv'],
+                    'deduction_period_of_months'=>$single_arr['deduction_period_of_months'],
+                    'approver_flow' =>json_decode($single_arr['approver_flow'], true),
+                    'can_borrowed_multiple'=>$single_arr['can_borrowed_multiple'],
+                    'assigned_emp'=>[],
+                );
+
+                foreach($getdetails as $get_single){
+
+                    if(in_array($get_single['settings_name'],$get_single)){
+
+                        array_push($res1['assigned_emp'],$get_single['name']);
+                    }
+                }
+            }
+
+                 $data['settings']['view_details'] = $res1;
+
+            array_push($res, $data);
         }
+
         return ($res);
     }
 
@@ -887,7 +911,6 @@ class VmtSalaryAdvanceService
         $getallintrestwithemp = VmtEmpInterestLoanDetails::get()->sortByDesc('id')->first();
 
 
-
         try {
             if ($loan_type == 'InterestFreeLoan') {
 
@@ -958,11 +981,49 @@ class VmtSalaryAdvanceService
             $loan_details->loan_crd_sts = 0;
             $loan_details->loan_status = 'Pending';
             $loan_details->save();
-            return response()->json([
-                'status' => 'save successfully',
-                'message' => 'Done',
 
-            ]);
+            if ($loan_type == 'InterestFreeLoan') {
+
+               $loan_settings_mail =  VmtEmployeeInterestFreeLoanDetails::where('request_id',$loan_details->request_id)->first();
+
+            } else if ($loan_type = 'InterestWithLoan') {
+
+                $loan_settings_mail = VmtEmpInterestLoanDetails::where('request_id', $loan_details->request_id)->first();
+
+            }
+
+                $simm =  json_decode(($loan_settings_mail->approver_flow), true);
+
+                foreach ($simm as $single_simma) {
+                    if ($single_simma['order'] == 1) {
+                        $approver_details = User::where('id', $single_simma['approver'])->first();
+                    }
+                }
+
+
+                $isSent    = \Mail::to($approver_details->email)
+                    ->send(new ApproveRejectLoanAndSaladvMail(
+                        $approver_details->name,
+                        // $emp_details->name,
+                        // $emp_details->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        // $emp_details->sal_adv_status,
+                    ));
+
+                if ($isSent) {
+                    $sima = "success";
+                } else {
+                    $sima = "failure";
+                }
+
+                dd($sima);
+
+
+            // return response()->json([
+            //     'status' => 'save successfully',
+            //     'message' => 'Done',
+
+            // ]);
         } catch (Exception $e) {
             return response()->json([
                 "status" => "failure",
@@ -1278,11 +1339,180 @@ class VmtSalaryAdvanceService
                 "exists" => "Field :attribute is invalid"
             ]
         );
+
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
             ]);
         }
+
+        $response = array();
+
+        if (VmtClientMaster::count() == 1) {
+            if ($loan_type == 'InterestFreeLoan') {
+                $loan_settings = VmtInterestFreeLoanSettings::join('vmt_client_master', 'vmt_client_master.id', 'vmt_int_free_loan_settings.client_id')
+                    ->get([
+                        'vmt_client_master.id as client_id',
+                        'vmt_client_master.abs_client_code as abs_client_code',
+                        'vmt_client_master.client_code as client_code',
+                        'vmt_client_master.client_fullname as client_fullname',
+                        'vmt_client_master.client_name as client_name',
+                        'vmt_int_free_loan_settings.id as loan_id',
+                        'vmt_int_free_loan_settings.name as name',
+                        'vmt_int_free_loan_settings.loan_applicable_type as loan_applicable_type',
+                        'vmt_int_free_loan_settings.min_month_served as min_month_served',
+                        'vmt_int_free_loan_settings.max_loan_amount as max_loan_amount',
+                        'vmt_int_free_loan_settings.percent_of_ctc as percent_of_ctc',
+                        'vmt_int_free_loan_settings.deduction_starting_months as deduction_starting_months',
+                        'vmt_int_free_loan_settings.max_tenure_months as max_tenure_months',
+                        'vmt_int_free_loan_settings.approver_flow as approver_flow',
+                        'vmt_int_free_loan_settings.active as active',
+                    ]);
+            } else  if ($loan_type == 'InterestWithLoan') {
+                $loan_settings = VmtLoanInterestSettings::join('vmt_client_master', 'vmt_client_master.id', 'vmt_loan_interest_settings.client_id')
+                    ->get([
+                        'vmt_client_master.id as client_id',
+                        'vmt_client_master.abs_client_code as abs_client_code',
+                        'vmt_client_master.client_code as client_code',
+                        'vmt_client_master.client_fullname as client_fullname',
+                        'vmt_client_master.client_name as client_name',
+                        'vmt_loan_interest_settings.id as loan_id',
+                        'vmt_loan_interest_settings.name as name',
+                        'vmt_loan_interest_settings.loan_applicable_type as loan_applicable_type',
+                        'vmt_loan_interest_settings.min_month_served as min_month_served',
+                        'vmt_loan_interest_settings.max_loan_amount as max_loan_amount',
+                        'vmt_loan_interest_settings.percent_of_ctc as percent_of_ctc',
+                        'vmt_loan_interest_settings.loan_amt_interest as loan_amt_interest',
+                        'vmt_loan_interest_settings.deduction_starting_months as deduction_starting_months',
+                        'vmt_loan_interest_settings.max_tenure_months as max_tenure_months',
+                        'vmt_loan_interest_settings.approver_flow as approver_flow',
+                        'vmt_loan_interest_settings.active as active',
+                    ]);
+            } else {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Undefined Loan Type'
+                ]);
+            }
+        } else {
+            if (sessionGetSelectedClientid() == 1) {
+                if ($loan_type == 'InterestFreeLoan') {
+                    $loan_settings = VmtInterestFreeLoanSettings::join('vmt_client_master', 'vmt_client_master.id', 'vmt_int_free_loan_settings.client_id')
+                        ->get([
+                            'vmt_client_master.id as client_id',
+                            'vmt_client_master.abs_client_code as abs_client_code',
+                            'vmt_client_master.client_code as client_code',
+                            'vmt_client_master.client_fullname as client_fullname',
+                            'vmt_client_master.client_name as client_name',
+                            'vmt_int_free_loan_settings.id as loan_id',
+                            'vmt_int_free_loan_settings.name as name',
+                            'vmt_int_free_loan_settings.loan_applicable_type as loan_applicable_type',
+                            'vmt_int_free_loan_settings.min_month_served as min_month_served',
+                            'vmt_int_free_loan_settings.max_loan_amount as max_loan_amount',
+                            'vmt_int_free_loan_settings.percent_of_ctc as percent_of_ctc',
+                            'vmt_int_free_loan_settings.deduction_starting_months as deduction_starting_months',
+                            'vmt_int_free_loan_settings.max_tenure_months as max_tenure_months',
+                            'vmt_int_free_loan_settings.approver_flow as approver_flow',
+                            'vmt_int_free_loan_settings.active as active',
+                        ]);
+                } else  if ($loan_type == 'InterestWithLoan') {
+                    $loan_settings = VmtLoanInterestSettings::join('vmt_client_master', 'vmt_client_master.id', 'vmt_loan_interest_settings.client_id')->get(
+                        [
+                            'vmt_client_master.id as client_id',
+                            'vmt_client_master.abs_client_code as abs_client_code',
+                            'vmt_client_master.client_code as client_code',
+                            'vmt_client_master.client_fullname as client_fullname',
+                            'vmt_client_master.client_name as client_name',
+                            'vmt_loan_interest_settings.id as loan_id',
+                            'vmt_loan_interest_settings.name as name',
+                            'vmt_loan_interest_settings.loan_applicable_type as loan_applicable_type',
+                            'vmt_loan_interest_settings.min_month_served as min_month_served',
+                            'vmt_loan_interest_settings.max_loan_amount as max_loan_amount',
+                            'vmt_loan_interest_settings.percent_of_ctc as percent_of_ctc',
+                            'vmt_loan_interest_settings.loan_amt_interest as loan_amt_interest',
+                            'vmt_loan_interest_settings.deduction_starting_months as deduction_starting_months',
+                            'vmt_loan_interest_settings.max_tenure_months as max_tenure_months',
+                            'vmt_loan_interest_settings.approver_flow as approver_flow',
+                            'vmt_loan_interest_settings.active as active',
+                        ]
+                    );
+                } else {
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Undefined Loan Type'
+                    ]);
+                }
+            } else {
+                if ($loan_type == 'InterestFreeLoan') {
+                    $loan_settings = VmtInterestFreeLoanSettings::join('vmt_client_master', 'vmt_client_master.id', 'vmt_int_free_loan_settings.client_id')->where('vmt_int_free_loan_settings.client_id', sessionGetSelectedClientid())
+                        ->get([
+                            'vmt_client_master.id as client_id',
+                            'vmt_client_master.abs_client_code as abs_client_code',
+                            'vmt_client_master.client_code as client_code',
+                            'vmt_client_master.client_fullname as client_fullname',
+                            'vmt_client_master.client_name as client_name',
+                            'vmt_int_free_loan_settings.id as loan_id',
+                            'vmt_int_free_loan_settings.name as name',
+                            'vmt_int_free_loan_settings.loan_applicable_type as loan_applicable_type',
+                            'vmt_int_free_loan_settings.min_month_served as min_month_served',
+                            'vmt_int_free_loan_settings.max_loan_amount as max_loan_amount',
+                            'vmt_int_free_loan_settings.percent_of_ctc as percent_of_ctc',
+                            'vmt_int_free_loan_settings.deduction_starting_months as deduction_starting_months',
+                            'vmt_int_free_loan_settings.max_tenure_months as max_tenure_months',
+                            'vmt_int_free_loan_settings.approver_flow as approver_flow',
+                            'vmt_int_free_loan_settings.active as active',
+                        ]);
+                } else  if ($loan_type == 'InterestWithLoan') {
+                    $loan_settings = VmtLoanInterestSettings::join('vmt_client_master', 'vmt_client_master.id', 'vmt_loan_interest_settings.client_id')->where('vmt_loan_interest_settings.client_id', sessionGetSelectedClientid())->get([
+                        'vmt_client_master.id as client_id',
+                        'vmt_client_master.abs_client_code as abs_client_code',
+                        'vmt_client_master.client_code as client_code',
+                        'vmt_client_master.client_fullname as client_fullname',
+                        'vmt_client_master.client_name as client_name',
+                        'vmt_loan_interest_settings.id as loan_id',
+                        'vmt_loan_interest_settings.name as name',
+                        'vmt_loan_interest_settings.loan_applicable_type as loan_applicable_type',
+                        'vmt_loan_interest_settings.min_month_served as min_month_served',
+                        'vmt_loan_interest_settings.max_loan_amount as max_loan_amount',
+                        'vmt_loan_interest_settings.percent_of_ctc as percent_of_ctc',
+                        'vmt_loan_interest_settings.loan_amt_interest as loan_amt_interest',
+                        'vmt_loan_interest_settings.deduction_starting_months as deduction_starting_months',
+                        'vmt_loan_interest_settings.max_tenure_months as max_tenure_months',
+                        'vmt_loan_interest_settings.approver_flow as approver_flow',
+                        'vmt_loan_interest_settings.active as active',
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => 'failure',
+                        'message' => 'Undefined Loan Type'
+                    ]);
+                }
+            }
+        }
+        foreach ($loan_settings as $single_settings) {
+            $temp_ar = array();
+            $temp_ar['name'] = $single_settings->name;
+            $temp_ar['client_id'] = $single_settings->client_id;
+            $temp_ar['client_name'] = $single_settings->client_name;
+            $temp_ar['record_id'] = $single_settings->loan_id;
+            if ($single_settings->loan_applicable_type == 'percnt') {
+                $temp_ar['loan_type'] = 'Percentage Of CTC';
+                $temp_ar['perct'] = $single_settings->percent_of_ctc;
+            } else if ($single_settings->loan_applicable_type == 'fixed') {
+                $temp_ar['loan_type'] = 'Percentage Of CTC';
+                $temp_ar['loan_amt'] = $single_settings->max_loan_amount;
+            }
+            if ($single_settings->deduction_starting_months < 2) {
+                $temp_ar['dedction_period'] = 'Deduct the amount in the Upcomming Payroll';
+            } else {
+                $temp_ar['dedction_period'] = 'Deduct the amount in the Upcomming' . $single_settings->deduction_starting_months . 'Payroll';
+            }
+            $temp_ar['setting_prev_details']= $single_settings;
+            array_push($response,$temp_ar);
+            unset($temp_ar);
+        }
+        return $response;
     }
 }
