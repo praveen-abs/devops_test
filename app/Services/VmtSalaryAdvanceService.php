@@ -684,7 +684,7 @@ class VmtSalaryAdvanceService
             $rules = [
                 "loan_type" => "required",
                 "client_id" => "required",
-                // "name" => "required",
+                 "name" => "required",
                 'loan_applicable_type' => "required",
                 "min_month_served" => "required",
                 "deduction_starting_months" => "required",
@@ -706,7 +706,7 @@ class VmtSalaryAdvanceService
         $approver_flow = json_encode($approver_flow);
         // $client_id = explode(",", $client_id);
         //dd($approver_flow);
-        $name = 'testing';
+       
         foreach ($client_id as $single_cl_id) {
             try {
                 $client_name = VmtClientMaster::where('id', $single_cl_id)->first()->client_fullname;
