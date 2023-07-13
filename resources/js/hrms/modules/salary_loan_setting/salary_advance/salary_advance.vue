@@ -207,7 +207,7 @@
                                 v-model:selection="salaryStore.sa.eligibleEmployee"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
-                                <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column>
+                                <Column selectionMode="multiple" headerStyle="width: 1.5rem" v-if="!view_details"></Column>
                                 <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
                                 <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
                                 <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
@@ -404,8 +404,10 @@
         <div class="row">
             <div class="col">
                 <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1">Cancel</button>
-                    <button class="mx-4 btn btn-primary" @click="submitForm">Save Changes</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details"  >  Cancel</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
+
+                    <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -548,7 +550,8 @@ function viewDetails(val) {
     salaryStore.sa.eligibleEmployee = val.settings.view_details;
     salaryStore.sa.perOfSalAdvance = val.settings.view_details.percent_salary_adv;
     salaryStore.sa.cusPerOfSalAdvance = val.settings.view_details
-    salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple
+    salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple;
+    salaryStore.eligbleEmployeeSource = val.settings.view_details.assigned_emp
 
     val.settings.view_details.approver_flow.forEach(element => {
 
