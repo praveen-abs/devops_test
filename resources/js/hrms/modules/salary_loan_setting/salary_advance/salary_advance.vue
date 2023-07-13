@@ -53,23 +53,23 @@
                     <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
                     <!-- :class="[ id ==  ?'blink':'' ]" -->
                     <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm"
-                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index">
+                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
                         <!-- {{ item.sattings }} -->
                         <!-- -->
                         <div class="w-100 d-flex justify-content-between align-items-center">
-                            <h1 class="  fs-5">{{ item.sattings.settings_name }}</h1>
+                            <h1 class="  fs-5">{{ item.settings.settings_name }}</h1>
                             <button class=" underline text-blue-400 fs-5 " @click="viewDetails(item)">View Details</button>
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <div>
-                                <h1 class=" fs-5" v-if="item.sattings.deduction_period_of_months === 1">Deduct the amount in
+                                <h1 class=" fs-5" v-if="item.settings.deduction_period_of_months === 1">Deduct the amount in
                                     the Upcomming Payroll</h1>
                                 <h1 class=" fs-5" v-else>The deduction can be made over a period of {{
-                                    item.sattings.deduction_period_of_months }} months. </h1>
+                                    item.settings.deduction_period_of_months }} months. </h1>
                             </div>
 
-                            <h1 class=" fs-5">Percentage of Salary Advance: {{ item.sattings.percent_salary_adv }}%</h1>
-                            <h1 class=" fs-5">Employee Count : {{ item.sattings.emp_count }}</h1>
+                            <h1 class=" fs-5">Percentage of Salary Advance: {{ item.settings.percent_salary_adv }}%</h1>
+                            <h1 class=" fs-5">Employee Count : {{ item.settings.emp_count }}</h1>
                         </div>
                     </div>
                 </div>
@@ -122,11 +122,11 @@
                         <div class="w-5" style="height: 40px;">
                             <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 0"
-                                :class="[salaryStore.sa.payroll_cycle == 0 ? ' text-white bg-orange-500 border-none' : '']">
+                                :class="[salaryStore.sa.payroll_cycle == '0' ? ' text-white bg-orange-500 border-none' : '']">
                                 Single</button>
                             <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 1"
-                                :class="[salaryStore.sa.payroll_cycle == 1 ? ' text-white bg-orange-500 border-none' : '']">
+                                :class="[salaryStore.sa.payroll_cycle == '1' ? ' text-white bg-orange-500 border-none' : '']">
                                 Multiple</button>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                                 v-model:selection="salaryStore.sa.eligibleEmployee"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
-                                <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column>
+                                <Column selectionMode="multiple" headerStyle="width: 1.5rem" v-if="!view_details"></Column>
                                 <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
                                 <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
                                 <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
@@ -219,9 +219,6 @@
                     </div>
                 </div>
 
-
-
-                {{ view_details }}
                 <div class="mt-4 col">
                     <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
                     <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
@@ -231,11 +228,10 @@
                             <div
                                 class="grid gap-4 p-2 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center">
                                 <div>
-
                                     <div class="flex flex-wrap gap-3">
                                         <div class="flex justify-content-center align-items-center">
                                             <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1"
-                                                name="percofsaladvance" value="100" :class="[
+                                                name="percofsaladvance" :value="100" :class="[
                                                     v$.perOfSalAdvance.$error ? 'p-invalid' : '',
                                                 ]" />
                                             <label for="ingredient1" class="ml-2 fs-5">100% Of Net salary</label>
@@ -245,7 +241,7 @@
                                 <div>
                                     <div class="flex align-items-center">
                                         <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2"
-                                            name="percofsaladvance" value="50" :class="[
+                                            name="percofsaladvance" :value="50" :class="[
                                                 v$.perOfSalAdvance.$error ? 'p-invalid' : '',
                                             ]" />
 
@@ -255,7 +251,7 @@
                                 <div class="flex">
                                     <div class="flex align-items-center">
                                         <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient3"
-                                            name="percofsaladvance" value="custom" :class="[
+                                            name="percofsaladvance" :value="'custom'" :class="[
                                                 v$.perOfSalAdvance.$error ? 'p-invalid' : '',
                                             ]" />
                                         <label for="ingredient3" class="ml-2 fs-5">Custom</label>
@@ -288,7 +284,7 @@
                                 <div class="col-7 d-flex justify-content-start align-items-center">
 
                                     <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1"
-                                        name="deductiomAmt" value="1" :class="[
+                                        name="deductiomAmt" :value="1" :class="[
                                             v$.deductMethod.$error ? 'p-invalid' : '',
                                         ]" />
                                     <label for="" class="mx-3 fs-5" style="line-height: 25px;">Deduct the amount in the
@@ -299,7 +295,7 @@
                             <div class="my-3 row">
                                 <div class="col-7 d-flex justify-content-start align-items-center">
                                     <RadioButton v-model="salaryStore.sa.deductMethod" inputId="ingredient1"
-                                        name="deductiomAmt" value="afterPayroll" :class="[
+                                        name="deductiomAmt" :value="'afterPayroll'" :class="[
                                             v$.deductMethod.$error ? 'p-invalid' : '',
                                         ]" />
                                     <label for="" class="mx-3 fs-5">The deduction can be made over a period of
@@ -408,15 +404,17 @@
         <div class="row">
             <div class="col">
                 <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1">Cancel</button>
-                    <button class="mx-4 btn btn-primary" @click="submitForm">Save Changes</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details"  >  Cancel</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
+
+                    <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
                 </div>
             </div>
         </div>
 
 
     </div>
-    {{ salaryStore.selectedOption3 }}
+    <!-- {{ salaryStore.selectedOption3 }} -->
 </template>
 <script setup>
 
@@ -471,6 +469,8 @@ const custDeduct = (value) => {
 
 
 
+
+
 // const eligibleRequiredAmount = (value) => {
 //     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
 //         console.log(value);
@@ -503,8 +503,10 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         salaryStore.saveSalaryAdvanceFeature();
-        salaryStore.create_new_from = 1;
-        v$.value.$reset()
+        salaryStore.salaryAdvanceHistory();
+        salaryStore.getCurrentStatus('sal_adv');
+        v$.value.$reset();
+
     } else {
         console.log('Form failed validation')
     }
@@ -535,26 +537,52 @@ onMounted(() => {
 
 let view_details = ref([]);
 
+
+const Name = [];
+
 function viewDetails(val) {
-    console.log(val.sattings.view_details[0].approver_flow);
+    view_details.value  = val;
 
     salaryStore.create_new_from = 2;
 
-    salaryStore.sa.SA = val.sattings.view_details[0].settings_name;
-    salaryStore.sa.isSalaryAdvanceEnabled = val.sattings.view_details[0];
-    salaryStore.sa.eligibleEmployee = val.sattings.view_details[0];
-    salaryStore.sa.perOfSalAdvance = val.sattings.view_details[0].percent_salary_adv;
-    salaryStore.sa.cusPerOfSalAdvance = val.sattings.view_details[0]
-    salaryStore.sa.deductMethod = val.sattings.view_details[0]
-    salaryStore.sa.cusDeductMethod = val.sattings.view_details[0]
-    // approvalflow: approvalFormat,
-    salaryStore.sa.selectClientID = val.sattings.view_details[0],
-        salaryStore.sa.payroll_cycle = val.sattings.view_details[0]
+    salaryStore.sa.SA = val.settings.view_details.settings_name;
+    salaryStore.sa.isSalaryAdvanceEnabled = val.settings.view_details;
+    salaryStore.sa.eligibleEmployee = val.settings.view_details;
+    salaryStore.sa.perOfSalAdvance = val.settings.view_details.percent_salary_adv;
+    salaryStore.sa.cusPerOfSalAdvance = val.settings.view_details
+    salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple;
+    salaryStore.eligbleEmployeeSource = val.settings.view_details.assigned_emp
 
-    salaryStore.selectedOption1 = val.sattings.view_details[0].approver_flow[0]
-    salaryStore.selectedOption2 = val.sattings.view_details[0].approver_flow[1]
-    salaryStore.selectedOption3 = val.sattings.view_details[0].approver_flow[2]
+    val.settings.view_details.approver_flow.forEach(element => {
 
+        Name.push(element.name)
+
+        salaryStore.selectedOption1 = Name[0];
+        if (Name[1]) {
+            salaryStore.selectedOption2 = Name[1];
+        }
+        if (Name[2]) {
+            salaryStore.selectedOption2 = Name[2];
+        }
+    });
+
+    if (salaryStore.selectedOption1) {
+        salaryStore.option1 = 0;
+        salaryStore.option = 1
+
+        if (salaryStore.selectedOption2) {
+            salaryStore.option1 = 1
+            salaryStore.option2 = 1
+        }
+    }
+
+    if (val.settings.view_details.deduction_period_of_months == 1) {
+        salaryStore.sa.deductMethod = val.settings.view_details.deduction_period_of_months;
+    }
+    else {
+        salaryStore.sa.deductMethod = "afterPayroll";
+        salaryStore.sa.cusDeductMethod = val.settings.view_details.deduction_period_of_months;
+    }
 
 }
 
