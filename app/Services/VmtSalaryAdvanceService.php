@@ -164,7 +164,9 @@ class VmtSalaryAdvanceService
                 $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
                     ->where('vmt_emp_assign_salary_adv_setting.user_id', $current_user_id)->first();
 
-                $get_salary_emp = VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
+                $get_salary_emp = VmtEmpSalAdvDetails::whereYear('requested_date', date("Y"))
+                                                    ->whereMonth('requested_date', date("m"))
+                                                    ->get();
 
                 $sal_borrowed = 0;
                 foreach ($get_salary_emp as $single_salary_emmp) {
