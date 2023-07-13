@@ -95,7 +95,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveIntersetAndIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-      
+
 
         $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
             $request->loan_type,
@@ -313,7 +313,7 @@ class VmtSalaryAdvanceController extends Controller
             ]);
         }
         return response()->json([
-            "status" => "Sucess",
+            "status" => "success",
             "message" => "changeClientIdStsForLoan",
 
         ]);

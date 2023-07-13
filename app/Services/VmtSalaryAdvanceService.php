@@ -1340,7 +1340,7 @@ class VmtSalaryAdvanceService
 
 
             return response()->json([
-                'status' => 'Sucess',
+                'status' => 'success',
                 'message' => $result,
 
             ]);
