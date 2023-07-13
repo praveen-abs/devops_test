@@ -1,7 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import { useToast } from "primevue/usetoast";
-import { reactive, ref } from "vue";
+import { inject, reactive, ref } from "vue";
 // import {}
 
 /*
@@ -29,6 +29,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Loading Service
 
     const canShowLoading = ref(false)
+    const swal = inject("$swal");
+
 
 
     // Initially Disabled
@@ -48,6 +50,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const selectedOption1 = ref();
     const selectedOption2 = ref();
     const selectedOption3 = ref();
+
+    const response_message = ref();
 
 
     // Eligible Employees
@@ -130,10 +134,22 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectClientID: '',
         payroll_cycle: ''
     })
+    function rest(){
+        salaryStore.sa.perOfSalAdvance =""
+        salaryStore.sa.SA=""
+        salaryStore.sa.cusPerOfSalAdvance=""
+        salaryStore.sa.deductMethod=""
+        salaryStore.sa.cusDeductMethod=""
+        salaryStore.sa.approvalflow=""
+        salaryStore.sa.selectClientID=""
+        salaryStore.sa=""
+    }
 
     // Approval Flow
 
     const SalaryAdvanceFeatureApprovalFlow = ref({})
+
+    const blink_UI = ref();
 
 
     const saveSalaryAdvanceFeature = () => {
@@ -158,9 +174,46 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log("salary Advance Enabled");
             sa.isSalaryAdvanceEnabled = 1
         }
-        axios.post(url, sa).finally(() => {
+
+        axios.post(url, sa).then((res)=>{
+            response_message.value  = res.data;
+
+            let val = res.data.data;
+            console.log(val);
+            console.log(res.data.status);
+            if(res.data.status == "success"){
+                Swal.fire({
+                    title: res.data.status = "success",
+                    text: res.data.message,
+                    // "Salary Advance Succesfully",
+                    icon: "success",
+                }).then((res)=>{
+                    rest();
+                    create_new_from = 1;
+                })
+            }
+            else if(res.data.status == "failure"){
+                Swal.fire({
+                    title: res.data.status = "failure",
+                    text: res.data.message,
+                    // "Salary Advance Succesfully",
+                    icon: "error",
+                    showCancelButton: false,
+                }).then((res)=>{
+                    // blink_UI.value = res.data.data;
+                        create_new_from.value = 1;
+                })
+
+            }
+        }).finally(() => {
+            // Swal.fire(
+            //     "Success",
+            //     "Salary Advance Succesfully",
+            //     "success"
+            // )
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
+
         })
         console.log(sa);
     }
@@ -596,7 +649,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest,blink_UI
 
     };
 });

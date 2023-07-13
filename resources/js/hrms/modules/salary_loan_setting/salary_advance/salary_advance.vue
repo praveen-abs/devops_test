@@ -53,7 +53,7 @@
                     <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
                     <!-- :class="[ id ==  ?'blink':'' ]" -->
                     <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm"
-                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index">
+                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
                         <!-- {{ item.sattings }} -->
                         <!-- -->
                         <div class="w-100 d-flex justify-content-between align-items-center">
@@ -219,9 +219,6 @@
                     </div>
                 </div>
 
-
-
-                {{ view_details }}
                 <div class="mt-4 col">
                     <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
                     <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
@@ -231,7 +228,6 @@
                             <div
                                 class="grid gap-4 p-2 md:grid-cols-3 sm:grid-cols-1 xxl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 align-items-center">
                                 <div>
-
                                     <div class="flex flex-wrap gap-3">
                                         <div class="flex justify-content-center align-items-center">
                                             <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient1"
@@ -245,7 +241,7 @@
                                 <div>
                                     <div class="flex align-items-center">
                                         <RadioButton v-model="salaryStore.sa.perOfSalAdvance" inputId="ingredient2"
-                                            name="percofsaladvance" :value="50"  :class="[
+                                            name="percofsaladvance" :value="50" :class="[
                                                 v$.perOfSalAdvance.$error ? 'p-invalid' : '',
                                             ]" />
 
@@ -416,7 +412,7 @@
 
 
     </div>
-    {{ salaryStore.selectedOption3 }}
+    <!-- {{ salaryStore.selectedOption3 }} -->
 </template>
 <script setup>
 
@@ -471,6 +467,8 @@ const custDeduct = (value) => {
 
 
 
+
+
 // const eligibleRequiredAmount = (value) => {
 //     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
 //         console.log(value);
@@ -503,8 +501,10 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         salaryStore.saveSalaryAdvanceFeature();
-        salaryStore.create_new_from = 1;
+        salaryStore.salaryAdvanceHistory();
+        salaryStore.getCurrentStatus('sal_adv');
         v$.value.$reset();
+
     } else {
         console.log('Form failed validation')
     }
@@ -534,10 +534,12 @@ onMounted(() => {
 });
 
 let view_details = ref([]);
+
+
 const Name = [];
 
 function viewDetails(val) {
-    console.log(val.settings.view_details.approver_flow);
+    view_details.value  = val;
 
     salaryStore.create_new_from = 2;
 
@@ -548,52 +550,33 @@ function viewDetails(val) {
     salaryStore.sa.cusPerOfSalAdvance = val.settings.view_details
     salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple
 
-
-    // salaryStore.selectedOption1 = val.settings.view_details.approver_flow[0].name;
-    // salaryStore.selectedOption2 = val.settings.view_details.approver_flow[1].name;
-    // if(val.settings.view_details.approver_flow[2].name){
-    //     salaryStore.selectedOption3 = val.settings.view_details.approver_flow[2].name
-    // }
-    // salaryStore.selectedOption3 = val.settings.view_details.approver_flow[2].name;
-    // salaryStore.selectedOption4 = val.settings.view_details.approver_flow[3].name;
-
-
     val.settings.view_details.approver_flow.forEach(element => {
 
-        Name.push( element.name)
+        Name.push(element.name)
 
-      salaryStore.selectedOption1 = Name[0];
-      if( Name[1]){
-        salaryStore.selectedOption2 = Name[1];
-      }
-
-      if(Name[2]){
-        salaryStore.selectedOption2 =Name[2] ;
-      }
-
-
+        salaryStore.selectedOption1 = Name[0];
+        if (Name[1]) {
+            salaryStore.selectedOption2 = Name[1];
+        }
+        if (Name[2]) {
+            salaryStore.selectedOption2 = Name[2];
+        }
     });
-    console.log(Name);
 
+    if (salaryStore.selectedOption1) {
+        salaryStore.option1 = 0;
+        salaryStore.option = 1
 
-
-   if(salaryStore.selectedOption1) {
-    salaryStore.option1 = 0;
-     salaryStore.option = 1
-    //  console.log(salaryStore.selectedOption1);
-     if(salaryStore.selectedOption2){
-        salaryStore.option1 = 1
-        salaryStore.option2 = 1
-        // console.log( salaryStore.selectedOption2);
-        // if(){
-        // }
-     }
-   }
-
-    if( val.settings.view_details.deduction_period_of_months==1){
-        salaryStore.sa.deductMethod =  val.settings.view_details.deduction_period_of_months ;
+        if (salaryStore.selectedOption2) {
+            salaryStore.option1 = 1
+            salaryStore.option2 = 1
+        }
     }
-    else{
+
+    if (val.settings.view_details.deduction_period_of_months == 1) {
+        salaryStore.sa.deductMethod = val.settings.view_details.deduction_period_of_months;
+    }
+    else {
         salaryStore.sa.deductMethod = "afterPayroll";
         salaryStore.sa.cusDeductMethod = val.settings.view_details.deduction_period_of_months;
     }
