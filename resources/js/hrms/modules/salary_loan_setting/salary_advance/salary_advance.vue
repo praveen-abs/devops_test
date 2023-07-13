@@ -52,7 +52,7 @@
                 <div class="row ml-1 mr-3 mt-2 ">
                     <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
                     <!-- :class="[ id ==  ?'blink':'' ]" -->
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm"
+                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2"
                         v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
                         <!-- {{ item.sattings }} -->
                         <!-- -->
@@ -90,7 +90,7 @@
             <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
 
-                    <div class="d-flex justify-content-between align-items-center mt-5  w-6">
+                    <!-- <div class="d-flex justify-content-between align-items-center mt-5  w-6">
                         <h1 class="fs-4 ">Select organization</h1>
                         <div class="d-flex justify-items-center position-relative">
                             <MultiSelect v-model="salaryStore.sa.selectClientID"
@@ -102,7 +102,7 @@
                                 class="text-red-400 fs-6 font-semibold position-absolute top-12">
                                 {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
                             </span>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
@@ -487,7 +487,7 @@ const rules = computed(() => {
         deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
-        selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
+        // selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
         // payroll_cycle:{ required: helpers.withMessage('salary Advance Name is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount)}
     }
 })
