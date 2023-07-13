@@ -172,12 +172,15 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        useEmpStore.saveSalaryAdvance()
+        useEmpStore.saveSalaryAdvance();
         v$.value.$reset();
+
     } else {
         console.log('Form failed validation')
     }
 }
+
+
 
 
 

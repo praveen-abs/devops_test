@@ -27,7 +27,7 @@
                 <div class="col-10">
                     <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
 
-                    <div class="d-flex justify-content-between align-items-center mt-5 "  style="width: 480px;">
+                    <div class="d-flex justify-content-between align-items-center mt-5 w-6 "  style="width: 480px;">
                         <h1 class="fs-4 fw-bolder" >Select organization</h1>
                         <div class="d-flex flex-col position-relative">
                             <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name"  optionValue="id"
