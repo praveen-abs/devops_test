@@ -52,7 +52,7 @@
                 <div class="row ml-1 mr-3 mt-2 ">
                     <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
                     <!-- :class="[ id ==  ?'blink':'' ]" -->
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm"
+                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2"
                         v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
                         <!-- {{ item.sattings }} -->
                         <!-- -->
@@ -90,7 +90,7 @@
             <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
 
-                    <div class="d-flex justify-content-between align-items-center mt-5  w-6">
+                    <!-- <div class="d-flex justify-content-between align-items-center mt-5  w-6">
                         <h1 class="fs-4 ">Select organization</h1>
                         <div class="d-flex justify-items-center position-relative">
                             <MultiSelect v-model="salaryStore.sa.selectClientID"
@@ -104,9 +104,9 @@
                             </span>
                         </div>
 
-                    </div>
+                    </div> -->
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of the Salary Advance</h1>
+                        <h1 class="fs-4">Name of the interest Free loan</h1>
                         <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
@@ -404,8 +404,8 @@
         <div class="row">
             <div class="col">
                 <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details"  >  Cancel</button>
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details"  >  Cancel</button>
+                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
                 </div>
             </div>
@@ -487,7 +487,7 @@ const rules = computed(() => {
         deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
-        selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
+        // selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
         // payroll_cycle:{ required: helpers.withMessage('salary Advance Name is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount)}
     }
 })
@@ -534,13 +534,14 @@ onMounted(() => {
 
 });
 
-let view_details = ref([]);
+let view_details = ref();
 
 
 const Name = [];
 
 function viewDetails(val) {
     view_details.value  = val;
+    console.log(view_details);
 
     salaryStore.create_new_from = 2;
 
