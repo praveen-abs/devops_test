@@ -3,12 +3,15 @@ import { ref, reactive, onMounted , inject } from "vue";
 import axios from "axios";
 
 
+
 export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', () => {
 
     // variables
     const arraySalaryAdvance = ref();
     const currentlySelectedStatus = ref();
     const canShowLoadingScreen = ref(false);
+
+    const swal = inject('$swal')
 
     const Request_comments = ref();
 
@@ -64,8 +67,10 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
             : status == -1 ? -1
                         : status,
             reviewer_comments: reviewer_comments,
-        }).then(() => {
+        }).then((res) => {
+               res.data.status == 'success' ?  Swal.fire("Success",res.data.message,"success") : Swal.fire("Failure",res.data.message,"error")
         }).finally(()=>{
+
             canShowLoadingScreen.value = false;
         })
 
