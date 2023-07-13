@@ -190,7 +190,7 @@ Travel Advance - ta
 
         axios.post('/apply-loan', interestFreeLoan).then((res)=>{
             swalFunction(res.data);
-            IFLrest();
+            // IFLrest();
         }).finally(() => {
             canShowLoading.value = false;
             fetchInterestfreeLoan();
@@ -325,7 +325,10 @@ Travel Advance - ta
 
         canShowLoading.value = true;
 
-        axios.post('/apply-loan', InterestWithLoan).finally(() => {
+        axios.post('/apply-loan', InterestWithLoan).then((res)=>{
+            swalFunction(res.data);
+            // IFLrest();
+        }).finally(() => {
             canShowLoading.value = false
             fetchInterstWithLoan();
         })
