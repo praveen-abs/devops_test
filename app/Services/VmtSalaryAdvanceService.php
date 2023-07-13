@@ -379,11 +379,11 @@ class VmtSalaryAdvanceService
 
         if ($salary_adv_name) {
 
-            $simma1 = VmtSalaryAdvSettings::where('percent_salary_adv', $perOfSalAdvance)
+            $already_assigned = VmtSalaryAdvSettings::where('percent_salary_adv', $perOfSalAdvance)
                 ->where('deduction_period_of_months', $deductMethod)
                 ->where('can_borrowed_multiple', $payroll_cycle)->first();
 
-            if ($simma1) {
+            if ($already_assigned) {
 
                 $json_approvalflow = json_encode($approvalflow);
 
@@ -406,11 +406,11 @@ class VmtSalaryAdvanceService
 
             $user_detailss = User::where('user_code', $emplo['user_code'])->first();
 
-            $simma_iddd = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
+            $already_assignd_emp = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
 
-            if (!empty($simma_iddd)) {
+            if (!empty($already_assignd_emp)) {
 
-                $user_name  =  User::where('id', $simma_iddd->user_id)->first();
+                $user_name  =  User::where('id', $already_assignd_emp->user_id)->first();
                 array_push($res, $user_name->name);
             }
         }
