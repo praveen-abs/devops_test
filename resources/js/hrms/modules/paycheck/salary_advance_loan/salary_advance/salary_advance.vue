@@ -62,7 +62,7 @@
                       </template> -->
                     </Column>
 
-                    <Column field="requested_date" header="Paid On " style="min-width: 12rem">
+                    <Column field="" header="Paid On " style="min-width: 12rem">
 
                     </Column>
 
