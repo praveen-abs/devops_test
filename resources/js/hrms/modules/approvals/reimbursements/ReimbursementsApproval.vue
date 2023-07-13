@@ -86,7 +86,7 @@
                 <Column class="fontSize13px" field="total_distance_travelled" header="Overall Distance Travelled"
                     :sortable="false">
                     <template #body="slotProps">
-                        {{ slotProps.data.total_distance_travelled + " KM" }}
+                        {{ slotProps.data.total_distance_travelled + " KM(s)" }}
                     </template>
                 </Column>
 
@@ -126,7 +126,11 @@
                             <Column field="to" header="To"></Column>
                             <Column field="user_comments" header="Comments"></Column>
                             <Column field="vehicle_type" header="Mode of transport"></Column>
-                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
+                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered">
+                                <template #body="slotProps">
+                                    {{ slotProps.data.distance_travelled +" KM(s)"}}
+                                </template>
+                            </Column>
                             <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
                                 <template #body="slotProps">
                                     {{ "&#8377; " + slotProps.data.total_expenses }}
