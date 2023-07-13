@@ -39,6 +39,7 @@ import OverlayPanel from 'primevue/overlaypanel';
 import Tag from 'primevue/tag'
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
+import SelectButton from 'primevue/selectbutton';
 
 import AttendanceModule from './AttendanceModule.vue'
 
@@ -80,6 +81,7 @@ app.component('Tag',Tag)
 app.component('Sidebar',Sidebar)
 app.component('Accordion',Accordion)
 app.component('AccordionTab',AccordionTab)
+app.component('SelectButton',SelectButton)
 
 app.mount("#AttendanceModule");
 

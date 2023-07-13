@@ -1,5 +1,8 @@
 <template>
-    <div class="col-span-7">
+    <div class="col-span-7 flex">
+        <div class="my-auto w-3 ml-3">
+            <SelectButton v-model="useTimesheet.switchTimesheet" :options="options" aria-labelledby="basic" />
+        </div>
         <div class="w-full flex justify-center items-center py-4">
             <button @click="calendarStore.decrementMonth(1)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -116,9 +119,11 @@ import { ref, onMounted } from "vue";
 import { useCalendarStore } from "../stores/calendar";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+import {useAttendanceTimesheetMainStore} from '../stores/attendanceTimesheetMainStore.js'
 
 // Store initialization and subscription
 const calendarStore = useCalendarStore();
+const useTimesheet = useAttendanceTimesheetMainStore()
 calendarStore.$subscribe((mutation, state) => {
     prepareMonths();
     initializeDatePicker();
@@ -128,6 +133,8 @@ calendarStore.$subscribe((mutation, state) => {
 const date = ref(); // for datepicker
 const monthStr = ref("");
 const shortMonthStr = ref("");
+
+const options = ref(['Classic', 'Detailed']);
 
 /**
  * Populate the month variable with month data from store
@@ -176,3 +183,7 @@ onMounted(() => {
     initializeDatePicker();
 });
 </script>
+
+
+<style>
+</style>

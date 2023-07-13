@@ -5,12 +5,12 @@
         </template>
         <!-- {{ currentData }} -->
         <div class="rounded-lg bg-yellow-100 p-3" v-if="currentData.isAbsent">
-           Absent
-           <p>Apply leave</p>
-           <p>Regularize</p>
+            Absent
+            <p>Apply leave</p>
+            <p>Regularize</p>
         </div>
-        <div class="rounded-lg bg-orange-100 p-3" v-if="!currentData.isAbsent" >
-            <p class="font-sans font-semibold fs-6">Check-in</p>
+        <div class="rounded-lg bg-orange-50 p-3" v-if="!currentData.isAbsent">
+            <p class="font-sans font-bold fs-6">Check-in</p>
 
             <div class="my-2">
                 <div class="flex my-1 justify-center">
@@ -31,12 +31,12 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Approval Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">10:00</p>
+                    <p class="font-semibold fs-6">{{ currentData.lc_status }}</p>
                 </div>
             </div>
         </div>
-        <div class="rounded-lg bg-blue-100 p-3 my-3"  v-if="!currentData.isAbsent">
-            <p class="font-sans font-semibold fs-6">Check-in</p>
+        <div class="rounded-lg bg-blue-50 p-3 my-3" v-if="!currentData.isAbsent">
+            <p class="font-sans font-bold fs-6">Check-out</p>
 
             <div class="my-2">
                 <div class="flex my-1">
@@ -52,29 +52,63 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Check Out Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{find(currentData)}}</p>
+                    <p class="font-semibold fs-6">{{ find(currentData) }}</p>
                 </div>
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Approval Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">10:00</p>
+                    <p class="font-semibold fs-6">{{ currentData.lc_status }}</p>
                 </div>
             </div>
         </div>
 
-        <Accordion :activeIndex="0">
-            <AccordionTab header="Lc " v-if="currentData.lc_status">
-                1
+        <p class="font-bold mx-2 my-3"
+            v-if="currentData.isLC || currentData.isMIP || currentData.isEG || currentData.isMOP">Attendance
+            regularization</p>
+
+
+        <Accordion>
+            <AccordionTab v-if="currentData.isLC">
+                <template #header>
+                    <div class="grid grid-cols-2 w-full">
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Late Coming</span>
+                        <p class="text-right px-4"><i :class="icons(currentData.isLC, currentData.lc_status)"
+                                class="py-auto" style="font-size: 1.2rem"></i></p>
+                    </div>
+                </template>
+                <App :source="useTimesheet.lcDetails" :type="'LC'" />
             </AccordionTab>
-            <AccordionTab header="MIP" v-if="currentData.mip_status">
-                2
+            <AccordionTab v-if="currentData.isMIP">
+                <template #header>
+                    <div class="grid grid-cols-2 w-full">
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Missed in punch</span>
+                        <p class="text-right px-4"><i :class="icons(currentData.isMIP, currentData.mip_status)"
+                                class="py-auto" style="font-size: 1.2rem"></i></p>
+                    </div>
+                </template>
+                <App :source="useTimesheet.mipDetails" :type="'MIP'" />
             </AccordionTab>
-            <AccordionTab header="EG" v-if="currentData.eg_status">
-                3
+            <AccordionTab v-if="currentData.isEG">
+                <template #header>
+                    <div class="grid grid-cols-2 w-full">
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Early going</span>
+                        <p class="text-right px-4"><i :class="icons(currentData.isEG, currentData.eg_status)"
+                                class="py-auto" style="font-size: 1.2rem"></i></p>
+                    </div>
+                </template>
+                <App :source="useTimesheet.egDetails" :type="'EG'" />
             </AccordionTab>
-            <AccordionTab header="MOP" v-if="currentData.mop_status">
-                4
+            <AccordionTab v-if="currentData.isMOP">
+                <template #header>
+                    <div class="grid grid-cols-2 w-full">
+                        <span class="w-10/12 px-2 font-semibold fs-6 my-auto">Missed out punch</span>
+                        <p class="text-right px-4"><i :class="icons(currentData.isMOP, currentData.mop_status)"
+                                class="py-auto" style="font-size: 1.2rem"></i></p>
+                    </div>
+                </template>
+                <App :source="useTimesheet.mopDetails" :type="'MOP'" />
             </AccordionTab>
+
         </Accordion>
 
     </Sidebar>
@@ -107,12 +141,12 @@
                 <!-- EACH CELL -->
                 <div v-if="currentMonthsingleAttendanceDay(day, singleAttendanceDay).length"
                     v-for="singleAttendanceDay in currentMonthsingleAttendanceDay(day, singleAttendanceDay)"
-                    class="hidden md:block" @click="visibleRight = true, currentData = { ...singleAttendanceDay }">
+                    class="hidden md:block" @click="getSelectedCellValues(singleAttendanceDay)">
 
 
                     <div v-if="isFutureDate(day)">
                         <div
-                            class="w-full h-full text-xs md:text-sm lg:text-base text-left transition-colors font-semibold ">
+                            class="w-full h-full text-xs md:text-sm lg:text-base text-left transition-colors font-semibold relative">
                             <div class="flex justify-center">
                                 <p class="mx-3">{{ dayjs(singleAttendanceDay.date).format('D') }}</p>
                             </div>
@@ -121,66 +155,46 @@
 
                             <div v-if="isWeekEndDays(day)" class="flex justify-center items-center">
                                 <p v-if="singleAttendanceDay.isAbsent"
-                                    class="px-auto font-bold text-sm  text-black text-center py-5">Week
+                                    class="px-auto font-semibold  fs-6  text-black text-center py-5">Week
                                     Off
                                 </p>
                             </div>
 
-
-                            <!-- If Employee is Absent  -->
-                            <!-- {{ leaveStatus(singleAttendanceDay.isAbsent) }} -->
-
-                            <!-- <div v-if="singleAttendanceDay.isAbsent">
-
-                                <div class="bg-green-100 p-3 rounded-lg"
-                                    v-if="singleAttendanceDay.absent_status.includes('Approved')">
-                                    <p class="font-semibold fs-6 text-green-900 text-center"> {{
-                                        singleAttendanceDay.leave_type }}
-                                    </p>
-                                    <p class="text-center">Approved
-                                        <i class='fa fa-check-circle text-success mx-2' v-tooltip="'Approved'"
-                                            title="Not Applied"></i>
-                                    </p>
-                                </div>
-                                <div class="bg-red-100 p-3 rounded-lg"
-                                    v-else-if="singleAttendanceDay.absent_status.includes('Rejected')">
-                                    <p class="font-semibold fs-6 text-red-900 text-center"> {{
-                                        singleAttendanceDay.leave_type }} </p>
-                                    <p class="text-center">Rejected <i class="fa fa-times-circle mx-2 text-danger"></i></p>
-                                </div>
-                                <div class="bg-yellow-100 p-3 rounded-lg"
-                                    v-else-if="singleAttendanceDay.absent_status.includes('Pending')">
-                                    <p class="font-semibold fs-6 text-yellow-600 text-center"> {{
-                                        singleAttendanceDay.leave_type }}
-                                    </p>
-                                    <p class="text-center">Pending<i class="fa fa-question-circle fs-15 text-secondary mx-2"
-                                            v-tooltip="'Pending'"></i></p>
-                                </div>
-                                <div class="bg-slate-100 p-3 rounded-lg"
-                                    v-else-if="singleAttendanceDay.absent_status.includes('Revoked')">
-                                    <p class="font-semibold fs-6 text-slate-600 text-center"> {{
-                                        singleAttendanceDay.leave_type }}
-                                    </p>
-                                    <p class="text-center">Revoked</p>
-                                </div>
-                                <div class="bg-red-100 p-3 rounded-lg" v-else-if="!isWeekEndDays(day)">
-                                    <p class="font-semibold fs-6 text-red-900 text-center">Absent <i
-                                            class="fa fa-exclamation-circle text-warning fs-15 mx-2"
-                                            v-tooltip="'Not Applied'"></i></p>
-
-                                </div>
-                            </div> -->
-
-
-                            <!-- If Employee is Present -->
                             <div v-else
-                                class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
-                                <div class="w-full my-3  p-2.5  rounded-sm mr-3"
+                                class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm hp">
+                                <div class="w-full my-3  p-2.5  rounded-sm mr-3 flex  "
                                     :class="findAttendanceStatus(singleAttendanceDay)">
-                                    <p class="font-sans">{{ find(singleAttendanceDay) }}</p>
+                                    <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
+                                            :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
+                                    </p>
+                                    <p class="font-sans break-after-all mx-2">{{ find(singleAttendanceDay) }}</p>
+
+                                    <p class=""><i
+                                            :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
+                                            style="font-size: 1rem"></i></p>
                                 </div>
 
                             </div>
+                            <div v-if="!singleAttendanceDay.isAbsent"
+                                class="hop  transition p-2 ease-in-out delay-150 bg-white border rounded-lg absolute  z-50">
+                                <div
+                                    class="w-full my-3  p-2.5  rounded-sm mr-3 flex  border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5">
+                                    <i class="fa fa-arrow-down text-green-800  font-medium text-sm "
+                                        style='transform: rotate(-45deg);'></i>
+                                    <p class="text-green-800 font-medium text-sm mx-1">
+                                        {{ getSession(singleAttendanceDay.checkin_time) }}
+                                    </p>
+                                </div>
+                                <div
+                                    class="w-full my-3  p-2.5  rounded-sm mr-3 flex  border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5">
+                                    <i class="fa fa-arrow-down font-medium text-sm text-red-800 "
+                                        style='transform: rotate(230deg);'></i>
+                                    <p class="text-red-800 font-medium text-sm mx-1">
+                                        {{ getSession(singleAttendanceDay.checkout_time) }}
+                                    </p>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
@@ -234,6 +248,8 @@ import { useAttendanceTimesheetMainStore } from '../hrms/modules/attendence/time
 import dayjs from "dayjs";
 import moment from "moment";
 import { Service } from "../hrms/modules/Service/Service";
+import App from "./app.vue";
+
 
 
 const currentData = ref({})
@@ -248,12 +264,44 @@ const tabs = ref([
 const useTimesheet = useAttendanceTimesheetMainStore()
 const service = Service()
 
+const getSelectedCellValues = (selectedCells) => {
+    visibleRight.value = true
+    currentData.value = { ...selectedCells }
+
+    if (selectedCells.isLC) {
+        useTimesheet.lcDetails = { ...selectedCells }
+    }
+    if (selectedCells.isEG) {
+        useTimesheet.egDetails = { ...selectedCells }
+    }
+    if (selectedCells.isMIP) {
+        useTimesheet.mipDetails = { ...selectedCells }
+    }
+    if (selectedCells.isMOP) {
+        useTimesheet.mopDetails = { ...selectedCells }
+
+    }
+}
 
 
 const findAttendanceStatus = (data) => {
     console.log(data);
     if (data.isAbsent) {
-        return 'border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5'
+        if (data.absent_status.includes('Approved')) {
+            return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
+        } else
+            if (data.absent_status.includes('Rejected')) {
+                return 'border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5'
+            } else
+                if (data.absent_status.includes('Pending')) {
+                    return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-600 font-medium fs-5'
+                } else
+                    if (data.absent_status.includes('Revoked')) {
+                        return 'border-l-4 border-gray-500 bg-gray-50 text-gray-600 font-medium fs-5'
+
+                    } else {
+                        return 'border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5'
+                    }
     } else {
         if (data.lc_status) {
             return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 font-medium fs-5'
@@ -262,17 +310,77 @@ const findAttendanceStatus = (data) => {
             if (data.mip_status) {
                 return 'border-l-4 border-blue-500 bg-blue-50 text-blue-600 font-medium fs-5'
 
-            } else {
-                return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
+            } else
+                if (data.eg_status) {
+                    return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 font-medium fs-5'
 
-            }
+                }
+                // else
+                //     if (data.mop_status) {
+                //         return 'border-l-4 border-blue-500 bg-blue-50 text-blue-600 font-medium fs-5'
+
+                //     }
+                else {
+                    return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
+
+                }
     }
+}
+
+const findAttendanceMode = (attendance_mode) => {
+    console.log(attendance_mode);
+    if (attendance_mode == "biometric")
+        // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+        return 'fas fa-fingerprint fs-12'
+    else
+        if (attendance_mode == "web")
+            return 'fa fa-laptop fs-12';
+        else
+            if (attendance_mode == "mobile")
+                return 'fa fa-mobile-phone fs-12';
+            else {
+                return ''; // when attendance_mode column is empty.
+            }
+}
+const icons = (isSelected, data) => {
+
+    if (isSelected) {
+        if (data == 'Approved') {
+            return 'pi pi-check-circle text-green-600 font-semibold'
+        } else
+            if (data == 'Pending') {
+                return 'pi pi-question-circle text-yellow-600 font-semibold'
+            } else
+                if (data == 'Rejected') {
+                    return 'pi pi-times-circle text-red-600 font-semibold'
+                } else {
+                    return 'pi pi-exclamation-circle text-green-600 font-semibold'
+                }
+    } else {
+        console.log('no data');
+    }
+
 }
 
 const find = (data) => {
 
     if (data.isAbsent) {
-        return 'Absent'
+        if (data.absent_status.includes('Approved')) {
+            return `${data.leave_type} Approved`
+        } else
+            if (data.absent_status.includes('Rejected')) {
+                return `${data.leave_type} Rejected`
+            } else
+                if (data.absent_status.includes('Pending')) {
+                    return `${data.leave_type} Pending`
+                } else
+                    if (data.absent_status.includes('Revoked')) {
+                        return `${data.leave_type} Revoked`
+
+                    } else {
+                        return 'Absent'
+
+                    }
     } else {
         if (data.lc_status) {
             return 'Late coming'
@@ -281,10 +389,18 @@ const find = (data) => {
             if (data.mip_status) {
                 return 'Missed in punch'
 
-            } else {
-                return 'Present'
+            } else
+                if (data.eg_status) {
+                    return 'Early going'
 
-            }
+                } else
+                    if (data.mip_status) {
+                        return 'Missed out punch'
+
+                    } else {
+                        return 'Present'
+
+                    }
     }
 }
 
@@ -295,6 +411,7 @@ const props = defineProps({
     },
 
 });
+
 
 const visibleRight = ref(false)
 
@@ -488,7 +605,21 @@ onUpdated(() => {
 });
 </script>
 
-<style scoped>
+<style>
+.hop {
+    display: none;
+    width: 150px;
+    top: 80px;
+    left: 25px;
+
+}
+
+.hp:hover+.hop {
+    display: block;
+}
+
+
+
 .modal-enter-active,
 .modal-leave-active {
     transition: translate 0.5s ease;

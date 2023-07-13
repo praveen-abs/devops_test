@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-2 card">
+        <div class="mb-2 card" v-if="false">
             <div class="card-body">
 
                 <div class="row ">
@@ -156,8 +156,11 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="overflow-x-auto">
-                            <!-- <Timesheet :single-attendance-day="useTimesheet.currentEmployeeAttendance" /> -->
-                            <second :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                            <Transition name="fade">
+                                <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
+                                    :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                                <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                            </Transition>
 
                         </div>
                     </div>
@@ -165,11 +168,15 @@
                     <div class="tab-pane fade " id="team" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-max">
-                                <!-- <EmployeeList :source="teamList" :is-team="true" /> -->
+                                <EmployeeList :source="teamList" :is-team="true" />
                             </div>
                             <div class="overflow-x-auto ml-2 w-100 rounded-lg">
-                                <!-- <Timesheet :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" /> -->
-
+                                <Transition name="fade">
+                                    <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
+                                        :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                    <ClassicTimesheet v-else
+                                        :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                </Transition>
                             </div>
 
                         </div>
@@ -177,10 +184,15 @@
                     <div class="tab-pane fade " id="org" role="tabpanel">
                         <div class="flex">
                             <div class="min-w-max">
-                                <!-- <EmployeeList :source="orgList" :is-team="false" /> -->
+                                <EmployeeList :source="orgList" :is-team="false" />
                             </div>
                             <div class="overflow-x-auto ml-2 w-100 rounded-lg">
-                                <!-- <Timesheet :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" /> -->
+                                <Transition name="fade">
+                                    <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
+                                        :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
+                                    <ClassicTimesheet v-else
+                                        :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
+                                </Transition>
                             </div>
                         </div>
                     </div>
@@ -197,8 +209,8 @@
 
 
 <script setup>
-import second from '../../../testings/second.vue';
-import Timesheet from './timesheet/timesheet.vue';
+import DetailedTimesheet from './timesheet/DetailedTimesheet.vue'
+import ClassicTimesheet from './timesheet/ClassicTimesheet.vue'
 import { useAttendanceTimesheetMainStore } from './timesheet/stores/attendanceTimesheetMainStore'
 import { useCalendarStore } from './timesheet/stores/calendar'
 import { Service } from '../Service/Service'
@@ -253,5 +265,16 @@ const emp = ref([
 <style>
 .textColor {
     color: #003056;
+}
+
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
 </style>

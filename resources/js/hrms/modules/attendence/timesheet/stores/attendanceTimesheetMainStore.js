@@ -14,6 +14,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const canShowLoading = ref(false)
     const isManager = ref(false)
     const isTeamOrg = ref('single')
+    const switchTimesheet = ref('Classic')
 
     const mopDetails = ref({})
     const mipDetails = ref({})
@@ -49,7 +50,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(156, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(141, useCalendar.getMonth, useCalendar.getYear).then(res => {
             currentEmployeeAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
@@ -348,7 +349,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         //   EG
         onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie, onClickSViewSelfie, selfieDetails,
+        dialog_Selfie, onClickSViewSelfie, selfieDetails,switchTimesheet
 
 
     }
