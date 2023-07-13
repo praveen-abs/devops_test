@@ -106,7 +106,7 @@
 
                     </div> -->
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of the interest Free loan</h1>
+                        <h1 class="fs-4">Name of the Salary Advance</h1>
                         <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
