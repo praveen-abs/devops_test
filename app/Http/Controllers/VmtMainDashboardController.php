@@ -121,22 +121,22 @@ class VmtMainDashboardController extends Controller
             }
 
         } else
-            if (Str::contains(currentLoggedInUserRole(), ["Manager"])) {
-                if (!$request->session()->has('client_id')) {
-                    //get the employee client_code
-                    $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
+        if (Str::contains(currentLoggedInUserRole(), ["Manager"])) {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
-                    $this->updateSessionVariables($assigned_client_id);
-                }
-            } else
-                if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
-                    if (!$request->session()->has('client_id')) {
-                        //get the employee client_code
-                        $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
+                $this->updateSessionVariables($assigned_client_id);
+            }
+        } else
+        if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
-                        $this->updateSessionVariables($assigned_client_id);
-                    }
-                }
+                $this->updateSessionVariables($assigned_client_id);
+            }
+        }
 
         //Promote user to Manager if any employees reporting him
         $reporteesCount = VmtEmployeeOfficeDetails::where('l1_manager_code', auth()->user()->user_code)->get()->count();
@@ -344,7 +344,6 @@ class VmtMainDashboardController extends Controller
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at', 'DESC')->get();
 
-
         if (Str::contains(currentLoggedInUserRole(), ["Super Admin", "Admin", "HR", "Manager"])) {
             return view('vmt_hr_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData'));
         }
@@ -357,7 +356,9 @@ class VmtMainDashboardController extends Controller
             if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
                 return view('vmt_employee_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
             }
-
+        else{
+            return "No Roles assigned for this user. Kindly contact the admin";
+        }
     }
 
     public function showMainDashboardPage(Request $request){
