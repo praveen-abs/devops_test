@@ -72,14 +72,7 @@
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
 
-                    <Column field="status" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <div>
-                                <!-- {{slotProps.data.status}} -->
-                                <h1 v-if="slotProps.data.status = 0" class=" text-orange-400">Pending</h1>
-                            </div>
-                        </template>
-                    </Column>
+                    <Column field="status_flow" header="Status" style="min-width: 12rem"> </Column>
 
                     <Column field="" header="Action">
                         <template #body="slotProps">
