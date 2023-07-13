@@ -566,7 +566,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     async function salaryAdvanceHistory(){
         // console.log();
         await axios.get('/settingDetails').then((res)=>{
-            salaryAdvanceSettingsDetails =  res.data;
+            salaryAdvanceSettingsDetails.value =  res.data;
             console.log(salaryAdvanceSettingsDetails.value);
         })
     }

@@ -22,7 +22,9 @@
             </div>
             <div class="col" v-if="salaryStore.create_new_from == '1'">
                 <div>
-                    <p class="fs-5" v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0' || salaryStore.isSalaryAdvanceFeatureEnabled == null ">Please click the "Enable" button
+                    <p class="fs-5"
+                        v-if="salaryStore.isSalaryAdvanceFeatureEnabled == '0' || salaryStore.isSalaryAdvanceFeatureEnabled == null">
+                        Please click the "Enable" button
                         to activate the salary advance feature for use within
                         your
                         organization.</p>
@@ -43,21 +45,31 @@
                         <!-- {{ salaryStore.client_name_status }} -->
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
-                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" @change="selectClientId('sal_adv')" />
+                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem"
+                            @change="selectClientId('sal_adv')" />
                     </div>
                 </div>
                 <div class="row ml-1 mr-3 mt-2 ">
+                    <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
                     <!-- :class="[ id ==  ?'blink':'' ]" -->
-                    <div
-                        class="col border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm" v-for="(item, index) in items" :key="index" >
-                        <div class="w-100 d-flex justify-content-between align-items-center" >
-                            <h1 class="  fs-5">Salary Advance - 2023</h1>
-                            <button class=" underline text-blue-400 fs-5 " @click="viewDetails(data)">View Details</button>
+                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm"
+                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index">
+                        <!-- {{ item.sattings }} -->
+                        <!-- -->
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <h1 class="  fs-5">{{ item.sattings.settings_name }}</h1>
+                            <button class=" underline text-blue-400 fs-5 " @click="viewDetails(item)">View Details</button>
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
-                            <h1 class=" fs-5">Deduct the amount in the Upcomming Payroll</h1>
-                            <h1 class=" fs-5">Percentage of Salary Advance: 100%</h1>
-                            <h1 class=" fs-5">Employee Count : 120</h1>
+                            <div>
+                                <h1 class=" fs-5" v-if="item.sattings.deduction_period_of_months === 1">Deduct the amount in
+                                    the Upcomming Payroll</h1>
+                                <h1 class=" fs-5" v-else>The deduction can be made over a period of {{
+                                    item.sattings.deduction_period_of_months }} months. </h1>
+                            </div>
+
+                            <h1 class=" fs-5">Percentage of Salary Advance: {{ item.sattings.percent_salary_adv }}%</h1>
+                            <h1 class=" fs-5">Employee Count : {{ item.sattings.emp_count }}</h1>
                         </div>
                     </div>
                 </div>
@@ -209,7 +221,7 @@
 
 
 
-
+                {{ view_details }}
                 <div class="mt-4 col">
                     <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
                     <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
@@ -404,6 +416,7 @@
 
 
     </div>
+    {{ salaryStore.selectedOption3 }}
 </template>
 <script setup>
 
@@ -418,6 +431,8 @@ const salaryStore = salaryAdvanceSettingMainStore()
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
+const settingHistory = ref([]);
 
 const opt = ref()
 const opt1 = ref()
@@ -488,7 +503,7 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         salaryStore.saveSalaryAdvanceFeature();
-        salaryStore.create_new_from = 1 ;
+        salaryStore.create_new_from = 1;
         v$.value.$reset()
     } else {
         console.log('Form failed validation')
@@ -496,14 +511,9 @@ const submitForm = () => {
 }
 
 
-function viewDetails(data) {
-
-    salaryStore.create_new_from = 2;
 
 
-}
-
-function selectClientId(data){
+function selectClientId(data) {
     salaryStore.sendClient_code(data);
 }
 
@@ -522,6 +532,31 @@ onMounted(() => {
     salaryStore.salaryAdvanceHistory();
 
 });
+
+let view_details = ref([]);
+
+function viewDetails(val) {
+    console.log(val.sattings.view_details[0].approver_flow);
+
+    salaryStore.create_new_from = 2;
+
+    salaryStore.sa.SA = val.sattings.view_details[0].settings_name;
+    salaryStore.sa.isSalaryAdvanceEnabled = val.sattings.view_details[0];
+    salaryStore.sa.eligibleEmployee = val.sattings.view_details[0];
+    salaryStore.sa.perOfSalAdvance = val.sattings.view_details[0].percent_salary_adv;
+    salaryStore.sa.cusPerOfSalAdvance = val.sattings.view_details[0]
+    salaryStore.sa.deductMethod = val.sattings.view_details[0]
+    salaryStore.sa.cusDeductMethod = val.sattings.view_details[0]
+    // approvalflow: approvalFormat,
+    salaryStore.sa.selectClientID = val.sattings.view_details[0],
+        salaryStore.sa.payroll_cycle = val.sattings.view_details[0]
+
+    salaryStore.selectedOption1 = val.sattings.view_details[0].approver_flow[0]
+    salaryStore.selectedOption2 = val.sattings.view_details[0].approver_flow[1]
+    salaryStore.selectedOption3 = val.sattings.view_details[0].approver_flow[2]
+
+
+}
 
 </script>
 <style>
@@ -602,20 +637,21 @@ input[type=radio] {
 
 
 .blink {
-        animation: blink-animation 1s steps(5, start) infinite;
-        -webkit-animation: blink-animation 1s steps(5, start) infinite;
-      }
-      @keyframes blink-animation {
-        to {
-          visibility: hidden;
-        }
-      }
-      @-webkit-keyframes blink-animation {
-        to {
-          visibility: hidden;
-        }
-      }
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
 
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
 </style>
 
 {

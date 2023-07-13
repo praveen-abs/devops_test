@@ -8,10 +8,16 @@ export const loanSettingsStore = defineStore("loanSettings", () => {
 
     const CreateLoanWithNewFrom = ref(1);
 
+    function viewHistory(data){
+
+    }
+    //
+
+
     return{
 
-        CreateLoanWithNewFrom
-
+        CreateLoanWithNewFrom,
+        viewHistory,
     }
 
 });

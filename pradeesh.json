@@ -1,217 +1,26 @@
-{
-  "getinterestwithloan": [
+{"":[{
+    "setting":[{
+        "name":"pradeesh"
+    }]
+},{}],
+
+  "sendclientcode": [
     {
-      "id": 4,
-      "request_id": "ABSIF001",
-      "user_code": "SA_ABS",
-      "name": "S2 Admin",
-      "eligible_amount": 60000,
-      "loan_amount": "3000",
-      "reason": "testingssss",
-      "deduction_starting_month": "2023-07-01",
-      "deduction_ending_month": "2023-08-01",
-      "monthly_emi": "1500",
-      "tenure": "2",
-      "status": 0,
-      "emp_prevdetails": [
-        {
-          "id": 4,
-          "user_id": 1,
-          "vmt_int_free_loan_id": 6,
-          "request_id": "ABSIF001",
-          "eligible_amount": 60000,
-          "borrowed_amount": "3000",
-          "requested_date": "2023-07-07",
-          "deduction_starting_month": "2023-07-01",
-          "deduction_ending_month": "2023-08-01",
-          "emi_per_month": "1500",
-          "tenure_months": "2",
-          "reason": "testingssss",
-          "approver_flow": "[{\"order\":1,\"approver\":1,\"status\":0},{\"order\":2,\"approver\":146,\"status\":0}]",
-          "loan_crd_sts": 0,
-          "created_at": "2023-07-07T09:42:13.000000Z",
-          "updated_at": "2023-07-07T09:42:13.000000Z"
-        }
-      ]
-    }
-  ],
-  "interestWithloanDetails": [
-    {
-      "minEligibile": 9000,
-      "Months": [
-        {
-          "month": 1
-        },
-        {
-          "month": 2
-        },
-        {
-          "month": 3
-        },
-        {
-          "month": 4
-        },
-        {
-          "month": 5
-        },
-        {
-          "month": 6
-        }
+      "client_status": [
+        2,
+        3
       ],
-      "Interest_rate": 2.5
-    }
-  ],
-  "InterestFreeLoanDetails": {},
-  "getloan_type": {
-    "Loan_type": "InterestFreeLoan"
-  },
-  "salaryAdvance": [
-    {
-      "id": 1,
-      "user_code": "PSC0060",
-      "name": "ARUNKUMAR",
-      "advance_amount": 2000,
-      "dedction_date": "2023-06-16",
-      "status": "Pending",
-      "emp_details": [
-        {
-          "id": 2,
-          "advance_amount": "20,000",
-          "paid_on": "12/02/2023",
-          "Expected_Return": "12/02/2023",
-          "status": "Pending"
-        },
-        {
-          "id": 3,
-          "advance_amount": "20,000",
-          "paid_on": "12/02/2023",
-          "Expected_Return": "12/02/2023",
-          "status": "Approved"
-        },
-        {
-          "id": 4,
-          "advance_amount": "20,000",
-          "paid_on": "12/02/2023",
-          "Expected_Return": "12/02/2023",
-          "status": "Rejected"
-        }
-      ]
-    }
-  ],
-  "useRolesAndPermission": [
-    {
-      "roles_id": 1,
-      "role": "superadmin",
-      "SubCategory": 3,
-      "": 4,
-      "accordian": [
-        {
-          "roles_id": 1,
-          "Sub_Category_Name": "Asset Privilege",
-          "user_id": 1,
-          "user_code": "SA100",
-          "Privilege": [
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            }
-          ]
-        },
-        {
-          "Sub_Category_Name": "Asset Privilege",
-          "Privilege": [
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            },
-            {
-              "Privilege_name": "View Asset Dashboard"
-            }
-          ]
-        }
-      ]
+      "id": 1
     },
     {
-      "roles_id": 4,
-      "role": "manager",
-      "description": "uwfp8fw8egwpguiweg",
-      "assigned_emp": 19,
-      "assigned_privileged": 0,
-      "accordian": [
-        {
-          "roles_id": 4,
-          "roles_name": "manager",
-          "description": "uwfp8fw8egwpguiweg",
-          "name": "ARUNKUMAR",
-          "user_id": 144,
-          "user_code": "PSC0060",
-          "department_name": "Sales"
-        }
-      ]
-    },
-    {
-      "roles_id": 4,
-      "role": "manager",
-      "description": "uwfp8fw8egwpguiweg",
-      "assigned_emp": 19,
-      "assigned_privileged": 0,
-      "accordian": [
-        {
-          "roles_id": 4,
-          "roles_name": "manager",
-          "description": "uwfp8fw8egwpguiweg",
-          "name": "MURALI",
-          "user_id": 146,
-          "user_code": "LAL0002",
-          "department_name": "Sales"
-        }
-      ]
-    },
-    {
-      "roles_id": 4,
-      "role": "manager",
-      "description": "uwfp8fw8egwpguiweg",
-      "assigned_emp": 19,
-      "assigned_privileged": 0,
-      "accordian": [
-        {
-          "roles_id": 4,
-          "roles_name": "manager",
-          "description": "uwfp8fw8egwpguiweg",
-          "name": "RAVIKUMAR K",
-          "user_id": 149,
-          "user_code": "LAL0008",
-          "department_name": "Technical"
-        }
-      ]
+      "client_status": [
+        2,
+        3,
+        4
+      ],
+      "id": 2
     }
   ],
-  "DeleteOnboardingFormDetails": [],
   "posts": [
     {
       "id": 1,
