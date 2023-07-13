@@ -167,7 +167,7 @@
                         </div>
                     </div>
                 </div>
-                {{ UseInterestFreeLoan.arrayIFL_List }}
+
                 <div class="table-responsive">
                     <DataTable v-if="useEmpData == ''" :value="UseInterestFreeLoan.arrayIFL_List" :paginator="true"
                         :rows="10" class="" dataKey="id" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"

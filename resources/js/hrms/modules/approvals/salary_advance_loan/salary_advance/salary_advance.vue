@@ -167,12 +167,16 @@
         </div>
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
-            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments" autoResize type="text"
-                rows="3" style="border:none; outline-: none;" />
+            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments.reviewer_comments" autoResize type="text"
+                rows="3" style="border:none; outline-: none;"  :class="[v$.reviewer_comments.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+            <br>
+            <span v-if="v$.reviewer_comments.$error" class="font-semibold text-red-400 fs-6">
+                {{ v$.reviewer_comments.$errors[0].$message }}
+            </span>
         </div>
         <div class="float-right ">
-            <button class="btn bg-red-500 text-white px-5" @click="approveAndReject(-1)">Reject</button>
-            <button class="mx-4 btn bg-green-500  text-white px-5" @click="approveAndReject(1)">Approve</button>
+            <button class="btn bg-red-500 text-white px-5" @click="submitForm(-1)">Reject</button>
+            <button class="mx-4 btn bg-green-500  text-white px-5" @click="submitForm(1)">Approve</button>
         </div>
     </Dialog>
 </template>
@@ -181,10 +185,13 @@
 
 <script setup>
 import EmployeePayable from '../../../Shared/EmployeePayable.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref,computed } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
-import { required } from '@vuelidate/validators';
+
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
+import { useNow, useDateFormat } from '@vueuse/core';
 
 const SalaryAdvanceApprovals = UseSalaryAdvanceApprovals();
 
@@ -198,7 +205,9 @@ const toggle = (event) => {
 const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
-const reviewer_comments = ref();
+const reviewer_comments = reactive({
+    reviewer_comments:""
+});
 const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
@@ -263,6 +272,28 @@ function view_more(selectedRowData, user_code, currentName) {
     CurrentName.value = currentName;
     CurrentUser_code.value = user_code
 
+}
+
+const rules = computed(() => {
+    return {
+        reviewer_comments: { required },
+    }
+})
+
+
+const v$ = useValidate(rules, reviewer_comments )
+
+
+const submitForm = (val) => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        approveAndReject(val);
+        SalaryAdvanceApprovals.getEmpDetails();
+    } else {
+        console.log('Form failed validation')
+    }
 }
 
 </script>
