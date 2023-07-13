@@ -102,9 +102,9 @@
                                 class="text-red-400 fs-6 font-semibold position-absolute top-12">
                                 {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
                             </span>
-                        </div> -->
+                        </div>
 
-                    </div>
+                    </div> -->
                     <div class="my-4 d-flex justify-content-between w-6 align-items-center">
                         <h1 class="fs-4">Name of the interest Free loan</h1>
                         <div class=" position-relative ">
