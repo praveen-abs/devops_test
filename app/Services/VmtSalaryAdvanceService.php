@@ -379,11 +379,11 @@ class VmtSalaryAdvanceService
 
         if ($salary_adv_name) {
 
-            $simma1 = VmtSalaryAdvSettings::where('percent_salary_adv', $perOfSalAdvance)
+            $already_assigned = VmtSalaryAdvSettings::where('percent_salary_adv', $perOfSalAdvance)
                 ->where('deduction_period_of_months', $deductMethod)
                 ->where('can_borrowed_multiple', $payroll_cycle)->first();
 
-            if ($simma1) {
+            if ($already_assigned) {
 
                 $json_approvalflow = json_encode($approvalflow);
 
@@ -406,11 +406,11 @@ class VmtSalaryAdvanceService
 
             $user_detailss = User::where('user_code', $emplo['user_code'])->first();
 
-            $simma_iddd = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
+            $already_assignd_emp = vmtEmpAssignSalaryAdvSettings::where('user_id', $user_detailss->id)->first();
 
-            if (!empty($simma_iddd)) {
+            if (!empty($already_assignd_emp)) {
 
-                $user_name  =  User::where('id', $simma_iddd->user_id)->first();
+                $user_name  =  User::where('id', $already_assignd_emp->user_id)->first();
                 array_push($res, $user_name->name);
             }
         }
@@ -721,7 +721,7 @@ class VmtSalaryAdvanceService
                         // Sending The Reord id and break One loop here
 
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Already Exist For ' . $client_name;
+                        $temp['heading'] = $client_name;
                         $temp['Message'] = 'This Setting Name Already Exist  For Another Settings in ' . $client_name . ' Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->where('name', $name)->first()->id;
                         array_push($sucess_msg, $temp);
@@ -736,7 +736,7 @@ class VmtSalaryAdvanceService
                     if ($existing_record->where('name', $name)->exists()) {
                         // Sending The Reord id and break One loop here
                         $temp = array();
-                        $temp['heading'] = 'This Setting Name Already Exist';
+                        $temp['heading'] = $client_name;
                         $temp['Message'] = 'This Setting Name Already Exist  For Another Settings Please Change The Setting Name';
                         $temp['record_id'] = $existing_record->first()->id;
                         array_push($sucess_msg, $temp);
@@ -763,7 +763,7 @@ class VmtSalaryAdvanceService
                     ->where('approver_flow', $approver_flow);
                 if ($existing_record->exists()) {
                     $temp = array();
-                    $temp['heading'] = 'This Setting Already Exist';
+                    $temp['heading'] = $client_name;
                     $temp['Message'] = 'This Setting Already Exist Please Change The Settings';
                     $temp['record_id'] = $existing_record->first()->id;
                     array_push($sucess_msg, $temp);
@@ -787,7 +787,7 @@ class VmtSalaryAdvanceService
                 $setting_for_loan->active = 1;
                 $setting_for_loan->save();
                 $temp = array();
-                $temp['heading'] = 'Setting Saved Sucessfully';
+                $temp['heading'] = $client_name;
                 $temp['Message'] = 'This Setting Assigned For ' . $client_name;
                 array_push($sucess_msg, $temp);
                 unset($temp);
@@ -803,12 +803,12 @@ class VmtSalaryAdvanceService
 
         if (empty($sucess_msg)) {
             return response()->json([
-                'status' => 'sucesss',
+                'status' => 'success',
                 'message' => "Interest free and int loan setiings Saved Sucessfully"
             ]);
         } else {
             return response()->json([
-                'status' => 'sucesss',
+                'status' => 'success',
                 'message' => $sucess_msg
             ]);
         }
