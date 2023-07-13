@@ -40,6 +40,18 @@
                         </div>
 
                     </div>
+                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
+                        <h1 class="fs-4">Name of the Salary Advance</h1>
+                        <div class=" position-relative ">
+                            <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.ifl.name"
+                                class="w-full d-flex justify-items-center md:w-18rem" :class="[
+                                    v$.name.$error ? 'p-invalid ' : '',
+                                ]" />
+                            <span v-if="v$.name.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                                {{ v$.name.required.$message.replace("Value", "Client Name") }}
+                            </span>
+                        </div>
+                    </div>
 
                     <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees and Amount</h1>
                     <p class="mt-3 fs-5">The employee's eligibility for the loan amount can be determined based on the
@@ -305,6 +317,7 @@ onMounted(() => {
 
 const rules = computed(() => {
     return {
+        name:{required},
         selectClientID: { required },
         minEligibile: { required } ,
         maxTenure : { required },

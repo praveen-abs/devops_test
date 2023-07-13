@@ -70,8 +70,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         })
     }
 
-
-
     const getSelectoption = (key, filter) => {
         console.log(filter);
 
@@ -117,7 +115,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         })
     }
 
-    const eligibleSalaryAdvanceEmployeeData = ref()
+    const eligibleSalaryAdvanceEmployeeData = ref();
 
     // Percentage of Salary Advance
     // Deduction Method
@@ -206,11 +204,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
             }
         }).finally(() => {
-            // Swal.fire(
-            //     "Success",
-            //     "Salary Advance Succesfully",
-            //     "success"
-            // )
+
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
 
@@ -275,9 +269,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             ifl.max_loan_limit = "";
         }
 
-        // let url = '/save-interset-free-loan-settings';
+
         let url = '/save-int-and-int-free-loan-settings';
-        // let url = 'http://localhost:3000/InterestWithLoan';
         axios.post(url, ifl).finally(() => {
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
@@ -285,8 +278,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     }
 
     // /get-clients-for-loan-adv
-
-    //
 
     async function getClientsName(Status) {
         canShowLoading.value = true;
