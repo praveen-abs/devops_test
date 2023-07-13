@@ -71,7 +71,7 @@ onMounted(() => {
     opt.value = "Department";
     salaryStore.getClientsName('loan_with_int');
     salaryStore.getCurrentStatus('loan_with_int');
-    loanStores.salaryAdvanceHistory();
+
 })
 
 
