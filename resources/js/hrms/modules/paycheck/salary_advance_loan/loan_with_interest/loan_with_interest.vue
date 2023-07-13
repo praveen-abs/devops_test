@@ -100,11 +100,12 @@
                                 <!-- <InputText type="text" v-model="useEmpStore.InterestWithLoan.required_amount" placeholder="&#8377; Enter The Required Amount" /> -->
                                 <InputNumber v-model="useEmpStore.InterestWithLoan.required_amount"
                                     placeholder="&#8377; Enter The Required Amount" inputId="withoutgrouping"
-                                    :useGrouping="false"  :class="[v$.required_amount.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-            <br>
-            <span v-if="v$.required_amount.$error" class="font-semibold text-red-400 fs-6">
-                {{ v$.required_amount.$errors[0].$message }}
-            </span>
+                                    :useGrouping="false"
+                                    :class="[v$.required_amount.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                <br>
+                                <span v-if="v$.required_amount.$error" class="font-semibold text-red-400 fs-6">
+                                    {{ v$.required_amount.$errors[0].$message }}
+                                </span>
                                 <p class="fs-6 my-2" style="color: var(--clr-gray)">Max Eligible Amount :
                                     {{ useEmpStore.InterestWithLoan.minEligibile }}
                                 </p>
@@ -115,13 +116,14 @@
                                 <Dropdown v-model="useEmpStore.InterestWithLoan.Term"
                                     :options="useEmpStore.InterestWithLoan.max_tenure_months" @change="selectMonth"
                                     optionLabel="month" optionValue="month" placeholder="select month"
-                                    class="w-full md:w-10rem" :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-                                    <label for="" class="fs-5 ml-1" style="color:var(--navy) ; ">Month</label>
-            <br>
+                                    class="w-full md:w-10rem"
+                                    :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                                <label for="" class="fs-5 ml-1" style="color:var(--navy) ; ">Month</label>
+                                <br>
 
-            <span v-if="v$.Term.$error" class="font-semibold text-red-400 fs-6">
-                {{ v$.Term.$errors[0].$message }}
-            </span>
+                                <span v-if="v$.Term.$error" class="font-semibold text-red-400 fs-6">
+                                    {{ v$.Term.$errors[0].$message }}
+                                </span>
 
                             </div>
                         </div>
@@ -195,11 +197,12 @@
                         <h1 class="fs-5 my-2 ml-2">EMI Start Month</h1>
                         <Dropdown @change="calculateMonth" v-model="useEmpStore.InterestWithLoan.EMI_Start_Month"
                             :options="useEmpStore.InterestWithLoan.details.deduction_starting_month" optionLabel="date"
-                            placeholder="select date" class="w-full md:w-10rem" optionValue="date" :class="[v$.EMI_Start_Month.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
-            <br>
-            <span v-if="v$.EMI_Start_Month.$error" class="font-semibold text-red-400 fs-6">
-                {{ v$.EMI_Start_Month.$errors[0].$message }}
-            </span>
+                            placeholder="select date" class="w-full md:w-10rem" optionValue="date"
+                            :class="[v$.EMI_Start_Month.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+                        <br>
+                        <span v-if="v$.EMI_Start_Month.$error" class="font-semibold text-red-400 fs-6">
+                            {{ v$.EMI_Start_Month.$errors[0].$message }}
+                        </span>
                     </div>
 
                     <div class="col-4 mx-2">
@@ -233,7 +236,6 @@
         </div>
 
     </Dialog>
-
 </template>
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';

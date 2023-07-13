@@ -52,6 +52,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const selectedOption3 = ref();
 
     const response_message = ref();
+    const canShowPopup = ref()
+    const AssignedClients = ref([])
 
 
     // Eligible Employees
@@ -132,15 +134,16 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectClientID: '',
         payroll_cycle: ''
     })
-    function reset(){
-        salaryStore.sa.perOfSalAdvance =""
-        salaryStore.sa.SA=""
-        salaryStore.sa.cusPerOfSalAdvance=""
-        salaryStore.sa.deductMethod=""
-        salaryStore.sa.cusDeductMethod=""
-        salaryStore.sa.approvalflow=""
-        salaryStore.sa.selectClientID=""
-        salaryStore.sa=""
+
+    function reset() {
+        salaryStore.sa.perOfSalAdvance = ""
+        salaryStore.sa.SA = ""
+        salaryStore.sa.cusPerOfSalAdvance = ""
+        salaryStore.sa.deductMethod = ""
+        salaryStore.sa.cusDeductMethod = ""
+        salaryStore.sa.approvalflow = ""
+        salaryStore.sa.selectClientID = ""
+        salaryStore.sa = ""
     }
 
     // Approval Flow
@@ -173,32 +176,32 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             sa.isSalaryAdvanceEnabled = 1
         }
 
-        axios.post(url, sa).then((res)=>{
-            response_message.value  = res.data;
+        axios.post(url, sa).then((res) => {
+            response_message.value = res.data;
 
             let val = res.data.data;
 
-            if(res.data.status == "success"){
+            if (res.data.status == "success") {
                 Swal.fire({
                     title: res.data.status = "success",
                     text: res.data.message,
                     // "Salary Advance Succesfully",
                     icon: "success",
-                }).then((res)=>{
+                }).then((res) => {
                     reset();
                     create_new_from = 1;
                 })
             }
-            else if(res.data.status == "failure"){
+            else if (res.data.status == "failure") {
                 Swal.fire({
                     title: res.data.status = "failure",
                     text: res.data.message,
                     // "Salary Advance Succesfully",
                     icon: "error",
                     showCancelButton: false,
-                }).then((res)=>{
+                }).then((res) => {
                     // blink_UI.value = res.data.data;
-                        create_new_from.value = 1;
+                    create_new_from.value = 1;
                 })
 
             }
@@ -212,29 +215,52 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     }
 
 
-    function swalFunction(Res){
-        console.log(Res);
-// let res = [];
-// res [Res]
-      let res = '';
-      res =Res;
-      console.log(res);
+    const swalFunction = (res) => {
+        // getting values after response is submitted
 
-        if(res.status == "success"){
+        let sm = [
+            { heading: "All", Message: "This Setting Name Already Exist For Another Settings in All Please Change The Setting Name", record_id: 1 },
+            { heading: "Brand Avatar", Message: "This Setting Name Already Exist For Another Settings in Brand Avatar Please Change The Setting Name", record_id: 2 },
+            { heading: "Avatar Live", Message: "This Setting Name Already Exist For Another Settings in Avatar Live Please Change The Setting Name", record_id: 14 }
+        ]
+
+        let messege = [
+
+        ]
+
+        sm.forEach(element => {
+            let format = `${element.heading} - ${element.Message}`
+            messege.push(format)
+            console.log(format);
+        });
+
+        messege.forEach((ele) => {
+            console.log(ele);
+        })
+
+        // This Setting Name Already Exist For Another Settings in All Please Change The Setting Name
+
+        console.log(messege);
+
+        // Notification service for Showing assigned Clients
+
+        if (res.status == "success") {
             Swal.fire({
-                title: res.status = "success",
-                text: res.message,
+                title: "Success",
+                text: messege.forEach((ele) => {
+                    return ele
+                }),
                 icon: "success",
-            }).then((res)=>{
+            }).then((res) => {
             })
         }
-        else if(res.status == "failure"){
+        else if (res.status == "failure") {
             Swal.fire({
                 title: res.status = "failure",
-                text: res.message,
+                text: messege,
                 icon: "error",
                 showCancelButton: false,
-            }).then((res)=>{
+            }).then((res) => {
 
             })
 
@@ -301,11 +327,14 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         let url = '/save-int-and-int-free-loan-settings';
-        axios.post(url, ifl).then((res)=>{
-            swalFunction(res.data);
-            console.log("testing swal",res.data);
+        axios.post(url, ifl).then((res) => {
+            res.data.message.forEach(element => {
+                let format = `${element.heading} - ${element.Message}`
+                AssignedClients.value.push(format)
+            });
         }).finally(() => {
             canShowLoading.value = false;
+            canShowPopup.value = true
             approvalFormat.splice(0, approvalFormat.length)
         })
     }
@@ -327,23 +356,25 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 }
             });
 
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false;
         })
     }
 
 
-    async function sendClient_code(loanType){
+    async function sendClient_code(loanType) {
         let loantype = loanType
         let url = `/change-client-id-sts-for-loan`;
-        await axios.post(url,{
-            client_status:client_name_status.value,
-            loanType:loantype
-        }).then((res)=>{
+        await axios.post(url, {
+            client_status: client_name_status.value,
+            loanType: loantype
+        }).then((res) => {
 
         })
 
     }
+
+
 
 
 
@@ -382,7 +413,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ta);
         }
         let url = '/saveTravelAdvanceSettings'
-        axios.post(url, ta).then((res)=>{
+        axios.post(url, ta).then((res) => {
             swalFunction(res.data)
         }).finally(() => {
             canShowLoading.value = false;
@@ -437,10 +468,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
         let url = '/save-int-and-int-free-loan-settings';
 
-        axios.post(url, lwif).then((res)=>{
-            swalFunction(res.data);
-            console.log("testing swal",res.data);
+        axios.post(url, lwif).then((res) => {
+            res.data.message.forEach(element => {
+                let format = `${element.heading} - ${element.Message}`
+                AssignedClients.value.push(format)
+            });
         }).finally(() => {
+            canShowPopup.value = true
             canShowLoading.value = false
             approvalFormat.splice(0, approvalFormat.length)
         })
@@ -638,17 +672,17 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 isLoanWithInterestFeature.value = res.data.status;
                 canShowLoading.value = false;
             }
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false;
         })
     }
 
     const salaryAdvanceSettingsDetails = ref();
 
-    async function salaryAdvanceHistory(){
+    async function salaryAdvanceHistory() {
         // console.log();
-        await axios.get('/settingDetails').then((res)=>{
-            salaryAdvanceSettingsDetails.value =  res.data;
+        await axios.get('/settingDetails').then((res) => {
+            salaryAdvanceSettingsDetails.value = res.data;
             console.log(salaryAdvanceSettingsDetails.value);
         })
     }
@@ -656,7 +690,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     return {
 
         //
-        dropdownFilter, getDropdownFilterDetails, getSelectoption, getElibigleEmployees, eligbleEmployeeSource, resetFilters, canShowLoading,
+        dropdownFilter, getDropdownFilterDetails, getSelectoption, getElibigleEmployees, eligbleEmployeeSource, resetFilters, canShowLoading, canShowPopup, AssignedClients,
 
         // Approver Flow
 
@@ -664,7 +698,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // SalaryAdvanceFeature
 
-        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from, getCurrentStatus, client_name_status,sendClient_code,salaryAdvanceHistory,salaryAdvanceSettingsDetails,
+        isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from, getCurrentStatus, client_name_status, sendClient_code, salaryAdvanceHistory, salaryAdvanceSettingsDetails,
 
         // Interest Free Loan
 
@@ -678,7 +712,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest,blink_UI,swalFunction,reset
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest, blink_UI, swalFunction, reset
 
     };
 });

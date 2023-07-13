@@ -372,7 +372,7 @@ class VmtSalaryAdvanceService
     }
 
 
-    public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $cusPerOfSalAdvance, $deductMethod, $cusDeductMethod, $approvalflow, $payroll_cycle, $SA)
+    public function saveSalaryAdvanceSettings($eligibleEmployee, $perOfSalAdvance, $deductMethod, $approvalflow, $payroll_cycle, $SA)
     {
 
         $salary_adv_name = VmtSalaryAdvSettings::where('settings_name', $SA)->first();
@@ -430,8 +430,8 @@ class VmtSalaryAdvanceService
 
             $saveSettingSALaryAdv = new VmtSalaryAdvSettings;
             $saveSettingSALaryAdv->settings_name = $SA;
-            $saveSettingSALaryAdv->percent_salary_adv = $perOfSalAdvance ?? $cusPerOfSalAdvance;
-            $saveSettingSALaryAdv->deduction_period_of_months = $deductMethod ?? $cusDeductMethod;
+            $saveSettingSALaryAdv->percent_salary_adv = $perOfSalAdvance;
+            $saveSettingSALaryAdv->deduction_period_of_months = $deductMethod;
             $saveSettingSALaryAdv->approver_flow = $json_approvalflow;
             $saveSettingSALaryAdv->can_borrowed_multiple = $payroll_cycle;
             $saveSettingSALaryAdv->save();

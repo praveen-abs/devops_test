@@ -3,7 +3,7 @@
 
         <div class="row d-flex justify-content-start align-items-center cu">
             <div class="mt-5 d-flex">
-                <div class="col-3 fs-4 fw-bolder">
+                <div class="col-4 fs-4 fw-bolder">
                     <h1 style="position: relative; left:-8px">Interest Free Loan Feature</h1>
                 </div>
 
@@ -21,7 +21,6 @@
                     your
                     organization.</p>
             </div>
-            <!-- {{salaryStore.ClientsName}} -->
 
             <div class="col" v-if="salaryStore.isInterestFreeLoaneature == '2'">
                 <div class="col-10">
@@ -30,18 +29,20 @@
                     <div class="d-flex justify-content-between align-items-center mt-5 w-6 "  style="width: 480px;">
                         <h1 class="fs-4 fw-bolder" >Select organization</h1>
                         <div class="d-flex flex-col position-relative">
-                            <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name"  optionValue="id"
-                            placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
-                                                v$.selectClientID.$error ? 'p-invalid' : '',
-                                            ]" />
-                                        <span v-if="v$.selectClientID.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
-                                            {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
-                                        </span>
+                            <MultiSelect v-model="salaryStore.ifl.selectClientID"
+                                :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
+                                placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
+                                    v$.selectClientID.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="v$.selectClientID.$error"
+                                class="text-red-400 fs-6 font-semibold position-absolute top-14">
+                                {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
+                            </span>
                         </div>
 
                     </div>
-                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of interest Free Loan</h1>
+                    <div class="my-4 d-flex justify-content-between align-items-center">
+                        <h1 class="fs-4 w-9">Name of interest Free Loan</h1>
                         <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.ifl.name"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
@@ -66,13 +67,15 @@
                                     <h1 class="fs-5">The employee must have served for a minimum of
                                         <!-- <InputText type="text" v-model="salaryStore.ifl.minEligibile"
                                             style="max-width: 100px; " class="mx-2" /> -->
-                                            <InputNumber v-model="salaryStore.ifl.minEligibile" inputId="withoutgrouping" :useGrouping="false" :class="[
+                                        <InputNumber v-model="salaryStore.ifl.minEligibile" inputId="withoutgrouping"
+                                            :useGrouping="false" :class="[
                                                 v$.minEligibile.$error ? 'p-invalid' : '',
                                             ]" />
-                                        <span v-if="v$.minEligibile.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
+                                        <span v-if="v$.minEligibile.$error"
+                                            class="text-red-400 fs-6 font-semibold position-absolute top-14">
                                             {{ v$.minEligibile.required.$message.replace("Value", "") }}
                                         </span>
-                                            months
+                                        months
                                     </h1>
                                 </div>
                                 <div class="col-12">
@@ -82,9 +85,13 @@
                                         years to avail the loan amount of
 
                                         <!-- <InputText type="text"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" /> -->
-                                            <InputNumber v-if="salaryStore.ifl.precent_Or_Amt == 'percnt'" style="max-width: 100px;"  v-model.number="salaryStore.ifl.availPerInCtc"  inputId="withoutgrouping" :useGrouping="false" class="mx-2" />
+                                        <InputNumber v-if="salaryStore.ifl.precent_Or_Amt == 'percnt'"
+                                            style="max-width: 100px;" v-model.number="salaryStore.ifl.availPerInCtc"
+                                            inputId="withoutgrouping" :useGrouping="false" class="mx-2" />
 
-                                            <InputNumber v-else disabled style="max-width: 100px;"  v-model.number="salaryStore.ifl.availPerInCtc"  inputId="withoutgrouping" :useGrouping="false" class="mx-2"  />
+                                        <InputNumber v-else disabled style="max-width: 100px;"
+                                            v-model.number="salaryStore.ifl.availPerInCtc" inputId="withoutgrouping"
+                                            :useGrouping="false" class="mx-2" />
                                         % of their CTC.
                                     </h1>
                                 </div>
@@ -95,9 +102,12 @@
                                         employees
                                         <!-- <InputText v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'" type="text"
                                             v-model="salaryStore.ifl.max_loan_limit"  /> -->
-                                            <InputNumber v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'"  v-model="salaryStore.ifl.max_loan_limit" inputId="withoutgrouping" :useGrouping="false" class="mx-2"  />
+                                        <InputNumber v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'"
+                                            v-model="salaryStore.ifl.max_loan_limit" inputId="withoutgrouping"
+                                            :useGrouping="false" class="mx-2" />
 
-                                            <InputNumber v-else  disabled  v-model="salaryStore.ifl.max_loan_limit" inputId="withoutgrouping" :useGrouping="false" class="mx-2"  />
+                                        <InputNumber v-else disabled v-model="salaryStore.ifl.max_loan_limit"
+                                            inputId="withoutgrouping" :useGrouping="false" class="mx-2" />
                                         <!-- <InputText v-else disabled type="text" v-model="salaryStore.ifl.max_loan_limit"
                                             style="width: 150px;" /> -->
                                     </h1>
@@ -166,13 +176,15 @@
                                             loan amount
                                             <!-- <InputText type="text" v-model="salaryStore.ifl.maxTenure"
                                                 style="max-width: 100px;" class="mx-2" /> -->
-                                            <InputNumber  v-model="salaryStore.ifl.maxTenure" inputId="withoutgrouping" :useGrouping="false" class="mx-2" :class="[
-                                                v$.maxTenure.$error ? 'p-invalid' : '',
-                                            ]" />
-                                        <span v-if="v$.maxTenure.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
-                                            {{ v$.maxTenure.required.$message.replace("Value", "maximum duration") }}
-                                        </span>
-                                             months
+                                            <InputNumber v-model="salaryStore.ifl.maxTenure" inputId="withoutgrouping"
+                                                :useGrouping="false" class="mx-2" :class="[
+                                                    v$.maxTenure.$error ? 'p-invalid' : '',
+                                                ]" />
+                                            <span v-if="v$.maxTenure.$error"
+                                                class="text-red-400 fs-6 font-semibold position-absolute top-14">
+                                                {{ v$.maxTenure.required.$message.replace("Value", "maximum duration") }}
+                                            </span>
+                                            months
                                         </p>
                                     </div>
                                 </div>
@@ -199,11 +211,12 @@
                                         :options="salaryStore.filteredApprovalFlow" optionLabel="name" placeholder="Select"
                                         class="w-full pl-2 md:w-14rem"
                                         @change="salaryStore.toSelectoption(1, salaryStore.selectedOption1)" :class="[
-                                                v$.selectedOption1.$error ? 'p-invalid' : '',
-                                            ]" />
-                                        <span v-if="v$.selectedOption1.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14 mt-3">
-                                            {{ v$.selectedOption1.required.$message.replace("Value", "Employee Request") }}
-                                        </span>
+                                            v$.selectedOption1.$error ? 'p-invalid' : '',
+                                        ]" />
+                                    <span v-if="v$.selectedOption1.$error"
+                                        class="text-red-400 fs-6 font-semibold position-absolute top-14 mt-3">
+                                        {{ v$.selectedOption1.required.$message.replace("Value", "Employee Request") }}
+                                    </span>
                                     <button
                                         @click="salaryStore.option1 = 0, salaryStore.toSelectoption(4, salaryStore.selectedOption1)"
                                         v-if="salaryStore.selectedOption1" class="mx-2">
@@ -287,14 +300,15 @@
 </template>
 <script setup>
 
-import { ref, reactive, onMounted,computed } from 'vue';
+import { ref, reactive, onMounted, computed } from 'vue';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore';
 import useValidate from '@vuelidate/core';
 import { required, email, minLength, sameAs } from '@vuelidate/validators';
 
 const salaryStore = salaryAdvanceSettingMainStore()
+const showPopup = ref(false)
 
-onMounted(()=>{
+onMounted(() => {
     salaryStore.getClientsName();
     salaryStore.getCurrentStatus('int_free_loan');
 })
@@ -315,17 +329,18 @@ onMounted(() => {
 });
 
 
+
 const rules = computed(() => {
     return {
-        name:{required},
+        name: { required },
         selectClientID: { required },
-        minEligibile: { required } ,
-        maxTenure : { required },
-        selectedOption1:{ required }
+        minEligibile: { required },
+        maxTenure: { required },
+        selectedOption1: { required }
     }
 })
 
-function reset(){
+function reset() {
     salaryStore.isInterestFreeLoaneature = 1
 }
 
@@ -429,5 +444,6 @@ input[type='radio']:after {
 
 .p-dropdown-label.p-inputtext {
     color: var(--navy);
-}</style>
+}
+</style>
 
