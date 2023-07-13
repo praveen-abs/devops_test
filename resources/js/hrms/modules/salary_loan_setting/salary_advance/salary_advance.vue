@@ -504,7 +504,7 @@ const submitForm = () => {
         console.log('Form successfully submitted.')
         salaryStore.saveSalaryAdvanceFeature();
         salaryStore.create_new_from = 1;
-        v$.value.$reset()
+        v$.value.$reset();
     } else {
         console.log('Form failed validation')
     }
@@ -534,6 +534,7 @@ onMounted(() => {
 });
 
 let view_details = ref([]);
+const Name = [];
 
 function viewDetails(val) {
     console.log(val.settings.view_details.approver_flow);
@@ -548,17 +549,42 @@ function viewDetails(val) {
     salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple
 
 
-    salaryStore.selectedOption1 = val.settings.view_details.approver_flow[0].name;
-    salaryStore.selectedOption2 = val.settings.view_details.approver_flow[1].name;
+    // salaryStore.selectedOption1 = val.settings.view_details.approver_flow[0].name;
+    // salaryStore.selectedOption2 = val.settings.view_details.approver_flow[1].name;
+    // if(val.settings.view_details.approver_flow[2].name){
+    //     salaryStore.selectedOption3 = val.settings.view_details.approver_flow[2].name
+    // }
     // salaryStore.selectedOption3 = val.settings.view_details.approver_flow[2].name;
-    console.log(salaryStore.selectedOption1);
+    // salaryStore.selectedOption4 = val.settings.view_details.approver_flow[3].name;
+
+
+    val.settings.view_details.approver_flow.forEach(element => {
+
+        Name.push( element.name)
+
+      salaryStore.selectedOption1 = Name[0];
+      if( Name[1]){
+        salaryStore.selectedOption2 = Name[1];
+      }
+
+      if(Name[2]){
+        salaryStore.selectedOption2 =Name[2] ;
+      }
+
+
+    });
+    console.log(Name);
+
+
 
    if(salaryStore.selectedOption1) {
     salaryStore.option1 = 0;
      salaryStore.option = 1
+    //  console.log(salaryStore.selectedOption1);
      if(salaryStore.selectedOption2){
-        salaryStore.option1 == 1
+        salaryStore.option1 = 1
         salaryStore.option2 = 1
+        // console.log( salaryStore.selectedOption2);
         // if(){
         // }
      }
