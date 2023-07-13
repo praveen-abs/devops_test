@@ -462,7 +462,19 @@ class VmtSalaryAdvanceService
                 ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])->get()->toArray();
 
           $getdetails = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
-                     ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])->get()->toArray();
+                     ->join('users', 'users.id', '=', 'vmt_emp_assign_salary_adv_setting.user_id')->where('salary_adv_id', $single_settings['id'])
+                     ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                     ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
+                     ->join('vmt_client_master','vmt_client_master.id','=','users.client_id')
+                     ->get([
+                        'vmt_salary_adv_setting.settings_name',
+                        'users.name',
+                        'users.user_code',
+                        'vmt_department.name as department_name',
+                        'vmt_employee_office_details.designation',
+                        'vmt_employee_office_details.work_location',
+                        'vmt_client_master.client_name'
+                        ])->toArray();
 
 
                 foreach($getsetting_details as $single_arr){
@@ -479,7 +491,14 @@ class VmtSalaryAdvanceService
 
                     if(in_array($get_single['settings_name'],$get_single)){
 
-                        array_push($res1['assigned_emp'],$get_single['name']);
+                                 $get_details_settings['name'] =  $get_single['name'];
+                                 $get_details_settings['user_code'] =  $get_single['user_code'];
+                                 $get_details_settings['department_name'] =  $get_single['department_name'];
+                                 $get_details_settings['designation'] =  $get_single['designation'];
+                                 $get_details_settings['work_location'] =  $get_single['work_location'];
+                                 $get_details_settings['client_name'] =  $get_single['client_name'];
+
+                        array_push($res1['assigned_emp'],$get_details_settings);
                     }
                 }
             }
