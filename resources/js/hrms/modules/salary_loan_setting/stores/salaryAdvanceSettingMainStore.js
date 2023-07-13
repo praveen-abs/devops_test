@@ -132,7 +132,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectClientID: '',
         payroll_cycle: ''
     })
-    function rest(){
+    function reset(){
         salaryStore.sa.perOfSalAdvance =""
         salaryStore.sa.SA=""
         salaryStore.sa.cusPerOfSalAdvance=""
@@ -177,8 +177,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             response_message.value  = res.data;
 
             let val = res.data.data;
-            console.log(val);
-            console.log(res.data.status);
+
             if(res.data.status == "success"){
                 Swal.fire({
                     title: res.data.status = "success",
@@ -186,7 +185,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                     // "Salary Advance Succesfully",
                     icon: "success",
                 }).then((res)=>{
-                    rest();
+                    reset();
                     create_new_from = 1;
                 })
             }
@@ -210,6 +209,37 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         })
         console.log(sa);
+    }
+
+
+    function swalFunction(Res){
+        console.log(Res);
+// let res = [];
+// res [Res]
+      let res = '';
+      res =Res;
+      console.log(res);
+
+        if(res.status == "success"){
+            Swal.fire({
+                title: res.status = "success",
+                text: res.message,
+                icon: "success",
+            }).then((res)=>{
+            })
+        }
+        else if(res.status == "failure"){
+            Swal.fire({
+                title: res.status = "failure",
+                text: res.message,
+                icon: "error",
+                showCancelButton: false,
+            }).then((res)=>{
+
+            })
+
+        }
+
     }
 
 
@@ -271,7 +301,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         let url = '/save-int-and-int-free-loan-settings';
-        axios.post(url, ifl).finally(() => {
+        axios.post(url, ifl).then((res)=>{
+            swalFunction(res.data);
+            console.log("testing swal",res.data);
+        }).finally(() => {
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length)
         })
@@ -349,7 +382,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(ta);
         }
         let url = '/saveTravelAdvanceSettings'
-        axios.post(url, ta).finally(() => {
+        axios.post(url, ta).then((res)=>{
+            swalFunction(res.data)
+        }).finally(() => {
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length);
         })
@@ -402,7 +437,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
         let url = '/save-int-and-int-free-loan-settings';
 
-        axios.post(url, lwif).finally(() => {
+        axios.post(url, lwif).then((res)=>{
+            swalFunction(res.data);
+            console.log("testing swal",res.data);
+        }).finally(() => {
             canShowLoading.value = false
             approvalFormat.splice(0, approvalFormat.length)
         })
@@ -640,7 +678,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest,blink_UI
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest,blink_UI,swalFunction,reset
 
     };
 });
