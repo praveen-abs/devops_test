@@ -801,12 +801,12 @@ class VmtSalaryAdvanceService
 
         if (empty($sucess_msg)) {
             return response()->json([
-                'status' => 'Sucesss',
+                'status' => 'sucesss',
                 'message' => "Interest free and int loan setiings Saved Sucessfully"
             ]);
         } else {
             return response()->json([
-                'status' => 'Sucesss',
+                'status' => 'sucesss',
                 'message' => $sucess_msg
             ]);
         }
