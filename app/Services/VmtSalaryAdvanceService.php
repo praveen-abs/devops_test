@@ -255,6 +255,7 @@ class VmtSalaryAdvanceService
             $EmpApplySalaryAmt->reason = $reason;
             $EmpApplySalaryAmt->emp_approver_flow = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
             $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
+            $EmpApplySalaryAmt->sal_adv_status = "Pending";
             $EmpApplySalaryAmt->save();
 
 
@@ -354,6 +355,7 @@ class VmtSalaryAdvanceService
                 $EmpApplySalaryAmt->reason = $reason;
                 $EmpApplySalaryAmt->emp_approver_flow = $this->getEmpapproverjson($employee_sal_sett->approver_flow, $employee_sal_sett->user_id);
                 $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
+                $EmpApplySalaryAmt->sal_adv_status = "Pending";
                 $EmpApplySalaryAmt->save();
 
                 return response()->json([
