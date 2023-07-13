@@ -395,7 +395,7 @@ class VmtSalaryAdvanceService
 
                     return response()->json([
                         'status' => 'failure',
-                        'massage' => 'already using the settings',
+                        'message' => 'already using the settings',
                     ]);
                 }
             }
@@ -418,10 +418,10 @@ class VmtSalaryAdvanceService
         }
 
         if (!empty($res)) {
-
+            $res = implode(',', $res);
             return response()->json([
                 'status'=> 'failure',
-                'message' => 'already assigned another setting',
+                'message' => $res.' These Employees are already assigned to another setting , so please remove this employees from that settings and add to this settings',
                 'data' => $res,
 
             ]);
