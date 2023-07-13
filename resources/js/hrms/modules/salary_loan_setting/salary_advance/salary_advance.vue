@@ -404,8 +404,8 @@
         <div class="row">
             <div class="col">
                 <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details"  >  Cancel</button>
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details"  >  Cancel</button>
+                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
                 </div>
             </div>
@@ -534,13 +534,14 @@ onMounted(() => {
 
 });
 
-let view_details = ref([]);
+let view_details = ref();
 
 
 const Name = [];
 
 function viewDetails(val) {
     view_details.value  = val;
+    console.log(view_details);
 
     salaryStore.create_new_from = 2;
 
