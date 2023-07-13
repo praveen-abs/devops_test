@@ -7,7 +7,7 @@
     <div class="col-10 ">
 
 
-        <div class="d-flex justify-content-between align-items-center mt-5 " style="width: 480px;">
+        <div class="d-flex justify-content-between align-items-center mt-5 w-6" style="width: 480px;">
             <h1 class="fs-4 ">Select organization</h1>
             <div class="d-flex flex-col position-relative">
                 <MultiSelect v-model="salaryStore.lwif.selectClientID" :options="salaryStore.dropdownFilter.legalEntity"
@@ -24,7 +24,7 @@
         </div>
 
         <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of the Salary Advance</h1>
+                        <h1 class="fs-4">Name of the Loan With Interest</h1>
                         <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.lwif.name"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
