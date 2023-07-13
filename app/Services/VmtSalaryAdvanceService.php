@@ -709,7 +709,7 @@ class VmtSalaryAdvanceService
        
         foreach ($client_id as $single_cl_id) {
             try {
-                $client_name = VmtClientMaster::where('id', $single_cl_id)->first()->client_fullname;
+                $client_name = VmtClientMaster::where('id', $single_cl_id)->first()->client_name;
                 if ($loan_type == 'InterestFreeLoan') {
                     $setting_for_loan = new VmtInterestFreeLoanSettings;
 
