@@ -3,7 +3,7 @@
 
         <div class="row d-flex justify-content-start align-items-center cu">
             <div class="mt-5 d-flex">
-                <div class="col-4 fs-4 fw-bolder">
+                <div class="col-4 fs-4 ">
                     <h1 style="position: relative; left:-8px">Interest Free Loan Feature</h1>
                 </div>
 
@@ -27,7 +27,7 @@
                     <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
 
                     <div class="d-flex justify-content-between align-items-center mt-5 w-6 "  style="width: 480px;">
-                        <h1 class="fs-4 fw-bolder" >Select organization</h1>
+                        <h1 class="fs-4" >Select organization</h1>
                         <div class="d-flex flex-col position-relative">
                             <MultiSelect v-model="salaryStore.ifl.selectClientID"
                                 :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
@@ -41,8 +41,8 @@
                         </div>
 
                     </div>
-                    <div class="my-4 d-flex justify-content-between align-items-center">
-                        <h1 class="fs-4 w-9">Name of interest Free Loan</h1>
+                    <div class="my-4 d-flex justify-content-between align-items-center w-6">
+                        <h1 class="fs-4 w-6">Name of interest Free Loan</h1>
                         <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.ifl.name"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees and Amount</h1>
+                    <h1 class="mt-10 fs-4 ">Eligible Employees and Amount</h1>
                     <p class="mt-3 fs-5">The employee's eligibility for the loan amount can be determined based on the
                         number of
                         years they have served in the organization.</p>
@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="col">
-                    <h1 class="mt-2 fs-4 fw-bolder">Deduction Method</h1>
+                    <h1 class="mt-2 fs-4 ">Deduction Method</h1>
                     <p class="my-2 fs-5">In the case of an interest-free loan, the EMI would only consist of repayment of
                         the
                         principal amount borrowed, and no interest would be charged.</p>
@@ -194,7 +194,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+                    <h1 class="my-3 fs-4 " style="margin-top: 30px !important;">Approval Setting</h1>
                     <p class="my-2 fs-5">Please choose the approval flow for Interest Free Loan Feature.</p>
 
                     <div class="card border-L">
@@ -309,7 +309,7 @@ const salaryStore = salaryAdvanceSettingMainStore()
 const showPopup = ref(false)
 
 onMounted(() => {
-    salaryStore.getClientsName();
+    salaryStore.getClientsName('int_free_loan');
     salaryStore.getCurrentStatus('int_free_loan');
 })
 const value = ref();
