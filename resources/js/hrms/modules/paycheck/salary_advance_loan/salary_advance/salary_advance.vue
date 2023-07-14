@@ -102,11 +102,15 @@
             </div>
             <div class="w-5 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
-                <input id="rentFrom_month" v-model="useEmpStore.sa.ra"
-                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
+                <InputNumber v-model="useEmpStore.sa.ra" inputId="withoutgrouping" class="my-2 " :useGrouping="false" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
                 <span v-if="v$.ra.$error" class="font-semibold text-red-400 fs-6">
                     {{ v$.ra.$errors[0].$message }}
                 </span>
+                <!-- <input id="rentFrom_month" v-model="useEmpStore.sa.ra"
+                    class="my-2  border border-black text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" :class="[  v$.ra.$error ? 'border border-red-500' : '' ]" />
+                <span v-if="v$.ra.$error" class="font-semibold text-red-400 fs-6">
+                    {{ v$.ra.$errors[0].$message }}
+                </span> -->
                 <p class="text-sm font-semibold text-gray-500">Max Eligible Amount : {{ useEmpStore.sa.mxe }} </p>
             </div>
         </div>
@@ -121,7 +125,7 @@
         </div>
 
         <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
-            <span class="font-semibold ">Reason</span>
+            <span class="font-semibold ">Reason <span class=" text-red-500 mx-1 fs-5">*</span></span>
             <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" :class="[  v$.reason.$error ? 'p-invalid' : '' ]" />
             <span v-if="v$.reason.$error" class="font-semibold text-red-400 fs-6">
                 {{ v$.reason.$errors[0].$message }}
