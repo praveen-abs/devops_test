@@ -465,10 +465,6 @@ const custDeduct = (value) => {
 
 
 
-
-
-
-
 // const eligibleRequiredAmount = (value) => {
 //     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
 //         console.log(value);
@@ -486,8 +482,7 @@ const rules = computed(() => {
         deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
-        // selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
-        // payroll_cycle:{ required: helpers.withMessage('salary Advance Name is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount)}
+
     }
 })
 
