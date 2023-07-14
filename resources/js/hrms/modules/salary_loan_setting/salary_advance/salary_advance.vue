@@ -2,8 +2,8 @@
     <div class="px-1">
         <div class="row d-flex justify-content-start align-items-center">
             <div class="d-flex " v-if="salaryStore.create_new_from == '1'">
-                <div class="col-3 fs-4" style="position: relative; left: -8px;">
-                    <h1 class="">Salary Advance Feature</h1>
+                <div class="col-3  text-center d-flex align-items-center justify-content-start"  style="">
+                    <h1 class="text-xl  xl:text-2xl ">Salary Advance Feature</h1>
                 </div>
                 <div class="col">
                     <button class="orange_btn border-1 border-orange-500"
@@ -55,7 +55,7 @@
             <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
                     <div class="my-4 flex align-items-center">
-                        <h1 class="fs-4 w-4">Name of the Salary Advance</h1>
+                        <h1 class="text-xl  xl:text-2xl  w-4">Name of the Salary Advance</h1>
                         <div class=" ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
@@ -80,7 +80,7 @@
                                 Multiple</button>
                         </div>
                     </div>
-                    <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees</h1>
+                    <h1 class="mt-10 fs-4 ">Eligible Employees</h1>
                     <p class="my-2 fs-5">Kindly choose the employees who are eligible for the salary advance.</p>
                 </div>
 
@@ -170,7 +170,7 @@
                 </div>
 
                 <div class="mt-4 col">
-                    <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
+                    <h1 class="my-3 fs-4 ">Percentage of Salary Advance</h1>
                     <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
                     <div class="shadow-sm card border-L rounded-top">
@@ -226,7 +226,7 @@
                         </div>
                     </div>
 
-                    <h1 class="my-3 mt-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
+                    <h1 class="my-3 mt-3 fs-4 " style="margin-top: 30px !important;">Deduction Method</h1>
                     <p class="my-2 fs-5">Please choose the method of deduction.</p>
                     <div class="card border-L">
                         <div class="card-body">
@@ -275,17 +275,23 @@
 
                     </div>
 
-                    <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+                    <h1 class="my-3 fs-4 " style="margin-top: 30px !important;">Approval Setting</h1>
                     <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
                     <div class="card border-L">
-                        <div class="py-3  grid grid-cols-4">
-                            <div class="my-3 mx-1 d-flex align-items-center" style="width: 200px;">
+                        <div class="py-3 row">
+                            <div class="col-3 my-3 mx-1 d-flex align-items-center" style="width: 200px;">
                                 <P class="mx-3 fs-5">Employee Request
                                 </P>
                                 <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
                             </div>
-                            <div class="d-flex">
+
+                            <div class="col">
+
+                                <div class="row">
+
+
+                            <div class="col d-flex">
                                 <div class="w-10 p-1 rounded bg-slate-200 d-flex align-items-center "
                                     style="width: 225px !important;">
                                     <Dropdown v-model="salaryStore.selectedOption1" editable
@@ -306,7 +312,7 @@
                             </div>
 
 
-                            <div class="col col-3 d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
+                            <div class="col  d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
                                 <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center col-8"
                                     style="width: 225px !important;">
                                     <Dropdown v-model="salaryStore.selectedOption2" editable
@@ -342,7 +348,15 @@
                                     </button>
                                 </div>
                             </div>
+
+                                </div>
+
+                            </div>
+
+
+
                         </div>
+                        <!-- grid grid  -->
 
                         <span v-if="v$.approvalflow.$error" class="mx-2 font-semibold text-red-400 fs-6">
                             {{ v$.approvalflow.$errors[0].$message }}

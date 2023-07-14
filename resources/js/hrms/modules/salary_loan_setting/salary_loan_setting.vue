@@ -2,8 +2,7 @@
     <div style="position: relative;">
         <div class="row">
             <div class="col-6">
-                <h1 class="mb-4 fs-3 d-flex align-items-center " style="color: #003056; "><i
-                        class='mr-3 pi pi-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
+                <h1 class="mb-4 fs-4 d-flex align-items-center " style="color: #003056; "> Salary Advance & Loan Settings</h1>
             </div>
             <div class="col-6 px-4 ">
                 <button class=" underline fs-5 text-blue-700 float-right mx-2" @click="viewHistory(data)">History</button>
@@ -83,7 +82,7 @@
         </p>
         <p class="font-semibold fs-4 text-center ">Submission Successfull</p>
 
-        <ul v-for="option in useSalaryStore.AssignedClients">
+        <ul v-for="option in useSalaryStore.AssignedClients" :key="option">
             <li class="my-2.5 text-medium ">{{ option }}</li>
         </ul>
     </Dialog>

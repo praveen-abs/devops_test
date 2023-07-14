@@ -2,8 +2,8 @@
     <div class="px-2">
         <div class="row d-flex justify-content-start align-items-center ">
             <div class="d-flex" v-if="CreateLoanWithNewFrom == 1">
-                <div class="col-3 fs-4" style="position: relative; left: -8px;" >
-                    <h1 class="">Loan With interest Feature</h1>
+                <div class="col-3  d-flex align-items-center justify-content-start" style="position: relative; left: -8px;" >
+                    <h1 class=" text-xl  xl:text-2xl ">Loan With interest Feature</h1>
                 </div>
                 <div class="col">
                     <button class="orange_btn "
