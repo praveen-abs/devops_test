@@ -497,8 +497,6 @@ const submitForm = () => {
 }
 
 
-
-
 function selectClientId(data) {
     salaryStore.sendClient_code(data);
 }
