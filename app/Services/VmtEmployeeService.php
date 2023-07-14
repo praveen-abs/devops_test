@@ -198,7 +198,7 @@ class VmtEmployeeService {
 
             $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
 
-                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+                $newUser->client_id = VmtClientMaster::where('client_code', $data['emp_client_code'])->first()->id;
 
 
             $newUser->active = '0';
@@ -761,10 +761,8 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
     public function uploadDocument($emp_id,$fileObject, $onboard_document_type){
 
         try{
+            if(!empty($fileObject)){
             $emp_code = User::find($emp_id)->user_code;
-
-            if(empty($fileObject))
-                return null;
 
             $onboard_doc_id = VmtDocuments::where('document_name',$onboard_document_type);
 
@@ -823,12 +821,17 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
 
 
             $employee_documents->save();
-        }
+
+            }
+    }
+
+
         catch(\Exception $e){
             dd("Error :: uploadDocument() ".$e);
         }
 
         return "success";
+
 
     }
 

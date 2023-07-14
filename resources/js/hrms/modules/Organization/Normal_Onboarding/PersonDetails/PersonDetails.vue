@@ -10,8 +10,9 @@
                         <div class="floating">
                             <label for="" class="float-label">Employee Code</label>
                             <div class="p-inputgroup flex-1">
-                                <span class="p-inputgroup-addon font-semibold text-sm text-black ">{{ service.clientCode
-                                }}</span>
+                                <span v-if="service.readonly.isDisableClientCode" class="p-inputgroup-addon font-semibold text-sm text-black ">
+                                    {{ service.clientCode
+                                    }}</span>
                                 <InputText
                                     :class="[service.readonly.is_emp_code_quick ? 'bg-gray-200' : '', service.user_code_exists ? 'p-invalid' : '']"
                                     class="capitalize form-onboard-form form-control textbox" type="text"
@@ -65,7 +66,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Marital Status <span class="text-danger">*</span></label>
                             <Dropdown v-model="service.employee_onboarding.marital_status" :options="service.maritalDetails"
-                                optionLabel="name" placeholder="Select Martial Status" @change="service.spouseDisable"
+                                optionLabel="name" optionValue="id" placeholder="Select Martial Status" @change="service.spouseDisable"
                                 class="p-error" :class="{
                                     'p-invalid':
                                         v$.marital_status.$error,
@@ -434,7 +435,7 @@ const mobileNoExists = () => {
         .get(`/mobile-no-exists/${mobile}`)
         .then((res) => {
             console.log(res.data);
-            if (service.checkIsQuickOrNormal == 'quick' || checkIsQuickOrNormal.onboard_type == 'bulk') {
+            if (service.checkIsQuickOrNormal == 'quick' || service.checkIsQuickOrNormal == 'bulk') {
                 console.log("quick onboarding");
             } else {
                 service.is_mobile_no_exists = res.data;

@@ -51,7 +51,7 @@
                             @change="service.getPersonalDocuments($event, 'Passport')"
                             class="onboard-form form-control file" />
                             <span v-if="v$.PassportDoc.$error" class="font-semibold text-red-400 fs-6">
-                                {{ v$.PanCardDoc.$errors[0].$message }}
+                                {{ v$.PassportDoc.$errors[0].$message }}
                             </span>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-6 col-xs-12 col-lg-6">
@@ -102,8 +102,8 @@
 
             <div class="row">
                 <div class="text-right col-12">
-                    <!-- <input type="button" value="sample" @click="service.Sampledata"
-                        class="mr-4 text-center btn btn-orange processOnboardForm" /> -->
+                    <input type="button" value="sample" @click="service.Sampledata"
+                        class="mr-4 text-center btn btn-orange processOnboardForm" />
 
                     <!-- <input class="btn btn-orange" type="button" value="check" @click="service.compensatoryCalWhileQuick"> -->
 

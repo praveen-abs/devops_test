@@ -25,6 +25,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const employee_onboarding = reactive({
         can_onboard_employee: 1,
+        emp_client_code: '',
         employee_code: "",
         doj: "",
         aadhar_number: "",
@@ -524,10 +525,38 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             dob_father: { required },
             mother_name: { required },
             dob_mother: { required },
-            spouse_name: { required },
+            spouse_name: {
+                // required: helpers.withMessage('Spouse name is required', () => {
+                //     console.log(employee_onboarding.marital_status.name);
+                //     if (employee_onboarding.marital_status == 2) {
+                //         return false
+                //     } else {
+                //         return true
+
+                //     }
+                // })
+            },
             wedding_date: {},
-            spouse_gender: { required },
-            dob_spouse: { required },
+            spouse_gender: {
+                // required: helpers.withMessage('Spouse gender is required', () => {
+                //     if (employee_onboarding.marital_status == 2) {
+                //         return false
+                //     } else {
+                //         return true
+
+                //     }
+                // })
+            },
+            dob_spouse: {
+                // required: helpers.withMessage('Spouse dob is required', () => {
+                //     if (employee_onboarding.marital_status == 2) {
+                //         return false
+                //     } else {
+                //         return true
+
+                //     }
+                // })
+            },
 
             // Personal Documents
 
@@ -550,9 +579,10 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const submit = () => {
 
         let formData = new FormData();
-        formData.append("can_onboard_employee", `${clientCode.value}${employee_onboarding.can_onboard_employee}`);
-        formData.append("employee_code", employee_onboarding.employee_code);
-        formData.append("doj", moment(employee_onboarding.doj).format('YYYY-MM-DD'));
+        formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
+        formData.append("emp_client_code", employee_onboarding.emp_client_code);
+        formData.append("employee_code", `${clientCode.value}${employee_onboarding.employee_code}`);
+        formData.append("doj", employee_onboarding.doj ? moment(employee_onboarding.doj).format('YYYY-MM-DD') : employee_onboarding.doj);
         formData.append("aadhar_number", employee_onboarding.aadhar_number);
         formData.append("passport_number", employee_onboarding.passport_number);
         formData.append("bank_id", employee_onboarding.bank_name);
@@ -562,13 +592,13 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         formData.append("pan_number", employee_onboarding.pan_number);
         formData.append("passport_date", employee_onboarding.passport_date);
         formData.append("AccountNumber", employee_onboarding.AccountNumber);
-        formData.append("dob", moment(employee_onboarding.dob).format('YYYY-MM-DD'));
+        formData.append("dob", employee_onboarding.doj ? moment(employee_onboarding.dob).format('YYYY-MM-DD') : employee_onboarding.doj);
         formData.append("mobile_number", employee_onboarding.mobile_number);
         formData.append("dl_no", employee_onboarding.dl_no);
         formData.append("blood_group_name", employee_onboarding.blood_group_name);
         //   formData.append("blood_group_id", employee_onboarding.blood_group_id);
         formData.append("bank_ifsc", employee_onboarding.bank_ifsc);
-        formData.append("marital_status", employee_onboarding.marital_status.id);
+        formData.append("marital_status", employee_onboarding.marital_status);
         //   formData.append("marital_status_id", employee_onboarding.marital_status_id);
         formData.append("email", employee_onboarding.email);
         formData.append("nationality", employee_onboarding.nationality);
@@ -687,7 +717,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         formData.append("AadharBack", employee_onboarding.AadharCardBack);
         formData.append("panDoc", employee_onboarding.PanCardDoc);
         formData.append("eductionDoc", employee_onboarding.EductionDoc);
-        formData.append("releivingDoc", employee_onboarding.ReleivingLetterDoc);
+        formData.append("releivingDoc", employee_onboarding.RelievingLetterDoc);
         formData.append("voterId", employee_onboarding.VoterIdDoc);
         formData.append("passport", employee_onboarding.PassportDoc);
         formData.append("dlDoc", employee_onboarding.DrivingLicenseDoc);
@@ -717,7 +747,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
                 });
 
-
                 employee_onboarding.save_draft_messege = response.data;
 
             })
@@ -731,6 +760,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const submitForm = (isEmployeeOnboard) => {
+
+        console.log(isEmployeeOnboard);
 
 
         employee_onboarding.can_onboard_employee = isEmployeeOnboard
@@ -749,7 +780,9 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                     } else {
                         RequiredDocument.value = true
                     }
-                } else {
+                } else
+                if(isEmployeeOnboard == 1)
+                 {
                     if (!v$.value.$error) {
                         // if ANY fail validation
                         console.log('Form successfully submitted.')
@@ -774,7 +807,9 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         let url_param_UID = new URL(document.location).searchParams.get('uid');
 
         if (url_param_UID) {
-            fetchQuickOnboardedEmployeeDetails(url_param_UID).then((result) => {
+            axios.post('/fetch-quickonboarded-emp-details', {
+                encr_uid: url_param_UID,
+            }).then((result) => {
                 populateQuickOnboardData(result.data);
                 // console.log("result" + result.data);
             });
@@ -784,6 +819,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             axios.get('/get-client-code').then(res => {
                 console.log(res.data);
                 clientCode.value = res.data
+                employee_onboarding.emp_client_code = res.data
             })
         }
     }
@@ -812,6 +848,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             readonly.other = true
             readonly.mobile = true
             readonly.designation = true
+            readonly.isDisableClientCode = false
             // setTimeout(() => {
             //   compensatoryCalWhileQuick()
             //   spouseEnable()
@@ -826,6 +863,14 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
         employee_onboarding.employee_code = ref(emp_data.user_code);
         employee_onboarding.employee_name = ref(emp_data.name);
+        employee_onboarding.dob = ref(emp_data.dob);
+        employee_onboarding.marital_status = ref(emp_data.marital_status_id);
+        employee_onboarding.gender = ref(emp_data.gender);
+        employee_onboarding.aadhar_number = ref(emp_data.aadhar_number);
+        employee_onboarding.pan_number = ref(emp_data.pan_number);
+        employee_onboarding.dl_no = ref(emp_data.dl_no);
+        employee_onboarding.nationality = ref(emp_data.nationality);
+        employee_onboarding.blood_group_name = ref(emp_data.blood_group_name);
         employee_onboarding.email = ref(emp_data.email);
         employee_onboarding.doj = ref(emp_data.doj);
         employee_onboarding.mobile_number = ref(emp_data.mobile_number);
@@ -943,7 +988,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const spouseDisable = () => {
-        if (employee_onboarding.marital_status.name == "Married" || employee_onboarding.marital_status.name == "married") {
+        if (employee_onboarding.marital_status == 2 || employee_onboarding.marital_status == 2) {
             isSpouseDisable.value = true;
         } else {
             isSpouseDisable.value = false;
@@ -1280,7 +1325,8 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         l1_code: false,
         designation: false,
         mobile: false,
-        spouse: false
+        spouse: false,
+        isDisableClientCode: true
 
     })
 
