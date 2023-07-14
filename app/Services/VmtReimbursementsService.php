@@ -167,7 +167,7 @@ class VmtReimbursementsService {
         return VmtReimbursements::all(['id','reimbursement_type']);
     }
 
-    function fetchAllReimbursementsAsGroups($year, $month, $status ,$reimbursement_type_id){
+    function fetchAllReimbursementsAsGroups($year, $month, $status ,$selected_reimbursement_type){
 
 
 
@@ -205,13 +205,21 @@ class VmtReimbursementsService {
                                 ->join('vmt_reimbursements','vmt_reimbursements.id','=','vmt_employee_reimbursements.reimbursement_type_id')
                                 ->whereYear('vmt_employee_reimbursements.date',$year)
                                 ->whereMonth('vmt_employee_reimbursements.date',$month)
-                                ->where('vmt_employee_reimbursements.reimbursement_type_id',$reimbursement_type_id)
-                                ->select('vmt_employee_reimbursements.id','vmt_employee_reimbursements.reimbursement_type_id','vmt_employee_reimbursements.date',
+                                ->select('vmt_employee_reimbursements.id','vmt_employee_reimbursements.reimbursement_type_id','vmt_reimbursements.reimbursement_type','vmt_employee_reimbursements.date',
                                 'vmt_employee_reimbursements.from','vmt_employee_reimbursements.to','user_comments','vmt_reimbursement_vehicle_types.vehicle_type','distance_travelled','total_expenses','status');
+
+            //If reimbursement type filter is given, then filter the query data
+            if(!empty($selected_reimbursement_type))
+            {
+                dd('ERROR : Reimbursement type filtering is not implemented');
+                $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.reimbursement_type_id',$selected_reimbursement_type);
+            }
+
 
             if($status!=null){
                 $reimbursement_data = $reimbursement_data->where('vmt_employee_reimbursements.status', $status);
             }
+
             $reimbursement_data = $reimbursement_data->get();
 
            foreach($reimbursement_data as $singledata){

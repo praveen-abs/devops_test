@@ -22,7 +22,7 @@ use App\Models\VmtClientMaster;
 
 <body>
 
-    @vite('resources/js/hrms/modules/paycheck/salary_advance_loan/employee_salary_loan.js')
+    @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
     <div id="EmpSalaryAdvanceLoan"></div>
 </body>
 

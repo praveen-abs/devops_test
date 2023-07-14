@@ -2,8 +2,8 @@
     <div class="px-1">
         <div class="row d-flex justify-content-start align-items-center">
             <div class="d-flex " v-if="salaryStore.create_new_from == '1'">
-                <div class="col-3 fs-4" style="position: relative; left: -8px;">
-                    <h1 class="">Salary Advance Feature</h1>
+                <div class="col-3  text-center d-flex align-items-center justify-content-start"  style="">
+                    <h1 class="text-xl  xl:text-2xl ">Salary Advance Feature</h1>
                 </div>
                 <div class="col">
                     <button class="orange_btn"
@@ -74,40 +74,15 @@
                     </div>
                 </div>
 
-
-                <!-- <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div> -->
-
             </div>
 
 
 
             <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
-
-                    <!-- <div class="d-flex justify-content-between align-items-center mt-5  w-6">
-                        <h1 class="fs-4 ">Select organization</h1>
-                        <div class="d-flex justify-items-center position-relative">
-                            <MultiSelect v-model="salaryStore.sa.selectClientID"
-                                :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
-                                placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
-                                    v$.selectClientID.$error ? 'p-invalid' : '',
-                                ]" />
-                            <span v-if="v$.selectClientID.$error"
-                                class="text-red-400 fs-6 font-semibold position-absolute top-12">
-                                {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
-                            </span>
-                        </div>
-
-                    </div> -->
-                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of the Salary Advance</h1>
-                        <div class=" position-relative ">
+                    <div class="my-4 flex align-items-center">
+                        <h1 class="text-xl  xl:text-2xl  w-4">Name of the Salary Advance</h1>
+                        <div class=" ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
                                     v$.SA.$error ? 'p-invalid ' : '',
@@ -117,9 +92,9 @@
                             </span>
                         </div>
                     </div>
-                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
+                    <div class="my-4 d-flex justify-content-between w-7 align-items-center  ">
                         <h1 class="fs-4">Payment Cycle</h1>
-                        <div class="w-5" style="height: 40px;">
+                        <div class="" style="height: 40px; position:relative;">
                             <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 0"
                                 :class="[salaryStore.sa.payroll_cycle == '0' ? ' text-white bg-orange-500 border-none' : '']">
@@ -130,7 +105,7 @@
                                 Multiple</button>
                         </div>
                     </div>
-                    <h1 class="mt-10 fs-4 fw-bolder">Eligible Employees</h1>
+                    <h1 class="mt-10 fs-4 ">Eligible Employees</h1>
                     <p class="my-2 fs-5">Kindly choose the employees who are eligible for the salary advance.</p>
                 </div>
 
@@ -220,7 +195,7 @@
                 </div>
 
                 <div class="mt-4 col">
-                    <h1 class="my-3 fs-4 fw-bolder">Percentage of Salary Advance</h1>
+                    <h1 class="my-3 fs-4 ">Percentage of Salary Advance</h1>
                     <p class="my-2 fs-5">Please select the percentage of the salary advance that employees can avail.</p>
 
                     <div class="shadow-sm card border-L rounded-top">
@@ -276,7 +251,7 @@
                         </div>
                     </div>
 
-                    <h1 class="my-3 mt-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Deduction Method</h1>
+                    <h1 class="my-3 mt-3 fs-4 " style="margin-top: 30px !important;">Deduction Method</h1>
                     <p class="my-2 fs-5">Please choose the method of deduction.</p>
                     <div class="card border-L">
                         <div class="card-body">
@@ -325,17 +300,23 @@
 
                     </div>
 
-                    <h1 class="my-3 fs-4 fw-bolder" style="margin-top: 30px !important;">Approval Setting</h1>
+                    <h1 class="my-3 fs-4 " style="margin-top: 30px !important;">Approval Setting</h1>
                     <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
                     <div class="card border-L">
-                        <div class="py-3 row d-flex">
-                            <div class="my-3 col col-2 d-flex align-items-center" style="width: 200px;">
+                        <div class="py-3 row">
+                            <div class="col-3 my-3 mx-1 d-flex align-items-center" style="width: 200px;">
                                 <P class="mx-3 fs-5">Employee Request
                                 </P>
                                 <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
                             </div>
-                            <div class="col col-3 d-flex" style="width: 280px;">
+
+                            <div class="col">
+
+                                <div class="row">
+
+
+                            <div class="col d-flex">
                                 <div class="w-10 p-1 rounded bg-slate-200 d-flex align-items-center "
                                     style="width: 225px !important;">
                                     <Dropdown v-model="salaryStore.selectedOption1" editable
@@ -356,7 +337,7 @@
                             </div>
 
 
-                            <div class="col col-3 d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
+                            <div class="col  d-flex" v-if="salaryStore.option1 == 1" style="width: 280px;">
                                 <div class="w-10 p-2 ml-2 rounded bg-slate-200 d-flex align-items-center col-8"
                                     style="width: 225px !important;">
                                     <Dropdown v-model="salaryStore.selectedOption2" editable
@@ -392,10 +373,19 @@
                                     </button>
                                 </div>
                             </div>
-                            <span v-if="v$.approvalflow.$error" class="mx-2 font-semibold text-red-400 fs-6">
-                                {{ v$.approvalflow.$errors[0].$message }}
-                            </span>
+
+                                </div>
+
+                            </div>
+
+
+
                         </div>
+                        <!-- grid grid  -->
+
+                        <span v-if="v$.approvalflow.$error" class="mx-2 font-semibold text-red-400 fs-6">
+                            {{ v$.approvalflow.$errors[0].$message }}
+                        </span>
 
                     </div>
                 </div>
@@ -466,10 +456,6 @@ const custDeduct = (value) => {
 
 
 
-
-
-
-
 // const eligibleRequiredAmount = (value) => {
 //     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
 //         console.log(value);
@@ -487,8 +473,7 @@ const rules = computed(() => {
         deductMethod: { required: helpers.withMessage('Method of deduction is required', required) },
         cusDeductMethod: { custDeduct: helpers.withMessage('Deduction peroid is required', custDeduct) },
         approvalflow: { required: helpers.withMessage('Approval Flow is required', required) },
-        // selectClientID: { required: helpers.withMessage('Select Client ID Flow is required', required) },
-        // payroll_cycle:{ required: helpers.withMessage('salary Advance Name is required', required), eligibleRequiredAmount: helpers.withMessage('Must be lesser than max eligible amount', eligibleRequiredAmount)}
+
     }
 })
 
@@ -510,8 +495,6 @@ const submitForm = () => {
         console.log('Form failed validation')
     }
 }
-
-
 
 
 function selectClientId(data) {

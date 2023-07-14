@@ -135,6 +135,15 @@ class VmtSalaryAdvanceService
             if (!empty($client_name)) {
                 $select_employee = $select_employee->where('client_id', $client_name);
             }
+            // dd($select_employee->get());
+            $assigned_emp_user_ids = VmtEmpAssignSalaryAdvSettings::pluck('user_id');
+            if (!empty($assigned_emp_user_ids)) {
+                $assigned_emp_user_codes = array();
+                foreach ($assigned_emp_user_ids as $single_id) {
+                    array_push($assigned_emp_user_codes, User::where('id', $single_id)->first()->user_code);
+                }
+                return  $select_employee->whereNotIn('user_code',  $assigned_emp_user_codes)->get();
+            }
 
             return $select_employee->get();
         } catch (\Exception $e) {
@@ -165,9 +174,7 @@ class VmtSalaryAdvanceService
                 $employee_salary_adv = VmtSalaryAdvSettings::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.salary_adv_id', '=', 'vmt_salary_adv_setting.id')
                     ->where('vmt_emp_assign_salary_adv_setting.user_id', $current_user_id)->first();
 
-                $get_salary_emp = VmtEmpSalAdvDetails::whereYear('requested_date', date("Y"))
-                                                    ->whereMonth('requested_date', date("m"))
-                                                    ->get();
+                $get_salary_emp = VmtEmpSalAdvDetails::where('requested_date', date("Y-m-d"))->get();
 
                 $sal_borrowed = 0;
                 foreach ($get_salary_emp as $single_salary_emmp) {
@@ -719,7 +726,7 @@ class VmtSalaryAdvanceService
             $rules = [
                 "loan_type" => "required",
                 "client_id" => "required",
-                 "name" => "required",
+                "name" => "required",
                 'loan_applicable_type' => "required",
                 "min_month_served" => "required",
                 "deduction_starting_months" => "required",

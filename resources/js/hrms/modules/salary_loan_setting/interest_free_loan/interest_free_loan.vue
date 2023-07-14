@@ -3,8 +3,8 @@
 
         <div class="row d-flex justify-content-start align-items-center cu">
             <div class="mt-5 d-flex">
-                <div class="col-4 fs-4 ">
-                    <h1 style="position: relative; left:-8px">Interest Free Loan Feature</h1>
+                <div class="col-4 d-flex justify-content-start align-items-center">
+                    <h1 class="text-xl  xl:text-2xl" >Interest Free Loan Feature</h1>
                 </div>
 
                 <div class="col">
@@ -26,9 +26,12 @@
                 <div class="col-10">
                     <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p>
 
-                    <div class="d-flex justify-content-between align-items-center mt-5 w-6 "  style="width: 480px;">
-                        <h1 class="fs-4" >Select organization</h1>
-                        <div class="d-flex flex-col position-relative">
+                    <div class="row d-flex justify-content-between align-items-center mt-5 w-8 " >
+                        <div class="col-6">
+                            <h1 class="text-xl  xl:text-2xl" >Select organization</h1>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex flex-col position-relative">
                             <MultiSelect v-model="salaryStore.ifl.selectClientID"
                                 :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
                                 placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
@@ -40,10 +43,17 @@
                             </span>
                         </div>
 
+                        </div>
+
+
+
                     </div>
-                    <div class="my-4 d-flex justify-content-between align-items-center w-6">
-                        <h1 class="fs-4 w-6">Name of interest Free Loan</h1>
-                        <div class=" position-relative ">
+                    <div class="my-4 d-flex justify-content-between align-items-center w-8">
+                        <div class="col-6">
+                            <h1 class=" text-xl  xl:text-2xl ">Name of interest Free Loan</h1>
+                        </div>
+                        <div class="col-6">
+                            <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.ifl.name"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
                                     v$.name.$error ? 'p-invalid ' : '',
@@ -52,6 +62,10 @@
                                 {{ v$.name.required.$message.replace("Value", "Client Name") }}
                             </span>
                         </div>
+
+                        </div>
+
+
                     </div>
 
                     <h1 class="mt-10 fs-4 ">Eligible Employees and Amount</h1>
@@ -309,7 +323,7 @@ const salaryStore = salaryAdvanceSettingMainStore()
 const showPopup = ref(false)
 
 onMounted(() => {
-    salaryStore.getClientsName('int_free_loan');
+    salaryStore.getClientsName();
     salaryStore.getCurrentStatus('int_free_loan');
 })
 const value = ref();
