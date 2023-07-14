@@ -73,6 +73,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     }
 
     const getSelectoption = (key, filter) => {
+        canShowLoading.value = true
         console.log(filter);
 
         if (key == "department") {
@@ -103,6 +104,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         axios.post(url, selectedFilterOptions).then(res => {
             eligbleEmployeeSource.value = res.data
             console.log(res.data);
+        }).finally(()=>{
+            canShowLoading.value = false
         })
     }
 

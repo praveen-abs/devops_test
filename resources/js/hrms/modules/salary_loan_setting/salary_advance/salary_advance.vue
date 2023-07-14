@@ -6,7 +6,7 @@
                     <h1 class="">Salary Advance Feature</h1>
                 </div>
                 <div class="col">
-                    <button class="orange_btn"
+                    <button class="orange_btn border-1 border-orange-500"
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 1 ? 'bg-white text-black border-1 border-black' : 'text-white']"
                         @click="salaryStore.isSalaryAdvanceFeatureEnabled = 0">Disabled</button>
                     <button class="Enable_btn"
@@ -41,89 +41,39 @@
                     </div>
 
                     <div class="col">
-                        <!-- v-model="salaryStore.sa.selectClientID" -->
-                        <!-- {{ salaryStore.client_name_status }} -->
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem"
                             @change="selectClientId('sal_adv')" />
                     </div>
                 </div>
-                <div class="row ml-1 mr-3 mt-2 ">
-                    <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
-                    <!-- :class="[ id ==  ?'blink':'' ]" -->
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2"
-                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
-                        <!-- {{ item.sattings }} -->
-                        <!-- -->
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <h1 class="  fs-5">{{ item.settings.settings_name }}</h1>
-                            <button class=" underline text-blue-400 fs-5 " @click="viewDetails(item)">View Details</button>
-                        </div>
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <div>
-                                <h1 class=" fs-5" v-if="item.settings.deduction_period_of_months === 1">Deduct the amount in
-                                    the Upcomming Payroll</h1>
-                                <h1 class=" fs-5" v-else>The deduction can be made over a period of {{
-                                    item.settings.deduction_period_of_months }} months. </h1>
-                            </div>
-
-                            <h1 class=" fs-5">Percentage of Salary Advance: {{ item.settings.percent_salary_adv }}%</h1>
-                            <h1 class=" fs-5">Employee Count : {{ item.settings.emp_count }}</h1>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div>
-               <div class="even-card">1</div> -->
-
+                <ManageSalaryAdvance :source="salaryStore.salaryAdvanceSettingsDetails" />
             </div>
 
 
 
             <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
-
-                    <!-- <div class="d-flex justify-content-between align-items-center mt-5  w-6">
-                        <h1 class="fs-4 ">Select organization</h1>
-                        <div class="d-flex justify-items-center position-relative">
-                            <MultiSelect v-model="salaryStore.sa.selectClientID"
-                                :options="salaryStore.dropdownFilter.legalEntity" optionLabel="client_name" optionValue="id"
-                                placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
-                                    v$.selectClientID.$error ? 'p-invalid' : '',
-                                ]" />
-                            <span v-if="v$.selectClientID.$error"
-                                class="text-red-400 fs-6 font-semibold position-absolute top-12">
-                                {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
-                            </span>
-                        </div>
-
-                    </div> -->
-                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of the Salary Advance</h1>
-                        <div class=" position-relative ">
+                    <div class="my-4 flex align-items-center">
+                        <h1 class="fs-4 w-4">Name of the Salary Advance</h1>
+                        <div class=" ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.sa.SA"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
                                     v$.SA.$error ? 'p-invalid ' : '',
                                 ]" />
-                            <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                            <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold">
                                 {{ v$.SA.required.$message.replace("Value", "Client Name") }}
                             </span>
                         </div>
+
                     </div>
-                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Payment Cycle</h1>
-                        <div class="w-5" style="height: 40px;">
+                    <div class="my-4 flex align-items-center">
+                        <h1 class="fs-4 w-4">Payment Cycle</h1>
+                        <div class="" style="height: 40px;">
                             <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 0"
                                 :class="[salaryStore.sa.payroll_cycle == '0' ? ' text-white bg-orange-500 border-none' : '']">
-                                Single</button>
+                                One Time</button>
                             <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 1"
                                 :class="[salaryStore.sa.payroll_cycle == '1' ? ' text-white bg-orange-500 border-none' : '']">
@@ -200,15 +150,15 @@
                                 </div>
                             </div>
 
-                            <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
-                                :value="salaryStore.eligbleEmployeeSource"
+                            <DataTable ref="dt" :paginator="true" :rows="10" :value="salaryStore.eligbleEmployeeSource"
+                                dataKey="id"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
                                 v-model:selection="salaryStore.sa.eligibleEmployee"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
                                 <Column selectionMode="multiple" headerStyle="width: 1.5rem" v-if="!view_details"></Column>
-                                <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
+                                <Column field="user_code" header="Employee Code" style="min-width: 8rem"></Column>
                                 <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
                                 <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
                                 <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
@@ -329,13 +279,13 @@
                     <p class="my-2 fs-5">Please choose the approval flow for salary advance.</p>
 
                     <div class="card border-L">
-                        <div class="py-3 row d-flex">
-                            <div class="my-3 col col-2 d-flex align-items-center" style="width: 200px;">
+                        <div class="py-3  grid grid-cols-4">
+                            <div class="my-3 mx-1 d-flex align-items-center" style="width: 200px;">
                                 <P class="mx-3 fs-5">Employee Request
                                 </P>
                                 <i class="text-green-400 pi pi-angle-double-right fs-4"></i>
                             </div>
-                            <div class="col col-3 d-flex" style="width: 280px;">
+                            <div class="d-flex">
                                 <div class="w-10 p-1 rounded bg-slate-200 d-flex align-items-center "
                                     style="width: 225px !important;">
                                     <Dropdown v-model="salaryStore.selectedOption1" editable
@@ -392,10 +342,11 @@
                                     </button>
                                 </div>
                             </div>
-                            <span v-if="v$.approvalflow.$error" class="mx-2 font-semibold text-red-400 fs-6">
-                                {{ v$.approvalflow.$errors[0].$message }}
-                            </span>
                         </div>
+
+                        <span v-if="v$.approvalflow.$error" class="mx-2 font-semibold text-red-400 fs-6">
+                            {{ v$.approvalflow.$errors[0].$message }}
+                        </span>
 
                     </div>
                 </div>
@@ -404,8 +355,10 @@
         <div class="row">
             <div class="col">
                 <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details"  >  Cancel</button>
-                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details">
+                        Cancel</button>
+                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1"
+                        v-if="view_details">Back</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
                 </div>
             </div>
@@ -422,6 +375,7 @@ import { FilterMatchMode } from 'primevue/api';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore'
 import useValidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
+import ManageSalaryAdvance from '../components/ManageSalaryAdvance.vue';
 
 const salaryStore = salaryAdvanceSettingMainStore()
 
@@ -465,19 +419,6 @@ const custDeduct = (value) => {
 }
 
 
-
-
-
-
-
-// const eligibleRequiredAmount = (value) => {
-//     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
-//         console.log(value);
-//         return false
-//     } else {
-//         return true
-//     }
-// }
 
 const rules = computed(() => {
     return {
@@ -531,6 +472,7 @@ onMounted(() => {
     salaryStore.getCurrentStatus('sal_adv');
     salaryStore.getDropdownFilterDetails();
     salaryStore.salaryAdvanceHistory();
+    salaryStore.getElibigleEmployees()
 
 });
 
@@ -540,7 +482,7 @@ let view_details = ref();
 const Name = [];
 
 function viewDetails(val) {
-    view_details.value  = val;
+    view_details.value = val;
     console.log(view_details);
 
     salaryStore.create_new_from = 2;
