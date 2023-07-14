@@ -151,7 +151,7 @@
                             </div>
 
                             <DataTable ref="dt" :paginator="true" :rows="10" :value="salaryStore.eligbleEmployeeSource"
-                                dataKey="id"
+                                dataKey="user_code"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
                                 v-model:selection="salaryStore.sa.eligibleEmployee"
