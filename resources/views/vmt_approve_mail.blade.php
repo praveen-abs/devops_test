@@ -76,7 +76,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                     <p class="text-center"
                                                         style="font-size:40px;margin:0;text-align:center;">Hi <b
                                                             class="" style="font-size:1em">
-                                                            {{ $approverName }}</b>
+                                                            {{ $employeeName }}</b>
                                                     </p>
                                                 </td>
                                             </tr>
@@ -84,7 +84,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                 <td colspan="4" align="">
                                                     <p class="text-justified"
                                                         style="font-size:14px;margin:0;text-align:justify;">
-                                                        This is to your attention that {{ $employeeName }} has submitted a request for a {{ $loanType }}, with the following details:
+                                                        This is to provide you with an update on your recent loan request, Request ID: {{ $requestID }}.
                                                     </p>
                                                 </td>
 
@@ -94,64 +94,8 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                     style="padding-bottom:10px;padding-top:5px;">
                                                     <p class="text-justified"
                                                         style="font-size:14px;margin:0;text-align:justify;">
-                                                        Request your prompt attention to record your decision regarding this loan request.
-                                                        Your timely response will help us ensure a smooth and efficient process for our employees.
+                                                        After careful consideration, we regret to inform you that your loan request has been rejected by your manager. The decision was made based on the reason mentioned in the below.
                                                     </p>
-                                                </td>
-                                            </tr>
-
-                                            <table class="table table-bordered table-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <td>Request ID</td>
-                                                        <td>{{ $requestID }}</td>
-                                                      </tr>
-                                                </thead>
-                                                <tbody>
-                                                  <tr>
-                                                    <td>Request Type</td>
-                                                    <td>{{ $loanType }}</td>
-
-                                                  </tr>
-                                                  <tr>
-                                                    <td>Requested Amount</td>
-                                                    <td>{{ $borrowed_Amount }}</td>
-
-                                                  </tr>
-                                                  <tr>
-                                                    <td>Repayment tenure</td>
-                                                    <td>{{ $requested_date }}</td>
-
-                                                  </tr>
-                                                </tbody>
-                                              </table>
-
-                                            <tr>
-                                                <td colspan="2" align="left">
-                                                    <a role="button" href="{{ $link }}/showSAapprovalView"
-                                                        style="font-weight: 600;
-                                                        color: #fff;
-                                                        border-radius: 50px;
-                                                        background-color: #14a701;
-                                                        border: 1px solid #ccc;
-                                                        padding: 8px 40px;
-                                                        text-decoration: none;
-                                                        ">
-                                                        Approve
-                                                    </a>
-                                                </td>
-                                                <td colspan="2" align="right">
-                                                    <a role="button" href="{{ $link }}/showSAapprovalView"
-                                                        style="font-weight: 600;
-                                                        color: #fff;
-                                                        border-radius: 50px;
-                                                        background-color: #ff2500;
-                                                        border: 1px solid #ccc;
-                                                        padding: 8px 40px;
-                                                        text-decoration: none;
-                                                        ">
-                                                        Reject
-                                                    </a>
                                                 </td>
                                             </tr>
 

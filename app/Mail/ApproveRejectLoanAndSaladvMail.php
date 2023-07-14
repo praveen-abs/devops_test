@@ -19,43 +19,46 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
      * @return void
      */
 
-     protected $ApproverName;
-     protected $Empname;
-     protected $Empcode;
-     protected $loginLink;
-     protected $curntStatus;
+     protected $approverName;
+     protected $employeeName;
+     protected $requestID;
+     protected $loanType;
+     protected $borrowed_Amount;
+     protected $requested_date;
+     protected $link;
 
-    public function __construct($ApproverName,$Empname,$Empcode,$loginLink,$curntStatus)
+    public function __construct($approverName,$employeeName,$requestID,$loanType,$borrowed_Amount,$requested_date,$link)
     {
-        $this->ApproverName = $ApproverName;
+        $this->approverName = $approverName;
 
-        $this->Empname = $Empname;
+        $this->employeeName = $employeeName;
 
-        $this->Empcode = $Empcode;
+        $this->requestID = $requestID;
 
-        $this->loginLink = $loginLink;
+        $this->loanType = $loanType;
 
-        $this->curntStatus = $curntStatus;
+        $this->borrowed_Amount = $borrowed_Amount;
+
+        $this->requested_date = $requested_date;
+
+        $this->link = $link;
     }
 
     public function build()
     {
-        //
-        // $subject = "Your ".$this->leaveType." has been ";
+
+         $subject = " Loan Requested by " . $this->employeeName . " - Request ID: " . $this->requestID ;
 
         $output = $this->view('vmt_approveRejectSalaryAdv_Email')
-                    // ->subject($subject.$this->leave_status)
-                    ->with('ApproverName', $this->ApproverName)
-                    ->with('EmpName', $this->Empname)
-                    ->with('EmpCode', $this->Empcode)
-                    ->with('loginLink', $this->loginLink)
-                    ->with('curntStatus', $this->curntStatus);
-                    // ->with('managerName', $this->managerName)
-                    // ->with('managerCode', $this->managerCode)
-                    // ->with('loginLink', $this->loginLink)
-                    // ->with('image_view', $this->image_view)
-                    // ->with('leave_status', $this->leave_status)
-                    // ->with('empAvatar', $this->empAvatar);
+                    ->subject($subject)
+                    ->with('approverName', $this->approverName)
+                    ->with('employeeName',$this->employeeName)
+                    ->with('requestID',$this->requestID)
+                    ->with('loanType', $this->loanType)
+                    ->with('borrowed_Amount', $this->borrowed_Amount)
+                    ->with('requested_date', $this->requested_date)
+                    ->with('link',  $this->link);
+
         return $output;
     }
 
