@@ -46,13 +46,12 @@
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        <!-- {{ useEmpStore.interestFreeLoan.max_tenure_months.month }} -->
+                                        {{ useEmpStore.interestFreeLoan.max_tenure_months.month }}
 
                                         <!-- <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth" :options="useEmpStore.interestFreeLoan.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
-                                        <!-- {{ useEmpStore.interestFreeLoan.max_tenure_months }} -->
 
                                         <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth"
-                                            :options="useEmpStore.max_tenure_months" class="w-full md:w-10rem"
+                                            :options="useEmpStore.interestFreeLoan.max_tenure_months" class="w-full md:w-10rem"
                                             optionValue="month" optionLabel="month" placeholder="Select Month"
                                             :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                                         <label for="" class="fs-5 ml-2">Month</label>
@@ -104,7 +103,7 @@
                         </div>
 
                         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
-                            <span class="font-semibold ">Reason<span class=" text-red-500 mx-1 fs-5">*</span></span>
+                            <span class="font-semibold ">Reason</span>
                             <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3"
                                 v-model="useEmpStore.interestFreeLoan.Reason"
                                 :class="[v$.Reason.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
@@ -212,7 +211,6 @@ const useEmpStore = useEmpSalaryAdvanceStore();
 onMounted(() => {
     useEmpStore.fetchInterestfreeLoan();
     useEmpStore.getinterestfreeloan();
-    useEmpStore.getLoanDetails();
 })
 
 const select_date = ref();

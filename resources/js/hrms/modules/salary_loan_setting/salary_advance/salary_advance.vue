@@ -6,7 +6,7 @@
                     <h1 class="text-xl  xl:text-2xl ">Salary Advance Feature</h1>
                 </div>
                 <div class="col">
-                    <button class="orange_btn border-1 border-orange-500"
+                    <button class="orange_btn"
                         :class="[salaryStore.isSalaryAdvanceFeatureEnabled === 1 ? 'bg-white text-black border-1 border-black' : 'text-white']"
                         @click="salaryStore.isSalaryAdvanceFeatureEnabled = 0">Disabled</button>
                     <button class="Enable_btn"
@@ -41,13 +41,48 @@
                     </div>
 
                     <div class="col">
+                        <!-- v-model="salaryStore.sa.selectClientID" -->
+                        <!-- {{ salaryStore.client_name_status }} -->
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem"
                             @change="selectClientId('sal_adv')" />
                     </div>
                 </div>
-                <ManageSalaryAdvance :source="salaryStore.salaryAdvanceSettingsDetails" />
+                <div class="row ml-1 mr-3 mt-2 ">
+                    <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
+                    <!-- :class="[ id ==  ?'blink':'' ]" -->
+                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2"
+                        v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
+                        <!-- {{ item.sattings }} -->
+                        <!-- -->
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <h1 class="  fs-5">{{ item.settings.settings_name }}</h1>
+                            <button class=" underline text-blue-400 fs-5 " @click="viewDetails(item)">View Details</button>
+                        </div>
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1 class=" fs-5" v-if="item.settings.deduction_period_of_months === 1">Deduct the amount in
+                                    the Upcomming Payroll</h1>
+                                <h1 class=" fs-5" v-else>The deduction can be made over a period of {{
+                                    item.settings.deduction_period_of_months }} months. </h1>
+                            </div>
+
+                            <h1 class=" fs-5">Percentage of Salary Advance: {{ item.settings.percent_salary_adv }}%</h1>
+                            <h1 class=" fs-5">Employee Count : {{ item.settings.emp_count }}</h1>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="even-card">1</div>
+               <div class="even-card">1</div>
+               <div class="even-card">1</div>
+               <div class="even-card">1</div>
+               <div class="even-card">1</div>
+               <div class="even-card">1</div>
+               <div class="even-card">1</div> -->
+
             </div>
 
 
@@ -61,19 +96,18 @@
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
                                     v$.SA.$error ? 'p-invalid ' : '',
                                 ]" />
-                            <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold">
+                            <span v-if="v$.SA.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
                                 {{ v$.SA.required.$message.replace("Value", "Client Name") }}
                             </span>
                         </div>
-
                     </div>
-                    <div class="my-4 flex align-items-center">
-                        <h1 class="fs-4 w-4">Payment Cycle</h1>
-                        <div class="" style="height: 40px;">
+                    <div class="my-4 d-flex justify-content-between w-6 align-items-center">
+                        <h1 class="fs-4">Payment Cycle</h1>
+                        <div class="w-5" style="height: 40px;">
                             <button class="px-4 py-2 rounded-l-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 0"
                                 :class="[salaryStore.sa.payroll_cycle == '0' ? ' text-white bg-orange-500 border-none' : '']">
-                                One Time</button>
+                                Single</button>
                             <button class="px-4 py-2 rounded-r-md border-1 text-gray-500 fw-semibold border-gray-500"
                                 @click="salaryStore.sa.payroll_cycle = 1"
                                 :class="[salaryStore.sa.payroll_cycle == '1' ? ' text-white bg-orange-500 border-none' : '']">
@@ -150,15 +184,15 @@
                                 </div>
                             </div>
 
-                            <DataTable ref="dt" :paginator="true" :rows="10" :value="salaryStore.eligbleEmployeeSource"
-                                dataKey="user_code"
+                            <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
+                                :value="salaryStore.eligbleEmployeeSource"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
                                 v-model:selection="salaryStore.sa.eligibleEmployee"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
                                 <Column selectionMode="multiple" headerStyle="width: 1.5rem" v-if="!view_details"></Column>
-                                <Column field="user_code" header="Employee Code" style="min-width: 8rem"></Column>
+                                <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
                                 <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
                                 <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
                                 <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
@@ -369,10 +403,8 @@
         <div class="row">
             <div class="col">
                 <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details">
-                        Cancel</button>
-                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1"
-                        v-if="view_details">Back</button>
+                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details"  >  Cancel</button>
+                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
                 </div>
             </div>
@@ -389,7 +421,6 @@ import { FilterMatchMode } from 'primevue/api';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore'
 import useValidate from '@vuelidate/core'
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
-import ManageSalaryAdvance from '../components/ManageSalaryAdvance.vue';
 
 const salaryStore = salaryAdvanceSettingMainStore()
 
@@ -433,6 +464,19 @@ const custDeduct = (value) => {
 }
 
 
+
+
+
+
+
+// const eligibleRequiredAmount = (value) => {
+//     if ( salaryStore.sa.payroll_cycle == 0 || salaryStore.sa.payroll_cycle == 1) {
+//         console.log(value);
+//         return false
+//     } else {
+//         return true
+//     }
+// }
 
 const rules = computed(() => {
     return {
@@ -486,7 +530,6 @@ onMounted(() => {
     salaryStore.getCurrentStatus('sal_adv');
     salaryStore.getDropdownFilterDetails();
     salaryStore.salaryAdvanceHistory();
-    salaryStore.getElibigleEmployees()
 
 });
 
@@ -496,7 +539,7 @@ let view_details = ref();
 const Name = [];
 
 function viewDetails(val) {
-    view_details.value = val;
+    view_details.value  = val;
     console.log(view_details);
 
     salaryStore.create_new_from = 2;

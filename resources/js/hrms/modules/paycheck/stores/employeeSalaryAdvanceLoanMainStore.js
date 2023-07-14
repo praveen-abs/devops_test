@@ -270,8 +270,6 @@ Travel Advance - ta
 
     const InterestWithLoanData = ref();
 
-    const max_tenure_months =ref([]);
-
     const InterestWithLoan = reactive({
         minEligibile: '',
         availPerInCtc: '',
@@ -304,9 +302,7 @@ Travel Advance - ta
             InterestWithLoan.minEligibile  = res.data.max_loan_amount;
             InterestWithLoan.loan_settings_id =res.data.loan_settings_id;
             InterestWithLoan.max_tenure_months = res.data.max_tenure_months;
-            max_tenure_months.value = res.data.max_tenure_months ;
-            console.log("testing ::",res.data.max_tenure_months);
-            console.log( InterestWithLoan.max_tenure_months);
+
         })
     }
 
@@ -433,7 +429,6 @@ Travel Advance - ta
         dailogSalaryAdvance,percent_salary_amt ,salaryAdvanceEmployeeData, sa, fetchSalaryAdvance, saveSalaryAdvance,
         arraySalaryDetails,
         getSalaryDetails,
-        max_tenure_months,
 
         SAreset,
 

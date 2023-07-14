@@ -377,8 +377,10 @@ class VmtApprovalsController extends Controller
         $year = $request->selected_year;
         $month = $request->selected_month;
         $status = $request->selected_status;
-        $reimbursement_type_id = "1"; //Hardcoded Local
-       return  $service->fetchAllReimbursementsAsGroups( $year, $month , $status, $reimbursement_type_id);
+        //$reimbursement_type_id = "1"; //Hardcoded Local
+        $selected_reimbursement_type = $request->selected_reimbursement_type;
+
+       return  $service->fetchAllReimbursementsAsGroups( $year, $month , $status, $selected_reimbursement_type);
     }
 
     /*

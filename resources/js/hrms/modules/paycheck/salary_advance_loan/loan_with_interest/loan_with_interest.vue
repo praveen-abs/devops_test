@@ -212,14 +212,14 @@
                     <div class="col-3">
                         <h1 class="fs-5 my-2 ml-2">Total Months</h1>
                         <InputText type="text" v-model="useEmpStore.InterestWithLoan.Total_Month"
-                            style="width: 150px !important;" disabled />
+                            style="width: 150px !important;" />
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="p-4 my-6 bg-gray-100 rounded-lg gap-6">
-            <span class="font-semibold ">Reason <span class=" text-red-500 mx-1 fs-5">*</span></span>
+            <span class="font-semibold ">Reason</span>
             <Textarea v-model="useEmpStore.InterestWithLoan.Reason" class="my-3 capitalize form-control textbox" autoResize
                 type="text" rows="3"
                 :class="[v$.Reason.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />

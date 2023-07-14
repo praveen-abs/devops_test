@@ -73,7 +73,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     }
 
     const getSelectoption = (key, filter) => {
-        canShowLoading.value = true
         console.log(filter);
 
         if (key == "department") {
@@ -104,8 +103,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         axios.post(url, selectedFilterOptions).then(res => {
             eligbleEmployeeSource.value = res.data
             console.log(res.data);
-        }).finally(() => {
-            canShowLoading.value = false
         })
     }
 
@@ -192,7 +189,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                     icon: "success",
                 }).then((res) => {
                     reset();
-                    create_new_from.value = 1;
+                    create_new_from = 1;
                 })
             }
             else if (res.data.status == "failure") {
@@ -203,6 +200,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                     icon: "error",
                     showCancelButton: false,
                 }).then((res) => {
+                    // blink_UI.value = res.data.data;
+                    create_new_from.value = 1;
                 })
 
             }
