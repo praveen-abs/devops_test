@@ -134,6 +134,15 @@ class VmtSalaryAdvanceService
             if (!empty($client_name)) {
                 $select_employee = $select_employee->where('client_id', $client_name);
             }
+            // dd($select_employee->get());
+            $assigned_emp_user_ids = VmtEmpAssignSalaryAdvSettings::pluck('user_id');
+            if (!empty($assigned_emp_user_ids)) {
+                $assigned_emp_user_codes = array();
+                foreach ($assigned_emp_user_ids as $single_id) {
+                    array_push($assigned_emp_user_codes, User::where('id', $single_id)->first()->user_code);
+                }
+                return  $select_employee->whereNotIn('user_code',  $assigned_emp_user_codes)->get();
+            }
 
             return $select_employee->get();
         } catch (\Exception $e) {
@@ -686,7 +695,7 @@ class VmtSalaryAdvanceService
             $rules = [
                 "loan_type" => "required",
                 "client_id" => "required",
-                 "name" => "required",
+                "name" => "required",
                 'loan_applicable_type' => "required",
                 "min_month_served" => "required",
                 "deduction_starting_months" => "required",
