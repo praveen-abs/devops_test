@@ -1369,6 +1369,7 @@ class VmtSalaryAdvanceService
                     $emp_details->request_id,
                     $result,
                     request()->getSchemeAndHttpHost(),
+                    $emp_details->sal_adv_status
                 ));
 
 
