@@ -7,8 +7,8 @@
     <div class="col-10 ">
 
 
-        <div class="d-flex justify-content-between align-items-center mt-5 w-6" style="width: 480px;">
-            <h1 class="fs-4 ">Select organization</h1>
+        <div class="d-flex justify-content-between align-items-center mt-5 w-8" style="width: 480px;">
+            <h1 class="text-xl  xl:text-2xl">Select organization</h1>
             <div class="d-flex flex-col position-relative">
                 <MultiSelect v-model="salaryStore.lwif.selectClientID" :options="salaryStore.dropdownFilter.legalEntity"
                     optionLabel="client_name" optionValue="id" placeholder="Select Branches"
@@ -23,8 +23,8 @@
 
         </div>
 
-        <div class="my-4 d-flex justify-content-between w-6 align-items-center">
-                        <h1 class="fs-4">Name of the Loan With Interest</h1>
+        <div class="my-4 d-flex justify-content-between w-8 align-items-center">
+                        <h1 class="text-xl  xl:text-2xl">Name of the Loan With Interest</h1>
                         <div class=" position-relative ">
                             <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.lwif.name"
                                 class="w-full d-flex justify-items-center md:w-18rem" :class="[
