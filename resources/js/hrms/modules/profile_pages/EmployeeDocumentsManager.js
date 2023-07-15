@@ -26,6 +26,8 @@ import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import ProgressBar from 'primevue/progressbar';
 
+
+
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
@@ -33,6 +35,7 @@ import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
 import Chips from 'primevue/chips'
 import MultiSelect from 'primevue/multiselect';
+import Checkbox from 'primevue/checkbox';
 
 
 import EmployeeDocumentsManager from './EmployeeDocumentsManager.vue'
@@ -69,6 +72,7 @@ app.component('Textarea', Textarea)
 app.component('Chips', Chips)
 app.component('MultiSelect', MultiSelect)
 app.component('ProgressBar', ProgressBar)
+app.component('Checkbox', Checkbox);
 
 app.mount("#EmployeeDocumentManager");
 
