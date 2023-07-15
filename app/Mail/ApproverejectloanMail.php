@@ -26,9 +26,10 @@ class ApproverejectloanMail extends Mailable
 
      protected $result;
      protected $link;
+     protected $approvalStatus;
 
 
-    public function __construct($approver_name,$employeename,$requestid, $result , $link)
+    public function __construct($approver_name,$employeename,$requestid,$result,$link,$approvalStatus)
     {
         $this->approver_name = $approver_name;
 
@@ -40,8 +41,7 @@ class ApproverejectloanMail extends Mailable
 
         $this->link = $link;
 
-
-
+        $this->approvalStatus = $approvalStatus;
 
     }
 
@@ -57,7 +57,9 @@ class ApproverejectloanMail extends Mailable
                     ->with('employeeName',$this->employeename)
                     ->with('requestID',$this->requestid)
                     ->with('result',$this->result)
-                    ->with('link',$this->link );
+                    ->with('link',$this->link )
+                    ->with('approvalStatus',$this->approvalStatus );
+
         return $output;
     }
 }

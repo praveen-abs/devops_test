@@ -94,7 +94,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                     style="padding-bottom:10px;padding-top:5px;">
                                                     <p class="text-justified"
                                                         style="font-size:14px;margin:0;text-align:justify;">
-                                                        After careful consideration, we regret to inform you that your loan request has been rejected by your manager. The decision was made based on the reason mentioned in the below.
+                                                        After careful consideration, we regret to inform you that your loan request has been {{ $approvalStatus }}. The decision was made based on the reason mentioned in the below.
                                                     </p>
                                                 </td>
                                             </tr>
@@ -115,7 +115,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                     <p class="text-justified"
                                                         style="font-size:14px;margin:0;text-align:justify;">
                                                         Kindly visit the HRMS portal for more details <a
-                                                            class="text-center" href="{{ $link }}
+                                                            class="text-center" href={{ $link }}
                                                             style="font-size:12px;
                                                         text-decoration:none;
                                                         color:#FF4D00

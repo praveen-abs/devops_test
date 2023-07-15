@@ -167,11 +167,12 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                 </td>
                                             </tr> --}}
                                             <tr>
+
                                                 <td colspan="4" align="">
                                                     <p class="text-justified"
                                                         style="font-size:14px;margin:0;text-align:justify;">
                                                         Kindly visit the HRMS portal for more details <a
-                                                            class="text-center" href="{{ $link }}
+                                                            class="text-center" href={{ $link }}
                                                             style="font-size:12px;
                                                         text-decoration:none;
                                                         color:#FF4D00
