@@ -1,35 +1,38 @@
 <template>
-    <input type="file" name="" id="" @change="json($event)">
-    <!-- <div class="result-table"> <button type="button" class="download-btn" @change="parseExcel($event)">Download</button> -->
-    <!-- </div> -->
+    <QuickOnboarding />
+    <!-- <input type="file" name="" id="" @change="json($event)">
+    <div class="table-responsive">
+
+        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="employee_documents"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[5, 10, 25]"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+
+            <Column header="File Name" field="Employee code" style="min-width: 8rem">
+            </Column>
+
+            <Column field="Employee Name" header="Status" style="min-width: 12rem">
+
+            </Column>
+
+            <Column field="Email" header="Reason " style="min-width: 12rem"></Column>
+            <Column field="Aadhar" header="Reason " style="min-width: 12rem"></Column>
+            <Column field="Account No" header="Reason " style="min-width: 12rem"></Column>
+            <Column field="Bank Name" header="Reason " style="min-width: 12rem"></Column> F
+
+        </DataTable>
+
+    </div> -->
 </template>
 
-<style scoped>
-.result-table {
-    width: 50%;
-    text-align: center;
-}
 
-.download-btn {
-    background-color: DodgerBlue;
-    border: none;
-    color: white;
-    padding: 12px 30px;
-    margin: 12px 0;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-/* Darker background on mouse-over */
-.download-btn:hover {
-    background-color: RoyalBlue;
-}
-</style>
 
 <script setup>
 
 import { ref } from 'vue';
 import * as XLSX from 'xlsx';
+
+import QuickOnboarding from '../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
 
 const items = ref([
     { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -38,6 +41,8 @@ const items = ref([
     { age: 38, first_name: 'Jami', last_name: 'Carney' }
 ])
 
+
+const employee_documents = ref()
 
 
 
@@ -95,6 +100,7 @@ const json = (e) => {
         }, {});
 
         console.log(jsonData);
+        employee_documents.value = jsonData.Sheet1
 
         // data preview
 
@@ -113,3 +119,26 @@ const download = () => {
 }
 
 </script>
+
+
+<style scoped>
+.result-table {
+    width: 50%;
+    text-align: center;
+}
+
+.download-btn {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    margin: 12px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+.download-btn:hover {
+    background-color: RoyalBlue;
+}
+</style>

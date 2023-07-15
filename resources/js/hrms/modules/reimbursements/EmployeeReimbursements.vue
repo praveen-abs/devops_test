@@ -4,20 +4,18 @@
         <div class="mb-2 card left-line">
             <div class="pt-1 pb-1 card-body">
                 <div class="row ">
-                    <div class="col-3 col-md">
+                    <div class="col-4 col-md">
                         <ul class="nav nav-pills nav-tabs-dashed" role="tablist">
-                            <!-- <li class="nav-item text-muted" role="presentation">
-                                <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#reimbursement"
-                                    aria-selected="true" role="tab"
-                                    @click="employee_service.onclickSwitchToReimbursmentTab">
+                            <li class="nav-item text-muted" role="presentation">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#reimbursement" aria-selected="true"
+                                    role="tab" @click="employee_service.onclickSwitchToReimbursmentTab">
                                     Reimbursement
                                 </a>
-                            </li> -->
+                            </li>
 
-                            <li class="nav-item text-muted p-2.5 " role="presentation">
-                                <a class=" nav-link active" data-bs-toggle="tab" href="#localConveyance"
-                                    aria-selected="true" role="tab"
-                                    @click="employee_service.onclickSwitchToLocalCoverganceTab">
+                            <li class="nav-item text-muted" role="presentation">
+                                <a class="nav-link" data-bs-toggle="tab" href="#localConveyance" aria-selected="true"
+                                    role="tab" @click="employee_service.onclickSwitchToLocalCoverganceTab">
                                     Local Conveyance
                                 </a>
                             </li>
@@ -39,12 +37,17 @@
                             <div class="col-2 d-flex justify-content-end ">
                                 <button class="my-auto btn btn-primary z-0"
                                     :disabled="employee_service.data_local_convergance == '' ? true : false"
-                                    severity="success" style="height: 33px;"  @click="employee_service.download_ajax"><i
+                                    severity="success" style="height: 33px;" @click="employee_service.download_ajax"><i
                                         class="fas fa-file-download me-2"></i>Download</button>
                             </div>
                             <div class="col-2 d-flex justify-content-end align-content-center ">
-                                <button @click="employee_service.onclickOpenLocalConverganceDailog"
+                                <button v-if="employee_service.localconverganceScreen"
+                                    @click="employee_service.onclickOpenLocalConverganceDailog"
                                     class="my-auto btn btn-orange" style="height: 33px;width: 130px;">
+                                    <i class="fa fa-plus-circle me-1"></i>Add Claim
+                                </button>
+                                <button v-if="employee_service.reimbursementsScreen"
+                                    @click="employee_service.onclickOpenReimbursmentDailog" class="my-auto btn btn-orange" style="height: 33px;width: 130px;">
                                     <i class="fa fa-plus-circle me-1"></i>Add Claim
                                 </button>
 
@@ -62,13 +65,7 @@
                                     role="menuitem" tabindex="-1" id="menu-item-1">Pdf</a>
                             </div>
                         </OverlayPanel>
-                        <!-- <button
-                                v-if="employee_service.reimbursementsScreen"
-                                @click="employee_service.onclickOpenReimbursmentDailog"
-                                class="mx-4 btn btn-orange"
-                                >
-                                <i class="fa fa-plus-circle me-1"></i>Add Claim
-                                </button> -->
+
                     </div>
                 </div>
             </div>
@@ -77,17 +74,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade " id="reimbursement" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="tab-pane  show fade active " id="reimbursement" role="tabpanel"
+                        aria-labelledby="pills-profile-tab">
                         <Reimbursements />
                     </div>
-                </div>
 
-                <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
+                    <!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
 
-                <!-- Local conveyance -->
-                <div class="tab-pane fade show active" id="localConveyance" role="tabpanel"
-                    aria-labelledby="pills-profile-tab">
-                    <LocalConveyance />
+                    <!-- Local conveyance -->
+                    <div class="tab-pane fade" id="localConveyance" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <LocalConveyance />
+                    </div>
                 </div>
             </div>
         </div>
