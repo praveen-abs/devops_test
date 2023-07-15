@@ -423,7 +423,8 @@ Route::middleware(['auth'])->group(function () {
     // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
-    Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
+   Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
+    //Route::post('/vmt-employee-onboard', 'App\Http\Controllers\VmtOnboardingTestingController@processEmployeeOnboardForm_Normal');
 
     Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
@@ -560,8 +561,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/documents', [App\Http\Controllers\VmtEmployeeController::class, 'showEmployeeDocumentsPage'])->name('vmt-documents-route');
     // Route::get('/employee-documents',  [App\Http\Controllers\VmtEmployeeController::class, 'fetchDocsForUser'])->name('vmt-documents-routes');
-
-    // Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
+     Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
     Route::post('vmt-documents-route', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@storeEmployeeDocuments')->name('vmt-storedocuments-route');
     Route::post('/onboarding/updateEmployeeActive', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class, 'updateEmployeeActiveStatus'])->name('updateEmployeeActiveStatus');
 
@@ -766,6 +766,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/addElbalancewithjsonString', [App\Http\Controllers\VmtCorrectionController::class, 'addElbalancewithjsonString'])->name('addElbalancewithjsonString');
     Route::get('/changeAttendanceBioMatricIdToHrmsUserid', [App\Http\Controllers\VmtCorrectionController::class, 'changeAttendanceBioMatricIdToHrmsUserid'])->name('changeAttendanceBioMatricIdToHrmsUserid');
     Route::get('/adding-work-shift-for-all-employees', [App\Http\Controllers\VmtCorrectionController::class, 'addingWorkShiftForAllEmployees'])->name('addingWorkShiftForAllEmployees');
+    //MasterImport
+    Route::get('/updateMasterdataUploads', [App\Http\Controllers\VmtCorrectionController::class,'updateMasterdataUploads'])->name('updateMasterdataUploads');
+    Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class,'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
 
 
 
@@ -907,6 +910,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/get-maindashboard-data', [App\Http\Controllers\VmtMainDashboardController::class, 'getMainDashboardData']);
     Route::get('/getNotifications', [App\Http\Controllers\VmtMainDashboardController::class, 'getNotifications']);
     Route::post('/performAttendanceCheckIn', [App\Http\Controllers\VmtMainDashboardController::class, 'performAttendanceCheckIn']);
+    Route::get('/fetchEmpLastAttendanceStatus', [App\Http\Controllers\VmtMainDashboardController::class, 'fetchEmpLastAttendanceStatus']);
     Route::get('/getAllEventsDashboard', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllEventsDashboard']);
     Route::get('/getEmployeeLeaveBalanceDashboards', [App\Http\Controllers\VmtMainDashboardController::class, 'getEmployeeLeaveBalanceDashboards']);
     Route::get('/getAllNewDashboardDetails', [App\Http\Controllers\VmtMainDashboardController::class, 'getAllNewDashboardDetails']);
