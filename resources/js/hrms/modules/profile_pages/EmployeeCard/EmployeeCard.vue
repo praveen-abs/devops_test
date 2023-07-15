@@ -195,7 +195,8 @@
                             <div class="py-2 border-bottom-liteAsh ml-3">
                                 <p class="text-muted f-12 fw-bold">
                                     Department
-                                    <a href="#" class="edit-icon" @click="dailogDepartment = true"><i
+                                    <a href="#" class="edit-icon" v-if="_instance_profilePagesStore.employeeDetails
+                                    .is_ssa ==1" @click="dailogDepartment = true"><i
                                             class="ri-pencil-fill"></i></a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
@@ -211,7 +212,8 @@
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">
                                     Reporting To
-                                    <a href="#" class="edit-icon" @click="dailogReporting
+                                    <a href="#" v-if="_instance_profilePagesStore.employeeDetails
+                                    .is_ssa ==1" class="edit-icon" @click="dailogReporting
                                                 = true"><i class="ri-pencil-fill"></i>
                                     </a>
                                 </p>
@@ -222,6 +224,7 @@
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_name
                                     }}
+                                    <!-- {{ _instance_profilePagesStore.employeeDetails }} -->
                                     -
                                     {{
                                         _instance_profilePagesStore.employeeDetails
@@ -233,9 +236,9 @@
                         </div>
                         <div class="text-center profile-bottom-right-content">
                             <!-- {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}} -->
-                            <button class="btn btn-danger">
+                            <!-- <button class="btn btn-danger">
                                 <i class="fa fa-sign-out me-1"></i> Action
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
