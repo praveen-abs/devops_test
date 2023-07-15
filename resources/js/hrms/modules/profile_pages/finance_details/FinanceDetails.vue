@@ -83,8 +83,7 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>Bank Name</label>
-                                                {{ bank_information.bank_id }}
-                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name"
+                                                <Dropdown editable @keypress="isLetter($event)" :options="bankNameList" optionLabel="bank_name"
                                                     optionValue="id" placeholder="Select Bank Name"
                                                     class="w-full form-controls" v-model="bank_information.bank_id" />
 
@@ -685,6 +684,12 @@ const submitForm = () => {
         console.log('Form failed submitted.')
     }
 
+}
+
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
 }
 
 
