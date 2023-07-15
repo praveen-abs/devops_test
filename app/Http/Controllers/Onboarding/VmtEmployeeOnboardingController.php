@@ -298,6 +298,7 @@ class VmtEmployeeOnboardingController extends Controller
 
 
         $data=$request->all();
+
         $user_id =$data['employee_code'];
         //dd( $user_id);
         $response = "";
@@ -317,7 +318,7 @@ class VmtEmployeeOnboardingController extends Controller
         {
 
             //If current user is Admin, then its normal onboarding or updating existing user details.
-            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"])  && $currentLoggedinInUser->onboard_type  == "normal")
+            if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
             {
 
                 // $result = $employeeService->createOrUpdate_OnboardFormData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id);
@@ -332,7 +333,7 @@ class VmtEmployeeOnboardingController extends Controller
 
                     if($request->input('can_onboard_employee') == "1")
                     {
-                        $isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
+                        //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
                         $message="Employee onboarded successfully";
                     }
                     else

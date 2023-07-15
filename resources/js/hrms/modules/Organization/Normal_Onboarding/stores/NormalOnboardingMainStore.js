@@ -449,9 +449,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             nationality: {
                 required,
             },
-            physically_challenged: {
-                required,
-            },
+            physically_challenged: {},
             //  Person Details End
 
             // Address Validation Start
@@ -563,6 +561,10 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 //     }
                 // })
             },
+
+            // Compensatory
+
+            cic:{required:helpers.withMessage('Monthly CTC is required',required)},
 
             // Personal Documents
 
