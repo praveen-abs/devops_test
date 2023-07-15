@@ -52,7 +52,7 @@
                 <div class="row ml-1 mr-3 mt-2 ">
                     <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
                     <!-- :class="[ id ==  ?'blink':'' ]" -->
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2"
+                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
                         v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
                         <!-- {{ item.sattings }} -->
                         <!-- -->
@@ -648,19 +648,24 @@ input[type=radio] {
 
 
 .blink {
-    animation: blink-animation 1s steps(5, start) infinite;
-    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+    animation: blink-animation 1.5s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1.5s steps(5, start) infinite;
 }
 
 @keyframes blink-animation {
     to {
-        visibility: hidden;
+        /* visibility: hidden; */
+        /* opacity: 0.5; */
+        box-shadow:0px 0px 11px 1px rgba(0,0,0,0.14),
+		0px 0px 19px 14px rgba(0,0,0,0.03) ;
     }
 }
 
 @-webkit-keyframes blink-animation {
     to {
-        visibility: hidden;
+        /* visibility: hidden; */
+        /* opacity: 1; */
+
     }
 }
 </style>
