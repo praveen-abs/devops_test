@@ -14,19 +14,13 @@ use App\Models\VmtEmployeeCompensatoryLeave;
 use App\Models\VmtLeaves;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtClientMaster;
-
-
-
-
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
-
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
 use DateInterval;
 use \Datetime;
-
 use App\Services\VmtAttendanceService;
 use App\Services\VmtHolidayService;
 use Illuminate\Support\Facades\Validator;
@@ -263,17 +257,16 @@ class VmtDashboardService{
 
             //Check if the user already checked-out.
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
-                        ->where('date', date('Y-m-d'));
+                        ->where('date', date('Y-m-d'))->first();
 
-            if($attendance->exists())
+            if(!empty($attendance->date) && !empty($attendance->checkin_time))
             {
                 return response()->json([
                     'status'=> 'failure',
-                    'message' => 'You have already checked-out for the day',
+                    'message' => 'Check-in already done',
                     'time' => ""
                 ]);
             }
-
 
             $attendance = new VmtEmployeeAttendance;
             $attendance->user_id = auth()->user()->id;
@@ -320,16 +313,72 @@ class VmtDashboardService{
                // 'regularization_mail_sent' => $isSent ? "True" : $isSent
             ]);
         } else {
-            $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+
+            $user_data =User::where('id', auth()->user()->id)->first();
+            $attendance = VmtEmployeeAttendance::where('user_id', $user_data->id)
                             ->where('date', date('Y-m-d'))
                             ->first();
 
+            if(!empty($attendance)){
+                if(!empty($attendance->checkout_date) && !empty($attendance->checkout_time))
+                {
+                    return response()->json([
+                        'status'=> 'failure',
+                        'message' => 'You have already checked-out for the day',
+                        'time' => ""
+                    ]);
+                }
+
+            }
+
             //dd($attendance);
             //$attendance->date = date('Y-m-d');
-            $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
-            $attendance->checkout_time = $currentTime;
-            $attendance->attendance_mode_checkout = "web";
-            $attendance->save();
+            //att- means (attendance)
+            $last_checkout_data = $this->fetchEmpLastAttendanceStatus(auth()->user()->user_code);
+
+            $bio_att_checkin_id = \DB::table('vmt_staff_attenndance_device')
+                            ->select('id','user_Id', \DB::raw('MIN(date) as check_in_time'))
+                            ->whereDate('date', $last_checkout_data->checkin_date)
+                            ->where('direction', 'in')
+                            ->where('user_Id', $user_data->user_code)
+                            ->first(['check_in_time','date']);
+                            dd($last_checkout_data);
+                 // dd(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin ='biometric');
+
+     if(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin ='biometric'){
+
+                        $attendance_bio_data = new VmtEmployeeAttendance;
+                        $attendance_bio_data->user_id = auth()->user()->id;
+                        $attendance_bio_data->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
+                        $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+                        $attendance_bio_data->checkout_time = $currentTime;
+                        $attendance_bio_data->checkout_date= $last_checkout_data->checkin_date;
+                        $attendance_bio_data->attendance_mode_checkin = "biometric";
+                        $attendance_bio_data->attendance_mode_checkout = "web";
+                        $attendance_bio_data->staff_attendance_id = $bio_att_checkin_id;
+                        $attendance_bio_data->save();
+
+    }else if(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) &&($last_checkout_data->attendance_mode_checkin ='web' || $last_checkout_data->attendance_mode_checkin ='mobile') ){
+
+                    $attendance_web_data = VmtEmployeeAttendance::where('user_id', $user_data->id)
+                                              ->where('date', $last_checkout_data->checkin_date)->first();
+
+                        $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+                        $attendance_web_data->checkout_time = $currentTime;
+                        $attendance_web_data->checkout_date= Carbon::today()->toDateString();
+                        $attendance_web_data->attendance_mode_checkout = "web";
+                        $attendance_web_data->save();
+
+    }else{
+                        $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+                        $attendance->checkout_time = $currentTime;
+                        $attendance->checkout_date= Carbon::today()->toDateString();
+                        $attendance->attendance_mode_checkout = "web";
+                        $attendance->save();
+
+            }
+
+
 
             //Get the time diff
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
@@ -1075,6 +1124,195 @@ class VmtDashboardService{
         }
 
     }
+    public function fetchEmpLastAttendanceStatus($user_code)
+    {
+
+        //Web/bio/mobile attendance
+        try {
+            $response = null;
+
+            $query_web_mobile_response = VmtEmployeeAttendance::join('users', 'users.id', '=', 'vmt_employee_attendance.user_id')
+                ->join('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_attendance.vmt_employee_workshift_id')
+                ->where('users.user_code', $user_code)
+                ->orderBy('vmt_employee_attendance.date', 'desc')
+                ->first([
+                    'users.user_code as employee_code',
+                    'vmt_employee_attendance.date',
+                    'vmt_employee_attendance.checkin_time as checkin_time',
+                    'vmt_employee_attendance.date as checkin_date',
+                    'vmt_employee_attendance.checkout_time as checkout_time',
+                    'vmt_employee_attendance.checkout_date as checkout_date',
+                    'vmt_employee_attendance.attendance_mode_checkin as attendance_mode_checkin',
+                    'vmt_employee_attendance.attendance_mode_checkout as attendance_mode_checkout',
+                ]);
+
+            // Biometric
+            $query_biometric_response = \DB::table('vmt_staff_attenndance_device')->leftjoin('users', 'users.user_code', '=', 'vmt_staff_attenndance_device.user_id')
+                ->leftjoin('vmt_employee_workshifts', 'vmt_employee_workshifts.user_id', '=', 'users.id')
+                ->leftjoin('vmt_work_shifts', 'vmt_work_shifts.id', '=', 'vmt_employee_workshifts.work_shift_id')
+                ->where('users.user_code', $user_code)
+                ->orderby('vmt_staff_attenndance_device.date', 'desc')
+                ->first([
+                    'users.user_code as employee_code',
+                    'vmt_staff_attenndance_device.date',
+                    'vmt_staff_attenndance_device.date as checkin_time',
+                    'vmt_staff_attenndance_device.date as checkin_date',
+                    'vmt_staff_attenndance_device.date as checkout_time',
+                    'vmt_staff_attenndance_device.date as checkout_date',
+                    'vmt_staff_attenndance_device.date as attendance_mode_checkin',
+                    'vmt_staff_attenndance_device.date as attendance_mode_checkout',
+                ]);
+
+       // dd($query_biometric_response,$query_web_mobile_response);
+//get dates from emp_attedance and staff_attedance and store it in an array
+
+            $boimetric_basic_attedance_date = array();
+            $query_web_mobile_response_date = null;
+            if (!empty($query_web_mobile_response)) {
+                array_push($boimetric_basic_attedance_date, $query_web_mobile_response->date);
+                $query_web_mobile_response_date = date("Y-m-d", strtotime($query_web_mobile_response->date));
+            }
+
+            $query_biometric_response_date = null;
+            if (!empty($query_biometric_response)) {
+                array_push($boimetric_basic_attedance_date, $query_biometric_response->date);
+                $query_biometric_response_date = date("Y-m-d", strtotime($query_biometric_response->date));
+            }
+
+
+//Compare which one is recent date
+    $recent_attedance_data =null;
+if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
+    $max = max(array_map('strtotime', $boimetric_basic_attedance_date));
+    $recent_attedance_data =  date('Y-m-d', $max);
+}
+
+
+            $bio_attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+                ->whereDate('date', $recent_attedance_data)
+                ->where('direction', 'out')
+                ->where('user_Id', $user_code)
+                ->first(['check_out_time','date']);
+
+
+            $bio_attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
+                ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
+                ->whereDate('date', $recent_attedance_data)
+                ->where('direction', 'in')
+                ->where('user_Id', $user_code)
+                ->first(['check_in_time','date']);
+
+//dd($bio_attendanceCheckIn,$bio_attendanceCheckOut);
+
+            //check wheather employee mode of check-in and check-out is present or not
+   if ((empty($query_biometric_response) && empty($query_web_mobile_response))) {
+
+             $response = null;
+
+        }//check employee mode of check-in and check-out in both employee attedance and staff attedance biometric
+        else if($query_web_mobile_response_date== $recent_attedance_data && $query_biometric_response_date == $recent_attedance_data ){
+        //check which attendance_mode is empty in employee attadance table
+            if( empty($query_web_mobile_response->attendance_mode_checkin) || empty($query_web_mobile_response->attendance_mode_checkout)){
+              //if is it checkin then directly check on staff attedance table
+                if(empty($query_web_mobile_response->attendance_mode_checkin)){
+
+                        $query_web_mobile_response->checkin_time =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                        $query_web_mobile_response->checkin_date =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("Y-m-d", strtotime($bio_attendanceCheckIn->check_in_time));
+                        $query_web_mobile_response->attendance_mode_checkin = empty($bio_attendanceCheckIn->check_in_time) ? null : 'biometric';
+                    } //if is it checkout then directly check on staff attedance table
+                    else if (empty($query_web_mobile_response->attendance_mode_checkout)) {
+
+                        $query_web_mobile_response->checkout_time = empty($bio_attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                        $query_web_mobile_response->checkout_date= empty($bio_attendanceCheckOut->check_out_time) ? null : date("Y-m-d", strtotime($bio_attendanceCheckOut->check_out_time));
+                        $query_web_mobile_response->attendance_mode_checkout = empty($bio_attendanceCheckOut->check_out_time) ? null : 'biometric';
+                    }
+            $response =$query_web_mobile_response;
+        }else{
+
+            $response = $query_web_mobile_response;
+        }
+
+    }//check employee mode of check-in and check-out in  employee attedance
+    else if($query_web_mobile_response_date == $recent_attedance_data ){
+
+               //if both attedance modes are present then retrun $query_web_mobile_response
+              if(!empty($query_web_mobile_response->attendance_mode_checkin) && !empty($query_web_mobile_response->attendance_mode_checkout)){
+
+                    $response = $query_web_mobile_response;
+                } //else check which attendance_mode is empty in staff attedance table
+                else if (empty($query_web_mobile_response->attendance_mode_checkin) || empty($query_web_mobile_response->attendance_mode_checkout)) {
+
+                    if (empty($query_web_mobile_response->attendance_mode_checkin)) {
+
+                        $query_web_mobile_response->checkin_time =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                        $query_web_mobile_response->checkin_date =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("Y-m-d", strtotime($bio_attendanceCheckIn->check_in_time));
+                        $query_web_mobile_response->attendance_mode_checkin = empty($bio_attendanceCheckIn->check_in_time) ? null : 'biometric';
+                    } else if (empty($query_web_mobile_response->attendance_mode_checkout)) {
+
+                        $query_web_mobile_response->checkout_time = empty($bio_attendanceCheckOut->check_out_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                        $query_web_mobile_response->checkout_date = empty($bio_attendanceCheckOut->check_out_time) ? null : date("Y-m-d", strtotime($bio_attendanceCheckOut->check_out_time));
+                        $query_web_mobile_response->attendance_mode_checkout = empty($bio_attendanceCheckOut->check_out_time) ? null : 'biometric';
+                    }
+
+                    $response = $query_web_mobile_response;
+                }
+            } //check employee mode of check-in and check-out in staff attedance biometric
+            //else if($query_biometric_response_date == $recent_attedance_data && $biometric_attendanceCheckInTime && $biometric_attendanceCheckoutTime ){
+            else if ($query_biometric_response_date == $recent_attedance_data) {
+
+                if (!empty($bio_attendanceCheckIn->check_in_time) && !empty($bio_attendanceCheckOut->check_out_time)) {
+                    /*original  data split into date and time in biometric and assign the time to checkin and checkout ,
+                then date to Checkin checkout date */
+                    $query_biometric_response->date = $recent_attedance_data;
+                    $query_biometric_response->checkin_time = date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_biometric_response->checkout_time = date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                    $query_biometric_response->checkin_date = date("Y-m-d", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_biometric_response->checkout_date = date("Y-m-d", strtotime($bio_attendanceCheckOut->check_out_time));
+                    $query_biometric_response->attendance_mode_checkin = 'biometric';
+                    $query_biometric_response->attendance_mode_checkout = 'biometric';
+
+                    $response = $query_biometric_response;
+
+                } else if (empty($bio_attendanceCheckIn->check_in_time) || empty($bio_attendanceCheckOut->check_out_time)) {
+
+                    if (empty($bio_attendanceCheckIn->check_in_time)) {
+
+                     $query_biometric_response->date = $recent_attedance_data;
+                     $query_biometric_response->checkin_time =  empty($query_web_mobile_response->check_in_time) ? null : date("H:i:s", strtotime($query_web_mobile_response->check_in_time));
+                     $query_biometric_response->checkin_date =  empty($query_web_mobile_response->check_in_time) ? null : date("Y-m-d", strtotime($query_web_mobile_response->check_in_time));
+                     $query_biometric_response->attendance_mode_checkin = empty($query_web_mobile_response->attendance_mode_checkin) ? null : $query_web_mobile_response->attendance_mode_checkin;
+                     $query_biometric_response->checkout_time =date("H:i:s", strtotime($bio_attendanceCheckOut->check_out_time));
+                     $query_biometric_response->checkout_date =date("Y-m-d", strtotime($bio_attendanceCheckOut->check_out_time));
+                     $query_biometric_response->attendance_mode_checkout = 'biometric';
+
+                    }
+
+                else if(empty($bio_attendanceCheckOut->check_out_time)){
+
+                    $query_biometric_response->date = $recent_attedance_data;
+                    $query_biometric_response->checkin_time = date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_biometric_response->checkin_date= date("Y-m-d", strtotime($bio_attendanceCheckIn->check_in_time));
+                    $query_biometric_response->attendance_mode_checkin = 'biometric';
+                    $query_biometric_response->checkout_time = empty($query_web_mobile_response->check_out_time) ? null : date("H:i:s", strtotime($query_web_mobile_response->check_out_time));
+                    $query_biometric_response->checkout_date = empty($query_web_mobile_response->check_out_time) ? null : date("Y-m-d", strtotime($query_web_mobile_response->check_out_time));
+                    $query_biometric_response->attendance_mode_checkout = empty($query_web_mobile_response->attendance_mode_checkout) ? null : $query_web_mobile_response->attendance_mode_checkout;
+
+
+                    }
+                    $response = $query_biometric_response;
+                }
+            }
+
+            return $response;
+        }catch (Exception $e) {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Error while get latest attedance status',
+            'data'   => $e->getmessage(),
+        ]);
+    }
+}
 
 
 
