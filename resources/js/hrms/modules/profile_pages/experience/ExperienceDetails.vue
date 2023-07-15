@@ -503,52 +503,52 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 //     width: 85%;
 // }
 
-.p-datatable .p-datatable-thead>tr>th {
-    text-align: center;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-width: 0 0 1px 0;
-    font-weight: 600;
-    color: #fff;
-    background: #003056;
-    transition: box-shadow 0.2s;
-    font-size: 13px;
+// .p-datatable .p-datatable-thead>tr>th {
+//     text-align: center;
+//     padding: 1rem 1rem;
+//     border: 1px solid #dee2e6;
+//     border-top-width: 1px;
+//     border-right-width: 1px;
+//     border-bottom-width: 1px;
+//     border-left-width: 1px;
+//     border-width: 0 0 1px 0;
+//     font-weight: 600;
+//     color: #fff;
+//     background: #003056;
+//     transition: box-shadow 0.2s;
+//     font-size: 13px;
 
-    .p-column-title {
-        font-size: 13px;
-    }
+//     .p-column-title {
+//         font-size: 13px;
+//     }
 
-    .p-column-filter {
-        width: 100%;
-    }
+//     .p-column-filter {
+//         width: 100%;
+//     }
 
-    #pv_id_2 {
-        height: 30px;
-    }
+//     #pv_id_2 {
+//         height: 30px;
+//     }
 
-    .p-fluid .p-dropdown .p-dropdown-label {
-        margin-top: -10px;
-    }
+//     .p-fluid .p-dropdown .p-dropdown-label {
+//         margin-top: -10px;
+//     }
 
-    .p-dropdown .p-dropdown-label.p-placeholder {
-        margin-top: -12px;
-    }
+//     .p-dropdown .p-dropdown-label.p-placeholder {
+//         margin-top: -12px;
+//     }
 
-    .p-column-filter-menu-button {
-        color: white;
-        margin-left: 10px;
-    }
+//     .p-column-filter-menu-button {
+//         color: white;
+//         margin-left: 10px;
+//     }
 
-    .p-column-filter-menu-button:hover {
-        color: white;
-        border-color: transparent;
-        background: #023e70;
-    }
-}
+//     .p-column-filter-menu-button:hover {
+//         color: white;
+//         border-color: transparent;
+//         background: #023e70;
+//     }
+// }
 
 .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
     margin-bottom: 0.5rem;
@@ -557,7 +557,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 }
 
 .p-button .p-component .p-button-sm {
-    background-color: #003056;
+    // background-color: #003056;
 }
 
 .p-datatable .p-datatable-tbody>tr {
@@ -617,11 +617,11 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 }
 
 .p-button.p-component.p-confirm-dialog-accept {
-    background-color: #003056;
+    // background-color: #003056;
 }
 
 .p-button.p-component.p-confirm-dialog-reject.p-button-text {
-    color: #003056;
+    // color: #003056;
 }
 
 .p-column-filter-overlay-menu .p-column-filter-buttonbar {
@@ -650,7 +650,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 /* For Sort */
 
 .p-datatable .p-sortable-column:not(.p-highlight):hover {
-    background: #003056;
+    // background: #003056;
     color: white;
 }
 
@@ -659,12 +659,12 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 }
 
 .p-datatable .p-sortable-column.p-highlight {
-    background: #003056;
+    // background: #003056;
     color: white;
 }
 
 .p-datatable .p-sortable-column.p-highlight:hover {
-    background: #003056;
+    // background: #003056;
     color: white;
 }
 
@@ -690,7 +690,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 
 #file_upload {
     display: inline-block;
-    background-color: #003056;
+    // background-color: #003056;
     color: white;
     padding: 0.5rem;
     font-family: sans-serif;
@@ -770,52 +770,3 @@ span {
 }
 </style>
 
-
-{
-<!--
-<template>
-    <div class="card">
-        <Message severity="success">Success Message Content</Message>
-        <Message severity="info">Info Message Content</Message>
-
-        <Message severity="error">Error Message Content</Message>
-    </div>
-</template>
-
-
-<template>
-    <div class="flex card justify-content-center">
-        <Toast />
-        <div class="flex flex-wrap gap-2">
-            <Button label="Success" severity="success" @click="showSuccess" />
-            <Button label="Info" severity="info" @click="showInfo" />
-            <Button label="Warn" severity="warning" @click="showWarn" />
-            <Button label="Error" severity="danger" @click="showError" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showSuccess = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-};
-
-const showInfo = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
-};
-
-const showWarn = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-};
-
-const showError = () => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
-};
-</script>
-
-<script setup>
-</script> -->
-}
