@@ -29,6 +29,7 @@
                         </div>
                         <div v-else>
                             <button class="px-4 py-2 text-center text-white bg-orange-700 rounded-md me-4"
+                             :disabled="!investmentStore.isSubmitted"
                                 @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2"
                                     aria-hidden="true"></i>
                                 Add Rented</button>
@@ -63,11 +64,9 @@
     <div class="bg-gray-50 tw-card rounded-xl">
         <div class="flex justify-between mb-3">
             <span class="mx-4 my-2 mt-2 text-2xl font-semibold text-indigo-950">Rental Property</span>
-            <div v-if="investmentStore.isSubmitted" >
-                <button v-if="investmentStore.AddHraButtonDisabled" class="my-3 mr-4 btn btn-border-orange"
+                <button v-if="investmentStore.AddHraButtonDisabled"  :disabled="!investmentStore.isSubmitted" class="my-3 mr-4 btn btn-border-orange"
                 @click="investmentStore.dailogAddNewRental = true"><i class="fa fa-plus-circle me-2" aria-hidden="true"></i>
                 Add Rented</button>
-            </div>
 
         </div>
 

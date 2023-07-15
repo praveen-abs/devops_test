@@ -16,7 +16,7 @@ use Carbon\Carbon;
 
 use App\Models\User;
 use App\Models\VmtClientMaster;
-use App\Models\VmtEmployeePayslipV2;
+use App\Models\VmtEmployeePaySlipV2;
 use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Imports\VmtPaySlip;
 use App\Models\Bank;
-use App\Models\VmtGeneralInfo;
+
 use Mail;
 use App\Mail\PayslipMail;
 
@@ -188,6 +188,7 @@ $i=array_keys($excelRowdata_row);
             $messages = [
                             'required' => 'Field <b>:attribute</b> is required',
                             'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist',
+                            'regex' =>  'Field <b>:attribute</b> is invalid',
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -253,7 +254,7 @@ $i=array_keys($excelRowdata_row);
                 //IFSC CODE
 
             //Store the data into vmt_employee_payslip table
-            $empPaySlip= new VmtEmployeePayslipV2;
+            $empPaySlip= new VmtEmployeePaySlipV2;
             $empPaySlip->gender = $row['gender'] ?? null;
             $empPaySlip->designation = $row['designation'];
             $empPaySlip->department = $row['department'] ?? null;
@@ -292,7 +293,7 @@ $i=array_keys($excelRowdata_row);
             }
 
             $emp_payroll_id = VmtEmployeePayroll::where('user_id', $user_id)->where('payroll_id', $payroll_id)->first()->id;
-            $emp_payslip_data = VmtEmployeePayslipV2::where('emp_payroll_id', $emp_payroll_id)->first();
+            $emp_payslip_data = VmtEmployeePaySlipV2::where('emp_payroll_id', $emp_payroll_id)->first();
 
 
             if(empty($emp_payslip_data)){
@@ -435,7 +436,7 @@ $i=array_keys($excelRowdata_row);
 //dd(payroll_month);
              $emp_payslip_id =VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_month->id)->first()->id;
 
-            $data['employee_payslip'] = VmtEmployeePaySlipv2::where('emp_payroll_id',$emp_payslip_id)->first();
+            $data['employee_payslip'] = VmtEmployeePaySlipV2::where('emp_payroll_id',$emp_payslip_id)->first();
 
             $data['emp_payroll_month'] = $payroll_month;
             $data['employee_code'] = $user->user_code;
@@ -521,7 +522,7 @@ $i=array_keys($excelRowdata_row);
 
              $emp_payslip_id =VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_month->id)->first()->id;
 
-            $data['employee_payslip'] = VmtEmployeePaySlipv2::where('emp_payroll_id',$emp_payslip_id)->first();
+            $data['employee_payslip'] = VmtEmployeePaySlipV2::where('emp_payroll_id',$emp_payslip_id)->first();
 
             $data['emp_payroll_month'] = $payroll_month;
             $data['employee_code'] = $user->user_code;
@@ -723,7 +724,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
 
 
-            $query_payslips = VmtEmployeePayslipV2::join('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
+            $query_payslips = VmtEmployeePaySlipV2::join('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
                                             ->join('vmt_payroll','vmt_payroll.id','=','vmt_emp_payroll.payroll_id')
                                             ->join('users','users.id','=','vmt_emp_payroll.user_id')
                                             ->whereYear('vmt_payroll.payroll_date', $year)
@@ -786,7 +787,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
                 $user_id = User::where('user_code', $user_code)->first()->id;
 
 
-        $query_payslips = VmtEmployeePayslipV2::join('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
+        $query_payslips = VmtEmployeePaySlipV2::join('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
                                             ->join('vmt_payroll','vmt_payroll.id','=','vmt_emp_payroll.payroll_id')
                                             ->where('vmt_emp_payroll.user_id',$user_id)
                                             ->orderBy('vmt_payroll.payroll_date', 'ASC')
@@ -973,7 +974,7 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
             $emp_payslip_id =VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_month->id)->first()->id;
 
-            $data['employee_payslip'] = VmtEmployeePaySlipv2::where('emp_payroll_id',$emp_payslip_id)->first();
+            $data['employee_payslip'] = VmtEmployeePaySlipV2::where('emp_payroll_id',$emp_payslip_id)->first();
 
             $data['emp_payroll_month'] = $payroll_month;
 
@@ -1005,8 +1006,8 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             $pdf->setPaper('A4', 'portrait');
             $pdf->render();
 
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
             // $pdf->stream($client_name.'.pdf');
             $isSent    = \Mail::to($query_user->email)->send(new PayslipMail( request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));

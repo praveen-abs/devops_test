@@ -220,10 +220,10 @@ class VmtProfilePagesService
 
 
 
-           $general_info = \DB::table('vmt_general_info')->first();
+           $general_info = \DB::table('vmt_client_master')->first();
 
-           //$query_client_logo = Storage::disk('public')->get($general_info->logo_img);
-           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->logo_img;
+           //$query_client_logo = Storage::disk('public')->get($general_info->client_logo);
+           $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
 
          //$response['client_logo'] = base64_encode($query_client_logo);
        $response['client_logo'] = $query_client_logo;

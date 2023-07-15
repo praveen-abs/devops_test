@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use \DateTime;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
+
+use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use \stdClass;
@@ -77,11 +78,13 @@ class VmtEmployeeMailNotifMgmtService {
             ->where('users.user_code',$user_code)
             ->first()->email;
 
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+            $client_id=User::where('user_code',$user_code)->first();
+            $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
-            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+            $isSent = \Mail::to($user_mail)->send(new WelcomeMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
             //Store the sent status in ' vmt_user_mail_status'
 
@@ -121,7 +124,7 @@ class VmtEmployeeMailNotifMgmtService {
             return response()->json([
                 'status' => 'failure',
                 'message' => "",
-                'data' => $e
+                'data' => $e->getmessage().$e->getLine(),
             ]);
         }
 
@@ -158,8 +161,8 @@ class VmtEmployeeMailNotifMgmtService {
             ->where('users.user_code',$user_code)
             ->first()->email;
 
-            $VmtGeneralInfo = VmtGeneralInfo::first();
-            $image_view = url('/') . $VmtGeneralInfo->logo_img;
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
             $isSent = \Mail::to($user_mail)->send(new ActivationMail($user_code ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));

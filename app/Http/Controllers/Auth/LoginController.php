@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth as auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\VmtGeneralInfo;
-use App\Models\User;
 use App\Models\VmtClientMaster;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Cache;
 use App\Mail\PasswordResetLinkMail;
 use Illuminate\Support\Facades\URL;
@@ -59,9 +59,9 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        $generalInfo = VmtGeneralInfo::first();
+        $Clientinfo = VmtClientMaster::first();
         $clientList = VmtClientMaster::all(['id','client_name']);
-        //dd($generalInfo);
+        //dd($Clientinfo);
         $cacheStatus = "";
 
         // $cookies = \Cookie::get();
@@ -78,13 +78,13 @@ class LoginController extends Controller
             $cacheStatus = "Cache not cleared";
 
 
-        return view('auth.login', compact('generalInfo','clientList','cacheStatus'));
+        return view('auth.login', compact('Clientinfo','clientList','cacheStatus'));
     }
 
     public function showForgetPasswordPage(Request $request){
-        $generalInfo = VmtGeneralInfo::first();
+        $Clientinfo = VmtClientMaster::first();
 
-        return view('forget_password',compact('generalInfo'));
+        return view('forget_password',compact('Clientinfo'));
     }
 
     public function login(Request $request)
@@ -198,9 +198,9 @@ class LoginController extends Controller
 
     public function showResetPasswordPage(Request $request)
     {
-        $generalInfo = VmtGeneralInfo::first();
+        $Clientinfo = VmtClientMaster::first();
 
-        return view('auth.reset_password',compact('generalInfo'));
+        return view('auth.reset_password',compact('Clientinfo'));
     }
 
     public function sendPasswordResetLink(Request $request, VmtLoginService $serviceVmtLoginService){

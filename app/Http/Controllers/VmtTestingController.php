@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestEmail;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
@@ -36,16 +37,17 @@ use App\Imports\VmtInvSectionImport;
 use App\Models\VmtInvFEmpAssigned;
 use App\Models\VmtInvFormSection;
 use Carbon\Carbon;
-
+use App\Models\VmtEmployeePaySlipV2;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\VmtGeneralInfo;
+
 use Illuminate\Support\Facades\Storage;
 use App\Services\VmtEmployeeService;
 use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
 use App\Jobs\sendemailjobs;
+use Illuminate\Support\Facades\Validator;
 
 
 class VmtTestingController extends Controller
@@ -251,8 +253,11 @@ class VmtTestingController extends Controller
 
         $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $client_id=User::where('user_code',$user_code)->first();
+
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+        
+        $image_view = url('/') . $VmtClientMaster->client_logo;
 
         $response = array();
         try {
@@ -272,6 +277,40 @@ class VmtTestingController extends Controller
             dd("Error : " . $e);
         }
     }
+
+    public function sendHTMLEmail(Request $request) {
+
+        try{
+
+            $validator = Validator::make(
+                $request->all(),
+                $rules = [
+                    "email" => 'required',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                ]
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
+
+            $isSent = \Mail::to($request->email)->send(new TestEmail($request->email));
+
+            return "success";
+        }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $e->getMessage(),
+            ]);
+        }
+     }
 
     public function exportattenance(Request $request)
     {
@@ -314,7 +353,7 @@ class VmtTestingController extends Controller
 
             $emp_payslip_id =VmtEmployeePayroll::where('user_id',$user_id)->where('payroll_id',$payroll_month->id)->first()->id;
 
-            $data['employee_payslip'] = VmtEmployeePaySlipv2::where('emp_payroll_id',$emp_payslip_id)->first();
+            $data['employee_payslip'] = VmtEmployeePaySlipV2::where('emp_payroll_id',$emp_payslip_id)->first();
 
             $data['emp_payroll_month'] = $payroll_month;
 

@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use App\Models\VmtEmployeePaySlipV2;
 
 class VmtPayrollReports extends DefaultValueBinder implements FromCollection,WithColumnWidths,WithStyles,WithHeadings,
 WithCustomValueBinder

@@ -21,7 +21,7 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtClientMaster;
 use App\Models\VmtMasterConfig;
-use App\Models\VmtGeneralInfo;
+
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployeePMSGoals;
@@ -1227,9 +1227,11 @@ class VmtEmployeeController extends Controller
         $data['net_take_home_monthly'] = $employeeData["net_income"];
         $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
 
+        $client_id=User::where('user_code',$employeeData['employee_name'])->first();
 
-        $VmtGeneralInfo = VmtGeneralInfo::first();
-        $image_view = url('/') . $VmtGeneralInfo->logo_img;
+        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
+        
+        $image_view = url('/') . $VmtClientMaster->client_logo;
         $appoinmentPath = "";
 
         if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
@@ -1263,7 +1265,7 @@ class VmtEmployeeController extends Controller
         $message = "Employee Bulk OnBoard was Created   ";
 
         Notification::send($notification_user ,new ViewNotification($message.$employeeData['employee_name']));
-        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
+        $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view,$client_code->abs_client_code));
 
         return $isSent;
     }
@@ -1290,7 +1292,7 @@ class VmtEmployeeController extends Controller
     //     //For validation
     //     $isAllRecordsValid = true;
 
-    //     $VmtGeneralInfo = VmtGeneralInfo::first();
+    //     $VmtClientMaster = VmtClientMaster::first();
 
     //     $rules = [];
     //     $responseJSON = [
@@ -1484,8 +1486,8 @@ class VmtEmployeeController extends Controller
 
     //         $notification_user = User::where('id',auth::user()->id)->first();
     //         $message = "Employee OnBoard was Created   ";
-    //         $VmtGeneralInfo = VmtGeneralInfo::first();
-    //         $image_view = url('/') . $VmtGeneralInfo->logo_img;
+    //         $VmtClientMaster = VmtClientMaster::first();
+    //         $image_view = url('/') . $VmtClientMaster->client_logo;
     //         Notification::send($notification_user ,new ViewNotification($message.$row['employee_name']));
     //         \Mail::to($row["email"])->send(new QuickOnboardLink($row['employee_name'], $empNo, 'Abs@123123', request()->getSchemeAndHttpHost(), $image_view));
 

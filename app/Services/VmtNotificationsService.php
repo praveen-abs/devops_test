@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use Dompdf\Dompdf;
 use \stdClass;
 use App\Models\User;

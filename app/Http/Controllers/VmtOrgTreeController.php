@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\VmtEmployeeOfficeDetails;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -76,7 +76,7 @@ class VmtOrgTreeController extends Controller
         }
 
 
-        $client_logo = VmtGeneralInfo::first()->logo_img;
+        $client_logo = VmtClientMaster::first()->client_logo;
 
         if( file_exists(public_path($client_logo)) ){
             $logoSrc     = \URL::asset($client_logo);

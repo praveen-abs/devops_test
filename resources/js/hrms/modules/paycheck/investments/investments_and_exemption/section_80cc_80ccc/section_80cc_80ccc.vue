@@ -40,7 +40,7 @@
                         <div v-else>
                             <InputNumber class="text-lg font-semibold w-7" v-model="slotProps.data.dec_amt"
                                 @focusout="investmentStore.getDeclarationAmount(slotProps.data)" mode="currency"
-                                currency="INR" locale="en-US" />
+                                currency="INR" locale="en-US" :readonly="!investmentStore.isSubmitted" />
                         </div>
 
                     </template>

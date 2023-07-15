@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
 use App\Mail\WelcomeClientMail;
-use App\Models\VmtGeneralInfo;
+use Symfony\Component\Mailer\Exception\TransportException;
+
+use Illuminate\Support\Facades\Validator;
+use App\Services\VmtClientService;
 
 class VmtClientController extends Controller
 {
@@ -37,8 +40,8 @@ class VmtClientController extends Controller
      */
     public function store(Request $request)
     {
-           // dd($request->all());
-       $VmtGeneralInfo = VmtGeneralInfo::where('id','1')->orderBy('created_at', 'DESC')->first();
+        //    dd($request->all());
+       $VmtClientMaster = VmtClientMaster::where('id','1')->orderBy('created_at', 'DESC')->first();
        try
        {
             $vmtClient  =  new VmtClientMaster;
@@ -60,7 +63,7 @@ class VmtClientController extends Controller
             $vmtClient->authorised_person_contact_email  = $request->authorised_person_contact_email;
             $vmtClient->billing_address  = $request->billing_address;
             $vmtClient->shipping_address  = $request->shipping_address;
-            if (request()->has('doc_uploads')) {
+            if ($request->doc_uploads) {
                 $docUploads = request()->file('doc_uploads');
                 $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
                 $docUploadsPath = public_path('/images/');
@@ -71,23 +74,38 @@ class VmtClientController extends Controller
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
 
-            $image_view = url('/').$VmtGeneralInfo->logo_img;
-            if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
+
+            $image_view = url('/').$VmtClientMaster->client_logo;
+
+            \Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
                                                             $request->authorised_person_contact_email,
                                                             'Abs@123123',
                                                              request()->getSchemeAndHttpHost() ,
                                                              "",
                                                              $image_view)
-                                                        )
-                ) {
+            );
                 return "Saved";
-            } else {
-                return "Error";
-            }
+        }
+        catch (TransportException $e) {
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'client onboarded successfully.',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
         }
         catch (\Throwable $e) {
-            return "Error".$e;
+            return response()->json(
+                [
+                    'status' => 'failure',
+                    'error' => $e->getMessage(),
+                ]
+            );
         }
     }
 
@@ -101,48 +119,9 @@ class VmtClientController extends Controller
         return json_encode( VmtClientMaster::all());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    public function getABSClientCode(Request $request, VmtClientService $serviceVmtClientService){
 
+        return $serviceVmtClientService->getABSClientCode($request->client_code);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
