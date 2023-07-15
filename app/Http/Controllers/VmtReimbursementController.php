@@ -17,11 +17,7 @@ class VmtReimbursementController extends Controller
 
     public function saveReimbursementsData(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
 
-<<<<<<< HEAD
         // dd($request->all());
-=======
-    //dd($request->all());
->>>>>>> 563c2ec058f5b3fe197e5257421a5b6053841b2d
 
         return $serviceVmtReimbursementsService->saveReimbursementData_LocalConveyance( user_code: $request->user_code,
                                                                                         date : $request->date,
