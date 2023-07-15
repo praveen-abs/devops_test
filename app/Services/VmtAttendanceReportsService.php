@@ -671,9 +671,9 @@ class VmtAttendanceReportsService
 
 
 
-            $firstDateStr=$start_date;
-            $lastAttendanceDate=Carbon::parse($end_date);
-            $totalDays=  $lastAttendanceDate->diffInDays(Carbon::parse(  $firstDateStr));
+            $firstDateStr = $start_date;
+            $lastAttendanceDate = Carbon::parse($end_date);
+            $totalDays =  $lastAttendanceDate->diffInDays(Carbon::parse($firstDateStr));
 
 
             //dd($totalDays);
@@ -690,7 +690,10 @@ class VmtAttendanceReportsService
                 $dateString  = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
 
                 //dd(sessionGetSelectedClientCode());
-                if (sessionGetSelectedClientCode() == "DM") {
+                if (
+                    sessionGetSelectedClientCode() == "DM" || sessionGetSelectedClientCode() == 'VASA' || sessionGetSelectedClientCode() == 'LAL'
+                    || sessionGetSelectedClientCode() == 'PSC' || sessionGetSelectedClientCode() ==  'IMA' || sessionGetSelectedClientCode() ==  'PA' || sessionGetSelectedClientCode() ==  'DMC'
+                ) {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
                         ->whereDate('date', $dateString)
@@ -748,7 +751,7 @@ class VmtAttendanceReportsService
                 // where('user_id', $request->user_id)
                 where('user_id', $singleUser->id)
                 //->whereMonth('date', $request->month)
-                ->whereBetween('date',[$start_date, $end_date])
+                ->whereBetween('date', [$start_date, $end_date])
                 ->orderBy('checkin_time', 'asc')
                 ->get(['date', 'checkin_time', 'checkout_time', 'attendance_mode_checkin', 'attendance_mode_checkout']);
             //dd($attendance_WebMobile);
@@ -769,7 +772,7 @@ class VmtAttendanceReportsService
             $heading_dates_2 = array();
             for ($i = 0; $i <= $totalDays; $i++) {
 
-                $fulldate =Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
+                $fulldate = Carbon::parse($firstDateStr)->addDay($i)->format('Y-m-d');
                 $date = Carbon::parse($firstDateStr)->addDay($i)->format('d');
 
                 $date_day = $date . ' - ' . Carbon::parse($fulldate)->format('l');
@@ -900,6 +903,11 @@ class VmtAttendanceReportsService
                 //get Shift Time for day
 
                 $shift_settings = $this->getShiftTimeForEmployee($singleUser->id, $value['checkin_time'], $value['checkout_time']);
+                // if( $shift_settings == null){
+                //     dd($singleUser->id);
+                // }
+                // if( $shift_settings->shift_start_time==null)
+                // dd($singleUser->id);
                 $shiftStartTime  = Carbon::parse($shift_settings->shift_start_time);
                 $shiftEndTime  = Carbon::parse($shift_settings->shift_end_time);
                 $weekOffDays =  $shift_settings->week_off_days;
@@ -914,9 +922,9 @@ class VmtAttendanceReportsService
                     $total_OT =  $total_OT +  $ot;
                     $ot_ar = CarbonInterval::minutes($ot)->cascade();
                     $ot_hrs = (int) $ot_ar->totalHours;
-                    $ot_mins =$ot_ar->toArray()['minutes'];
+                    $ot_mins = $ot_ar->toArray()['minutes'];
                     $total_ot =    $ot_hrs . ' Hrs:' .  $ot_mins . ' Minutes';
-                   // dd( $total_ot);
+                    // dd( $total_ot);
                     $attendanceResponseArray[$key]['OT'] =  $total_ot;
                 }
 
@@ -957,8 +965,8 @@ class VmtAttendanceReportsService
                     $attendanceResponseArray[$key]['is_weekoff'] == false
                 ) {
                     $leave_Details = VmtEmployeeLeaves::where('user_id', $attendanceResponseArray[$key]['user_id'])
-                        ->whereBetween('start_date',[$start_date,$end_date])
-                        ->orWhereBetween('end_date',[$start_date,$end_date])
+                        ->whereBetween('start_date', [$start_date, $end_date])
+                        ->orWhereBetween('end_date', [$start_date, $end_date])
                         ->get(['start_date', 'end_date', 'status', 'leave_type_id', 'total_leave_datetime']);
                     if ($leave_Details->count() == 0) {
                         // dd( $leave_Details->count());
@@ -1158,7 +1166,7 @@ class VmtAttendanceReportsService
                 $total_OT = CarbonInterval::minutes($total_OT)->cascade();
                 $total_hours = (int)$total_OT->totalHours;
                 $total_minutes = $total_OT->toArray()['minutes'];
-                $total_OT =  $total_hours.'.'.$total_minutes;
+                $total_OT =  $total_hours . '.' . $total_minutes;
                 // dd(  $total_OT );
             }
 
