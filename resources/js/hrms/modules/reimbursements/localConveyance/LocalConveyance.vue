@@ -48,6 +48,11 @@
                     {{ slotProps.data.user_comments }}
                 </template>
             </Column>
+            <Column field="user_comments" header="Entry Mode" style="min-width: 12rem text-transform: capitalize">
+                <template #body="slotProps">
+                    {{ slotProps.data.entry_mode }}
+                </template>
+            </Column>
         </DataTable>
     </div>
 
