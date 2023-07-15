@@ -18,7 +18,7 @@
                                     class="capitalize form-onboard-form form-control textbox" type="text"
                                     :readonly="service.readonly.is_emp_code_quick"
                                     v-model="service.employee_onboarding.employee_code" placeholder="Employee Code"
-                                    @input="userCodeExists" @keypress="isSpecialChars($event)" />
+                                    @input="userCodeExists" @keypress="isNumber($event)" />
                             </div>
                             <span v-if="service.user_code_exists" class="p-error">Employee code Already Exists</span>
 

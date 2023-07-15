@@ -363,11 +363,17 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
     const validateFile = (value) => {
 
-        if (value.type == 'image/jpeg' || value.type == 'image/png' || value.type == 'application/pdf') {
+        if(value){
+            if (value.type == 'image/jpeg' || value.type == 'image/png' || value.type == 'application/pdf') {
+                return true
+            } else {
+                return false
+            }
+        }else{
             return true
-        } else {
-            return false
         }
+
+
     }
 
     const rules = computed(() => {

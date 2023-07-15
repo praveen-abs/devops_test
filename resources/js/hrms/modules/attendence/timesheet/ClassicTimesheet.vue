@@ -4,15 +4,79 @@
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
         <!-- {{ currentlySelectedCellRecord }} -->
-        <div class="rounded-lg bg-red-50 p-3 my-3" v-if="currentlySelectedCellRecord.isAbsent">
-            <p class="text-center font-semibold fs-6">Absent</p>
+        <div v-if="currentlySelectedCellRecord.isAbsent">
+            <div class="rounded-lg bg-red-50 p-3 my-3">
+                <p class="text-center font-semibold fs-6">Absent</p>
 
-            <div class="flex justify-center mx-8 my-3">
-                <p class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer">Apply leave</p>
-                <p class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer">Regularize</p>
+                <div class="flex justify-center mx-8 my-3">
+                    <p class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer">Apply leave</p>
+                    <p class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer">Regularize</p>
+                </div>
             </div>
+            <div class="my-2 bg-red-50 rounded-lg p-3" v-if="false">
+                <div class="flex">
+                    <div class="w-6"><label class="font-medium fs-6 text-gray-700">Date</label></div>
+                    <div class="">
+                        <span class="text-ash-medium fs-15" id="current_date">{{ currentlySelectedCellRecord.date
+                        }}</span>
+                        <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
+                            id="attendance_date">
+                    </div>
+                </div>
+                <div class="flex my-4">
+                    <div class="w-6"><label class="font-medium fs-6 text-gray-700">Check In Time</label>
+                    </div>
+                    <div class="">
+                        9.30AM
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="w-6"><label class="font-medium fs-6 text-gray-700">Check Out Time</label>
+                    </div>
+                    <div class="">
+                        6.30PM
+                    </div>
+                </div>
+                <div v-if="type == 'EG'">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
 
+                            <div class="col-6" v-if="source.eg_status == 'None'">
+                                <select name="reason" class="form-select btn-line-orange" id="reason_lc">
+                                    <option selected hidden disabled>
+                                        Choose Reason
+                                    </option>
+                                    <option value="Permission">Permission</option>
+                                    <option value="Technical Error">Technical Error</option>
+                                    <option value="Technical Error">Official</option>
+                                    <option value="Technical Error">Personal</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                            <!-- <div class="col-6" v-else>
+                                <p class="max-w-min p-1" :class="findStatus(source.eg_status)"> {{ source.eg_status }}
+                                </p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 " v-if="useTimesheet.egDetails.reason == 'Others'">
+                        <div class="row">
+                            <div class="col-12">
+                                <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                                    placeholder="Reason here...."
+                                    v-model="useTimesheet.egDetails.custom_reason"></textarea>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div v-if="!source.eg_status == 'None'" class="text-end btn btn-orange">Apply</div> -->
+                </div>
+            </div>
         </div>
+
+
+
         <div class="rounded-lg bg-orange-50 p-3" v-if="!currentlySelectedCellRecord.isAbsent">
             <p class="font-sans font-bold fs-6">Check-in</p>
 
