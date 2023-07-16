@@ -12,33 +12,36 @@
                 <div class="flex">
                     <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
                             class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
-                    <input type="file" name="" id="file" hidden @change="json($event)">
-                    <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg"></p>
+                    <input type="file" name="" id="file" hidden @change="json($event)" accept=".xls, .xlsx">
+                    <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg">{{ selectedFile ? selectedFile.name : '' }}
+                    </p>
                 </div>
             </div>
             <div>
                 <div class="col-form-label">
-                    <h4 class="font-semibold fs-6"> Upload Instructions</h4>
+                    <p class="font-semibold fs-4"> Upload Instructions</p>
                     <div class="py-2 my-4 bg-red-100 rounded-lg f-12 alert-warning font-semibold fs-6"><i
                             class='fa fa-warning text-danger mx-2'></i> Read
                         these instructions before uploading the file.</div>
                     <div>
-                        <ul class="list-style" style="">
-                            <li class="my-2"><i class="text-green-500 fa fa-check" aria-hidden="true"></i> Employee
+                        <ul class="list-style font-semibold" style="">
+                            <li class="my-2 font-semibold fs-6"><i class="text-green-500 fa fa-check"
+                                    aria-hidden="true"></i> Employee
                                 Number,Employee Name, Email, Date of joining
                                 and Location fields are required to add employees in.</li>
-                            <li class="my-2"><i class="text-green-500 fa fa-check"></i> Enter mobile number is mandatory
+                            <li class="my-2 font-semibold fs-6"><i class="text-green-500 fa fa-check"></i> Enter mobile
+                                number is mandatory
                                 while adding employee </li>
 
-                            <li class="my-2"> <i class="text-green-500 fa fa-check"></i> Employee email is unique across
+                            <li class="my-2 font-semibold fs-6"> <i class="text-green-500 fa fa-check"></i> Employee email
+                                is unique across
                                 . So, cannot add same employee in two
                                 Organizations with same email. </li>
 
-                            <li class="my-2"><i class="text-green-500 fa fa-check"></i> Designation is mandatory since
+                            <li class="my-2 font-semibold fs-6"><i class="text-green-500 fa fa-check"></i> Designation is
+                                mandatory since
                                 it will help to identify employees in People picker
                                 search results when 2 or more employees have same Name. </li>
-
-                            <!---->
                         </ul>
 
                     </div>
@@ -50,20 +53,60 @@
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
-            <Column header="File Name" field="Employee code" style="min-width: 8rem">
+            <Column header="Employee code" field="Employee code" style="min-width: 8rem"></Column>
+            <Column field="Employee Name" header="Employee Name" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data['Employee Name'] }}
+                    </p>
+                </template>
             </Column>
-
-            <Column field="Employee Name" header="Status" style="min-width: 12rem">
-
+            <Column field="Email" header="Email " style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data['Email'] }}
+                    </p>
+                </template>
             </Column>
-
-            <Column field="Email" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Aadhar" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Account No" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Bank Name" header="Reason " style="min-width: 12rem"></Column>
+            <Column field="Aadhar" header="Aadhar " style="min-width: 12rem"></Column>
+            <Column field="Account No" header="Account No " style="min-width: 12rem"></Column>
+            <Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data['Bank Name'] }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="Gender" header="Gender" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data['Gender']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data['Gender'] }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="DOJ" header="DOJ " style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isNumber(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg border-1' : '']" class="font-semibold fs-6">
+                        {{ data['DOJ'] }}
+                    </p>
+                </template>
+            </Column>
+            <Column field=" Location" header="Location" style="min-width: 12rem"></Column>
+            <Column field="DOB" header="DOB" style="min-width: 12rem"></Column>
+            <Column field="Pan No" header="Pan No" style="min-width: 12rem"></Column>
+            <Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem"></Column>
+            <Column field="Department" header="Department" style="min-width: 12rem"></Column>
+            <Column field="Process" header="Process" style="min-width: 12rem"></Column>
+            <Column field="Designation" header="Designation" style="min-width: 12rem"></Column>
+            <Column field="Bank ifsc" header="Bank ifsx" style="min-width: 12rem"></Column>
 
         </DataTable>
     </div>
+<!--
+    <Dialog header="Header" v-model:visible="dailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+
+</Dialog> -->
 </template>
 
 
@@ -142,6 +185,9 @@ const sampleTemplate = ref([
     }
 ])
 
+const dailog = ref(false)
+const selectedFile = ref()
+
 
 const items = ref([
     { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
@@ -193,6 +239,7 @@ const parseExcel = (file) => {
 const json = (e) => {
 
     var file = e.target.files[0];
+    selectedFile.value = e.target.files[0];
     // input canceled, return
     if (!file) return;
 
@@ -211,6 +258,17 @@ const json = (e) => {
             return initial;
         }, {});
 
+        for (let index = 0; index < jsonData['Sheet1'].length; index++) {
+            console.log("jsonData['Sheet1'].length :", jsonData['Sheet1'].length);
+            const validationResult = getValidationMessages(
+                jsonData['Sheet1'][index]
+            );
+            if (validationResult.length > 0) {
+                problemLeads.push({ messages: validationResult, rowNumber: index + 1 });
+            }
+        }
+
+
         console.log(jsonData);
         employee_documents.value = jsonData.Sheet1
 
@@ -222,6 +280,64 @@ const json = (e) => {
     reader.readAsArrayBuffer(file);
 }
 
+
+const isLetter = (e) => {
+    if (/^[A-Za-z_ ]+$/.test(e)) {
+        return false
+    } else {
+        return true
+
+    }
+}
+
+const isSpecialChars = (e) => {
+    if (/^[A-Za-z0-9]+$/.test(e)) {
+        return false
+    } else {
+        return true
+
+    }
+}
+
+const isNumber = (e) => {
+    if (/^[0-9]+$/.test(e)) {
+        return false
+    } else {
+        return true
+
+    }
+}
+
+const isEmail = (e) => {
+    if (/^[A-Za-z0-9@.]+$/.test(e)) {
+        return false
+    } else {
+        return true
+
+    }
+}
+
+const getValidationMessages = (data) => {
+    console.log(data);
+    let errorMessages = [];
+    const isLetter = /^[A-Za-z_ ]+$/;
+    const digitRegexp = /\w*\d{1,}\w*/;
+    const emailRegexp =
+        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const websiteRegexp =
+        new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
+
+    if (isLetter.test(data["DOJ"])) {
+        console.log("error");
+    } else {
+        console.log("false");
+    }
+
+
+
+
+    return errorMessages;
+}
 
 const download = () => {
     const data = XLSX.utils.json_to_sheet(sampleTemplate.value)
