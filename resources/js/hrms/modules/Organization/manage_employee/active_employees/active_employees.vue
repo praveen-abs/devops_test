@@ -21,7 +21,13 @@
         <template #empty> No customers found.</template>
         <template #loading> Loading customers data. Please wait. </template>
         <Column class="font-bold" field="emp_name" header="Employee Name">
-          <template #body="slotProps"> {{ slotProps.data.emp_name }} </template>
+
+          <template #body="slotProps">
+           <div class="flex">
+            <p class="p-2 text-semibold rounded-full bg-blue-900 w-3 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
+            <p>{{ slotProps.data.emp_name }} </p>
+           </div>
+            </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
               :showClear="true" />
@@ -34,7 +40,7 @@
           </template>
         </Column>
         <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
-        <Column field="l1_manager_name" header="Reporting Manager"></Column>
+        <Column field="reporting_manager_name" header="Reporting Manager"></Column>
         <Column field="doj" header="DOJ"  style="min-width: 10rem;">
           <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
         </Column>
