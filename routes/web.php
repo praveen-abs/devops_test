@@ -47,9 +47,6 @@ Route::get('/create-holiday', function () {
     return view('createHoliday');
 })->name('create-holiday');
 
-Route::get('/testing-shelly', function () {
-    return view('testing_shelly');
-})->name('create-holiday');
 
 // Route::post('/employee_profile', [App\Http\Controllers\Api\VmtAPIAttendanceController::class, 'employeeProfile'])->name('employeeProfile');
 Route::get('/employee_profile', [App\Http\Controllers\VmtAttendanceController::class, 'employeeProfile'])->name('employeeProfile');

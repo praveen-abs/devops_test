@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Carbon\Carbon;
 use App\Models\VmtEmployeeDetails;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\VmtDocuments;
@@ -18,6 +19,9 @@ use Illuminate\Http\Request;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeePaySlip;
+use App\Models\VmtEmployeePaySlipV2;
+use App\Models\VmtPayroll;
+use App\Models\VmtEmpPayroll;
 use App\Models\VmtMaritalStatus;
 use App\Models\VmtTempEmployeeProofDocuments;
 use Illuminate\Support\Facades\Crypt;
@@ -231,6 +235,22 @@ class VmtProfilePagesService
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;
         $response['employee_documents_proof'] = $update_user_data;
+
+
+        $year =Carbon::now()->year;
+        $month =Carbon::now()->subMonth()->format('m');
+
+        $response['payroll_summary'] = VmtEmployeePaySlipV2::join('vmt_emp_payroll','vmt_emp_payroll.id','=','vmt_employee_payslip_v2.emp_payroll_id')
+                                                     ->join('vmt_payroll','vmt_payroll.id','vmt_emp_payroll.payroll_id')
+                                                     ->join('users','users.id','vmt_emp_payroll.user_id')
+                                                     ->whereYear('vmt_payroll.payroll_date', '=',$year)
+                                                     ->whereMonth('vmt_payroll.payroll_date', '=',$month)
+                                                     ->where('users.id', '=',$user_id)
+                                                     ->orderBy('vmt_payroll.updated_at','DESC')
+                                                     ->get(['vmt_payroll.payroll_date',
+                                                                'vmt_employee_payslip_v2.worked_Days',
+                                                                'vmt_employee_payslip_v2.lop'
+                                                                ]);
 
         //Add the documents details
 

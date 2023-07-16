@@ -7,7 +7,7 @@
         </span>
 
 
-            <a href="{{ url('vmt_privacy_policy') }}" class="text-ash f-12 privacy-policy" role="button">
+            <a href="{{ url('https://ardens.in/policies/privacy-policy/') }}" class="text-ash f-12 privacy-policy" role="button">
                 Privacy Policy
             </a>
 
