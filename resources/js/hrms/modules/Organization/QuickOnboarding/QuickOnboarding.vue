@@ -48,17 +48,32 @@
                 </div>
             </div>
         </div>
-        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="employee_documents"
+        <DataTable editMode="cell" @cell-edit-complete="onCellEditComplete" ref="dt" dataKey="id" :paginator="true"
+            :rows="10" :value="employee_documents"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
 
-            <Column header="Employee code" field="Employee code" style="min-width: 8rem"></Column>
+            <Column header="Employee code" field="Employee code" style="min-width: 8rem">
+                <template #body="{ data }">
+                    <p :class="[isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Employee code'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
             <Column field="Employee Name" header="Employee Name" style="min-width: 12rem">
                 <template #body="{ data }">
-                    <p :class="[isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                    <p :class="[isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
                         {{ data['Employee Name'] }}
                     </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
                 </template>
             </Column>
             <Column field="Email" header="Email " style="min-width: 12rem">
@@ -67,14 +82,40 @@
                         {{ data['Email'] }}
                     </p>
                 </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
             </Column>
-            <Column field="Aadhar" header="Aadhar " style="min-width: 12rem"></Column>
-            <Column field="Account No" header="Account No " style="min-width: 12rem"></Column>
+            <Column field="Aadhar" header="Aadhar " style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Aadhar'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Account No" header="Account No " style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Account No'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" minlength="10" maxlength="18" />
+                </template>
+            </Column>
             <Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
                 <template #body="{ data }">
                     <p :class="[isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
                         {{ data['Bank Name'] }}
                     </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
                 </template>
             </Column>
             <Column field="Gender" header="Gender" style="min-width: 12rem">
@@ -83,26 +124,113 @@
                         {{ data['Gender'] }}
                     </p>
                 </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+
             </Column>
             <Column field="DOJ" header="DOJ " style="min-width: 12rem">
                 <template #body="{ data }">
-                    <p :class="[isNumber(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg border-1' : '']" class="font-semibold fs-6">
+                    <p :class="[isNumber(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg border-1' : '']"
+                        class="font-semibold fs-6">
                         {{ data['DOJ'] }}
                     </p>
                 </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
             </Column>
-            <Column field=" Location" header="Location" style="min-width: 12rem"></Column>
-            <Column field="DOB" header="DOB" style="min-width: 12rem"></Column>
-            <Column field="Pan No" header="Pan No" style="min-width: 12rem"></Column>
-            <Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem"></Column>
-            <Column field="Department" header="Department" style="min-width: 12rem"></Column>
-            <Column field="Process" header="Process" style="min-width: 12rem"></Column>
-            <Column field="Designation" header="Designation" style="min-width: 12rem"></Column>
-            <Column field="Bank ifsc" header="Bank ifsx" style="min-width: 12rem"></Column>
+            <Column field=" Location" header="Location" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data[' Location']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data[' Location'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="DOB" header="DOB" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isNumber(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data['DOB'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Pan No" header="Pan No" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Pan No'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Mobile Number'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Department" header="Department" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Department'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Process" header="Process" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+                        {{ data['Process'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Designation" header="Designation" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isLetter(data['Designation']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Designation'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+            <Column field="Bank ifsc" header="Bank ifsc" style="min-width: 12rem">
+                <template #body="{ data }">
+                    <p :class="[isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Bank ifsc'] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputText v-model="data[field]" />
+                </template>
+            </Column>
+
+            <template></template>
 
         </DataTable>
     </div>
-<!--
+    <!--
     <Dialog header="Header" v-model:visible="dailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
     :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
 
@@ -114,6 +242,16 @@
 
 import { ref } from 'vue';
 import * as XLSX from 'xlsx';
+
+
+
+const onCellEditComplete = (event) => {
+    let { data, newValue, field } = event;
+
+    if (newValue.trim().length > 0) { data[field] = newValue; }
+    else event.preventDefault();
+
+}
 
 
 const sampleTemplate = ref([
@@ -309,11 +447,40 @@ const isNumber = (e) => {
 }
 
 const isEmail = (e) => {
-    if (/^[A-Za-z0-9@.]+$/.test(e)) {
+    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e)) {
         return false
     } else {
         return true
 
+    }
+}
+
+const isValidAadhar = (e) => {
+    if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(e)) {
+        return false
+    } else {
+        return true
+    }
+}
+const isValidPancard = (e) => {
+    if (/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/.test(e)) {
+        return false
+    } else {
+        return true
+    }
+}
+const isValidBankAccountNo = (e) => {
+    if (/^[0-9]{9,18}$/.test(e)) {
+        return false
+    } else {
+        return true
+    }
+}
+const isValidBankIfsc = (e) => {
+    if (/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(e)) {
+        return false
+    } else {
+        return true
     }
 }
 
