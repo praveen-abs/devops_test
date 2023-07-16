@@ -382,10 +382,9 @@
                     <div class="col">
                         <h1 class="" >{{  }}</h1>
                     </div>
-                    <div class="col">{{  }}
-                    </div>
-                    <div class="col"></div>
-                    <div class="col"></div>
+                    <div class="col">{{  }}</div>
+                    <div class="col">{{  }}</div>
+                    <div class="col">{{  }}</div>
 
 
                 </div>
