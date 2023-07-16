@@ -245,7 +245,7 @@ class VmtProfilePagesService
                                                      ->join('users','users.id','vmt_emp_payroll.user_id')
                                                      ->whereYear('vmt_payroll.payroll_date', '=',$year)
                                                      ->whereMonth('vmt_payroll.payroll_date', '=',$month)
-                                                     ->where('users.id', '=','157')
+                                                     ->where('users.id', '=',$user_id)
                                                      ->orderBy('vmt_payroll.updated_at','DESC')
                                                      ->get(['vmt_payroll.payroll_date',
                                                                 'vmt_employee_payslip_v2.worked_Days',

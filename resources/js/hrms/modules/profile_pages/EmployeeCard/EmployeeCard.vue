@@ -290,28 +290,34 @@
             </div>
 
         </template>
-        <div class="card p-3 d-flex justify-items-center align-items-center"
-            style="width: 18rem;margin-left: 150px; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style="height: 45px;width:140px; object-fit: cover; " >
+        <div class=" bg-blue-900 w-100 py-4 px-6 rounded-lg d-flex justify-content-between" style="">
+
+
+            <div class="card p-3 d-flex  justify-items-center align-items-center"
+            style="width: 18rem; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+
+            <div style="height: 45px;width:140px;">
+                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style=" object-fit: cover; " >
+            </div>
             <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
                 <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
                     style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
                     <img v-if="_instance_profilePagesStore.profile"
-                        class="rounded-circle img-xl userActive-status profile-img border"
+                        class="rounded-circle img-xl userActive-status profile-img border object-cover"
                         :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
-                        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
+                        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 80px; height: 80px;" />
                 </div>
 
 
                 <!-- <img v-if="profile" class="rounded-circle   profile-img"
                     :src="`data:image/png;base64,${profile}`" srcset=""  /> -->
 
-                <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;"> {{
-                    _instance_profilePagesStore.employeeDetails.name }}</h5>
+                <h1 class="card-title mt-3 mb-2 f-12 text-blue-900 subpixel-antialiased font-semibold" style="text-align: center;"> {{
+                    _instance_profilePagesStore.employeeDetails.name }}</h1>
 
                 <h5 v-if="_instance_profilePagesStore.employeeDetails
                     .get_employee_office_details.department_id
-                    " class="f-12  card-text mb-2 text-gray-400">
+                    " class="f-12  card-text mb-2 text-gray-600 subpixel-antialiased font-semibold">
                     {{
                         _instance_profilePagesStore.employeeDetails
                             .get_employee_office_details.department_name
@@ -319,13 +325,35 @@
                 </h5>
                 <h1 v-else class="f-12 fw-bold">-</h1>
 
-                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold mb-2"
-                    style="color:grey">
+                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-16 mb-2 text-gray-700"
+                    >
                     {{ _instance_profilePagesStore.employeeDetails.user_code }}
                 </h5>
                 <p v-else class="f-12   mb-2 text-secondary-emphasis">-</p>
             </div>
+            </div>
+
+            <!-- Digital Id back side  -->
+
+            <div class="card p-3 d-flex justify-items-center align-items-center"
+            style="width: 18rem; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            <div>
+                <h1 class=" text-orange-500">Employee Details</h1>
+                <div class="row">
+                    <div class="col">
+                        Blood Group :
+                    </div>
+                    <div class="col">
+                        {{_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id   }}
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
         </div>
+
     </Dialog>
 
 
