@@ -33,20 +33,37 @@
                             <ul class="personal-info">
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Last Processed</div>
-                                    <div class="text">
-                                        -
+                                    <div class="text"
+                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
+                                        :key="index">
+                                        <h1 class="fs-5" v-if="item">
+                                            <!-- {{  dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary[0].payroll_date).format('DD-MMM-YYYY') }} -->
+                                            {{ item.payroll_date }}
+                                        </h1>
+                                        <h1 v-else> - </h1>
                                     </div>
                                 </li>
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Total Working Days</div>
-                                    <div class="text">
-                                        -
+                                    <div class="text"
+                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
+                                        :key="index">
+
+                                        <h1 v-if="item">{{ item.worked_Days }}</h1>
+
+                                        <h1 v-else>
+                                            -
+                                        </h1>
                                     </div>
                                 </li>
                                 <li class="pb-1 ">
                                     <div class="title">Loss Of Pay(LOP)</div>
-                                    <div class="text">
-                                        -
+                                    <div class="text"
+                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary" :key="index">
+                                        <h1 v-if="item">{{ item.lop }}</h1>
+                                        <h1 v-else>
+                                            -
+                                        </h1>
                                     </div>
                                 </li>
                             </ul>
@@ -83,8 +100,8 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>Bank Name</label>
-                                                <Dropdown editable @keypress="isLetter($event)" :options="bankNameList" optionLabel="bank_name"
-                                                    optionValue="id" placeholder="Select Bank Name"
+                                                <Dropdown editable @keypress="isLetter($event)" :options="bankNameList"
+                                                    optionLabel="bank_name" optionValue="id" placeholder="Select Bank Name"
                                                     class="w-full form-controls" v-model="bank_information.bank_id" />
 
                                             </div>
@@ -136,7 +153,7 @@
                                                             ]" />
                                                         <span v-if="r$.PassBook.$error"
                                                             class="text-red-400 fs-6 font-semibold text-center">
-                                                            {{ r$.PassBook.required.$message.replace("Value", "PassBook or Cheque Leaf") }}
+                                                            {{ r$.PassBook.required.$message.replace("Value", "PassBook or  Cheque Leaf") }}
                                                         </span>
                                                     </div>
                                                     <div v-if="bank_information.PassBook"
@@ -309,8 +326,8 @@
                                 <div class="row ">
                                     <div class="col ">
                                         <label class=" ml-1">UAN Number</label>
-                                        <InputNumber placeholder="EPF Number" class="w-100" minlength="12"
-                                            maxlength="12" v-model="statutory_information.uan_no" inputId="withoutgrouping"
+                                        <InputNumber placeholder="EPF Number" class="w-100" minlength="12" maxlength="12"
+                                            v-model="statutory_information.uan_no" inputId="withoutgrouping"
                                             :useGrouping="false" />
                                     </div>
                                     <div class="col ml-2">
@@ -324,12 +341,12 @@
                                 <div class="row">
                                     <div class="col-6 ">
                                         <label for="" class=" ml-2">ESIC Number</label>
-                                            <InputNumber placeholder="EPF Number" class="w-100  mt-1" minlength="12"
+                                        <InputNumber placeholder="EPF Number" class="w-100  mt-1" minlength="12"
                                             maxlength="12" v-model="statutory_information.esic_no" inputId="withoutgrouping"
                                             :useGrouping="false" />
                                     </div>
                                     <div class="col">
-                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
@@ -415,7 +432,13 @@ import { Service } from "../../Service/Service";
 import { profilePagesStore } from '../stores/ProfilePagesStore'
 import EmployeePayslips from './EmployeePayslips.vue'
 import useValidate from '@vuelidate/core'
+import dayjs from 'dayjs';
+import { useNow, useDateFormat } from '@vueuse/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
+
+const _instance_profilePagesStore = profilePagesStore()
+
+const fetch_data = Service()
 
 
 const toast = useToast();
@@ -423,6 +446,11 @@ const toast = useToast();
 const canShowLoading = ref(false);
 
 const dialog_PanNo_visible = ref(false);
+
+const payroll_summary = ref();
+
+payroll_summary.value = _instance_profilePagesStore.employeeDetails.payroll_summary;
+console.log("testing payroll summary :", payroll_summary.value);
 
 
 let form = new FormData();
@@ -440,9 +468,7 @@ axios
         // updateCheckBookPhoto();
     });
 
-const _instance_profilePagesStore = profilePagesStore()
 
-const fetch_data = Service()
 
 const statutory = ref([])
 const bankNameList = ref();
