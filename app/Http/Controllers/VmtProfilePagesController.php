@@ -798,6 +798,44 @@ public function addExperienceInfo(Request $request)
         return $response;
 
     }
+    public function saveEmployeeDocument(Request $request,VmtEmployeeService $employeeService){
+
+         $bulkonboard_docs = $request->all();
+        $rowdata_response = [
+            'status' => 'empty',
+            'message' => 'empty',
+        ];
+
+
+        try
+        {
+
+            $doc_upload_status = array();
+
+            foreach( $bulkonboard_docs as $doc_name => $doc_obj){
+
+               $processed_doc_name = str_replace('_',' ',$doc_name);
+
+               $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
+            }
+
+
+                return  $rowdata_response = [
+                    'status' => 'Success',
+                    'message' => 'documents uploaded successfully',
+                    'data' => $doc_upload_status
+                ];
+
+        }
+        catch (\Throwable $e) {
+            //dd("error! ".$e);
+            return $rowdata_response = [
+                'status' => 'failure',
+                'message' => 'Error while uploading documents',
+                'error_message' => $e->getMessage()
+            ];
+        }
+    }
     public function SingleDocumentProofApproval(Request $request){
 
         //Validate the request

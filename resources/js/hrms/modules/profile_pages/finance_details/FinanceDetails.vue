@@ -38,7 +38,8 @@
                                         :key="index">
                                         <h1 class="fs-5" v-if="item">
                                             <!-- {{  dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary[0].payroll_date).format('DD-MMM-YYYY') }} -->
-                                            {{ item.payroll_date }}
+                                            <!-- {{ item.payroll_date }} -->
+                                            {{ dayjs(item.payroll_date ).format('DD-MMM-YYYY')  }}
                                         </h1>
                                         <h1 v-else> - </h1>
                                     </div>
