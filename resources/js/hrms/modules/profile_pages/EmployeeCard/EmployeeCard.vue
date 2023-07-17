@@ -9,21 +9,23 @@
                     </button>
                 </div>
                 <div class="text-center col-12">
-                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
-                        style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img d-flex  justify-content-center align-items-center"
+                        style=" " :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
+                        <!-- box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; -->
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
                         <img v-if="_instance_profilePagesStore.profile"
                             class="rounded-circle img-xl userActive-status profile-img"
                             :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" />
-
+                            <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4"   >{{ _instance_profilePagesStore.employeeDetails.user_short_name  }}</h1>
 
                         <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
                             <i class="fa fa-camera"></i></label>
-                        <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
-                    </div>
 
+                        <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
+
+                    </div>
                     <div class="mt-4">
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
@@ -295,16 +297,19 @@
             <div class="card p-3 d-flex  justify-items-center align-items-center mr-2 :lg:mx-0 Digital_Id_Card_"
             style="width: 260px; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
-            <div style="height: 45px;width:140px;" class=" mt-2">
-                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style=" object-fit: cover; " >
+            <div style="height: 45px;width:140px;" class=" mt-2" >
+                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style=" object-fit: cover; "  >
             </div>
             <div class="card-body d-flex justify-items-center align-items-center mt-6" style="flex-direction: column ; ">
-                <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
-                    style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+                <div class="mx-auto rounded-circle img-xl userActive-status profile-img  d-flex justify-content-center align-items-center "
+                :class="[!_instance_profilePagesStore.profile ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]" >
+
                     <img v-if="_instance_profilePagesStore.profile"
                         class="rounded-circle img-xl userActive-status profile-img border object-cover"
                         :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 80px; height: 80px;" />
+
+                        <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4"   >{{ _instance_profilePagesStore.employeeDetails.user_short_name  }}</h1>
                 </div>
 
 
@@ -661,11 +666,9 @@ const cmpBldGrp = computed(() => {
 <style>
 .p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
+    /* background-color: aqua; */
 }
 
-* {
-    /* font-family: sans-serif; */
-}
 
 @media only screen and (max-width: 1280px) {
   .Digital_Id_Card_ {
