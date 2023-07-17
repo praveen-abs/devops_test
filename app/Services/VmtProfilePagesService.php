@@ -10,6 +10,7 @@ use App\Models\VmtDocuments;
 use App\Models\VmtEmployeeDocuments;
 use Illuminate\Support\Facades\DB;
 use App\Models\Department;
+use App\Models\VmtClientMaster;
 use App\Models\Bank;
 use App\Models\Experience;
 use App\Models\gender;
@@ -223,7 +224,8 @@ class VmtProfilePagesService
           }
 
 
-
+           $user_client_data = User::where('id',$user_id)->first();
+           $response['client_details'] =VmtClientMaster::where('id',$user_client_data->client_id)->first();
            $general_info = \DB::table('vmt_client_master')->first();
 
            //$query_client_logo = Storage::disk('public')->get($general_info->client_logo);

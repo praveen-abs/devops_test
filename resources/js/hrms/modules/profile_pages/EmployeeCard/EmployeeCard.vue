@@ -279,7 +279,7 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '40vw', borderTop: '5px solid #002f56' }">
+    <Dialog v-model:visible="dialogIdCard" modal header=""  :style="{ width: '45vw', borderTop: '5px solid #002f56', }" style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
             <div>
@@ -290,11 +290,10 @@
             </div>
 
         </template>
-        <div class=" bg-blue-900 w-100 py-4 px-6 rounded-lg d-flex justify-content-between" style="">
+        <div class=" bg-blue-900  w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 "  >
 
-
-            <div class="card p-3 d-flex  justify-items-center align-items-center"
-            style="width: 20rem; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            <div class="card p-3 d-flex  justify-items-center align-items-center mr-2 :lg:mx-0 Digital_Id_Card_"
+            style="width: 260px; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
             <div style="height: 45px;width:140px;" class=" mt-2">
                 <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style=" object-fit: cover; " >
@@ -335,9 +334,9 @@
 
             <!-- Digit-al Id back side  -->
 
-            <div class="card p-2 d-flex justify-items-center align-items-center"
-            style="width: 21rem; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-            <div class=" w-100 d-flex justify-content-center align-items-center flex-column">
+            <div class="card p-2  d-flex justify-items-center align-items-center ml-2  Digital_Id_Card_ :lg:p-2 "
+            style="width: 260px;  height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            <div class=" w-100 d-flex justify-content-center align-items-center flex-column ">
                 <h1 class=" text-orange-500 fs-14 subpixel-antialiased font-semibold  fw-600">EMPLOYEE DETAILS</h1>
                 <div class="row  w-100 mt-2">
                     <div class="col-6 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
@@ -373,18 +372,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-1 w-100 mt-2">
+                <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-1 w-100 mt-2 :lg:mt-2">
                 </div>
                 <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-3 w-100 mt-1">
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <h1 class=" text-center font-semibold text-orange-500 fs-14 subpixel-antialiased mt-1" > {{  _instance_profilePagesStore.employeeDetails.client_details.client_name  }}</h1>
+                        <h1 class=" text-center font-semibold text-orange-500 fs-14 subpixel-antialiased mt-0 :lg:mt-2" v-if=" _instance_profilePagesStore.employeeDetails.client_details.client_name" > {{  _instance_profilePagesStore.employeeDetails.client_details.client_name  }}</h1>
                     </div>
                     <div class="col-12"> <h1 class=" fs-11 text-center font-semibold text-blue-900">{{ _instance_profilePagesStore.employeeDetails.client_details.address }}</h1></div>
                     <div class="col-12"> <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900">{{_instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_number  }}</h1></div>
                     <div class="col-12"> <h1 class="fs-12 text-center font-semibold  text-blue-900">{{ _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_email  }}</h1></div>
-                    <div class="col-12"> <h1 class="fs-12 text-center font-semibold  text-blue-900">{{ _instance_profilePagesStore.employeeDetails.email  }}</h1></div>
+                    <div class="col-12"> <h1 class="fs-12 text-center font-semibold  text-blue-900 mb-3 :lg:mb-0">{{ _instance_profilePagesStore.employeeDetails.email  }}</h1></div>
                 </div>
 
             </div>
@@ -666,6 +665,12 @@ const cmpBldGrp = computed(() => {
 
 * {
     /* font-family: sans-serif; */
+}
+
+@media only screen and (max-width: 1280px) {
+  .Digital_Id_Card_ {
+    /* height: 7000px; */
+  }
 }
 </style>
 
