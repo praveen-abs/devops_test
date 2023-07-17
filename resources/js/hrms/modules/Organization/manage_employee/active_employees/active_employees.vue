@@ -23,8 +23,13 @@
         <Column class="font-bold" field="emp_name" header="Employee Name">
 
           <template #body="slotProps">
+            
            <div class="flex">
-            <p class="p-2 text-semibold rounded-full bg-blue-900 w-3 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
+            <p v-if="JSON.parse(slotProps.data.emp_avatar).type =='shortname'" if class="p-2 text-semibold rounded-full bg-blue-900 w-3 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
+
+            <img v-else
+            class="rounded-circle img-md w-3 userActive-status profile-img"
+            :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset="" alt="" />
             <p>{{ slotProps.data.emp_name }} </p>
            </div>
             </template>
