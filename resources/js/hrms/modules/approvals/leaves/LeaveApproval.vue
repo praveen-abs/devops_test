@@ -60,8 +60,16 @@
 
         <Column class="font-bold" field="employee_name" header="Employee Name" style="min-width: 18em;">
           <template #body="slotProps">
-            {{ slotProps.data.employee_name }}
-          </template>
+            
+            <div class="flex">
+             <p v-if="JSON.parse(slotProps.data.employee_avatar).type =='shortname'" if class="p-2 text-semibold rounded-full bg-blue-900 w-3 text-white">{{ JSON.parse(slotProps.data.employee_avatar).data }} </p>
+ 
+             <img v-else
+             class="rounded-circle img-md w-3 userActive-status profile-img"
+             :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset="" alt="" />
+             <p>{{ slotProps.data.employee_name }} </p>
+            </div>
+             </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
               :showClear="true" />
