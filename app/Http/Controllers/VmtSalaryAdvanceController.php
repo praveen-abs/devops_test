@@ -125,8 +125,8 @@ class VmtSalaryAdvanceController extends Controller
     //Gettings Clients Based on Login
     public function getClientForLoanAndAdv(Request $request)
     {
-         //dd($request->status);
-        $column = 'vmt_loan_sal_adv_master.'.$request->status;
+        //dd($request->status);
+        $column = 'vmt_loan_sal_adv_master.' . $request->status;
         if (VmtClientMaster::count() == 1) {
             return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                 ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
@@ -138,13 +138,20 @@ class VmtSalaryAdvanceController extends Controller
                 ]);
         } else {
             if (sessionGetSelectedClientid() == 1) {
-                return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->get([
+                $client_details_query =  VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->get([
                     'vmt_client_master.id as id',
                     'vmt_client_master.abs_client_code as abs_client_code',
                     'vmt_client_master.client_code as client_code',
                     'vmt_client_master.client_name as client_name',
                     $column . ' as status',
                 ]);
+                $client_details = array();
+                foreach ($client_details_query  as $single_details) {
+                    if ($single_details->id != 1) {
+                        array_push($client_details, $single_details);
+                    }
+                }
+                return  $client_details;
             } else {
                 return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                     ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
@@ -319,9 +326,10 @@ class VmtSalaryAdvanceController extends Controller
         ]);
     }
 
-    public function interestAndInterestfreeLoanDetilsHistory(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+    public function interestAndInterestfreeLoanDetilsHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
         //$loan_type = $request->loan_type;
-          $loan_type = 'InterestFreeLoan';
+        $loan_type = 'InterestFreeLoan';
         $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanDetilsHistory($loan_type);
         return  $response;
     }
