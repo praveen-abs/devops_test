@@ -9,21 +9,23 @@
                     </button>
                 </div>
                 <div class="text-center col-12">
-                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
-                        style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img d-flex  justify-content-center align-items-center"
+                        style=" " :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
+                        <!-- box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; -->
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
                         <img v-if="_instance_profilePagesStore.profile"
                             class="rounded-circle img-xl userActive-status profile-img"
                             :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" />
-
+                            <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4"   >{{ _instance_profilePagesStore.employeeDetails.user_short_name  }}</h1>
 
                         <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
                             <i class="fa fa-camera"></i></label>
-                        <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
-                    </div>
 
+                        <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
+
+                    </div>
                     <div class="mt-4">
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
@@ -279,7 +281,7 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '40vw', borderTop: '5px solid #002f56' }">
+    <Dialog v-model:visible="dialogIdCard" modal header=""  :style="{ width: '45vw', borderTop: '5px solid #002f56', }" style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
             <div>
@@ -290,34 +292,36 @@
             </div>
 
         </template>
-        <div class=" bg-blue-900 w-100 py-4 px-6 rounded-lg d-flex justify-content-between" style="">
+        <div class=" bg-blue-900  w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 "  >
 
+            <div class="card p-3 d-flex  justify-items-center align-items-center mr-2 :lg:mx-0 Digital_Id_Card_"
+            style="width: 260px; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
 
-            <div class="card p-3 d-flex  justify-items-center align-items-center"
-            style="width: 20rem; height: 340px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-
-            <div style="height: 45px;width:140px;">
-                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style=" object-fit: cover; " >
+            <div style="height: 45px;width:140px;" class=" mt-2" >
+                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style=" object-fit: cover; "  >
             </div>
-            <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
-                <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
-                    style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            <div class="card-body d-flex justify-items-center align-items-center mt-6" style="flex-direction: column ; ">
+                <div class="mx-auto rounded-circle img-xl userActive-status profile-img  d-flex justify-content-center align-items-center "
+                :class="[!_instance_profilePagesStore.profile ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]" >
+
                     <img v-if="_instance_profilePagesStore.profile"
                         class="rounded-circle img-xl userActive-status profile-img border object-cover"
                         :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 80px; height: 80px;" />
+
+                        <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4"   >{{ _instance_profilePagesStore.employeeDetails.user_short_name  }}</h1>
                 </div>
 
 
                 <!-- <img v-if="profile" class="rounded-circle   profile-img"
                     :src="`data:image/png;base64,${profile}`" srcset=""  /> -->
 
-                <h1 class="card-title mt-5 mb-2 f-12 text-blue-900 subpixel-antialiased font-semibold" style="text-align: center;"> {{
+                <h1 class="card-title mt-12 mb-3 f-12 text-blue-900 subpixel-antialiased font-semibold" style="text-align: center;"> {{
                     _instance_profilePagesStore.employeeDetails.name }}</h1>
 
                 <h5 v-if="_instance_profilePagesStore.employeeDetails
                     .get_employee_office_details.department_id
-                    " class="f-12  card-text mb-2 text-gray-600 subpixel-antialiased font-semibold">
+                    " class="f-12  card-text mb-3 text-gray-600 subpixel-antialiased font-semibold">
                     {{
                         _instance_profilePagesStore.employeeDetails
                             .get_employee_office_details.department_name
@@ -335,58 +339,56 @@
 
             <!-- Digit-al Id back side  -->
 
-            <div class="card p-2 d-flex justify-items-center align-items-center"
-            style="width: 20rem; height: 340px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-            <div class=" w-100 d-flex justify-content-center align-items-center flex-column">
-                <h1 class=" text-orange-500 fs-14 subpixel-antialiased  fw-600">EMPLOYEE DETAILS</h1>
+            <div class="card p-2  d-flex justify-items-center align-items-center ml-2  Digital_Id_Card_ :lg:p-2 "
+            style="width: 260px;  height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+            <div class=" w-100 d-flex justify-content-center align-items-center flex-column ">
+                <h1 class=" text-orange-500 fs-14 subpixel-antialiased font-semibold  fw-600">EMPLOYEE DETAILS</h1>
                 <div class="row  w-100 mt-2">
                     <div class="col-6 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                         Blood Group :
                     </div>
-                    <div class="col-5 subpixel-antialiased font-semibold fs-6">
-                     {{ blood_group_id }}
+                    <div class="col-5 subpixel-antialiased font-semibold fs-6 text-blue-900">
+                     {{ cmpBldGrp }}
                     </div>
                 </div>
                 <div class="row  w-100">
                     <div class="col-6 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                         Phone :
                     </div>
-                    <div class="col-5 subpixel-antialiased font-semibold fs-6">
-                     {{ blood_group_id }}
+                    <div class="col-5 subpixel-antialiased font-semibold fs-6 text-blue-900">
+                     {{ _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number }}
                     </div>
                 </div>
                 <div class="row w-100 ">
-                    <div class="col-6 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
+                    <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                        Email Id :
                     </div>
-                    <div class="col-5 subpixel-antialiased font-semibold fs-6">
-                     {{ blood_group_id }}
+                    <div class="col-6 subpixel-antialiased font-semibold fs-12">
+                        <h1 class=" text-center">{{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}</h1>
                     </div>
                 </div>
                 <div class="row  w-100 ">
                     <div class="col fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
-                        <h1 class=" text-orange-500 fs-12">Residential Address :</h1>
+                        <h1 class=" text-orange-500 fs-12 ">Residential Address :</h1>
                         <div class=" ml-2">
                             <p class=" text-blue-900 mt-2 subpixel-antialiased font-semibold fs-11">
                                 {{ _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 }}
                             </p>
                         </div>
-
                     </div>
                 </div>
-                <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-1 w-100 mt-2">
+                <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-1 w-100 mt-2 :lg:mt-2">
                 </div>
                 <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-3 w-100 mt-1">
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <h1 class="" >{{  }}</h1>
+                    <div class="col-12">
+                        <h1 class=" text-center font-semibold text-orange-500 fs-14 subpixel-antialiased mt-0 :lg:mt-2" v-if=" _instance_profilePagesStore.employeeDetails.client_details.client_name" > {{  _instance_profilePagesStore.employeeDetails.client_details.client_name  }}</h1>
                     </div>
-                    <div class="col">{{  }}</div>
-                    <div class="col">{{  }}</div>
-                    <div class="col">{{  }}</div>
-
-
+                    <div class="col-12"> <h1 class=" fs-11 text-center font-semibold text-blue-900">{{ _instance_profilePagesStore.employeeDetails.client_details.address }}</h1></div>
+                    <div class="col-12"> <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900">{{_instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_number  }}</h1></div>
+                    <div class="col-12"> <h1 class="fs-12 text-center font-semibold  text-blue-900">{{ _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_email  }}</h1></div>
+                    <div class="col-12"> <h1 class="fs-12 text-center font-semibold  text-blue-900 mb-3 :lg:mb-0">{{ _instance_profilePagesStore.employeeDetails.email  }}</h1></div>
                 </div>
 
             </div>
@@ -578,6 +580,8 @@ onMounted(() => {
         reportManagerOption.value = res.data;
     });
     setvalue();
+
+    console.log();
 });
 
 const UploadEmpDocsPhoto = (e) => {
@@ -634,39 +638,26 @@ const saveEmpChangeInfoDetails = () => {
 
 }
 
-const blood_group_id = ref() ;
+const cmpBldGrp = computed(() => {
+    if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 1) return "A Positive";
 
-switch (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id) {
-    case 8 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 7 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 6 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 5 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 4 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 3 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 2 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 1 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     case 1 :
-     blood_group_id.value = "O Negative" ;
-      break;
-     default:
-       blood_group_id.value = "-" ;
-}
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 2) return "A Negative";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 3) return "B Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 4) return "B Negative";
+
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 5) return "AB Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 6) return "AB Negative";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
+
+})
+
+
 
 
 
@@ -675,10 +666,14 @@ switch (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_g
 <style>
 .p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
+    /* background-color: aqua; */
 }
 
-* {
-    /* font-family: sans-serif; */
+
+@media only screen and (max-width: 1280px) {
+  .Digital_Id_Card_ {
+    /* height: 7000px; */
+  }
 }
 </style>
 
