@@ -204,16 +204,16 @@
 
                                 <div class="mb-3 form-group">
                                     <label>Mobile Number</label>
-                                    <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
-                                        v-model="dailog_contactinfo.mobile_number">
+                                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.mobile_number" mask="9999999999"
+                                placeholder="999999999" />
                                 </div>
                             </div>
                             <div class="col-md-6">
 
                                 <div class="mb-3 form-group">
                                     <label>Official Mobile Number</label>
-                                    <input type="text" size=20 maxlength=10 name="official_mobile_number"
-                                        class="form-control" v-model.number="dailog_contactinfo.official_mobile_number" >
+                                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.official_mobile_number" mask="9999999999"
+                                placeholder="999999999" />
                                         <!-- v-model="dailog_contactinfo.official_mobile_number" -->
                                 </div>
                             </div>
