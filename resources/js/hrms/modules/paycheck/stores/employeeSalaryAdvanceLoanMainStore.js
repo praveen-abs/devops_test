@@ -3,6 +3,7 @@ import { constant, functions } from "lodash";
 import { defineStore } from "pinia";
 import dayjs from 'dayjs';
 import { reactive, ref } from "vue";
+import { inject } from "vue";
 
 /*
     This Pinia code will store the ajax values of the
@@ -18,6 +19,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     // Loading Screen
 
     const canShowLoading = ref(false)
+    const swal = inject("$swal");
 
 
     /*
@@ -83,8 +85,11 @@ Travel Advance - ta
     const saveSalaryAdvance = () => {
         dailogSalaryAdvance.value = false
         canShowLoading.value = true;
-        axios.post('/EmpSaveSalaryAmt', sa).finally(() => {
-            canShowLoading.value = false
+        axios.post('/EmpSaveSalaryAmt', sa).then((res)=>{
+            swalFunction(res.data);
+            SAreset();
+        }).finally(() => {
+            canShowLoading.value = false;
         })
     }
 
@@ -97,6 +102,29 @@ Travel Advance - ta
     // Interest Free Loan Feature Begins
 
     // Initially Disabled
+
+    function swalFunction(val){
+        let res = val;
+        if(res.status == "success"){
+            Swal.fire({
+                title: res.status = "success",
+                text: res.message,
+                icon: "success",
+            }).then((res)=>{
+                getSalaryDetails();
+            })
+        }
+        else if(res.status == "failure"){
+            Swal.fire({
+                title: res.status = "failure",
+                text: res.message,
+                icon: "error",
+                showCancelButton: false,
+            }).then((res)=>{
+            })
+        }
+
+    }
 
     const dialog_NewInterestFreeLoanRequest = ref(false)
 
@@ -160,9 +188,13 @@ Travel Advance - ta
         canShowLoading.value = true
         console.log("Saving SA");
 
-        axios.post('/apply-loan', interestFreeLoan).finally(() => {
+        axios.post('/apply-loan', interestFreeLoan).then((res)=>{
+            swalFunction(res.data);
+            // IFLrest();
+        }).finally(() => {
             canShowLoading.value = false;
             fetchInterestfreeLoan();
+
         })
         dialog_NewInterestFreeLoanRequest.value = false
     }
@@ -293,7 +325,10 @@ Travel Advance - ta
 
         canShowLoading.value = true;
 
-        axios.post('/apply-loan', InterestWithLoan).finally(() => {
+        axios.post('/apply-loan', InterestWithLoan).then((res)=>{
+            swalFunction(res.data);
+            // IFLrest();
+        }).finally(() => {
             canShowLoading.value = false
             fetchInterstWithLoan();
         })
@@ -356,6 +391,30 @@ Travel Advance - ta
 
     // Loan With interest Feature Ends
 
+    function SAreset(){
+        sa.ra= ''
+        sa.repdate= ''
+        sa.reason= ''
+    }
+
+    function IFLrest(){
+        InterestWithLoan.minEligibile= ''
+        InterestWithLoan.availPerInCtc= ''
+        InterestWithLoan.deductMethod= ''
+        InterestWithLoan.cusDeductMethod= ''
+        InterestWithLoan.maxTenure= ''
+        InterestWithLoan.required_amount= ''
+        InterestWithLoan.M_EMI= ''
+        InterestWithLoan.Term= ''
+        InterestWithLoan.EMI_Start_Month= ''
+        InterestWithLoan.EMI_End_Month= ''
+        InterestWithLoan.Total_Months= ''
+        InterestWithLoan.Reason= ''
+        InterestWithLoan.max_tenure_months= ''
+        InterestWithLoan.details= ''
+        InterestWithLoan.loan_type= ''
+    }
+
 
 
 
@@ -370,6 +429,8 @@ Travel Advance - ta
         dailogSalaryAdvance,percent_salary_amt ,salaryAdvanceEmployeeData, sa, fetchSalaryAdvance, saveSalaryAdvance,
         arraySalaryDetails,
         getSalaryDetails,
+
+        SAreset,
 
 
         // Interest Free Loan

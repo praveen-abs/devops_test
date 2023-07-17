@@ -86,7 +86,7 @@
                 <Column class="fontSize13px" field="total_distance_travelled" header="Overall Distance Travelled"
                     :sortable="false">
                     <template #body="slotProps">
-                        {{ slotProps.data.total_distance_travelled + " KM" }}
+                        {{ slotProps.data.total_distance_travelled + " KM(s)" }}
                     </template>
                 </Column>
 
@@ -121,11 +121,16 @@
                                     </p>
                                 </template>
                             </Column>
+                            <Column field="reimbursement_type" header="Reimbursement Type"></Column>
                             <Column field="from" header="From"></Column>
                             <Column field="to" header="To"></Column>
                             <Column field="user_comments" header="Comments"></Column>
                             <Column field="vehicle_type" header="Mode of transport"></Column>
-                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered"></Column>
+                            <Column class="fontSize13px" field="distance_travelled" header="Distance Covered">
+                                <template #body="slotProps">
+                                    {{ slotProps.data.distance_travelled +" KM(s)"}}
+                                </template>
+                            </Column>
                             <Column class="fontSize13px" field="total_expenses" header="Total Expenses">
                                 <template #body="slotProps">
                                     {{ "&#8377; " + slotProps.data.total_expenses }}
@@ -190,6 +195,7 @@ const filters = ref({
 
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
+
 const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 let currentlySelectedStatus = null;
@@ -283,6 +289,7 @@ const generate_ajax = () => {
         selected_year: year,
         selected_month: month,
         selected_status: selected_status.value,
+        selected_reimbursement_type: '', //Need to write filter to select reimbursement types
     }).then(res => {
         console.log("data sent");
         console.log("data from " + res.employee_name);

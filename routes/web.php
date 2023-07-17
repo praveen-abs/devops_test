@@ -852,9 +852,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/EmpSaveSalaryAmt', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvEmpSaveSalaryAmt']);
     Route::get('/SalAdvApproverFlow', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'SalAdvApproverFlow']);
     Route::get('/getEmpsaladvDetails', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'getEmpsaladvDetails']);
-    Route::get('/showSAemployeeView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAemployeeView']);
-    Route::get('/showSAapprovalView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAapprovalView']);
-    Route::get('/showSAsettingsView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAsettingsView']);
+    Route::get('/showSAemployeeView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAemployeeView'])->name('showSAemployeeView');
+    Route::get('/showSAapprovalView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAapprovalView'])->name('showSAapprovalView');
+    Route::get('/showSAsettingsView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAsettingsView'])->name('showSAsettingsView');
     Route::post('/rejectOrApprovedSaladv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'rejectOrApprovedSaladv']);
     Route::get('/settingDetails', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'settingDetails']);
 

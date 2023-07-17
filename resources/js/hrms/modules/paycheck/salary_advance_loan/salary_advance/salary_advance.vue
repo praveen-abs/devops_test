@@ -62,7 +62,7 @@
                       </template> -->
                     </Column>
 
-                    <Column field="requested_date" header="Paid On " style="min-width: 12rem">
+                    <Column field="" header="Paid On " style="min-width: 12rem">
 
                     </Column>
 
@@ -94,7 +94,7 @@
                 Advance Request</h1>
         </template>
 
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
+        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3 shadow-md">
             <div class="w-5 p-4 ">
                 <span class="font-semibold">Your Monthly Income</span>
                 <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
@@ -111,7 +111,7 @@
             </div>
         </div>
 
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
             <span class="font-semibold ">Repayment</span>
             <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
                 salary
@@ -120,7 +120,7 @@
             </p>
         </div>
 
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
             <span class="font-semibold ">Reason</span>
             <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" :class="[  v$.reason.$error ? 'p-invalid' : '' ]" />
             <span v-if="v$.reason.$error" class="font-semibold text-red-400 fs-6">
@@ -172,12 +172,15 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        useEmpStore.saveSalaryAdvance()
+        useEmpStore.saveSalaryAdvance();
         v$.value.$reset();
+
     } else {
         console.log('Form failed validation')
     }
 }
+
+
 
 
 

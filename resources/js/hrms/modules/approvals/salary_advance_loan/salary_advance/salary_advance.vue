@@ -72,14 +72,7 @@
                     <Column field="advance_amount" header="Advance Amount"></Column>
                     <Column field="dedction_date" header="Date"> </Column>
 
-                    <Column field="status" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <div>
-                                <!-- {{slotProps.data.status}} -->
-                                <h1 v-if="slotProps.data.status = 0" class=" text-orange-400">Pending</h1>
-                            </div>
-                        </template>
-                    </Column>
+                    <Column field="status_flow" header="Status" style="min-width: 12rem"> </Column>
 
                     <Column field="" header="Action">
                         <template #body="slotProps">
@@ -151,7 +144,7 @@
             <h1 class="mx-3 fs-4 text-xxl " style="border-left:3px solid var(--orange) ; padding-left:10px  ;">New Salary
                 Advance Request</h1>
         </template>
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
+        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3">
             <div class="w-4 p-4 mx-4">
                 <span class="font-semibold">Required Amount</span>
                 <input id="rentFrom_month"
@@ -168,18 +161,22 @@
                 </div>
             </div>
         </div>
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-2 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Reason</span>
             <div class="border w-full h-28 rounded bg-slate-50 p-2 ">{{ val.reason }}</div>
         </div>
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-2 bg-gray-100 rounded-lg">
             <span class="font-semibold ">Your Comments</span>
-            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments" autoResize type="text"
-                rows="3" style="border:none; outline-: none;" />
+            <Textarea class="my-3 capitalize form-control textbox" v-model="reviewer_comments.reviewer_comments" autoResize type="text"
+                rows="3" style="border:none; outline-: none;"  :class="[v$.reviewer_comments.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
+            <br>
+            <span v-if="v$.reviewer_comments.$error" class="font-semibold text-red-400 fs-6">
+                {{ v$.reviewer_comments.$errors[0].$message }}
+            </span>
         </div>
         <div class="float-right ">
-            <button class="btn bg-red-500 text-white px-5" @click="approveAndReject(-1)">Reject</button>
-            <button class="mx-4 btn bg-green-500  text-white px-5" @click="approveAndReject(1)">Approve</button>
+            <button class="btn bg-red-500 text-white px-5" @click="submitForm(-1)">Reject</button>
+            <button class="mx-4 btn bg-green-500  text-white px-5" @click="submitForm(1)">Approve</button>
         </div>
     </Dialog>
 </template>
@@ -188,10 +185,13 @@
 
 <script setup>
 import EmployeePayable from '../../../Shared/EmployeePayable.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref,computed } from 'vue';
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { UseSalaryAdvanceApprovals } from '../store/loanAdvanceMainStore';
-import { required } from '@vuelidate/validators';
+
+import useValidate from '@vuelidate/core'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
+import { useNow, useDateFormat } from '@vueuse/core';
 
 const SalaryAdvanceApprovals = UseSalaryAdvanceApprovals();
 
@@ -205,7 +205,9 @@ const toggle = (event) => {
 const currentlySelectedRowData = ref();
 const showAppoverDialog = ref(false);
 const canShowConfirmationAll = ref(false);
-const reviewer_comments = ref();
+const reviewer_comments = reactive({
+    reviewer_comments:""
+});
 const useEmpData = ref([""]);
 const CurrentName = ref();
 const CurrentUser_code = ref();
@@ -270,6 +272,28 @@ function view_more(selectedRowData, user_code, currentName) {
     CurrentName.value = currentName;
     CurrentUser_code.value = user_code
 
+}
+
+const rules = computed(() => {
+    return {
+        reviewer_comments: { required },
+    }
+})
+
+
+const v$ = useValidate(rules, reviewer_comments )
+
+
+const submitForm = (val) => {
+    v$.value.$validate() // checks all inputs
+    if (!v$.value.$error) {
+        // if ANY fail validation
+        console.log('Form successfully submitted.')
+        approveAndReject(val);
+        SalaryAdvanceApprovals.getEmpDetails();
+    } else {
+        console.log('Form failed validation')
+    }
 }
 
 </script>

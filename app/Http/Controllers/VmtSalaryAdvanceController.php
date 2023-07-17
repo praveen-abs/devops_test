@@ -67,7 +67,13 @@ class VmtSalaryAdvanceController extends Controller
     {
 
         //   dd($request->all());
-        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow, $request->payroll_cycle, $request->SA);
+        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->deductMethod, $request->approvalflow, $request->payroll_cycle, $request->SA);
+    }
+
+    public function settingDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        //   dd($request->all());
+        return $vmtSalaryAdvanceService->settingDetails();
     }
 
     public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
@@ -119,8 +125,8 @@ class VmtSalaryAdvanceController extends Controller
     //Gettings Clients Based on Login
     public function getClientForLoanAndAdv(Request $request)
     {
-        //  dd($request->all());
-        $column = 'vmt_loan_sal_adv_master.sal_adv';
+         //dd($request->status);
+        $column = 'vmt_loan_sal_adv_master.'.$request->status;
         if (VmtClientMaster::count() == 1) {
             return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
                 ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
@@ -307,7 +313,7 @@ class VmtSalaryAdvanceController extends Controller
             ]);
         }
         return response()->json([
-            "status" => "Sucess",
+            "status" => "success",
             "message" => "changeClientIdStsForLoan",
 
         ]);
