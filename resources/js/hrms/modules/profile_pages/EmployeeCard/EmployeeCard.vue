@@ -148,10 +148,15 @@
 
 
                                 </div> -->
-                                <!-- {{ _instance_profilePagesStore.employeeDetails.profile_completeness }} -->
-                                <!-- :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <=30 ? 'progressbar_val3': _instance_profilePagesStore.employeeDetails.profile_completeness >= 40 ? '' :_instance_profilePagesStore.employeeDetails.profile_completeness >= 60 ? 'progressbar_val3': '' ]" -->
-                            <ProgressBar v-if="_instance_profilePagesStore.employeeDetails.profile_completeness"
-                            :class="[]"
+                                <ProgressBar  v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <=39 "
+                                :value="_instance_profilePagesStore.employeeDetails.profile_completeness" :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <=39 ? 'progressbar' : '' ]" >
+                            </ProgressBar>
+                            <ProgressBar  class="progressbar_val2" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=40 && _instance_profilePagesStore.employeeDetails.profile_completeness <=59"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >=40 &&  _instance_profilePagesStore.employeeDetails.profile_completeness <=59]"  :value="_instance_profilePagesStore.employeeDetails.profile_completeness" >
+                            </ProgressBar>
+
+                            <ProgressBar class="progressbar_val3" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=60"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >=60]"
                                 :value="_instance_profilePagesStore.employeeDetails.profile_completeness" >
                             </ProgressBar>
 
@@ -699,21 +704,33 @@ const cmpBldGrp = computed(() => {
     /* background-color: aqua; */
 }
 
-.progressbar_val .p-progressbar-value.p-progressbar-value-animate , .p-progressbar-label{
-     background-color: red !important ;
-     color: #fff !important;
-}
 
-.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
-    background-color:yellow !important;
-    color: black !important;
-}
 
-.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate {
+
+
+.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate  {
     /* background-color:#fff !important; */
     background-color: rgb(48, 218, 48) !important;
      color: #fff !important;
 }
+.progressbar .p-progressbar-value.p-progressbar-value-animate {
+    /* background-color:#fff !important; */
+    background-color: red !important;
+     color: #fff !important;
+}
+.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
+    background-color:orange !important;
+    color: black !important;
+}
+/* .p-progressbar-label{
+color: black !important;
+} */
+
+
+/* .progressbar_val_1 >  .p-progressbar-value.p-progressbar-value-animate , .p-progressbar-label{
+     background-color: red !important ;
+     color: #fff !important;
+} */
 
 
 @media only screen and (max-width: 1280px) {
