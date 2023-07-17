@@ -16,6 +16,8 @@
                     <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg">{{ selectedFile ? selectedFile.name : '' }}
                     </p>
                 </div>
+                <button class="btn btn-orange mt-6" @click="upload">upload</button>
+
             </div>
             <div>
                 <div class="col-form-label">
@@ -49,7 +51,7 @@
             </div>
         </div>
         <DataTable editMode="cell" @cell-edit-complete="onCellEditComplete" ref="dt" dataKey="id" :paginator="true"
-            :rows="10" :value="employee_documents"
+            :rows="5"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -94,7 +96,7 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputMask id="ssn" mask="9999 9999 9999" v-model="data[field]" />
                 </template>
             </Column>
             <Column field="Account No" header="Account No " style="min-width: 12rem">
@@ -104,9 +106,9 @@
                         {{ data['Account No'] }}
                     </p>
                 </template>
-                <template #editor="{ data, field }">
+                <!-- <template #editor="{ data, field }">
                     <InputText v-model="data[field]" minlength="10" maxlength="18" />
-                </template>
+                </template> -->
             </Column>
             <Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
                 <template #body="{ data }">
@@ -125,7 +127,8 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <Dropdown v-model="data[field]" :options="Gender" optionLabel="name" optionValue="name"
+                        placeholder="Select Gender" class="w-full" />
                 </template>
 
             </Column>
@@ -147,7 +150,7 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
                 </template>
             </Column>
             <Column field="DOB" header="DOB" style="min-width: 12rem">
@@ -164,11 +167,11 @@
                 <template #body="{ data }">
                     <p :class="[isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
-                        {{ data['Pan No'] }}
+                        {{ data['Pan No'].toUpperCase() }}
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputMask id="serial" mask="aaaPa9999a" v-model="data[field]" class="uppercase" />
                 </template>
             </Column>
             <Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem">
@@ -179,7 +182,7 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputText minLength="10" maxLength="10" v-model="data[field]" @keypress="isEnteredNos($event)" />
                 </template>
             </Column>
             <Column field="Department" header="Department" style="min-width: 12rem">
@@ -190,17 +193,17 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
                 </template>
             </Column>
-            <Column field="Process" header="Process" style="min-width: 12rem">
+            <Column field="Process" header="Process" style="min-width: 12rem">isEnterLetter
                 <template #body="{ data }">
                     <p :class="[isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
                         {{ data['Process'] }}
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
                 </template>
             </Column>
             <Column field="Designation" header="Designation" style="min-width: 12rem">
@@ -211,7 +214,7 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
                 </template>
             </Column>
             <Column field="Bank ifsc" header="Bank ifsc" style="min-width: 12rem">
@@ -222,7 +225,7 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
+                    <InputText v-model="data[field]" @keypress="isEnterSpecialChars($event)" />
                 </template>
             </Column>
 
@@ -235,6 +238,15 @@
     :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
 
 </Dialog> -->
+    <!-- {{ EmployeeQuickOnboardingSource }} -->
+    <DataTable :value="EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem" responsiveLayout="scroll">
+        <Column v-for="col of EmployeeQuickOnboardingDynamicHeader" :key="col.title" :field="col.title" :header="col.title">
+            <template #editor="{ data, field }">
+                <InputText v-model="data[field]" />
+            </template>
+        </Column>
+
+    </DataTable>
 </template>
 
 
@@ -248,7 +260,7 @@ import * as XLSX from 'xlsx';
 const onCellEditComplete = (event) => {
     let { data, newValue, field } = event;
 
-    if (newValue.trim().length > 0) { data[field] = newValue; }
+    if (newValue.trim().length > 0) data[field] = newValue;
     else event.preventDefault();
 
 }
@@ -327,19 +339,14 @@ const dailog = ref(false)
 const selectedFile = ref()
 
 
-const items = ref([
-    { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 38, first_name: 'Jami', last_name: 'Carney' }
-])
+
+const EmployeeQuickOnboardingSource = ref()
+const EmployeeQuickOnboardingDynamicHeader = ref()
 
 
-
-
-
-const employee_documents = ref()
-
+const upload = () => {
+    console.log(EmployeeQuickOnboardingSource.value);
+}
 
 
 const parseExcel = (file) => {
@@ -373,7 +380,6 @@ const parseExcel = (file) => {
     reader.readAsBinaryString(file);
 };
 
-
 const json = (e) => {
 
     var file = e.target.files[0];
@@ -401,14 +407,52 @@ const json = (e) => {
             const validationResult = getValidationMessages(
                 jsonData['Sheet1'][index]
             );
-            if (validationResult.length > 0) {
-                problemLeads.push({ messages: validationResult, rowNumber: index + 1 });
+            // if (validationResult.length > 0) {
+            //     problemLeads.push({ messages: validationResult, rowNumber: index + 1 });
+            // }
+
+            console.log(validationResult);
+        }
+
+        let arra = []
+
+        jsonData.Sheet1.forEach(element => {
+
+            let format = {
+                title: Object.keys(element),
+                value: Object.values(element)
+            }
+            arra.push(format)
+
+        });
+
+        let orn = []
+        let inde = 0
+        let inital = 0
+
+
+        for (let index = 0; index < arra.length; index++) {
+            const element = arra[index];
+            inde = index
+
+            for (let index = 0; index < element.value.length; index++) {
+                const value = element.value[index];
+                const title = element.title[index];
+                let form = {
+                    title: title,
+                    value: value
+                }
+
+                console.log(inde);
+
+                if (inde == inital) {
+                    orn.push(form)
+                }
             }
         }
 
-
-        console.log(jsonData);
-        employee_documents.value = jsonData.Sheet1
+        EmployeeQuickOnboardingDynamicHeader.value = orn
+        EmployeeQuickOnboardingSource.value = jsonData.Sheet1
 
         // data preview
 
@@ -484,8 +528,27 @@ const isValidBankIfsc = (e) => {
     }
 }
 
+
+const isEnteredNos = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[0-9]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const isEnterLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const isEnterSpecialChars = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z0-9]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
 const getValidationMessages = (data) => {
-    console.log(data);
+    // console.log(data);
     let errorMessages = [];
     const isLetter = /^[A-Za-z_ ]+$/;
     const digitRegexp = /\w*\d{1,}\w*/;
@@ -494,14 +557,8 @@ const getValidationMessages = (data) => {
     const websiteRegexp =
         new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-    if (isLetter.test(data["DOJ"])) {
-        console.log("error");
-    } else {
-        console.log("false");
-    }
 
-
-
+    !isLetter.test(data['Department']) ? errorMessages.push('Invalid') : null
 
     return errorMessages;
 }
@@ -510,7 +567,14 @@ const download = () => {
     const data = XLSX.utils.json_to_sheet(sampleTemplate.value)
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, data, 'data')
-    XLSX.writeFile(wb, 'demo.xlsx')
+    XLSX.writeFile(wb, 'QuickOnboarding.xlsx')
 }
+
+
+const Gender = ref([
+    { name: "Male", value: "Male" },
+    { name: "Female", value: "Female" },
+    { name: "Others", value: "Others" },
+]);
 
 </script>
