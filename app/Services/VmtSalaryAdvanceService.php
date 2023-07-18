@@ -1430,7 +1430,7 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function interestAndInterestfreeLoanDetilsHistory($loan_type)
+    public function interestAndInterestfreeLoanSettingsDetails($loan_type)
     {
         $validator = Validator::make(
             $data = [

@@ -326,11 +326,11 @@ class VmtSalaryAdvanceController extends Controller
         ]);
     }
 
-    public function interestAndInterestfreeLoanDetilsHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    public function interestAndInterestfreeLoanSettingsDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         //$loan_type = $request->loan_type;
         $loan_type = 'InterestFreeLoan';
-        $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanDetilsHistory($loan_type);
+        $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanSettingsDetails($loan_type);
         return  $response;
     }
 }
