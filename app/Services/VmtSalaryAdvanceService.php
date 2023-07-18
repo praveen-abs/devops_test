@@ -115,6 +115,7 @@ class VmtSalaryAdvanceService
                 ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
                 ->where('process', '<>', 'S2 Admin')
                 ->select(
+                    'users.id',
                     'users.name',
                     'users.user_code',
                     'vmt_department.name as department_name',
@@ -528,6 +529,7 @@ class VmtSalaryAdvanceService
                 ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
                 ->get([
                     'vmt_salary_adv_setting.settings_name',
+                    'users.id',
                     'users.name',
                     'users.user_code',
                     'vmt_department.name as department_name',
@@ -551,6 +553,7 @@ class VmtSalaryAdvanceService
                 foreach ($getdetails as $get_single) {
 
                     if (in_array($get_single['settings_name'], $get_single)) {
+                        $get_details_settings['id'] =  $get_single['id'];
 
                         $get_details_settings['name'] =  $get_single['name'];
                         $get_details_settings['user_code'] =  $get_single['user_code'];
