@@ -242,20 +242,11 @@
                                         class="py-1 nav-link sidebar"><span>Master Correction</span></a>
                                 </li>
                                 @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
-<<<<<<< HEAD
                                     <li class="nav-item ">
                                         <a href="{{ route('showRolesPermissionsPage') }}"
                                             class="py-1 nav-link sidebar"><span>Roles & Permissions</span></a>
                                     </li>
                                 @endcan
-=======
-                                <li class="nav-item ">
-                                    <a href="{{ route('showRolesPermissionsPage') }}"
-                                        class="py-1 nav-link sidebar"><span>Roles & Permissions</span></a>
-                                </li>
-                            @endcan
-
->>>>>>> c4bbf2f4432957558de1cd8bbcc316e14e239874
                             </ul>
                         </div>
                     </li>

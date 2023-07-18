@@ -1618,7 +1618,11 @@ class VmtSalaryAdvanceService
             array_push($response, $temp_ar);
             unset($temp_ar);
         }
-        return $response;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Undefined Loan Type',
+            'data'=>$response
+        ]);
 
     }
 }
