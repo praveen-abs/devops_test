@@ -920,6 +920,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/paycheck/employee_payslip/downloadPayslip', [App\Http\Controllers\VmtTestingController::class, 'downloadPaySlip_pdfView'])->name('downloadPaySlip_pdfView');
     Route::get('users/export', [App\Http\Controllers\VmtTestingController::class, 'exportattenance']);
 
+    Route::view('/testing_simma','testing_narasimman');
+
 
     Route::get('/testing_shelly', function () {
         return view('testing_shelly');

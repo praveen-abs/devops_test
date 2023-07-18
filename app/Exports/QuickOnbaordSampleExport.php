@@ -29,10 +29,12 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
 
     protected $title;
     protected $client_list;
+    protected $departments;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
         $this->client_list = $onbaord_details['client_list'];
+        $this->departments = $onbaord_details['department'];
     }
 
     public function startCell(): string
@@ -127,16 +129,15 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 // set dropdown column
                 $gender_column = 'E';
                 $legal_entity_column = 'H';
+                $departments_column = 'I';
 
                 // set dropdown options
                 $gender_options = [
                     'Male',
                     'Female',
                 ];
-                $legal_entity_option= [
-                   'one',
-                   'two'
-                ];
+                $legal_entity_option =   $this->client_list;
+                $departments_option = $this->departments;
 
                 // set dropdown list for first data row
                 $validation_gender = $event->sheet->getCell("{$gender_column}3")->getDataValidation();
@@ -152,6 +153,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_gender->setPrompt('Please pick a value from the drop-down list.');
                 $validation_gender->setFormula1(sprintf('"%s"', implode(',',  $gender_options)));
 
+                // set dropdown list for Legal Entity
                 $validation_entity = $event->sheet->getCell("{$legal_entity_column}3")->getDataValidation();
                 $validation_entity->setType(DataValidation::TYPE_LIST);
                 $validation_entity->setErrorStyle(DataValidation::STYLE_INFORMATION);
@@ -160,16 +162,30 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_entity->setShowErrorMessage(true);
                 $validation_entity->setShowDropDown(true);
                 $validation_entity->setErrorTitle('Input error');
-                $validation_entity->setError('Value is not in list.');
-                $validation_entity->setPromptTitle('Pick from list');
+                $validation_entity->setError('Selected Legal Entity is not in list.');
+                $validation_entity->setPromptTitle('Select Legal Entity from list');
                 $validation_entity->setPrompt('Please pick a value from the drop-down list.');
-                $validation_entity->setFormula1(sprintf('"%s"', implode(',',   $legal_entity_option)));
-                // $validation_entity->setFormula1($this->client_list);
+                $validation_entity->setFormula1($legal_entity_option);
+
+                // set dropdown list for Legal Entity
+                $validation_dep = $event->sheet->getCell("{$departments_column}3")->getDataValidation();
+                $validation_dep->setType(DataValidation::TYPE_LIST);
+                $validation_dep->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                $validation_dep->setAllowBlank(false);
+                $validation_dep->setShowInputMessage(true);
+                $validation_dep->setShowErrorMessage(true);
+                $validation_dep->setShowDropDown(true);
+                $validation_dep->setErrorTitle('Input error');
+                $validation_dep->setError('Selected Department is not in list.');
+                $validation_dep->setPromptTitle('Select Department from list');
+                $validation_dep->setPrompt('Please pick a Department from the drop-down list.');
+                $validation_dep->setFormula1($departments_option);
 
                 //clone validation to remaining rows
                 for ($i = 3; $i <= $row_count; $i++) {
                     $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$legal_entity_column}{$i}")->setDataValidation(clone    $validation_entity);
+                    $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
                 }
 
                 // set columns to autosize

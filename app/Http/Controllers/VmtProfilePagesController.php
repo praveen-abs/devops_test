@@ -798,7 +798,7 @@ public function addExperienceInfo(Request $request)
         return $response;
 
     }
-    public function saveEmployeeDoc(Request $request,VmtProfilePagesService $profilepagesservice){
+    public function saveEmployeeDocument(Request $request,VmtEmployeeService $employeeService){
 
          $bulkonboard_docs = $request->all();
         $rowdata_response = [

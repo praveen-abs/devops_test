@@ -1,14 +1,30 @@
 <?php
 
 namespace App\Services;
+
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\VmtClientMaster;
-class VmtExcelGeneratorService {
+use App\Models\Department;
+use Maatwebsite\Excel\Concerns\ToArray;
 
-    public function downloadQuickOnbaordExcel(){
+class VmtExcelGeneratorService
+{
+
+    public function downloadQuickOnbaordExcel()
+    {
         $onbaord_excel_details = array();
         $onbaord_excel_details['title'] = sessionGetSelectedClientName();
-        $onbaord_excel_details['client_list'] = VmtClientMaster::pluck('client_fullname');
-       return  $onbaord_excel_details;
+        if(VmtClientMaster::count()==1){
+           $client_list_query = VmtClientMaster::pluck('client_fullname')->toArray();
+        }else{
+            if(sessionGetSelectedClientid()==1){
+                $client_list_query = VmtClientMaster::whereNotIn('id',[1])->pluck('client_fullname')->toArray();
+            }else{
+                $client_list_query = VmtClientMaster::where('id',sessionGetSelectedClientid())->pluck('client_fullname')->toArray();
+            }
+        }
+        $onbaord_excel_details['client_list'] = (sprintf('"%s"', implode(',',      $client_list_query)));
+        $onbaord_excel_details['department'] = (sprintf('"%s"', implode(',',   Department::pluck('name')->toArray())));
+        return  $onbaord_excel_details;
     }
 }

@@ -222,8 +222,9 @@ class VmtProfilePagesService
                 }
              }
           }
-
-
+             $user_short_name= getUserShortName($user_id);
+          $response['user_short_name'] = getUserShortName($user_id);
+          $response['short_name_Color'] = shortNameBGColor($user_short_name);
            $user_client_data = User::where('id',$user_id)->first();
            $response['client_details'] =VmtClientMaster::where('id',$user_client_data->client_id)->first();
            $general_info = \DB::table('vmt_client_master')->first();
@@ -232,7 +233,7 @@ class VmtProfilePagesService
            $query_client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_logo;
 
          //$response['client_logo'] = base64_encode($query_client_logo);
-       $response['client_logo'] = $query_client_logo;
+          $response['client_logo'] = $query_client_logo;
 
         //dd($response_docs);
         $response['employee_documents'] = $response_docs;

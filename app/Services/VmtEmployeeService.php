@@ -983,6 +983,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                                         ->where('users.active','<>',"-1")
                                         ->where('vmt_employee_documents.status','<>',"Approved")
                                         ->get([
+                                            'users.id as user_id',
                                             'users.name as name',
                                             'vmt_employee_details.doj as doj',
                                             'users.user_code as user_code',
@@ -1012,6 +1013,7 @@ private function Upload_BulkOnboardDetail($user,$row,$user_id){
                     "name" => $single_pending_docs->name,
                     "user_code" =>  $single_pending_docs->user_code,
                     "doj" => $single_pending_docs->doj,
+                    "emp_avatar" => getEmployeeAvatarOrShortName($single_pending_docs->user_id),
                     "documents" => array([
                                     "record_id" => $single_pending_docs->record_id,
                                     "doc_name" => $single_pending_docs->doc_name,
