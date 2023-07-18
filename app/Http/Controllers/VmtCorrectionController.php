@@ -748,9 +748,9 @@ class VmtCorrectionController extends Controller
             $rules = [
                 'employee_code' =>'required|exists:users,user_code' ,
                 'name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required',
-                'doj' => 'nullable|date',
-                'dob' => 'nullable|date|before:-18 years',
+                'email' => 'nullable',
+                'doj' => 'nullable|date_format:dd-mm-yyyy',
+                'dob' => 'nullable|date_format:dd-mm-yyyy|before:-18 years',
                 'epf_number' => 'nullable|required_unless:epf_number,!=,NULL',
                 'esic_number' => 'nullable|required_unless:esic_number,!=,NULL',
                 'uan_number' => 'nullable|required_unless:uan_number,!=,NULL',
@@ -787,6 +787,7 @@ class VmtCorrectionController extends Controller
                         if (!$result) {
                             $fail($value .'<b>:is invalid' );
                             }
+
                         }
                     },
                 ],
@@ -975,10 +976,7 @@ class VmtCorrectionController extends Controller
 
             try{
      //dd($data);
-                $data_count =count($data);
-                $success_count =0;
-                $failure_count =0;
-                $failure_data = array();
+
 
                 $user_id = User::where('user_code',$data['employee_code'])->first();
 
@@ -1117,8 +1115,7 @@ class VmtCorrectionController extends Controller
             return $response=([
                 'status' => 'success',
                 'message' =>'Master data updated successfully',
-                'data' => ['success count '.$success_count,
-                           ]
+                'data' => ''
             ]);
 
 
