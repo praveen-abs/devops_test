@@ -2535,13 +2535,13 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
 
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+                    $singleItem->employee_avatar = newgetEmployeeAvatarOrShortName($singleItem->user_id);
                 }
 
                 //Map reviewer names
                 if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
                     $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+                    $singleItem->reviewer_avatar = newgetEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
                 }
 
                 //Map leave types
@@ -2564,13 +2564,13 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
 
                     if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
                         $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                        $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+                        $singleItem->employee_avatar = newgetEmployeeAvatarOrShortName($singleItem->user_id);
                     }
 
                     if (array_key_exists($singleItem->reviewer_user_id, $map_allEmployees->toArray())) {
 
                         $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_user_id]["name"];
-                        $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
+                        $singleItem->reviewer_avatar = newgetEmployeeAvatarOrShortName($singleItem->reviewer_user_id);
                     }
 
                     //Map leave types

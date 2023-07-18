@@ -343,10 +343,10 @@
                         <ul class="personal-info">
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">Permanent Address </div>
-                                <div class="text d-flex justify-items-center" v-if=" _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1=='none'">
+                                <div class="text d-flex justify-items-center w-100" v-if=" _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1=='none'">
                                     -
                                 </div>
-                                <div class="text" v-else>
+                                <div class="text d-flex justify-items-center w-100" v-else>
                                     {{
                                         _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1
                                     }}
@@ -478,8 +478,6 @@ const cmpBldGrp = computed(() => {
     else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
 
     else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
-
-
 
 })
 

@@ -20,11 +20,15 @@
         :globalFilterFields="['emp_name', 'emp_code', 'status']">
         <template #empty> No customers found.</template>
         <template #loading> Loading customers data. Please wait. </template>
-        <Column class="font-bold" field="emp_name" header="Employee Name">
+        <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 20rem; text-align: center:  !important;">
+          <template #body="slotProps"  >
 
-          <template #body="slotProps">
-           <div class="flex">
-            <p class="p-2 text-semibold rounded-full bg-blue-900 w-3 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
+           <div class="d-flex justify-content-center align-items-center">
+            <p v-if="JSON.parse(slotProps.data.emp_avatar).type =='shortname'" if class="p-2 w-2 h-18 text-semibold rounded-full bg-blue-900 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
+
+            <img v-else
+            class="rounded-circle img-md w-3 userActive-status profile-img"
+            :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset="" alt="" />
             <p>{{ slotProps.data.emp_name }} </p>
            </div>
             </template>
@@ -33,7 +37,7 @@
               :showClear="true" />
           </template>
         </Column>
-        <Column field="emp_code" header="Employee Code">
+        <Column field="emp_code" header="Employee Code" style="min-width: 15rem;">
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
               :showClear="true" />
@@ -47,7 +51,20 @@
         <Column field="blood_group_name" header="Blood Group"></Column>
         <Column field="profile_completeness" header="Profile Completeness">
           <template #body="slotProps">
-            <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar>
+            <!-- <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar> -->
+
+            <ProgressBar  v-if="slotProps.data.profile_completeness <=39 "
+                                :value="slotProps.data.profile_completeness" :class="[slotProps.data.profile_completeness <=39 ? 'progressbar' : '' ]" >
+                            </ProgressBar>
+                            <ProgressBar  class="progressbar_val2" v-if="slotProps.data.profile_completeness >=40 && slotProps.data.profile_completeness <=59"
+                            :class="[slotProps.data.profile_completeness >=40 &&  slotProps.data.profile_completeness <=59]"  :value="slotProps.data.profile_completeness" >
+                            </ProgressBar>
+
+                            <ProgressBar class="progressbar_val3" v-if="slotProps.data.profile_completeness >=60"
+                            :class="[slotProps.data.profile_completeness >=60]"
+                                :value="slotProps.data.profile_completeness" >
+                            </ProgressBar>
+
           </template>
           <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
         </Column>
@@ -293,4 +310,21 @@ async function openProfilePage(uid){
   content: "\e9a2";
   color: white;
 }
+
+
+.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate  {
+    /* background-color:#fff !important; */
+    background-color: rgb(48, 218, 48) !important;
+     color: #fff !important;
+}
+.progressbar .p-progressbar-value.p-progressbar-value-animate {
+    /* background-color:#fff !important; */
+    background-color: red !important;
+     color: #fff !important;
+}
+.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
+    background-color:orange !important;
+    color: black !important;
+}
+
 </style>
