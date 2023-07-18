@@ -189,7 +189,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                     icon: "success",
                 }).then((res) => {
                     reset();
-                    create_new_from = 1;
+                    create_new_from.value = 1;
                 })
             }
             else if (res.data.status == "failure") {
@@ -276,12 +276,14 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Initially Disabled
 
-    const isInterestFreeLoaneature = ref(1)
+    const isInterestFreeLoanFeature = ref(1)
 
     // Eligible Employees and Amount
     // Deduction Method
     const deduction_starting_months = ref();
     const createIflNewFrom = ref(1);
+
+
     const ifl = reactive({
         name: '',
         isInterestFreeLoanIsEnabled: 0,
@@ -294,6 +296,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         max_loan_limit: '',
         cusDeductMethod: '',
         maxTenure: '',
+        payroll_cycle: '',
         approvalflow: approvalFormat,
         loan_type: 'InterestFreeLoan',
         selectedOption1: selectedOption1,
@@ -312,7 +315,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         } else {
             console.log("same of percent");
         }
-        if (isInterestFreeLoaneature.value == '1') {
+        if (isInterestFreeLoanFeature.value == '1') {
             console.log("disabled");
         } else {
             console.log(ifl);
@@ -662,15 +665,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }).then((res) => {
             if (status === 'sal_adv') {
                 isSalaryAdvanceFeatureEnabled.value = res.data.status;
-                canShowLoading.value = false;
-            } else if (status === 'int_free_loan') {
-                isLoanWithInterestFeature.value = res.data.status;
-                canShowLoading.value = false;
+            } if (status === 'int_free_loan') {
+                isInterestFreeLoanFeature.value = res.data.status;
             }
-            else if (status === 'loan_with_int') {
-
-                isLoanWithInterestFeature.value = res.data.status;
-                canShowLoading.value = false;
+            if (status === 'loan_with_int') {
+                isInterestFreeLoanFeature.value = res.data.status;
             }
         }).finally(() => {
             canShowLoading.value = false;
@@ -702,7 +701,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Interest Free Loan
 
-        isInterestFreeLoaneature, ifl, saveInterestfreeLoan, deduction_starting_months,
+        isInterestFreeLoanFeature, ifl, saveInterestfreeLoan, deduction_starting_months,
 
         getClientsName, ClientsName, createIflNewFrom,
 

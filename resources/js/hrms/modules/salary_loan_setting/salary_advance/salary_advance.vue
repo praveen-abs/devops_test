@@ -50,12 +50,8 @@
                     </div>
                 </div>
                 <div class="row ml-1 mr-3 mt-2 ">
-                    <!-- {{ salaryStore.salaryAdvanceSettingsDetails }} -->
-                    <!-- :class="[ id ==  ?'blink':'' ]" -->
                     <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
                         v-for="(item, index) in salaryStore.salaryAdvanceSettingsDetails" :key="index" :class="[]" >
-                        <!-- {{ item.sattings }} -->
-                        <!-- -->
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <h1 class="  fs-5">{{ item.settings.settings_name }}</h1>
                             <button class=" underline text-blue-400 fs-5 " @click="viewDetails(item)">View Details</button>
