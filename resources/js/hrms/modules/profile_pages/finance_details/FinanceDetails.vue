@@ -33,20 +33,38 @@
                             <ul class="personal-info">
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Last Processed</div>
-                                    <div class="text">
-                                        -
+                                    <div class="text"
+                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
+                                        :key="index">
+                                        <h1 class="fs-5" v-if="item">
+                                            <!-- {{  dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary[0].payroll_date).format('DD-MMM-YYYY') }} -->
+                                            <!-- {{ item.payroll_date }} -->
+                                            {{ dayjs(item.payroll_date ).format('DD-MMM-YYYY')  }}
+                                        </h1>
+                                        <h1 v-else> - </h1>
                                     </div>
                                 </li>
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Total Working Days</div>
-                                    <div class="text">
-                                        -
+                                    <div class="text"
+                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
+                                        :key="index">
+
+                                        <h1 v-if="item">{{ item.worked_Days }}</h1>
+
+                                        <h1 v-else>
+                                            -
+                                        </h1>
                                     </div>
                                 </li>
                                 <li class="pb-1 ">
                                     <div class="title">Loss Of Pay(LOP)</div>
-                                    <div class="text">
-                                        -
+                                    <div class="text"
+                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary" :key="index">
+                                        <h1 v-if="item">{{ item.lop }}</h1>
+                                        <h1 v-else>
+                                            -
+                                        </h1>
                                     </div>
                                 </li>
                             </ul>
@@ -83,9 +101,8 @@
                                         <div class="col-md-6">
                                             <div class="mb-3 form-group">
                                                 <label>Bank Name</label>
-
-                                                <Dropdown editable :options="bankNameList" optionLabel="bank_name"
-                                                    optionValue="id" placeholder="Select Bank Name"
+                                                <Dropdown editable @keypress="isLetter($event)" :options="bankNameList"
+                                                    optionLabel="bank_name" optionValue="id" placeholder="Select Bank Name"
                                                     class="w-full form-controls" v-model="bank_information.bank_id" />
 
                                             </div>
@@ -94,11 +111,10 @@
                                             <div class="mb-3 form-group">
                                                 <label>Bank Account No</label>
                                                 <div class="cal-icon">
-
                                                 </div>
-                                                <InputText class="form-controls onboard-form pl-2" inputId="integeronly"
-                                                    name="account_no" :min="0" :max="100" type="number"
-                                                    v-model="bank_information.bank_ac_no" />
+                                                <InputNumber v-model="bank_information.bank_ac_no"
+                                                    class="form-controls onboard-form" inputId="withoutgrouping"
+                                                    :useGrouping="false" />
                                             </div>
 
                                         </div>
@@ -128,15 +144,18 @@
                                                         <i class="pi pi-arrow-circle-up fs-5 mr-3"></i>
                                                         <h1 class="text-light">Upload file</h1>
                                                     </label>
-                                                    <div class="d-flex flex-column">
+                                                    <div
+                                                        class="d-flex flex-column justify-content-center align-items-center border ">
                                                         <input type="file" name="" id="uploadPassBook" hidden
-                                                        @change="updateCheckBookPhoto($event)"
-                                                        style="text-transform: uppercase" class="form-controls pl-2" :class="[
-                                                            r$.PassBook.$error ? 'p-invalid' : '',
-                                                        ]" />
-                                                    <span v-if="r$.PassBook.$error" class="text-red-400 fs-6 font-semibold">
-                                                        {{ r$.PassBook.required.$message.replace("Value", "PassBook or Cheque Leaf") }}
-                                                    </span>
+                                                            @change="updateCheckBookPhoto($event)"
+                                                            style="text-transform: uppercase" class="form-controls pl-2"
+                                                            :class="[
+                                                                r$.PassBook.$error ? 'p-invalid' : '',
+                                                            ]" />
+                                                        <span v-if="r$.PassBook.$error"
+                                                            class="text-red-400 fs-6 font-semibold text-center">
+                                                            {{ r$.PassBook.required.$message.replace("Value", "PassBook or  Cheque Leaf") }}
+                                                        </span>
                                                     </div>
                                                     <div v-if="bank_information.PassBook"
                                                         class="p-2 px-3 bg-green-100 rounded-lg font-semibold fs-11 mx-4">
@@ -291,81 +310,44 @@
 
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="floating">
-                                            <label for="" class="float-label">PF
-                                                Applicable<span class="text-danger">*</span></label>
-                                            <select placeholder="PF Applicable" name="pf_applicable" id="pf_applicable"
-                                                class="onboard-form form-control textbox select2_form_without_search"
-                                                v-model="statutory_information.pf_applicable">
-                                                <option value="" hidden selected disabled>PF
-                                                    Applicable</option>
-                                                <option value="yes">Yes</option>
-                                                <option value="no">No</option>
-                                            </select>
-                                        </div>
+                                    <div class="col">
+                                        <label for="" class="">PF
+                                            Applicable<span class="text-danger">*</span></label>
+                                        <Dropdown v-model="statutory_information.pf_applicable"
+                                            :options="esic_applicable_option" placeholder="PF Applicable" optionLabel="name"
+                                            optionValue="value" class="w-100 " />
                                     </div>
-
-                                    <div class="col-md-6 ">
-                                        <div class="mb-3 form-group">
-                                            <label>EPF Number</label>
-                                            <input type="text" placeholder="EPF Number" name="epf_number" id="epf_number"
-                                                class="onboard-form form-control " v-model="statutory_information.epf_no">
-                                        </div>
+                                    <div class="col">
+                                        <label class="ml-2">EPF Number</label>
+                                        <InputNumber placeholder="EPF Number" class="w-100 mt-1"
+                                            v-model="statutory_information.epf_no" inputId="withoutgrouping"
+                                            :useGrouping="false" />
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label>UAN Number</label>
-                                            <input name="uan_number" id="uan_number" minlength="12" maxlength="12"
-                                                class="form-control onboard-form" type="text" pattern-data="ifsc" required
-                                                v-model="statutory_information.uan_no">
-                                        </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col ">
+                                        <label class=" ml-1">UAN Number</label>
+                                        <InputNumber placeholder="EPF Number" class="w-100" minlength="12" maxlength="12"
+                                            v-model="statutory_information.uan_no" inputId="withoutgrouping"
+                                            :useGrouping="false" />
                                     </div>
-
-
-                                    <div class="col-md-6">
-                                        <div class="mb-3 form-group">
-                                            <label class="float-label">ESIC
-                                                Applicable<span class="text-danger">*</span></label>
-                                            <select placeholder="ESIC Applicable" name="esic_applicable"
-                                                id="esic_applicable"
-                                                class="onboard-form form-control textbox select2_form_without_search"
-                                                required v-model="statutory_information.esic_applicable">
-                                                <option value="" hidden selected disabled>ESIC
-                                                    Applicable</option>
-                                                <option value="yes">
-                                                    Yes
-                                                </option>
-                                                <option value="no">
-                                                    No
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <div class="col ml-2">
+                                        <label class="ml-2">ESIC
+                                            Applicable<span class="text-danger">*</span></label>
+                                        <Dropdown v-model="statutory_information.esic_applicable"
+                                            :options="esic_applicable_option" optionLabel="name"
+                                            placeholder="ESIC Applicable" class="w-100 " optionValue="value" />
                                     </div>
-
-                                    <div class="col-md-6 ">
-                                        <div class="floating">
-                                            <label for="" class="float-label">ESIC Number</label>
-
-                                            <input type="text" placeholder="ESIC Number" name="esic_number" id="esic_number"
-                                                minlength="10" maxlength="10" class="onboard-form form-control textbox "
-                                                v-model="statutory_information.esic_no" />
-                                            <span class="error" id="error_esic_number"></span>
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 ">
+                                        <label for="" class=" ml-2">ESIC Number</label>
+                                        <InputNumber placeholder="EPF Number" class="w-100  mt-1" minlength="12"
+                                            maxlength="12" v-model="statutory_information.esic_no" inputId="withoutgrouping"
+                                            :useGrouping="false" />
                                     </div>
-
-                                    <div class="col-md-6 ">
-                                        <div class="floating">
-                                            <!-- <label for="" class="float-label">check book</label> -->
-
-                                            <span class="error" id="error_esic_number"></span>
-                                        </div>
+                                    <div class="col">
                                     </div>
-
-
-
-
                                 </div>
 
                                 <div class="col-12">
@@ -383,37 +365,35 @@
                             <li>
                                 <div class="title">PF Applicable</div>
                                 <div class="text ">
-                                    {{ pf_applicable }}
-
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable }}
                                 </div>
                             </li>
                             <li>
                                 <div class="title">EPF Number</div>
                                 <div class="text">
                                     {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number }}
-
                                 </div>
                             </li>
                             <li>
                                 <div class="title">UAN Number</div>
-                                <div class="text">
-
+                                <div class="text"
+                                    v-if="_instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number == 'null'">
+                                    -
+                                </div>
+                                <div class="text" v-else>
                                     {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number }}
-
                                 </div>
                             </li>
 
                             <li>
                                 <div class="title">ESIC Applicable</div>
                                 <div class="text">
-                                    {{ esic_applicable }}
+                                    {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable }}
                                 </div>
                             </li>
                             <li>
                                 <div class="title">ESIC Number</div>
                                 <div class="text">
-                                    {{ _instance_profilePagesStore.employeeDetails.get_employee_details.account_no }}
-
                                     {{ _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number }}
 
                                 </div>
@@ -453,7 +433,13 @@ import { Service } from "../../Service/Service";
 import { profilePagesStore } from '../stores/ProfilePagesStore'
 import EmployeePayslips from './EmployeePayslips.vue'
 import useValidate from '@vuelidate/core'
+import dayjs from 'dayjs';
+import { useNow, useDateFormat } from '@vueuse/core'
 import { required, email, minLength, sameAs } from '@vuelidate/validators'
+
+const _instance_profilePagesStore = profilePagesStore()
+
+const fetch_data = Service()
 
 
 const toast = useToast();
@@ -461,6 +447,11 @@ const toast = useToast();
 const canShowLoading = ref(false);
 
 const dialog_PanNo_visible = ref(false);
+
+const payroll_summary = ref();
+
+payroll_summary.value = _instance_profilePagesStore.employeeDetails.payroll_summary;
+console.log("testing payroll summary :", payroll_summary.value);
 
 
 let form = new FormData();
@@ -478,9 +469,7 @@ axios
         // updateCheckBookPhoto();
     });
 
-const _instance_profilePagesStore = profilePagesStore()
 
-const fetch_data = Service()
 
 const statutory = ref([])
 const bankNameList = ref();
@@ -528,19 +517,11 @@ const updateCheckBookPhoto = (e) => {
 }
 
 
-const esic_applicable = computed(() => {
-    if (_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "no") return "No";
-    else
-        if (_instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable == "yes") return "Yes";
-})
+const esic_applicable_option = ref([
+    { name: 'Yes', value: 'Yes' },
+    { name: 'No', value: 'No' },
+]);
 
-const pf_applicable = computed(() => {
-
-    if (_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "no") return "No";
-    else
-        if (_instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable == "yes") return "Yes";
-
-})
 
 // save bankdetails function
 
@@ -595,12 +576,17 @@ function onClick_EditButton_BankInfo() {
 
 function onClick_EditButton_Statutory_Info() {
     // Assign json values into dialog elements also
-    statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable;
-    statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number;
-    statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number;
-    statutory_information.esic_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable;
-    statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number;
 
+    if (_instance_profilePagesStore.employeeDetails.get_statutory_details) {
+        statutory_information.pf_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.pf_applicable;
+        statutory_information.epf_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.epf_number;
+        statutory_information.uan_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.uan_number;
+        statutory_information.esic_applicable = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_applicable;
+        statutory_information.esic_no = _instance_profilePagesStore.employeeDetails.get_statutory_details.esic_number;
+    }
+    else {
+        dialog_statutory_visible.value = true;
+    }
     dialog_statutory_visible.value = true;
 }
 
@@ -725,6 +711,12 @@ const submitForm = () => {
         console.log('Form failed submitted.')
     }
 
+}
+
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
 }
 
 

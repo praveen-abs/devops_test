@@ -3,20 +3,34 @@
         <div class="d-flex">
             <div class="status-wrapper page-header-user-dropdown me-3">
                 <?php
+
+                use App\Models\User;
+
                 //dd($currentUser);
                 $t_userAvatarDetails = json_decode(getEmployeeAvatarOrShortName(auth()->user()->id), true);
                 // dd($t_userAvatarDetails);
+
+                 //Get the user record and update avatar column
+                 $avatar_filename = User::where('user_code',auth()->user()->user_code)->first()->avatar;
+
+                        //Get the image from PRIVATE disk and send as BASE64
+                  $response = Storage::disk('private')->get(auth()->user()->user_code ."/profile_pics/".$avatar_filename);
+
+                   $base_codeimg = base64_encode($response);
                 ?>
-                @if ($t_userAvatarDetails['type'] == 'shortname')
-                    <div id=""
-                        class="align-middle fw-600 img-xl text-white  rounded-circle d-flex align-items-center justify-content-center  rounded-circle <?php echo $t_userAvatarDetails['color']; ?>"
-                        style="font-size: 25px">
-                        {{ $t_userAvatarDetails['data'] }}</div>
-                @else
-                    <img class="rounded-circle header-profile-user img-xl"
-                        src=" {{ URL::asset('images/' . $t_userAvatarDetails['data']) }}" alt="user-image">
-                @endif
+
+               @if(!empty($base_codeimg))
+               <img class="rounded-circle header-profile-user img-xl"
+               src="data:image/png;base64,{{ $base_codeimg}}" alt="user-image">
+
+               @else
+                   <div id=""
+                   class="align-middle fw-600 img-xl text-white  rounded-circle d-flex align-items-center justify-content-center  rounded-circle <?php echo $t_userAvatarDetails['color']; ?>"
+                   style="font-size: 25px">
+                       {{ $t_userAvatarDetails['data'] }}</div>
+               @endif
             </div>
+
             <div class="greet-wrap ">
                 <div class="d-felx ">
                     <!-- <h4>Welcome Back<b class="ml-1 text-primary">{{ auth()->user()->name }}</b></h4> -->

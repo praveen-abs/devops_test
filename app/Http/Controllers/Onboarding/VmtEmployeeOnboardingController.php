@@ -1462,13 +1462,6 @@ class VmtEmployeeOnboardingController extends Controller
         try
         {
 
-           // $this->uploadDocument($user->id, $row['Aadhar Back'], 'Aadhar Card Back');
-            // $this->uploadDocument($user->id, $row['panDoc'], 'Pan Card');
-            // $this->uploadDocument($user->id, $row['passport'], 'Passport');
-            // $this->uploadDocument($user->id, $row['voterId'], 'Voter ID');
-            // $this->uploadDocument($user->id, $row['dlDoc'], 'Driving License');
-            // $this->uploadDocument($user->id, $row['eductionDoc'], 'Education Certificate');
-            // $this->uploadDocument($user->id, $row['releivingDoc'],'Relieving Letter');
             $doc_upload_status = array();
 
             foreach( $bulkonboard_docs as $doc_name => $doc_obj){

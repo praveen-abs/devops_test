@@ -21,46 +21,43 @@
 
                         <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
 
-                            <div class="space-between">
-                                <div class="flex-col input_text">
+                            <div class="row">
+                                <div class="col" style="margin-right: 20px; !important">
                                     <span>Company Name <span class="text-danger">*</span></span>
                                     <InputText type="text" v-model="ExperienceInfo.company_name"
-                                        name="ExperienceDetails_company_name[]" required />
+                                        name="ExperienceDetails_company_name[]" class="" required />
                                 </div>
-                                <div class="flex-col input_text">
+                                <div class="col mr-2">
                                     <span> Location<span class="text-danger">*</span></span>
                                     <InputText type="text" v-model="ExperienceInfo.location" name="experienceDet_location[]"
                                         required />
-
                                 </div>
-                            </div>
-                            <div class="space-between M-T">
-                                <div class="flex-col input_text">
-                                    <span>Job Position <span class="text-danger">*</span></span>
-                                    <InputText type="text" v-model="ExperienceInfo.job_position"
+                                <div class="row w-100  ml-1  p-0">
+                                    <div class="col mr-4">
+                                        <span>Job Position <span class="text-danger">*</span></span>
+                                    <InputText type="text" @keypress="isLetter($event)" v-model="ExperienceInfo.job_position"
                                         name="experienceDet_job_position[]" required />
-                                </div>
 
-                                <div class="flex-col input_text" style="margin-right: 7px;">
-                                    <span :style="{ paddingLeft: '6px' }">Period From<span
+                                    </div>
+                                    <div class="col mr-5 ml-1 mt-2 p-0 ">
+                                        <span :style="{ paddingLeft: '6px' }">Period From<span
                                             class="text-danger">*</span></span>
-                                    <Calendar showIcon v-model="ExperienceInfo.period_from"
-                                        :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
-                                        name="experienceDet_period_from[]" />
-                                </div>
-                            </div>
+                                    <Calendar class=" w-100"  v-model="ExperienceInfo.period_from"
+                                        />
 
-                            <div class="space-between M-T">
-                                <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mr-3">
                                     <span :style="{ paddingLeft: '6px' }">Period To <span
                                             class="text-danger">*</span></span>
-                                    <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
-                                        :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
+                                    <Calendar class="w-100 mr-5"  v-model="ExperienceInfo.period_to"
                                         name="experienceDet_period_to[]" />
                                 </div>
+                                <div class="col-6"></div>
+                                </div>
+
                             </div>
-
-
 
                         </div>
 
@@ -126,45 +123,41 @@
                                             </div>
                                         </template>
 
-                                        <div style="box-shadow: 0 1px 2px rgba(56, 65, 74, 0.15); padding: 1rem;">
-
-                                            <div class="space-between">
-                                                <div class="flex-col input_text">
-                                                    <span>Company Name <span class="text-danger">*</span></span>
+                                        <div style=" padding: 0.5rem;">
+                                            <div>
+                                                <div class="row ">
+                                                    <div class="col-6 ">
+                                                        <span>Company Name <span class="text-danger">*</span></span>
                                                     <InputText type="text" v-model="ExperienceInfo.company_name"
-                                                        name="ExperienceDetails_company_name[]" required />
-                                                </div>
-                                                <div class="flex-col input_text">
-                                                    <span> Location<span class="text-danger">*</span></span>
+                                                        required class="w-100" />
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <span> Location<span class="text-danger">*</span></span>
                                                     <InputText type="text" v-model="ExperienceInfo.location"
                                                         name="experienceDet_location[]" required />
-
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="space-between M-T">
-                                                <div class="flex-col input_text">
-                                                    <span>Job Position <span class="text-danger">*</span></span>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <span>Job Position <span class="text-danger">*</span></span>
                                                     <InputText type="text" v-model="ExperienceInfo.job_position"
-                                                        name="experienceDet_job_position[]" required />
+                                                         required @keypress="isLetter($event)" class="w-100" />
+                                                    </div>
+                                                    <div class="col-6 position-relative ">
+                                                        <span :style="{ paddingLeft: '6px' }">Period From<span
+                                                            class="text-danger">*</span></span>
+                                                    <Calendar :style="{ paddingRight: '15px' }"  v-model="ExperienceInfo.period_from" class=" position-absolute left-0 bottom-2 m" style="width: 100%;"   />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col mr-2  pr-4">
+                                                        <span :style="{ paddingLeft: '6px' }">Period To <span
+                                                            class="text-danger">*</span></span>
+                                                    <Calendar   v-model="ExperienceInfo.period_to" class="w-100 mr-4" />
+                                                    </div>
+                                                    <div class="col-6 "></div>
                                                 </div>
 
-                                                <div class="flex-col input_text" style="margin-right: 7px;">
-                                                    <span :style="{ paddingLeft: '6px' }">Period From<span
-                                                            class="text-danger">*</span></span>
-                                                    <Calendar showIcon v-model="ExperienceInfo.period_from"
-                                                        :style="{ height: ' 2.3rem', width: '100%', marginRight: '20px' }"
-                                                        name="experienceDet_period_from[]" />
-                                                </div>
-                                            </div>
-
-                                            <div class="space-between M-T">
-                                                <div class="flex-col input_text" :style="{ marginLeft: '-6px' }">
-                                                    <span :style="{ paddingLeft: '6px' }">Period To <span
-                                                            class="text-danger">*</span></span>
-                                                    <Calendar showIcon v-model="ExperienceInfo.period_to" class=""
-                                                        :style="{ height: ' 2.3rem', width: '100%', borderRadius: '2px' }"
-                                                        name="experienceDet_period_to[]" />
-                                                </div>
                                             </div>
 
                                         </div>
@@ -180,11 +173,6 @@
                                     </Dialog>
                                 </template>
 
-
-
-
-                                <!-- <Button icon="pi pi-pencil" label="edit" outlined rounded class="mr-2" @click="editFamilyDetails(slotProps.data)" />
-                        <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" /> -->
                             </template>
                         </Column>
 
@@ -192,107 +180,6 @@
                     </DataTable>
 
                 </div>
-<!--
-
-                <div  >
-
-                    <div class="text-end">
-                        <button type="button" class="btn btn-border-primary" data-bs-target="#edit_experienceInfo"
-                            data-bs-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Add More</button>
-                    </div>
-
-                    <div class="timeline">
-                        <div class="container bg- left" id="experience_card">
-                            <div class="card experience-card " style="margin-right: 500px;">
-                                <div class="py-1 card-body " >
-                                    <ul class="personal-info ">
-                                        <li class="pb-1 border-0 border-bottom-liteAsh">
-                                            <div class="title"></div>
-                                            <div class="text text-end">
-                                                <a class="edit-icon" data-bs-toggle="modal" data-bs-target=""><i
-                                                        class="ri-pencil-fill"></i></a>
-
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-bottom-liteAsh">
-                                            <div class="title">Organization</div>
-                                            <div class="text" data-toggle="tooltip" data-placement="bottom">
-                                                Organization Organization Organization
-
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-bottom-liteAsh">
-                                            <div class="title">Designation</div>
-                                            <div class="text">
-                                                Designation
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-bottom-liteAsh ">
-                                            <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
-                                            <div class="text">
-                                                From
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-0 border-bottom-liteAsh">
-                                            <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
-                                            <div class="text">
-                                                To
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container bg-white right">
-                            <div class="card experience-card ">
-                                <div class="py-1 card-body">
-                                    <ul class="personal-info">
-                                        <li class="pb-1 border-0 border-bottom-liteAsh">
-                                            <div class="title"></div>
-                                            <div class="text text-end">
-                                                <a class="edit-icon" data-bs-toggle="modal"
-                                                    data-bs-target="#edit_generalInfo"><i class="ri-pencil-fill"></i></a>
-
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-bottom-liteAsh">
-                                            <div class="title">Organization</div>
-                                            <div class="text">
-                                                Organization
-
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-bottom-liteAsh">
-                                            <div class="title">Designation</div>
-                                            <div class="text">
-                                                Designation
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-bottom-liteAsh ">
-                                            <div class="title">From <i class="fa fa-exclamation-circle text-muted ms-2"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="DOJ"></i></div>
-                                            <div class="text">
-                                                From
-                                            </div>
-                                        </li>
-                                        <li class="pb-1 border-0 border-bottom-liteAsh">
-                                            <div class="title">To <i class="fa fa-exclamation-circle text-muted ms-2"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="LWD"></i></div>
-                                            <div class="text">
-                                                To
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-
-                <!-- </form> -->
             </div>
         </div>
 
@@ -335,12 +222,6 @@ const saveExperienceDetails = () => {
     console.log(ExperienceInfo);
 
     _instance_profilePagesStore.loading_screen = true
-
-    // if (ExperienceInfo.company_name == ' ' || ExperienceInfo.job_position === '' || ExperienceInfo.location === '' || ExperienceInfo.period_from === " " || ExperienceInfo.period_to === " ") {
-
-    //     toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-
-    // } else {
     let id = fetch_data.current_user_id
     let url = `/add-experience-info/${id}`
 
@@ -356,12 +237,6 @@ const saveExperienceDetails = () => {
 
             if (res.data.status == "success") {
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'Experiance information updated', life: 3000 });
-                // _instance_profilePagesStore.employeeDetails.get_experience_details.company_name = ExperienceInfo.company_name
-
-                // _instance_profilePagesStore.employeeDetails.get_experience_details.location = ExperienceInfo.location;
-                // _instance_profilePagesStore.employeeDetails.get_experience_details.job_position = ExperienceInfo.job_position;
-                // _instance_profilePagesStore.employeeDetails.get_experience_details.period_from = ExperienceInfo.period_from;
-                // _instance_profilePagesStore.employeeDetails.get_experience_details.period_to = ExperienceInfo.period_to;
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
             }
@@ -425,12 +300,6 @@ const sumbit_Edit_Exp_details = (get_experience_details) => {
                 window.location.reload();
                 toast.add({ severity: 'success', summary: 'Updated', detail: 'General information updated', life: 3000 });
 
-                // ExperienceInfo.company_name = get_experience_details.company_name
-                // ExperienceInfo.location = get_experience_details.location
-                // ExperienceInfo.job_position = get_experience_details.job_position
-                // ExperienceInfo.period_from = get_experience_details.period_from
-                // ExperienceInfo.period_to = get_experience_details.period_to
-
             } else if (res.data.status == "failure") {
                 leave_data.leave_request_error_messege = res.data.message;
             }
@@ -472,6 +341,13 @@ const diolog_Delete_Exp_Details = (family) => {
 }
 
 
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+
 
 
 
@@ -503,52 +379,52 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 //     width: 85%;
 // }
 
-.p-datatable .p-datatable-thead>tr>th {
-    text-align: center;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-width: 0 0 1px 0;
-    font-weight: 600;
-    color: #fff;
-    background: #003056;
-    transition: box-shadow 0.2s;
-    font-size: 13px;
+// .p-datatable .p-datatable-thead>tr>th {
+//     text-align: center;
+//     padding: 1rem 1rem;
+//     border: 1px solid #dee2e6;
+//     border-top-width: 1px;
+//     border-right-width: 1px;
+//     border-bottom-width: 1px;
+//     border-left-width: 1px;
+//     border-width: 0 0 1px 0;
+//     font-weight: 600;
+//     color: #fff;
+//     background: #003056;
+//     transition: box-shadow 0.2s;
+//     font-size: 13px;
 
-    .p-column-title {
-        font-size: 13px;
-    }
+//     .p-column-title {
+//         font-size: 13px;
+//     }
 
-    .p-column-filter {
-        width: 100%;
-    }
+//     .p-column-filter {
+//         width: 100%;
+//     }
 
-    #pv_id_2 {
-        height: 30px;
-    }
+//     #pv_id_2 {
+//         height: 30px;
+//     }
 
-    .p-fluid .p-dropdown .p-dropdown-label {
-        margin-top: -10px;
-    }
+//     .p-fluid .p-dropdown .p-dropdown-label {
+//         margin-top: -10px;
+//     }
 
-    .p-dropdown .p-dropdown-label.p-placeholder {
-        margin-top: -12px;
-    }
+//     .p-dropdown .p-dropdown-label.p-placeholder {
+//         margin-top: -12px;
+//     }
 
-    .p-column-filter-menu-button {
-        color: white;
-        margin-left: 10px;
-    }
+//     .p-column-filter-menu-button {
+//         color: white;
+//         margin-left: 10px;
+//     }
 
-    .p-column-filter-menu-button:hover {
-        color: white;
-        border-color: transparent;
-        background: #023e70;
-    }
-}
+//     .p-column-filter-menu-button:hover {
+//         color: white;
+//         border-color: transparent;
+//         background: #023e70;
+//     }
+// }
 
 .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
     margin-bottom: 0.5rem;
@@ -557,7 +433,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 }
 
 .p-button .p-component .p-button-sm {
-    background-color: #003056;
+    // background-color: #003056;
 }
 
 .p-datatable .p-datatable-tbody>tr {
@@ -617,11 +493,11 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 }
 
 .p-button.p-component.p-confirm-dialog-accept {
-    background-color: #003056;
+    // background-color: #003056;
 }
 
 .p-button.p-component.p-confirm-dialog-reject.p-button-text {
-    color: #003056;
+    // color: #003056;
 }
 
 .p-column-filter-overlay-menu .p-column-filter-buttonbar {
@@ -650,7 +526,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 /* For Sort */
 
 .p-datatable .p-sortable-column:not(.p-highlight):hover {
-    background: #003056;
+    // background: #003056;
     color: white;
 }
 
@@ -659,12 +535,12 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 }
 
 .p-datatable .p-sortable-column.p-highlight {
-    background: #003056;
+    // background: #003056;
     color: white;
 }
 
 .p-datatable .p-sortable-column.p-highlight:hover {
-    background: #003056;
+    // background: #003056;
     color: white;
 }
 
@@ -690,7 +566,7 @@ span .p-calendar.p-component.p-inputwrapper.p-calendar-w-btn {
 
 #file_upload {
     display: inline-block;
-    background-color: #003056;
+    // background-color: #003056;
     color: white;
     padding: 0.5rem;
     font-family: sans-serif;
@@ -770,52 +646,3 @@ span {
 }
 </style>
 
-
-{
-<!--
-<template>
-    <div class="card">
-        <Message severity="success">Success Message Content</Message>
-        <Message severity="info">Info Message Content</Message>
-
-        <Message severity="error">Error Message Content</Message>
-    </div>
-</template>
-
-
-<template>
-    <div class="flex card justify-content-center">
-        <Toast />
-        <div class="flex flex-wrap gap-2">
-            <Button label="Success" severity="success" @click="showSuccess" />
-            <Button label="Info" severity="info" @click="showInfo" />
-            <Button label="Warn" severity="warning" @click="showWarn" />
-            <Button label="Error" severity="danger" @click="showError" />
-        </div>
-    </div>
-</template>
-
-<script setup>
-import { useToast } from "primevue/usetoast";
-const toast = useToast();
-
-const showSuccess = () => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
-};
-
-const showInfo = () => {
-    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
-};
-
-const showWarn = () => {
-    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
-};
-
-const showError = () => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
-};
-</script>
-
-<script setup>
-</script> -->
-}
