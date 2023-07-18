@@ -879,6 +879,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/loan-and-salAdv-current-status',[App\Http\Controllers\VmtSalaryAdvanceController::class,'loanAndSalAdvCurrentStatus']);
     Route::post('/change-client-id-sts-for-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'changeClientIdStsForLoan']);
     Route::get('/interest-and-interestfree-loan-settings-details',[App\Http\Controllers\VmtSalaryAdvanceController::class,'interestAndInterestfreeLoanSettingsDetails']);
+    Route::get('/disable-or-enable-interest-and-interest-free-loan-setting',[\App\Http\Controllers\VmtSalaryAdvanceController::class,'disableOrEnableInterestAndInterestFreeLoanSetting']);
     //Loan Approval changeClientIdStsForLoan
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
