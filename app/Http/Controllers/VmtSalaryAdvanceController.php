@@ -167,7 +167,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function loanAndSalAdvCurrentStatus(Request $request)
     {
-        $column = 'sal_adv';
+        $column = $request->Status;
 
         if (VmtClientMaster::count() == 1) {
             $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
