@@ -104,11 +104,13 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
+import router from "./hrms/modules/Organization/router/router";
 
 
 import second from './testings/second.vue'
+import QUickOnboarding from './hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
 import { utils } from "xlsx";
-const app = createApp(second);
+const app = createApp(QUickOnboarding);
 const pinia=createPinia()
 
 
@@ -117,6 +119,7 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia);
+app.use(router);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);

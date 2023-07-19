@@ -1,25 +1,44 @@
 <template>
-    <div class="flex">
-        <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
-                class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
-        <input type="file" name="" id="file" hidden @change="convertExcelIntoArray($event)" accept=".xls, .xlsx">
-        <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg">{{ selectedFile ? selectedFile.name : '' }}
-        </p>
+
+
+
+
+    <div class="grid grid-cols-4 w-full place-content-center mx-auto">
+        <div class="flex">
+            <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
+                    class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
+            <input type="file" name="" id="file" hidden @change="convertExcelIntoArray($event)" accept=".xls, .xlsx">
+        </div>
+        <div class="bg-white text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Total Records : <span class="font-bold">
+                {{ totalRecordsCount.length }}
+            </span>
+        </div>
+        <div class="bg-green-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Processed Records : <span class="font-bold">
+                {{ totalRecordsCount.length - errorRecordsCount.length }}</span>
+        </div>
+        <div class="bg-red-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Error Records : <span class="font-bold">
+                {{ errorRecordsCount.length }}</span>
+        </div>
     </div>
-    <button class="btn btn-orange mt-6" @click="upload">upload</button>
 
 
-
-    <DataTable :value="EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem" responsiveLayout="scroll"
+    <DataTable class="my-4" :value="EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem" responsiveLayout="scroll"
         editMode="cell" @cell-edit-complete="onCellEditComplete" v-if="EmployeeQuickOnboardingSource">
 
 
         <Column v-for="col of  EmployeeQuickOnboardingDynamicHeader " :key="col.title" :field="col.title"
             style="min-width: 12rem;" :header="col.title">
 
-
             <template #body="{ data, field }">
-                <p v-if="field == 'Aadhar'" :class="[isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                <!-- {{ useStore.userCodeExists(data['Employee code']) }} -->
+                <div v-if="field == 'Employee code'"
+                    :class="[isSpecialChars(data['Employee code']) || useStore.userCodeExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                    <p class="font-semibold fs-6">
+                        {{ data['Employee code'] }}
+                    </p>
+                </div>
+
+                <p v-else-if="field == 'Aadhar'" :class="[isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                     class="font-semibold fs-6">
                     {{ data['Aadhar'] }}
                 </p>
@@ -37,6 +56,11 @@
                 <p v-else-if="field == 'Email'" :class="[isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                     class="font-semibold fs-6">
                     {{ data['Email'] }}
+                </p>
+                <p v-else-if="field == 'Mobile Number'"
+                    :class="[isValidMobileNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                    class="font-semibold fs-6">
+                    {{ data['Mobile Number'] }}
                 </p>
 
                 <p v-else-if="field == 'Account No'"
@@ -62,17 +86,25 @@
                     class="font-semibold fs-6">
                     {{ data['DOJ'] }}
                 </p>
+                <p v-else-if="field == 'Bank ifsc'"
+                    :class="[isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                    class="font-semibold fs-6">
+                    {{ data['Bank ifsc'].toUpperCase() }}
+                </p>
                 <p v-else class="font-semibold fs-6">
                     {{ data[field] }}
                 </p>
             </template>
             <template #editor="{ data, field }">
                 <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
-                <Dropdown v-else-if="field == 'gender'" v-model="data[field]" :options="Gender" optionLabel="name"
+                <Dropdown v-else-if="field == 'Gender'" v-model="data[field]" :options="Gender" optionLabel="name"
                     optionValue="name" placeholder="Select Gender" class="w-full" />
                 <InputMask v-else-if="field == 'Pan No'" id="serial" mask="aaaPa9999a" v-model="data[field]"
                     class="uppercase" />
-                <InputText v-else v-model="data[field]" />
+                <InputText v-else-if="field == 'Email'" v-model="data[field]" />
+                <InputText v-else-if="field == 'Mobile Number'" v-model="data[field]" minLength="10" maxLength="10"
+                    @keypress="isValidMobileNumber($event)" />
+                <InputText v-else v-model="data[field]" :readonly="checkingNonEditableFields(field)" />
             </template>
         </Column>
 
@@ -84,15 +116,44 @@
 
 import { ref } from 'vue';
 import * as XLSX from 'xlsx';
+import axios from 'axios'
+
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+
+import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
+
+
+const useStore = useOnboardingMainStore()
+
+
+
+
+const checkingNonEditableFields = (e) => {
+
+    let nonEditableField = ['Basic', 'HRA', 'Statutory Bonus', 'Child Education Allowance', 'Food Coupon', 'LTA']
+
+    return nonEditableField.includes(e) ? true : false
+
+}
+
 
 
 
 const onCellEditComplete = (event) => {
+
+    errorRecordsCount.value.splice(0, errorRecordsCount.value.length)
+
     let { data, newValue, field } = event;
 
     if (newValue.trim().length > 0) data[field] = newValue;
     else event.preventDefault();
 
+
+    for (let index = 0; index < EmployeeQuickOnboardingSource.value.length; index++) {
+        getValidationMessages(EmployeeQuickOnboardingSource.value[index]);
+    }
 }
 
 
@@ -174,13 +235,12 @@ const EmployeeQuickOnboardingSource = ref()
 const EmployeeQuickOnboardingDynamicHeader = ref()
 
 
-const upload = () => {
-    console.log(EmployeeQuickOnboardingSource.value);
-}
 
 
 
 const convertExcelIntoArray = (e) => {
+
+    router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
 
     var file = e.target.files[0];
     selectedFile.value = e.target.files[0];
@@ -202,18 +262,27 @@ const convertExcelIntoArray = (e) => {
             return initial;
         }, {});
 
-        console.log(jsonData['Sheet1']);
+        EmployeeQuickOnboardingSource.value = jsonData.Sheet1
+
+
+
+
+
+        // console.log(jsonData['Sheet1']);
 
         for (let index = 0; index < jsonData['Sheet1'].length; index++) {
             console.log("jsonData['Sheet1'].length :", jsonData['Sheet1'].length);
+
+
             const validationResult = getValidationMessages(
-                jsonData['Sheet1'][index]
+                EmployeeQuickOnboardingSource.value[index]
             );
+
             // if (validationResult.length > 0) {
             //     problemLeads.push({ messages: validationResult, rowNumber: index + 1 });
             // }
 
-            console.log(validationResult);
+            // console.log(validationResult);
         }
 
         let excelRowData = []
@@ -233,6 +302,7 @@ const convertExcelIntoArray = (e) => {
         let initialColumnValue = 0
 
 
+
         for (let i = 0; i < excelRowData.length; i++) {
             const singleRowData = excelRowData[i];
             RowIndex = i
@@ -246,7 +316,11 @@ const convertExcelIntoArray = (e) => {
                     value: value
                 }
 
-                console.log(RowIndex);
+
+                totalRecordsCount.value.push(form)
+
+
+
 
                 /*
                 To Avoid duplicate Header insert
@@ -256,13 +330,13 @@ const convertExcelIntoArray = (e) => {
                 if (RowIndex == initialColumnValue) {
                     excelHeaders.push(form)
                 }
-
-                console.log(excelHeaders);
             }
         }
 
         EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
-        EmployeeQuickOnboardingSource.value = jsonData.Sheet1
+
+
+
 
         // data preview
 
@@ -271,6 +345,16 @@ const convertExcelIntoArray = (e) => {
     };
     reader.readAsArrayBuffer(file);
 }
+
+
+const errorRecordsCount = ref([])
+const successRecordsCount = ref([])
+const totalRecordsCount = ref([])
+
+
+
+
+
 
 
 const isLetter = (e) => {
@@ -338,10 +422,19 @@ const isValidBankIfsc = (e) => {
     }
 }
 const isValidDate = (e) => {
-    if (/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(e)) {
+    if (/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(e) || /^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4}$/.test(e)) {
         return false
     } else {
         return true
+    }
+}
+
+const isValidMobileNumber = (e) => {
+    if (/^[0-9]{10,10}$/.test(e)) {
+        return false
+    } else {
+        return true
+
     }
 }
 
@@ -365,21 +458,36 @@ const isEnterSpecialChars = (e) => {
     else e.preventDefault(); // If not match, don't add to input text
 }
 
+
 const getValidationMessages = (data) => {
-    // console.log(data);
+
+
     let errorMessages = [];
-    const isLetter = /^[A-Za-z_ ]+$/;
     const digitRegexp = /\w*\d{1,}\w*/;
     const emailRegexp =
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     const websiteRegexp =
         new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
+    isSpecialChars(data['Employee Code']) ? errorRecordsCount.value.push('Employee Code') : ''
+    isLetter(data['Employee Name']) ? errorRecordsCount.value.push('invalid') : ''
 
-    !isLetter.test(data['Department']) ? errorMessages.push('Invalid') : null
+    isValidPancard(data['Pan No']) ? errorRecordsCount.value.push('invalid') : ''
+    isValidMobileNumber(data['Mobile Number']) ? errorRecordsCount.value.push('invalid') : ''
+    isValidAadhar(data['Aadhar']) ? errorRecordsCount.value.push('invalid') : ''
+
+    // Date Validation
+    isValidDate(data['DOJ']) ? errorRecordsCount.value.push('invalid') : ''
+    isValidDate(data['DOB']) ? errorRecordsCount.value.push('invalid') : ''
+
+    console.log(errorRecordsCount.value.length);
+
+
+
 
     return errorMessages;
 }
+
 
 const download = () => {
     const data = XLSX.utils.json_to_sheet(sampleTemplate.value)
