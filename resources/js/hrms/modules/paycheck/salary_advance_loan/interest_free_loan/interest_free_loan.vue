@@ -46,12 +46,12 @@
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        {{ useEmpStore.interestFreeLoan.max_tenure_months.month }}
+                                        <!-- {{ useEmpStore.interestFreeLoan.max_tenure_months.month }} -->
 
                                         <!-- <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth" :options="useEmpStore.interestFreeLoan.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
-
+                                        <!-- {{useEmpStore.max_tenure_month}} -->
                                         <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth"
-                                            :options="useEmpStore.interestFreeLoan.max_tenure_months" class="w-full md:w-10rem"
+                                            :options="useEmpStore.max_tenure_month" class="w-full md:w-10rem"
                                             optionValue="month" optionLabel="month" placeholder="Select Month"
                                             :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                                         <label for="" class="fs-5 ml-2">Month</label>

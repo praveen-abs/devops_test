@@ -134,7 +134,7 @@ Travel Advance - ta
     // Eligible Employees and Amount
     // Deduction Method
 
-    const max_tenure_month = ref();
+    const max_tenure_month = ref([]);
     const interestFreeLoan = reactive({
         minEligibile: '',
         availPerInCtc: '',
@@ -166,6 +166,7 @@ Travel Advance - ta
             interestFreeLoan.details = res.data;
             interestFreeLoan.loan_setting_id = res.data.loan_setting_id;
             interestFreeLoan.minEligibile = res.data.max_loan_amount;
+            max_tenure_month.value = res.data.max_tenure_months;
         })
     }
     // const selected_date =ref();

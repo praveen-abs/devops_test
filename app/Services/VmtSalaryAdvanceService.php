@@ -907,7 +907,7 @@ class VmtSalaryAdvanceService
         } else if ($loan_type == 'InterestFreeLoan') {
             $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
                 ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
-            // dd($avaliable_int_loans );
+            //  dd($avaliable_int_loans );
         } else {
             return response()->json([
                 'status' => 'failure',
@@ -1655,25 +1655,26 @@ class VmtSalaryAdvanceService
             'data' => $response
         ]);
     }
-
-    public function disableOrEnableInterestAndInterestFreeLoanSetting($loan_type, $loan_setting_id, $status)
+    public function loanTransectionRecord($loan_type, $loan_detail_id)
     {
-        $validator = Validator::make(
-            $data = [
-                "loan_type" => $loan_type,
-                "loan_setting_id"=>$loan_setting_id,
-                "status"=>$status
-            ],
-            $rules = [
-                "loan_type" => "required",
-                "loan_setting_id"=>"required",
-                "status"=>"required"
+        //dd($loan_type);
 
-            ],
-            $messages = [
-                "required" => "Field :attribute is missing",
-                "exists" => "Field :attribute is invalid"
-            ]
-        );
+        {
+            if ($loan_type == 'InterestFreeLoan') {
+                // dd($record_id);
+                $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id',$loan_detail_id )->first();
+            } else if ($loan_type == 'InterestWithLoan') {
+                $loan_details = VmtEmpInterestLoanDetails::where('id',$loan_detail_id )->first();
+            } else {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Undefined Loan type'
+                ]);
+            }
+            $borrowed_amount = $loan_details->borrowed_amount;
+            $tenure_months =  $loan_details->tenure_months;
+            $emi_per_month  = $loan_details->emi_per_month;
+            //dd($tenure_months);
+        }
     }
 }

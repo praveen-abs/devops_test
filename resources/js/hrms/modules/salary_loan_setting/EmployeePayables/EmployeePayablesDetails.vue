@@ -1,13 +1,81 @@
 <template>
-    <div>
-        <h1>Employee Payables - Jun 2023</h1>
-        <p>Payment Batches</p>
+    <div class=" p-2">
+        <h1 class=" fs-2 font-semibold">Employee Payables - Jun 2023</h1>
+        <!-- <h1 class=""  style="font-size:28px">test</h1> -->
+        <div class="flex justify-content-between align-items-center">
+            <p class=" fs-5 my-2" style="font-size: 14px;">Payment Batches</p>
+            <div class=" d-flex justify-content-end align-items-center" style="width: 200px;">
+                <button class="mx-4 " @click="view_Details = 1" v-if="view_Details == 2"><i
+                        class="pi pi-times fs-5"></i></button>
+                <button class="underline text-blue-700 fs-5 font-semibold " style="color:#0873CD" @click="view_Details = 2"
+                    v-if="view_Details == 1">View Details</button>
+            </div>
+
+        </div>
+        <div class="card" v-if="view_Details == 2">
+
+            <div class=" flex justify-between align-middle border-b-2 pb-1 p-3">
+                <div class="">
+                    <p class="text-[16px]">Default batch for Bank Transfer</p>
+                    <p class=" text-[14px] text-gray-400 mt-1">Default batch for salary</p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center  ">
+                    <button class=" rounded-md px-2 py-1 border border-blue-600 text-blue-600 fs-6 h-10" @click="btn">
+                        Download
+                        <i class="pi pi-download px-2"></i></button>
+                    <button class=" bg-blue-600 text-white px-4 py-1 rounded-md h-10 mx-2">Mask As Paid</button>
+                    <button class="mx-1"> <i class="pi pi-ellipsis-v  text-blue-600 "></i></button>
+                </div>
+            </div>
+            <div class="flex justify-between">
+                <div class="grid grid-cols-6 w-full p-4 b">
+                <div>
+                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Employees</p>
+                    <span class="">188</span>
+                </div>
+                <div class="">
+                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Total Amount</p>
+                    <span class="">INR 1,15,35,494</span>
+                </div>
+                <div class="">
+                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Account Number</p>
+                    <span class="">188</span>
+                </div>
+                <div class="">
+                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Bank Name</p>
+                    <span class="">188</span>
+                </div>
+                <div class="">
+                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">IFSC Code</p>
+                    <span class="">HDFCC0001234</span>
+                </div>
+
+                <div class="d-flex flex-column align-items-center justify-content-center" style="position: relative; " >
+                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Transfer Statement</p>
+                    <div class="flex">
+                    <button class=" mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center ">
+                         <span class="text-[13px] lg:text-[14px]">TEXT</span>
+                          <i class="pi pi-angle-down px-2"></i>
+                    </button>
+                    <button class="mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center">
+                        <span class=" text-[13px] lg:text-[14px]">EXCEL</span>
+                        <i class="pi pi-angle-down px-2"></i>
+                    </button>
+                    <button class="mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center">
+                        <span class="text-[13px] lg:text-[14px]">PDF</span>
+                        <i class="pi pi-angle-down px-2"></i>
+                    </button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <h1 v-if="view_Details == 2" class="fs-4 text-gray-900 mt-4 ml-2 from-stone-600" >Bank Transfer</h1>
 
         <div style="position: relative;">
-        <h1 class="mb-4 fs-3 d-flex align-items-center fw-bolder" style="color: #003056; "><i
-                class='mr-3 fas fa-cog fs-3 '></i> Salary Advance & Loan Settings</h1>
 
-        <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
+            <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
             <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
                 <li class=" nav-item" role="presentation">
                     <a class="px-2 position-relative" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
@@ -23,7 +91,8 @@
                         :class="[activetab === 2 ? 'active ' : '']" role="tab" aria-controls="" aria-selected="true">
                         EMPLOYEES
                     </a>
-                    <div v-if="activetab === 2" class=" border-3 h-1 rounded-r-3xl border-orange-400 position-absolute right-5 w-10"></div>
+                    <div v-if="activetab === 2"
+                        class=" border-3 h-1 rounded-r-3xl border-orange-400 position-absolute left-0 w-12"></div>
                     <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-400"></div>
                 </li>
                 <!-- <li class="mx-3 nav-item " role="presentation">
@@ -40,48 +109,136 @@
                     </a>
                 </li> -->
             </ul>
-        <!-- </div> -->
-        <!-- Tab Content -->
-        <div class="tab-content " id="">
-            <div>
-                <div class="card-body">
-                    <div v-if="activetab === 1">
-                        <SalaryAdvance />
-                    </div>
-                    <div v-if="activetab === 2">
-                        <InterestFreeLoan />
-                    </div>
-                    <!-- <div v-if="activetab === 3">
+            <!-- </div> -->
+            <!-- Tab Content -->
+            <div class="tab-content " id="">
+                <div>
+                    <div class="card-body">
+                        <div v-if="activetab === 1">
+                            <summaryvue />
+                        </div>
+                        <div v-if="activetab === 2">
+                            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor, sapiente.</h1>
+                            <!-- <InterestFreeLoan /> -->
+                        </div>
+                        <!-- <div v-if="activetab === 3">
                         <TravelAdvance />
                     </div>
                     <div v-if="activetab === 4">
                         <LoanWithInterest />
                     </div> -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <Dialog header="Header"
-        :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
-        :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
+        <Dialog header="Header" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true"
+            :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
 
 
     </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import { BaseTransition, ref } from "vue";
+import summaryvue from "./BankTransferSummary/summary.vue";
 
 const activetab = ref(1);
 
+const view_Details = ref(1);
+
+const download = ref(1);
+
+function btn_download() {
+    download.value = 2;
+}
+
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
 
 
 </script>
+
+
+<style lang="sass" scoped>
+
+#btn-download
+  cursor: pointer
+  display: block
+  width: 48px
+  height: 48px
+  border-radius: 50%
+  -webkit-tap-highlight-color: transparent
+  //transform: scale(2)
+  //centering
+  position: absolute
+  top: calc(50% - 24px)
+  left: calc(50% - 24px)
+  &:hover
+    background: rgba(#223254,.03)
+  svg
+    margin: 16px 0 0 16px
+    fill: none
+    transform: translate3d(0,0,0)
+    polyline,
+    path
+      stroke: #0077FF
+      stroke-width: 2
+      stroke-linecap: round
+      stroke-linejoin: round
+      transition: all .3s ease
+      transition-delay: .3s
+    path#check
+      stroke-dasharray: 38
+      stroke-dashoffset: 114
+      transition: all .4s ease
+  &.downloaded
+    svg
+      .svg-out
+        opacity: 0
+        animation: drop .3s linear
+        transition-delay: .4s
+      path#check
+        stroke: #20CCA5
+        stroke-dashoffset: 174
+        transition-delay: .4s
+
+@keyframes drop
+  20%
+    transform: (translate(0, -3px))
+  80%
+    transform: (translate(0, 2px))
+  95%
+    transform: (translate(0, 0))
+
+//dribbble
+.credit
+  position: fixed
+  right: 20px
+  bottom: 20px
+  transition: all .2s ease
+  -webkit-user-select: none
+  user-select: none
+  opacity: .6
+  img
+    width: 72px
+  &:hover
+    transform: scale(.95)
+
+
+</style>
+
+
+

@@ -328,18 +328,17 @@ class VmtSalaryAdvanceController extends Controller
 
     public function interestAndInterestfreeLoanSettingsDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $loan_type = $request->loan_type;
-        //$loan_type = 'InterestFreeLoan';
+        //$loan_type = $request->loan_type;
+        $loan_type = 'InterestFreeLoan';
         $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanSettingsDetails($loan_type);
         return  $response;
     }
-
-    public function disableOrEnableInterestAndInterestFreeLoanSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+    //this is for interest and interest free transection record
+    public function loanTransectionRecord(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
         //$loan_type = $request->loan_type;
         $loan_type = 'InterestFreeLoan';
-        $loan_setting_id = 1;
-        $status = 0;
-        $response = $vmtSalaryAdvanceService->disableOrEnableInterestAndInterestFreeLoanSetting($loan_type,$loan_setting_id,$status);
-        return  $response;
+        $loan_details_id = 2;
+        $response = $vmtSalaryAdvanceService->loanTransectionRecord($loan_type, $loan_details_id);
     }
 }
