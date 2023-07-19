@@ -48,12 +48,12 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
     public function styles(Worksheet $sheet)
     {
         //For First Row
-        $sheet->mergeCells('A1:AV1')->setCellValue('A1', $this->title);
-        $sheet->getStyle('A1:AV1')->getFill()
+        $sheet->mergeCells('A1:T1')->setCellValue('A1', $this->title);
+        $sheet->getStyle('A1:T1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
-        $sheet->getStyle('A1:AV1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-        $sheet->getStyle('A1:AV1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:T1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+        $sheet->getStyle('A1:T1')->getAlignment()->setHorizontal('center');
     }
 
     public function headings(): array
@@ -77,7 +77,6 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Father Name',
             'Physically Handicapped',
             'Pan Number',
-            'Salary Payment Mode',
             'Aadhaar Number',
         ];
     }
@@ -107,6 +106,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $legal_entity_column = 'H';
                 $departments_column = 'I';
                 $marital_column = 'O';
+                $manager_code_column = 'L';
 
                 // set dropdown options
                 $gender_options = [
@@ -116,8 +116,9 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $legal_entity_option =   $this->client_list;
                 $departments_option = $this->departments;
                 $marital_option = $this->marital_status;
+                $manager_code_option = $this->manager_code;
 
-                // set dropdown list for first data row
+                // set dropdown list for Gender
                 $validation_gender = $event->sheet->getCell("{$gender_column}3")->getDataValidation();
                 $validation_gender->setType(DataValidation::TYPE_LIST);
                 $validation_gender->setErrorStyle(DataValidation::STYLE_INFORMATION);
@@ -160,7 +161,6 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_dep->setFormula1($departments_option);
 
                 //set dropdown list for marital status
-                // set dropdown list for Legal Entity
                 $validation_mar_sts = $event->sheet->getCell("{$marital_column}3")->getDataValidation();
                 $validation_mar_sts->setType(DataValidation::TYPE_LIST);
                 $validation_mar_sts->setErrorStyle(DataValidation::STYLE_INFORMATION);
@@ -172,14 +172,29 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_mar_sts->setError('Selected Option is not in list.');
                 $validation_mar_sts->setPromptTitle('Select Marital Status from list');
                 $validation_mar_sts->setPrompt('Please pick a  Marital Status from the drop-down list.');
-                $validation_mar_sts->setFormula1($departments_option);
+                $validation_mar_sts->setFormula1($marital_option);
+
+                //set dropdown list for managercode
+                $validation_mangr_code = $event->sheet->getCell("{$manager_code_column}3")->getDataValidation();
+                $validation_mangr_code->setType(DataValidation::TYPE_LIST);
+                $validation_mangr_code->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                $validation_mangr_code->setAllowBlank(false);
+                $validation_mangr_code->setShowInputMessage(true);
+                $validation_mangr_code->setShowErrorMessage(true);
+                $validation_mangr_code->setShowDropDown(true);
+                $validation_mangr_code->setErrorTitle('Input error');
+                $validation_mangr_code->setError('Selected Option is not in list.');
+                $validation_mangr_code->setPromptTitle('Select Manager Code from list');
+                $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
+                $validation_mangr_code->setFormula1($manager_code_option);
 
                 //clone validation to remaining rows
                 for ($i = 3; $i <= $row_count; $i++) {
                     $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$legal_entity_column}{$i}")->setDataValidation(clone    $validation_entity);
                     $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
-                    $event->sheet->getCell("{$marital_option}{$i}")->setDataValidation(clone  $validation_mar_sts);
+                    $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
+                    $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
                 }
 
                 // set columns to autosize
