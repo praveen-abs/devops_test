@@ -272,7 +272,9 @@ class VmtDashboardService{
                     'message' => 'Check-in already done',
                     'time' => ""
                 ]);
-             }else if( ($checkout_attendance->date !=  date('Y-m-d')) && !empty($checkout_attendance->checkout_date) && empty($checkout_attendance->checkin_time) ){
+             }else if( ( !empty($attendance) && $checkout_attendance->date !=  date('Y-m-d')) &&
+                          !empty($checkout_attendance->checkout_date) && empty($checkout_attendance->checkin_time) ){
+
                 return response()->json([
                     'status'=> 'failure',
                     'message' => 'Check-in already done',
@@ -358,7 +360,7 @@ class VmtDashboardService{
 
                  // dd(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin ='biometric');
 
-     if(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin == 'biometric'){
+     if(empty($attendance) &&  empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin == 'biometric' ){
 
                         $attendance_bio_data = VmtEmployeeAttendance::where('user_id', $user_data->id)
                                                         ->where('date', $last_checkout_data->checkin_date)->first();
@@ -420,19 +422,16 @@ class VmtDashboardService{
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
                         ->where('checkout_date', $attendance_bio_data->checkout_date)
                         ->first();
-
-          if(!empty($checked->checkout_time)){
+      if(!empty($checked->checkout_time)){
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
-          }else{
-              $to = $last_checkout_data->checkout_time;
           }
           if(!empty($checked->checkin_time)){
              $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
-          }else{
-             $from =$last_checkout_data->checkin_time;
           }
-
+          if(!empty($from) && !empty($to) ){
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+
+         }
 
 
                // dd($effective_hours);
