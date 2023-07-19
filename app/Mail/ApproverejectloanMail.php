@@ -27,9 +27,13 @@ class ApproverejectloanMail extends Mailable
      protected $result;
      protected $link;
      protected $approvalStatus;
+     protected $emp_image;
+     protected $reviewer_comments;
+     protected $next_approver;
+     protected $current_approver;
 
 
-    public function __construct($approver_name,$employeename,$requestid,$result,$link,$approvalStatus)
+    public function __construct($approver_name,$employeename,$requestid,$result,$link,$approvalStatus,$emp_image,$reviewer_comments,$next_approver,$current_approver)
     {
         $this->approver_name = $approver_name;
 
@@ -43,6 +47,16 @@ class ApproverejectloanMail extends Mailable
 
         $this->approvalStatus = $approvalStatus;
 
+        $this->emp_image = $emp_image;
+
+        $this->reviewer_comments = $reviewer_comments;
+
+        $this->next_approver = $next_approver;
+
+        $this->current_approver = $current_approver;
+
+
+
     }
 
     public function build()
@@ -51,14 +65,34 @@ class ApproverejectloanMail extends Mailable
 
          $subject = $this->result . " of Loan Request – Request ID " . $this->requestid ;
 
-        $output = $this->view('vmt_approve_mail')
-                    ->subject($subject)
-                    ->with('approverName', $this->approver_name)
-                    ->with('employeeName',$this->employeename)
-                    ->with('requestID',$this->requestid)
-                    ->with('result',$this->result)
-                    ->with('link',$this->link )
-                    ->with('approvalStatus',$this->approvalStatus );
+        if($this->result == "Approved"){
+
+            $output = $this->view('mail_salary_adv_approve')
+            ->subject($subject)
+            ->with('approverName', $this->approver_name)
+            ->with('employeeName',$this->employeename)
+            ->with('requestID',$this->requestid)
+            ->with('result',$this->result)
+            ->with('link',$this->link )
+            ->with('approvalStatus',$this->approvalStatus )
+            ->with('emp_image',$this->emp_image )
+            ->with('next_approver',$this->next_approver)
+            ->with('current_approver',$this->current_approver);
+
+        }else if($this->result == "Rejected"){
+
+            $output = $this->view('mail_salary_adv_reject')
+            ->subject($subject)
+            ->with('approverName', $this->approver_name)
+            ->with('employeeName',$this->employeename)
+            ->with('requestID',$this->requestid)
+            ->with('result',$this->result)
+            ->with('link',$this->link )
+            ->with('approvalStatus',$this->approvalStatus )
+            ->with('emp_image',$this->emp_image )
+            ->with('reviewer_comments',$this->reviewer_comments );
+
+        }
 
         return $output;
     }

@@ -247,7 +247,7 @@ function showConfirmDialog(selectedRowData, status) {
 
 async function approveAndReject(status) {
     showAppoverDialog.value = false;
-    await SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.value)
+    await SalaryAdvanceApprovals.SAapproveAndReject(currentlySelectedRowData.value, status, reviewer_comments.reviewer_comments)
     currentlySelectedStatus.value = status;
 }
 

@@ -277,6 +277,10 @@ class VmtSalaryAdvanceService
                     ->where('vmt_emp_sal_adv_details.id', $EmpApplySalaryAmt->id)
                     ->first();
 
+                    $emp_image = json_decode(newgetEmployeeAvatarOrShortName($emp_details->user_id),true);
+
+                    // dd($emp_image);
+
                 $request_type = "Salary Advance";
 
                 $simm =  json_decode(($emp_details->emp_approver_flow), true);
@@ -297,6 +301,7 @@ class VmtSalaryAdvanceService
                         $emp_details->borrowed_amount,
                         $emp_details->dedction_date,
                         request()->getSchemeAndHttpHost(),
+                        $emp_image
                     ));
 
 
@@ -311,7 +316,7 @@ class VmtSalaryAdvanceService
                 return response()->json([
                     "status" => "failure",
                     "message" => "Applied Failure",
-                    "data" => $e,
+                    "data" => $e->getMessage(),
                 ]);
             }
         } else if ($employee_sal_sett->can_borrowed_multiple == "0") {
@@ -1335,7 +1340,8 @@ class VmtSalaryAdvanceService
             for ($i = 0; $i < count($approver_flow); $i++) {
 
                 if ($approver_flow[$i]['approver'] == $user_id) {
-                    //$nxt_order  = $approver_flow[$i]['order']+1;
+                    $nxt_order  = $approver_flow[$i]['order']+1;
+                    $current_order  = $approver_flow[$i]['order'];
                     if ($status == 1) {
                         $approver_flow[$i]['status'] = $status;
                         $approver_flow[$i]['reason'] = $reviewer_comments;
@@ -1352,10 +1358,25 @@ class VmtSalaryAdvanceService
             $sal_adv_details->emp_approver_flow = json_encode($approver_flow, true);
             $sal_adv_details->save();
 
+
+
+            // mail details
+
+            for ($i = 0; $i < count($sal_adv_settings_approver_flow); $i++) {
+
+                if ($sal_adv_settings_approver_flow[$i]['order'] == $nxt_order) {
+                     $next_approver =  $sal_adv_settings_approver_flow[$i]['name'];
+                }
+                if($sal_adv_settings_approver_flow[$i]['order'] == $current_order){
+                    $current_approver =  $sal_adv_settings_approver_flow[$i]['name'];
+                }
+            }
+
+
             if ($status == -1) {
-                $result = "Rejected successfully";
+                $result = "Rejected";
             } else if ($status == 1) {
-                $result = "Approved successfully";
+                $result = "Approved";
             }
 
             $approver_details = User::where('id', $user_id)->first();
@@ -1365,6 +1386,9 @@ class VmtSalaryAdvanceService
                 ->where('vmt_emp_sal_adv_details.id', $record_id)
                 ->first();
 
+                $emp_image = json_decode(newgetEmployeeAvatarOrShortName(auth()->user()->id),true);
+
+
             $isSent    = \Mail::to($emp_details->email)
                 ->send(new ApproverejectloanMail(
                     $approver_details->name,
@@ -1372,7 +1396,11 @@ class VmtSalaryAdvanceService
                     $emp_details->request_id,
                     $result,
                     request()->getSchemeAndHttpHost(),
-                    $emp_details->sal_adv_status
+                    $emp_details->sal_adv_status,
+                    $emp_image,
+                    $reviewer_comments,
+                    $next_approver,
+                    $current_approver
                 ));
 
 
