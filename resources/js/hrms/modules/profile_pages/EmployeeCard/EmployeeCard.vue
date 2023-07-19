@@ -31,16 +31,16 @@
                     <div class="mt-4">
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
-                            <div class="mb-1  px-auto d-flex align-items-center justify-content-center pl-5">
-                                <h6 class="text-center fw-bold ">
+                            <div class="mb-1  px-auto d-flex align-items-center justify-content-around ">
+                                <h6 class="text-center fw-bold fs-5  ">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
-                                <span class="personal-edit position-absolute" style="right: -9px;">
+                            </div>
+                            <span class="personal-edit position-absolute" style="top: 148px;right: 0px;">
                                     <a href="#" class="edit-icon "><i class="ri-pencil-fill"
                                             @click="dialog_emp_name_visible = true"></i>
                                     </a>
                                 </span>
-                            </div>
 
 
                             <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
@@ -360,36 +360,38 @@
                 <div class=" w-100 d-flex justify-content-center align-items-center flex-column ">
                     <h1 class=" text-orange-500 fs-14 subpixel-antialiased font-semibold  fw-600">EMPLOYEE DETAILS</h1>
                     <div class="row  w-100 mt-2">
-                        <div class="col-6 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
-                            Blood Group :
+                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
+                            Blood Group <span class=" position-absolute  " style="position: absolute; left:90px ;">:</span>
                         </div>
-                        <div class="col-5 subpixel-antialiased font-semibold fs-6 text-blue-900">
-                            {{ cmpBldGrp }}
+                        <div class="col-6  fs-6 text-blue-900 ">
+                            <h1 class=" text-left pt-1">{{ cmpBldGrp }}</h1>
                         </div>
                     </div>
                     <div class="row  w-100">
-                        <div class="col-6 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
-                            Phone :
+                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
+                            Phone <span class=" position-absolute " style="position: absolute; left:90px ;">:</span>
                         </div>
-                        <div class="col-5 subpixel-antialiased font-semibold fs-6 text-blue-900">
-                            {{ _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number }}
+                        <div class="col-6  fs-6 text-blue-900  ">
+                            <h1 class=" text-left pt-1">{{ _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number }}</h1>
+
                         </div>
                     </div>
                     <div class="row w-100 ">
-                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
-                            Email Id :
+                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900 position-relative">
+                            Email Id  <span class=" position-absolute " style="position: absolute; left:90px ;">:</span>
                         </div>
-                        <div class="col-6 subpixel-antialiased font-semibold fs-12">
-                            <h1 class=" text-center">{{
-                                _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}
+                        <div class="col-6 subpixel-antialiased  fs-12">
+                            <h1 class=" text-left " >
+
+                                {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}
                             </h1>
                         </div>
                     </div>
                     <div class="row  w-100 ">
                         <div class="col fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
                             <h1 class=" text-orange-500 fs-12 ">Residential Address :</h1>
-                            <div class=" ml-2">
-                                <p class=" text-blue-900 mt-2 subpixel-antialiased font-semibold fs-11">
+                            <div class=" ml-2 ">
+                                <p class=" text-blue-900 mt-2 subpixel-antialiased font-semibold fs-11 text-center">
                                     {{
                                         _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
                                     }}
@@ -397,9 +399,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-1 w-100 mt-2 :lg:mt-2">
+                    <div class="row bg-gradient-to-r  from-orange-500 to-orange-300 h-1 w-100 mt-2 :lg:mt-2">
                     </div>
-                    <div class="row bg-gradient-to-r from-violet-500 to-fuchsia-500 h-3 w-100 mt-1">
+                    <div class="row bg-gradient-to-r from-orange-500 to-orange-300 h-3 w-100 mt-1">
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -407,14 +409,9 @@
                                 v-if="_instance_profilePagesStore.employeeDetails.client_details.client_name"> {{
                                     _instance_profilePagesStore.employeeDetails.client_details.client_name }}</h1>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 ">
                             <h1 class=" fs-11 text-center font-semibold text-blue-900">{{
                                 _instance_profilePagesStore.employeeDetails.client_details.address }}</h1>
-                        </div>
-                        <div class="col-12">
-                            <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900">
-                                {{ _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_number
-                                }}</h1>
                         </div>
                         <div class="col-12">
                             <h1 class="fs-12 text-center font-semibold  text-blue-900">{{
@@ -422,8 +419,14 @@
                             }}</h1>
                         </div>
                         <div class="col-12">
-                            <h1 class="fs-12 text-center font-semibold  text-blue-900 mb-3 :lg:mb-0">{{
-                                _instance_profilePagesStore.employeeDetails.email }}</h1>
+                            <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900">
+                                {{ _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_number
+                                }}</h1>
+                        </div>
+
+                        <div class="col-12">
+                            <!-- <h1 class="fs-12 text-center font-semibold  text-blue-900 mb-3 :lg:mb-0">{{
+                                _instance_profilePagesStore.employeeDetails.email }}</h1> -->
                         </div>
                     </div>
 
