@@ -27,9 +27,9 @@
             <p v-if="JSON.parse(slotProps.data.emp_avatar).type =='shortname'" if class="p-2 w-2 h-18 text-semibold rounded-full bg-blue-900 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
 
             <img v-else
-            class="rounded-circle img-md w-3 userActive-status profile-img"
+            class="rounded-circle img-md w-2  userActive-status profile-img" style="height: 30px !important;"
             :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset="" alt="" />
-            <p>{{ slotProps.data.emp_name }} </p>
+            <p class=" text-left pl-2">{{ slotProps.data.emp_name }} </p>
            </div>
             </template>
           <template #filter="{ filterModel, filterCallback }">
@@ -37,7 +37,7 @@
               :showClear="true" />
           </template>
         </Column>
-        <Column field="emp_code" header="Employee Code" style="min-width: 15rem;">
+        <Column field="emp_code" header="Employee Code"  class="" style="min-width: 5rem !important;" >
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
               :showClear="true" />
