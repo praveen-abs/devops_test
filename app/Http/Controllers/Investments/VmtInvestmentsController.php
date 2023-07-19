@@ -521,7 +521,7 @@ class VmtInvestmentsController extends Controller
         $sumOfOtherSourceOfIncome = 0;
         $totalRentPaid = 0;
         $standardDeducation = 0;
-        $totalSumOfExemption = 0;
+        $ExemptionsUnder80s = 0;
         $SumOfHousPropsInNew = 0;
         $SumOfHousPropsInOld = 0;
         $otherAllowance = 0;
@@ -529,6 +529,8 @@ class VmtInvestmentsController extends Controller
         $sumOfOtherExemptionMax = 0;
 
         foreach ($v_form_template as $dec_amt) {
+
+            // dd($dec_amt);
 
             $current_year = date('Y'); // Get Current Year
             $dob = date_parse($dec_amt['dob']); // Employeer Dob
@@ -545,28 +547,28 @@ class VmtInvestmentsController extends Controller
 
             if ($dec_amt['section_group'] == "HRA") {
                 $sumOfHra += $hraTotalRent['total_rent_paid'];
-                $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
+                // $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
 
             }
 
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
-                $totalSumOfExemption += $dec_amt['dec_amount'];
+                $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
             if ($dec_amt['section_group'] == "Other Excemptions ") {
-                $totalSumOfExemption += $dec_amt['dec_amount'];
+                $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
             if ($dec_amt['section_group'] == "Previous Employer Income") {
-                $totalSumOfExemption += $dec_amt['dec_amount'];
+                $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
 
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
-                $totalSumOfExemption += $dec_amt['dec_amount'];
+                $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
                 $sumOfOtherSourceOfIncome = $dec_amt['dec_amount'];
-                $totalSumOfExemption += $dec_amt['dec_amount'];
+                $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
 
             if ($dec_amt['gross'] >= 50000) {
@@ -577,7 +579,7 @@ class VmtInvestmentsController extends Controller
 
             // Calculate Total Sum Of Declaration Amount
 
-            $totalSumOfExemption += $dec_amt['dec_amount'];
+            // $ExemptionsUnder80s += $dec_amt['dec_amount'];
 
             if ($dec_amt['section_group'] == "House Properties ") {
                 $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
@@ -615,18 +617,18 @@ class VmtInvestmentsController extends Controller
 
             $exemption['sno'] = "f";
             $exemption['section'] = "Exemptions under Sec 80's";
-            $exemption['old_regime'] = round($totalSumOfExemption);
-            $exemption['new_regime'] = round($totalSumOfExemption);
+            $exemption['old_regime'] = round($ExemptionsUnder80s);
+            $exemption['new_regime'] = round($ExemptionsUnder80s);
 
             $total_tax_income['sno'] = "g";
             $total_tax_income['section'] = "Total Taxable Income";
-            $total_tax_income['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] * 12 + $sumOfHra + $dec_amt['child_education_allowance'] + $dec_amt['lta'] + $totalSumOfExemption)));
-            $total_tax_income['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $totalSumOfExemption)));
+            $total_tax_income['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] * 12 + $sumOfHra + $dec_amt['child_education_allowance'] + $dec_amt['lta'] + $ExemptionsUnder80s)));
+            $total_tax_income['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $ExemptionsUnder80s)));
 
             $total_tax_laibilty['sno'] = "h";
             $total_tax_laibilty['section'] = "Total Tax Laibility";
-            $total_tax_laibilty['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] * 12 + $sumOfHra + $dec_amt['child_education_allowance'] + $dec_amt['lta'] + $totalSumOfExemption)));
-            $total_tax_laibilty['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $totalSumOfExemption)));
+            $total_tax_laibilty['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $dec_amt['professional_tax'] * 12 + $sumOfHra + $dec_amt['child_education_allowance'] + $dec_amt['lta'] + $ExemptionsUnder80s)));
+            $total_tax_laibilty['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $ExemptionsUnder80s)));
             $total_tax_laibilty['age'] = $empAge;
             $total_tax_laibilty['regime'] = $dec_amt['regime'];
             $total_tax_laibilty['last_updated'] = $dec_amt['updated_at'];
@@ -647,7 +649,7 @@ class VmtInvestmentsController extends Controller
             $total_tax_laibilty
 
         );
-        return $res;
+        return ($res);
 
 
     }
