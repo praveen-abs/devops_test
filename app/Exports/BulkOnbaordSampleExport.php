@@ -54,12 +54,12 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     public function styles(Worksheet $sheet)
     {
         //For First Row
-        $sheet->mergeCells('A1:T1')->setCellValue('A1', $this->title);
-        $sheet->getStyle('A1:T1')->getFill()
+        $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
+        $sheet->getStyle('A1:AF1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
-        $sheet->getStyle('A1:T1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-        $sheet->getStyle('A1:T1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:AF1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+        $sheet->getStyle('A1:AF1')->getAlignment()->setHorizontal('center');
     }
 
     public function headings(): array
@@ -105,6 +105,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         return [
             'F' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'P' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
