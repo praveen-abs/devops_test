@@ -6,6 +6,8 @@
     use App\Models\VmtEmployee;
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
+    use Dompdf\Dompdf;
+     use Dompdf\Options;
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtEmployeeOfficeDetails;
@@ -25,6 +27,7 @@
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;
+    use App\Models\VmtEmployeeStatutoryDetails;
     use App\Models\VmtPayroll;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
@@ -386,14 +389,72 @@ dd($query_docs);
 // }else{
 //     echo 'bye';
 // }
+// $query_document =VmtDocuments::all();
+//              $query_doc_id = array();
+//           foreach ($query_document as $key => $Singledocid)
+//             {
+//                 $query_doc_id[] = $Singledocid;
+//             }
+
+//              $query_user_doc_id = array();
+//           foreach ($query_doc_id as $key => $Singledocid)
+//             {
+//                 $query_user_doc_id[] = VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$Singledocid['id'])->first();
+//              }
+
+//              dd(  $query_doc_id );
+//              $reponse= array_diff($query_user_doc_id,$query_doc_id);
 
 
-$client_id=User::where('user_code','PLIPL068')->first();
 
-        $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
-        $image_view = url('/') . $VmtClientMaster->client_logo;
-dd();
+            //     $query_document =VmtDocuments::all()->toarray();
+
+            //     $query_user_doc_id = VmtEmployeeDocuments::where('user_id','236')->get()->toarray();
+
+
+            //     $present_doc= $query_document->diff($query_user_doc_id);
+
+            //     $missing_doc=$query_document->diff($present_doc);
+            //  $emp_documents=array();
+            //  foreach ($present_doc as $key => $singledata) {
+
+            //      if($docid){
+            //         $emp_documents[$key]=
+            //         $emp_documents[$key]['document_name']=VmtDocuments::where('id',$singledata->id)->first()->document_name;
+            //      }else{
+            //         $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+            //         $emp_documents[$j]['status']=null;
+            //      }
+            //      $i++;
+            //     }
+
+        //      $missing_doc_id= $query_document->diff($query_user_doc_id);
+        //      $present_doc_id= $query_document->diff($missing_doc);
+        //      $emp_documents=array();
+        //                $i=0;
+        //      foreach ($present_doc_id as $key => $singledocid) {
+        //              $emp_documents[$i]= VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$singledocid)->first();
+        //              $emp_documents[$i]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+        //              $i++;
+        //            }
+        //            $j=$i;
+        //    foreach ($missing_doc_id as $key => $singledocid) {
+        //               $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+        //               $emp_documents[$j]['status']=null;
+        //               $j++;
+        //          }
+
+//dd($emp_documents);
+$value=24-10-2000;
+
+if (! is_string($value) && ! is_numeric($value)) {
+  echo  'bye';
+}else{
+    echo 'hii';
+}
+
+
 
 
     ?>
