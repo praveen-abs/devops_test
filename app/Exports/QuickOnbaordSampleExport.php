@@ -30,11 +30,15 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
     protected $title;
     protected $client_list;
     protected $departments;
+    protected $marital_status;
+    protected $manager_code;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
         $this->client_list = $onbaord_details['client_list'];
         $this->departments = $onbaord_details['department'];
+        $this->marital_status = $onbaord_details['marital_status'];
+        $this->manager_code = $onbaord_details['managr_code'];
     }
 
     public function startCell(): string
@@ -64,10 +68,8 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Date of Joined (dd-mmm-yyyy)',
             'Legal Entity',
             'Department',
-            'Business Unit',
             'Designation',
             'Location',
-            'Worker Type',
             'Reporting Manager Employee Code',
             'Work Phone',
             'Personal Email',
@@ -77,32 +79,6 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Pan Number',
             'Salary Payment Mode',
             'Aadhaar Number',
-            'Basic',
-            'Dearness Allowance',
-            'VDA',
-            'House Rent Allowance',
-            'Child Education Allowance',
-            'Communication Allowance',
-            'Food Allowance',
-            'Travel Reimbursement (LTA)',
-            'Special Allowance',
-            'Other Allowance',
-            'Vehicle Reimbursement',
-            'Driver Salary',
-            'Washing Allowance',
-            'Unifrom Allowance',
-            'Total Fixed Gross',
-            'Employer EPF',
-            'Employer ESIC',
-            'Employer LWF',
-            'Employer Insurance',
-            'Cost to Company (CTC)',
-            'Employee EPF',
-            'Employee ESIC',
-            'Employee PT',
-            'Employee LWF',
-            'Employee Insurance',
-            'Net Take Home'
         ];
     }
 
@@ -130,6 +106,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $gender_column = 'E';
                 $legal_entity_column = 'H';
                 $departments_column = 'I';
+                $marital_column = 'O';
 
                 // set dropdown options
                 $gender_options = [
@@ -138,6 +115,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 ];
                 $legal_entity_option =   $this->client_list;
                 $departments_option = $this->departments;
+                $marital_option = $this->marital_status;
 
                 // set dropdown list for first data row
                 $validation_gender = $event->sheet->getCell("{$gender_column}3")->getDataValidation();
@@ -181,11 +159,27 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_dep->setPrompt('Please pick a Department from the drop-down list.');
                 $validation_dep->setFormula1($departments_option);
 
+                //set dropdown list for marital status
+                // set dropdown list for Legal Entity
+                $validation_mar_sts = $event->sheet->getCell("{$marital_column}3")->getDataValidation();
+                $validation_mar_sts->setType(DataValidation::TYPE_LIST);
+                $validation_mar_sts->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                $validation_mar_sts->setAllowBlank(false);
+                $validation_mar_sts->setShowInputMessage(true);
+                $validation_mar_sts->setShowErrorMessage(true);
+                $validation_mar_sts->setShowDropDown(true);
+                $validation_mar_sts->setErrorTitle('Input error');
+                $validation_mar_sts->setError('Selected Option is not in list.');
+                $validation_mar_sts->setPromptTitle('Select Marital Status from list');
+                $validation_mar_sts->setPrompt('Please pick a  Marital Status from the drop-down list.');
+                $validation_mar_sts->setFormula1($departments_option);
+
                 //clone validation to remaining rows
                 for ($i = 3; $i <= $row_count; $i++) {
                     $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$legal_entity_column}{$i}")->setDataValidation(clone    $validation_entity);
                     $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
+                    $event->sheet->getCell("{$marital_option}{$i}")->setDataValidation(clone  $validation_mar_sts);
                 }
 
                 // set columns to autosize
