@@ -17,6 +17,10 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
@@ -32,6 +36,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
     protected $departments;
     protected $marital_status;
     protected $manager_code;
+    protected $salary;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
@@ -39,6 +44,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
         $this->departments = $onbaord_details['department'];
         $this->marital_status = $onbaord_details['marital_status'];
         $this->manager_code = $onbaord_details['managr_code'];
+        $this->salary = $onbaord_details['salary'];
     }
 
     public function startCell(): string
@@ -78,9 +84,17 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Physically Handicapped',
             'Pan Number',
             'Aadhaar Number',
+            $this->salary
         ];
     }
 
+    public function columnFormats(): array
+    {
+        return [
+            'F' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+        ];
+    }
 
     public function array(): array
     {
@@ -107,6 +121,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $departments_column = 'I';
                 $marital_column = 'O';
                 $manager_code_column = 'L';
+                $mobile_num_column = 'D';
 
                 // set dropdown options
                 $gender_options = [
@@ -177,7 +192,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 //set dropdown list for managercode
                 $validation_mangr_code = $event->sheet->getCell("{$manager_code_column}3")->getDataValidation();
                 $validation_mangr_code->setType(DataValidation::TYPE_LIST);
-                $validation_mangr_code->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                $validation_mangr_code->setErrorStyle(DataValidation::STYLE_WARNING);
                 $validation_mangr_code->setAllowBlank(false);
                 $validation_mangr_code->setShowInputMessage(true);
                 $validation_mangr_code->setShowErrorMessage(true);
@@ -188,6 +203,20 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
                 $validation_mangr_code->setFormula1($manager_code_option);
 
+                //validation For Mobile Number
+                // $validation_mobile = $event->sheet->getCell("{$mobile_num_column}3")->getDataValidation();
+                // $validation_mobile->setType(DataValidation::TYPE_WHOLE);
+                // $validation_mobile->setErrorStyle(DataValidation::STYLE_STOP);
+                // $validation_mobile->setAllowBlank(true);
+                // $validation_mobile->setShowInputMessage(true);
+                // $validation_mobile->setShowErrorMessage(true);
+                // $validation_mobile->setErrorTitle('Input error');
+                // $validation_mobile->setError('invalid Mobile Number!');
+                // $validation_mobile->setPromptTitle('Allowed input');
+                // $validation_mobile->setPrompt('Only 10 Digits Are Allowed');
+                // $validation_mobile->setFormula1(10);
+                // $validation_mobile->setFormula2(12);
+
                 //clone validation to remaining rows
                 for ($i = 3; $i <= $row_count; $i++) {
                     $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
@@ -195,6 +224,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                     $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
                     $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
                     $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
+                    //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                 }
 
                 // set columns to autosize
