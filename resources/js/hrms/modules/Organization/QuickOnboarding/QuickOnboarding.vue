@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen w-full">
+    <div class="h-screen w-full" v-if="false">
         <div class="flex">
             <div class="w-6 px-2">
                 <p class="font-bold text-2xl">Employee Quick Onboarding</p>
@@ -50,203 +50,11 @@
                 </div>
             </div>
         </div>
-        <DataTable editMode="cell" @cell-edit-complete="onCellEditComplete" ref="dt" dataKey="id" :paginator="true"
-            :rows="5"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
-            <Column header="Employee code" field="Employee code" style="min-width: 8rem">
-                <template #body="{ data }">
-                    <p :class="[isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Employee code'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field="Employee Name" header="Employee Name" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Employee Name'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field="Email" header="Email " style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                        {{ data['Email'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field="Aadhar" header="Aadhar " style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Aadhar'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputMask id="ssn" mask="9999 9999 9999" v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field="Account No" header="Account No " style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Account No'] }}
-                    </p>
-                </template>
-                <!-- <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" minlength="10" maxlength="18" />
-                </template> -->
-            </Column>
-            <Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                        {{ data['Bank Name'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field="Gender" header="Gender" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isLetter(data['Gender']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                        {{ data['Gender'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <Dropdown v-model="data[field]" :options="Gender" optionLabel="name" optionValue="name"
-                        placeholder="Select Gender" class="w-full" />
-                </template>
-
-            </Column>
-            <Column field="DOJ" header="DOJ " style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isNumber(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg border-1' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['DOJ'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field=" Location" header="Location" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isLetter(data[' Location']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                        {{ data[' Location'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-                </template>
-            </Column>
-            <Column field="DOB" header="DOB" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isNumber(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                        {{ data['DOB'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" />
-                </template>
-            </Column>
-            <Column field="Pan No" header="Pan No" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Pan No'].toUpperCase() }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputMask id="serial" mask="aaaPa9999a" v-model="data[field]" class="uppercase" />
-                </template>
-            </Column>
-            <Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Mobile Number'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText minLength="10" maxLength="10" v-model="data[field]" @keypress="isEnteredNos($event)" />
-                </template>
-            </Column>
-            <Column field="Department" header="Department" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isLetter(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Department'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-                </template>
-            </Column>
-            <Column field="Process" header="Process" style="min-width: 12rem">isEnterLetter
-                <template #body="{ data }">
-                    <p :class="[isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                        {{ data['Process'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-                </template>
-            </Column>
-            <Column field="Designation" header="Designation" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isLetter(data['Designation']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Designation'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-                </template>
-            </Column>
-            <Column field="Bank ifsc" header="Bank ifsc" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <p :class="[isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                        class="font-semibold fs-6">
-                        {{ data['Bank ifsc'] }}
-                    </p>
-                </template>
-                <template #editor="{ data, field }">
-                    <InputText v-model="data[field]" @keypress="isEnterSpecialChars($event)" />
-                </template>
-            </Column>
-
-            <template></template>
-
-        </DataTable>
     </div>
-    <!--
-    <Dialog header="Header" v-model:visible="dailog" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-    :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
 
-</Dialog> -->
-    <!-- {{ EmployeeQuickOnboardingSource }} -->
-    <DataTable :value="EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem" responsiveLayout="scroll">
-        <Column v-for="col of EmployeeQuickOnboardingDynamicHeader" :key="col.title" :field="col.title" :header="col.title">
-            <template #editor="{ data, field }">
-                <InputText v-model="data[field]" />
-            </template>
-        </Column>
-
-    </DataTable>
+    <div class="">
+        <ImportQuickOnboarding />
+    </div>
 </template>
 
 
@@ -254,6 +62,7 @@
 
 import { ref } from 'vue';
 import * as XLSX from 'xlsx';
+import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 
 
 
@@ -414,44 +223,40 @@ const json = (e) => {
             console.log(validationResult);
         }
 
-        let arra = []
+        let excelRowData = []
 
         jsonData.Sheet1.forEach(element => {
-
             let format = {
                 title: Object.keys(element),
                 value: Object.values(element)
             }
-            arra.push(format)
-
+            excelRowData.push(format)
         });
 
-        let orn = []
-        let inde = 0
-        let inital = 0
+        let excelHeaders = []
+        let firstRowColumnIndex = 0
+        let initialColumnValue = 0
 
 
-        for (let index = 0; index < arra.length; index++) {
-            const element = arra[index];
-            inde = index
+        for (let index = 0; index < excelRowData.length; index++) {
+            const singleRowData = excelRowData[index];
+            initialColumnValue = index
 
-            for (let index = 0; index < element.value.length; index++) {
-                const value = element.value[index];
-                const title = element.title[index];
+            for (let index = 0; index < singleRowData.value.length; index++) {
+                const value = singleRowData.value[index];
+                const title = singleRowData.title[index];
                 let form = {
                     title: title,
                     value: value
                 }
 
-                console.log(inde);
-
-                if (inde == inital) {
-                    orn.push(form)
+                if (firstRowColumnIndex == initialColumnValue) {
+                    excelHeaders.push(form)
                 }
             }
         }
 
-        EmployeeQuickOnboardingDynamicHeader.value = orn
+        EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
         EmployeeQuickOnboardingSource.value = jsonData.Sheet1
 
         // data preview
