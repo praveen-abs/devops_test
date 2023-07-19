@@ -7,6 +7,8 @@ use App\Models\VmtEmpPaygroup;
 use App\Models\VmtPaygroup;
 use App\Models\VmtPaygroupComps;
 use App\Models\VmtAppIntegration;
+use App\Models\VmtPayrollEpf;
+use App\Models\VmtPayrollEsi;
 use Illuminate\Support\Facades\DB;
 use App\Models\VmtPayrollComponents;
 use Illuminate\Support\Facades\Validator;
@@ -14,21 +16,9 @@ use Illuminate\Support\Facades\Validator;
 class VmtPayrollComponentsService{
 
 
-    public function CreatePayRollComponents(
-        $comp_name,
-        $comp_type_id,
-        $calculation_type,
-        $amount,
-        $percentage,
-        $comp_name_payslip,
-        $epf,
-        $esi,
-        $category_id,
-        $is_part_of_empsal_structure,
-        $is_taxable,
-        $calculate_on_prorate_basis,
-        $can_show_inpayslip,
-        $status){
+    public function CreatePayRollComponents($comp_name,$comp_type_id,$calculation_type,$amount,$percentage,$comp_name_payslip,$epf,$esi,$category_id,
+                                        $is_part_of_empsal_structure, $is_taxable, $calculate_on_prorate_basis, $can_show_inpayslip,$status)
+     {
 
            //Validate
            $validator = Validator::make(
@@ -1332,7 +1322,7 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
         }
 
         try{
-            $save_payroll_epf_data = new VmtPayrollEpf;
+            $save_payroll_epf_data = new VmtPayrollEsi;
             $save_payroll_epf_data->client_id = auth()->user()->client_id;
             $save_payroll_epf_data->epf_number = $epf_number;
             $save_payroll_epf_data->epf_deduction_cycle =$epf_deduction_cycle ;
@@ -1348,7 +1338,7 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
             $save_payroll_epf_data->status = $status;
             $save_payroll_epf_data->save();
 
-         }catch(Exception $e){
+         }catch(\Exception $e){
 
         }
 }
