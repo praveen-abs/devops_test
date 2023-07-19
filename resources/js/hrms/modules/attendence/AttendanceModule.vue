@@ -233,10 +233,11 @@ onMounted(() => {
     Service()
 
 
-    useTimesheet.getTeamList(service.current_user_code).then(res => {
-        console.log(res.data);
+    setTimeout(() => {
+        useTimesheet.getTeamList(service.current_user_code).then(res => {
         teamList.value = Object.values(res.data)
     })
+    }, 3000);
 
     useTimesheet.getOrgList().then(res => {
         orgList.value = Object.values(res.data)
@@ -244,7 +245,7 @@ onMounted(() => {
 
     setTimeout(() => {
         useTimesheet.getSelectedEmployeeAttendance()
-    }, 400);
+    }, 500);
 
 
 })
@@ -276,5 +277,9 @@ const emp = ref([
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
+}
+
+.page-content {
+    padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>

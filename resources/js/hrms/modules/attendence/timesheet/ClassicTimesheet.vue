@@ -227,8 +227,7 @@
                     class="hidden md:block"
                     @click="!singleAttendanceDay.isAbsent ? getSelectedCellValues(singleAttendanceDay) : singleAttendanceDay.absent_status.includes('Not Applied') ? getSelectedCellValues(singleAttendanceDay) : ''">
 
-
-                    <div v-if="isFutureDate(day)">
+                    <div >
                         <div
                             class="w-full h-full text-xs md:text-sm lg:text-base text-left transition-colors font-semibold relative">
                             <div class="flex justify-center">
@@ -247,7 +246,7 @@
                             <div v-else
                                 class=" py-1 flex space-x-1 items-center  overflow-hidden  hover: cursor-pointer rounded-sm hp"
                                 :class="[find(singleAttendanceDay).length > 20 ? 'whitespace-normal' : 'whitespace-nowrap']">
-                                <div class="w-full my-3  p-2.5  rounded-sm mr-3 flex font-semibold "
+                                <div v-if="isFutureDate(day)" class="w-full my-3  p-2.5  rounded-sm mr-3 flex font-semibold "
                                     style="max-width: 140px;" :class="findAttendanceStatus(singleAttendanceDay)">
                                     <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
@@ -454,10 +453,10 @@ const find = (data) => {
             return data.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : `${data.leave_type} Approved`
         } else
             if (data.absent_status.includes('Rejected')) {
-                return `${data.leave_type} Rejected`
+                return data.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Rejected' : `${data.leave_type} Rejected`
             } else
                 if (data.absent_status.includes('Pending')) {
-                    return `${data.leave_type} Pending`
+                    return data.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Pending' : `${data.leave_type} Pending`
                 } else
                     if (data.absent_status.includes('Revoked')) {
                         return `${data.leave_type} Revoked`

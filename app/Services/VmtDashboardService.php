@@ -420,7 +420,10 @@ class VmtDashboardService{
              $from =$last_checkout_data->checkin_time;
           }
 
+          if(!empty($to) && !empty($from)){
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+          }
+
 
 
                // dd($effective_hours);

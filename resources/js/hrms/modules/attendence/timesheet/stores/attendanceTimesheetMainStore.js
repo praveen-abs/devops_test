@@ -50,7 +50,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(141, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             currentEmployeeAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
@@ -81,6 +81,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const getTeamList = async (user_code) => {
+        console.log(user_code);
         return axios.post('/fetch-team-members', {
             user_code: user_code
         })

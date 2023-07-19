@@ -1,8 +1,8 @@
 <template>
         <Galleria :value="holidays" :responsiveOptions="responsiveOptions" :numVisible="5" :circular="true"
-        containerStyle="max-width: 500px" style="height: 100px;" :showItemNavigators="true" :showThumbnails="false">
+        containerStyle="max-width: 500px" style="height: 150px;" :showItemNavigators="true" :showThumbnails="false">
         <template #item="slotProps">
-            <img :src="`data:image/png;base64,${slotProps.item.image}`" class="mt-3 rounded shadow-sm" style="width:450px; height: 175px; margin-bottom: 10px;position: relative; bottom :10px; display: block;"  :alt="slotProps.item.holiday_name" />
+            <img :src="`data:image/png;base64,${slotProps.item.image}`" class="mt-3 rounded shadow-sm" style="width:450px; height: 200px; margin-bottom: 10px;position: relative; bottom :10px; display: block;"  :alt="slotProps.item.holiday_name" />
         </template>
     </Galleria>
 
