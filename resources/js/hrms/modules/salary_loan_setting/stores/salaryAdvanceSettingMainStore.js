@@ -685,6 +685,26 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             console.log(salaryAdvanceSettingsDetails.value);
         })
     }
+    const interestFreeLoanHistory = ref();
+
+    async function getInterestFreeLoanHistory(Status){
+        let status = Status;
+        axios.post('/interest-and-interestfree-loan-settings-details',
+        {
+            Status:status
+        }
+        ).then(res => {
+            if (status === 'InterestFreeLoan') {
+                interestFreeLoanHistory.value = res.data;
+            }
+            if (status === 'InterestWithLoan') {
+                interestFreeLoanHistory.value = res.data;
+            }
+            // interestFreeLoanHistory.value = res.data.data
+        })
+
+    }
+
 
     return {
 
@@ -712,6 +732,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
         // Loan With interest Feature
         isLoanWithInterestFeature, lwif, saveLoanWithInterest, blink_UI, swalFunction, reset
+        ,
+
+        // get Interest Free Loan History
+        getInterestFreeLoanHistory,interestFreeLoanHistory
+
 
     };
 });

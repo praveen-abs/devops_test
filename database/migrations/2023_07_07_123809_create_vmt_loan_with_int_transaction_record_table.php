@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('emp_loan_details_id')->constrained('vmt_emp_int_loan_details');
             $table->text('expected_emi');
-            $table->text('paid_emi');
+            $table->text('paid_emi')->default(0);
             $table->date('payroll_date');
             $table->timestamps();
         });
