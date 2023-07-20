@@ -391,6 +391,16 @@ class VmtAttendanceController extends Controller
 
             // dd($reviewer_mail);
 
+            $emp_image = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id),true);
+
+            $query_manager_id = User::where('user_code', $manager_emp_code)->first()->id;
+
+            $manager_image =  json_decode(newgetEmployeeAvatarOrShortName($query_manager_id),true);
+
+             $emp_designation = VmtEmployeeOfficeDetails::where('user_id',auth::user()->id)->first()->designation;
+
+
+
             $isSent    = \Mail::to($reviewer_mail)->cc($notification_mails)->send(new RequestLeaveMail(
                 uEmployeeName: auth::user()->name,
                 uEmpCode: auth::user()->user_code,
@@ -404,7 +414,10 @@ class VmtAttendanceController extends Controller
                 uTotal_leave_datetime: $mailtext_total_leave,
                 //Carbon::parse($request->total_leave_datetime)->format('M jS Y \\, h:i:s A'),
                 loginLink: request()->getSchemeAndHttpHost(),
-                image_view: $image_view
+                image_view: $image_view,
+                emp_image: $emp_image,
+                manager_image: $manager_image,
+                emp_designation:$emp_designation
             ));
 
             if ($isSent) {

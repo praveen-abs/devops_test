@@ -689,7 +689,7 @@ class VmtAttendanceService
         $VmtClientMaster = VmtClientMaster::first();
         $image_view = url('/') . $VmtClientMaster->client_logo;
 
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
+        $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName($approver_user_id),true);
 
 
         $isSent    = \Mail::to($employee_mail)->send(
