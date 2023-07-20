@@ -57,7 +57,7 @@
                         <!-- {{ }} -->{{ item.settings }}
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <h1 class="  fs-5">{{ item.name }}</h1>
-                            <h1 class=" fs-5">Client ID : {{ item.client_id }}</h1>
+                            <h1 class=" fs-5">Client Name: {{ item.client_name }}</h1>
                             <button class=" underline text-blue-400 fs-5 "
                                 @click="viewDetails(item.setting_prev_details)">View Details</button>
                         </div>
@@ -66,7 +66,10 @@
                                 <h1 class=" fs-5"> {{
                                     item.dedction_period }} months. </h1>
                             </div>
-                            <h1 class=" fs-5">{{ item.loan_type }} : {{ item.perct }}%</h1>
+
+                            <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
+                            <h1 class="fs-5" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">{{item.setting_prev_details.max_loan_amount}}</h1>
+                            <!-- {{ item }} -->
                         </div>
                     </div>
                 </div>
@@ -88,11 +91,14 @@ import { required, email, minLength, sameAs } from '@vuelidate/validators';
 import CreateNewInterestFreeLoan from './create_new_interest_free_loan.vue';
 import axios from 'axios';
 import { set } from '@vueuse/core';
+import {loanSettingsStore} from '../stores/loanSettingsStores';
 
 const salaryStore = salaryAdvanceSettingMainStore()
 const showPopup = ref(false)
 const CreateLoanFreeNewFrom = ref(1);
 const interestFreeLoanHistory = ref();
+
+const loanSettings = loanSettingsStore();
 
 
 onMounted(() => {
@@ -185,8 +191,10 @@ function viewDetails(setting_prev_details) {
     salaryStore.selectedOption2  = ""
 
     salaryStore.EnableAndDisable =setting_prev_details.active;
+    loanSettings.loan_ID = setting_prev_details.loan_id;
 
     console.log(setting_prev_details.approver_flow);
+
 
        JSON.parse(setting_prev_details.approver_flow).forEach(element => {
 

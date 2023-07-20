@@ -314,20 +314,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // max_loan_limit
 
     function resetIfl(){
-        selectClientID=""
-        minEligibile=""
-        availPerInCtc=""
-        deductMethod=""
-        precent_Or_Amt=""
-        deductMethod= "",
-        max_loan_limit=""
-        cusDeductMethod=""
-        maxTenure=""
-        payroll_cycle=""
-        approvalflow= ""
-        selectedOption1=''
-        selectedOption2=""
-        selectedOption3=""
+        ifl.name= ''
+        ifl.selectClientID=""
+        ifl.minEligibile=""
+        ifl.availPerInCtc=""
+        ifl.deductMethod=""
+        ifl.precent_Or_Amt=""
+        ifl.deductMethod= ""
+        ifl.max_loan_limit=""
+        ifl.cusDeductMethod=""
+        ifl.maxTenure=""
+        ifl.payroll_cycle=""
+        ifl.approvalflow= ""
+        ifl.selectedOption1=''
+        ifl.selectedOption2=""
+        ifl.selectedOption3=""
     }
 
 

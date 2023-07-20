@@ -884,10 +884,10 @@ Route::middleware(['auth'])->group(function () {
     //Loan Approval changeClientIdStsForLoan
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
-    Route::get('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
+    Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
     //loan with intrest
     Route::get('/saveLoanWithIntrest', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'saveLoanWithInterestSettings'])->name('save-LoanWithIntrestSettings');
-    
+
     Route::get('/loan-transection-record',[App\Http\Controllers\VmtSalaryAdvanceController::class,'loanTransectionRecord']);
 
     //Loan And Advance Client Settings Route

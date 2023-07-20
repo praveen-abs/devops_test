@@ -269,11 +269,11 @@ import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMai
 import useValidate from '@vuelidate/core';
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
 import interest_free_loan from './interest_free_loan.vue';
-import useloanSettingsStore from '../stores/loanSettingsStores';
+import {loanSettingsStore} from '../stores/loanSettingsStores';
 
 const salaryStore = salaryAdvanceSettingMainStore();
 
-const useSettingStore = useloanSettingsStore();
+const useSettingStore = loanSettingsStore();
 
 const interest_free_loans = ref(2);
 
@@ -304,7 +304,7 @@ const submitForm = () => {
 function EnableDisable(val){
 
     salaryStore.resetIfl();
-    useSettingStore.SendEnableAndDisable(val);
+    useSettingStore.SendEnableAndDisable(val,'InterestFreeLoan');
 }
 
 
