@@ -67,6 +67,8 @@ use App\Models\VmtClientMaster;
     @vite('resources/js/hrms/modules/salary_loan_setting/EmployeePayables/EmployeePayablesDetails.js')
     <div id="EmployeePayablesDetails"></div>
 
+    
+
 </body>
 
 </html>
