@@ -25,7 +25,7 @@
                         <form action="" method="POST" enctype="multipart/form-data">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="mb-2 fw-bold fs-15 z-0">
+                                <h6 class="mb-2  fs-15 z-0">
                                     Payroll Summary
 
                                 </h6>
@@ -36,9 +36,10 @@
                                     <div class="text"
                                         v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
                                         :key="index">
-                                        <h1 class="fs-5" v-if="item">
+                                        <h1 class="" v-if="item">
                                             <!-- {{  dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary[0].payroll_date).format('DD-MMM-YYYY') }} -->
-                                            {{ item.payroll_date }}
+                                            <!-- {{ item.payroll_date }} -->
+                                            {{ dayjs(item.payroll_date ).format('DD-MMM-YYYY')  }}
                                         </h1>
                                         <h1 v-else> - </h1>
                                     </div>

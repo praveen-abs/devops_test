@@ -1,8 +1,9 @@
 <template>
+    <!-- {{ EmpDetials }} -->
     <div class="border-0 card w-100 box-shadow-md">
         <div class="card-body">
             <div class="row">
-                <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8">
+                <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8" v-for="item in EmpDetials">
                     <p class="fw-bold f-18 text-blue-900" id="greeting_text">
                         {{ current_session }}
                     </p>
@@ -10,23 +11,50 @@
                         {{ service.current_user_name }}
                     </p>
                     <div class="my-2.5 flex">
-                        <i class="fa fa-sun-o  text-warning my-auto" aria-hidden="true"></i>
+                        <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
                         <p class="mx-2 fs-6 my-auto">General Shift</p>
-                        <label class="switch-checkbox f-12 text-muted ">
+                        <label class="switch-checkbox f-12 text-muted">
                             <input type="checkbox" id="checkin_function" class="f-13 text-muted"
                                 v-model="welcome_card.check" @change="getTime" />
-                            <span class="slider-checkbox check-in round">
+                            <span class="slider-checkbox check-inw round">
                                 <span class="slider-checkbox-text"> </span>
                             </span>
                         </label>
                     </div>
-                    <p  class="f-12 text-muted" id="time_duration">
+
+                    <p v-if="item.checkin_time" class="f-12 text-muted  " style="width: 280px;" id="time_duration">
                         Check-in time:
-                        {{ "--:--:--" }} &nbsp; Mode : {{ "--" }}
+                        {{ item.checkin_time }} &nbsp;Mode: {{ item.attendance_mode_checkin }}
                     </p>
-                    <p  class="f-12 text-muted" id="time_duration">
+                    <p v-else class="f-12 text-muted" id="time_duration">
+                        Check-in time:
+                        {{ "--:--:--" }} &nbsp; Mode : {{ "--:--:--" }}
+                    </p>
+
+                    <p v-if="item.checkin_date" class="f-12 text-muted" id="time_duration">
+                        Check-in date:
+                        {{ item.checkin_date }}
+                    </p>
+                    <p v-else class="f-12 text-muted" id="time_duration">
+                        Check-in date:
+                        {{ "--:--:--" }}
+                    </p>
+
+                    <p v-if="item.checkout_time" class="f-12 text-muted" id="time_duration">
                         Check-out time:
-                        {{ "--:--:--" }} &nbsp; Mode : {{ "--" }}
+                        {{ item.checkout_time }} &nbsp; Mode : {{ item.attendance_mode_checkout }}
+                    </p>
+                    <p v-else class="f-12 text-muted" id="time_duration">
+                        Check-out time:
+                        {{ "--:--:--" }} &nbsp; Mode : {{ "--:--:--" }}
+                    </p>
+                    <p v-if="item.checkout_date" class="f-12 text-muted" id="time_duration">
+                        Check-out date:
+                        {{ item.checkout_date }}
+                    </p>
+                    <p v-else class="f-12 text-muted" id="time_duration">
+                        Check-out date:
+                        {{ "--:--:--" }}
                     </p>
                     <!-- <p class="f-12 text-muted" id="time_duration">
                         Time Duration:
@@ -53,7 +81,8 @@
                 </div>
                 <div class="mt-2">
                     <h4 class="mb-2">Welcome {{ service.current_user_name }}</h4>
-                    <p class="mb-4 text-muted">Have a good day !</p>
+                    <p class="mb-4 text-muted" v-if="checkInMessege" >{{ checkInMessege }}</p>
+                    <p class="mb-4 text-muted" v-else>Have a good day !</p>
                     <div class="gap-2 hstack justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal">
                             <button @click="check_in_dailog = false" type="button" class="btn btn-primary">
@@ -96,12 +125,15 @@
 import { onMounted, ref, reactive } from "vue";
 import { Service } from "../../../Service/Service";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
+import axios from "axios";
 
-const service  = Service()
+const service = Service();
 const usedashboard = useMainDashboardStore();
 
 const current_session = ref();
 const current_user = ref();
+
+const EmpDetials = ref([]);
 
 const check_in_dailog = ref(false);
 const check_out_dailog = ref(false);
@@ -111,9 +143,9 @@ const welcome_card = reactive({
     check: "",
     check_in: "",
     check_out: "",
-    attendance_mode:"web",
-    work_mode:"",
-    checked:false
+    attendance_mode: "web",
+    work_mode: "",
+    checked: false,
 });
 
 const getSession = () => {
@@ -132,38 +164,64 @@ const getSession = () => {
     }
 };
 
+async function gettime() {
+
+}
+
 const getTime = () => {
+    EmpDetials.value.splice(0,EmpDetials.value.length)
     if (welcome_card.check == true) {
         welcome_card.check_in = new Date().toLocaleTimeString();
-        welcome_card.checked = true
+        welcome_card.checked = true;
         check_in_dailog.value = true;
+
+
+
     } else {
         welcome_card.check_out = new Date().toLocaleTimeString();
         check_out_dailog.value = true;
-        welcome_card.checked = false
-
+        welcome_card.checked = false;
     }
 
-    usedashboard.updateCheckin_out({
-        checked:welcome_card.checked
-    }).finally(()=>{
-        resetChars()
-    });
+    usedashboard
+        .updateCheckin_out({
+            checked: welcome_card.checked,
+        }).then((res=>{
+            checkInMessege.value = res.data.message
+        }))
+        .finally(() => {
+            getEmployeeDetials();
+            resetChars();
+        });
 };
 
-onMounted(async () => {
+const checkInMessege = ref()
+const getEmployeeDetials = async () => {
+    let url = "/fetchEmpLastAttendanceStatus";
+    await axios.get(url).then((res) => {
+        console.log(res.data);
+        EmpDetials.value.push(res.data);
+        if (res.data.checkout_time) {
+            welcome_card.check = false;
+        }
+        else if (res.data.checkin_time) {
+            welcome_card.check = true;
+        } else {
+            welcome_card.check = null;
+        }
+    });
+};
+onMounted(() => {
     getSession();
-
+    getEmployeeDetials();
 });
 
-const resetChars = () =>{
-    usedashboard.check = "",
-    usedashboard.check_in = "",
-    usedashboard.check_out = "",
-    usedashboard.work_mode =""
-}
-
-
+const resetChars = () => {
+    (usedashboard.check = ""),
+        (usedashboard.check_in = ""),
+        (usedashboard.check_out = ""),
+        (usedashboard.work_mode = "");
+};
 </script>
 
 <style>
