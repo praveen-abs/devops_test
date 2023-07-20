@@ -1,7 +1,7 @@
 <template>
     <div class=" mt-4 h-full">
-        <div class="card-body d-flex justify-content-between align-items-center bg-gray-100 py-2 h-full ">
-            <div class=" shadow-sm bg-white rounded-md w-4 mr-2 h-[150px] ">
+        <div class="card-body d-flex justify-content-between align-items-center  py-2 h-full " >
+            <div class=" shadow-sm bg-white rounded-md  mr-2 h-[150px] w-[383px] ">
                 <div class=" bg-gray-200 p-2" style="background-color:#E6E6E6;" >
                     <p class=" fs-5">Bank Transfer</p>
                 </div>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class=" rounded-md w-9  h-full ml-2" style="background-color: #E6E6E6;">
+            <div class=" rounded-md w-8  h-full ml-2" style="background-color: #E6E6E6;">
                 <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
@@ -48,3 +48,56 @@
 <script setup>
 
 </script>
+
+<style lang="sass" scoped>
+
+#btn-download
+  cursor: pointer
+  display: block
+  width: 48px
+  height: 48px
+  border-radius: 50%
+  -webkit-tap-highlight-color: transparent
+  //transform: scale(2)
+  //centering
+  position: absolute
+  top: calc(50% - 24px)
+  left: calc(50% - 24px)
+  &:hover
+    background: rgba(#223254,.03)
+  svg
+    margin: 16px 0 0 16px
+    fill: none
+    transform: translate3d(0,0,0)
+    polyline,
+    path
+      stroke: #0077FF
+      stroke-width: 2
+      stroke-linecap: round
+      stroke-linejoin: round
+      transition: all .3s ease
+      transition-delay: .3s
+    path#check
+      stroke-dasharray: 38
+      stroke-dashoffset: 114
+      transition: all .4s ease
+  &.downloaded
+    svg
+      .svg-out
+        opacity: 0
+        animation: drop .3s linear
+        transition-delay: .4s
+      path#check
+        stroke: #20CCA5
+        stroke-dashoffset: 174
+        transition-delay: .4s
+
+@keyframes drop
+  20%
+    transform: (translate(0, -3px))
+  80%
+    transform: (translate(0, 2px))
+  95%
+    transform: (translate(0, 0))
+
+</style>
