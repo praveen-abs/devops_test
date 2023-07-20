@@ -58,8 +58,8 @@
 
                                 <div class="bg-green-100 p-3 rounded-lg"
                                     v-if="singleAttendanceDay.absent_status.includes('Approved')">
-                                    <p class="font-semibold fs-6 text-green-900 text-center"> {{
-                                        singleAttendanceDay.leave_type }}
+                                    <p class="font-semibold fs-6 text-green-900 text-center">
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
                                     </p>
                                     <p class="text-center">Approved
                                         <i class='fa fa-check-circle text-success mx-2' v-tooltip="'Approved'"
@@ -68,22 +68,23 @@
                                 </div>
                                 <div class="bg-red-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Rejected')">
-                                    <p class="font-semibold fs-6 text-red-900 text-center"> {{
-                                        singleAttendanceDay.leave_type }} </p>
+                                    <p class="font-semibold fs-6 text-red-900 text-center">
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
+                                         </p>
                                     <p class="text-center">Rejected <i class="fa fa-times-circle mx-2 text-danger"></i></p>
                                 </div>
                                 <div class="bg-yellow-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Pending')">
-                                    <p class="font-semibold fs-6 text-yellow-600 text-center"> {{
-                                        singleAttendanceDay.leave_type }}
+                                    <p class="font-semibold fs-6 text-yellow-600 text-center">
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
                                     </p>
                                     <p class="text-center">Pending<i class="fa fa-question-circle fs-15 text-secondary mx-2"
                                             v-tooltip="'Pending'"></i></p>
                                 </div>
                                 <div class="bg-slate-100 p-3 rounded-lg"
                                     v-else-if="singleAttendanceDay.absent_status.includes('Revoked')">
-                                    <p class="font-semibold fs-6 text-slate-600 text-center"> {{
-                                        singleAttendanceDay.leave_type }}
+                                    <p class="font-semibold fs-6 text-slate-600 text-center">
+                                        {{ singleAttendanceDay.leave_type == 'Sick Leave / Casual Leave' ? 'Sl/CL Approved' : singleAttendanceDay.leave_type }}
                                     </p>
                                     <p class="text-center">Revoked</p>
                                 </div>
@@ -99,7 +100,7 @@
                             <!-- If Employee is Present -->
                             <div v-else
                                 class="w-full  py-1 flex space-x-1 items-center whitespace-nowrap overflow-hidden  hover: cursor-pointer rounded-sm">
-                                <div class="w-full " >
+                                <div class="w-full ">
                                     <div class="text-xs tracking-tight text-clip overflow-hidden p-1 overflow-y-auto">
                                         <!-- singleAttendanceDay Check in  -->
                                         <div class="flex">
@@ -141,7 +142,8 @@
                                                     <i v-if="singleAttendanceDay.lc_status.includes('Rejected')"
                                                         class="fa fa-times-circle mx-2 text-danger"></i>
 
-                                                    <i v-if="singleAttendanceDay.lc_status.includes('None')" class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.lc_status.includes('None')"
+                                                        class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
 
@@ -158,7 +160,8 @@
                                                         class="fa fa-times-circle mx-2 text-danger"
                                                         v-tooltip="'Rejected'"></i>
 
-                                                    <i v-if="singleAttendanceDay.mip_status.includes('None')" class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.mip_status.includes('None')"
+                                                        class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
 
@@ -204,7 +207,8 @@
                                                     <i v-if="singleAttendanceDay.eg_status.includes('Rejected')"
                                                         v-tooltip="'Rejected'"
                                                         class="fa fa-times-circle mx-2 text-danger"></i>
-                                                    <i v-if="singleAttendanceDay.eg_status.includes('None')"  class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.eg_status.includes('None')"
+                                                        class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
 
@@ -220,7 +224,8 @@
                                                         v-tooltip="'Rejected'"
                                                         class="fa fa-times-circle  text-danger mx-2"></i>
 
-                                                    <i  v-if="singleAttendanceDay.mop_status.includes('None')" class="fa fa-exclamation-circle text-warning fs-15 mx-2"
+                                                    <i v-if="singleAttendanceDay.mop_status.includes('None')"
+                                                        class="fa fa-exclamation-circle text-warning fs-15 mx-2"
                                                         v-tooltip="'Not Applied'"></i>
                                                 </button>
                                             </div>
@@ -425,6 +430,8 @@ const isAbesent = (date) => {
 }
 
 
+
+
 /**
  * Validates a day to check if event start date is current calendar date or not
  *
@@ -505,5 +512,4 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}
-</style>
+}</style>

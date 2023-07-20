@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div id="div_reason_editable" v-if="useTimesheet.mopDetails.mop_status.includes('None')">
+            <div id="div_reason_editable" v-if="false">
                 <div class="row">
                     <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                     <div class="col-6">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <div id="div_reason_noneditable" v-if="!useTimesheet.mopDetails.mop_status.includes('None')">
+            <div id="div_reason_noneditable" v-if="useTimesheet.mopDetails.reason">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
@@ -74,20 +74,19 @@
                     </div>
                 </div>
 
-                <div class="mb-2 col-12" id="div_custom_reason">
+                <!-- <div class="mb-2 col-12" id="div_custom_reason">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                         </div>
                         <div class="col-6">
-                            <!-- {{ useTimesheet.mopDetails  }} -->
 
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="mb-2 col-12">
+                <div class="mb-2 col-12" v-if="useTimesheet.mopDetails.mop_status">
                     <div class="row">
-                        <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
+                        <div class="col-6"><label class="text-ash-medium fs-15" >Status</label>
                         </div>
                         <div class="col-6">
                             <span v-if="useTimesheet.mopDetails.mop_status.includes('Approved')"
@@ -101,10 +100,10 @@
                 </div>
             </div>
         </div>
-        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"  v-if="useTimesheet.mopDetails.mop_status.includes('None')">
+        <!-- <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"  v-if="useTimesheet.mopDetails.mop_status.includes('None')">
             <button type="button" class="btn btn-orange"
                 @click="useTimesheet.applyMopRegularization(), useTimesheet.dialog_Mop = false">Apply</button>
-        </div>
+        </div> -->
 
 
     </Dialog>

@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div id="div_reason_editable" v-if="useTimesheet.mipDetails.mip_status.includes('None')">
+            <div id="div_reason_editable" v-if="false">
                 <div class="row">
                     <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
                     <div class="col-6">
@@ -57,33 +57,34 @@
                     <div class="row">
                         <div class="col-12">
                             <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                                v-model="useTimesheet.mopDetails.custom_reason" placeholder="Reason here...."
-                                v-if="useTimesheet.mopDetails.reason == 'Others'"></textarea>
+                                v-model="useTimesheet.mipDetails.custom_reason" placeholder="Reason here...."
+                                v-if="useTimesheet.mipDetails.reason == 'Others'"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="div_reason_noneditable" v-if="!useTimesheet.mipDetails.mip_status.includes('None')">
+            <div id="div_reason_noneditable" v-if="useTimesheet.mipDetails.mop_status">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
+                            {{ useTimesheet.mipDetails.mip_status }}
                         </div>
                         <div class="col-6">
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-2 col-12" id="div_custom_reason">
+                <div class="mb-2 col-12" id="div_custom_reason" v-if="useTimesheet.mipDetails.mop_status">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                         </div>
                         <div class="col-6">
-
+                            {{ useTimesheet.mopDetails.mip_status }}
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-2 col-12">
+                <div class="mb-2 col-12" v-if="useTimesheet.mipDetails.mip_status">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
                         </div>
@@ -99,10 +100,11 @@
                 </div>
             </div>
         </div>
-        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"  v-if="useTimesheet.mipDetails.mip_status.includes('None')">
+        <!-- <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"
+            v-if="useTimesheet.mipDetails.mip_status.includes('None')">
             <button type="button" class="btn btn-orange"
                 @click="useTimesheet.applyMipRegularization(), useTimesheet.dialog_Mip = false">Apply</button>
-        </div>
+        </div> -->
 
     </Dialog>
 </template>

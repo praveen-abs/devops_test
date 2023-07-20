@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div id="div_reason_editable" v-if="useTimesheet.lcDetails.lc_status.includes('None')">
+            <!-- <div id="div_reason_editable" v-if="useTimesheet.lcDetails.lc_status.includes('None')">
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label></div>
@@ -71,36 +71,32 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- After manager Applied -->
 
-            <div id="div_reason_noneditable" v-if="!useTimesheet.lcDetails.lc_status.includes('None')">
+            <div id="div_reason_noneditable" >
                 <div class="mb-2 col-12">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Reason</label>
                         </div>
                         <div class="col-6">
                             {{ useTimesheet.lcDetails.lc_reason }}
-                            <!-- <input class="text-ash-medium form-control fs-15" name="txt_reason_noneditable"
-                                id="txt_reason_noneditable"  readonly v-model="useTimesheet.lcDetails.reason"> -->
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-2 col-12" id="div_custom_reason">
+                <div class="mb-2 col-12" id="div_custom_reason" v-if="useTimesheet.lcDetails.lc_reason_custom" >
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Custom Reason</label>
                         </div>
                         <div class="col-6">
                             {{ useTimesheet.lcDetails.lc_reason_custom }}
-                            <!-- <input class="text-ash-medium form-control fs-15" name="txt_customreason_noneditable"
-                                id="txt_customreason_noneditable"  readonly v-model="useTimesheet.lcDetails.custom_reason"> -->
                         </div>
                     </div>
                 </div>
 
-                <div class="mb-2 col-12">
+                <div class="mb-2 col-12" v-if="!useTimesheet.lcDetails.lc_status.includes('None')">
                     <div class="row">
                         <div class="col-6"><label class="text-ash-medium fs-15">Status</label>
                         </div>
@@ -117,10 +113,10 @@
             </div>
 
         </div>
-        <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"  v-if="useTimesheet.lcDetails.lc_status.includes('None')">
+        <!-- <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize"  v-if="useTimesheet.lcDetails.lc_status.includes('None')">
             <button type="button" class="btn btn-orange"
                 @click="useTimesheet.applyLcRegularization(), useTimesheet.dialog_Lc = false">Apply</button>
-        </div>
+        </div> -->
 
     </Dialog>
 </template>

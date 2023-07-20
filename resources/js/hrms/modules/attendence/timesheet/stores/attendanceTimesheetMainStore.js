@@ -151,7 +151,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     //  Applying for Late Coming and Early Going
 
     const onClickShowLcRegularization = (attendance) => {
-        // dialog_Lc.value = true
+        dialog_Lc.value = true
         lcDetails.value = { ...attendance }
     }
 
@@ -183,7 +183,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const onClickShowEgRegularization = (attendance) => {
-        // dialog_Eg.value = true
+        dialog_Eg.value = true
         egDetails.value = { ...attendance }
     }
 
@@ -216,7 +216,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     //  Applying for Missed In and  Out Punches
 
     const onClickShowMipRegularization = (attendance) => {
-        // dialog_Mip.value = true
+        dialog_Mip.value = true
         mipDetails.value = { ...attendance }
     }
 
@@ -247,7 +247,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
     const onClickShowMopRegularization = (attendance) => {
-        // dialog_Mop.value = true
+        dialog_Mop.value = true
         mopDetails.value = { ...attendance }
     }
 
