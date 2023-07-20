@@ -109,7 +109,6 @@ import router from "./hrms/modules/Organization/router/router";
 
 import second from './testings/second.vue'
 import QUickOnboarding from './hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
-import { utils } from "xlsx";
 const app = createApp(QUickOnboarding);
 const pinia=createPinia()
 

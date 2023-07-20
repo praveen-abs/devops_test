@@ -447,24 +447,30 @@
         //          }
 
 
-$data =array();
+// $data =array();
+         $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
 
-        $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
+// // dd($employees_aadhar_number);
+//         // $aadhar_number = array_filter($employees_aadhar_number, static function($employees_aadhar_number){
+//         //     return $employees_aadhar_number !== null;
+//         // } );
 
-// dd($employees_aadhar_number);
-        // $aadhar_number = array_filter($employees_aadhar_number, static function($employees_aadhar_number){
-        //     return $employees_aadhar_number !== null;
-        // } );
-     
-dd($aadhar_number);
-        $data['aadhar_number']=array_values($aadhar_number);
+// dd($aadhar_number);
+//         $data['aadhar_number']=array_values($aadhar_number);
 
 
-          //array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
-        dd($data);
+//          array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
+//         dd($data);
 
         //
 
+        $my_array = array(2, "a", null, 2.5, 'NULL', 0, "", 8);
+
+ function null_Check($data) {
+    return !is_null($data) && $data !='NULL';
+
+}
+dd(array_filter($employees_aadhar_number, "null_Check"));
 
 
     ?>

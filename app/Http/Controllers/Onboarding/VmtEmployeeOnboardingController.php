@@ -910,44 +910,67 @@ class VmtEmployeeOnboardingController extends Controller
     public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
             return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
+
+
+
     public function getEmployeeMandatoryDetails(Request $request){
 
         try{
         $data =array();
 
+
         $employees_user_code =User::pluck('user_code')->toarray();
-        $user_code=array_filter($employees_user_code);
+        $user_code= array_filter($employees_user_code, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
         $data['user_code']=array_values($user_code);
 //get
 
         $employees_email =User::pluck('email')->toarray();
-        $email=array_filter($employees_email);
+        $email=array_filter($employees_email, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
         $data['email']=array_values($email);
 
 
         $employees_mobile_number =VmtEmployee::pluck('mobile_number')->toarray();
-        $mobile_number=array_filter($employees_mobile_number);
+        $mobile_number = array_filter($employees_mobile_number, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
         $data['mobile_number']=array_values($mobile_number);
 
+
         $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
-        $aadhar_number=array_filter($employees_aadhar_number);
+        $aadhar_number= array_filter($employees_aadhar_number, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
         $data['aadhar_number']=array_values($aadhar_number);
 
+
         $employees_pan_number =VmtEmployee::pluck('pan_number')->toarray();
-        $pan_number=array_filter($employees_pan_number);
+        $pan_number = array_filter($employees_pan_number, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
         $data['pan_number']=array_values($pan_number);
 
+
         $employees_bankaccount_number =VmtEmployee::pluck('bank_account_number')->toarray();
-        $bankaccount_number=array_filter($employees_bankaccount_number);
+        $bankaccount_number = array_filter($employees_bankaccount_number, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
         $data['bankaccount_number']=array_values($bankaccount_number);
 
-        //  array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
+        $employees_officical_mail =VmtEmployeeOfficeDetails::pluck('officical_mail')->toarray();
+        $official_mail = array_filter($employees_officical_mail, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
+        $data['official_mail']=array_values($official_mail);
 
-           $response = ([
-                'status'=>'success',
-                'message'=>'',
-                "data"=> $data
-            ]);
+        $response = ([
+            'status'=>'success',
+            'message'=>'',
+            "data"=> $data
+         ]);
         }catch(\Exception $e){
             $response = ([
                 'status'=>'success',
@@ -957,6 +980,5 @@ class VmtEmployeeOnboardingController extends Controller
         }
 
         return response()->json($response);
-
     }
 }

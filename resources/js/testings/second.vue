@@ -30,7 +30,6 @@
 <script setup>
 
 import { ref } from 'vue';
-import * as XLSX from 'xlsx';
 
 import QuickOnboarding from '../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
 
