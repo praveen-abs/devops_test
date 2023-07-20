@@ -1255,8 +1255,9 @@ class VmtAttendanceController extends Controller
         $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
+        $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id),true);
 
+        dd($emp_avatar);
 
         $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
             auth::user()->name,
@@ -1341,7 +1342,7 @@ class VmtAttendanceController extends Controller
 
         $VmtClientMaster = VmtClientMaster::first();
         $image_view = url('/') . $VmtClientMaster->client_logo;
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
+        $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id),true);
 
         $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
             $employee_details->name,
