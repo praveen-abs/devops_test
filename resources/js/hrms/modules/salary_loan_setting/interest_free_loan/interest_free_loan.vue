@@ -42,29 +42,31 @@
                     <div class="col">
                         <!-- v-model="salaryStore.sa.selectClientID" -->
                         <!-- {{ salaryStore.client_name_status }} -->
+
                         <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
                             optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
                             placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem"
                             @change="selectClientId('int_free_loan')" />
                     </div>
                 </div>
+
                 <div class="row ml-1 mr-3 mt-2 ">
+
                     <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
-                        v-for="(item, index) in salaryStore.interestFreeLoanHistory" :key="index" :class="[]">
-                        {{ index.data }}
+                        v-for="(item, index) in salaryStore.interestFreeLoanHistory" :key="index">
+                        <!-- {{ }} -->{{ item.settings }}
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <h1 class="  fs-5">{{ item.name }}</h1>
-                            <button class=" underline text-blue-400 fs-5 " @click="viewDetails(item)">View Details</button>
+                            <h1 class=" fs-5">Client ID : {{ item.client_id }}</h1>
+                            <button class=" underline text-blue-400 fs-5 "
+                                @click="viewDetails(item.setting_prev_details)">View Details</button>
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <div>
-                                <h1 class=" fs-5" v-if="item.min_month_served === 1">Deduct the amount in
-                                    the Upcomming Payroll</h1>
-                                <h1 class=" fs-5">The deduction can be made over a period of {{
-                                    item.min_month_served }} months. </h1>
+                                <h1 class=" fs-5"> {{
+                                    item.dedction_period }} months. </h1>
                             </div>
-
-                            <h1 class=" fs-5">Percentage of Salary Advance: {{ item.percent_of_ctc }}%</h1>
+                            <h1 class=" fs-5">{{ item.loan_type }} : {{ item.perct }}%</h1>
                         </div>
                     </div>
                 </div>
@@ -85,6 +87,7 @@ import useValidate from '@vuelidate/core';
 import { required, email, minLength, sameAs } from '@vuelidate/validators';
 import CreateNewInterestFreeLoan from './create_new_interest_free_loan.vue';
 import axios from 'axios';
+import { set } from '@vueuse/core';
 
 const salaryStore = salaryAdvanceSettingMainStore()
 const showPopup = ref(false)
@@ -147,6 +150,69 @@ const submitForm = () => {
     } else {
         console.log('Form failed submitted.')
     }
+}
+
+const Name = [];
+
+function viewDetails(setting_prev_details) {
+
+    CreateLoanFreeNewFrom.value = 2;
+
+    salaryStore.ifl.name = setting_prev_details.name;
+    // salaryStore.ifl.isInterestFreeLoanIsEnabled=
+    // salaryStore.ifl.selectClientID = ;
+
+    // salaryStore.ifl.selectClientID.forEach(element => {
+    //         if (element.status == 1) {
+    //             setting_prev_details.client_id.push(element.id)
+    //         }});
+
+    salaryStore.ifl.minEligibile = setting_prev_details.min_month_served
+    salaryStore.ifl.precent_Or_Amt = setting_prev_details.loan_applicable_type
+    salaryStore.ifl.availPerInCtc = setting_prev_details.percent_of_ctc
+    salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months
+
+
+    if (setting_prev_details.deduction_starting_months == 1) {
+        salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months;
+    }
+    else {
+        salaryStore.ifl.deductMethod = "emi";
+        salaryStore.ifl.cusDeductMethod = setting_prev_details.deduction_starting_months;
+    }
+    salaryStore.selectedOption1 = ""
+    salaryStore.selectedOption2 =""
+    salaryStore.selectedOption2  = ""
+
+    salaryStore.EnableAndDisable =setting_prev_details.active;
+
+    console.log(setting_prev_details.approver_flow);
+
+       JSON.parse(setting_prev_details.approver_flow).forEach(element => {
+
+        Name.push(element.name)
+        console.log(element.name);
+
+        salaryStore.selectedOption1 = Name[0];
+        if (Name[1]) {
+            salaryStore.selectedOption2 = Name[1];
+        }
+        if (Name[2]) {
+            salaryStore.selectedOption2 = Name[2];
+        }
+        console.log(Name);
+    });
+
+    if (salaryStore.selectedOption1) {
+        salaryStore.option1 = 0;
+        salaryStore.option = 1
+
+        if (salaryStore.selectedOption2) {
+            salaryStore.option1 = 1
+            salaryStore.option2 = 1
+        }
+    }
+
 }
 
 

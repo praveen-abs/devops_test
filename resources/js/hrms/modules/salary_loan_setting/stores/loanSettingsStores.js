@@ -13,11 +13,22 @@ export const loanSettingsStore = defineStore("loanSettings", () => {
     }
     //
 
+    async function SendEnableAndDisable(Status){
+        let status = Status;
+        await axios.post('',{
+            Status : status
+        }).then(()=>{
+        })
+
+
+    }
+
 
     return{
 
         CreateLoanWithNewFrom,
         viewHistory,
+        SendEnableAndDisable
     }
 
 });

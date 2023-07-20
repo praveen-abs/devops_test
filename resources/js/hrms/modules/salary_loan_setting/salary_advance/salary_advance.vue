@@ -66,9 +66,13 @@
 
                             <h1 class=" fs-5">Percentage of Salary Advance: {{ item.settings.percent_salary_adv }}%</h1>
                             <h1 class=" fs-5">Employee Count : {{ item.settings.emp_count }}</h1>
+
                         </div>
+
                     </div>
+
                 </div>
+
 
             </div>
 

@@ -1650,11 +1650,8 @@ class VmtSalaryAdvanceService
             unset($temp_ar);
         }
         $res['settings']=$response;
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Undefined Loan Type',
-            'data' => $res
-        ]);
+
+        return  $res;
     }
     public function loanTransectionRecord($loan_type, $loan_detail_id)
     {

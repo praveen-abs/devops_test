@@ -1,5 +1,6 @@
 <template>
     <!-- <p class="fs-5">Please click the "Disable" button to deactivate the Interest Free Loan Feature.</p> -->
+    <div v-if="interest_free_loans ==2">
     <div class="my-4 flex align-items-center">
         <h1 class="text-xl  w-5  xl:text-2xl ">Name of the Interest Free Loan</h1>
         <div class=" ">
@@ -60,7 +61,7 @@
                     <div class="col-12">
                         <h1 class="fs-5 d-flex align-items-center">
                             <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1" name="dectmeth"
-                                value="percnt" class="mx-3" />
+                                :value="'percnt'" class="mx-3" />
                             years to avail the loan amount of
 
                             <!-- <InputText type="text"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" /> -->
@@ -76,7 +77,7 @@
                     </div>
                     <div class="col-12 d-flex align-items-center">
                         <RadioButton v-model="salaryStore.ifl.precent_Or_Amt" inputId="ingredient1" name="dectmeth"
-                            value="fixed" class="mx-3" />
+                            :value="'fixed'" class="mx-3" />
                         <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the
                             employees
                             <!-- <InputText v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'" type="text"
@@ -112,7 +113,7 @@
                     <div class="row">
                         <div class="col-7 d-flex justify-content-start align-items-center">
                             <RadioButton v-model="salaryStore.ifl.deductMethod" inputId="ingredient1" name="dectmeth"
-                                value="1" />
+                                :value="1" />
                             <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin deducting
                                 the EMI in the
                                 upcoming payroll.</label>
@@ -123,7 +124,7 @@
                     <div class="my-1 row">
                         <div class="col-7 d-flex justify-content-start align-items-center">
                             <RadioButton v-model="salaryStore.ifl.deductMethod" inputId="ingredient1" name="dectmeth"
-                                value="emi" />
+                                :value="'emi'" />
                             <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when they
                                 would like their EMI
                                 payments to begin
@@ -246,11 +247,18 @@
     <div class="row">
         <div class="col">
             <div class="float-right">
-                <button class="btn btn-border-primary">Cancel</button>
+                <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="interest_free_loans=1">Cancel</button>
+                <button class="btn btn-border-primary" v-if="salaryStore.EnableAndDisable" @click="interest_free_loans=1">back</button>
+                <button class="btn btn-border-primary" v-if="salaryStore.EnableAndDisable ==0" @click="EnableDisable(1)">Enable</button>
+                <button class="btn btn-border-primary" v-if="salaryStore.EnableAndDisable == 1" @click="EnableDisable(0)">Disable</button>
                 <!-- submitForm -->
-                <button class="mx-4 btn btn-primary" @click="submitForm">Save Changes</button>
+                <button class="mx-4 btn btn-primary" v-if="!salaryStore.EnableAndDisable" @click="submitForm">Save Changes</button>
             </div>
         </div>
+    </div>
+</div>
+    <div v-if="interest_free_loans ==1">
+        <interest_free_loan/>
     </div>
 </template>
 
@@ -260,8 +268,14 @@ import { ref, reactive, onMounted, computed } from 'vue';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore';
 import useValidate from '@vuelidate/core';
 import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
+import interest_free_loan from './interest_free_loan.vue';
+import useloanSettingsStore from '../stores/loanSettingsStores';
 
-const salaryStore = salaryAdvanceSettingMainStore()
+const salaryStore = salaryAdvanceSettingMainStore();
+
+const useSettingStore = useloanSettingsStore();
+
+const interest_free_loans = ref(2);
 
 const rules = computed(() => {
     return {
@@ -285,5 +299,16 @@ const submitForm = () => {
         console.log('Form failed submitted.')
     }
 }
+
+
+function EnableDisable(val){
+
+    salaryStore.resetIfl();
+    useSettingStore.SendEnableAndDisable(val);
+}
+
+
+
+
 
 </script>

@@ -53,7 +53,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     const response_message = ref();
     const canShowPopup = ref()
-    const AssignedClients = ref([])
+    const AssignedClients = ref([]);
+
+    // Enable btn disable for loan and salary advance settings
+
+    const EnableAndDisable = ref();
 
 
     // Eligible Employees
@@ -145,6 +149,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         salaryStore.sa.selectClientID = ""
         salaryStore.sa = ""
     }
+
+
 
     // Approval Flow
 
@@ -307,6 +313,23 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // deduction_starting_months
     // max_loan_limit
 
+    function resetIfl(){
+        selectClientID=""
+        minEligibile=""
+        availPerInCtc=""
+        deductMethod=""
+        precent_Or_Amt=""
+        deductMethod= "",
+        max_loan_limit=""
+        cusDeductMethod=""
+        maxTenure=""
+        payroll_cycle=""
+        approvalflow= ""
+        selectedOption1=''
+        selectedOption2=""
+        selectedOption3=""
+    }
+
 
     const saveInterestfreeLoan = () => {
         canShowLoading.value = true
@@ -449,6 +472,23 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         approvalflow: approvalFormat,
         selectedOption1: selectedOption1,
     });
+
+    function RestLwif(){
+        lwif.name = ""
+        lwif.selectClientID= ''
+        lwif.minEligibile= ''
+        lwif.availPerInCtc= ''
+        lwif.deductMethod= ''
+        lwif.precent_Or_Amt= ''
+        lwif.deductMethod= ""
+        lwif.max_loan_limit= ''
+        lwif.cusDeductMethod= ''
+        lwif.maxTenure= ''
+        lwif.loan_amt_interest= ''
+        lwif.loan_type= ""
+        lwif.approvalflow= ""
+        lwif.selectedOption1= ""
+    }
 
     const saveLoanWithInterest = () => {
         canShowLoading.value = true
@@ -695,15 +735,16 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }
         ).then(res => {
             if (status === 'InterestFreeLoan') {
-                interestFreeLoanHistory.value = res.data;
+                interestFreeLoanHistory.value = res.data.settings;
             }
             if (status === 'InterestWithLoan') {
-                interestFreeLoanHistory.value = res.data;
+                // interestFreeLoanHistory.value = res.data;
             }
             // interestFreeLoanHistory.value = res.data.data
         })
 
     }
+
 
 
     return {
@@ -731,11 +772,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest, blink_UI, swalFunction, reset
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest, blink_UI, swalFunction, reset ,resetIfl , RestLwif
         ,
 
         // get Interest Free Loan History
-        getInterestFreeLoanHistory,interestFreeLoanHistory
+        getInterestFreeLoanHistory,interestFreeLoanHistory,
+
+        EnableAndDisable,
 
 
     };
