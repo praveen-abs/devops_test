@@ -213,8 +213,7 @@ class VmtMainDashboardController extends Controller
         //If user already checkout, then send time difference to blade
         if(!empty($checked->checkout_time)){
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
-
-        }
+          }
           if(!empty($checked->checkin_time)){
              $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
           }
