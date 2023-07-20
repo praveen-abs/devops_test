@@ -188,13 +188,18 @@ try{
 
         $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
 
-        return $this->storeQuickOnboardEmployees($importDataArry, $VmtOnboardingTestingService);
+       // return $this->storeQuickOnboardEmployees($importDataArry, $VmtOnboardingTestingService);
     }
 
         // insert the employee to database for quick onboarding
-     private function storeQuickOnboardEmployees($data,  $VmtOnboardingTestingService)
+    public function storeQuickOnboardEmployees( Request $request )
         {
+ /*      testing stage       */
+
+
+SS
             //For output jsonresponse
+            $data=$request->all();
             $data_array = [];
             //For validation
             $isAllRecordsValid = true;
@@ -299,6 +304,7 @@ try{
                  'data' =>$data_array
               ];
             }
+
             return response()->json($response);
 
         }
