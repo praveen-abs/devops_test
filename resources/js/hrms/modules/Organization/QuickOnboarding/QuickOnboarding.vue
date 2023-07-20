@@ -1,9 +1,9 @@
 <template>
-        <!-- <div class=""  v-if="route.params.module == 'quickOnboarding'"> -->
-        <ImportQuickOnboarding />
-        <!-- </div> -->
-        <Transition name="fade">
-        <div class="h-screen w-full" v-if="false">
+    <Transition name="fade">
+        <div class="" v-if="route.params.module == 'quickOnboarding'">
+            <ImportQuickOnboarding />
+        </div>
+        <div class="h-screen w-full" v-else>
             <div class="flex">
                 <div class="w-6 px-2">
                     <p class="font-bold text-2xl">Employee Quick Onboarding</p>
@@ -14,61 +14,96 @@
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
                     <div class="flex">
-                        <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer"
-                            for="file"><i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
-                        <input type="file" name="" id="file" hidden @change="convertExcelIntoArray($event)"
+                        <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer w-full mr-3"
+                            for="file"><i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse <span
+                                class=" p-2 border-l border-l-gray-500 px-6">
+                                 {{ useStore.selectedFile ? useStore.selectedFile.name : ''}}</span></label>
+                        <input type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
                             accept=".xls, .xlsx">
-                        <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg">{{ selectedFile ? selectedFile.name : ''
-                        }}
-                        </p>
+                        <!-- <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg">
+                            {{ selectedFile ? selectedFile.name : '' }}
+                        </p> -->
                     </div>
-                    <button class="btn btn-orange mt-6" @click="upload">upload</button>
-
+                    <button class="btn btn-orange mt-6 float-right mx-5" @click="useStore.convertExcelIntoArray">Upload</button>
                 </div>
                 <div>
                     <div class="col-form-label">
-                        <p class="font-semibold fs-4"> Upload Instructions</p>
-                        <div class="py-2 my-4 bg-red-100 rounded-lg f-12 alert-warning font-semibold fs-6"><i
-                                class='fa fa-warning text-danger mx-2'></i> Read
-                            these instructions before uploading the file.</div>
+                        <!-- <p class="font-semibold fs-4"> Upload Instructions</p> -->
+                        <div class="py-2  bg-red-100 rounded-lg f-12 alert-warning font-semibold fs-6"><i
+                                class='fa fa-warning text-danger mx-2'></i>
+                            Read these instructions before uploading the file.
+                        </div>
                         <div>
-                            <ul class="list-style font-semibold" style="">
-                                <li class="my-2 font-semibold fs-6"><i class="text-green-500 fa fa-check"
-                                        aria-hidden="true"></i> Employee
-                                    Number,Employee Name, Email, Date of joining
-                                    and Location fields are required to add employees in.</li>
-                                <li class="my-2 font-semibold fs-6"><i class="text-green-500 fa fa-check"></i> Enter mobile
-                                    number is mandatory
-                                    while adding employee </li>
+                            <ul class="list-disc font-semibold m-4" style="">
+                                <li class="font-semibold fs-6">
+                                    The fields Employee Number, Employee Name, Email, Date of Joining, and Location must be
+                                    filled in before adding workers.</li>
+                                <li class="font-semibold fs-6">
+                                        When adding an employee, you must enter your mobile phone
+                                    number.</li>
+                                <li class="font-semibold fs-6">
+                                    To receive all messages, including those about timesheet reminders, leave requests, and
+                                    attendance requests, your email address must be current.
+                                </li>
 
-                                <li class="my-2 font-semibold fs-6"> <i class="text-green-500 fa fa-check"></i> Employee
-                                    email
-                                    is unique across
-                                    . So, cannot add same employee in two
-                                    Organizations with same email. </li>
+                                <li class="font-semibold fs-6">
+                                    Each employee's email is different. Therefore, an employee cannot be added to two
+                                    organisations using
+                                    the same email.</li>
 
-                                <li class="my-2 font-semibold fs-6"><i class="text-green-500 fa fa-check"></i> Designation
-                                    is
-                                    mandatory since
-                                    it will help to identify employees in People picker
-                                    search results when 2 or more employees have same Name. </li>
+                                <li class="font-semibold fs-6">
+                                    Designation is required because, in cases when two or more workers share the same Name,
+                                    it will aid in
+                                    locating them in People Picker search results. </li>
+
                             </ul>
-
                         </div>
                     </div>
                 </div>
             </div>
+            <DataTable ref="dt" dataKey="id" :paginator="true" class="mt-3"
+                paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                :rowsPerPageOptions="[5, 10, 25]"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
+                <Column field="Employee" header="Employee's"></Column>
+                <Column field="Employee code" header="Month"></Column>
+                <Column field="Employee code" header="Date Time"></Column>
+                <Column field="Employee code" header="Total Employees Onboarded"></Column>
+                <Column field="Employee code" header="Action"></Column>
+            </DataTable>
         </div>
+    </Transition>
+
+    <Transition name="fade">
+        <Dialog header="Header" v-model:visible="useStore.canShowloading"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
+            :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
+            </template>
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
     </Transition>
 </template>
 
 
 <script setup>
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import * as XLSX from 'xlsx';
 import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 import { useRouter, useRoute } from "vue-router";
+import { useOnboardingMainStore } from '../stores/OnboardingMainStore';
+
+
+const useStore = useOnboardingMainStore()
+
+onMounted(() => {
+    useStore.getExistingOnboardingDocuments()
+})
 
 
 const router = useRouter();
@@ -145,117 +180,13 @@ const sampleTemplate = ref([
 
 const selectedFile = ref()
 
-const convertExcelIntoArray = (e) => {
-
-    router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
-
-    var file = e.target.files[0];
-    selectedFile.value = e.target.files[0];
-    // input canceled, return
-    if (!file) return;
-
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        const data = reader.result;
-        var workbook = XLSX.read(data, { type: 'binary' });
-        var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-
-        // header: 1 instructs xlsx to create an 'array of arrays'
-        var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-        const jsonData = workbook.SheetNames.reduce((initial, name) => {
-            const sheet = workbook.Sheets[name];
-            initial[name] = XLSX.utils.sheet_to_json(sheet);
-            return initial;
-        }, {});
-
-        EmployeeQuickOnboardingSource.value = jsonData.Sheet1
-
-
-
-
-
-        // console.log(jsonData['Sheet1']);
-
-        for (let index = 0; index < jsonData['Sheet1'].length; index++) {
-            console.log("jsonData['Sheet1'].length :", jsonData['Sheet1'].length);
-
-
-            const validationResult = getValidationMessages(
-                EmployeeQuickOnboardingSource.value[index]
-            );
-
-            // if (validationResult.length > 0) {
-            //     problemLeads.push({ messages: validationResult, rowNumber: index + 1 });
-            // }
-
-            // console.log(validationResult);
-        }
-
-        let excelRowData = []
-
-        jsonData.Sheet1.forEach(element => {
-
-            let format = {
-                title: Object.keys(element),
-                value: Object.values(element)
-            }
-            excelRowData.push(format)
-
-        });
-
-        let excelHeaders = []
-        let RowIndex = 0
-        let initialColumnValue = 0
-
-
-
-        for (let i = 0; i < excelRowData.length; i++) {
-            const singleRowData = excelRowData[i];
-            RowIndex = i
-
-            for (let j = 0; j < singleRowData.value.length; j++) {
-                const value = singleRowData.value[j];
-                const title = singleRowData.title[j];
-
-                let form = {
-                    title: title,
-                    value: value
-                }
-
-
-                totalRecordsCount.value.push(form)
-
-
-
-
-                /*
-                To Avoid duplicate Header insert
-                  - only allow first index object headers
-                 */
-
-                if (RowIndex == initialColumnValue) {
-                    excelHeaders.push(form)
-                }
-            }
-        }
-
-        EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
-
-
-
-
-        // data preview
-
-        // console.log(result);
-
-    };
-    reader.readAsArrayBuffer(file);
-}
-
-
-const upload = () => {
-}
-
 
 </script>
+
+
+
+<style>
+.page-content {
+    padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+}
+</style>

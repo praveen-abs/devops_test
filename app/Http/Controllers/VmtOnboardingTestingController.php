@@ -194,6 +194,8 @@ try{
         // insert the employee to database for quick onboarding
     public function storeQuickOnboardEmployees( Request $request )
         {
+
+            dd($request->all());
  /*      testing stage       */
 
             //For output jsonresponse

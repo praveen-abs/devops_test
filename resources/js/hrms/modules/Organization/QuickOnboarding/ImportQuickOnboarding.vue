@@ -1,120 +1,146 @@
 <template>
-
-
-
-
-    <div class="grid grid-cols-4 w-full place-content-center mx-auto">
-        <div class="flex">
+    <div class="grid grid-cols-3 w-8/12 place-content-center mx-auto my-2">
+        <!-- <div class="flex">
             <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
                     class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
-            <input type="file" name="" id="file" hidden @change="convertExcelIntoArray($event)" accept=".xls, .xlsx">
-        </div>
+            <input type="file" name="" id="file" hidden @change="useStore.convertExcelIntoArray($event)"
+                accept=".xls, .xlsx">
+        </div> -->
         <div class="bg-white text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Total Records : <span class="font-bold">
-                {{ totalRecordsCount.length }}
+                {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length : 0 }}
             </span>
         </div>
-        <div class="bg-green-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Processed Records : <span class="font-bold">
-                {{ totalRecordsCount.length - errorRecordsCount.length }}</span>
+        <div class="bg-green-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Processed Records : <span
+                class="font-bold">
+                {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length -
+                    useStore.errorRecordsCount.length : 0 }}</span>
         </div>
         <div class="bg-red-100  text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Error Records : <span class="font-bold">
-                {{ errorRecordsCount.length }}</span>
+                {{ useStore.errorRecordsCount.length }}</span>
+        </div>
+    </div>
+
+    <div class="py-5">
+        <p class="font-semibold fs-6">Sample format:</p>
+        <div class="table-responsive">
+            <DataTable class="my-4" :value="sampleTemplate" tableStyle="min-width: 50rem" responsiveLayout="scroll">
+                <Column v-for="col of  sampleTemplateHeaders " :key="col.title" :field="col.title" style="min-width: 12rem;"
+                    :header="col.title"></Column>
+            </DataTable>
         </div>
     </div>
 
 
-    <DataTable class="my-4" :value="EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem" responsiveLayout="scroll"
-        editMode="cell" @cell-edit-complete="onCellEditComplete" v-if="EmployeeQuickOnboardingSource">
+    <div class="table-responsive">
+        <p class="font-semibold fs-6">Original data:</p>
+        <DataTable class="py-4" :value="useStore.EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem"
+            responsiveLayout="scroll" editMode="cell" @cell-edit-complete="onCellEditComplete"
+            v-if="useStore.EmployeeQuickOnboardingSource" :rows="useStore.EmployeeQuickOnboardingSource.length">
 
 
-        <Column v-for="col of  EmployeeQuickOnboardingDynamicHeader " :key="col.title" :field="col.title"
-            style="min-width: 12rem;" :header="col.title">
+            <Column v-for="col of  useStore.EmployeeQuickOnboardingDynamicHeader " :key="col.title" :field="col.title"
+                style="min-width: 12rem;" :header="col.title">
 
-            <template #body="{ data, field }">
-                <!-- {{ useStore.userCodeExists(data['Employee code']) }} -->
-                <div v-if="field == 'Employee code'"
-                    :class="[isSpecialChars(data['Employee code']) || useStore.userCodeExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
-                    <p class="font-semibold fs-6">
-                        {{ data['Employee code'] }}
+                <template #body="{ data, field }">
+                    <div v-if="field == 'Employee code'"
+                        :class="[useStore.isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        <p class="font-semibold fs-6">
+                            <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                                v-tooltip.right="'User code is already exists'"
+                                v-if="useStore.existingUserCode.includes(data['Employee code'])"></i>
+                            {{ data['Employee code'] }}
+                        </p>
+                    </div>
+                    <p v-else-if="field == 'Aadhar'"
+                        :class="[useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Aadhar'] }}
                     </p>
-                </div>
+                    <p v-else-if="field == 'Employee Name'"
+                        :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Employee Name'] }}
+                    </p>
+                    <p v-else-if="field == 'Email'"
+                        :class="[useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        <i class="fa fa-exclamation-circle text-warning  cursor-pointer" aria-hidden="true"
+                            v-tooltip.right="'Email is already exists'"
+                            v-if="useStore.existingEmails.includes(data['Email'])"></i>
+                        {{ data['Email'] }}
+                    </p>
+                    <p v-else-if="field == 'Mobile Number'"
+                        :class="[useStore.isValidMobileNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
+                            v-tooltip.right="'Mobile number is already exists'"
+                            v-if="useStore.existingMobileNumbers.includes(data['Mobile Number'])"></i>
+                        {{ data['Mobile Number'] }}
+                    </p>
 
-                <p v-else-if="field == 'Aadhar'" :class="[isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Aadhar'] }}
-                </p>
-                <p v-else-if="field == 'Employee code'"
-                    :class="[isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Employee code'] }}
-                </p>
+                    <p v-else-if="field == 'Account No'"
+                        :class="[useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Account No'] }}
+                    </p>
 
-                <p v-else-if="field == 'Employee Name'"
-                    :class="[isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Employee Name'] }}
-                </p>
-                <p v-else-if="field == 'Email'" :class="[isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Email'] }}
-                </p>
-                <p v-else-if="field == 'Mobile Number'"
-                    :class="[isValidMobileNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Mobile Number'] }}
-                </p>
+                    <p v-else-if="field == 'Bank Name'"
+                        :class="[useStore.isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Bank Name'] }}
+                    </p>
 
-                <p v-else-if="field == 'Account No'"
-                    :class="[isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Account No'] }}
-                </p>
-
-                <p v-else-if="field == 'Bank Name'"
-                    :class="[isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                    {{ data['Bank Name'] }}
-                </p>
-
-                <p v-else-if="field == 'Pan No'"
-                    :class="[isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-                    {{ data['Pan No'].toUpperCase() }}
-                </p>
-                <p v-else-if="field == 'DOB'" :class="[isValidDate(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['DOB'] }}
-                </p>
-                <p v-else-if="field == 'DOJ'" :class="[isValidDate(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['DOJ'] }}
-                </p>
-                <p v-else-if="field == 'Bank ifsc'"
-                    :class="[isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-                    class="font-semibold fs-6">
-                    {{ data['Bank ifsc'].toUpperCase() }}
-                </p>
-                <p v-else class="font-semibold fs-6">
-                    {{ data[field] }}
-                </p>
+                    <p v-else-if="field == 'Pan No'"
+                        :class="[useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
+                            v-tooltip.right="'Mobile number is already exists'"
+                            v-if="useStore.existingPanCards.includes(data['Pan No'])"></i>
+                        {{ data['Pan No'].toUpperCase() }}
+                    </p>
+                    <p v-else-if="field == 'DOB'"
+                        :class="[useStore.isValidDate(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['DOB'] }}
+                    </p>
+                    <p v-else-if="field == 'DOJ'"
+                        :class="[useStore.isValidDate(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['DOJ'] }}
+                    </p>
+                    <p v-else-if="field == 'Bank ifsc'"
+                        :class="[useStore.isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Bank ifsc'].toUpperCase() }}
+                    </p>
+                    <p v-else class="font-semibold fs-6">
+                        {{ data[field] }}
+                    </p>
+                </template>
+                <template #editor="{ data, field }">
+                    <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
+                    <Dropdown v-else-if="field == 'Gender'" v-model="data[field]" :options="Gender" optionLabel="name"
+                        optionValue="name" placeholder="Select Gender" class="w-full" />
+                    <InputMask v-else-if="field == 'Pan No'" id="serial" mask="aaaPa9999a" v-model="data[field]"
+                        class="uppercase" />
+                    <InputText v-else-if="field == 'Email'" v-model="data[field]" />
+                    <InputText v-else-if="field == 'Mobile Number'" v-model="data[field]" minLength="10" maxLength="10"
+                        @keypress="useStore.isEnteredNos($event)" />
+                    <InputText v-else v-model="data[field]" :readonly="checkingNonEditableFields(field)" />
+                </template>
+            </Column>
+            <template #footer>
+                <button class="btn btn-orange mx-auto flex justify-center"
+                    @click="saveOnboarding(useStore.EmployeeQuickOnboardingSource)">Upload</button>
             </template>
-            <template #editor="{ data, field }">
-                <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
-                <Dropdown v-else-if="field == 'Gender'" v-model="data[field]" :options="Gender" optionLabel="name"
-                    optionValue="name" placeholder="Select Gender" class="w-full" />
-                <InputMask v-else-if="field == 'Pan No'" id="serial" mask="aaaPa9999a" v-model="data[field]"
-                    class="uppercase" />
-                <InputText v-else-if="field == 'Email'" v-model="data[field]" />
-                <InputText v-else-if="field == 'Mobile Number'" v-model="data[field]" minLength="10" maxLength="10"
-                    @keypress="isValidMobileNumber($event)" />
-                <InputText v-else v-model="data[field]" :readonly="checkingNonEditableFields(field)" />
-            </template>
-        </Column>
-
-    </DataTable>
+        </DataTable>
+    </div>
 </template>
 
 
 <script setup>
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import * as XLSX from 'xlsx';
 import axios from 'axios'
 
@@ -126,6 +152,13 @@ import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
 
 
 const useStore = useOnboardingMainStore()
+
+
+
+const saveOnboarding = (data) => {
+    console.log(data);
+    axios.post('/quicktesting', data)
+}
 
 
 
@@ -143,350 +176,57 @@ const checkingNonEditableFields = (e) => {
 
 const onCellEditComplete = (event) => {
 
-    errorRecordsCount.value.splice(0, errorRecordsCount.value.length)
+    useStore.errorRecordsCount.splice(0, useStore.errorRecordsCount.length)
 
     let { data, newValue, field } = event;
 
     if (newValue.trim().length > 0) data[field] = newValue;
     else event.preventDefault();
 
-
-    for (let index = 0; index < EmployeeQuickOnboardingSource.value.length; index++) {
-        getValidationMessages(EmployeeQuickOnboardingSource.value[index]);
+    for (let index = 0; index < useStore.EmployeeQuickOnboardingSource.length; index++) {
+        useStore.getValidationMessages(useStore.EmployeeQuickOnboardingSource[index]);
     }
 }
 
 
 const sampleTemplate = ref([
     {
-        "Location": "",
-        Aadhar: '',
-        "Account No": '',
-        "Bank Name": " ",
-        "Bank ifsc": "",
-        Basic: '',
-        "Child DOB": '',
-        "Child Education Allowance": '',
-        "Child Name": '',
-        "Confirmation Period": '',
-        "Cost Center": '',
-        "Current Address": "",
-        DOB: '',
-        DOJ: '',
-        Department: "",
-        Designation: "",
-        "EPF Employer Contribution": '',
-        "EPf Employee": '',
-        "ESIC Employee": '',
-        "ESIC Employer Contribution": '',
-        Email: "",
-        "Emp Notice": '',
-        "Employee Name": "",
-        "Employee code": "",
-        "Esic applicable": "",
-        "Father DOB": "",
-        "Father Gender": "",
-        "Father name": "",
-        "Food Coupon": "",
-        Gender: "",
-        Graduity: "",
-        HRA: "",
-        "Holiday Location": "",
-        Insurance: "",
-        "L1 Manager Code": "",
-        "L1 Manager Name": "",
-        LTA: "",
-        "Labour Welfare Fund": "",
-        "Lwf location": "",
-        "Marital Status": " ",
-        "Mobile Number": "",
-        "Mother DOB": "",
-        "Mother Gender": "",
-        "Mother Name": "",
-        "Net Income ": "",
-        "No of child": "",
-        "Official Mail": "",
-        "Official Mobile": "",
-        "Other Allowance": "",
-        "Pan Ack": "",
-        "Pan No": "",
-        "Permanent Address": "",
-        "Pf applicable ": "",
-        Process: "",
-        "Professional Tax": "",
-        "Ptax location ": "",
-        "Special Allowance": "",
-        "Spouse DOB": "",
-        "Spouse Name": "",
-        "Statutory Bonus": "",
-        "Work Location": "",
-        "dearness  allowance ": "",
-        "tax regime ": "",
-        "uan number": ""
+        'Employee Code': 'ABS01',
+        'Employee Name': 'Vishu',
+        'Date Of Birth (dd-mmm-yyyy)': '23-09-2001',
+        'Date of Joined (dd-mmm-yyyy)': '23-09-2023',
+        'Mobile Number': '9898989898',
+        'Aadhaar Number': '2222 3333 4444',
+        'Personal Email': 'abs@gmail.com',
+        'Pan Number': 'AJUPA0900H',
+        'Gender': 'Male',
+        'Marital Status': 'Married',
+        'Reporting Manager': 'Pradessh',
+        'Designation': 'Developer',
+        'Department': 'IT',
+        'Location': 'Chennai',
+        'Father Name': 'Simma',
+        'Physically Handicapped': 'No',
     }
 ])
-
-const dailog = ref(false)
-const selectedFile = ref()
-
-
-
-const EmployeeQuickOnboardingSource = ref()
-const EmployeeQuickOnboardingDynamicHeader = ref()
-
-
-
-
-
-const convertExcelIntoArray = (e) => {
-
-    router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
-
-    var file = e.target.files[0];
-    selectedFile.value = e.target.files[0];
-    // input canceled, return
-    if (!file) return;
-
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        const data = reader.result;
-        var workbook = XLSX.read(data, { type: 'binary' });
-        var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-
-        // header: 1 instructs xlsx to create an 'array of arrays'
-        var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-        const jsonData = workbook.SheetNames.reduce((initial, name) => {
-            const sheet = workbook.Sheets[name];
-            initial[name] = XLSX.utils.sheet_to_json(sheet);
-            return initial;
-        }, {});
-
-        EmployeeQuickOnboardingSource.value = jsonData.Sheet1
-
-
-
-
-
-        // console.log(jsonData['Sheet1']);
-
-        for (let index = 0; index < jsonData['Sheet1'].length; index++) {
-            console.log("jsonData['Sheet1'].length :", jsonData['Sheet1'].length);
-
-
-            const validationResult = getValidationMessages(
-                EmployeeQuickOnboardingSource.value[index]
-            );
-
-            // if (validationResult.length > 0) {
-            //     problemLeads.push({ messages: validationResult, rowNumber: index + 1 });
-            // }
-
-            // console.log(validationResult);
-        }
-
-        let excelRowData = []
-
-        jsonData.Sheet1.forEach(element => {
-
-            let format = {
-                title: Object.keys(element),
-                value: Object.values(element)
-            }
-            excelRowData.push(format)
-
-        });
-
-        let excelHeaders = []
-        let RowIndex = 0
-        let initialColumnValue = 0
-
-
-
-        for (let i = 0; i < excelRowData.length; i++) {
-            const singleRowData = excelRowData[i];
-            RowIndex = i
-
-            for (let j = 0; j < singleRowData.value.length; j++) {
-                const value = singleRowData.value[j];
-                const title = singleRowData.title[j];
-
-                let form = {
-                    title: title,
-                    value: value
-                }
-
-
-                totalRecordsCount.value.push(form)
-
-
-
-
-                /*
-                To Avoid duplicate Header insert
-                  - only allow first index object headers
-                 */
-
-                if (RowIndex == initialColumnValue) {
-                    excelHeaders.push(form)
-                }
-            }
-        }
-
-        EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
-
-
-
-
-        // data preview
-
-        // console.log(result);
-
-    };
-    reader.readAsArrayBuffer(file);
-}
-
-
-const errorRecordsCount = ref([])
-const successRecordsCount = ref([])
-const totalRecordsCount = ref([])
-
-
-
-
-
-
-
-const isLetter = (e) => {
-    if (/^[A-Za-z_ ]+$/.test(e)) {
-        return false
-    } else {
-        return true
-
-    }
-}
-
-const isSpecialChars = (e) => {
-    if (/^[A-Za-z0-9]+$/.test(e)) {
-        return false
-    } else {
-        return true
-
-    }
-}
-
-const isNumber = (e) => {
-    if (/^[0-9]+$/.test(e)) {
-        return false
-    } else {
-        return true
-
-    }
-}
-
-const isEmail = (e) => {
-    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e)) {
-        return false
-    } else {
-        return true
-
-    }
-}
-
-const isValidAadhar = (e) => {
-    if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(e)) {
-        return false
-    } else {
-        return true
-    }
-}
-const isValidPancard = (e) => {
-    if (/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/.test(e)) {
-        return false
-    } else {
-        return true
-    }
-}
-const isValidBankAccountNo = (e) => {
-    if (/^[0-9]{9,18}$/.test(e)) {
-        return false
-    } else {
-        return true
-    }
-}
-const isValidBankIfsc = (e) => {
-    if (/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(e)) {
-        return false
-    } else {
-        return true
-    }
-}
-const isValidDate = (e) => {
-    if (/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(e) || /^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4}$/.test(e)) {
-        return false
-    } else {
-        return true
-    }
-}
-
-const isValidMobileNumber = (e) => {
-    if (/^[0-9]{10,10}$/.test(e)) {
-        return false
-    } else {
-        return true
-
-    }
-}
-
-
-
-const isEnteredNos = (e) => {
-    let char = String.fromCharCode(e.keyCode); // Get the character
-    if (/^[0-9]+$/.test(char)) return true; // Match with regex
-    else e.preventDefault(); // If not match, don't add to input text
-}
-
-const isEnterLetter = (e) => {
-    let char = String.fromCharCode(e.keyCode); // Get the character
-    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
-    else e.preventDefault(); // If not match, don't add to input text
-}
-
-const isEnterSpecialChars = (e) => {
-    let char = String.fromCharCode(e.keyCode); // Get the character
-    if (/^[A-Za-z0-9]+$/.test(char)) return true; // Match with regex
-    else e.preventDefault(); // If not match, don't add to input text
-}
-
-
-const getValidationMessages = (data) => {
-
-
-    let errorMessages = [];
-    const digitRegexp = /\w*\d{1,}\w*/;
-    const emailRegexp =
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    const websiteRegexp =
-        new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
-
-    isSpecialChars(data['Employee Code']) ? errorRecordsCount.value.push('Employee Code') : ''
-    isLetter(data['Employee Name']) ? errorRecordsCount.value.push('invalid') : ''
-
-    isValidPancard(data['Pan No']) ? errorRecordsCount.value.push('invalid') : ''
-    isValidMobileNumber(data['Mobile Number']) ? errorRecordsCount.value.push('invalid') : ''
-    isValidAadhar(data['Aadhar']) ? errorRecordsCount.value.push('invalid') : ''
-
-    // Date Validation
-    isValidDate(data['DOJ']) ? errorRecordsCount.value.push('invalid') : ''
-    isValidDate(data['DOB']) ? errorRecordsCount.value.push('invalid') : ''
-
-    console.log(errorRecordsCount.value.length);
-
-
-
-
-    return errorMessages;
-}
+const sampleTemplateHeaders = [
+    { title: 'Employee Code' },
+    { title: 'Employee Name' },
+    { title: 'Date Of Birth (dd-mmm-yyyy)', },
+    { title: 'Date of Joined (dd-mmm-yyyy)' },
+    { title: 'Mobile Number' },
+    { title: 'Aadhaar Number' },
+    { title: 'Personal Email' },
+    { title: 'Pan Number' },
+    { title: 'Gender', },
+    { title: 'Marital Status' },
+    { title: 'Reporting Manager' },
+    { title: 'Designation' },
+    { title: 'Department' },
+    { title: 'Location' },
+    { title: 'Father Name' },
+    { title: 'Physically Handicapped' },
+]
 
 
 const download = () => {
@@ -514,7 +254,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 
 <Column header="Employee code" field="Employee code" style="min-width: 8rem">
     <template #body="{ data }">
-        <p :class="[isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Employee code'] }}
         </p>
@@ -525,7 +265,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Employee Name" header="Employee Name" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Employee Name'] }}
         </p>
@@ -536,7 +276,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Email" header="Email " style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+        <p :class="[useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
             {{ data['Email'] }}
         </p>
     </template>
@@ -546,7 +286,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Aadhar" header="Aadhar " style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Aadhar'] }}
         </p>
@@ -557,7 +297,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Account No" header="Account No " style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Account No'] }}
         </p>
@@ -568,7 +308,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+        <p :class="[useStore.isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
             {{ data['Bank Name'] }}
         </p>
     </template>
@@ -578,7 +318,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Gender" header="Gender" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isLetter(data['Gender']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+        <p :class="[useStore.isLetter(data['Gender']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
             {{ data['Gender'] }}
         </p>
     </template>
@@ -601,7 +341,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field=" Location" header="Location" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isLetter(data[' Location']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+        <p :class="[useStore.isLetter(data[' Location']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
             {{ data[' Location'] }}
         </p>
     </template>
@@ -621,7 +361,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Pan No" header="Pan No" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Pan No'].toUpperCase() }}
         </p>
@@ -643,7 +383,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Department" header="Department" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isLetter(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isLetter(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Department'] }}
         </p>
@@ -654,7 +394,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Process" header="Process" style="min-width: 12rem">isEnterLetter
     <template #body="{ data }">
-        <p :class="[isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
+        <p :class="[useStore.isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
             {{ data['Process'] }}
         </p>
     </template>
@@ -664,7 +404,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Designation" header="Designation" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isLetter(data['Designation']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isLetter(data['Designation']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Designation'] }}
         </p>
@@ -675,7 +415,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" 
 </Column>
 <Column field="Bank ifsc" header="Bank ifsc" style="min-width: 12rem">
     <template #body="{ data }">
-        <p :class="[isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+        <p :class="[useStore.isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
             class="font-semibold fs-6">
             {{ data['Bank ifsc'] }}
         </p>
