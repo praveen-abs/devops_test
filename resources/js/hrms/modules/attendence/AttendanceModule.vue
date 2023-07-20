@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
-                        <div class="flex">
+                        <div class="flex" v-if="teamList">
                             <div class="min-w-max">
                                 <EmployeeList :source="teamList" :is-team="true" />
                             </div>
@@ -178,11 +178,14 @@
                                         :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                                 </Transition>
                             </div>
-
+                        </div>
+                        <div class="mr-4 card pb-10" v-else>
+                            <img src="../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
+                            <!-- <p class="my-2 font-semibold fs-3 text-center">You are not eligible to apply salary advance</p> -->
                         </div>
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
-                        <div class="flex">
+                        <div class="flex" v-if="orgList">
                             <div class="min-w-max">
                                 <EmployeeList :source="orgList" :is-team="false" />
                             </div>
@@ -195,6 +198,7 @@
                                 </Transition>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -38,9 +38,11 @@
                         </div>
 
                     </div>
-                    <!-- <div class="">
-                       <button @click="apply = true" class="btn btn-orange">Apply Leave</button>
-                    </div> -->
+                    <a href="/attendance-leave-policydocument" id="" class="text-md  font-medium border-1 border-orange-400 rounded-lg text-center bg-orange-400 text-white my-auto p-1.5 dark:text-white" role="button"
+                    aria-expanded="false">
+                    Leave
+                    Policy Explanation
+                </a>
                 </div>
 
             </div>
@@ -107,6 +109,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+
+.page-content {
+    padding: calc(1px + 1rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
+}
 .p-datatable .p-datatable-thead>tr>th {
     text-align: center;
     padding: 1rem 1rem;
