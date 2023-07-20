@@ -54,7 +54,7 @@ class VmtMainDashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request,VmtDashboardService $VmtDashboardService)
     {
 
         if (auth()->user()->active == 0) {
@@ -203,20 +203,28 @@ class VmtMainDashboardController extends Controller
 
         //dd($dashboardEmployeeEventsData);
         //get the last attendance data for the current user
+
+        $last_checkout_data = $VmtDashboardService->fetchEmpLastAttendanceStatus(auth()->user()->user_code);
+
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
             ->orderBy('created_at', 'DESC')->first();
         $effective_hours = "";
 
         //If user already checkout, then send time difference to blade
-        if (isset($checked->checkout_time)) {
+        if(!empty($checked->checkout_time)){
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
-
-            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
-
+          }
+          if(!empty($checked->checkin_time)){
+             $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
+          }
+          if(!empty($from) && !empty($to) ){
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
 
+         }
+
+
             // dd($effective_hours);
-        }
+
 
         $dashboardpost = vmt_dashboard_posts::all();
         // $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();

@@ -25,7 +25,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents
+class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -54,12 +54,12 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
     public function styles(Worksheet $sheet)
     {
         //For First Row
-        $sheet->mergeCells('A1:T1')->setCellValue('A1', $this->title);
-        $sheet->getStyle('A1:T1')->getFill()
+        $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
+        $sheet->getStyle('A1:AF1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
-        $sheet->getStyle('A1:T1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-        $sheet->getStyle('A1:T1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:AF1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+        $sheet->getStyle('A1:AF1')->getAlignment()->setHorizontal('center');
     }
 
     public function headings(): array
@@ -80,10 +80,22 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Work Phone',
             'Personal Email',
             'Marital Status',
+            'Marriage Date (dd-mmm-yyyy)',
             'Father Name',
+            'Mother Name',
+            'Spouse Name',
+            'Blood Group',
             'Physically Handicapped',
             'Pan Number',
             'Aadhaar Number',
+            'Bank Name',
+            'IFSC Code',
+            'Bank Account Number',
+            'Prev UAN',
+            'ESI Eligible',
+            'Prev ESI Number',
+            'Current Address',
+            'Permanent Address',
             $this->salary
         ];
     }
@@ -93,37 +105,14 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
         return [
             'F' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'P' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
     public function array(): array
     {
 
-        return [
-            [
-                'ABS0001',
-                'Name',
-                'abs@gmail.com',
-                '0912345678',
-                'Male',
-                '28-06-2000',
-                '14-11-2022',
-                '',
-                'It',
-                '',
-                'Chennai',
-                'ABSM001',
-                '0912345678',
-                'test@gmail.com',
-                'Single',
-                'Father Name',
-                'No',
-                'ABCTY1234D',
-                '0000 1111 2222',
-                '18000'
-
-            ]
-        ];
+        return [];
     }
 
 
@@ -246,7 +235,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                     $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$legal_entity_column}{$i}")->setDataValidation(clone    $validation_entity);
                     $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
-                    $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
+                     $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
                     $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                 }
