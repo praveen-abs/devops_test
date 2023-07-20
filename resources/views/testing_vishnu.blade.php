@@ -8,6 +8,7 @@
     use App\Models\VmtPMS_KPIFormDetailsModel;
     use Dompdf\Dompdf;
      use Dompdf\Options;
+     use Carbon\Carbon;
 
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtEmployeeOfficeDetails;
@@ -380,13 +381,9 @@
         //          }
 
 //dd($emp_documents);
-$value=24-10-2000;
 
-if (! is_string($value) && ! is_numeric($value)) {
-  echo  'bye';
-}else{
-    echo 'hii';
-}
+// $time = date('H:i:s', $currentTime);
+        dd( $date);
 
 
 
