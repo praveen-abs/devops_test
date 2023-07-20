@@ -38,9 +38,9 @@
                         </div>
 
                     </div>
-                    <div class="">
+                    <!-- <div class="">
                        <button @click="apply = true" class="btn btn-orange">Apply Leave</button>
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
