@@ -259,8 +259,22 @@ class VmtDashboardService{
             $attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
                         ->where('date', date('Y-m-d'))->first();
 
+            $checkout_attendance = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
+                        ->where('checkout_date', date('Y-m-d'))->first();
+
+
+
+
             if(!empty($attendance->date) && !empty($attendance->checkin_time))
             {
+                return response()->json([
+                    'status'=> 'failure',
+                    'message' => 'Check-in already done',
+                    'time' => ""
+                ]);
+             }else if( ( !empty($attendance) && $checkout_attendance->date !=  date('Y-m-d')) &&
+                          !empty($checkout_attendance->checkout_date) && empty($checkout_attendance->checkin_time) ){
+
                 return response()->json([
                     'status'=> 'failure',
                     'message' => 'Check-in already done',
@@ -320,7 +334,7 @@ class VmtDashboardService{
                             ->first();
 
             if(!empty($attendance)){
-                if(!empty($attendance->checkout_date) && !empty($attendance->checkout_time))
+                if(!empty($attendance->checkin_date) && !empty($attendance->checkin_time))
                 {
                     return response()->json([
                         'status'=> 'failure',
@@ -331,10 +345,10 @@ class VmtDashboardService{
 
             }
 
-            //dd($attendance);
-            //$attendance->date = date('Y-m-d');
-            //att- means (attendance)
+            $checkout_time=null;
+
             $last_checkout_data = $this->fetchEmpLastAttendanceStatus(auth()->user()->user_code);
+
 
             $bio_att_checkin_id = \DB::table('vmt_staff_attenndance_device')
                             ->select('id','user_Id', \DB::raw('MIN(date) as check_in_time'))
@@ -342,23 +356,33 @@ class VmtDashboardService{
                             ->where('direction', 'in')
                             ->where('user_Id', $user_data->user_code)
                             ->first(['check_in_time','date']);
-                            dd($last_checkout_data);
+
+
                  // dd(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin ='biometric');
 
-     if(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin ='biometric'){
+     if(empty($attendance) &&  empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) && $last_checkout_data->attendance_mode_checkin == 'biometric' ){
 
+                        $attendance_bio_data = VmtEmployeeAttendance::where('user_id', $user_data->id)
+                                                        ->where('date', $last_checkout_data->checkin_date)->first();
+                     if(!empty($attendance_bio_data)){
+                        $attendance_bio_data=$attendance_bio_data;
+                     }else{
                         $attendance_bio_data = new VmtEmployeeAttendance;
+                     }
+
                         $attendance_bio_data->user_id = auth()->user()->id;
+                        $attendance_bio_data->date = $last_checkout_data->checkin_date ;
                         $attendance_bio_data->vmt_employee_workshift_id = $vmt_employee_workshift->work_shift_id;
-                        $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+                        $currentTime =Carbon::now();
                         $attendance_bio_data->checkout_time = $currentTime;
-                        $attendance_bio_data->checkout_date= $last_checkout_data->checkin_date;
+                        $attendance_bio_data->checkout_date= Carbon::today()->toDateString();
                         $attendance_bio_data->attendance_mode_checkin = "biometric";
                         $attendance_bio_data->attendance_mode_checkout = "web";
-                        $attendance_bio_data->staff_attendance_id = $bio_att_checkin_id;
+                        $attendance_bio_data->staff_attendance_id = $bio_att_checkin_id->id;
                         $attendance_bio_data->save();
+                        $checkout_time = Carbon::parse($currentTime)->format('H:i:s');
 
-    }else if(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) &&($last_checkout_data->attendance_mode_checkin ='web' || $last_checkout_data->attendance_mode_checkin ='mobile') ){
+    }else if(empty($last_checkout_data->checkout_date) && empty($last_checkout_data->checkout_time) &&($last_checkout_data->attendance_mode_checkin == 'web' || $last_checkout_data->attendance_mode_checkin == 'mobile') ){
 
                     $attendance_web_data = VmtEmployeeAttendance::where('user_id', $user_data->id)
                                               ->where('date', $last_checkout_data->checkin_date)->first();
@@ -368,35 +392,54 @@ class VmtDashboardService{
                         $attendance_web_data->checkout_date= Carbon::today()->toDateString();
                         $attendance_web_data->attendance_mode_checkout = "web";
                         $attendance_web_data->save();
+                        $checkout_time = $attendance_web_data->checkout_time ;
 
-    }else{
+    }else if($attendance->checkout_date == Carbon::today()->toDateString()){
+
                         $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
                         $attendance->checkout_time = $currentTime;
                         $attendance->checkout_date= Carbon::today()->toDateString();
                         $attendance->attendance_mode_checkout = "web";
                         $attendance->save();
+                        $checkout_time = $attendance->checkout_time ;
 
-            }
+     }else{
+
+        $attendance = VmtEmployeeAttendance::where('user_id', $user_data->id)
+                                 ->where('date', $last_checkout_data->checkin_date)->first();
+        $currentTime = new DateTime("now", new \DateTimeZone('Asia/Kolkata') );
+        $attendance->checkout_time = $currentTime;
+        $attendance->checkout_date= Carbon::today()->toDateString();
+        $attendance->attendance_mode_checkout = "web";
+        $attendance->save();
+        $checkout_time = $attendance->checkout_time ;
+
+     }
 
 
 
             //Get the time diff
             $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
-                        ->where('date', date('Y-m-d'))
+                        ->where('checkout_date', $attendance_bio_data->checkout_date)
                         ->first();
-
+      if(!empty($checked->checkout_time)){
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
-
-            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
-
+          }
+          if(!empty($checked->checkin_time)){
+             $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
+          }
+          if(!empty($from) && !empty($to) ){
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+
+         }
+
 
                // dd($effective_hours);
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'You have successfully checked out!',
-                'time' => $attendance->checkout_time,
+                'time' => $checkout_time,
                 'effective_hours' => $effective_hours,
             ]);
         }
@@ -1204,16 +1247,26 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
                 ->first(['check_in_time','date']);
 
 //dd($bio_attendanceCheckIn,$bio_attendanceCheckOut);
-
+//dd($query_web_mobile_response->attendance_mode_checkin == 'biometric' &&  empty($query_web_mobile_response->checkin_time));
             //check wheather employee mode of check-in and check-out is present or not
    if ((empty($query_biometric_response) && empty($query_web_mobile_response))) {
 
              $response = null;
 
-        }//check employee mode of check-in and check-out in both employee attedance and staff attedance biometric
-        else if($query_web_mobile_response_date== $recent_attedance_data && $query_biometric_response_date == $recent_attedance_data ){
+        }//check employee mode of check-in and check-out in both employee attedance and staff attedance
+     else if($query_web_mobile_response_date== $recent_attedance_data && $query_biometric_response_date == $recent_attedance_data ){
         //check which attendance_mode is empty in employee attadance table
-            if( empty($query_web_mobile_response->attendance_mode_checkin) || empty($query_web_mobile_response->attendance_mode_checkout)){
+
+
+        if($query_web_mobile_response->attendance_mode_checkin == 'biometric' &&  empty($query_web_mobile_response->checkin_time) )
+        {
+
+            $query_web_mobile_response->checkin_time =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("H:i:s", strtotime($bio_attendanceCheckIn->check_in_time));
+            $query_web_mobile_response->checkin_date =  empty($bio_attendanceCheckIn->check_in_time) ? null : date("Y-m-d", strtotime($bio_attendanceCheckIn->check_in_time));
+            $query_web_mobile_response->attendance_mode_checkin = empty($bio_attendanceCheckIn->check_in_time) ? null : 'biometric';
+            $response = $query_web_mobile_response;
+        }
+        else if( empty($query_web_mobile_response->attendance_mode_checkin) || empty($query_web_mobile_response->attendance_mode_checkout)){
               //if is it checkin then directly check on staff attedance table
                 if(empty($query_web_mobile_response->attendance_mode_checkin)){
 
@@ -1305,7 +1358,7 @@ if(!empty($query_biometric_response) || !empty($query_web_mobile_response)){
             }
 
             return $response;
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
         return response()->json([
             'status' => 'success',
             'message' => 'Error while get latest attedance status',
