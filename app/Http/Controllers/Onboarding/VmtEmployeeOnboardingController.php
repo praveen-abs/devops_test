@@ -916,16 +916,30 @@ class VmtEmployeeOnboardingController extends Controller
         $data =array();
 
         $employees_user_code =User::pluck('user_code')->toarray();
-        $data['user_code']=array_values($employees_user_code);
+        $user_code=array_filter($employees_user_code);
+        $data['user_code']=array_values($user_code);
+//get
 
         $employees_email =User::pluck('email')->toarray();
-        $data['email']=array_values($employees_email);
+        $email=array_filter($employees_email);
+        $data['email']=array_values($email);
+
 
         $employees_mobile_number =VmtEmployee::pluck('mobile_number')->toarray();
-        $data['mobile_number']=array_values($employees_mobile_number);
+        $mobile_number=array_filter($employees_mobile_number);
+        $data['mobile_number']=array_values($mobile_number);
 
-        // $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
-        // $data['aadhar_number']=array_values($employees_aadhar_number);
+        $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
+        $aadhar_number=array_filter($employees_aadhar_number);
+        $data['aadhar_number']=array_values($aadhar_number);
+
+        $employees_pan_number =VmtEmployee::pluck('pan_number')->toarray();
+        $pan_number=array_filter($employees_pan_number);
+        $data['pan_number']=array_values($pan_number);
+
+        $employees_bankaccount_number =VmtEmployee::pluck('bank_account_number')->toarray();
+        $bankaccount_number=array_filter($employees_bankaccount_number);
+        $data['bankaccount_number']=array_values($bankaccount_number);
 
         //  array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
 
