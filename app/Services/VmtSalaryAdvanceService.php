@@ -17,6 +17,7 @@ use App\Models\VmtLoanInterestSettings;
 use App\Models\VmtSalaryAdvSettings;
 use Carbon\Carbon;
 use App\Models\VmtEmpAssignSalaryAdvSettings;
+use App\Models\VmtInterestFreeLoanTransaction;
 use App\Models\VmtInterestFreeLoanSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Models\VmtEmpInterestLoanDetails;
@@ -277,9 +278,9 @@ class VmtSalaryAdvanceService
                     ->where('vmt_emp_sal_adv_details.id', $EmpApplySalaryAmt->id)
                     ->first();
 
-                    $emp_image = json_decode(newgetEmployeeAvatarOrShortName($emp_details->user_id),true);
+                $emp_image = json_decode(newgetEmployeeAvatarOrShortName($emp_details->user_id), true);
 
-                    // dd($emp_image);
+                // dd($emp_image);
 
                 $request_type = "Salary Advance";
 
@@ -1340,7 +1341,7 @@ class VmtSalaryAdvanceService
             for ($i = 0; $i < count($approver_flow); $i++) {
 
                 if ($approver_flow[$i]['approver'] == $user_id) {
-                    $nxt_order  = $approver_flow[$i]['order']+1;
+                    $nxt_order  = $approver_flow[$i]['order'] + 1;
                     $current_order  = $approver_flow[$i]['order'];
                     if ($status == 1) {
                         $approver_flow[$i]['status'] = $status;
@@ -1365,9 +1366,9 @@ class VmtSalaryAdvanceService
             for ($i = 0; $i < count($sal_adv_settings_approver_flow); $i++) {
 
                 if ($sal_adv_settings_approver_flow[$i]['order'] == $nxt_order) {
-                     $next_approver =  $sal_adv_settings_approver_flow[$i]['name'];
+                    $next_approver =  $sal_adv_settings_approver_flow[$i]['name'];
                 }
-                if($sal_adv_settings_approver_flow[$i]['order'] == $current_order){
+                if ($sal_adv_settings_approver_flow[$i]['order'] == $current_order) {
                     $current_approver =  $sal_adv_settings_approver_flow[$i]['name'];
                 }
             }
@@ -1386,7 +1387,7 @@ class VmtSalaryAdvanceService
                 ->where('vmt_emp_sal_adv_details.id', $record_id)
                 ->first();
 
-                $emp_image = json_decode(newgetEmployeeAvatarOrShortName(auth()->user()->id),true);
+            $emp_image = json_decode(newgetEmployeeAvatarOrShortName(auth()->user()->id), true);
 
 
             $isSent    = \Mail::to($emp_details->email)
@@ -1662,9 +1663,9 @@ class VmtSalaryAdvanceService
         {
             if ($loan_type == 'InterestFreeLoan') {
                 // dd($record_id);
-                $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id',$loan_detail_id )->first();
+                $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $loan_detail_id)->first();
             } else if ($loan_type == 'InterestWithLoan') {
-                $loan_details = VmtEmpInterestLoanDetails::where('id',$loan_detail_id )->first();
+                $loan_details = VmtEmpInterestLoanDetails::where('id', $loan_detail_id)->first();
             } else {
                 return response()->json([
                     'status' => 'failure',
@@ -1673,8 +1674,16 @@ class VmtSalaryAdvanceService
             }
             $borrowed_amount = $loan_details->borrowed_amount;
             $tenure_months =  $loan_details->tenure_months;
-            $emi_per_month  = $loan_details->emi_per_month;
-            //dd($tenure_months);
+            $deduction_starting_month = $loan_details->deduction_starting_month;
+            for($i=1;$i<$tenure_months;$i++){
+               $loan_detail= new VmtInterestFreeLoanTransaction;
+               $loan_detail->emp_loan_details_id=$loan_detail_id;
+               $loan_detail->expected_emi=  $borrowed_amount/ $tenure_months ;
+               $loan_detail->payroll_date =  $deduction_starting_month ;
+               $loan_detail->save();
+               // dd( $loan_detail);
+            }
+
         }
     }
 }
