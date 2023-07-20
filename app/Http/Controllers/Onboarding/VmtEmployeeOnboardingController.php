@@ -960,7 +960,9 @@ class VmtEmployeeOnboardingController extends Controller
         });
         $data['bankaccount_number']=array_values($bankaccount_number);
 
-        $employees_officical_mail =VmtEmployeeOfficeDetails::pluck('officical_mail')->toarray();
+        $employees_officical_mail =VmtEmployeeOfficeDetails::join('users','users.id','=','vmt_employee_office_details.user_id')
+                                                           ->where('active','<>','-1')
+                                                           ->pluck('officical_mail')->toarray();
         $official_mail = array_filter($employees_officical_mail, static function($data){
             return !is_null($data) && $data !='NULL';
         });
