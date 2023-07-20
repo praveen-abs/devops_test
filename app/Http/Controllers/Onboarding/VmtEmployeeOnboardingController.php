@@ -462,18 +462,17 @@ class VmtEmployeeOnboardingController extends Controller
                 $currentRowInExcel++;
                 //Validation
                 $rules = [
-                    'employee_code' => ['distinct',
-                         function ($attribute, $value, $fail) {
+                    'employee_code' => ['unique:users,user_code',
+                    function ($attribute, $value, $fail) {
 
-                             $emp_client_code = preg_replace('/\d+/', '', $value );
+                        $emp_client_code = preg_replace('/\d+/', '', $value );
+                        $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
 
-                             $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
-
-                             if (!$result) {
-                                 $fail('No matching client exists for the given Employee Code : '.$value);
-                             }
-                         },
-                     ],
+                        if (!$result) {
+                            $fail('No matching client exists for the given <b> Employee Code <b>: '.$value);
+                        }
+                    },
+                  ],
                     'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                     'email' => 'nullable|email:strict|unique:users,email',
                     'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
@@ -518,7 +517,7 @@ class VmtEmployeeOnboardingController extends Controller
                         'row_number' => $currentRowInExcel,
                         'status' => 'failure',
                         'message' => 'In Excel Row : ' . $currentRowInExcel . ' has following error(s)',
-                        'data' => json_encode($validator->errors()),
+                        'error_fields' => json_encode($validator->errors()),
                     ];
 
                     array_push($data_array, $rowDataValidationResult);
@@ -531,7 +530,7 @@ class VmtEmployeeOnboardingController extends Controller
             //Runs only if all excel records are valid
             if ($isAllRecordsValid) {
                 foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-                    $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$VmtOnboardingTestingService);
+                    $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$employeeService);
                     array_push($data_array, $rowdata_response);
                 }
              $response = [
@@ -610,7 +609,7 @@ class VmtEmployeeOnboardingController extends Controller
             // linking Manager To the employees;
             // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
         }
-        private function storeBulkOnboardEmployees($data,$VmtOnboardingTestingService)
+        private function storeBulkOnboardEmployees($data,$employeeService)
         {
 
             ini_set('max_execution_time', 300);
