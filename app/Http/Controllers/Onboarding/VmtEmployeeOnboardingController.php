@@ -910,4 +910,39 @@ class VmtEmployeeOnboardingController extends Controller
     public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
             return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
+    public function getEmployeeMandatoryDetails(Request $request){
+
+        try{
+        $data =array();
+
+        $employees_user_code =User::pluck('user_code')->toarray();
+        $data['user_code']=array_values($employees_user_code);
+
+        $employees_email =User::pluck('email')->toarray();
+        $data['email']=array_values($employees_email);
+
+        $employees_mobile_number =VmtEmployee::pluck('mobile_number')->toarray();
+        $data['mobile_number']=array_values($employees_mobile_number);
+
+        // $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
+        // $data['aadhar_number']=array_values($employees_aadhar_number);
+
+        //  array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
+
+           $response = ([
+                'status'=>'success',
+                'message'=>'',
+                "data"=> $data
+            ]);
+        }catch(\Exception $e){
+            $response = ([
+                'status'=>'success',
+                'message'=>'',
+                "data"=> $e->getmessage()." ".$e->getline()
+            ]);
+        }
+
+        return response()->json($response);
+
+    }
 }
