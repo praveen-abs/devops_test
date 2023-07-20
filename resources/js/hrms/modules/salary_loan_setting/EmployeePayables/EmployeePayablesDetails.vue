@@ -19,59 +19,72 @@
                     <p class="text-[16px]">Default batch for Bank Transfer</p>
                     <p class=" text-[14px] text-gray-400 mt-1">Default batch for salary</p>
                 </div>
-                <div class="d-flex justify-content-center align-items-center  ">
-                    <button class=" rounded-md px-2 py-1 border border-blue-600 text-blue-600 fs-6 h-10" @click="btn">
-                        Download
-                        <i class="pi pi-download px-2"></i></button>
+                <div class="d-flex justify-content-center align-items-center position-relative ">
+                    <button class=" rounded-md px-4 py-1 border border-blue-600 text-blue-600 fs-6 h-10" @click="btn_download = !btn_download">
+                        <p class=" position-relative right-3">Download</p>
+                        <div id="btn-download"  style=" position: absolute; right: 0;"
+                            :class="[btn_download == true ? toggleClass : 'toggleClass', 'toggleClass']">
+                            <svg width="22px" height="16px" viewBox="0 0 22 16">
+                                <path
+                                    d="M2,10 L6,13 L12.8760559,4.5959317 C14.1180021,3.0779974 16.2457925,2.62289624 18,3.5 L18,3.5 C19.8385982,4.4192991 21,6.29848669 21,8.35410197 L21,10 C21,12.7614237 18.7614237,15 16,15 L1,15"
+                                    id="check"></path>
+                                <polyline points="4.5 8.5 8 11 11.5 8.5" class="svg-out"></polyline>
+                                <path d="M8,1 L8,11" class="svg-out"></path>
+                            </svg>
+                        </div>
+                    </button>
                     <button class=" bg-blue-600 text-white px-4 py-1 rounded-md h-10 mx-2">Mask As Paid</button>
                     <button class="mx-1"> <i class="pi pi-ellipsis-v  text-blue-600 "></i></button>
                 </div>
             </div>
             <div class="flex justify-between">
                 <div class="grid grid-cols-6 w-full p-4 b">
-                <div>
-                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Employees</p>
-                    <span class="">188</span>
-                </div>
-                <div class="">
-                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Total Amount</p>
-                    <span class="">INR 1,15,35,494</span>
-                </div>
-                <div class="">
-                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Account Number</p>
-                    <span class="">188</span>
-                </div>
-                <div class="">
-                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Bank Name</p>
-                    <span class="">188</span>
-                </div>
-                <div class="">
-                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">IFSC Code</p>
-                    <span class="">HDFCC0001234</span>
-                </div>
+                    <div>
+                        <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Employees</p>
+                        <span class="">188</span>
+                    </div>
+                    <div class="">
+                        <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Total Amount</p>
+                        <span class="">INR 1,15,35,494</span>
+                    </div>
+                    <div class="">
+                        <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Account Number</p>
+                        <span class="">188</span>
+                    </div>
+                    <div class="">
+                        <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Bank Name</p>
+                        <span class="">188</span>
+                    </div>
+                    <div class="">
+                        <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">IFSC Code</p>
+                        <span class="">HDFCC0001234</span>
+                    </div>
 
-                <div class="d-flex flex-column align-items-center justify-content-center" style="position: relative; " >
-                    <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Transfer Statement</p>
-                    <div class="flex">
-                    <button class=" mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center ">
-                         <span class="text-[13px] lg:text-[14px]">TEXT</span>
-                          <i class="pi pi-angle-down px-2"></i>
-                    </button>
-                    <button class="mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center">
-                        <span class=" text-[13px] lg:text-[14px]">EXCEL</span>
-                        <i class="pi pi-angle-down px-2"></i>
-                    </button>
-                    <button class="mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center">
-                        <span class="text-[13px] lg:text-[14px]">PDF</span>
-                        <i class="pi pi-angle-down px-2"></i>
-                    </button>
+                    <div class="d-flex flex-column align-items-center justify-content-center" style="position: relative; ">
+                        <p class=" text-gray-700 text-[13px] lg:text-[14px] mb-2">Transfer Statement</p>
+                        <div class="flex">
+                            <button
+                                class=" mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center ">
+                                <span class="text-[13px] lg:text-[14px]">TEXT</span>
+                                <i class="pi pi-angle-down px-2"></i>
+                            </button>
+                            <button
+                                class="mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center">
+                                <span class=" text-[13px] lg:text-[14px]">EXCEL</span>
+                                <i class="pi pi-angle-down px-2"></i>
+                            </button>
+                            <button
+                                class="mx-1 text-blue-600 font-semibold text-[13px] lg:text-[14px] d-flex justify-content-center align-items-center">
+                                <span class="text-[13px] lg:text-[14px]">PDF</span>
+                                <i class="pi pi-angle-down px-2"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
             </div>
         </div>
 
-        <h1 v-if="view_Details == 2" class="fs-4 text-gray-900 mt-4 ml-2 from-stone-600" >Bank Transfer</h1>
+        <h1 v-if="view_Details == 2" class="fs-4 text-gray-900 mt-4 ml-2 from-stone-600">Bank Transfer</h1>
 
         <div style="position: relative;">
 
@@ -154,11 +167,9 @@ const activetab = ref(1);
 
 const view_Details = ref(1);
 
-const download = ref(1);
+// const download = ref(1);
 
-function btn_download() {
-    download.value = 2;
-}
+
 
 const cities = ref([
     { name: 'New York', code: 'NY' },
@@ -167,6 +178,13 @@ const cities = ref([
     { name: 'Istanbul', code: 'IST' },
     { name: 'Paris', code: 'PRS' }
 ]);
+
+
+const toggleClass = ref('downloaded');
+
+const btn_download = ref(false);
+
+
 
 
 </script>
@@ -185,7 +203,7 @@ const cities = ref([
   //centering
   position: absolute
   top: calc(50% - 24px)
-  left: calc(50% - 24px)
+  left: calc(85% - 24px)
   &:hover
     background: rgba(#223254,.03)
   svg
@@ -195,7 +213,7 @@ const cities = ref([
     polyline,
     path
       stroke: #0077FF
-      stroke-width: 2
+      stroke-width: 1
       stroke-linecap: round
       stroke-linejoin: round
       transition: all .3s ease
@@ -222,20 +240,6 @@ const cities = ref([
     transform: (translate(0, 2px))
   95%
     transform: (translate(0, 0))
-
-//dribbble
-.credit
-  position: fixed
-  right: 20px
-  bottom: 20px
-  transition: all .2s ease
-  -webkit-user-select: none
-  user-select: none
-  opacity: .6
-  img
-    width: 72px
-  &:hover
-    transform: scale(.95)
 
 
 </style>
