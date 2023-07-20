@@ -1650,7 +1650,7 @@ class VmtSalaryAdvanceService
             array_push($response, $temp_ar);
             unset($temp_ar);
         }
-        $res['settings']=$response;
+        $res['settings'] = $response;
         return response()->json([
             'status' => 'success',
             'message' => 'Undefined Loan Type',
@@ -1676,15 +1676,82 @@ class VmtSalaryAdvanceService
             $borrowed_amount = $loan_details->borrowed_amount;
             $tenure_months =  $loan_details->tenure_months;
             $deduction_starting_month = $loan_details->deduction_starting_month;
-            for($i=1;$i<$tenure_months;$i++){
-               $loan_detail= new VmtInterestFreeLoanTransaction;
-               $loan_detail->emp_loan_details_id=$loan_detail_id;
-               $loan_detail->expected_emi=  $borrowed_amount/ $tenure_months ;
-               $loan_detail->payroll_date =  $deduction_starting_month ;
-               $loan_detail->save();
-               // dd( $loan_detail);
+            for ($i = 1; $i < $tenure_months; $i++) {
+                $loan_detail = new VmtInterestFreeLoanTransaction;
+                $loan_detail->emp_loan_details_id = $loan_detail_id;
+                $loan_detail->expected_emi =  $borrowed_amount / $tenure_months;
+                $loan_detail->payroll_date =  $deduction_starting_month;
+                $loan_detail->save();
+                // dd( $loan_detail);
             }
-
         }
+    }
+
+    public function enableOrDisableLoanSettings($loan_type, $loan_setting_id, $status)
+    {
+        $validator = Validator::make(
+            $data = [
+                "loan_type" => $loan_type,
+                "loan_setting_id" => $loan_setting_id,
+                "status" => $status
+            ],
+            $rules = [
+                "loan_type" => "required",
+                "loan_setting_id" => "required",
+                "status" => "required",
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+
+        $msg = '';
+        if ($loan_type == 'InterestFreeLoan') {
+            $loan_details = VmtInterestFreeLoanSettings::where('id',  $loan_setting_id)->first();
+        } else if ($loan_type == 'InterestWithLoan') {
+            $loan_details = VmtLoanInterestSettings::where('id', $loan_setting_id)->first();
+        } else {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Undefined Loan type'
+            ]);
+        }
+
+        try {
+            if ($status == 0) {
+                $loan_details->active = 0;
+                $msg = 'Loan Disenabled Successfully';
+            } else if ($status == 1) {
+                $loan_details->active = 1;
+                $msg = 'Loan Enabled Successfully';
+            } else {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Undefined status'
+                ]);
+            }
+            $loan_details->save();
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "enableOrDisableLoanSettings",
+                "data" => $e->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "enableOrDisableLoanSettings",
+            'data' => $msg
+        ]);
     }
 }
