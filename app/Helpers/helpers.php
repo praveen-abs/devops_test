@@ -468,7 +468,7 @@ function newgetEmployeeAvatarOrShortName($user_id)
 
         //Add color
 
-       
+
 
         return json_encode($responseJSON);
     } catch (Throwable $e) {
@@ -579,5 +579,34 @@ function num2alpha($n) {
     $n -= pow(26, $i);
     }
     return $r;
+
 }
+
+function getGenderNeutralTerm($user_id){
+
+    $emp_details  = VmtEmployee::where('userid',$user_id)->first();
+
+    if(isset($emp_details->gender)){
+
+    $emp_details  = strtoupper($emp_details->gender);
+
+    if(empty($emp_details)){
+        $result =  "Mr. / Ms.";
+    }else if($emp_details == "FEMALE"){
+        $result =  "Ms.";
+    }else if($emp_details == "MALE"){
+        $result =  "Mr.";
+    }
+}
+else{
+    $result =  "Mr. / Ms.";
+}
+
+    return $result;
+
+}
+
+
+
+
 

@@ -17,7 +17,9 @@ class VmtPMSMail_PublishForm extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct( $approvalStatus,$user_emp_name,$appraisal_year,$appraisal_period,$user_manager_name,$command_emp,$flow_check,$login_Link)
+    public function __construct( $approvalStatus,$user_emp_name,$appraisal_year,$appraisal_period,$user_manager_name,$command_emp,$flow_check,$login_Link,$emp_avatar
+    // ,$user_gender,$reviewer_gender
+    )
     {
         //
 
@@ -29,7 +31,11 @@ class VmtPMSMail_PublishForm extends Mailable
         $this->command_emp = $command_emp;
         $this->flow_check = $flow_check;
         $this->login_Link    = $login_Link;
-    } 
+        $this->emp_avatar    = $emp_avatar;
+        // $this->user_gender    = $user_gender;
+        // $this->reviewer_gender    = $reviewer_gender;
+
+    }
 
     /**
      * Build the message.
@@ -58,6 +64,10 @@ class VmtPMSMail_PublishForm extends Mailable
                 ->with('appraisal_period', $this->appraisal_period)
                 ->with('user_manager_name', $this->user_manager_name)
                 ->with('command_emp', $this->command_emp)
-                ->with('login_Link', $this->login_Link);
+                ->with('login_Link', $this->login_Link)
+                ->with('emp_avatar', $this->emp_avatar);
+                // ->with('user_gender', $this->user_gender)
+                // ->with('reviewer_gender', $this->reviewer_gender);
+
     }
 }

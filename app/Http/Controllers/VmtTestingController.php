@@ -256,7 +256,7 @@ class VmtTestingController extends Controller
         $client_id=User::where('user_code',$user_code)->first();
 
         $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
-        
+
         $image_view = url('/') . $VmtClientMaster->client_logo;
 
         $response = array();
@@ -414,33 +414,14 @@ class VmtTestingController extends Controller
     public function testinginvest(Request $request)
     {
 
-        // dd($request->all());
+        $user_id = "141";
 
-        //   $simma = new vmtInvEmp_Fsp_Popups;
-        //   $simma->user_id = ('141');
-        //   $simma->fsp_popups_id = ('2');
-        //   $simma->popup_value = $request->input('from_month');
-        //   $simma->popup_value = $request->input('to_month');
-        //   $simma->save();
+        $simma  = getGenderNeutralTerm($user_id);
 
-        $createMultipleUsers = [
-            ['user_id' => '141', 'fsp_popups_id' => '1', 'popup_value' => $request->input('from_month')],
-            ['user_id' => '141', 'fsp_popups_id' => '2', 'popup_value' => $request->input('to_month')],
-            ['user_id' => '141', 'fsp_popups_id' => '5', 'popup_value' => $request->input('city')],
-            ['user_id' => '141', 'fsp_popups_id' => '6', 'popup_value' => $request->input('totalRent')],
-            ['user_id' => '141', 'fsp_popups_id' => '7', 'popup_value' => $request->input('land_lard')],
-            ['user_id' => '141', 'fsp_popups_id' => '8', 'popup_value' => $request->input('landpan')],
-            ['user_id' => '141', 'fsp_popups_id' => '9', 'popup_value' => $request->input('address')],
-
-        ];
-
-        vmtInvEmp_Fsp_Popups::insert($createMultipleUsers);
+        return ($simma);
 
 
 
-
-
-        return 'save successfully';
     }
 
 
