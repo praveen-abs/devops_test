@@ -36,7 +36,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         selectedFile.value = e.target.files[0];
     }
 
-
     const convertExcelIntoArray = (e) => {
 
         // canShowloading.value = true
@@ -56,6 +55,22 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             const data = reader.result;
             var workbook = XLSX.read(data, { type: 'binary', cellDates: true, dateNF: "dd/mm/yyyy" });
             var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+
+
+            const headers = {};
+            const range = XLSX.utils.decode_range(firstSheet['!ref']);
+            let C;
+            const R = range.s.r;
+            /* start in the first row */
+            for (C = range.s.c; C <= range.e.c; ++C) {
+                /* walk every column in the range */
+                const cell = firstSheet[XLSX.utils.encode_cell({ c: C, r: R })];
+                /* find the cell in the first row */
+                let hdr = "UNKNOWN " + C; // <-- replace with your desired default
+                if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
+                headers[C] = hdr;
+            }
+            console.log(headers);
 
             // header: 1 instructs xlsx to create an 'array of arrays'
             var result = XLSX.utils.sheet_to_json(firstSheet, { raw: false, header: 1, dateNF: "dd/mm/yyyy" });
@@ -295,8 +310,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-            console.log("Usercode:" + data["Employee code"] +  isUserExists(data["Employee Code"]));
-            console.log("Already" + data["Employee code"] + Object.values(data).includes(data["Employee Code"]));
+        console.log("Usercode:" + data["Employee code"] + isUserExists(data["Employee Code"]));
+        console.log("Already" + data["Employee code"] + Object.values(data).includes(data["Employee Code"]));
 
         if (Object.values(data).includes(data["Employee Code"]) || !isUserExists(data["Employee code"])) {
             errorRecordsCount.value.push('invalid')
