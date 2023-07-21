@@ -2,10 +2,12 @@ import { defineStore } from "pinia";
 import { ref, reactive } from "vue";
 import axios from "axios";
 import dayjs from 'dayjs';
+import { UseEmployeeDocumentManagerService } from "../EmployeeDocumentsManagerService";
 
 export const useEmployeePayslipStore = defineStore("employeePayslipStore", () => {
 
 
+    const documentService = UseEmployeeDocumentManagerService()
     // Variable Declarations
     const array_employeePayslips_list = ref()
 
@@ -48,7 +50,6 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
             year: year
         }).then((response) => {
             // console.log("Response [getEmployeePayslipDetailsAsHTML] : " + JSON.stringify(response.data.data));
-
             paySlipHTMLView.value = response.data;
             canShowPayslipView.value = true;
 
@@ -65,22 +66,11 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
         downloadLink.click();
     }
 
-    function downloadAsPDF(pdf) {
-
-        let base64String = "JVBERi0xLjcKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZwovT3V0bGluZXMgMiAwIFIKL1BhZ2VzIDMgMCBSID4"
-        if (base64String.startsWith("JVB")) {
-            base64String = "data:application/pdf;base64," + base64String;
-            downloadFileObject(base64String);
-        } else if (base64String.startsWith("data:application/pdf;base64")) {
-            downloadFileObject(base64String);
-        }
-
-    }
 
     async function getEmployeePayslipDetailsAsPDF(user_code, payroll_month) {
 
+        documentService.loading = true
         console.log("Downloading payslip PDF.....");
-
 
         let month = parseInt(dayjs(payroll_month).month()) + 1;
         let year = dayjs(payroll_month).year();
@@ -109,8 +99,8 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
                     console.log("Response Url Not Found");
                 }
 
-
-
+            }).finally(()=>{
+                documentService.loading = false
             })
 
     }
