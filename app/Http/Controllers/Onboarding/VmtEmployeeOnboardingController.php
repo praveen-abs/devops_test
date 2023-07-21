@@ -312,7 +312,6 @@ class VmtEmployeeOnboardingController extends Controller
 
               $existingUser = User::where('user_code',$user_code);
 
-
               if($existingUser->exists())
               {
 
@@ -597,7 +596,7 @@ class VmtEmployeeOnboardingController extends Controller
              $message = $row['employee_code']  ." not imported ";
              $status = 'failure';
              try {
-dd('hii');
+
                 $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee:"0", existing_user_id : null, onboard_type:'quick');
 
                  $status = $response['status'];
