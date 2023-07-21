@@ -9,34 +9,38 @@
                     </button>
                 </div>
                 <div class="text-center col-12">
-                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
-                        style="box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; border: 1px solid navy;">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img d-flex  justify-content-center align-items-center"
+                        style=" "
+                        :class="[_instance_profilePagesStore.employeeDetails.short_name_Color ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
+                        <!-- box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; -->
                         <!-- <img class="rounded-circle img-xl userActive-status profile-img" src="./photo1675430684.jpeg" alt=""
                             srcset="" style="border:6px solid #c2c2c2c2"> -->
                         <img v-if="_instance_profilePagesStore.profile"
                             class="rounded-circle img-xl userActive-status profile-img"
                             :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset="" alt="" />
-
+                        <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4">{{
+                            _instance_profilePagesStore.employeeDetails.user_short_name }}</h1>
 
                         <label class="cursor-pointer edit-icon" style="position: absolute; top: 76px ;right: 10px;"
                             data-bs-toggle="modal" data-bs-target="#edit_profileImg" id="" for="upload">
                             <i class="fa fa-camera"></i></label>
-                        <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
-                    </div>
 
+                        <input type="file" name="" id="upload" hidden @change="updateProfilePhoto($event)" />
+
+                    </div>
                     <div class="mt-4">
                         <div class="progress-wrapper border-bottom-liteAsh">
                             <span class="mx-auto opacity-0 border-1"></span>
-                            <div class="mb-1  px-auto d-flex align-items-center justify-content-center pl-5">
-                                <h6 class="text-center fw-bold ">
+                            <div class="mb-1  px-auto d-flex align-items-center justify-content-around ">
+                                <h6 class="text-center fw-bold fs-5  ">
                                     {{ _instance_profilePagesStore.employeeDetails.name }}
                                 </h6>
-                                <span class="personal-edit position-absolute" style="right: -9px;">
+                            </div>
+                            <span class="personal-edit position-absolute" style="top: 148px;right: 0px;">
                                     <a href="#" class="edit-icon "><i class="ri-pencil-fill"
                                             @click="dialog_emp_name_visible = true"></i>
                                     </a>
                                 </span>
-                            </div>
 
 
                             <Dialog v-model:visible="dialog_emp_name_visible" modal header=" "
@@ -144,7 +148,16 @@
 
 
                                 </div> -->
-                            <ProgressBar :value="_instance_profilePagesStore.employeeDetails.profile_completeness">
+                                <ProgressBar  v-if="_instance_profilePagesStore.employeeDetails.profile_completeness <=39 "
+                                :value="_instance_profilePagesStore.employeeDetails.profile_completeness" :class="[_instance_profilePagesStore.employeeDetails.profile_completeness <=39 ? 'progressbar' : '' ]" >
+                            </ProgressBar>
+                            <ProgressBar  class="progressbar_val2" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=40 && _instance_profilePagesStore.employeeDetails.profile_completeness <=59"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >=40 &&  _instance_profilePagesStore.employeeDetails.profile_completeness <=59]"  :value="_instance_profilePagesStore.employeeDetails.profile_completeness" >
+                            </ProgressBar>
+
+                            <ProgressBar class="progressbar_val3" v-if="_instance_profilePagesStore.employeeDetails.profile_completeness >=60"
+                            :class="[_instance_profilePagesStore.employeeDetails.profile_completeness >=60]"
+                                :value="_instance_profilePagesStore.employeeDetails.profile_completeness" >
                             </ProgressBar>
 
                             <p class="mb-2 text-muted f-10 text-start fw-bold">
@@ -195,8 +208,8 @@
                             <div class="py-2 border-bottom-liteAsh ml-3">
                                 <p class="text-muted f-12 fw-bold">
                                     Department
-                                    <a href="#" class="edit-icon" @click="dailogDepartment = true"><i
-                                            class="ri-pencil-fill"></i></a>
+                                    <a href="#" class="edit-icon" v-if="_instance_profilePagesStore.employeeDetails
+                                                .is_ssa == 1" @click="dailogDepartment = true"><i class="ri-pencil-fill"></i></a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                     .get_employee_office_details.department_id
@@ -211,8 +224,9 @@
                             <div class="py-2 border-bottom-liteAsh">
                                 <p class="text-muted f-12 fw-bold">
                                     Reporting To
-                                    <a href="#" class="edit-icon" @click="dailogReporting
-                                                = true"><i class="ri-pencil-fill"></i>
+                                    <a href="#" v-if="_instance_profilePagesStore.employeeDetails
+                                                .is_ssa == 1" class="edit-icon" @click="dailogReporting
+                = true"><i class="ri-pencil-fill"></i>
                                     </a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
@@ -222,6 +236,7 @@
                                         _instance_profilePagesStore.employeeDetails
                                             .get_employee_office_details.l1_manager_name
                                     }}
+                                    <!-- {{ _instance_profilePagesStore.employeeDetails }} -->
                                     -
                                     {{
                                         _instance_profilePagesStore.employeeDetails
@@ -233,9 +248,9 @@
                         </div>
                         <div class="text-center profile-bottom-right-content">
                             <!-- {{-- <button class="btn btn-danger"><i class="fa fa-sign-out me-2"></i> Logout </button> --}} -->
-                            <button class="btn btn-danger">
+                            <!-- <button class="btn btn-danger">
                                 <i class="fa fa-sign-out me-1"></i> Action
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -276,7 +291,8 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '40vw', borderTop: '5px solid #002f56' }">
+    <Dialog v-model:visible="dialogIdCard" modal header="" :style="{ width: '45vw', borderTop: '5px solid #002f56', }"
+        style=" @media (min-width:1024px){background-image:particular_ad_small.png;} ">
 
         <template #header>
             <div>
@@ -287,42 +303,139 @@
             </div>
 
         </template>
-        <div class="card p-3 d-flex justify-items-center align-items-center"
-            style="width: 18rem;margin-left: 150px; height: 300px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-                <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt="" style="height: 45px;width:140px; object-fit: cover; " >
-            <div class="card-body d-flex justify-items-center align-items-center mt-4" style="flex-direction: column ; ">
-                <div class="mx-auto rounded-circle img-xl userActive-status profile-img "
-                    style="border: 1px solid navy;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
-                    <img v-if="_instance_profilePagesStore.profile"
-                        class="rounded-circle img-xl userActive-status profile-img border"
-                        :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
-                        style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 120px; height: 120px;" />
+        <div
+            class=" bg-blue-900  w-100  py-4 px-2 rounded-lg d-flex justify-content-around overflow-x-scroll ... lg:w-100 ">
+
+            <div class="card p-3 d-flex  justify-items-center align-items-center mr-2 :lg:mx-0 Digital_Id_Card_"
+                style="width: 260px; height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+
+                <div style="height: 45px;width:140px;" class=" mt-2">
+                    <img :src="`${_instance_profilePagesStore.employeeDetails.client_logo}`" alt=""
+                        style=" object-fit: cover; ">
                 </div>
+                <div class="card-body d-flex justify-items-center align-items-center mt-6"
+                    style="flex-direction: column ; ">
+                    <div class="mx-auto rounded-circle img-xl userActive-status profile-img  d-flex justify-content-center align-items-center "
+                        :class="[!_instance_profilePagesStore.profile ? _instance_profilePagesStore.employeeDetails.short_name_Color : '', _instance_profilePagesStore.employeeDetails.short_name_Color]">
+
+                        <img v-if="_instance_profilePagesStore.profile"
+                            class="rounded-circle img-xl userActive-status profile-img border object-cover"
+                            :src="`data:image/png;base64,${_instance_profilePagesStore.profile}`" srcset=""
+                            style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; width: 80px; height: 80px;" />
+
+                        <h1 v-if="!_instance_profilePagesStore.profile" class=" text-white fs-4">{{
+                            _instance_profilePagesStore.employeeDetails.user_short_name }}</h1>
+                    </div>
 
 
-                <!-- <img v-if="profile" class="rounded-circle   profile-img"
+                    <!-- <img v-if="profile" class="rounded-circle   profile-img"
                     :src="`data:image/png;base64,${profile}`" srcset=""  /> -->
 
-                <h5 class="card-title mt-3 mb-2 f-12" style="text-align: center;"> {{
-                    _instance_profilePagesStore.employeeDetails.name }}</h5>
+                    <h1 class="card-title mt-12 mb-3 f-12 text-blue-900 subpixel-antialiased font-semibold"
+                        style="text-align: center;"> {{
+                            _instance_profilePagesStore.employeeDetails.name }}</h1>
 
-                <h5 v-if="_instance_profilePagesStore.employeeDetails
-                    .get_employee_office_details.department_id
-                    " class="f-12  card-text mb-2 text-gray-400">
-                    {{
-                        _instance_profilePagesStore.employeeDetails
-                            .get_employee_office_details.department_name
-                    }}
-                </h5>
-                <h1 v-else class="f-12 fw-bold">-</h1>
+                    <h5 v-if="_instance_profilePagesStore.employeeDetails
+                        .get_employee_office_details.department_id
+                        " class="f-12  card-text mb-3 text-gray-600 subpixel-antialiased font-semibold">
+                        {{
+                            _instance_profilePagesStore.employeeDetails
+                                .get_employee_office_details.department_name
+                        }}
+                    </h5>
+                    <h1 v-else class="f-12  card-text ">-</h1>
 
-                <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code" class="f-12 fw-bold mb-2"
-                    style="color:grey">
-                    {{ _instance_profilePagesStore.employeeDetails.user_code }}
-                </h5>
-                <p v-else class="f-12   mb-2 text-secondary-emphasis">-</p>
+                    <h5 v-if="_instance_profilePagesStore.employeeDetails.user_code"
+                        class="f-16 mb-2 text-gray-700 subpixel-antialiased font-semibold">
+                        {{ _instance_profilePagesStore.employeeDetails.user_code }}
+                    </h5>
+                    <p v-else class="f-12   mb-2 text-secondary-emphasis">-</p>
+                </div>
             </div>
+
+            <!-- Digit-al Id back side  -->
+
+            <div class="card p-2  d-flex justify-items-center align-items-center ml-2  Digital_Id_Card_ :lg:p-2 "
+                style="width: 260px;  height: 380px; flex-direction: column !important;box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;">
+                <div class=" w-100 d-flex justify-content-center align-items-center flex-column ">
+                    <h1 class=" text-orange-500 fs-14 subpixel-antialiased font-semibold  fw-600">EMPLOYEE DETAILS</h1>
+                    <div class="row  w-100 mt-2">
+                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
+                            Blood Group <span class=" position-absolute  " style="position: absolute; left:90px ;">:</span>
+                        </div>
+                        <div class="col-6  fs-6 text-blue-900 ">
+                            <h1 class=" text-left pt-1">{{ cmpBldGrp }}</h1>
+                        </div>
+                    </div>
+                    <div class="row  w-100">
+                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
+                            Phone <span class=" position-absolute " style="position: absolute; left:90px ;">:</span>
+                        </div>
+                        <div class="col-6  fs-6 text-blue-900  ">
+                            <h1 class=" text-left pt-1">{{ _instance_profilePagesStore.employeeDetails.get_employee_details.mobile_number }}</h1>
+
+                        </div>
+                    </div>
+                    <div class="row w-100 ">
+                        <div class="col-5 fs-14 subpixel-antialiased  font-semibold text-left text-blue-900 position-relative">
+                            Email Id  <span class=" position-absolute " style="position: absolute; left:90px ;">:</span>
+                        </div>
+                        <div class="col-6 subpixel-antialiased  fs-12">
+                            <h1 class=" text-left " >
+
+                                {{ _instance_profilePagesStore.employeeDetails.get_employee_office_details.officical_mail }}
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="row  w-100 ">
+                        <div class="col fs-14 subpixel-antialiased  font-semibold text-left text-blue-900">
+                            <h1 class=" text-orange-500 fs-12 ">Residential Address :</h1>
+                            <div class=" ml-2 ">
+                                <p class=" text-blue-900 mt-2 subpixel-antialiased font-semibold fs-11 text-center">
+                                    {{
+                                        _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
+                                    }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bg-gradient-to-r  from-orange-500 to-orange-300 h-1 w-100 mt-2 :lg:mt-2">
+                    </div>
+                    <div class="row bg-gradient-to-r from-orange-500 to-orange-300 h-3 w-100 mt-1">
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class=" text-center font-semibold text-orange-500 fs-14 subpixel-antialiased mt-0 :lg:mt-2"
+                                v-if="_instance_profilePagesStore.employeeDetails.client_details.client_name"> {{
+                                    _instance_profilePagesStore.employeeDetails.client_details.client_name }}</h1>
+                        </div>
+                        <div class="col-12 ">
+                            <h1 class=" fs-11 text-center font-semibold text-blue-900">{{
+                                _instance_profilePagesStore.employeeDetails.client_details.address }}</h1>
+                        </div>
+                        <div class="col-12">
+                            <h1 class="fs-12 text-center font-semibold  text-blue-900">{{
+                                _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_email
+                            }}</h1>
+                        </div>
+                        <div class="col-12">
+                            <h1 class="fs-11 text-center font-semibold lining-nums ... text-blue-900">
+                                {{ _instance_profilePagesStore.employeeDetails.client_details.authorised_person_contact_number
+                                }}</h1>
+                        </div>
+
+                        <div class="col-12">
+                            <!-- <h1 class="fs-12 text-center font-semibold  text-blue-900 mb-3 :lg:mb-0">{{
+                                _instance_profilePagesStore.employeeDetails.email }}</h1> -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
     </Dialog>
 
 
@@ -506,6 +619,8 @@ onMounted(() => {
         reportManagerOption.value = res.data;
     });
     setvalue();
+
+    console.log();
 });
 
 const UploadEmpDocsPhoto = (e) => {
@@ -562,17 +677,68 @@ const saveEmpChangeInfoDetails = () => {
 
 }
 
+const cmpBldGrp = computed(() => {
+    if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 1) return "A Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 2) return "A Negative";
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 3) return "B Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 4) return "B Negative";
+
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 5) return "AB Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 6) return "AB Negative";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
+
+    else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
+
+})
+
+
+
 
 
 </script>
 
-<style>
-.p-progressbar.p-component.p-progressbar-determinate {
+<style>.p-progressbar.p-component.p-progressbar-determinate {
     height: 13px;
+    /* background-color: aqua; */
 }
 
-* {
-    /* font-family: sans-serif; */
+
+
+
+
+.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate  {
+    /* background-color:#fff !important; */
+    background-color: rgb(48, 218, 48) !important;
+     color: #fff !important;
 }
-</style>
+.progressbar .p-progressbar-value.p-progressbar-value-animate {
+    /* background-color:#fff !important; */
+    background-color: red !important;
+     color: #fff !important;
+}
+.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
+    background-color:orange !important;
+    color: black !important;
+}
+/* .p-progressbar-label{
+color: black !important;
+} */
+
+
+/* .progressbar_val_1 >  .p-progressbar-value.p-progressbar-value-animate , .p-progressbar-label{
+     background-color: red !important ;
+     color: #fff !important;
+} */
+
+
+@media only screen and (max-width: 1280px) {
+    .Digital_Id_Card_ {
+        /* height: 7000px; */
+    }
+}</style>
 

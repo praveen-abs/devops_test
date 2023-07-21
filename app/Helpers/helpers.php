@@ -439,6 +439,44 @@ function getEmployeeAvatarOrShortName($user_id)
     }
 }
 
+function newgetEmployeeAvatarOrShortName($user_id)
+{
+
+    try {
+        // dd($user_id);
+        $user = User::where('id', $user_id);
+        $avatar = $user->value('avatar');
+        $user_code = $user->value('user_code');
+        $responseJSON = null;
+
+        $get_emp_profile  = Storage::disk('private')->get($user_code."/profile_pics/".$avatar);
+
+        //IF images doesnt exists, then generate ShortName
+        if (empty($avatar) || empty($get_emp_profile)) {
+            //send the shortname
+            $responseJSON['type'] = 'shortname';
+            $responseJSON['data'] = strtoupper(getUserShortName($user_id));
+            $responseJSON['color'] = shortNameBGColor($responseJSON['data']);
+        } else {
+            //send the profile pic
+            $responseJSON['type'] = 'avatar';
+
+            $get_emp_profile  = Storage::disk('private')->get($user_code."/profile_pics/".$avatar);
+
+             $responseJSON['data'] = base64_encode($get_emp_profile);
+        }
+
+        //Add color
+
+       
+
+        return json_encode($responseJSON);
+    } catch (Throwable $e) {
+        dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : " . $e);
+    }
+}
+
+
 function isAppointmentLetterTemplateAvailable()
 {
 
@@ -542,3 +580,4 @@ function num2alpha($n) {
     }
     return $r;
 }
+

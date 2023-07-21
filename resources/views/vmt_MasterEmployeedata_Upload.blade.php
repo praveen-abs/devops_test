@@ -15,7 +15,7 @@
             <div class="form-control">
                 <div class="row">
                     <div class="col-md-5 col-xl-5 col-sm-12">
-                        <h6 class="text-xl font-semibold"> Payroll Components Upload</h6>
+                        <h6 class="text-xl font-semibold"> Master Data Upload</h6>
                         <div class="col col-form-label">
                             <ul class="list-style-numbered ">
                                 <li class="my-4"><i class="text-green-500 fa fa-step-forward" aria-hidden="true"></i> Download

@@ -746,15 +746,49 @@ class VmtCorrectionController extends Controller
             $rules = [
                 'employee_code' =>'required|exists:users,user_code' ,
                 'name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'required',
-                'doj' => 'nullable|required_unless:doj,!=,NULL&date',
-                'dob' => 'nullable|required_unless:doj,!=,NULL&date&before:-18 years',
-                'epf_number' => 'required',
-                'esic_number' => 'nullable|required_unless:esic_number,!=,NULL&numeric',
-                'uan_number' => 'nullable|required_unless:uan_number,!=,NULL&numeric',
-                'pan_number' => 'nullable|required_unless:pan_number,!=,NULL&regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                'aadhar_number' => 'required|required_unless:aadhar_number,!=,NULL&regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-                'mobile_number' => 'nullable|required_unless:mobile_number,!=,NULL&regex:/^([0-9]{10})?$/u&numeric',
+                'email' => 'nullable',
+                'doj' => 'nullable|date',
+                'dob' => 'nullable|date|before:-18 years',
+                'epf_number' => 'nullable|required_unless:epf_number,!=,NULL',
+                'esic_number' => 'nullable|required_unless:esic_number,!=,NULL',
+                'uan_number' => 'nullable|required_unless:uan_number,!=,NULL',
+                //'pan_number' => 'nullable|required_unless:pan_number,!=,null|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
+                'pan_number' => ['nullable',
+                function ($attribute, $value, $fail) {
+
+                    if($value !== 'NULL'){
+                        $result = preg_match("/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u", $value);
+                        if (!$result) {
+                            $fail($value .'<b>:is invalid' );
+                                }
+                            }
+                        },
+                    ],
+                //'aadhar_number' => 'nullable|required_unless:aadhar_number,!=,NULL&regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
+             'aadhar_number' => ['nullable',
+                function ($attribute, $value, $fail) {
+
+                    if($value !== 'NULL'){
+                        $result = preg_match("/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u", $value);
+                        if (!$result) {
+                            $fail($value .'<b>:is invalid' );
+                        }
+                        }
+                    },
+                ],
+               // 'mobile_number' => 'nullable|required_unless:mobile_number,!=,NULL&regex:/^([0-9]{10})?$/u&numeric',
+                'mobile_number' => ['nullable',
+                function ($attribute, $value, $fail) {
+
+                    if($value !== 'NULL'){
+                        $result = preg_match("/^([0-9]{10})?$/u", $value);
+                        if (!$result) {
+                            $fail($value .'<b>:is invalid' );
+                            }
+
+                        }
+                    },
+                ],
                 'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 //'martial_status' => 'nullable|exists:vmt_marital_status,name',
@@ -770,13 +804,13 @@ class VmtCorrectionController extends Controller
                             }
                         },
                     ],
-                'spouse_name' => 'nullable|required_unless:marital_status,Unmarried&regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'spouse_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 //'blood_group' =>'nullable|required_unless:blood_group,!=,NULL&exists:vmt_bloodgroup,name&regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'blood_group' => ['nullable',
                         function ($attribute, $value, $fail) {
 
                             if($value !== 'NULL'){
-                                $result =VmtBloodGroup::where('bank_name',$value)->first();
+                                $result =VmtBloodGroup::where('name',$value)->first();
 
                                 if (empty($result)) {
                                     $fail($value .'<b>:doesnt exist in application.Kindly create one' );
@@ -797,8 +831,19 @@ class VmtCorrectionController extends Controller
                             }
                         },
                     ],
-                'bank_ifsc_code' => 'required|required_unless:bank_ifsc_code,!=,NULL&regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-                'bank_account_number' => 'nullable|required_unless:blood_group,!=,NULL&numeric',
+                //'bank_ifsc_code' => 'nullable|required_unless:bank_ifsc_code,!=,NULL|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
+                'bank_ifsc_code' => ['nullable',
+                    function ($attribute, $value, $fail) {
+
+                        if($value !== 'NULL'){
+                            $result = preg_match("/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u", $value);
+                            if (!$result) {
+                                $fail($value .'<b>:is invalid' );
+                                }
+                            }
+                        },
+                    ],
+                'bank_account_number' => 'nullable|required_unless:bank_account_number,!=,NULL',
                 'current_address' => 'required',
                 'basic' => 'required|numeric',
                 'hra' => 'required|numeric',
@@ -908,6 +953,7 @@ class VmtCorrectionController extends Controller
 
                         'status' => $response['status'],
                         'message' => $message,
+                        'mail_status' =>'',
                         'data' =>$response['data']
                     ];
 
@@ -928,12 +974,9 @@ class VmtCorrectionController extends Controller
 
             try{
      //dd($data);
-                $data_count =count($data);
-                $success_count =0;
-                $failure_count =0;
-                $failure_data = array();
 
-                $user_id = User::where('user_code',$data['employee_code'])->where('active','<>','-1')->first();
+
+                $user_id = User::where('user_code',$data['employee_code'])->first();
 
                 if(!empty($user_id)){
 
@@ -1038,7 +1081,13 @@ class VmtCorrectionController extends Controller
                 $newEmployee_statutoryDetails->esic_number = $data["esic_number"] ?? '';
                 $newEmployee_statutoryDetails->save();
 
-                $compensatory =Compensatory::where('user_id',$user_id)->first();
+                $compensatory =Compensatory::where('user_id',$user_id);
+                if($compensatory->exists()){
+                    $compensatory=$compensatory->first();
+                }else{
+                    $compensatory=new Compensatory;
+                    $compensatory->user_id = $user_id;
+                }
                 $compensatory->basic = $data["basic"] ?? '';
                 $compensatory->hra = $data["hra"] ?? '';
                 $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
@@ -1064,8 +1113,7 @@ class VmtCorrectionController extends Controller
             return $response=([
                 'status' => 'success',
                 'message' =>'Master data updated successfully',
-                'data' => ['success count '.$success_count,
-                           ]
+                'data' => ''
             ]);
 
 
