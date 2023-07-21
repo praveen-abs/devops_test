@@ -439,6 +439,12 @@ class VmtEmployeeOnboardingController extends Controller
         return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
     }
 
+     public function check_Duplicate_Usercode( $user_code) {
+
+
+
+     }
+
         // insert the employee to database for quick onboarding
      private function storeQuickOnboardEmployees($data,  $employeeService)
         {
@@ -456,23 +462,27 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => 'Please fill the excel',
             ];
         }else{
-
+                $emp_user_code = array();
             foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
 
                 $currentRowInExcel++;
+                //$emp_user_code = $excelRowdata['employee_code'];
+
                 //Validation
                 $rules = [
                     'employee_code' => ['unique:users,user_code',
-                    function ($attribute, $value, $fail) {
+                    function ($attribute, $value, $fail ) {
 
                         $emp_client_code = preg_replace('/\d+/', '', $value );
                         $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
 
                         if (!$result) {
-                            $fail('No matching client exists for the given <b> Employee Code <b>: '.$value);
+                            $fail('No matching client exists for the given <b> Employee Code <b>: '. $value);
                         }
+
                     },
                   ],
+
                     'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                     'email' => 'nullable|email:strict|unique:users,email',
                     'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
@@ -509,21 +519,53 @@ class VmtEmployeeOnboardingController extends Controller
                     'email' => 'Field <b>:attribute</b> is invalid'
                 ];
 
+                  if(!empty($emp_user_code))
+                  {
+                         $fail_data =array();
+                    foreach($emp_user_code as $key => $single_user_code){
+
+                        if( $key == 0 && $single_user_code == $excelRowdata['employee_code']){
+
+                            $fail_data[0] = 'Employee Code should be unique :'.' '.$excelRowdata['employee_code'];
+                            //    array_push($fail_data, $fails);
+                        }
+                         if( $key == 1 && $single_user_code == $excelRowdata['email']){
+
+                             $fail_data[1] = 'email should be unique :'.' '.$excelRowdata['email'];
+
+                         }
+                         if( $key == 2 && $single_user_code == $excelRowdata['mobile_number']){
+
+                             $fail_data[2] = 'mobile_number should be unique :'.' '.$excelRowdata['mobile_number'];
+
+                         }
+                    }
+                }
+                array_push($emp_user_code,$excelRowdata['employee_code'],$excelRowdata['email'],$excelRowdata['mobile_number']);
+
                 $validator = Validator::make($excelRowdata, $rules, $messages);
 
-                if (!$validator->passes()) {
+                if (!$validator->passes() || !empty($fail_data)) {
+                   if(!empty($fail_data)){
+
+                        $error_data =json_encode($fail_data);
+
+                    }else{
+                        $error_data =json_encode($validator->errors());
+                    }
 
                     $rowDataValidationResult = [
                         'row_number' => $currentRowInExcel,
                         'status' => 'failure',
                         'message' => 'In Excel Row : ' . $currentRowInExcel . ' has following error(s)',
-                        'error_fields' => json_encode($validator->errors()),
+                        'error_fields' => $error_data,
                     ];
 
                     array_push($data_array, $rowDataValidationResult);
                     $isAllRecordsValid = false;
                   }
              }
+
          }
 
            //for each
@@ -555,6 +597,7 @@ class VmtEmployeeOnboardingController extends Controller
              $message = $row['employee_code']  ." not imported ";
              $status = 'failure';
              try {
+dd('hii');
                 $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee:"0", existing_user_id : null, onboard_type:'quick');
 
                  $status = $response['status'];
@@ -573,7 +616,7 @@ class VmtEmployeeOnboardingController extends Controller
                 return $rowdata_response = [
                     'status' => $status,
                     'message' => $message,
-                    'data' =>''
+                    'data' =>$response['data']
                 ];
             }
             catch (\Exception $e) {

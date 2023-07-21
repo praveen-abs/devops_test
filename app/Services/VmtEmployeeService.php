@@ -94,8 +94,8 @@ class VmtEmployeeService {
 
                  $response=([
                     'status' => $save_details['status'],
-                    'message' => '',
-                    'data' =>''
+                    'message' => 'Employee details saved successfully',
+                    'data' =>$save_details
                 ]);
 
                 return $response;
@@ -138,7 +138,7 @@ class VmtEmployeeService {
                $response=([
                   'status' => $save_details['status'],
                   'message' => 'Employee details saved successfully',
-                  'data' =>''
+                  'data' =>$save_details
               ]);
 
               return $response;
@@ -180,7 +180,7 @@ class VmtEmployeeService {
                $response=([
                   'status' => $save_details['status'],
                   'message' => 'Employee details saved successfully',
-                  'data' =>''
+                  'data' =>$save_details
               ]);
 
               return $response;
