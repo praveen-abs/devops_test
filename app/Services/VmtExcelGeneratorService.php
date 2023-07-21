@@ -8,6 +8,8 @@ use App\Models\Department;
 use Maatwebsite\Excel\Concerns\ToArray;
 use App\Models\VmtMaritalStatus;
 use App\Models\User;
+use App\Models\VmtBloodGroup;
+use App\Models\Bank;
 
 class VmtExcelGeneratorService
 {
@@ -58,6 +60,8 @@ class VmtExcelGeneratorService
         $onbaord_excel_details['client_list'] = (sprintf('"%s"', implode(',', $client_list_query)));
         $onbaord_excel_details['managr_code'] = (sprintf('"%s"', implode(',', $manager_emp_code)));
         $onbaord_excel_details['marital_status'] = (sprintf('"%s"', implode(',', VmtMaritalStatus::pluck('name')->toArray())));
+        $onbaord_excel_details['blood_group'] = (sprintf('"%s"', implode(',', VmtBloodGroup::pluck('name')->toArray())));
+        $onbaord_excel_details['bank_name'] = (sprintf('"%s"', implode(',', Bank::pluck('bank_name')->toArray())));
         $onbaord_excel_details['department'] = (sprintf('"%s"', implode(',', Department::pluck('name')->toArray())));
         $onbaord_excel_details['salary'] = 'CTC';
 

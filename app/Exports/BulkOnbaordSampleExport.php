@@ -37,6 +37,8 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     protected $marital_status;
     protected $manager_code;
     protected $salary;
+    protected $blood_group;
+    protected $bank_name;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
@@ -45,6 +47,9 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         $this->marital_status = $onbaord_details['marital_status'];
         $this->manager_code = $onbaord_details['managr_code'];
         $this->salary = $onbaord_details['salary'];
+        $this->blood_group =  $onbaord_details['blood_group'];
+        $this->bank_name =  $onbaord_details['bank_name'];
+
     }
 
     public function startCell(): string
@@ -135,6 +140,9 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $marital_column = 'O';
                 $manager_code_column = 'L';
                 $mobile_num_column = 'D';
+                $blood_group_column = 'T';
+               $bank_name_column = 'X';
+
 
                 // set dropdown options
                 $gender_options = [
@@ -145,6 +153,8 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $departments_option = $this->departments;
                 $marital_option = $this->marital_status;
                 $manager_code_option = $this->manager_code;
+                $blood_group_option = $this->blood_group;
+                $bank_name_option = $this->bank_name;
 
                 // set dropdown list for Gender
                 $validation_gender = $event->sheet->getCell("{$gender_column}3")->getDataValidation();
@@ -216,6 +226,34 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
                 $validation_mangr_code->setFormula1($manager_code_option);
 
+                 //set dropdown list for blood_group
+                $validation_blood_grp = $event->sheet->getCell("{$blood_group_column}3")->getDataValidation();
+                $validation_blood_grp->setType(DataValidation::TYPE_LIST);
+                $validation_blood_grp->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_blood_grp->setAllowBlank(false);
+                $validation_blood_grp->setShowInputMessage(true);
+                $validation_blood_grp->setShowErrorMessage(true);
+                $validation_blood_grp->setShowDropDown(true);
+                $validation_blood_grp->setErrorTitle('Input error');
+                $validation_blood_grp->setError('Selected Option is not in list.');
+                $validation_blood_grp->setPromptTitle('Select Blood Group from list');
+                $validation_blood_grp->setPrompt('Please pick a Blood Group from the drop-down list.');
+                $validation_blood_grp->setFormula1($blood_group_option);
+
+                // set dropdown list for bank name
+                $validation_bank_name = $event->sheet->getCell("{$bank_name_column}3")->getDataValidation();
+                $validation_bank_name->setType(DataValidation::TYPE_LIST);
+                $validation_bank_name->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_bank_name->setAllowBlank(false);
+                $validation_bank_name->setShowInputMessage(true);
+                $validation_bank_name->setShowErrorMessage(true);
+                $validation_bank_name->setShowDropDown(true);
+                $validation_bank_name->setErrorTitle('Input error');
+                $validation_bank_name->setError('Selected Option is not in list.');
+                $validation_bank_name->setPromptTitle('Select Bank Name from list');
+                $validation_bank_name->setPrompt('Please pick a Bank Name from the drop-down list.');
+                $validation_bank_name->setFormula1($bank_name_option);
+
                 //validation For Mobile Number
                 // $validation_mobile = $event->sheet->getCell("{$mobile_num_column}3")->getDataValidation();
                 // $validation_mobile->setType(DataValidation::TYPE_WHOLE);
@@ -237,6 +275,8 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                     $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
                      $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
                     $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
+                    $event->sheet->getCell("{$blood_group_column}{$i}")->setDataValidation(clone   $validation_blood_grp);
+                    $event->sheet->getCell("{$bank_name_column}{$i}")->setDataValidation(clone   $validation_bank_name);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                 }
 
