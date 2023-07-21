@@ -283,44 +283,56 @@ class VmtProfilePagesService
         //Remove ID from user table
         unset($response['id']);
         //dd($response['getEmployeeDetails']);
-        foreach ($response['getEmployeeDetails']->toArray() as $key => $value) {
-            if ($value == null || empty($value) || $value == 'none') {
-                $response['getEmployeeDetails'][$key] = '';
+        if(!empty($response['getEmployeeDetails'])){
+
+            foreach ($response['getEmployeeDetails']->toArray() as $key => $value) {
+                if ($value == null || empty($value) || $value == 'none') {
+                    $response['getEmployeeDetails'][$key] = '';
+                }
             }
-        }
-        //dd($response['getEmployeeDetails']);
-        
-        foreach ($response['getEmployeeOfficeDetails']->toArray() as $key => $value) {
-            if ($value == null || empty($value) || $value == 'none') {
-                $response['getEmployeeOfficeDetails'][$key] = '';
+           }
+            //dd($response['getEmployeeDetails']);
+        if(!empty($response['getEmployeeOfficeDetails'])){
+            foreach ($response['getEmployeeOfficeDetails']->toArray() as $key => $value) {
+                if ($value == null || empty($value) || $value == 'none') {
+                    $response['getEmployeeOfficeDetails'][$key] = '';
+                }
             }
         }
 
-        foreach ($response['getFamilyDetails']->toArray() as $key => $value) {
-            if ($value == null || empty($value) || $value == 'none') {
-                $response['getFamilyDetails'][$key] = '';
-            }
-        }
-               
-            foreach ($response['getExperienceDetails']->toArray() as $key => $value) {
-            if ($value == null || empty($value) || $value == 'none') {
-                $response['getExperienceDetails'][$key] = '';
-            }
-        }
-        foreach ($response['getStatutoryDetails']->toArray() as $key => $value) {
-            if ($value == null || empty($value) || $value == 'none') {
-                $response['getStatutoryDetails'][$key] = '';
+            if(!empty( $response['getFamilyDetails'])){
+            foreach ($response['getFamilyDetails']->toArray() as $key => $value) {
+                if ($value == null || empty($value) || $value == 'none') {
+                    $response['getFamilyDetails'][$key] = '';
+                }
             }
         }
 
-        foreach ($response['getEmergencyContactsDetails']->toArray() as $key => $value) {
-            if ($value == null || empty($value) || $value == 'none') {
-                $response['getEmergencyContactsDetails'][$key] = '';
+            if(!empty($response['getExperienceDetails'])){
+                foreach ($response['getExperienceDetails']->toArray() as $key => $value) {
+                if ($value == null || empty($value) || $value == 'none') {
+                    $response['getExperienceDetails'][$key] = '';
+                }
+            }
+          }
+
+            if(!empty($response['getStatutoryDetails'])){
+            foreach ($response['getStatutoryDetails']->toArray() as $key => $value) {
+                if ($value == null || empty($value) || $value == 'none') {
+                    $response['getStatutoryDetails'][$key] = '';
+                }
+            }
+          }
+
+            if(!empty($response['getEmployeeDetails'])){
+            foreach ($response['getEmergencyContactsDetails']->toArray() as $key => $value) {
+                if ($value == null || empty($value) || $value == 'none') {
+                    $response['getEmergencyContactsDetails'][$key] = '';
+                }
             }
         }
 
-
-        return $response;
+            return $response;
     }
     public function getEmployeePrivateDocumentFile($user_code, $doc_name, $emp_doc_record_id = null)
     {

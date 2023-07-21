@@ -84,7 +84,8 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Physically Handicapped',
             'Pan Number',
             'Aadhaar Number',
-            $this->salary
+            'Compensatory Type',
+            'Compensanation',
         ];
     }
 
@@ -99,7 +100,32 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
     public function array(): array
     {
 
-        return [];
+        return [
+            [
+                'ABS0001',
+                'Name',
+                'abs@gmail.com',
+                '0912345678',
+                'Male',
+                '28-06-2000',
+                '14-11-2022',
+                '',
+                'It',
+                '',
+                'Chennai',
+                'ABSM001',
+                '0912345678',
+                'test@gmail.com',
+                'Single',
+                'Father Name',
+                'No',
+                'ABCTY1234D',
+                '0000 1111 2222',
+                '',
+                '18000'
+
+            ]
+        ];
     }
 
 
@@ -120,6 +146,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $legal_entity_column = 'H';
                 $departments_column = 'I';
                 $marital_column = 'O';
+                $compansation_column = 'T';
                 $manager_code_column = 'L';
                 $mobile_num_column = 'D';
 
@@ -203,6 +230,21 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
                 $validation_mangr_code->setFormula1($manager_code_option);
 
+                
+                //set dropdown list for CompansationType
+                $validation_compansation = $event->sheet->getCell("{$compansation_column}3")->getDataValidation();
+                $validation_compansation->setType(DataValidation::TYPE_LIST);
+                $validation_compansation->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_compansation->setAllowBlank(false);
+                $validation_compansation->setShowInputMessage(true);
+                $validation_compansation->setShowErrorMessage(true);
+                $validation_compansation->setShowDropDown(true);
+                $validation_compansation->setErrorTitle('Input error');
+                $validation_compansation->setError('Selected Option is not in list.');
+                $validation_compansation->setPromptTitle('Select Compansation Type  from list');
+                $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
+                $validation_compansation->setFormula1('"CTC,Gross,Take Home"');
+
                 //validation For Mobile Number
                 // $validation_mobile = $event->sheet->getCell("{$mobile_num_column}3")->getDataValidation();
                 // $validation_mobile->setType(DataValidation::TYPE_WHOLE);
@@ -224,6 +266,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                     $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
                     $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
                     $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
+                    $event->sheet->getCell("{$compansation_column}{$i}")->setDataValidation(clone    $validation_compansation);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                 }
 
