@@ -135,6 +135,7 @@
             </template>
         </DataTable>
     </div>
+    <button class="btn btn-primary" @click="download">Down</button>
 </template>
 
 
@@ -206,7 +207,9 @@ const sampleTemplate = ref([
         'Department': 'IT',
         'Location': 'Chennai',
         'Father Name': 'Simma',
-        'Physically Handicapped': 'No',
+        'Physically Handicapped': [
+            "one", "two", "three", "four"
+        ],
     }
 ])
 const sampleTemplateHeaders = [
@@ -229,10 +232,40 @@ const sampleTemplateHeaders = [
 ]
 
 
+
+
+const datn = ref([
+
+    { header: "eid", value: "" },
+    { header: "test", value: [{ name: "test1" }, { name: "test2" }] },
+    { header: "ename", value: "" },
+    { header: "esal", value: [{ name: "val" }, { name: "val1" }] }])
+
+
+const transform = (data) => {
+    const noOfRowaToGenerate = 10;
+    return data.map(({ name, values }) => {
+        const headers = values.reduce((prev, next) =>
+        ({
+            ...prev, [next.header]: Array.isArray
+                (next.value) ? next.value.map(({ name }) => name) : next.value
+        }), {})
+        return {
+            workSheet: name,
+            rows: Array(noOfRowaToGenerate).fill(headers)
+        }
+    })
+}
+// transform(values.value)
+
+
+
 const download = () => {
+
+
     const data = XLSX.utils.json_to_sheet(sampleTemplate.value)
     const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, data, 'data')
+    XLSX.utils.book_append_sheet(wb, data, 'sheet1')
     XLSX.writeFile(wb, 'QuickOnboarding.xlsx')
 }
 
