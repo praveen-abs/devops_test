@@ -1650,7 +1650,7 @@ class VmtSalaryAdvanceService
             array_push($response, $temp_ar);
             unset($temp_ar);
         }
-        $res['settings']=$response;
+        $res['settings'] = $response;
 
         return  $res;
     }
@@ -1673,16 +1673,24 @@ class VmtSalaryAdvanceService
             $borrowed_amount = $loan_details->borrowed_amount;
             $tenure_months =  $loan_details->tenure_months;
             $deduction_starting_month = $loan_details->deduction_starting_month;
-            for ($i = 1; $i < $tenure_months; $i++) {
+            for ($i = 0; $i < $tenure_months; $i++) {
                 $loan_detail = new VmtInterestFreeLoanTransaction;
                 $loan_detail->emp_loan_details_id = $loan_detail_id;
                 $loan_detail->expected_emi =  $borrowed_amount / $tenure_months;
-                $loan_detail->payroll_date =  $deduction_starting_month;
+                if($i==0){
+                    $loan_detail->payroll_date =  $deduction_starting_month;
+                }
+                $loan_detail->payroll_date =Carbon::parse( $deduction_starting_month)->addMonth($i);
                 $loan_detail->save();
-                // dd( $loan_detail);
+                 
+               // $posts = VmtInterestFreeLoanTransaction::where('status', '=', 1)->whereDate('created_at', '=', $month)->get();
             }
+            //dd(gettype($deduction_starting_month));
+
         }
     }
+
+
 
     public function enableOrDisableLoanSettings($loan_type, $loan_setting_id, $status)
     {
