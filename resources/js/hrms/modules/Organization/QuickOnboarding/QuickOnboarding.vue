@@ -1,7 +1,8 @@
 <template>
-    <Transition name="fade">
+    <ImportQuickOnboarding />
+
+    <Transition name="fade" v-if="false">
         <div class="" v-if="route.params.module == 'quickOnboarding'">
-            <ImportQuickOnboarding />
         </div>
         <div class="h-screen w-full" v-else>
             <div class="flex">

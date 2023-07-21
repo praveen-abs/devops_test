@@ -1,11 +1,11 @@
 <template>
-    <div class="grid grid-cols-3 w-8/12 place-content-center mx-auto my-2">
-        <!-- <div class="flex">
+    <div class="grid grid-cols-4 w-8/12 place-content-center mx-auto my-2">
+        <div class="flex">
             <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
                     class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
             <input type="file" name="" id="file" hidden @change="useStore.convertExcelIntoArray($event)"
                 accept=".xls, .xlsx">
-        </div> -->
+        </div>
         <div class="bg-white text-black p-2 font-semibold fs-6 mx-6 rounded-lg">Total Records : <span class="font-bold">
                 {{ useStore.totalRecordsCount.length ? useStore.totalRecordsCount[0].length : 0 }}
             </span>
@@ -43,11 +43,11 @@
 
                 <template #body="{ data, field }">
                     <div v-if="field == 'Employee code'"
-                        :class="[useStore.isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        :class="[!useStore.findDuplicate(data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
-                                v-if="useStore.existingUserCode.includes(data['Employee code'])"></i>
+                                v-if="!useStore.isUserExists(data['Employee code'])"></i>
                             {{ data['Employee code'] }}
                         </p>
                     </div>
