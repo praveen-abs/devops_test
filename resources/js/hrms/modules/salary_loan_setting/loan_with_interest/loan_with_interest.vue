@@ -27,8 +27,6 @@
                     your
                     organization.</p>
                     <p class="fs-5 " v-if="salaryStore.isLoanWithInterestFeature == '1' ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
-
-
             </div>
 
 

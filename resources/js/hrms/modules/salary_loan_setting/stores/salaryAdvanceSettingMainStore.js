@@ -326,9 +326,13 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         ifl.maxTenure=""
         ifl.payroll_cycle=""
         ifl.approvalflow= ""
-        ifl.selectedOption1=''
+        ifl.selectedOption1=""
         ifl.selectedOption2=""
         ifl.selectedOption3=""
+        selectedOption1.value = ""
+        selectedOption2.value = ""
+        selectedOption3.value = ""
+        EnableAndDisable.value = ""
     }
 
 
@@ -361,8 +365,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             });
         }).finally(() => {
             canShowLoading.value = false;
-            canShowPopup.value = true
+            canShowPopup.value = true;
             approvalFormat.splice(0, approvalFormat.length)
+            resetIfl();
         })
     }
 

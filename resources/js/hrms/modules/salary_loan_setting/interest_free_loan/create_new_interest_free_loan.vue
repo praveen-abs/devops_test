@@ -21,7 +21,7 @@
         <h1 class="text-xl w-5  xl:text-2xl">Select organization</h1>
         <div class="">
             <div class="d-flex flex-col position-relative">
-                <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.dropdownFilter.legalEntity"
+                <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.ClientsName"
                     optionLabel="client_name" optionValue="id" placeholder="Select Branches" :maxSelectedLabels="3"
                     class="w-full  md:w-18rem" :class="[
                         v$.selectClientID.$error ? 'p-invalid' : '',
@@ -246,13 +246,13 @@
 
     <div class="row">
         <div class="col">
-            <div class="float-right">
-                <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="interest_free_loans=1">Cancel</button>
-                <button class="btn btn-border-primary" v-if="salaryStore.EnableAndDisable" @click="interest_free_loans=1">back</button>
-                <button class="btn btn-border-primary" v-if="salaryStore.EnableAndDisable ==0" @click="EnableDisable(1)">Enable</button>
-                <button class="btn btn-border-primary" v-if="salaryStore.EnableAndDisable == 1" @click="EnableDisable(0)">Disable</button>
+            <div class=" flex justify-center align-middle">
+                <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="cancel_btn">Cancel</button>
+                <button class="btn btn-border-primary mx-2 " v-if="salaryStore.EnableAndDisable" @click="back_btn">back</button>
+                <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable ==0" @click="EnableDisable(1)">Enable</button>
+                <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1" @click="EnableDisable(0)">Disable</button>
                 <!-- submitForm -->
-                <button class="mx-4 btn btn-primary" v-if="!salaryStore.EnableAndDisable" @click="submitForm">Save Changes</button>
+                <button class="mx-4 btn btn-primary" v-if="!salaryStore.EnableAndDisable" @click="submitForm">Save</button>
             </div>
         </div>
     </div>
@@ -305,6 +305,16 @@ function EnableDisable(val){
 
     salaryStore.resetIfl();
     useSettingStore.SendEnableAndDisable(val,'InterestFreeLoan');
+}
+
+function back_btn(){
+      salaryStore.resetIfl();
+          interest_free_loans.value=1;
+}
+
+function cancel_btn(){
+    interest_free_loans.value=1;
+      salaryStore.resetIfl();
 }
 
 

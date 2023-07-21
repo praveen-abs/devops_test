@@ -302,11 +302,14 @@
 
 <div class="row">
     <div class="col">
-        <div class="float-right" >
-            <button class="btn btn-border-primary"  @click="CreateLoanWithNew = 1" >Cancel</button>
-            <!-- submitForm -->
-            <button class="mx-4 btn btn-primary" @click="submitForm">Save
-                Changes</button>
+        <div class=" flex justify-center align-middle" >
+                 <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="cancel_btn">Cancel</button>
+                <button class="btn btn-border-primary mx-2 " v-if="salaryStore.EnableAndDisable" @click="cancel_btn">back</button>
+                <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable ==0" @click="EnableDisable(1)">Enable</button>
+                <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1" @click="EnableDisable(0)">Disable</button>
+                <!-- submitForm -->
+                <button class="mx-4 btn btn-primary" v-if="!salaryStore.EnableAndDisable" @click="submitForm">Save</button>
+
         </div>
     </div>
 </div>
@@ -368,6 +371,11 @@ const submitForm = () => {
     } else {
         console.log('Form failed submitted.')
     }
+
+}
+
+function cancel_btn(){
+    CreateLoanWithNew.value = 1;
 
 }
 

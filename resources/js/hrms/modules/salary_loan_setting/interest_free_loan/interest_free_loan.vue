@@ -56,15 +56,16 @@
                         v-for="(item, index) in salaryStore.interestFreeLoanHistory" :key="index">
                         <!-- {{ }} -->{{ item.settings }}
                         <div class="w-100 d-flex justify-content-between align-items-center">
-                            <h1 class="  fs-5">{{ item.name }}</h1>
-                            <h1 class=" fs-5">Client Name: {{ item.client_name }}</h1>
+                            <h1 class="  fs-5">Settings Name : {{ item.name }}</h1>
+                         <h1 class=" fs-5">Client Name: {{ item.client_name }}</h1>
+                    
                             <button class=" underline text-blue-400 fs-5 "
                                 @click="viewDetails(item.setting_prev_details)">View Details</button>
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <div>
                                 <h1 class=" fs-5"> {{
-                                    item.dedction_period }} months. </h1>
+                                    item.dedction_period }}  months. </h1>
                             </div>
 
                             <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
@@ -82,6 +83,7 @@
         </div>
     </div>
 </template>
+
 <script setup>
 
 import { ref, reactive, onMounted, computed } from 'vue';
