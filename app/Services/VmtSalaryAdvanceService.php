@@ -1546,6 +1546,7 @@ class VmtSalaryAdvanceService
                         'vmt_loan_interest_settings.loan_amt_interest as loan_amt_interest',
                         'vmt_loan_interest_settings.deduction_starting_months as deduction_starting_months',
                         'vmt_loan_interest_settings.max_tenure_months as max_tenure_months',
+                        'vmt_loan_interest_settings.loan_amt_interest as loan_amt_interest',
                         'vmt_loan_interest_settings.approver_flow as approver_flow',
                         'vmt_loan_interest_settings.active as active',
                     ]);
