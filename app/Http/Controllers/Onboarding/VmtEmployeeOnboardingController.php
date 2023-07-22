@@ -438,11 +438,6 @@ class VmtEmployeeOnboardingController extends Controller
         return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
     }
 
-     public function check_Duplicate_Usercode( $user_code) {
-
-
-
-     }
 
         // insert the employee to database for quick onboarding
      private function storeQuickOnboardEmployees($data,  $employeeService)
@@ -632,7 +627,7 @@ class VmtEmployeeOnboardingController extends Controller
 // store employeess from excel sheet to database
 
 
-   public function importBulkOnboardEmployeesExcelData(Request $request,VmtEmployeeService $employeeService)
+      public function importBulkOnboardEmployeesExcelData(Request $request,VmtEmployeeService $employeeService)
         {
 
             $validator =    Validator::make(
@@ -674,6 +669,7 @@ class VmtEmployeeOnboardingController extends Controller
         }else{
             foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
               //  dd($excelRowdata);
+              $emp_user_code = array();
                 $currentRowInExcel++;
 
                 //Validation
@@ -769,10 +765,40 @@ class VmtEmployeeOnboardingController extends Controller
                     'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
 
                 ];
+                if(!empty($emp_user_code))
+                {
+                       $fail_data =array();
+                  foreach($emp_user_code as $key => $single_user_code){
+
+                      if( $key == 0 && $single_user_code == $excelRowdata['employee_code']){
+
+                          $fail_data[0] = 'Employee Code should be unique :'.' '.$excelRowdata['employee_code'];
+                          //    array_push($fail_data, $fails);
+                      }
+                       if( $key == 1 && $single_user_code == $excelRowdata['email']){
+
+                           $fail_data[1] = 'email should be unique :'.' '.$excelRowdata['email'];
+
+                       }
+                       if( $key == 2 && $single_user_code == $excelRowdata['mobile_number']){
+
+                           $fail_data[2] = 'mobile_number should be unique :'.' '.$excelRowdata['mobile_number'];
+
+                       }
+                  }
+              }
+              array_push($emp_user_code,$excelRowdata['employee_code'],$excelRowdata['email'],$excelRowdata['mobile_number']);
 
                 $validator = Validator::make($excelRowdata, $rules, $messages);
 
-                if (!$validator->passes()) {
+                if (!$validator->passes() || !empty($fail_data)) {
+                    if(!empty($fail_data)){
+
+                         $error_data =json_encode($fail_data);
+
+                     }else{
+                         $error_data =json_encode($validator->errors());
+                     }
 
                     $rowDataValidationResult = [
                         'row_number' => $currentRowInExcel,
@@ -959,13 +985,13 @@ class VmtEmployeeOnboardingController extends Controller
         try{
         $data =array();
 
-
+//get existing employee_code
         $employees_user_code =User::pluck('user_code')->toarray();
         $user_code= array_filter($employees_user_code, static function($data){
             return !is_null($data) && $data !='NULL';
         });
         $data['user_code']=array_values($user_code);
-//get
+//get existing employee_email
 
         $employees_email =User::pluck('email')->toarray();
         $email=array_filter($employees_email, static function($data){
@@ -973,34 +999,49 @@ class VmtEmployeeOnboardingController extends Controller
         });
         $data['email']=array_values($email);
 
-
+//get existing employee_mobile_number
         $employees_mobile_number =VmtEmployee::pluck('mobile_number')->toarray();
         $mobile_number = array_filter($employees_mobile_number, static function($data){
             return !is_null($data) && $data !='NULL';
         });
         $data['mobile_number']=array_values($mobile_number);
 
-
+//get existing employee_aadhar_number
         $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
         $aadhar_number= array_filter($employees_aadhar_number, static function($data){
             return !is_null($data) && $data !='NULL';
         });
         $data['aadhar_number']=array_values($aadhar_number);
 
-
+//get existing employee_pan_number
         $employees_pan_number =VmtEmployee::pluck('pan_number')->toarray();
         $pan_number = array_filter($employees_pan_number, static function($data){
             return !is_null($data) && $data !='NULL';
         });
         $data['pan_number']=array_values($pan_number);
 
+//get existing bank_name
+        $bank_name =Bank::pluck('bank_name')->toarray();
+        $bank_name = array_filter($bank_name, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
+        $data['bank_name']=array_values($bank_name);
 
+//get existing department_name
+        $department_name =Department::pluck('name')->toarray();
+        $department_name = array_filter($department_name, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
+        $data['department_name']=array_values($department_name);
+
+//get existing employees_bankaccount_number
         $employees_bankaccount_number =VmtEmployee::pluck('bank_account_number')->toarray();
         $bankaccount_number = array_filter($employees_bankaccount_number, static function($data){
             return !is_null($data) && $data !='NULL';
         });
         $data['bankaccount_number']=array_values($bankaccount_number);
 
+//get existing employees_bankaccount_number
         $employees_officical_mail =VmtEmployeeOfficeDetails::join('users','users.id','=','vmt_employee_office_details.user_id')
                                                            ->where('active','<>','-1')
                                                            ->pluck('officical_mail')->toarray();
@@ -1008,6 +1049,7 @@ class VmtEmployeeOnboardingController extends Controller
             return !is_null($data) && $data !='NULL';
         });
         $data['official_mail']=array_values($official_mail);
+
 
         $response = ([
             'status'=>'success',
