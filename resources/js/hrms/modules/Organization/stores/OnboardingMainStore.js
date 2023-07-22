@@ -6,6 +6,7 @@ import { useToast } from "primevue/usetoast";
 import { Service } from "../../Service/Service";
 import * as XLSX from 'xlsx';
 import { useRouter, useRoute } from "vue-router";
+import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore'
 import dayjs from "dayjs";
 
 
@@ -18,6 +19,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const service = Service()
     const router = useRouter();
+    const normalOnboardingSource = useNormalOnboardingMainStore()
 
 
     const canShowloading = ref(false)
@@ -35,6 +37,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const getExcelForUpload = (e) => {
         selectedFile.value = e.target.files[0];
     }
+
+    const DuplicateList = ref([])
 
     const convertExcelIntoArray = (e) => {
 
@@ -78,7 +82,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     value: headers[C]
                 }
 
-                excelHeaders.push(form)
+                !headers[C].includes("UNKNOWN") ? excelHeaders.push(form) : ''
+
 
             }
             EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
@@ -94,11 +99,22 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
             const importedExcelKey = Object.keys(jsonData)[0]
 
-            EmployeeQuickOnboardingSource.value = jsonData.Sheet1
+
+            jsonData.Sheet1 ? EmployeeQuickOnboardingSource.value = jsonData.Sheet1 : EmployeeQuickOnboardingSource.value = []
+
+            if (EmployeeQuickOnboardingSource.value) {
+                isdups()
+            }
+
+
+
+
+
+            // isdups(DuplicateList.value)
+
             totalRecordsCount.value.push(EmployeeQuickOnboardingSource.value)
 
             // console.log(jsonData['Sheet1']);
-
             for (let index = 0; index < jsonData[importedExcelKey].length; index++) {
                 console.log("jsonData['Sheet1'].length :", jsonData[importedExcelKey].length);
 
@@ -108,18 +124,60 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             }
         };
         reader.readAsArrayBuffer(file);
+
     }
+
+
+
 
     // Helper Function
 
-
     const findDuplicate = (array) => {
-        let result = array.length !== new Set(array).size ? true : false;
+        let result = array.length !== new Set(array).size ? false : true;
         console.log("Selected row contains dup's : " + result);
         return result
     }
 
+    const isdups = () => {
+        let excelRowData = []
 
+        EmployeeQuickOnboardingSource.value.forEach(element => {
+
+            let format = {
+                title: Object.keys(element),
+                value: Object.values(element)
+            }
+            excelRowData.push(format)
+
+        });
+
+
+        let currentDupes = []
+        for (let i = 0; i < excelRowData.length; i++) {
+            const singleRowData = excelRowData[i];
+
+            for (let j = 0; j < singleRowData.value.length; j++) {
+                const value = singleRowData.value[j];
+                const title = singleRowData.title[j];
+                if (title == 'Employee code') {
+                    currentDupes.push(value)
+                }
+            }
+        }
+
+        const toFindDuplicates = (array) => array.filter((item, index) => array.indexOf(item) !== index)
+        const duplicateElements = toFindDuplicates(currentDupes);
+        console.log(duplicateElements);
+    }
+
+
+
+    /*
+
+     Validation - Data format
+     Duplicate Identification
+
+    */
 
     const existingUserCode = ref()
     const existingEmails = ref()
@@ -127,6 +185,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const existingPanCards = ref()
     const existingAadharCards = ref()
     const existingBankAccountNumbers = ref()
+    const existingBankNames = ref()
+    const existingDepartments = ref()
+    const existingOfficialEmails = ref()
 
     const getExistingOnboardingDocuments = () => {
 
@@ -139,6 +200,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 existingPanCards.value = element.pan_number
                 existingAadharCards.value = element.aadhar_number
                 existingBankAccountNumbers.value = element.bankaccount_number
+                existingBankNames.value = element.bank_name
+                existingDepartments.value = element.department_name
+                existingOfficialEmails.value = element.official_mail
 
             });
         })
@@ -250,6 +314,19 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         else e.preventDefault(); // If not match, don't add to input text
     }
 
+    const isBankExists = (e) => {
+        let bankName = e.toUpperCase()
+        return existingBankNames.value.includes(bankName) ? true : false
+    }
+
+    const isDepartmentExists = (e) => {
+        return existingDepartments.value.includes(e) ? true : false
+    }
+
+    const isOfficialMailExists = (e) => {
+        return existingOfficialEmails.value.includes(e) ? true : false
+    }
+
     const getValidationMessages = (data) => {
         let errorMessages = [];
         const digitRegexp = /\w*\d{1,}\w*/;
@@ -280,6 +357,106 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         return errorMessages;
     }
+
+
+
+
+    //  Compensatory Calculation
+
+
+
+    const compensatory_calculation = (total_ctc) => {
+
+        let basic = (total_ctc * 50) / 100;
+        let hra = (basic * 50) / 100;
+        let special_allowance = basic - hra;
+
+        let actual_gross = basic + hra + special_allowance;
+
+        let format = {
+            basic: basic,
+            hra: hra,
+            special: special_allowance,
+            gross: actual_gross,
+            epf_employer_contribution: epf_esic_calculation(actual_gross, hra).epf_employer_contribution,
+            epf_employee: epf_esic_calculation(actual_gross, hra).epf_employee,
+            esic_employer_contribution: epf_esic_calculation(actual_gross, hra).esic_employer_contribution,
+            esic_employee: epf_esic_calculation(actual_gross, hra).esic_employee,
+            total_ctc: gross_calculation(actual_gross, epf_esic_calculation(actual_gross, hra).epf_employer_contribution, epf_esic_calculation(actual_gross, hra).esic_employer_contribution),
+            net_income: net_calculation(actual_gross, epf_esic_calculation(actual_gross, hra).epf_employee, epf_esic_calculation(actual_gross, hra).esic_employee)
+        }
+
+        // console.log(format);
+        return format
+
+    };
+
+    const epf_esic_calculation = (gross, hra) => {
+
+        let EpfCalculation = gross - hra;
+
+        // console.log("EpfCalculation:" + EpfCalculation);
+
+        let epf_esic = {
+
+            epf_employer_contribution: "",
+            epf_employee: "",
+            esic_employer_contribution: "",
+            esic_employee: "",
+        }
+
+        if (EpfCalculation < 15000) {
+            epf_esic.epf_employer_contribution = Math.floor(EpfCalculation * 12 / 100);
+            epf_esic.epf_employee = Math.floor(EpfCalculation * 12 / 100);
+        } else if (EpfCalculation > 15000) {
+            let epfConstant = 1800;
+            epf_esic.epf_employee = epfConstant;
+            epf_esic.epf_employer_contribution = epfConstant;
+        }
+
+        if (gross <= 21000) {
+            epf_esic.esic_employer_contribution = Math.floor((gross * 3.25) / 100);
+            epf_esic.esic_employee = Math.floor((gross * 0.75) / 100);
+        } else if (gross > 21000) {
+            console.log(gross);
+            let EsicConstant = 0;
+            epf_esic.esic_employee = EsicConstant;
+            epf_esic.esic_employer_contribution = EsicConstant;
+        }
+        // console.log(epf_esic);
+        return epf_esic
+    };
+
+    const gross_calculation = (gross, epf_employer_contribution, esic_employer_contribution) => {
+        let total_ctc = gross + epf_employer_contribution + esic_employer_contribution
+        // employee_onboarding.insurance +
+        // employee_onboarding.graduity;
+
+        // console.log("ctc" + total_ctc);
+        return total_ctc
+    };
+
+
+    const net_calculation = (gross, epf_employee, esic_employee) => {
+
+        let net_income = gross - epf_employee - esic_employee;
+        // console.log("net Income:" + net_income);
+        return net_income
+    };
+
+    const insurance = (total, insurance) => {
+        let sum = parseInt(total) + parseInt(insurance);
+        console.log("sum " + sum);
+    };
+
+    const graduity = (total, graduity) => {
+        let sum =
+            parseInt(total) +
+            parseInt(graduity);
+
+        console.log(sum);
+    };
+
 
 
 
@@ -324,7 +501,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
-        isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists,
+        isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists,isBankExists,isDepartmentExists,
+        isOfficialMailExists,
 
 
 
@@ -332,13 +510,13 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         // View
 
-        canShowloading,
+        canShowloading, isdups,
 
 
         // Onboarding Helper functions
 
         // Basic Depes
-        getBasicDeps, bankList, country, state, departmentDetails, ManagerDetails, maritalDetails, bloodGroups,
+        getBasicDeps, bankList, country, state, departmentDetails, ManagerDetails, maritalDetails, bloodGroups, compensatory_calculation
 
     }
 })

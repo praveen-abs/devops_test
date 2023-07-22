@@ -1037,6 +1037,9 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         }
     };
 
+    const quickCompens = reactive({
+
+    })
 
     const actual_gross = ref()
 
@@ -1065,6 +1068,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         employee_onboarding.gross = Math.floor(gross);
 
         console.log("Gross", Math.floor(gross));
+
 
         epf_esic_calculation();
 

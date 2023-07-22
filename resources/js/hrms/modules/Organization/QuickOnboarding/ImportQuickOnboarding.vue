@@ -34,8 +34,9 @@
     <div class="table-responsive">
         <p class="font-semibold fs-6">Original data:</p>
         <DataTable class="py-4" :value="useStore.EmployeeQuickOnboardingSource" tableStyle="min-width: 50rem"
-            responsiveLayout="scroll" editMode="cell" @cell-edit-complete="onCellEditComplete"
-            v-if="useStore.EmployeeQuickOnboardingSource" :rows="useStore.EmployeeQuickOnboardingSource.length">
+            responsiveLayout="scroll" editMode="cell" @cell-edit-complete="onCellEditComplete" stateStorage="session"
+            stateKey="dt-state-demo-session" v-if="useStore.EmployeeQuickOnboardingSource"
+            :rows="useStore.EmployeeQuickOnboardingSource.length">
 
 
             <Column v-for="col of  useStore.EmployeeQuickOnboardingDynamicHeader " :key="col.title" :field="col.title"
@@ -43,7 +44,7 @@
 
                 <template #body="{ data, field }">
                     <div v-if="field == 'Employee code'"
-                        :class="[!useStore.findDuplicate(data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        :class="[useStore.findDuplicate(data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
@@ -85,7 +86,7 @@
                     </p>
 
                     <p v-else-if="field == 'Bank Name'"
-                        :class="[useStore.isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.isLetter(data['Bank Name']) || !useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank Name'] }}
                     </p>
@@ -113,9 +114,47 @@
                         class="font-semibold fs-6">
                         {{ data['Bank ifsc'].toUpperCase() }}
                     </p>
+                    <p v-else-if="field.includes('Department')"
+                        :class="[!useStore.isDepartmentExists(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Department'] }}
+                    </p>
+                    <p v-else-if="field.includes('Official Mail')"
+                        :class="[useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Official Mail'] }}
+                    </p>
+
+                    <p v-else-if="field.includes('Basic')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).basic }}
+                    </p>
+                    <p v-else-if="field.includes('HRA')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).hra }}
+                    </p>
+                    <p v-else-if="field.includes('Special Allowance')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).special }}
+                    </p>
+                    <p v-else-if="field.includes('EPF Employer Contribution')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).epf_employer_contribution }}
+                    </p>
+                    <p v-else-if="field.includes('ESIC Employer Contribution')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).esic_employer_contribution }}
+                    </p>
+                    <p v-else-if="field.includes('EPf Employee')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).epf_employee }}
+                    </p>
+                    <p v-else-if="field.includes('ESIC Employee')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).esic_employee }}
+                    </p>
+                    <p v-else-if="field.includes('Net Income')" class="font-semibold fs-6">
+                        {{ useStore.compensatory_calculation(data['Total CTC']).net_income }}
+                    </p>
+
+
                     <p v-else class="font-semibold fs-6">
                         {{ data[field] }}
                     </p>
+
                 </template>
                 <template #editor="{ data, field }">
                     <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
@@ -135,7 +174,6 @@
             </template>
         </DataTable>
     </div>
-    <button class="btn btn-primary" @click="download">Down</button>
 </template>
 
 
@@ -176,6 +214,8 @@ const checkingNonEditableFields = (e) => {
 
 
 const onCellEditComplete = (event) => {
+
+    useStore.isdups()
 
 
     useStore.findDuplicate(useStore.EmployeeQuickOnboardingDynamicHeader)
