@@ -723,6 +723,49 @@ class VmtSalaryAdvanceService
             }
     }
 
+    public function salAdvAmtApprovedEmp(){
+
+           $get_details =  VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.id','=','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
+           ->where('sal_adv_crd_sts','0')->get();
+
+        //    dd($get_details);
+
+           $getsaldetails = [];
+           foreach($get_details as $single_details){
+
+            $simam['user_id'] = $single_details->user_id;
+            $simam['request_id'] = $single_details->request_id;
+            $simam['eligible_amount'] = $single_details->eligible_amount;
+            $simam['borrowed_amount'] = $single_details->borrowed_amount;
+            $simam['requested_date'] = $single_details->requested_date;
+            $simam['dedction_date'] = $single_details->dedction_date;
+            $simam['json_flow'] = json_decode($single_details->emp_approver_flow,true);
+
+                array_push($getsaldetails,$simam);
+           }
+
+
+           $res11 = [];
+           foreach($getsaldetails as $single_getdetails){
+
+            for($i=0; $i<count($single_getdetails['json_flow']); $i++){
+
+                if($single_getdetails['json_flow'][$i]['status'] == 1){
+
+                    array_push($res11,$single_getdetails);
+                }
+
+            }
+
+    }
+    dd($res11);
+
+
+
+    }
+
+
+
 
     public function saveIntersetAndIntersetFreeLoanSettings(
         $loan_type,

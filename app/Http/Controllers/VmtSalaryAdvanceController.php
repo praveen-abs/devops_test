@@ -102,6 +102,11 @@ class VmtSalaryAdvanceController extends Controller
 
         return $vmtSalaryAdvanceService->salAdvSettingDelete();
     }
+    public function salAdvAmtApprovedEmp(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->salAdvAmtApprovedEmp();
+    }
 
 
     public function saveTravelAdvanceSettings(Request $request)
