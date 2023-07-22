@@ -1656,6 +1656,7 @@ class VmtSalaryAdvanceService
             $temp_ar['client_id'] = $single_settings->client_id;
             $temp_ar['client_name'] = $single_settings->client_name;
             $temp_ar['record_id'] = $single_settings->loan_id;
+            $temp_ar['Active'] = $single_settings->active;
             if ($single_settings->loan_applicable_type == 'percnt') {
                 $temp_ar['loan_type'] = 'Percentage Of CTC';
                 $temp_ar['perct'] = $single_settings->percent_of_ctc;
@@ -1666,7 +1667,7 @@ class VmtSalaryAdvanceService
             if ($single_settings->deduction_starting_months < 2) {
                 $temp_ar['dedction_period'] = 'Deduct the amount in the Upcomming Payroll';
             } else {
-                $temp_ar['dedction_period'] = 'Deduct the amount in the Upcomming' . $single_settings->deduction_starting_months . 'Payroll';
+                $temp_ar['dedction_period'] = 'Deduct the amount in the Upcomming ' . $single_settings->deduction_starting_months . ' Payroll';
             }
             $temp_ar['setting_prev_details'] = $single_settings;
             array_push($response, $temp_ar);
