@@ -49,6 +49,7 @@
                             @change="selectClientId('int_free_loan')" />
                     </div>
                 </div>
+                {{ salaryStore.interestFreeLoanHistory }}
 
                 <div class="row ml-1 mr-3 mt-2 ">
 
