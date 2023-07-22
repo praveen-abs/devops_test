@@ -177,6 +177,9 @@ const checkingNonEditableFields = (e) => {
 
 const onCellEditComplete = (event) => {
 
+
+    useStore.findDuplicate(useStore.EmployeeQuickOnboardingDynamicHeader)
+
     useStore.errorRecordsCount.splice(0, useStore.errorRecordsCount.length)
 
     let { data, newValue, field } = event;

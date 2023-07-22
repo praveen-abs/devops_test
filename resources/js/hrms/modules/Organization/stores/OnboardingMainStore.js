@@ -57,6 +57,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 
 
+            // Dynamically Find header's from imported excel sheet
+
+            let excelHeaders = []
             const headers = {};
             const range = XLSX.utils.decode_range(firstSheet['!ref']);
             let C;
@@ -69,11 +72,19 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 let hdr = "UNKNOWN " + C; // <-- replace with your desired default
                 if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
                 headers[C] = hdr;
+
+                let form = {
+                    title: headers[C],
+                    value: headers[C]
+                }
+
+                excelHeaders.push(form)
+
             }
-            console.log(headers);
+            EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
 
             // header: 1 instructs xlsx to create an 'array of arrays'
-            var result = XLSX.utils.sheet_to_json(firstSheet, { raw: false, header: 1, dateNF: "dd/mm/yyyy" });
+            // var result = XLSX.utils.sheet_to_json(firstSheet, { raw: false, header: 1, dateNF: "dd/mm/yyyy" });
 
             const jsonData = workbook.SheetNames.reduce((initial, name) => {
                 const sheet = workbook.Sheets[name];
@@ -81,74 +92,20 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 return initial;
             }, {});
 
+            const importedExcelKey = Object.keys(jsonData)[0]
+
             EmployeeQuickOnboardingSource.value = jsonData.Sheet1
             totalRecordsCount.value.push(EmployeeQuickOnboardingSource.value)
-            errorlist.value.push(Object.values(EmployeeQuickOnboardingSource.value))
-            console.log(errorlist.value);
 
             // console.log(jsonData['Sheet1']);
 
-            for (let index = 0; index < jsonData['Sheet1'].length; index++) {
-                console.log("jsonData['Sheet1'].length :", jsonData['Sheet1'].length);
-
+            for (let index = 0; index < jsonData[importedExcelKey].length; index++) {
+                console.log("jsonData['Sheet1'].length :", jsonData[importedExcelKey].length);
 
                 const validationResult = getValidationMessages(
                     EmployeeQuickOnboardingSource.value[index]
                 );
             }
-
-            let excelRowData = []
-
-            jsonData.Sheet1.forEach(element => {
-
-                let format = {
-                    title: Object.keys(element),
-                    value: Object.values(element)
-                }
-                excelRowData.push(format)
-
-            });
-
-            let excelHeaders = []
-            let RowIndex = 0
-            let initialColumnValue = 0
-
-
-
-            for (let i = 0; i < excelRowData.length; i++) {
-                const singleRowData = excelRowData[i];
-                RowIndex = i
-
-                for (let j = 0; j < singleRowData.value.length; j++) {
-                    const value = singleRowData.value[j];
-                    const title = singleRowData.title[j];
-
-                    let form = {
-                        title: title,
-                        value: value
-                    }
-
-                    if (RowIndex == initialColumnValue) {
-                        excelHeaders.push(form)
-                    }
-
-                    /*
-                To Avoid duplicate Header insert
-                  - only allow first index object headers
-                 */
-
-
-                    // if (RowIndex == initialColumnValue) {
-                    //     excelHeaders.push(form)
-                    // }
-
-
-                }
-            }
-
-            EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
-
-
         };
         reader.readAsArrayBuffer(file);
     }
@@ -159,7 +116,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const findDuplicate = (array) => {
         let result = array.length !== new Set(array).size ? true : false;
         console.log("Selected row contains dup's : " + result);
-
         return result
     }
 
@@ -276,8 +232,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         }
     }
 
-
-
     const isEnteredNos = (e) => {
         let char = String.fromCharCode(e.keyCode); // Get the character
         if (/^[0-9]+$/.test(char)) return true; // Match with regex
@@ -296,12 +250,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         else e.preventDefault(); // If not match, don't add to input text
     }
 
-
-
-
-    const errorlist = ref([])
-
-
     const getValidationMessages = (data) => {
         let errorMessages = [];
         const digitRegexp = /\w*\d{1,}\w*/;
@@ -310,8 +258,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-        console.log("Usercode:" + data["Employee code"] + isUserExists(data["Employee Code"]));
-        console.log("Already" + data["Employee code"] + Object.values(data).includes(data["Employee Code"]));
+        // console.log("Usercode:" + data["Employee code"] + isUserExists(data["Employee Code"]));
+        // console.log("Already" + data["Employee code"] + Object.values(data).includes(data["Employee Code"]));
 
         if (Object.values(data).includes(data["Employee Code"]) || !isUserExists(data["Employee code"])) {
             errorRecordsCount.value.push('invalid')
@@ -335,11 +283,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
 
 
-
-
-
-
-
     const bankList = ref();
     const country = ref();
     const departmentDetails = ref();
@@ -347,8 +290,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const ManagerDetails = ref();
     const maritalDetails = ref();
     const bloodGroups = ref();
-
-
 
 
 
@@ -391,7 +332,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         // View
 
-        canShowloading, errorlist,
+        canShowloading,
 
 
         // Onboarding Helper functions
