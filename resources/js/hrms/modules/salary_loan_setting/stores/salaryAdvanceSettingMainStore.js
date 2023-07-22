@@ -2,7 +2,6 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { useToast } from "primevue/usetoast";
 import { inject, reactive, ref } from "vue";
-// import {}
 
 /*
     This Pinia code will store the ajax values of the
@@ -27,8 +26,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     //   Salary Advance Begins
 
     // Loading Service
-
     const canShowLoading = ref(false)
+
+    // Notification service
     const swal = inject("$swal");
 
 
@@ -36,6 +36,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Initially Disabled
     const create_new_from = ref(1);
     const isSalaryAdvanceFeatureEnabled = ref(0)
+
+    // Dropdown for filter employee'
+
     const dropdownFilter = ref();
     const selectedFilterOptions = reactive({
         department_id: '',
@@ -63,6 +66,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // Eligible Employees
 
     const eligbleEmployeeSource = ref();
+
+    const SalaryEmpDetails = ref();
 
     // Get filter
 
@@ -139,16 +144,35 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         payroll_cycle: ''
     })
 
-    function reset() {
-        salaryStore.sa.perOfSalAdvance = ""
-        salaryStore.sa.SA = ""
-        salaryStore.sa.cusPerOfSalAdvance = ""
-        salaryStore.sa.deductMethod = ""
-        salaryStore.sa.cusDeductMethod = ""
-        salaryStore.sa.approvalflow = ""
-        salaryStore.sa.selectClientID = ""
-        salaryStore.sa = ""
+    function sal_adv_reset() {
+       sa.SA=''
+       sa.isSalaryAdvanceEnabled=''
+       sa.eligibleEmployee=''
+       sa.perOfSalAdvance=''
+       sa.cusPerOfSalAdvance=''
+       sa.deductMethod=''
+       sa.cusDeductMethod=''
+       sa.approvalflow=''
+       sa.selectClientID=''
+       sa.payroll_cycle=''
+       ifl.approvalflow = ""
+       ifl.selectedOption1 = ""
+       ifl.selectedOption2 = ""
+       ifl.selectedOption3 = ""
+       selectedOption1.value = ""
+       selectedOption2.value = ""
+       selectedOption3.value = ""
+       EnableAndDisable.value = ""
+       resetFilters.value= ""
+       eligbleEmployeeSource.value = ""
+       SalaryEmpDetails.value = ""
     }
+
+    if(!sa.eligibleEmployee){
+        console.log("testing simma :",sa.eligibleEmployee);
+    }
+
+
 
 
 
@@ -214,7 +238,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         }).finally(() => {
 
             canShowLoading.value = false;
-            approvalFormat.splice(0, approvalFormat.length)
+            approvalFormat.splice(0, approvalFormat.length);
+            sal_adv_reset();
 
         })
         console.log(sa);
@@ -274,6 +299,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     }
 
+   
+
 
     //   Salary Advance Ends
 
@@ -313,27 +340,28 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     // deduction_starting_months
     // max_loan_limit
 
-    function resetIfl(){
-        ifl.name= ''
-        ifl.selectClientID=""
-        ifl.minEligibile=""
-        ifl.availPerInCtc=""
-        ifl.deductMethod=""
-        ifl.precent_Or_Amt=""
-        ifl.deductMethod= ""
-        ifl.max_loan_limit=""
-        ifl.cusDeductMethod=""
-        ifl.maxTenure=""
-        ifl.payroll_cycle=""
-        ifl.approvalflow= ""
-        ifl.selectedOption1=""
-        ifl.selectedOption2=""
-        ifl.selectedOption3=""
+    function resetIfl() {
+        ifl.name = ''
+        ifl.selectClientID = ""
+        ifl.minEligibile = ""
+        ifl.availPerInCtc = ""
+        ifl.deductMethod = ""
+        ifl.precent_Or_Amt = ""
+        ifl.deductMethod = ""
+        ifl.max_loan_limit = ""
+        ifl.cusDeductMethod = ""
+        ifl.maxTenure = ""
+        ifl.payroll_cycle = ""
+        ifl.approvalflow = ""
+        ifl.selectedOption1 = ""
+        ifl.selectedOption2 = ""
+        ifl.selectedOption3 = ""
         selectedOption1.value = ""
         selectedOption2.value = ""
         selectedOption3.value = ""
         EnableAndDisable.value = ""
     }
+
 
 
     const saveInterestfreeLoan = () => {
@@ -479,21 +507,21 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectedOption1: selectedOption1,
     });
 
-    function RestLwif(){
+    function RestLwif() {
         lwif.name = ""
-        lwif.selectClientID= ''
-        lwif.minEligibile= ''
-        lwif.availPerInCtc= ''
-        lwif.deductMethod= ''
-        lwif.precent_Or_Amt= ''
-        lwif.deductMethod= ""
-        lwif.max_loan_limit= ''
-        lwif.cusDeductMethod= ''
-        lwif.maxTenure= ''
-        lwif.loan_amt_interest= ''
-        lwif.loan_type= ""
-        lwif.approvalflow= ""
-        lwif.selectedOption1= ""
+        lwif.selectClientID = ''
+        lwif.minEligibile = ''
+        lwif.availPerInCtc = ''
+        lwif.deductMethod = ''
+        lwif.precent_Or_Amt = ''
+        lwif.deductMethod = ""
+        lwif.max_loan_limit = ''
+        lwif.cusDeductMethod = ''
+        lwif.maxTenure = ''
+        lwif.loan_amt_interest = ''
+        lwif.loan_type = ""
+        lwif.approvalflow = ""
+        lwif.selectedOption1 = ""
     }
 
     const saveLoanWithInterest = () => {
@@ -715,7 +743,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 isInterestFreeLoanFeature.value = res.data.status;
             }
             if (status === 'loan_with_int') {
-                isInterestFreeLoanFeature.value = res.data.status;
+                isLoanWithInterestFeature.value = res.data.status;
             }
         }).finally(() => {
             canShowLoading.value = false;
@@ -732,19 +760,20 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         })
     }
     const interestFreeLoanHistory = ref();
+    const interestwithLoanHistory =ref();
 
-    async function getInterestFreeLoanHistory(Status){
+    async function getInterestFreeAndInterestWithLoanHistory(Status) {
         let status = Status;
         axios.post('/interest-and-interestfree-loan-settings-details',
-        {
-            Status:status
-        }
+            {
+                Status: status
+            }
         ).then(res => {
             if (status === 'InterestFreeLoan') {
                 interestFreeLoanHistory.value = res.data.settings;
             }
             if (status === 'InterestWithLoan') {
-                // interestFreeLoanHistory.value = res.data;
+                interestwithLoanHistory.value = res.data.settings;
             }
             // interestFreeLoanHistory.value = res.data.data
         })
@@ -765,7 +794,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         // SalaryAdvanceFeature
 
         isSalaryAdvanceFeatureEnabled, eligibleSalaryAdvanceEmployeeData, sa, SalaryAdvanceFeatureApprovalFlow, saveSalaryAdvanceFeature, create_new_from, getCurrentStatus, client_name_status, sendClient_code, salaryAdvanceHistory, salaryAdvanceSettingsDetails,
-
+         SalaryEmpDetails,
         // Interest Free Loan
 
         isInterestFreeLoanFeature, ifl, saveInterestfreeLoan, deduction_starting_months,
@@ -778,11 +807,11 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif, saveLoanWithInterest, blink_UI, swalFunction, reset ,resetIfl , RestLwif
+        isLoanWithInterestFeature, lwif, saveLoanWithInterest, blink_UI, swalFunction, sal_adv_reset, resetIfl, RestLwif
         ,
 
         // get Interest Free Loan History
-        getInterestFreeLoanHistory,interestFreeLoanHistory,
+        getInterestFreeAndInterestWithLoanHistory, interestFreeLoanHistory,interestwithLoanHistory,
 
         EnableAndDisable,
 
