@@ -7,7 +7,7 @@
             <div class=" d-flex justify-content-end align-items-center" style="width: 200px;">
                 <button class="mx-4 " @click="view_Details = 1" v-if="view_Details == 2"><i
                         class="pi pi-times fs-5"></i></button>
-                <button class="underline text-blue-700 fs-5 font-semibold " style="color:#0873CD" @click="view_Details = 2"
+                <button class="underline text-blue-700 text-[16px] font-semibold " style="color:#0873CD" @click="view_Details = 2"
                     v-if="view_Details == 1">View Details</button>
             </div>
 
@@ -84,14 +84,14 @@
             </div>
         </div>
 
-        <h1 v-if="view_Details == 2" class="fs-4 text-gray-900 mt-4 ml-2 from-stone-600">Bank Transfer</h1>
+        <h1 v-if="view_Details == 2" class="fs-4 text-gray-900 mt-4 ml-2" style="font-weight: 600;">Bank Transfer</h1>
 
         <div style="position: relative;">
 
             <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
-            <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
+            <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed border-none border-0" id="pills-tab" role="tablist">
                 <li class=" nav-item" role="presentation">
-                    <a class="px-2 position-relative" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                    <a class="px-2 position-relative border-0" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
                         aria-selected="true" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']">
                         SUMMARY
                     </a>
@@ -99,8 +99,8 @@
                     <div v-else class=" border-3 h-1 rounded-l-3xl border-gray-400"></div>
                 </li>
 
-                <li class=" nav-item position-relative" role="presentation">
-                    <a class=" text-center px-2 " id="" data-bs-toggle="pill" href="" @click="activetab = 2"
+                <li class=" nav-item position-relative  border-0" role="presentation">
+                    <a class=" text-center px-2  border-0 " id="" data-bs-toggle="pill" href="" @click="activetab = 2"
                         :class="[activetab === 2 ? 'active ' : '']" role="tab" aria-controls="" aria-selected="true">
                         EMPLOYEES
                     </a>
@@ -213,7 +213,7 @@ const btn_download = ref(false);
     polyline,
     path
       stroke: #0077FF
-      stroke-width: 1
+      stroke-width: 2
       stroke-linecap: round
       stroke-linejoin: round
       transition: all .3s ease
