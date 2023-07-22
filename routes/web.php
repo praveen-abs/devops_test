@@ -862,6 +862,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/showSAsettingsView', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'showSAsettingsView'])->name('showSAsettingsView');
     Route::post('/rejectOrApprovedSaladv', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'rejectOrApprovedSaladv']);
     Route::get('/settingDetails', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'settingDetails']);
+    Route::post('/salAdvSettingEdit', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingEdit']);
+    Route::post('/salAdvSettingDelete', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'salAdvSettingDelete']);
 
     //Travel Advance
 

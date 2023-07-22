@@ -548,6 +548,7 @@ class VmtSalaryAdvanceService
             foreach ($getsetting_details as $single_arr) {
 
                 $res1 = array(
+                    'settings_id' => $single_arr['salary_adv_id'],
                     'settings_name' => $single_arr['settings_name'],
                     'percent_salary_adv' => $single_arr['percent_salary_adv'],
                     'deduction_period_of_months' => $single_arr['deduction_period_of_months'],
@@ -559,8 +560,8 @@ class VmtSalaryAdvanceService
                 foreach ($getdetails as $get_single) {
 
                     if (in_array($get_single['settings_name'], $get_single)) {
-                        $get_details_settings['id'] =  $get_single['id'];
 
+                        $get_details_settings['id'] =  $get_single['id'];
                         $get_details_settings['name'] =  $get_single['name'];
                         $get_details_settings['user_code'] =  $get_single['user_code'];
                         $get_details_settings['department_name'] =  $get_single['department_name'];
@@ -699,6 +700,27 @@ class VmtSalaryAdvanceService
         // dd($getempdetails);
 
         return $getempdetails;
+    }
+
+    public function salAdvSettingEdit($record_id,$user_id){
+
+            foreach($user_id as $single_userid){
+
+              $new_emp_assign = new VmtEmpAssignSalaryAdvSettings;
+              $new_emp_assign->user_id  = $single_userid;
+              $new_emp_assign->salary_adv_id  = $record_id;
+              $new_emp_assign->save();
+
+            }
+    }
+    public function salAdvSettingDelete($user_id){
+
+            foreach($user_id as $single_userid){
+
+              $new_emp_assign = VmtEmpAssignSalaryAdvSettings::where('user_id',$single_userid)->first();
+              $new_emp_assign->delete();
+
+            }
     }
 
 
@@ -1682,7 +1704,7 @@ class VmtSalaryAdvanceService
                 }
                 $loan_detail->payroll_date =Carbon::parse( $deduction_starting_month)->addMonth($i);
                 $loan_detail->save();
-                 
+
                // $posts = VmtInterestFreeLoanTransaction::where('status', '=', 1)->whereDate('created_at', '=', $month)->get();
             }
             //dd(gettype($deduction_starting_month));

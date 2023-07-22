@@ -91,6 +91,18 @@ class VmtSalaryAdvanceController extends Controller
         return $vmtSalaryAdvanceService->getEmpsaladvDetails($request->user_id);
     }
 
+    public function salAdvSettingEdit(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->salAdvSettingEdit();
+    }
+
+    public function salAdvSettingDelete(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->salAdvSettingDelete();
+    }
+
 
     public function saveTravelAdvanceSettings(Request $request)
     {
