@@ -1,11 +1,15 @@
 <template>
-    <div class=" mt-4 h-full">
-        <div class="card-body d-flex justify-content-between align-items-center  py-2 h-full " >
-            <div class=" shadow-sm bg-white rounded-md  mr-2 h-[150px] w-[383px] ">
-                <div class=" bg-gray-200 p-2" style="background-color:#E6E6E6;" >
-                    <p class=" fs-5">Bank Transfer</p>
+    <div class="h-full">
+        <div class="card-body d-flex justify-content-between align-items-center  py-2 mt-2 " >
+
+          <div class=" flex justify-start ">
+
+            <div class="">
+              <div class=" shadow-sm bg-white rounded-md  mr-2 h-[150px] w-[320px] 2xl:w-[383px] " >
+                <div class=" h-[50px] px-2 d-flex align-items-center"  style="background-color: #fff" >
+                    <p class=" fs-5 ">Bank Transfer</p>
                 </div>
-                <div class="flex justify-content-between align-items-start p-3 ">
+                <div class="flex justify-content-between align-items-start p-3 h-[135px] rounded-b-md" style="background-color: #E6E6E6;" >
                     <div>
                         <p class="text-[12px] md:text-[13px] xl:text-[16px]">Default Batch for Bank Transfer</p>
                         <p class="text-[12px] md:text-[13px] xl:text-[16px] text-gray-700 mt-2">188 Employees</p>
@@ -14,33 +18,52 @@
                         <button class="bg-gray-200 p-2 rounded-md mt-2 w-[90px]  text-[12px]  xl:text-[13px] " >Not Paid</button>
                     </div>
                 </div>
+              </div>
 
-                <div class=" bg-white shadow-sm p-3">
-                    <p class="text-[14px]  xl:text-[16px] mb-2">Salary to be Paid</p>
-                    <div class=" border-b-2 d-flex justify-content-between align-items-center w-full pb-2">
-                        <!-- <div class=" d-flex justify-content-between align-items-center "> -->
-                            <p class="text-[13px]  xl:text-[14px] ">Total Employees</p>
-                        <p class=" text-right ">188</p>
-                        <!-- </div> -->
-
-                    </div>
+              <div class=" bg-white shadow-sm p-3 mt-16 h-26  w-[320px] 2xl:w-[383px]">
+                <p class="text-[14px]  xl:text-[16px] mb-2 font-semibold" >Salary to be Paid</p>
+                <div class=" d-flex justify-content-between align-items-center  w-full">
+                    <!-- <div class=" d-flex justify-content-between align-items-center "> -->
+                        <p class="text-[13px]  xl:text-[14px]  text-left font-medium">Total Employees</p>
+                    <p class=" text-right font-semibold">188</p>
+                    <!-- </div> -->
+                </div>
+                <div class="border-b-2 w-full my-[16px]"></div>
+                <div class="grid grid-cols-2 mt-2 ">
+                  <p class=" text-[14px] font-medium" style="color:  #535353;" >Bank Transfer</p>
+                  <p class=" text-[16px] text-right font-semibold">INR 6,40,800</p>
+                  <p class=" text-gray col-span-3 text-center">+</p>
+                  <p class=" text-[14px] font-medium" style="color:  #535353;" >Cash Payment</p>
+                  <p class=" text-[16px] text-right font-semibold">INR 0</p>
+                  <p class=" text-gray col-span-3 text-center">+</p>
+                  <p class=" text-[14px] font-medium" style="color:  #535353;" >cheque Payments</p>
+                  <p class=" text-[16px] text-right font-semibold">INR 0</p>
+                  <p class=" text-gray col-span-3 text-center">=</p>
+                  <p class=" text-[14px] font-medium" style="color:  #535353;" >Salaries to be Paid</p>
+                  <p class=" text-[16px] text-right font-semibold">INR 1,15,40,800</p>
                 </div>
             </div>
-            <div class=" rounded-md w-8  h-full ml-2" style="background-color: #E6E6E6;">
+
+            </div>
+            <!-- tableStyle="min-width: 20rem" -->
+            <div class="w-full ">
+              <div class=" rounded-md  ml-2 w-full  xxl:w-full" style="background-color: #E6E6E6; w-full">
                 <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                                responsiveLayout="scroll">
+                                responsiveLayout="scroll" class=" w-full"  >
                                 <Column selectionMode="multiple" headerStyle="width: 1.5rem" ></Column>
-                                <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
-                                <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
-                                <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
-                                <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
-                                <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
-                                <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
+                                <Column field="user_code" header="Bank Name" style="min-width: 8rem"></Column>
+                                <Column field="user_code" header="Total Amount" style="min-width: 8rem"></Column>
+                                <Column field="name" header="Employees" style="min-width: 8rem"></Column>
+                                <Column field="department_name" header="Download" style="min-width: 8rem"></Column>
                             </DataTable>
             </div>
+
+            </div>
+          </div>
+
         </div>
     </div>
 </template>

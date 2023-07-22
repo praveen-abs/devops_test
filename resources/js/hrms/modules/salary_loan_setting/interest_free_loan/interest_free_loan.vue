@@ -64,13 +64,13 @@
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <div>
-                                <h1 class=" fs-5"> {{
+                                <h1 class=" fs-5" > {{
                                     item.dedction_period }}  months. </h1>
                             </div>
 
                             <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
-                            <h1 class="fs-5" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">{{item.setting_prev_details.max_loan_amount}}</h1>
-                            <!-- {{ item }} -->
+                            <h1 class="fs-5" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">maximum Loan Amount: {{item.setting_prev_details.max_loan_amount}}</h1>
+                          
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ const loanSettings = loanSettingsStore();
 onMounted(() => {
     salaryStore.getClientsName('int_free_loan');
     salaryStore.getCurrentStatus('int_free_loan');
-    salaryStore.getInterestFreeLoanHistory('InterestFreeLoan');
+    salaryStore.getInterestFreeAndInterestWithLoanHistory('InterestFreeLoan');
 })
 const value = ref();
 const options = ref(['Off', 'On']);

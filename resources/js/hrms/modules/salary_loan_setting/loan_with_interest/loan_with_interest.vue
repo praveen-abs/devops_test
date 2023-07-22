@@ -27,7 +27,52 @@
                     your
                     organization.</p>
                     <p class="fs-5 " v-if="salaryStore.isLoanWithInterestFeature == '1' ">Please click the "Disable" button to deactivate the Loan With interest Feature.</p>
+
+                    <div class="row d-flex justify-items-center align-items-center">
+                        <div class="col-3">
+                            <h1 class="fs-4 ">Select organization</h1>
+                        </div>
+    
+                        <div class="col">
+                            <!-- v-model="salaryStore.sa.selectClientID" -->
+                            <!-- {{ salaryStore.client_name_status }} -->
+    
+                            <MultiSelect v-model="salaryStore.client_name_status" :options="salaryStore.ClientsName"
+                                optionLabel="client_name" :trueValue="1" :falseValue="0" optionValue="id"
+                                placeholder="Select Branches" :maxSelectedLabels="3" class="w-full  md:w-18rem"
+                                @change="selectClientId('loan_with_int')" />
+                        </div>
+                    </div>
+
+                    <div class="row ml-1 mr-3 mt-2 ">
+
+
+                        <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
+                            v-for="(item, index) in salaryStore.interestFreeLoanHistory" :key="index">
+                            <!-- {{ }} -->{{ item.settings }}
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <h1 class="  fs-5">Settings Name : {{ item.name }}</h1>
+                             <h1 class=" fs-5">Client Name: {{ item.client_name }}</h1>
+                        
+                                <button class=" underline text-blue-400 fs-5 "
+                                    @click="viewDetails(item.setting_prev_details)">View Details</button>
+                            </div>
+                            <div class="w-100 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h1 class=" fs-5" > {{
+                                        item.dedction_period }}  months. </h1>
+                                </div>
+        
+                                <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
+                                <h1 class="fs-5" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">maximum Loan Amount: {{item.setting_prev_details.max_loan_amount}}</h1>
+                              
+                            </div>
+                        </div>
+                    </div>
             </div>
+
+
+          
 
 
             <div v-if="CreateLoanWithNewFrom == 2">
@@ -50,10 +95,13 @@ import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMai
 import useValidate from '@vuelidate/core';
 import { required, email, minLength, sameAs } from '@vuelidate/validators';
 import  { loanSettingsStore }  from '../stores/loanSettingsStores';
-import  createNewInterestWithloan from './createNewInterestWithloan.vue'
+import  createNewInterestWithloan from './createNewInterestWithloan.vue';
 
 const salaryStore = salaryAdvanceSettingMainStore();
 const loanStores = loanSettingsStore();
+salaryStore.getClientsName('loan_with_int');
+salaryStore.getCurrentStatus('loan_with_int');
+salaryStore.getInterestFreeAndInterestWithLoanHistory('InterestFreeLoan');
 
 const opt = ref()
 const op = ref([
@@ -93,6 +141,10 @@ const submitForm = () => {
         console.log('Form failed submitted.')
     }
 
+}
+
+function selectClientId(data) {
+    salaryStore.sendClient_code(data);
 }
 
 </script>
