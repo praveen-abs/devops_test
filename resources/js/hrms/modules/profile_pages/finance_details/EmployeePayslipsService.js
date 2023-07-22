@@ -56,25 +56,13 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
     }
 
-    function downloadFileObject(base64String) {
+    function downloadFileObject(base64String,employeeName ,payslipMonth) {
         const linkSource = base64String;
         const downloadLink = document.createElement("a");
-        const fileName = "convertedPDFFile.pdf";
+        const fileName = `${employeeName}-${payslipMonth}.pdf`;
         downloadLink.href = linkSource;
         downloadLink.download = fileName;
         downloadLink.click();
-    }
-
-    function downloadAsPDF(pdf) {
-
-        let base64String = "JVBERi0xLjcKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZwovT3V0bGluZXMgMiAwIFIKL1BhZ2VzIDMgMCBSID4"
-        if (base64String.startsWith("JVB")) {
-            base64String = "data:application/pdf;base64," + base64String;
-            downloadFileObject(base64String);
-        } else if (base64String.startsWith("data:application/pdf;base64")) {
-            downloadFileObject(base64String);
-        }
-
     }
 
     async function getEmployeePayslipDetailsAsPDF(user_code, payroll_month) {
@@ -99,9 +87,11 @@ export const useEmployeePayslipStore = defineStore("employeePayslipStore", () =>
 
                 if(response.data.data){
                     let base64String = response.data.data
+                    let employeeName = response.data.emp_name
+                    let payslipMonth = response.data.emp_month
                     if (base64String.startsWith("JVB")) {
                         base64String = "data:application/pdf;base64," + base64String;
-                        downloadFileObject(base64String);
+                        downloadFileObject(base64String,employeeName,payslipMonth);
                     } else if (base64String.startsWith("data:application/pdf;base64")) {
                         downloadFileObject(base64String);
                     }
