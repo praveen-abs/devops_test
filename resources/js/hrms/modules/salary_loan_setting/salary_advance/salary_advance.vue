@@ -179,10 +179,14 @@
                                 :value="salaryStore.eligbleEmployeeSource"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
-                                v-model:selection="salaryStore.sa.eligibleEmployee"
+                            
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
-                                <Column selectionMode="multiple" headerStyle="width: 1.5rem" v-if="!view_details"></Column>
+                                <Column selectionMode="multiple" headerStyle="width: 1.5rem"  >
+                                    <template  #body="slotProps">
+                                        <Checkbox  @change="sendEmpDetails(slotProps.data) " :binary="true" />
+                                    </template>
+                                </Column>
                                 <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
                                 <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
                                 <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
@@ -190,6 +194,24 @@
                                 <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
                                 <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
                             </DataTable>
+
+                            {{ salaryStore.SalaryEmpDetails  }}
+                             <h1>details</h1>
+                             {{ salaryStore.sa.eligibleEmployee }}
+                            <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
+                            :value="salaryStore.SalaryEmpDetails" v-if="view_details" 
+                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                            :rowsPerPageOptions="[5, 10, 25]" 
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
+                            responsiveLayout="scroll">
+                            <!-- <Column selectionMode="multiple" headerStyle="width: 1.5rem"></Column> -->
+                            <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
+                            <Column field="name" header="Employee Name" style="min-width: 12rem"></Column>
+                            <Column field="department_name" header="Department " style="min-width: 12rem"></Column>
+                            <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
+                            <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
+                            <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
+                        </DataTable>
                         </div>
                     </div>
                 </div>
@@ -393,15 +415,15 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="float-right" v-if="salaryStore.create_new_from == '2'">
-                    <button class="btn btn-border-primary" @click="salaryStore.create_new_from = 1" v-if="!view_details"  >  Cancel</button>
-                    <button class="btn btn-border-primary mr-5" @click="salaryStore.create_new_from = 1" v-if="view_details" >Back</button>
-                    <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save Changes</button>
+                <div class=" d-flex justify-content-center" v-if="salaryStore.create_new_from == '2'" >
+                    <button class="btn btn-border-primary" @click="back_btn" v-if="!view_details"  >Cancel</button>
+                    <button class="btn btn-border-primary mr-5" @click="back_btn" v-if="view_details" >Back</button>
+                    <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 0 && view_details " @click="EnableDisable(1)">Enable</button>
+                    <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1 && view_details" @click="EnableDisable(0)">Disable</button>
+                    <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save </button>
                 </div>
             </div>
         </div>
-
-
     </div>
     <!-- {{ salaryStore.selectedOption3 }} -->
 </template>
@@ -522,6 +544,7 @@ let view_details = ref();
 
 const Name = [];
 
+
 function viewDetails(val) {
     view_details.value  = val;
     console.log(view_details);
@@ -530,11 +553,11 @@ function viewDetails(val) {
 
     salaryStore.sa.SA = val.settings.view_details.settings_name;
     salaryStore.sa.isSalaryAdvanceEnabled = val.settings.view_details;
-    salaryStore.sa.eligibleEmployee = val.settings.view_details;
+    // salaryStore.sa.eligibleEmployee = val.settings.view_details;
     salaryStore.sa.perOfSalAdvance = val.settings.view_details.percent_salary_adv;
     salaryStore.sa.cusPerOfSalAdvance = val.settings.view_details
     salaryStore.sa.payroll_cycle = val.settings.view_details.can_borrowed_multiple;
-    salaryStore.eligbleEmployeeSource = val.settings.view_details.assigned_emp
+    salaryStore.SalaryEmpDetails = val.settings.view_details.assigned_emp ; 
 
     val.settings.view_details.approver_flow.forEach(element => {
 
@@ -568,6 +591,23 @@ function viewDetails(val) {
     }
 
 }
+
+
+function back_btn(){
+    salaryStore.sal_adv_reset();
+    salaryStore.create_new_from = 1;
+}
+
+function sendEmpDetails(){
+    salaryStore.SalaryEmpDetails.push(salaryStore.sa.eligibleEmployee);
+}
+// if(salaryStore.sa.eligibleEmployee){
+
+//     salaryStore.SalaryEmpDetails.push(Object.values(salaryStore.sa.eligibleEmployee))
+//     console.log("testings simma");
+
+// }
+
 
 </script>
 <style>

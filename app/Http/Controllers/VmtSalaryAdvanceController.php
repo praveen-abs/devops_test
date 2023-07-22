@@ -344,8 +344,8 @@ class VmtSalaryAdvanceController extends Controller
 
     public function interestAndInterestfreeLoanSettingsDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        //$loan_type = $request->loan_type;
-        $loan_type = 'InterestFreeLoan';
+        $loan_type = $request->Status;
+      //  $loan_type = 'InterestFreeLoan';
         $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanSettingsDetails($loan_type);
         return  $response;
     }
