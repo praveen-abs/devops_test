@@ -43,13 +43,13 @@
                 style="min-width: 12rem;" :header="col.title">
 
                 <template #body="{ data, field }">
-                    <div v-if="field == 'Employee code'"
-                        :class="[useStore.findDuplicate(data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                    <div v-if="field.includes('Employee Code')"
+                        :class="[!useStore.findDuplicate(data['Employee Code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
                                 v-if="!useStore.isUserExists(data['Employee code'])"></i>
-                            {{ data['Employee code'] }}
+                            {{ data['Employee Code'] }}
                         </p>
                     </div>
                     <p v-else-if="field == 'Aadhar'"

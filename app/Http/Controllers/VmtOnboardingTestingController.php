@@ -313,13 +313,15 @@ try{
             $data = $request->all();
             $data_array =array();
             $onboard_data =array();
-            foreach ($onboard_data  as $key => $excelRowdata) {
+            foreach ($data  as $key => $excelRowdata) {
 
-            $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($data[0]));
-            $onboard_data[] = array_combine($processed_data,array_values( $data[0]));
-            array_push();
+            $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($excelRowdata));
+
+            $Emp_data = array_combine(array_map('strtolower', $processed_data),array_values($excelRowdata));
+
+            array_push($onboard_data,$Emp_data);
             }
-
+           // dd($onboard_data);
             foreach ($onboard_data  as $key => $excelRowdata) {
 
                             $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$VmtOnboardingTestingService);
@@ -375,13 +377,18 @@ try{
         public function storeBulkOnboardEmployees(Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService){
 
             $data = $request->all();
+            $data_array =array();
+            $onboard_data =array();
+            foreach ($data  as $key => $excelRowdata) {
 
-            $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($data[0]));
+            $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($excelRowdata));
 
-            $onboard_data = array_combine($processed_data,array_values( $data[0]));
+            $Emp_data = array_combine(array_map('strtolower', $processed_data),array_values($excelRowdata));
 
-            foreach ($onboard_data[0]  as $key => $excelRowdata) {
+            array_push($onboard_data,$Emp_data);
+            }
 
+            foreach ($onboard_data  as $key => $excelRowdata) {
                             $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata,$VmtOnboardingTestingService);
                             array_push($data_array, $rowdata_response);
                         }
