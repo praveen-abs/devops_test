@@ -63,7 +63,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         $sheet->getStyle('A1:AG1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
         $sheet->getStyle('A1:AG1')->getAlignment()->setHorizontal('center');
 
-    
+
     }
 
     public function headings(): array
@@ -143,7 +143,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         return [];
     }
 
-   
+
 
 
     public function registerEvents(): array
@@ -162,7 +162,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 //     )
                 // );
 
-               
+
 
 
 
@@ -265,7 +265,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 // $validation_mangr_code->setPromptTitle('Select Manager Code from list');
                 // $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
                 // $validation_mangr_code->setFormula1($manager_code_option);
-                
+
                 //set dropdown list for handicapped column
                 $validation_Q = $event->sheet->getCell("U2")->getDataValidation();
                 $validation_Q->setType(DataValidation::TYPE_LIST);
@@ -312,7 +312,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                     $event->sheet->getColumnDimension($column)->setAutoSize(true);
                 }
 
-                $event->sheet->getDelegate()->getColumnDimension('AG')->setVisible(false);
+               // $event->sheet->getDelegate()->getColumnDimension('AG')->setVisible(false);
                 $event->sheet->getDelegate()->getColumnDimension('AH')->setVisible(false);
                 $event->sheet->getDelegate()->getColumnDimension('AI')->setVisible(false);
                 $event->sheet->getDelegate()->getColumnDimension('AJ')->setVisible(false);
