@@ -463,15 +463,11 @@
 //         dd($data);
 
         //
-
-        $my_array = array(2, "a", null, 2.5, 'NULL', 0, "", 8);
-
- function null_Check($data) {
-    return !is_null($data) && $data !='NULL';
-
-}
-dd(array_filter($employees_aadhar_number, "null_Check"));
-
+        $string = array_combine(
+    ['newKey1', 'newKey2', 'newKey3'],
+    array_values(['oldKey1' => 1, 'oldKey2' => 2, 'oldKey3' => 3])
+   );
+        dd($string);
 
     ?>
 
