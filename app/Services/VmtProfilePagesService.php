@@ -235,17 +235,12 @@ class VmtProfilePagesService
 
         $response['Current_login_user'] = User::where('id',auth()->user()->id)->first();
 
-        $year = Carbon::now()->year;
-        $month = Carbon::now()->subMonth()->format('m');
-
         $response['payroll_summary'] = VmtEmployeePaySlipV2::join('vmt_emp_payroll', 'vmt_emp_payroll.id', '=', 'vmt_employee_payslip_v2.emp_payroll_id')
             ->join('vmt_payroll', 'vmt_payroll.id', 'vmt_emp_payroll.payroll_id')
             ->join('users', 'users.id', 'vmt_emp_payroll.user_id')
-            ->whereYear('vmt_payroll.payroll_date', '=', $year)
-            ->whereMonth('vmt_payroll.payroll_date', '=', $month)
             ->where('users.id', '=', $user_id)
             ->orderBy('vmt_payroll.updated_at', 'DESC')
-            ->get([
+            ->first([
                 'vmt_payroll.payroll_date',
                 'vmt_employee_payslip_v2.worked_Days',
                 'vmt_employee_payslip_v2.lop'
