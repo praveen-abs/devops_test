@@ -166,11 +166,11 @@ const Name = [];
 function viewDetails(setting_prev_details) {
 
     CreateLoanFreeNewFrom.value = 2;
+
     salaryStore.ifl.name = setting_prev_details.name;
 
     salaryStore.ifl.selectClientID = setting_prev_details.client_id ;
-    console.log(setting_prev_details.client_id);
-    console.log(salaryStore.ifl.selectClientID = [setting_prev_details.client_id] );
+
     salaryStore.ifl.minEligibile = setting_prev_details.min_month_served
     salaryStore.ifl.precent_Or_Amt = setting_prev_details.loan_applicable_type
     salaryStore.ifl.availPerInCtc = setting_prev_details.percent_of_ctc

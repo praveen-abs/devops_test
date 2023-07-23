@@ -64,7 +64,10 @@
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <div>
                                 <h1 class=" fs-5"> {{
-                                    item.dedction_period }} months. </h1>
+                                    item.dedction_period }} months.</h1>
+                            </div>
+                            <div>
+                                <h1 class=" fs-5">Loan Amount Interest : {{item.setting_prev_details.loan_amt_interest}} %</h1>
                             </div>
 
                             <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
@@ -153,6 +156,8 @@ function selectClientId(data) {
 
 function viewDetails(val) {
     console.log(val);
+
+    CreateLoanWithNewFrom.value = 2;
 
 }
 
