@@ -126,28 +126,29 @@
                     </p>
 
                     <p v-else-if="field.includes('Basic')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).basic }}
+                        <input type="text" v-model="data.Basic">
+                        {{ useStore.compensatory_calculation(data['Amount']).basic }}
                     </p>
                     <p v-else-if="field.includes('HRA')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).hra }}
+                        {{ useStore.compensatory_calculation(data['Amount']).hra }}
                     </p>
                     <p v-else-if="field.includes('Special Allowance')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).special }}
+                        {{ useStore.compensatory_calculation(data['Amount']).special }}
                     </p>
                     <p v-else-if="field.includes('EPF Employer Contribution')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).epf_employer_contribution }}
+                        {{ useStore.compensatory_calculation(data['Amount']).epf_employer_contribution }}
                     </p>
                     <p v-else-if="field.includes('ESIC Employer Contribution')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).esic_employer_contribution }}
+                        {{ useStore.compensatory_calculation(data['Amount']).esic_employer_contribution }}
                     </p>
                     <p v-else-if="field.includes('EPf Employee')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).epf_employee }}
+                        {{ useStore.compensatory_calculation(data['Amount']).epf_employee }}
                     </p>
                     <p v-else-if="field.includes('ESIC Employee')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).esic_employee }}
+                        {{ useStore.compensatory_calculation(data['Amount']).esic_employee }}
                     </p>
                     <p v-else-if="field.includes('Net Income')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).net_income }}
+                        {{ useStore.compensatory_calculation(data['Amount']).net_income }}
                     </p>
 
 
