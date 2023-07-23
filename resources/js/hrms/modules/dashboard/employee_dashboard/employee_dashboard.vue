@@ -31,3 +31,28 @@ import LeaveBalance from "./leave_balance/leave_balance.vue";
 import Calender from "./calender/calender.vue";
 import HolidayWidget from "./holiday_widget/holiday_widget.vue";
 </script>
+
+
+<style>
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+</style>

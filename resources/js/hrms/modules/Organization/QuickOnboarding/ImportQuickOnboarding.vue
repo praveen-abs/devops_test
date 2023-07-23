@@ -216,7 +216,15 @@ const checkingNonEditableFields = (e) => {
 
 const onCellEditComplete = (event) => {
 
-    useStore.isdups()
+    // if (event.value) {
+    //     useStore.excelRowData.splice(0, useStore.excelRowData.length)
+    // }
+
+
+    useStore.currentFiled = event.value
+    useStore.isdups(event.value)
+    useStore.excelRowData.splice(0, useStore.excelRowData.length)
+    useStore.currentDupes.splice(0, useStore.currentDupes.length)
 
 
     useStore.findDuplicate(useStore.EmployeeQuickOnboardingDynamicHeader)
@@ -230,6 +238,11 @@ const onCellEditComplete = (event) => {
 
     for (let index = 0; index < useStore.EmployeeQuickOnboardingSource.length; index++) {
         useStore.getValidationMessages(useStore.EmployeeQuickOnboardingSource[index]);
+        let format = {
+            title: Object.keys(useStore.EmployeeQuickOnboardingSource[index]),
+            value: Object.values(useStore.EmployeeQuickOnboardingSource[index])
+        }
+        useStore.excelRowData.push(format)
     }
 }
 

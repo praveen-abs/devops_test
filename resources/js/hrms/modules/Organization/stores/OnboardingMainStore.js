@@ -39,6 +39,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const DuplicateList = ref([])
+    const excelRowData = ref([])
+
 
     const convertExcelIntoArray = (e) => {
 
@@ -102,9 +104,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
             jsonData.Sheet1 ? EmployeeQuickOnboardingSource.value = jsonData.Sheet1 : EmployeeQuickOnboardingSource.value = []
 
-            if (EmployeeQuickOnboardingSource.value) {
-                isdups()
-            }
+            // if (EmployeeQuickOnboardingSource.value) {
+            //     isdups()
+            // }
 
 
 
@@ -118,9 +120,18 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             for (let index = 0; index < jsonData[importedExcelKey].length; index++) {
                 console.log("jsonData['Sheet1'].length :", jsonData[importedExcelKey].length);
 
+
                 const validationResult = getValidationMessages(
                     EmployeeQuickOnboardingSource.value[index]
                 );
+
+
+                let format = {
+                    title: Object.keys(EmployeeQuickOnboardingSource.value[index]),
+                    value: Object.values(EmployeeQuickOnboardingSource.value[index])
+                }
+                excelRowData.value.push(format)
+
             }
         };
         reader.readAsArrayBuffer(file);
@@ -128,9 +139,13 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
 
+    const currentFiled = ref()
 
 
     // Helper Function
+
+
+    const currentDupes = ref([])
 
     const findDuplicate = (array) => {
         let result = array.length !== new Set(array).size ? false : true;
@@ -138,37 +153,37 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         return result
     }
 
-    const isdups = () => {
-        let excelRowData = []
+    const isdups = (elemt) => {
 
-        EmployeeQuickOnboardingSource.value.forEach(element => {
-
-            let format = {
-                title: Object.keys(element),
-                value: Object.values(element)
-            }
-            excelRowData.push(format)
-
-        });
-
-
-        let currentDupes = []
-        for (let i = 0; i < excelRowData.length; i++) {
-            const singleRowData = excelRowData[i];
+        let mandatoryFields = ["Email"]
+        for (let i = 0; i < excelRowData.value.length; i++) {
+            const singleRowData = excelRowData.value[i];
 
             for (let j = 0; j < singleRowData.value.length; j++) {
                 const value = singleRowData.value[j];
                 const title = singleRowData.title[j];
-                if (title == 'Employee code') {
-                    currentDupes.push(value)
-                }
+                currentDupes.value.push(value)
             }
         }
 
         const toFindDuplicates = (array) => array.filter((item, index) => array.indexOf(item) !== index)
-        const duplicateElements = toFindDuplicates(currentDupes);
-        console.log(duplicateElements);
+        const duplicateElements = toFindDuplicates(currentDupes.value);
+        // console.log(duplicateElements);
+        let uniqueChars = [...new Set(duplicateElements)];
+        console.log(uniqueChars);
+
+        console.log(elemt);
+        if (elemt) {
+            const index = uniqueChars.indexOf(elemt);
+            console.log("Index of duplicate:" + index);
+            if (index > -1) { // only splice array when item is found
+                uniqueChars.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }
+
+        // console.log(duplicateElements.includes('BA210'));
     }
+
 
 
 
@@ -495,13 +510,13 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        findDuplicate,
+        findDuplicate,currentFiled,
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
-        isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists,isBankExists,isDepartmentExists,
+        isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
         isOfficialMailExists,
 
 
@@ -510,7 +525,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         // View
 
-        canShowloading, isdups,
+        canShowloading, isdups, excelRowData,currentDupes,
 
 
         // Onboarding Helper functions

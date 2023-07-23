@@ -320,6 +320,17 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
+    const getLocation = () => {
+        bdcApi = bdcApi
+            + "?latitude=" + position.coords.latitude
+            + "&longitude=" + position.coords.longitude
+            + "&localityLanguage=en";
+        var locationApi = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=13.026586987757538&longitude=80.20477619620871&localityLanguage=en"
+    }
+    // Latitude: 13.026586987757538
+    // Longitude: 80.20477619620871
+
+
 
     return {
         // Timesheet Data source
