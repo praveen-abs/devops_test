@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('vmt_client_master');
             $table->int('pay_frequency_id');
             $table->date('payperiod_start_month');
-            $table->date('payperiod_end_date');
+            $table->integer('payperiod_end_date');
             $table->date('payment_date');
             $table->text('currency_type');
             $table->text('remuneration_type');

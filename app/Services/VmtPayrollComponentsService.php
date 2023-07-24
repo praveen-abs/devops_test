@@ -1401,7 +1401,7 @@ public function assignPaygroupComponents_to_Employee($assigned_employees,$paygro
             $save_payroll_epf_data->status = $status;
             $save_payroll_epf_data->save();
 
-         }catch(Exception $e){
+         }catch(\Exception $e){
 
         }
 }
