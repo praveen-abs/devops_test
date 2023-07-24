@@ -175,16 +175,16 @@
                                 </div>
                             </div>
 
-                            <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
+                            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
                                 :value="salaryStore.eligbleEmployeeSource"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
-                            
+                                :rowsPerPageOptions="[5, 10, 25]" :filters="filters" 
+                                v-model:selection="salaryStore.sa.eligibleEmployee"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
                                 responsiveLayout="scroll">
                                 <Column selectionMode="multiple" headerStyle="width: 1.5rem"  >
-                                    <template  #body="slotProps">
-                                        <Checkbox  @change="sendEmpDetails(slotProps.data) " :binary="true" />
+                                    <template  #body="slotProps" v-if="view_details"  >
+                                        <Checkbox   v-model:selection="salaryStore.sa.eligibleEmployee"  @change="sendEmpDetails(slotProps.data)"  :binary="true" />
                                     </template>
                                 </Column>
                                 <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
@@ -195,7 +195,7 @@
                                 <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
                             </DataTable>
 
-                            {{ salaryStore.SalaryEmpDetails  }}
+                            {{ salaryStore.SalaryEmpDetails}}
                              <h1>details</h1>
                              {{ salaryStore.sa.eligibleEmployee }}
                             <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
@@ -596,10 +596,16 @@ function viewDetails(val) {
 function back_btn(){
     salaryStore.sal_adv_reset();
     salaryStore.create_new_from = 1;
+    view_details.value = "";
 }
 
-function sendEmpDetails(){
-    salaryStore.SalaryEmpDetails.push(salaryStore.sa.eligibleEmployee);
+function sendEmpDetails(val){
+    console.log(val);
+
+    if(view_details){
+        salaryStore.SalaryEmpDetails.push(val);
+    }
+  
 }
 // if(salaryStore.sa.eligibleEmployee){
 

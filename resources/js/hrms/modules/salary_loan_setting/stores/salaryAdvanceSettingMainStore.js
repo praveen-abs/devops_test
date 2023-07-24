@@ -522,6 +522,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         lwif.loan_type = ""
         lwif.approvalflow = ""
         lwif.selectedOption1 = ""
+        selectedOption1.value = ""
+        selectedOption2.value = ""
+        selectedOption3.value = ""
+        EnableAndDisable.value = 3
     }
 
     const saveLoanWithInterest = () => {

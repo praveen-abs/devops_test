@@ -154,10 +154,76 @@ function selectClientId(data) {
     salaryStore.sendClient_code(data);
 }
 
-function viewDetails(val) {
-    console.log(val);
+function viewDetails(setting_prev_details) {
+
+
+       lwif.name = ""
+        lwif.selectClientID = ''
+        lwif.minEligibile = ''
+        lwif.availPerInCtc = ''
+        lwif.deductMethod = ''
+        lwif.precent_Or_Amt = ''
+        lwif.deductMethod = ""
+        lwif.max_loan_limit = ''
+        lwif.cusDeductMethod = ''
+        lwif.maxTenure = ''
+        lwif.loan_amt_interest = ''
+        lwif.loan_type = ""
+        lwif.approvalflow = ""
 
     CreateLoanWithNewFrom.value = 2;
+
+salaryStore.ifl.name = setting_prev_details.name;
+
+salaryStore.ifl.selectClientID = setting_prev_details.client_id ;
+
+salaryStore.ifl.minEligibile = setting_prev_details.min_month_served
+salaryStore.ifl.precent_Or_Amt = setting_prev_details.loan_applicable_type
+salaryStore.ifl.availPerInCtc = setting_prev_details.percent_of_ctc
+salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months
+
+
+if (setting_prev_details.deduction_starting_months == 1) {
+    salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months;
+}
+else {
+    salaryStore.ifl.deductMethod = "emi";
+    salaryStore.ifl.cusDeductMethod = setting_prev_details.deduction_starting_months;
+}
+salaryStore.selectedOption1 = ""
+salaryStore.selectedOption2 =""
+salaryStore.selectedOption2  = ""
+
+salaryStore.EnableAndDisable =setting_prev_details.active;
+loanSettings.loan_ID = setting_prev_details.loan_id;
+
+console.log(setting_prev_details.approver_flow);
+
+
+   JSON.parse(setting_prev_details.approver_flow).forEach(element => {
+
+    Name.push(element.name)
+    console.log(element.name);
+
+    salaryStore.selectedOption1 = Name[0];
+    if (Name[1]) {
+        salaryStore.selectedOption2 = Name[1];
+    }
+    if (Name[2]) {
+        salaryStore.selectedOption2 = Name[2];
+    }
+    console.log(Name);
+});
+
+if (salaryStore.selectedOption1) {
+    salaryStore.option1 = 0;
+    salaryStore.option = 1
+
+    if (salaryStore.selectedOption2) {
+        salaryStore.option1 = 1
+        salaryStore.option2 = 1
+    }
+}
 
 }
 
