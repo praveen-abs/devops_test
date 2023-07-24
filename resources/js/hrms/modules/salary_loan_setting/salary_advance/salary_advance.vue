@@ -194,11 +194,7 @@
                                 <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
                                 <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
                             </DataTable>
-
-                            <!-- {{ salaryStore.SalaryEmpDetails}} -->
-                             <h1>details</h1>
-                             {{setEligibleEmployee}}
-                             <!-- {{ salaryStore.sa.eligibleEmployee }} -->
+                            
                             <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                             :value="salaryStore.SalaryEmpDetails" v-if="view_details" 
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"

@@ -1,10 +1,10 @@
 <template>
-    <div class="h-full">
-        <div class="card-body d-flex justify-content-between align-items-center  py-2 mt-2 " >
+    <div class="h-full w-full border border-red-500  ">
+        <div class="card-body d-flex justify-content-between align-items-center  py-2 mt-2 border border-green-500 w-full" >
 
-          <div class=" flex justify-start ">
-
-            <div class="">
+          <div class=" flex justify-start border border-blue-700 w-full ">
+            <!--  -->
+            <div class=" border border-red-500 ">
               <div class=" shadow-sm bg-white rounded-md  mr-2 h-[150px] w-[320px] 2xl:w-[383px] " >
                 <div class=" h-[50px] px-2 d-flex align-items-center"  style="background-color: #fff" >
                     <p class=" fs-5 ">Bank Transfer</p>
@@ -46,13 +46,13 @@
 
             </div>
             <!-- tableStyle="min-width: 20rem" -->
-            <div class="w-full ">
-              <div class=" rounded-md  ml-2 w-full  xxl:w-full" style="background-color: #E6E6E6; w-full">
+            <div class=" border w-100%">
+              <div class=" rounded-md  ml-2 xl:w-[1000px]   xxl:w-full" style="background-color: #E6E6E6; w-full">
                 <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records"
-                                responsiveLayout="scroll" class=" w-full"  >
+                                responsiveLayout="scroll" class="!min-w-full  !max-w-full" >
                                 <Column selectionMode="multiple" headerStyle="width: 1.5rem" ></Column>
                                 <Column field="user_code" header="Bank Name" style="min-width: 8rem"></Column>
                                 <Column field="user_code" header="Total Amount" style="min-width: 8rem"></Column>

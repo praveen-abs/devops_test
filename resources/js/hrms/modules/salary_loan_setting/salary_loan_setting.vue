@@ -4,9 +4,9 @@
             <div class="col-6">
                 <h1 class="mb-4 fs-4 d-flex align-items-center " style="color: #003056; "> Salary Advance & Loan Settings</h1>
             </div>
-            <div class="col-6 px-4 ">
+            <!-- <div class="col-6 px-4 ">
                 <button class=" underline fs-5 text-blue-700 float-right mx-2" @click="viewHistory(data)">History</button>
-            </div>
+            </div> -->
         </div>
 
 

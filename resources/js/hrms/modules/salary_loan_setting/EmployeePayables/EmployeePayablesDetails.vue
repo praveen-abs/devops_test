@@ -1,18 +1,32 @@
 <template>
     <div class=" p-2">
         <h1 class=" fs-2 font-semibold">Employee Payables - Jun 2023</h1>
-        <!-- <h1 class=""  style="font-size:28px">test</h1> -->
-        <div class="flex justify-content-between align-items-center">
+
+        <!-- Summary screen -->
+        <div class="flex justify-content-between align-items-center" v-if="activetab === 1">
             <p class=" fs-5 my-2" style="font-size: 14px;">Payment Batches</p>
             <div class=" d-flex justify-content-end align-items-center" style="width: 200px;">
                 <button class="mx-4 " @click="view_Details = 1" v-if="view_Details == 2"><i
                         class="pi pi-times fs-5"></i></button>
-                <button class="underline text-blue-700 text-[16px] font-semibold " style="color:#0873CD" @click="view_Details = 2"
+                <button class="underline text-blue-700 text-[16px] " style="color:#0873CD;font-weight:550;" @click="view_Details = 2"
                     v-if="view_Details == 1">View Details</button>
             </div>
 
         </div>
-        <div class="card" v-if="view_Details == 2">
+
+        <!-- Employees screen -->
+        <div class="flex justify-content-between align-items-center" v-if="activetab === 2">
+            <p class=" fs-5 my-2" style="font-size: 14px;">Payment Batches</p>
+            <div class=" d-flex justify-content-end align-items-center" style="width: 200px;">
+                <button class="mx-4 " @click="view_Details = 1" v-if="view_Details == 2"><i
+                        class="pi pi-times fs-5"></i></button>
+                <button class="underline text-blue-700 text-[16px] " style="color:#0873CD;font-weight:550;" @click="view_Details = 2"
+                    v-if="view_Details == 1">View Details</button>
+            </div>
+
+        </div>
+
+        <div class="card" v-if="view_Details == 2 ">
 
             <div class=" flex justify-between align-middle border-b-2 pb-1 p-3">
                 <div class="">
