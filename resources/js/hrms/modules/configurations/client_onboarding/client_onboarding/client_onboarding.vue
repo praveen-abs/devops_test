@@ -636,7 +636,7 @@ const client_logo = (e) => {
 
 const isAbs = (e)=> {
   let char = String.fromCharCode(e.keyCode); // Get the character
-  if(/^[ABS{3}_CL{2}]+$/.test(char)) return true; // Match with regex
+  if(/^[ABS{3}_CL{2} 0-9]+$/.test(char)) return true; // Match with regex
   else e.preventDefault(); // If not match, don't add to input text
 }
 
