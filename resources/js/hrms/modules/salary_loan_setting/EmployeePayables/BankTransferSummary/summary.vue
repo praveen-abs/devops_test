@@ -1,10 +1,10 @@
 <template>
-    <div class="h-full w-full border border-red-500  ">
-        <div class="card-body d-flex justify-content-between align-items-center  py-2 mt-2 border border-green-500 w-full" >
+    <div class="h-full w-full  ">
+        <div class="card-body d-flex justify-content-between align-items-center  py-2 mt-2  w-full" >
 
-          <div class=" flex justify-start border border-blue-700 w-full ">
+          <div class=" flex justify-start  w-full ">
             <!--  -->
-            <div class=" border border-red-500 ">
+            <div class="  ">
               <div class=" shadow-sm bg-white rounded-md  mr-2 h-[150px] w-[320px] 2xl:w-[383px] " >
                 <div class=" h-[50px] px-2 d-flex align-items-center"  style="background-color: #fff" >
                     <p class=" fs-5 ">Bank Transfer</p>
@@ -46,8 +46,8 @@
 
             </div>
             <!-- tableStyle="min-width: 20rem" -->
-            <div class=" border w-100%">
-              <div class=" rounded-md  ml-2 xl:w-[1000px]   xxl:w-full" style="background-color: #E6E6E6; w-full">
+            <div class=" border ml-2 xl:w-[100%]   xxl:w-full" style="background-color: #E6E6E6; w-full">
+              <!-- <div class=" rounded-md  ml-2 xl:w-[1000px]   xxl:w-full" style="background-color: #E6E6E6; w-full"> -->
                 <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters"
@@ -59,7 +59,7 @@
                                 <Column field="name" header="Employees" style="min-width: 8rem"></Column>
                                 <Column field="department_name" header="Download" style="min-width: 8rem"></Column>
                             </DataTable>
-            </div>
+            <!-- </div> -->
 
             </div>
           </div>
