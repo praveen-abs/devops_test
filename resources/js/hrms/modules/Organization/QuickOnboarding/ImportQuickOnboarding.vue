@@ -114,11 +114,11 @@
                         class="font-semibold fs-6">
                         {{ data['Bank ifsc'].toUpperCase() }}
                     </p>
-                    <p v-else-if="field.includes('Department')"
+                    <!-- <p v-else-if="field.includes('Department')"
                         :class="[!useStore.isDepartmentExists(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Department'] }}
-                    </p>
+                    </p> -->
                     <p v-else-if="field.includes('Official Mail')"
                         :class="[useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
