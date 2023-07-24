@@ -6,7 +6,10 @@
     use App\Models\VmtEmployee;
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
-    use App\Models\VmtGeneralInfo;
+    use Dompdf\Dompdf;
+     use Dompdf\Options;
+     use Carbon\Carbon;
+
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
@@ -15,7 +18,7 @@
     use App\Models\User;
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
-
+    use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
     use App\Models\VmtEmployeePaySlipV2;
@@ -24,6 +27,7 @@
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;
+    use App\Models\VmtEmployeeStatutoryDetails;
     use App\Models\VmtPayroll;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
@@ -323,38 +327,101 @@ dd($paygroup_structure_comps);
     //     return "success";
 
 
-$flowCheck	="1";
+// $flowCheck	="1";
 
-$assignment_period_year =	"2023";
-$calendar_type	="financial_year";
-$hidden_calendar_year=	"April+-+2022+to+March+-+2023";
-$frequency	="quarterly";
-$assignment_period_start=	"q3";
-$department=	"6";
-$employees =['246','247','248'];
-$reviewer[]="245";
-$hr_id	="245";
-$selected_kpi_form_id=	"1";
+// $assignment_period_year =	"2023";
+// $calendar_type	="financial_year";
+// $hidden_calendar_year=	"April+-+2022+to+March+-+2023";
+// $frequency	="quarterly";
+// $assignment_period_start=	"q3";
+// $department=	"6";
+// $employees =['246','247','248'];
+// $reviewer[]="245";
+// $hr_id	="245";
+// $selected_kpi_form_id=	"1";
 
-    //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
-     $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
-    //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-               $comments_employee = '';
-    $login_Link = request()->getSchemeAndHttpHost();
+//     //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
+//      $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
+//     //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
+//                $comments_employee = '';
+//     $login_Link = request()->getSchemeAndHttpHost();
 
 
-     $is_sent=\Mail::to('vvishva185@gmail.com')
-                        ->send(new VmtPMSMail_Assignee("none",$flowCheck,
-                                                       $assigneeName,
-                                                       $hidden_calendar_year." - ".strtoupper($assignment_period_start),
-                                                       'vishnu',
-                                                       $comments_employee,
-                                                       $login_Link));
-if($is_sent){
-    echo 'hii';
-}else{
-    echo 'bye';
-}
+//      $is_sent=\Mail::to('vvishva185@gmail.com')
+//                         ->send(new VmtPMSMail_Assignee("none",$flowCheck,
+//                                                        $assigneeName,
+//                                                        $hidden_calendar_year." - ".strtoupper($assignment_period_start),
+//                                                        'vishnu',
+//                                                        $comments_employee,
+//                                                        $login_Link));
+// if($is_sent){
+//     echo 'hii';
+// }else{
+//     echo 'bye';
+// }
+// $query_document =VmtDocuments::all();
+//              $query_doc_id = array();
+//           foreach ($query_document as $key => $Singledocid)
+//             {
+//                 $query_doc_id[] = $Singledocid;
+//             }
+
+//              $query_user_doc_id = array();
+//           foreach ($query_doc_id as $key => $Singledocid)
+//             {
+//                 $query_user_doc_id[] = VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$Singledocid['id'])->first();
+//              }
+
+//              dd(  $query_doc_id );
+//              $reponse= array_diff($query_user_doc_id,$query_doc_id);
+
+
+
+
+            //     $query_document =VmtDocuments::all()->toarray();
+
+            //     $query_user_doc_id = VmtEmployeeDocuments::where('user_id','236')->get()->toarray();
+
+
+            //     $present_doc= $query_document->diff($query_user_doc_id);
+
+            //     $missing_doc=$query_document->diff($present_doc);
+            //  $emp_documents=array();
+            //  foreach ($present_doc as $key => $singledata) {
+
+            //      if($docid){
+            //         $emp_documents[$key]=
+            //         $emp_documents[$key]['document_name']=VmtDocuments::where('id',$singledata->id)->first()->document_name;
+            //      }else{
+            //         $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+            //         $emp_documents[$j]['status']=null;
+            //      }
+            //      $i++;
+            //     }
+
+        //      $missing_doc_id= $query_document->diff($query_user_doc_id);
+        //      $present_doc_id= $query_document->diff($missing_doc);
+        //      $emp_documents=array();
+        //                $i=0;
+        //      foreach ($present_doc_id as $key => $singledocid) {
+        //              $emp_documents[$i]= VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$singledocid)->first();
+        //              $emp_documents[$i]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+        //              $i++;
+        //            }
+        //            $j=$i;
+        //    foreach ($missing_doc_id as $key => $singledocid) {
+        //               $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+        //               $emp_documents[$j]['status']=null;
+        //               $j++;
+        //          }
+
+//dd($emp_documents);
+
+// $time = date('H:i:s', $currentTime);
+        dd( $date);
+
+
+
 
     ?>
 

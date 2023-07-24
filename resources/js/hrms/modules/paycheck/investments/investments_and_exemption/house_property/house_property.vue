@@ -30,7 +30,7 @@
                                 <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.getSopSlotData(slotProps.data)"
+                                <button @click="investmentStore.getSopSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                             </div>
@@ -40,7 +40,7 @@
                                 <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.getLopSlotData(slotProps.data)"
+                                <button @click="investmentStore.getLopSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                             </div>
@@ -51,7 +51,7 @@
                                 <p  style="font-weight: 501;" >{{  investmentStore.formatCurrency(slotProps.data['json_popups_value'].income_loss ) }}</p>
                             </div>
                             <div v-else>
-                                <button @click="investmentStore.getDlopSlotData(slotProps.data)"
+                                <button @click="investmentStore.getDlopSlotData(slotProps.data)"  :disabled="!investmentStore.isSubmitted"
                                     class="px-4 py-2 mb-3 text-center text-white bg-orange-700 rounded-md">Add
                                     New</button>
                             </div>
@@ -89,8 +89,10 @@
             </DataTable>
 
         </div>
+        <div class="my-4 table-responsive" v-if="investmentStore.house_props_data[0] == 'failure'">
+        </div>
 
-        <div class=" table-responsive">
+        <div class=" table-responsive" v-else >
             <DataTable ref="dt" dataKey="id" rowGroupMode="rowspan" groupRowsBy="property_type" sortMode="single"
                 :value="investmentStore.house_props_data" :sortOrder="+1" sortField="property_type" :paginator="true"
                 :rows="10" scrollable

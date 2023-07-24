@@ -34,6 +34,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 // use Maatwebsite\Excel\Facades\Excel;
 /*
@@ -695,10 +696,15 @@ class VmtPMSModuleController extends Controller
             //status of assignee,assigner,reviewer ("Pending")
             return response()->json(['status' => true, 'message' => "KPI Published Successfully"]);
             // return "KPI Published Successfully";
-           }catch(Exception $e){
-            Log::info('Publish KPI Form V2 Error: '.$e->getMessage());
-            //dd($e);
-            return response()->json(['status' => false, 'message' => 'Something went wrong!','error_verbose' => $e->getMessage()]);
+           }
+           catch(TransportException $e){
+                 return response()->json(['status' => true, 'message' => 'KPI Published Successfully','error_verbose' => $e->getMessage()]);
+
+           }
+           catch(Exception $e){
+                Log::info('Publish KPI Form V2 Error: '.$e->getMessage());
+                //dd($e);
+                return response()->json(['status' => false, 'message' => 'Something went wrong!','error_verbose' => $e->getMessage()]);
         }
     }
 
@@ -900,10 +906,15 @@ class VmtPMSModuleController extends Controller
                 if(!empty($kpiFormAssignedReviewersOfficialMails)){
                     return response()->json(['status'=>true,'message'=>"Published Review successfully.Sent mail to manager ".$kpiFormAssignedReviewersOfficialMails]);
                 }
-                return response()->json(['status'=>true,'message'=>'Published Review successfully']);
+                return response()->json(['status'=>true,'message'=>'Published Review successfully' , 'mail_status'=>'true']);
             }
 
-        }catch(Exception $e){
+        }
+        catch(TransportException $e){
+
+            return response()->json(['status'=>true,'message'=>'Published Review successfully', 'mail_status'=>'failure']);
+        }
+        catch(Exception $e){
             Log::info('save or submit assignee review error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
@@ -986,7 +997,11 @@ class VmtPMSModuleController extends Controller
                 return response()->json(['status'=>true,'message'=>"Published Review successfully. Sent mail to HR and Employee.  ".$hr_details->officical_mail." , ".$assigneeOfficeDetails->officical_mail]);
             }
 
-        }catch(Exception $e){
+        }
+        catch(TransportException $e){
+            return response()->json(['status'=>true,'message'=>'Published Review successfully. Mail sending failed/dalayed' , 'mail_status'=>'failure', 'error'=>$e]);
+        }
+        catch(Exception $e){
             Log::info('save or submit reviewer review error: '.$e->getMessage());
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
@@ -1216,7 +1231,8 @@ class VmtPMSModuleController extends Controller
             }
             return response()->json(['status'=>false,'message'=>'Something Went Wrong!']);
 
-        }catch(Exception $e){
+        }
+        catch(Exception $e){
             Log::info('accept/reject review by assignee error: '.$e->__toString());
             return response()->json(['status'=>false,'message'=>$e->getMessage(),'error_verbose'=>$e->__toString()]);
         }
@@ -1315,6 +1331,7 @@ class VmtPMSModuleController extends Controller
                                                                                 ->where('year',$request->year)
                                                                                 ->pluck('assignee_id');
 
+                //dd($assignedEmployeesForGivenPeriod);
 
                 //store the employee ids in collection and check whether given employees has already been assigned forms
                 $collection = collect();

@@ -827,7 +827,7 @@ class VmtEmployeeOnboardingController extends Controller
                         },
                     ],
                 'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict'|'unique:users,email',
+                'email' => 'nullable|email:strict|unique:users,email',
                 'gender' => 'required|in:Male,male,Female,female,other',
                 'doj' => 'required|date',
                 'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -850,15 +850,15 @@ class VmtEmployeeOnboardingController extends Controller
                 'mother_gender' => 'nullable|in:Male,male,Female,female,other',
                 'mother_dob' => 'nullable|date',
                 'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'spouse_dob' => 'nullable|required_unless:marital_status,unmarried|date',
+                'spouse_dob' => 'nullable',
                 'no_of_child' => 'nullable|numeric',
-                'child_name' => 'nullable|required_unless:no_of_child,null,0|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'child_dob' => 'nullable|required_unless:no_of_child,null,0|date',
+                'child_name' => 'nullable',
+                'child_dob' => 'nullable',
                 'department' => 'required|exists:vmt_department,name',
                 'process' => 'nullable',
                 'designation' => 'required',
                 'cost_center' => 'nullable',
-                'confirmation_period' => 'nullable|date',
+                'confirmation_period' => 'nullable',
                 'holiday_location' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
                 'l1_manager_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
@@ -888,7 +888,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'tax_regime' => 'nullable|in:old,Old,new,New',
                 'lwf_location' => 'nullable',
                 'esic_employer_contribution' => 'required|numeric',
-                 'dearness_allowance' => 'nullable|numeric',
+                 'dearness_allowance' => 'nullable',
             ];
 
             $messages = [
@@ -1462,13 +1462,6 @@ class VmtEmployeeOnboardingController extends Controller
         try
         {
 
-           // $this->uploadDocument($user->id, $row['Aadhar Back'], 'Aadhar Card Back');
-            // $this->uploadDocument($user->id, $row['panDoc'], 'Pan Card');
-            // $this->uploadDocument($user->id, $row['passport'], 'Passport');
-            // $this->uploadDocument($user->id, $row['voterId'], 'Voter ID');
-            // $this->uploadDocument($user->id, $row['dlDoc'], 'Driving License');
-            // $this->uploadDocument($user->id, $row['eductionDoc'], 'Education Certificate');
-            // $this->uploadDocument($user->id, $row['releivingDoc'],'Relieving Letter');
             $doc_upload_status = array();
 
             foreach( $bulkonboard_docs as $doc_name => $doc_obj){

@@ -121,9 +121,8 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Gender </div>
                         <div class="text ">
-                            <!-- {{ emp_details.gender.name }} -->
-                            {{ computedGenderValue }}
 
+                            {{ computedGenderValue }}
 
                         </div>
                     </li>
@@ -139,8 +138,7 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title">Marital Status </div>
                         <div class="text text-capitalize">
-                            <!-- {{ emp_details.marital_status_id.name }} -->
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.marital_status_id }} -->
+
                             {{ computedMarital_StatusValue }}
 
                         </div>
@@ -148,19 +146,14 @@
                     <li class="pb-1 border-bottom-liteAsh">
                         <div class="title"> Blood Group</div>
                         <div class="text">
-                            <!-- {{ emp_details.blood_group_id.name }} -->
-                            <!---->
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id  }} -->
+
                             {{ cmpBldGrp }}
-                            <!-- {{  _instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id }} -->
 
                         </div>
                     </li>
                     <li class="pb-1 ">
                         <div class="title">Physically Handicapped</div>
                         <div class="text">
-                            <!-- {{ emp_details.blood_group_id.physically_challenged }} -->
-                            <!-- {{ _instance_profilePagesStore.employeeDetails.get_employee_details.physically_challenged }} -->
 
                             {{ computedPhy_challenged }}
 
@@ -211,16 +204,16 @@
 
                                 <div class="mb-3 form-group">
                                     <label>Mobile Number</label>
-                                    <input type="text" size=20 maxlength=10 name="mobile_number" class="form-control"
-                                        v-model="dailog_contactinfo.mobile_number">
+                                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.mobile_number" mask="9999999999"
+                                placeholder="999999999" />
                                 </div>
                             </div>
                             <div class="col-md-6">
 
                                 <div class="mb-3 form-group">
                                     <label>Official Mobile Number</label>
-                                    <input type="text" size=20 maxlength=10 name="official_mobile_number"
-                                        class="form-control" v-model.number="dailog_contactinfo.official_mobile_number" >
+                                        <InputMask id="basic" class="form-control h-10" v-model="dailog_contactinfo.official_mobile_number" mask="9999999999"
+                                placeholder="999999999" />
                                         <!-- v-model="dailog_contactinfo.official_mobile_number" -->
                                 </div>
                             </div>
@@ -306,14 +299,22 @@
                                 <textarea name="permanent_address_line_1" id="permanent_address_line_1" cols="30" rows="3"
                                     class="form-control" v-model="diolog_Addressinfo.Permanent_Address"></textarea>
                             </div>
+
                         </div>
 
                         <div class="col-12">
-                            <div class="text-right">
+                            <div class=" d-flex justify-content-between align-items-center">
+                                <div class=" d-flex justify-content-center align-items-center" >
+                             <input type="checkbox" class="border rounded-md" v-model="CopyAddress" style="width: 20px; height: 20px;" @change="copyAddress" :value="1"  >
+                             <h1 class="mx-2">Copy current address to the permanent address</h1>
+                            </div>
+                            <div class="">
                                 <Toast />
                                 <button id="btn_submit_address" class="btn btn-border-orange submit-btn warn"
                                     @click="saveAddressinfoDetails" severity="warn">Save</button>
                             </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -327,11 +328,13 @@
                         <ul class="personal-info">
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">Current Address </div>
-                                <div class="text">
+                                <div class="text" v-if="_instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1 == 'none'">
+                                 -
+                                </div>
+                                <div v-else>
                                     {{
                                         _instance_profilePagesStore.employeeDetails.get_employee_details.current_address_line_1
                                     }}
-
                                 </div>
                             </li>
                         </ul>
@@ -340,11 +343,15 @@
                         <ul class="personal-info">
                             <li class="pb-1 border-bottom-liteAsh flex-column">
                                 <div class="title">Permanent Address </div>
-                                <div class="text">
+                                <div class="text d-flex justify-items-center w-100" v-if=" _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1=='none'">
+                                    -
+                                </div>
+                                <div class="text d-flex justify-items-center w-100" v-else>
                                     {{
                                         _instance_profilePagesStore.employeeDetails.get_employee_details.permanent_address_line_1
                                     }}
                                 </div>
+
                             </li>
                         </ul>
                     </div>
@@ -385,6 +392,8 @@ const ContactVisible = ref(false);
 const addressVisible = ref(false);
 
 
+
+
 //Used inside dialog elements
 const dialog_general_information = reactive({
     dob: '',
@@ -400,6 +409,38 @@ const options_gender = ref([
     { name: "Female", value: "female" },
     { name: "Others", value: "others" },
 ]);
+
+// contact details
+const contact_details = ref();
+
+const dailog_contactinfo = reactive({
+    email: "",
+    official_email: "",
+    mobile_number: "",
+    official_mobile_number: ""
+
+});
+
+//  Address details //
+
+const addressUpdateDetails = ref();
+
+const diolog_Addressinfo = reactive({
+    current_address: "",
+    Permanent_Address: ""
+});
+
+const CopyAddress = ref(false);
+
+function copyAddress(){
+    if(CopyAddress.value == 1){
+        diolog_Addressinfo.Permanent_Address =   diolog_Addressinfo.current_address ;
+    }
+    else{
+        CopyAddress.value = false;
+    }
+}
+
 
 const computedGenderValue = computed(() => {
     if (_instance_profilePagesStore.employeeDetails.get_employee_details.gender == 'male')
@@ -437,8 +478,6 @@ const cmpBldGrp = computed(() => {
     else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 7) return "O Positive";
 
     else if (_instance_profilePagesStore.employeeDetails.get_employee_details.blood_group_id == 8) return "O Negative";
-
-
 
 })
 
@@ -523,9 +562,7 @@ function saveGeneralInformationDetails() {
         .then((res) => {
 
             if (res.data.status == "success") {
-                //  window.location.reload();
                 _instance_profilePagesStore.employeeDetails.get_employee_details.dob = useDateFormat(dialog_general_information.dob, 'YYYY-MM-DD');
-                // _instance_profilePagesStore.employeeDetails.dob = dialog_general_information.dob;
                 _instance_profilePagesStore.employeeDetails.gender = dialog_general_information.gender;
                 _instance_profilePagesStore.employeeDetails.marital_status_id = dialog_general_information.marital_status_id;
                 // _instance_profilePagesStore.employeeDetails.doj = dialog_general_information.doj;
@@ -551,15 +588,7 @@ function saveGeneralInformationDetails() {
 
 }
 
-const contact_details = ref();
 
-const dailog_contactinfo = reactive({
-    email: "",
-    official_email: "",
-    mobile_number: "",
-    official_mobile_number: ""
-
-});
 
 function onClick_EditButtonContacttInfo() {
     console.log("Opening General Info Dialog : ");
@@ -621,12 +650,7 @@ function save_contactinfoDetails() {
 
 
 
-const addressUpdateDetails = ref();
 
-const diolog_Addressinfo = reactive({
-    current_address: "",
-    Permanent_Address: ""
-});
 
 function onClick_EditButtonAddressInfo() {
     console.log("Opening General Info Dialog");
