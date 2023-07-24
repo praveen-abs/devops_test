@@ -94,7 +94,7 @@
                     {{ slotProps.data.sno }}.
                 </template>
             </Column>
-            <Column field="section" header="" style=" width: 26rem; text-align: left !important;">
+            <Column field="section" header="" style=" width: 30rem; text-align: left !important;">
                 <template #header>
                     <p style="font-weight: 501;">
                         Particulars
