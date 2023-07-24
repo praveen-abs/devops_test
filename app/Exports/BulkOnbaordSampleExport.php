@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\NamedRange;
@@ -27,7 +28,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents
+class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping,WithCalculatedFormulas
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -39,8 +40,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     protected $marital_status;
     protected $manager_code;
     protected $salary;
-    protected $blood_group;
-    protected $bank_name;
+    protected $blood_grp;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
@@ -49,9 +49,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         $this->marital_status = $onbaord_details['marital_status'];
         $this->manager_code = $onbaord_details['managr_code'];
         $this->salary = $onbaord_details['salary'];
-        $this->blood_group =  $onbaord_details['blood_group'];
-        $this->bank_name =  $onbaord_details['bank_name'];
-
+        $this->blood_grp = $onbaord_details['blood_group'];
     }
 
     public function startCell(): string
@@ -61,14 +59,12 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     public function styles(Worksheet $sheet)
     {
         //For First Row
-       // $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
+        // $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
         $sheet->getStyle('A1:AG1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
         $sheet->getStyle('A1:AG1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
         $sheet->getStyle('A1:AG1')->getAlignment()->setHorizontal('center');
-
-
     }
 
     public function headings(): array
@@ -110,7 +106,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
             'HRA',
             'Statutory Bonus',
             'Child Education Allowance',
-            'Child Education Allowance',
             'Food Coupon',
             'LTA',
             'Special Allowance',
@@ -133,6 +128,57 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         ];
     }
 
+
+    public function array(): array
+    {
+
+        return [
+            [
+                'ABS0001',
+                'Name',
+                'abs@gmail.com',
+                '0912345678',
+                'Male',
+                '28-06-2000',
+                '14-11-2022',
+                '',
+                'It',
+                '',
+                'Chennai',
+                'ABSM001',
+                '0912345678',
+                'test@gmail.com',
+                'Single',
+                '',
+                'Father Name',
+                'Mother Name',
+                'Spouse Name',
+                'B Positive',
+                'No',
+                'ABCTY1234D',
+                '0000 1111 2222',
+                'Axis Bank',
+                'AXIB0028901',
+                '24898240942',
+                'UAN0945049',
+                'Yes',
+                '942904',
+                'Current Address',
+                'Permanent Address',
+                'CTC - Monthly',
+                '18000',
+            ]
+        ];
+    }
+
+    public function map($row): array
+    {
+        return [
+            ['','=AG2*10'],
+            ['','=AG2*10']
+        ];
+    }
+
     public function columnFormats(): array
     {
         return [
@@ -142,11 +188,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         ];
     }
 
-    public function array(): array
-    {
-
-        return [];
-    }
 
 
 
@@ -280,12 +321,26 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $validation_Q->setShowErrorMessage(true);
                 $validation_Q->setShowDropDown(true);
                 $validation_Q->setErrorTitle('Input error');
-               //$validation_compansation->setError('Selected Option is not in list.');
-               // $validation_compansation->setPromptTitle('Select Compansation Type  from list');
-               // $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
-               $validation_Q->setFormula1('"Yes,No"');
+                //$validation_compansation->setError('Selected Option is not in list.');
+                // $validation_compansation->setPromptTitle('Select Compansation Type  from list');
+                // $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
+                $validation_Q->setFormula1('"Yes,No"');
 
-               $validation_compansation = $event->sheet->getCell("{$compansation_column}3")->getDataValidation();
+
+                //set dropdown list for blood group column
+                $validation_bld_grp = $event->sheet->getCell("T2")->getDataValidation();
+                $validation_bld_grp->setType(DataValidation::TYPE_LIST);
+                $validation_bld_grp->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_bld_grp->setAllowBlank(false);
+                $validation_bld_grp->setShowInputMessage(true);
+                $validation_bld_grp->setShowErrorMessage(true);
+                $validation_bld_grp->setShowDropDown(true);
+                $validation_bld_grp->setErrorTitle('Input error');
+                $validation_bld_grp->setFormula1($this->blood_grp);
+
+
+
+                $validation_compansation = $event->sheet->getCell("{$compansation_column}3")->getDataValidation();
                 $validation_compansation->setType(DataValidation::TYPE_LIST);
                 $validation_compansation->setErrorStyle(DataValidation::STYLE_WARNING);
                 $validation_compansation->setAllowBlank(false);
@@ -303,12 +358,13 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 for ($i = 2; $i <= $row_count; $i++) {
                     $event->sheet->getCell("E{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$compansation_column}{$i}")->setDataValidation(clone    $validation_compansation);
-                     $event->sheet->getCell("H{$i}")->setDataValidation(clone  $validation_entity);
-                   // $event->sheet->getCell("I{$i}")->setDataValidation(clone  $validation_dep);
-                     $event->sheet->getCell("O{$i}")->setDataValidation(clone  $validation_mar_sts);
+                    $event->sheet->getCell("H{$i}")->setDataValidation(clone  $validation_entity);
+                    // $event->sheet->getCell("I{$i}")->setDataValidation(clone  $validation_dep);
+                    $event->sheet->getCell("O{$i}")->setDataValidation(clone  $validation_mar_sts);
                     // $event->sheet->getCell("L{$i}")->setDataValidation(clone  $validation_mangr_code);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                     $event->sheet->getCell("U{$i}")->setDataValidation(clone    $validation_Q);
+                    $event->sheet->getCell("T{$i}")->setDataValidation(clone      $validation_bld_grp);
                 }
 
                 // set columns to autosize
@@ -317,30 +373,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                     $event->sheet->getColumnDimension($column)->setAutoSize(true);
                 }
 
-               // $event->sheet->getDelegate()->getColumnDimension('AG')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AH')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AI')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AJ')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AK')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AL')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AM')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AN')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AO')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AP')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AQ')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AR')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AS')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AT')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AU')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AV')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AW')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AX')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AY')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('AZ')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('BA')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('BB')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('BC')->setVisible(false);
-                $event->sheet->getDelegate()->getColumnDimension('BD')->setVisible(false);
+                // $event->sheet->getDelegate()->getColumnDimension('AG')->setVisible(false);
             },
 
         ];
