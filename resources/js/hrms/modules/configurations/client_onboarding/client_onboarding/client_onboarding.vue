@@ -209,15 +209,15 @@
                         <div class="floating">
                             <label for="" class="float-label">ABS Client Code</label>
 
-                            <InputMask id="basic" v-model="client_onboarding.abs_client_code" @keypress="isAbs($event)"  class="onboard-form form-control textbox" mask="99-999999" placeholder="ABS Client Code" :class="[
+                            <!-- <InputMask id="basic" v-model="client_onboarding.abs_client_code" @keypress="isAbs($event)"  class="onboard-form form-control textbox" mask="ABS_CL" placeholder="ABS Client Code" :class="[
                                 v$.abs_client_code.$error ? 'border border-red-500' : '',
                             ]" />
                         <span v-if="v$.abs_client_code.$error" class="font-semibold text-red-400 fs-6">
                             {{ v$.abs_client_code.required.$message.replace("Value", "ABS Client Code") }}
-                        </span>
-                        <label class="error lwf_label" for="lwf" style="display: none;"></label>
+                        </span> -->
+                        <!-- <label class="error lwf_label" for="lwf" style="display: none;"></label> -->
 
-                            <!-- <input type="text" placeholder="ABS Client Code" name="lwf" @keypress="isAbs($event)"
+                            <input type="text" placeholder="ABS Client Code" name="lwf" @keypress="isAbs($event)"
                                 v-model="client_onboarding.abs_client_code" class="onboard-form form-control textbox"
                                 pattern="alp-num" required :class="[
                                     v$.abs_client_code.$error ? 'border border-red-500' : '',
@@ -225,7 +225,7 @@
                             <span v-if="v$.abs_client_code.$error" class="font-semibold text-red-400 fs-6">
                                 {{ v$.abs_client_code.required.$message.replace("Value", "ABS Client Code") }}
                             </span>
-                            <label class="error lwf_label" for="lwf" style="display: none;"></label> -->
+                            <label class="error lwf_label" for="lwf" style="display: none;"></label>
                             <!-- <label for="" class="float-label">LWF Registration Number</label> -->
                         </div>
                     </div>
