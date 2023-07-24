@@ -43,13 +43,13 @@
                 style="min-width: 12rem;" :header="col.title">
 
                 <template #body="{ data, field }">
-                    <div v-if="field == 'Employee code'"
-                        :class="[useStore.findDuplicate(data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                    <div v-if="field.includes('Employee Code')"
+                        :class="[!useStore.findDuplicate(data['Employee Code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
                                 v-if="!useStore.isUserExists(data['Employee code'])"></i>
-                            {{ data['Employee code'] }}
+                            {{ data['Employee Code'] }}
                         </p>
                     </div>
                     <p v-else-if="field == 'Aadhar'"
@@ -126,28 +126,29 @@
                     </p>
 
                     <p v-else-if="field.includes('Basic')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).basic }}
+                        <input type="text" v-model="data.Basic">
+                        {{ useStore.compensatory_calculation(data['Amount']).basic }}
                     </p>
                     <p v-else-if="field.includes('HRA')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).hra }}
+                        {{ useStore.compensatory_calculation(data['Amount']).hra }}
                     </p>
                     <p v-else-if="field.includes('Special Allowance')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).special }}
+                        {{ useStore.compensatory_calculation(data['Amount']).special }}
                     </p>
                     <p v-else-if="field.includes('EPF Employer Contribution')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).epf_employer_contribution }}
+                        {{ useStore.compensatory_calculation(data['Amount']).epf_employer_contribution }}
                     </p>
                     <p v-else-if="field.includes('ESIC Employer Contribution')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).esic_employer_contribution }}
+                        {{ useStore.compensatory_calculation(data['Amount']).esic_employer_contribution }}
                     </p>
                     <p v-else-if="field.includes('EPf Employee')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).epf_employee }}
+                        {{ useStore.compensatory_calculation(data['Amount']).epf_employee }}
                     </p>
                     <p v-else-if="field.includes('ESIC Employee')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).esic_employee }}
+                        {{ useStore.compensatory_calculation(data['Amount']).esic_employee }}
                     </p>
                     <p v-else-if="field.includes('Net Income')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Total CTC']).net_income }}
+                        {{ useStore.compensatory_calculation(data['Amount']).net_income }}
                     </p>
 
 

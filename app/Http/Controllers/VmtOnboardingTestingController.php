@@ -192,13 +192,13 @@ try{
     }
 
         // insert the employee to database for quick onboarding
-    public function storeQuickOnboardEmployees( Request $request )
-        {
+    // public function storeQuickOnboardEmployees( Request $request )
+    //     {
 
-            dd($request->all());
+    //         dd($request->all());
  /*      testing stage       */
 
-            //For output jsonresponse
+        //     For output jsonresponse
         //     $data=$request->all();
         //     $data_array = [];
         //     //For validation
@@ -270,7 +270,6 @@ try{
         //         $validator = Validator::make($excelRowdata, $rules, $messages);
 
         //         if (!$validator->passes()) {
-
         //             $rowDataValidationResult = [
         //                 'row_number' => $currentRowInExcel,
         //                 'status' => 'failure',
@@ -307,9 +306,38 @@ try{
 
         //     return response()->json($response);
 
-        }
+        //}
 
-     private function storeSingleRecord_QuickEmployee($row,VmtOnboardingTestingService $VmtOnboardingTestingService)
+        public function storeQuickOnboardEmployees( Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService )
+        {
+            $data = $request->all();
+            $data_array =array();
+            $onboard_data =array();
+            foreach ($data  as $key => $excelRowdata) {
+
+            $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($excelRowdata));
+
+            $Emp_data = array_combine(array_map('strtolower', $processed_data),array_values($excelRowdata));
+
+            array_push($onboard_data,$Emp_data);
+            }
+           // dd($onboard_data);
+            foreach ($onboard_data  as $key => $excelRowdata) {
+
+                            $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$VmtOnboardingTestingService);
+                            array_push($data_array, $rowdata_response);
+                        }
+
+                     $response = [
+                         'status' => $rowdata_response['status'],
+                         'message' => "Excelsheet data import success",
+                         'data' =>$data_array
+                      ];
+
+                      return response()->json($response);
+                }
+
+      public function storeSingleRecord_QuickEmployee($row,VmtOnboardingTestingService $VmtOnboardingTestingService)
         {
              $message = $row['employee_code']  ." not imported ";
              $status = 'failure';
@@ -346,191 +374,39 @@ try{
 
         }
 
-        public function importBulkOnboardEmployeesExcelData(Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService)
-        {
+        public function storeBulkOnboardEmployees(Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService){
 
-            $validator =    Validator::make(
-                $request->all(),
-                ['file' => 'required|file|mimes:xls,xlsx'],
-                ['required' => 'The :attribute is required.']
-            );
+            $data = $request->all();
+            $data_array =array();
+            $onboard_data =array();
+            foreach ($data  as $key => $excelRowdata) {
 
-            if ($validator->passes()) {
-                $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-                return $this->storeBulkOnboardEmployees($importDataArry, $VmtOnboardingTestingService);
-            } else {
-                $data['failed'] = $validator->errors()->all();
-                return response()->json($data);
+            $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($excelRowdata));
+
+            $Emp_data = array_combine(array_map('strtolower', $processed_data),array_values($excelRowdata));
+
+            array_push($onboard_data,$Emp_data);
             }
-            // linking Manager To the employees;
-            // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
+
+            foreach ($onboard_data  as $key => $excelRowdata) {
+                            $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata,$VmtOnboardingTestingService);
+                            array_push($data_array, $rowdata_response);
+                        }
+
+                     $response = [
+                         'status' => $rowdata_response['status'],
+                         'message' => "Excelsheet data import success",
+                         'data' =>$data_array
+                      ];
+
+                      return response()->json($response);
+
         }
-        private function storeBulkOnboardEmployees($data,$VmtOnboardingTestingService)
-        {
-
-            ini_set('max_execution_time', 300);
-            //For output jsonresponse
-            $data_array = [];
-            //For validation
-            $isAllRecordsValid = true;
-
-            $rules = [];
-
-            // $excelRowdata = $data[0][0];
-            $excelRowdata_row = $data;
-            $currentRowInExcel = 0;
-        if(empty($excelRowdata_row )){
-            return $rowdata_response = [
-                'status' => 'failure',
-                'message' => 'Please fill the excel',
-            ];
-
-        }else{
-            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-              //  dd($excelRowdata);
-                $currentRowInExcel++;
-
-                //Validation
-                $rules = [
-                    'employee_code' => ['unique:users,user_code',
-                            function ($attribute, $value, $fail) {
-
-                                $emp_client_code = preg_replace('/\d+/', '', $value );
-                                $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
-
-                                if (!$result) {
-                                    $fail('No matching client exists for the given <b> Employee Code <b>: '.$value);
-                                }
-                            },
-                        ],
-                    'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'email' => 'nullable|email:strict|unique:users,email',
-                    'gender' => 'required|in:Male,male,Female,female,other',
-                    'doj' => 'required|date',
-                    'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'dob' => 'required|date|before:-18 years',
-                    'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'father_gender' => 'nullable|in:Male,male,Female,female,other',
-                    'father_dob' => 'nullable|date',
-                    'pan_no' => 'nullable|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u',
-                    'pan_ack' => 'nullable',
-                    'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-                    'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
-                    'mobile_no' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-                    'bank_name' => 'required|exists:vmt_banks,bank_name',
-                    'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-                    'account_no' => 'required',
-                    'current_address' => 'nullable',
-                    'permanent_address' => 'nullable',
-                    'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'mother_gender' => 'nullable|in:Male,male,Female,female,other',
-                    'mother_dob' => 'nullable|date',
-                    'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'spouse_dob' => 'nullable',
-                    'no_of_child' => 'nullable|numeric',
-                    'child_name' => 'nullable',
-                    'child_dob' => 'nullable',
-                    'department' => 'required|exists:vmt_department,name',
-                    'process' => 'nullable',
-                    'designation' => 'required',
-                    'cost_center' => 'nullable',
-                    'confirmation_period' => 'nullable|date',
-                    'holiday_location' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                    'l1_manager_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'official_mail' => 'nullable|email',
-                    'official_mobile' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-                    'emp_notice' => 'nullable|numeric',
-                    'basic' => 'required|numeric',
-                    'hra' => 'required|numeric',
-                    'statutory_bonus' => 'required|numeric',
-                    'child_education_allowance' => 'required|numeric',
-                    'food_coupon' => 'required|numeric',
-                    'lta' => 'required|numeric',
-                    'special_allowance' => 'required|numeric',
-                    'other_allowance' => 'required|numeric',
-                    'epf_employer_contribution' => 'required|numeric',
-                    'insurance' => 'required|numeric',
-                    'graduity' => 'required|numeric',
-                    'epf_employee' => 'required|numeric',
-                    'esic_employee' => 'required|numeric',
-                    'professional_tax' => 'required|numeric',
-                    'labour_welfare_fund' => 'nullable|numeric',
-                    'uan_number' => 'nullable|numeric',
-                    'pf_applicable' => 'nullable|in:yes,Yes,no,No',
-                    'esic_applicable' => 'nullable|in:yes,Yes,no,No',
-                    'ptax_location' => 'nullable',
-                    'tax_regime' => 'nullable|in:old,Old,new,New',
-                    'lwf_location' => 'nullable',
-                    'esic_employer_contribution' => 'required|numeric',
-                     'dearness_allowance' => 'nullable',
-                ];
-
-                $messages = [
-                    'numeric' => 'Field <b>:attribute</b> should be numeric',
-                    'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
-                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-                    'required' => 'Field <b>:attribute</b> is required',
-                    'regex' => 'Field <b>:attribute</b> is invalid',
-                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-                    'unique' => 'Field <b>:attribute</b> should be unique',
-                    'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
-                    'email' => 'Field <b>:attribute</b> is invalid',
-                    'pan_no.required_if' =>'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
-                    'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
-                    'required_unless' => 'Field <b>:attribute</b> is invalid',
-                    'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
-
-                ];
-
-                $validator = Validator::make($excelRowdata, $rules, $messages);
-
-                if (!$validator->passes()) {
-
-                    $rowDataValidationResult = [
-                        'row_number' => $currentRowInExcel,
-                        'status' => 'failure',
-                        'message' => 'In Excel Row - '.$excelRowdata['employee_code'].' : ' . $currentRowInExcel . ' has following error(s)',
-                        'error_fields' => json_encode($validator->errors()),
-                    ];
-
-                    array_push($data_array, $rowDataValidationResult);
-
-                    $isAllRecordsValid = false;
-                }
-            }
-            } //for loop
-
-            //Runs only if all excel records are valid
-            if ($isAllRecordsValid) {
-                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-                    $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata, $VmtOnboardingTestingService);
-                    array_push($data_array, $rowdata_response);
-                }
-
-                $response = [
-                    'status' => $rowdata_response['status'],
-                    'message' => "Excelsheet data import success",
-                    'data' =>$data_array
-                 ];
-
-            } else {
-                $response = [
-                    'status' => 'failure',
-                    'message' =>"Please fix the below excelsheet data",
-                    'data' =>$data_array
-                 ];
-            }
-
-            return response()->json($response);
-        }
-
           /*
 
             $outputArray should be passed from parent function.
         */
-        private function storeSingleRecord_BulkEmployee($row, $VmtOnboardingTestingService)
+        private function storeSingleRecord_BulkEmployee($row,VmtOnboardingTestingService $VmtOnboardingTestingService)
         {
             //DB level validation
 

@@ -107,6 +107,29 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
             'Permanent Address',
             'Compensatory Type',
             'Amount',
+            'HRA',
+            'Statutory Bonus',
+            'Child Education Allowance',
+            'Child Education Allowance',
+            'Food Coupon',
+            'LTA',
+            'Special Allowance',
+            'Other Allowance',
+            'EPF Employer Contribution',
+            'ESIC Employer Contribution',
+            'Insurance',
+            'Graduity',
+            'EPf Employee',
+            'ESIC Employee',
+            'Professional Tax',
+            'Labour Welfare Fund',
+            'Net Income',
+            'Pf applicable',
+            'Esic applicable',
+            'Ptax location',
+            'tax regime',
+            'Lwf location',
+            'dearness  allowance'
         ];
     }
 
@@ -293,6 +316,31 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                     $column = Coordinate::stringFromColumnIndex($i);
                     $event->sheet->getColumnDimension($column)->setAutoSize(true);
                 }
+
+               // $event->sheet->getDelegate()->getColumnDimension('AG')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AH')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AI')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AJ')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AK')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AL')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AM')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AN')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AO')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AP')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AQ')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AR')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AS')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AT')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AU')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AV')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AW')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AX')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AY')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('AZ')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('BA')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('BB')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('BC')->setVisible(false);
+                $event->sheet->getDelegate()->getColumnDimension('BD')->setVisible(false);
             },
 
         ];

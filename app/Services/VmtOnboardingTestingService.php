@@ -84,7 +84,7 @@ class VmtOnboardingTestingService {
 
   public function createOrUpdate_BulkOnboardData($data, $can_onboard_employee, $existing_user_id = null,$onboard_type = null)
   {
-      //dd("heeey");
+
       $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
       if(!empty($response) && $response['status'] == 'success')
@@ -126,7 +126,7 @@ class VmtOnboardingTestingService {
   }
   public function createOrUpdate_QuickOnboardData($data, $can_onboard_employee, $existing_user_id = null,$onboard_type = null)
   {
-      //dd("heeey");
+      dd($data);
       $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type );
 
       if(!empty($response) && $response['status'] == 'success')
@@ -221,20 +221,31 @@ class VmtOnboardingTestingService {
 
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
+        dd($data);
         try
         {
             $newUser = new User;
             $newUser->name =$data['employee_name'];
-            $newUser->email = empty($data["email"]) ? '' : $data["email"];
+              //for quick and bulk
+            if(array_key_exists('personal_email',$data)){
+                $email =$data['personal_email'];
+            }//for normal onboarding data
+            else{
+               $email =$data['email'];
+            }
+            $newUser->email = empty($email) ? '' : $email;
             $newUser->password = Hash::make('Abs@123123');
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
-            $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-
+            //for quick and bulk
+            if(array_key_exists('legal_entity',$data)){
+                $newUser->client_id = VmtClientMaster::where('client_fullname', $$data['legal_entity'])->first()->id;
+            }//for normal onboarding data
+            else{
+                $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
                 $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+            }
 
-
-            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
             $newUser->is_onboarded = $can_onboard_employee;
@@ -528,9 +539,8 @@ class VmtOnboardingTestingService {
             $newEmployee = new VmtEmployee;
         }
 
-        $dob=$data["dob"] ?? '';
-        $doj=$data["doj"] ?? '';
-        $passport_date =  $data["passport_date"] ?? '';
+        $dob=$data["date_of_birth"] ?? '';
+        $doj=$data["date_of_joined"] ?? '';
 
         $newEmployee->userid   =    $user_id;
         $newEmployee->marital_status_id = $data["marital_status"] ?? '';
@@ -680,8 +690,8 @@ class VmtOnboardingTestingService {
             $newEmployee = new VmtEmployee;
         }
 
-        $dob=$data["dob"] ?? '';
-        $doj=$data["doj"] ?? '';
+        $dob=$data["date_of_birth"] ?? '';
+        $doj=$data["date_of_joined"] ?? '';
         $passport_date =  $data["passport_date"] ?? '';
 
         $newEmployee->userid   =    $user_id;
