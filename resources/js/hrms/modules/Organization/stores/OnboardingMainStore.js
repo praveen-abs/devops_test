@@ -85,10 +85,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 }
 
                 !headers[C].includes("UNKNOWN") ? excelHeaders.push(form) : ''
-
-
             }
             EmployeeQuickOnboardingDynamicHeader.value = excelHeaders
+            console.log(excelHeaders);
 
             // header: 1 instructs xlsx to create an 'array of arrays'
             // var result = XLSX.utils.sheet_to_json(firstSheet, { raw: false, header: 1, dateNF: "dd/mm/yyyy" });
@@ -99,10 +98,14 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 return initial;
             }, {});
 
+
             const importedExcelKey = Object.keys(jsonData)[0]
+            console.log();
 
 
-            jsonData.Sheet1 ? EmployeeQuickOnboardingSource.value = jsonData.Sheet1 : EmployeeQuickOnboardingSource.value = []
+            jsonData[importedExcelKey] ? EmployeeQuickOnboardingSource.value = jsonData[importedExcelKey] : EmployeeQuickOnboardingSource.value = []
+
+            console.log(jsonData[importedExcelKey]);
 
             // if (EmployeeQuickOnboardingSource.value) {
             //     isdups()
