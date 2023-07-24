@@ -201,6 +201,71 @@
                             <!-- <label for="" class="float-label">LWF Registration Number</label> -->
                         </div>
                     </div>
+
+                    <!--  -->
+
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 dashBoard">
+                        <!-- <label class="" for="lwf">LWF Registration Number{!! required() !!}</label> -->
+                        <div class="floating">
+                            <label for="" class="float-label">ABS Client Code</label>
+
+                            <InputMask id="basic" v-model="client_onboarding.abs_client_code" @keypress="isAbs($event)"  class="onboard-form form-control textbox" mask="99-999999" placeholder="ABS Client Code" :class="[
+                                v$.abs_client_code.$error ? 'border border-red-500' : '',
+                            ]" />
+                        <span v-if="v$.abs_client_code.$error" class="font-semibold text-red-400 fs-6">
+                            {{ v$.abs_client_code.required.$message.replace("Value", "ABS Client Code") }}
+                        </span>
+                        <label class="error lwf_label" for="lwf" style="display: none;"></label>
+
+                            <!-- <input type="text" placeholder="ABS Client Code" name="lwf" @keypress="isAbs($event)"
+                                v-model="client_onboarding.abs_client_code" class="onboard-form form-control textbox"
+                                pattern="alp-num" required :class="[
+                                    v$.abs_client_code.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.abs_client_code.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.abs_client_code.required.$message.replace("Value", "ABS Client Code") }}
+                            </span>
+                            <label class="error lwf_label" for="lwf" style="display: none;"></label> -->
+                            <!-- <label for="" class="float-label">LWF Registration Number</label> -->
+                        </div>
+                    </div>
+
+                    <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-xl-3 col-lg-3 dashBoard">
+                        <!-- <label class="" for="lwf">LWF Registration Number{!! required() !!}</label> -->
+                        <div class="floating">
+                            <label for="" class="float-label">Client Full Name</label>
+
+                            <input type="text" placeholder="Client Full Name" name="lwf"
+                                v-model="client_onboarding.client_full_name" class="onboard-form form-control textbox"
+                                pattern="alp-num" required :class="[
+                                    v$.client_full_name.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.client_full_name.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.client_full_name.required.$message.replace("Value", "Client Full Name") }}
+                            </span>
+                            <label class="error lwf_label" for="lwf" style="display: none;"></label>
+                            <!-- <label for="" class="float-label">LWF Registration Number</label> -->
+                        </div>
+                    </div>
+
+                    <div class="mb-2 col-md-6 col-sm-6 col-xs-6 col-xl-3 col-lg-3 dashBoard">
+                        <!-- <label class="" for="doc_uploads">Documents Upload{!! required() !!}</label> -->
+                        <!-- <div class="floating"> -->
+                      <label for="" class="float-label">Client Logo </label>
+                        <!-- <input @change="client_onboarding_document($event)" type="file" placeholder="Documents Upload"
+                            class="onboard-form form-control textbox " required
+                           /> -->
+                            <div class="mb-3">
+                                <!-- <label for="formFile" class="form-label btn btn-primary">Upload</label> -->
+                                <input class="form-control" @change="client_logo($event)" type="file"  id="formFile"   accept=".doc,.docx,.pdf,image/*" :class="[
+                                    v$.client_logo.$error ? 'border border-red-500' : '',
+                                ]" />
+                            <span v-if="v$.client_logo.$error" class="font-semibold text-red-400 fs-6">
+                                {{ v$.client_logo.required.$message.replace("Value", "Document") }}
+                            </span>
+                              </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -403,7 +468,8 @@
     <template #footer>
         <h5 style="text-align: center">Please wait...</h5>
     </template>
-</Dialog>
+    </Dialog>
+
 </template>
 
 
@@ -432,6 +498,9 @@ const client_onboarding = reactive({
     esic_reg_number: "",
     prof_tax_reg_number: "",
     lwf_reg_number: "",
+    abs_client_code:"",
+    client_full_name:"",
+    client_logo:"",
     authorised_person_name: "",
     authorised_person_designation: "",
     authorised_person_contact_number: "",
@@ -458,6 +527,9 @@ const rules = computed(() => {
     esic_reg_number: {required},
     prof_tax_reg_number: {required},
     lwf_reg_number: {required},
+    abs_client_code:{required},
+    client_full_name:{required},
+    client_logo :{required},
     authorised_person_name: {required},
     authorised_person_designation: {required},
     authorised_person_contact_number: {required},
@@ -509,6 +581,9 @@ const submit = () => {
     formData.append('esic_reg_number', client_onboarding.esic_reg_number)
     formData.append('prof_tax_reg_number', client_onboarding.prof_tax_reg_number)
     formData.append('lwf_reg_number', client_onboarding.lwf_reg_number)
+    formData.append('abs_client_code', client_onboarding.abs_client_code)
+    formData.append('client_full_name', client_onboarding.client_full_name)
+    formData.append('client_logo', client_onboarding.client_logo)
     formData.append('authorised_person_name', client_onboarding.authorised_person_name)
     formData.append('authorised_person_designation', client_onboarding.authorised_person_designation)
     formData.append('authorised_person_contact_number', client_onboarding.authorised_person_contact_number)
@@ -517,7 +592,6 @@ const submit = () => {
     formData.append('shipping_address', client_onboarding.shipping_address)
     formData.append('doc_uploads', client_onboarding.doc_uploads)
     formData.append('subscription_type', client_onboarding.subscription_type)
-
 
     console.log(formData);
 
@@ -551,5 +625,24 @@ const client_onboarding_document = (e) => {
     console.log(client_onboarding.doc_uploads);
   }
 };
+
+const client_logo = (e) => {
+  // Check if file is selected
+  if (e.target.files && e.target.files[0]) {
+    client_onboarding.client_logo = e.target.files[0]
+    console.log(client_onboarding.client_logo);
+  }
+};
+
+const isAbs = (e)=> {
+  let char = String.fromCharCode(e.keyCode); // Get the character
+  if(/^[ABS{3}_CL{2}]+$/.test(char)) return true; // Match with regex
+  else e.preventDefault(); // If not match, don't add to input text
+}
+
+// function lettersStartWithABS (){
+
+
+// }
 
 </script>
