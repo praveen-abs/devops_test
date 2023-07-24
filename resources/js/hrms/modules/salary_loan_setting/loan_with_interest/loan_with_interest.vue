@@ -154,48 +154,52 @@ function selectClientId(data) {
     salaryStore.sendClient_code(data);
 }
 
+const Name = [];
 function viewDetails(setting_prev_details) {
 
 
-       lwif.name = ""
-        lwif.selectClientID = ''
-        lwif.minEligibile = ''
-        lwif.availPerInCtc = ''
-        lwif.deductMethod = ''
-        lwif.precent_Or_Amt = ''
-        lwif.deductMethod = ""
-        lwif.max_loan_limit = ''
-        lwif.cusDeductMethod = ''
-        lwif.maxTenure = ''
-        lwif.loan_amt_interest = ''
-        lwif.loan_type = ""
-        lwif.approvalflow = ""
+    //    lwif.name = ""
+    //     lwif.selectClientID = ''
+    //     lwif.minEligibile = ''
+    //     lwif.availPerInCtc = ''
+    //     lwif.deductMethod = ''
+    //     lwif.precent_Or_Amt = ''
+    //     lwif.deductMethod = ""
+    //     lwif.max_loan_limit = ''
+    //     lwif.cusDeductMethod = ''
+    //     lwif.maxTenure = ''
+    //     lwif.loan_amt_interest = ''
+    //     lwif.loan_type = ""
+    //     lwif.approvalflow = ""
 
     CreateLoanWithNewFrom.value = 2;
 
-salaryStore.ifl.name = setting_prev_details.name;
+salaryStore.lwif.name  = setting_prev_details.name;
 
-salaryStore.ifl.selectClientID = setting_prev_details.client_id ;
+salaryStore.lwif.selectClientID = setting_prev_details.client_id ;
 
-salaryStore.ifl.minEligibile = setting_prev_details.min_month_served
-salaryStore.ifl.precent_Or_Amt = setting_prev_details.loan_applicable_type
-salaryStore.ifl.availPerInCtc = setting_prev_details.percent_of_ctc
-salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months
+salaryStore.lwif.minEligibile = setting_prev_details.min_month_served
+salaryStore.lwif.precent_Or_Amt = setting_prev_details.loan_applicable_type
+salaryStore.lwif.availPerInCtc = setting_prev_details.percent_of_ctc
+salaryStore.lwif.deductMethod = setting_prev_details.deduction_starting_months
+salaryStore.lwif.loan_amt_interest  =setting_prev_details.loan_amt_interest
+salaryStore.lwif.maxTenure  =setting_prev_details.max_tenure_months
+
 
 
 if (setting_prev_details.deduction_starting_months == 1) {
-    salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months;
+    salaryStore.lwif.deductMethod = setting_prev_details.deduction_starting_months;
 }
 else {
-    salaryStore.ifl.deductMethod = "emi";
-    salaryStore.ifl.cusDeductMethod = setting_prev_details.deduction_starting_months;
+    salaryStore.lwif.deductMethod = "emi";
+    salaryStore.lwif.cusDeductMethod = setting_prev_details.deduction_starting_months;
 }
 salaryStore.selectedOption1 = ""
 salaryStore.selectedOption2 =""
 salaryStore.selectedOption2  = ""
 
 salaryStore.EnableAndDisable =setting_prev_details.active;
-loanSettings.loan_ID = setting_prev_details.loan_id;
+// loanSettings.loan_ID = setting_prev_details.loan_id;
 
 console.log(setting_prev_details.approver_flow);
 

@@ -218,7 +218,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                     // "Salary Advance Succesfully",
                     icon: "success",
                 }).then((res) => {
-                    reset();
+                   
                     create_new_from.value = 1;
                 })
             }
@@ -283,6 +283,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 }),
                 icon: "success",
             }).then((res) => {
+                sal_adv_reset();
             })
         }
         else if (res.status == "failure") {
@@ -292,7 +293,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 icon: "error",
                 showCancelButton: false,
             }).then((res) => {
-
+                sal_adv_reset();
             })
 
         }

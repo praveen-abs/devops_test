@@ -30,12 +30,24 @@ export const loanSettingsStore = defineStore("loanSettings", () => {
 
     }
 
+    async function sendSavechanges(setting_id,empid){
+        let settings = setting_id;
+        let empDetails= empid; 
+        await axios.post('/salAdvSettingEdit',{
+            settings_id:settings,
+            empID:empDetails
+        }).then(()=>{
+
+        })
+    }
+
 
     return{
 
         CreateLoanWithNewFrom,
         viewHistory,
-        SendEnableAndDisable,loan_ID
+        SendEnableAndDisable,loan_ID,
+        sendSavechanges
     }
 
 });

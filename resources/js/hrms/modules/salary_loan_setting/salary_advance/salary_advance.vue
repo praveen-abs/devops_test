@@ -175,7 +175,7 @@
                                 </div>
                             </div>
 
-                            <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10"
+                            <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                                 :value="salaryStore.eligbleEmployeeSource"
                                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                 :rowsPerPageOptions="[5, 10, 25]" :filters="filters" 
@@ -184,7 +184,7 @@
                                 responsiveLayout="scroll">
                                 <Column selectionMode="multiple" headerStyle="width: 1.5rem"  >
                                     <template  #body="slotProps" v-if="view_details"  >
-                                        <Checkbox   v-model:selection="salaryStore.sa.eligibleEmployee"  @change="sendEmpDetails(slotProps.data)"  :binary="true" />
+                                        <Checkbox   v-model:selection="setEligibleEmployee"  :inputId="slotProps.data.id"  @change="sendEmpDetails(slotProps.data,slotProps.data.id)"  :binary="true" />
                                     </template>
                                 </Column>
                                 <Column field="user_code" header="Employee Name" style="min-width: 8rem"></Column>
@@ -195,9 +195,10 @@
                                 <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
                             </DataTable>
 
-                            {{ salaryStore.SalaryEmpDetails}}
+                            <!-- {{ salaryStore.SalaryEmpDetails}} -->
                              <h1>details</h1>
-                             {{ salaryStore.sa.eligibleEmployee }}
+                             {{setEligibleEmployee}}
+                             <!-- {{ salaryStore.sa.eligibleEmployee }} -->
                             <DataTable ref="dt" dataKey="user_code" :paginator="true" :rows="10"
                             :value="salaryStore.SalaryEmpDetails" v-if="view_details" 
                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -418,9 +419,10 @@
                 <div class=" d-flex justify-content-center" v-if="salaryStore.create_new_from == '2'" >
                     <button class="btn btn-border-primary" @click="back_btn" v-if="!view_details"  >Cancel</button>
                     <button class="btn btn-border-primary mr-5" @click="back_btn" v-if="view_details" >Back</button>
-                    <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 0 && view_details " @click="EnableDisable(1)">Enable</button>
+                    <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable === 0 && view_details " @click="EnableDisable(1)">Enable</button>
                     <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1 && view_details" @click="EnableDisable(0)">Disable</button>
                     <button class="mx-4 btn btn-primary" @click="submitForm" v-if="!view_details">Save </button>
+                    <button class="mx-4 btn btn-primary" @click="savechanges" v-if="view_details">Save changes</button>
                 </div>
             </div>
         </div>
@@ -433,15 +435,21 @@ import { ref, reactive, onMounted, computed } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import { salaryAdvanceSettingMainStore } from '../stores/salaryAdvanceSettingMainStore'
 import useValidate from '@vuelidate/core'
-import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators'
+import { required, email, minLength, sameAs, helpers } from '@vuelidate/validators';
+import {loanSettingsStore} from '../stores/loanSettingsStores';
 
 const salaryStore = salaryAdvanceSettingMainStore()
+const useSettingStore = loanSettingsStore();
 
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const settingHistory = ref([]);
+
+const setEligibleEmployee = ref([]);
+
+const settings_id = ref();
 
 const opt = ref()
 const opt1 = ref()
@@ -512,7 +520,6 @@ const submitForm = () => {
         salaryStore.salaryAdvanceHistory();
         salaryStore.getCurrentStatus('sal_adv');
         v$.value.$reset();
-
     } else {
         console.log('Form failed validation')
     }
@@ -550,6 +557,7 @@ function viewDetails(val) {
     console.log(view_details);
 
     salaryStore.create_new_from = 2;
+    settings_id.value = val.settings.view_details.settings_id;
 
     salaryStore.sa.SA = val.settings.view_details.settings_name;
     salaryStore.sa.isSalaryAdvanceEnabled = val.settings.view_details;
@@ -599,13 +607,22 @@ function back_btn(){
     view_details.value = "";
 }
 
-function sendEmpDetails(val){
+function sendEmpDetails(val,id){
     console.log(val);
 
     if(view_details){
         salaryStore.SalaryEmpDetails.push(val);
     }
+    setEligibleEmployee.value.push(id);
+    console.log();
   
+}
+
+function EnableDisable(val){
+
+salaryStore.sal_adv_reset();
+useSettingStore.SendEnableAndDisable( );
+console.log(val);
 }
 // if(salaryStore.sa.eligibleEmployee){
 
@@ -613,6 +630,11 @@ function sendEmpDetails(val){
 //     console.log("testings simma");
 
 // }
+
+function savechanges(){
+    console.log(salaryStore.sa.eligibleEmployee);
+    useSettingStore.sendSavechanges( settings_id.value , setEligibleEmployee.value )
+}
 
 
 </script>
