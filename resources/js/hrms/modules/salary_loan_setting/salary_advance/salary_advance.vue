@@ -212,6 +212,13 @@
                             <Column field="designation" header="Designation " style="min-width: 20rem"></Column>
                             <Column field="work_location" header="Location " style="min-width: 12rem"></Column>
                             <Column field="client_name" header="Legal Entity" style="min-width: 20rem"></Column>
+                            <Column  header="Action">
+                            <template #body="slotProps" >
+                                <div>
+                                    <button class="border border-blue-600 text-blue-600 px-2 rounded-md" @click="Remove(slotProps.data)">remove </button>
+                                </div>
+                            </template>
+                            </Column>
                         </DataTable>
                         </div>
                     </div>
@@ -634,6 +641,12 @@ console.log(val);
 function savechanges(){
     console.log(salaryStore.sa.eligibleEmployee);
     useSettingStore.sendSavechanges( settings_id.value , setEligibleEmployee.value )
+}
+
+function Remove(val){
+    setEligibleEmployee.value =  setEligibleEmployee.value.filter(item => item !== val.id )
+    salaryStore.SalaryEmpDetails = salaryStore.SalaryEmpDetails.filter(item => item !== val );
+    console.log(setEligibleEmployee.value);
 }
 
 

@@ -360,7 +360,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectedOption1.value = ""
         selectedOption2.value = ""
         selectedOption3.value = ""
-        EnableAndDisable.value = ""
+        EnableAndDisable.value = null;
     }
 
 
@@ -526,7 +526,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectedOption1.value = ""
         selectedOption2.value = ""
         selectedOption3.value = ""
-        EnableAndDisable.value = 3
+        EnableAndDisable.value = null
     }
 
     const saveLoanWithInterest = () => {

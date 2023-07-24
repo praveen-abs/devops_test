@@ -249,7 +249,7 @@
             <div class=" flex justify-center align-middle">
                 <button class="btn btn-border-primary" v-if="!salaryStore.EnableAndDisable" @click="cancel_btn">Cancel</button>
                 <button class="btn btn-border-primary mx-2 " v-if="salaryStore.EnableAndDisable" @click="back_btn">back</button>
-                <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 0  " @click="EnableDisable(1)">Enable</button>
+                <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable === 0  " @click="EnableDisable(1)">Enable</button>
                 <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1" @click="EnableDisable(0)">Disable</button>
                 <!-- submitForm -->
                 <button class="mx-4 btn btn-primary" v-if="!salaryStore.EnableAndDisable" @click="submitForm">Save</button>
