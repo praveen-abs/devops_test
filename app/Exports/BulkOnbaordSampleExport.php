@@ -39,6 +39,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     protected $marital_status;
     protected $manager_code;
     protected $salary;
+    protected $blood_grp;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
@@ -47,6 +48,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         $this->marital_status = $onbaord_details['marital_status'];
         $this->manager_code = $onbaord_details['managr_code'];
         $this->salary = $onbaord_details['salary'];
+        $this->blood_grp = $onbaord_details['blood_group'];
     }
 
     public function startCell(): string
@@ -105,7 +107,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
             'HRA',
             'Statutory Bonus',
             'Child Education Allowance',
-            'Child Education Allowance',
             'Food Coupon',
             'LTA',
             'Special Allowance',
@@ -128,6 +129,74 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         ];
     }
 
+
+    public function array(): array
+    {
+
+        return [
+            [
+                'ABS0001',
+                'Name',
+                'abs@gmail.com',
+                '0912345678',
+                'Male',
+                '28-06-2000',
+                '14-11-2022',
+                '',
+                'It',
+                '',
+                'Chennai',
+                'ABSM001',
+                '0912345678',
+                'test@gmail.com',
+                'Single',
+                '',
+                'Father Name',
+                'Mother Name',
+                'Spouse Name',
+                'B Positive',
+                'No',
+                'ABCTY1234D',
+                '0000 1111 2222',
+                'Axis Bank',
+                'AXIB0028901',
+                '24898240942',
+                'UAN0945049',
+                'Yes',
+                '942904',
+                'Current Address',
+                'Permanent Address',
+                'CTC - Monthly',
+                '18000',
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+
+
+
+            ]
+        ];
+    }
+
     public function columnFormats(): array
     {
         return [
@@ -137,11 +206,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         ];
     }
 
-    public function array(): array
-    {
-
-        return [];
-    }
 
 
 
@@ -280,6 +344,20 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                // $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
                $validation_Q->setFormula1('"Yes,No"');
 
+
+                 //set dropdown list for blood group column
+                 $validation_bld_grp = $event->sheet->getCell("T2")->getDataValidation();
+                 $validation_bld_grp->setType(DataValidation::TYPE_LIST);
+                 $validation_bld_grp->setErrorStyle(DataValidation::STYLE_WARNING);
+                 $validation_bld_grp->setAllowBlank(false);
+                 $validation_bld_grp->setShowInputMessage(true);
+                 $validation_bld_grp->setShowErrorMessage(true);
+                 $validation_bld_grp->setShowDropDown(true);
+                 $validation_bld_grp->setErrorTitle('Input error');
+                 $validation_bld_grp->setFormula1( $this->blood_grp);
+
+
+
                $validation_compansation = $event->sheet->getCell("{$compansation_column}3")->getDataValidation();
                 $validation_compansation->setType(DataValidation::TYPE_LIST);
                 $validation_compansation->setErrorStyle(DataValidation::STYLE_WARNING);
@@ -304,6 +382,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                     // $event->sheet->getCell("L{$i}")->setDataValidation(clone  $validation_mangr_code);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                     $event->sheet->getCell("U{$i}")->setDataValidation(clone    $validation_Q);
+                    $event->sheet->getCell("T{$i}")->setDataValidation(clone      $validation_bld_grp);
                 }
 
                 // set columns to autosize
