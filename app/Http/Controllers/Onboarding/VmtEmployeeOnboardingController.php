@@ -849,6 +849,7 @@ class VmtEmployeeOnboardingController extends Controller
               try{
 
                 $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row,can_onboard_employee:"0",existing_user_id : null,onboard_type  : "bulk");
+               
                   $status = $response['status'];
                  if($status == "success")
                     $message =  $row['employee_code']  . ' added successfully';
