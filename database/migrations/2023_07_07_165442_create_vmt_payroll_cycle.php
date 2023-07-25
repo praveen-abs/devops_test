@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('vmt_payroll_cycle', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('vmt_client_master');
-            $table->int('pay_frequency_id');
+            $table->integer('pay_frequency_id');
             $table->date('payperiod_start_month');
             $table->integer('payperiod_end_date');
             $table->date('payment_date');
