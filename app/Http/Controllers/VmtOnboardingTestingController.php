@@ -375,7 +375,7 @@ try{
         }
 
         public function storeBulkOnboardEmployees(Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService){
-
+dd($request->all());
             $data = $request->all();
             $data_array =array();
             $onboard_data =array();

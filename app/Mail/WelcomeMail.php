@@ -25,16 +25,16 @@ class WelcomeMail extends Mailable
     protected $image_view;
     protected $client_code;
 
-    // public function __construct($uEmail, $uPassowrd, $loginLink, $filename , $image_view,$client_code )
-    // {
-    //     //
-    //     $this->uEmail  = $uEmail;
-    //     $this->uPassowrd  = $uPassowrd;
-    //     $this->loginLink  = $loginLink;
-    //     $this->filename   = $filename;
-    //     $this->image_view   = $image_view;
-    //     $this->client_code   = $client_code;
-    // }
+    public function __construct($uEmail, $uPassowrd, $loginLink, $filename , $image_view,$client_code )
+    {
+        //
+        $this->uEmail  = $uEmail;
+        $this->uPassowrd  = $uPassowrd;
+        $this->loginLink  = $loginLink;
+        $this->filename   = $filename;
+        $this->image_view   = $image_view;
+        $this->client_code   = $client_code;
+    }
 
     /**
      * Build the message.
@@ -45,13 +45,13 @@ class WelcomeMail extends Mailable
     {
 
 
-            $output = $this->view('mail.testing');
-            // ->subject('ABShrms - Welcome')
-            // ->with('uEmail', $this->uEmail)
-            // ->with('uPassowrd', $this->uPassowrd)
-            // ->with('loginLink', $this->loginLink)
-            // ->with('image_view', $this->image_view)
-            // ->with('client_code',$this->client_code);
+            $output = $this->view('vmt_welcomeemployee_email')
+            ->subject('ABShrms - Welcome')
+            ->with('uEmail', $this->uEmail)
+            ->with('uPassowrd', $this->uPassowrd)
+            ->with('loginLink', $this->loginLink)
+            ->with('image_view', $this->image_view)
+            ->with('client_code',$this->client_code);
 
 
         //Only for Employee Onboarding
