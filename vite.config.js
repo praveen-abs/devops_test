@@ -20,10 +20,13 @@ export default defineConfig({
 
                 'resources/js/hrms/modules/profile_pages/ProfilePageNew.js',
 
+                // Attendance
+
+                'resources/js/hrms/modules/attendence/AttendanceModule.js',
+
                 // Leaves
 
                 'resources/js/hrms/modules/leave_module/LeaveModule.js',
-
                 'resources/js/hrms/modules/leave_module/leave_apply/LeaveApply.js',
                 'resources/js/hrms/modules/leave_module/leave_apply_v2/leave_apply_v2.js',
 
@@ -49,7 +52,7 @@ export default defineConfig({
                 ////Reimbursements Module
 
                 //Employee Reimbursements
-                'resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js',
+                'resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js',
 
                 //Configurations
                 //Attendance settings

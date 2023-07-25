@@ -5,12 +5,12 @@ import { ref, reactive } from 'vue';
 export const usePayrollHelper = defineStore('usePayrollHelper', () => {
 
     /*
-    1)Helper class contains Dropdown source 
-    2)Basic Dependent Function 
+    1)Helper class contains Dropdown source
+    2)Basic Dependent Function
     3)Filter functions
     4)Simple Calculation
 
-    *Only Access for Payroll Module 
+    *Only Access for Payroll Module
     */
 
     const componentTypes = ref([
@@ -30,6 +30,13 @@ export const usePayrollHelper = defineStore('usePayrollHelper', () => {
 
     const findCompType = (value) => {
         let type = componentTypes.value.find(ele => {
+            return ele.value == value
+        })
+        return type.name
+    }
+
+    const findCalType = (value) => {
+        let type = calculationTypes.value.find(ele => {
             return ele.value == value
         })
         return type.name
@@ -102,7 +109,7 @@ export const usePayrollHelper = defineStore('usePayrollHelper', () => {
                         else {
                             console.log("nope");
                         }
-        let url = '/showAssignEmp' 
+        let url = '/showAssignEmp'
         axios.post(url, selectedFilterOptions).then(res => {
             eligbleEmployeeSource.value = res.data
             console.log(res.data);
@@ -114,6 +121,7 @@ export const usePayrollHelper = defineStore('usePayrollHelper', () => {
         calculationTypes,
         componentCategories,
         findCompType,
+        findCalType,
         findIsSelected,
         filterSource,
         dropdownFilter,

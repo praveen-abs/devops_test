@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\ToArray;
 use App\Models\VmtMaritalStatus;
 use App\Models\VmtBloodGroup;
 use App\Models\User;
+use App\Models\Bank;
 
 class VmtExcelGeneratorService
 {

@@ -2,12 +2,12 @@ import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+import './hrms/assests/tailwind.css'
 
-import './bootstrap';
-import '../../public/assets/css/app.css';
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import AccordionTab from 'primevue/accordiontab';
@@ -104,16 +104,21 @@ import TreeSelect from 'primevue/treeselect';
 import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
+import router from "./hrms/modules/Organization/router/router";
 
 
-import leave from './testings/leave.vue'
+import second from './testings/second.vue'
+import QUickOnboarding from './hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
+const app = createApp(QUickOnboarding);
+const pinia=createPinia()
 
-const app = createApp(leave);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(pinia);
+app.use(router);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
@@ -121,7 +126,6 @@ app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
-app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
 app.component('AutoComplete', AutoComplete)
 app.component('Avatar', Avatar);

@@ -156,8 +156,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             {
                 uid: getURLParams_UID(),
                 user_code: user_code,
-                month: month,
-                year: year
+                month: formattedMonth,
+                year: formattedYear
             }).then((response) => {
                 //  console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
                 console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));

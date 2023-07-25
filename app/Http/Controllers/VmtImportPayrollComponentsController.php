@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\VmtPayrollCompTypes;
 use App\Models\VmtPayrollCompCategory;
 use App\Models\VmtPayrollCompNature;
+use App\Models\VmtPayrollCalculatiomMethod;
 use App\Models\VmtPayrollComponents;
 use App\Imports\VmtFinancialComponents;
 use Illuminate\Support\Facades\Validator;
@@ -63,6 +64,8 @@ $i=array_keys($excelRowdata_row);
                  'component_nature'=>'nullable',
                  'category'=>'nullable',
                  'calculation_method'=>'nullable',
+                 'flat amount'=>'nullable',
+                 'percentage'=>'nullable',
                  'taxability'=>'nullable',
                  'epf'=>'nullable',
                  'esi'=>'nullable',
@@ -155,7 +158,10 @@ $i=array_keys($excelRowdata_row);
                 $fin_components->comp_nature_id =$component_nature->id;
                 $component_category =VmtPayrollCompCategory::where('name',strtolower($row["category"]))->first();
                 $fin_components->category_id =$component_category->id;
-                $fin_components->calculation_method =$row["calculation_method"];
+                $calculation_method_id =VmtPayrollCalculatiomMethod::where('name',strtolower($row["calculation_method"]))->first();
+                $fin_components->calculation_method_id =$calculation_method_id->id;
+                $fin_components->flat_amount =$row["flat_amount"];
+                $fin_components->percentage =$row["percentage"];
                 $fin_components->epf =$row["epf"];
                 $fin_components->esi =$row["esi"];
                 $fin_components->pt =$row["pt"];

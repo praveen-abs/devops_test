@@ -22,9 +22,10 @@ return new class extends Migration
             $table->integer('esi');
             $table->integer('tds');
             $table->integer('fbp');
+            $table->integer('creator_user_id');
             $table->timestamps();
         });
-      
+
     }
 
     /**
