@@ -97,7 +97,8 @@ class VmtClientController extends Controller
                                                             'Abs@123123',
                                                              request()->getSchemeAndHttpHost() ,
                                                              "",
-                                                             $image_view)
+                                                             $image_view,
+                                                             $request->abs_client_code)
             );
                 return "Saved";
         }

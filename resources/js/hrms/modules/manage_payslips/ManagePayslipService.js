@@ -147,8 +147,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         console.log("Downloading payslip PDF.....");
 
 
-        let formattedMonth = parseInt(dayjs(payroll_month).month()) + 1;
-        let formattedYear = dayjs(payroll_month).year();
+        let month_payroll = parseInt(dayjs(payroll_month).month()) + 1;
+        let year_payroll = dayjs(payroll_month).year();
 
         //split the payroll_month into month and year
 
