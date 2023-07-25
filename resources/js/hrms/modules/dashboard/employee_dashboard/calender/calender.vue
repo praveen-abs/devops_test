@@ -50,14 +50,13 @@ label {
     position: fixed;
     top: 0;
     left: 0;
-    width: 90%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     pointer-events: none;
     background: #433f3f6b;
-
 }
 
 .p-button:enabled:hover {
@@ -68,7 +67,7 @@ label {
 
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 0.2rem 0.55rem;
-    margin-right: 0.5rem;
+    margin-right: 0.2rem;
     background: #dee2e6;
     color: #495057;
     border-radius: 16px;
@@ -110,6 +109,14 @@ label {
     flex-wrap: wrap;
     width: 100%;
 }
+
+.p-datepicker , .p-datepicker-inline{
+    height: 375px;
+    width: 100%;
+}
+.p-datepicker table td {
+    padding: 0.2rem;
+  }
 
 /*.p-dialog.p-component:before {
     content: "";
