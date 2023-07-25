@@ -582,6 +582,7 @@ class VmtAttendanceController extends Controller
     public function getShiftTimeForEmployee($user_id, $checkin_time, $checkout_time)
     {
         $emp_work_shift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->get();
+
         if (count($emp_work_shift) == 1) {
             $regularTime  = VmtWorkShifts::where('id', $emp_work_shift->first()->work_shift_id)->first();
             return  $regularTime;
@@ -602,6 +603,10 @@ class VmtAttendanceController extends Controller
                     return  $regularTime;
                 }
             }
+        }
+        else
+        {
+            return null;
         }
     }
 
@@ -851,6 +856,13 @@ class VmtAttendanceController extends Controller
         foreach ($attendanceResponseArray as $key => $value) {
 
               $shift_time=$this->getShiftTimeForEmployee($value['user_id'],$value['checkin_time'],$value['checkout_time']);
+
+              //If no shift assigned to user, then return null
+              if(!$shift_time)
+              {
+                return 0;
+              }
+
               $attendanceResponseArray[$key]['vmt_employee_workshift_id']= $shift_time->id;
               $attendanceResponseArray[$key]['workshift_code']= $shift_time->shift_code;
               $attendanceResponseArray[$key]['workshift_name']= $shift_time->shift_name;

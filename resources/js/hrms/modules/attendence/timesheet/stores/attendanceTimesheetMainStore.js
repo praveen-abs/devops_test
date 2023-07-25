@@ -38,7 +38,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     const getEmployeeAttendance = async (currentlySelectedUser, currentlySelectedMonth, currentlySelectedYear) => {
         canShowLoading.value = true
-        let url = '/fetch-attendance-user-timesheet'
+        let url = '/fetch-attendance-user-timesheet';
+
+        //Returns '0' if shift is not assigned to user. Need to handle error scenario based on that value.
+
         return axios.post(url, {
             month: currentlySelectedMonth + 1,
             year: currentlySelectedYear,
@@ -51,6 +54,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
         canShowLoading.value = true
         getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+            console.log("Selected employee attendance : "+res.data);
             currentEmployeeAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
