@@ -1826,6 +1826,7 @@ class VmtSalaryAdvanceService
 
     public function getApprovedRequestedForLoanAndAdvance()
     {
+        $response = array();
         //For Interest Free Loan
         $interest_free_loan_query = VmtEmployeeInterestFreeLoanDetails::get();
         foreach ($interest_free_loan_query as $key => $single_record) {
@@ -1835,6 +1836,14 @@ class VmtSalaryAdvanceService
                     break;
                 }
             }
+        }
+        if(!empty($interest_free_loan_query)){
+           foreach( $interest_free_loan_query as $single_rcrd){
+                   $temp_ar=array();
+                   $temp_ar['name']=User::where('id',$single_rcrd->user_id)->first()->name;
+                  // $temp_ar[]
+                   dd( $single_rcrd);
+           }
         }
 
         //For Interest With Loan
@@ -1858,8 +1867,8 @@ class VmtSalaryAdvanceService
                 }
             }
         }
-        //For Travel 
-        $response = array();
+        
+       
 
         
     }
