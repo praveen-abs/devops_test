@@ -43,17 +43,17 @@
                 style="min-width: 12rem;" :header="col.title">
 
                 <template #body="{ data, field }">
-                    <div v-if="field.includes('Employee Code')"
-                        :class="[!useStore.findDuplicate(data['Employee Code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                    <div v-if="field.includes('Employee code')"
+                        :class="[useStore.findDuplicate(data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
                                 v-if="!useStore.isUserExists(data['Employee code'])"></i>
-                            {{ data['Employee Code'] }}
+                            {{ data['Employee code'] }}
                         </p>
                     </div>
                     <p v-else-if="field == 'Aadhar'"
-                        :class="[useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[!useStore.findDuplicate(data['Employee code']) || useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Aadhar'] }}
                     </p>
@@ -63,24 +63,25 @@
                         {{ data['Employee Name'] }}
                     </p>
                     <p v-else-if="field == 'Email'"
-                        :class="[useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.findDuplicate(data['Email'])  || useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning  cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Email is already exists'"
                             v-if="useStore.existingEmails.includes(data['Email'])"></i>
                         {{ data['Email'] }}
                     </p>
-                    <p v-else-if="field == 'Mobile Number'"
-                        :class="[useStore.isValidMobileNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                    <p v-else-if="field.includes("Mobile Number")"
+                        :class="[ useStore.findDuplicate(data[field])   ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
-                            v-if="useStore.existingMobileNumbers.includes(data['Mobile Number'])"></i>
+                            v-if="useStore.existingMobileNumbers.includes(data[field])"></i>
+                            <!-- {{ field }} -->
                         {{ data['Mobile Number'] }}
                     </p>
 
                     <p v-else-if="field == 'Account No'"
-                        :class="[useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.findDuplicate(data['Account No']) || useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Account No'] }}
                     </p>
@@ -92,7 +93,7 @@
                     </p>
 
                     <p v-else-if="field == 'Pan No'"
-                        :class="[useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.findDuplicate(data['Pan No']) ||useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
@@ -120,7 +121,7 @@
                         {{ data['Department'] }}
                     </p> -->
                     <p v-else-if="field.includes('Official Mail')"
-                        :class="[useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="useStore.findDuplicate(data['Official Mail'])  || [useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Official Mail'] }}
                     </p>

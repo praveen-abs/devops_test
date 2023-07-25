@@ -151,6 +151,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const currentDupes = ref([])
 
     const findDuplicate = (array) => {
+        console.log(array);
         let result = array.length !== new Set(array).size ? false : true;
         console.log("Selected row contains dup's : " + result);
         return result
