@@ -373,4 +373,8 @@ class VmtSalaryAdvanceController extends Controller
         $response = $vmtSalaryAdvanceService->enableOrDisableLoanSettings($loan_type, $loan_id,$status);
         return $response;
     }
+    public function getApprovedRequestedForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+           $response = $vmtSalaryAdvanceService->getApprovedRequestedForLoanAndAdvance();
+           return $response;
+    }
 }
