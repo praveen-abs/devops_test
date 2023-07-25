@@ -70,7 +70,7 @@
                             v-if="useStore.existingEmails.includes(data['Email'])"></i>
                         {{ data['Email'] }}
                     </p>
-                    <p v-else-if="field.includes("Mobile Number")"
+                    <p v-else-if="field.includes('Mobile Number')"
                         :class="[ useStore.findDuplicate(data[field])   ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
