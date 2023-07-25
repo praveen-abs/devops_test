@@ -131,7 +131,7 @@ class VmtClientController extends Controller
 
     public function fetchAllClients(Request $request)
     {
-        return json_encode( VmtClientMaster::all());
+        return json_encode( VmtClientMaster::where('id','<>',1)->get());
     }
 
     public function getABSClientCode(Request $request, VmtClientService $serviceVmtClientService){
