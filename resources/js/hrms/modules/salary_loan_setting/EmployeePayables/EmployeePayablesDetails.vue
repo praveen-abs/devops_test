@@ -1,5 +1,5 @@
 <template>
-    <div class=" p-2">
+    <div class=" p-2 mt-4">
         <h1 class=" fs-2 font-semibold">Employee Payables - Jun 2023</h1>
 
         <!-- Summary screen -->
