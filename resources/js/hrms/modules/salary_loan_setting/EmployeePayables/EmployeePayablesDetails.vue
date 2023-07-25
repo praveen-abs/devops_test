@@ -221,15 +221,8 @@
                             <summaryvue />
                         </div>
                         <div v-if="activetab === 2">
-                            <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor, sapiente.</h1>
-                            <!-- <InterestFreeLoan /> -->
+                            <EmployeeSummary />
                         </div>
-                        <!-- <div v-if="activetab === 3">
-                        <TravelAdvance />
-                    </div>
-                    <div v-if="activetab === 4">
-                        <LoanWithInterest />
-                    </div> -->
                     </div>
                 </div>
             </div>
@@ -252,6 +245,7 @@
 <script setup>
 import { BaseTransition, ref } from "vue";
 import summaryvue from "./BankTransferSummary/summary.vue";
+import EmployeeSummary from "./BankTransferSummary/EmployeeSummary.vue";
 
 const activetab = ref(1);
 
