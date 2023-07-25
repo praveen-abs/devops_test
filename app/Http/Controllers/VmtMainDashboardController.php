@@ -59,7 +59,7 @@ class VmtMainDashboardController extends Controller
 
           $client =  VmtClientMaster::get()->count();
 
-          if($client == 1){
+          if($client == 0){
 
             return view('on_run_first_client_onboarding');
 
