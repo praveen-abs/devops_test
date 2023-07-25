@@ -1,4 +1,5 @@
 <template>
+
     <div class="h-full w-full  ">
         <div class="card-body d-flex justify-content-between align-items-center  py-2 mt-2  w-full" >
 
@@ -67,12 +68,24 @@
         </div>
     </div>
 </template>
+<style>
+
+.p-multiselect-label,.p-placeholder{
+ position: relative !important ;
+  bottom: 2px !important; }
+
+  .p-multiselect-trigger-icon , .pi-chevron-down{
+    rotate: 270deg !important;
+  }
+
+</style>
 
 <script setup>
 
 </script>
 
 <style lang="sass" scoped>
+
 
 #btn-download
   cursor: pointer
