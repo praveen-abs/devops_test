@@ -24,6 +24,7 @@ use App\Models\VmtEmpInterestLoanDetails;
 use App\Models\VmtPayroll;
 use App\Models\Department;
 use App\Models\State;
+use App\Models\Bank;
 use Exception;
 use App\Models\VmtClientMaster;
 use Mail;
@@ -1837,13 +1838,18 @@ class VmtSalaryAdvanceService
                 }
             }
         }
-        if(!empty($interest_free_loan_query)){
-           foreach( $interest_free_loan_query as $single_rcrd){
-                   $temp_ar=array();
-                   $temp_ar['name']=User::where('id',$single_rcrd->user_id)->first()->name;
-                  // $temp_ar[]
-                   dd( $single_rcrd);
-           }
+        if (!empty($interest_free_loan_query)) {
+            foreach ($interest_free_loan_query as $single_rcrd) {
+                $temp_ar = array();
+                $temp_ar['name'] = User::where('id', $single_rcrd->user_id)->first()->name;
+                $temp_ar['loan_req_id'] = $single_rcrd->request_id;
+                $temp_ar['nature_of_payment'] = 'Interesr Free Loan';
+                $temp_ar['amt_borrow'] = $single_rcrd->borrowed_amount;
+                $temp_ar['loan_req_date'] = $single_rcrd->requested_date;
+                $temp_ar['bank'] = Bank::find(VmtEmployee::where('userid', $single_rcrd->user_id)->first()->bank_id)->bank_name;
+                array_push($response,  $temp_ar);
+                unset($temp_ar);
+            }
         }
 
         //For Interest With Loan
@@ -1854,6 +1860,19 @@ class VmtSalaryAdvanceService
                     $loan_with_interest_query->forget($key);
                     break;
                 }
+            }
+        }
+        if (!empty($loan_with_interest_query)) {
+            foreach ($loan_with_interest_query as $single_rcrd) {
+                $temp_ar = array();
+                $temp_ar['name'] = User::where('id', $single_rcrd->user_id)->first()->name;
+                $temp_ar['loan_req_id'] = $single_rcrd->request_id;
+                $temp_ar['nature_of_payment'] = 'Loan With Interest';
+                $temp_ar['amt_borrow'] = $single_rcrd->borrowed_amount;
+                $temp_ar['loan_req_date'] = $single_rcrd->requested_date;
+                $temp_ar['bank'] = Bank::find(VmtEmployee::where('userid', $single_rcrd->user_id)->first()->bank_id)->bank_name;
+                array_push($response,  $temp_ar);
+                unset($temp_ar);
             }
         }
 
@@ -1867,9 +1886,21 @@ class VmtSalaryAdvanceService
                 }
             }
         }
-        
-       
 
-        
+        if (!empty($sal_adv_query)) {
+            foreach ($sal_adv_query as $single_rcrd) {
+                $temp_ar = array();
+                $user_id = VmtEmpAssignSalaryAdvSettings::find($single_rcrd->vmt_emp_assign_salary_adv_id)->user_id;
+                $temp_ar['name'] = User::where('id',   $user_id)->first()->name;
+                $temp_ar['loan_req_id'] = $single_rcrd->request_id;
+                $temp_ar['nature_of_payment'] = 'Salary Advance';
+                $temp_ar['amt_borrow'] = $single_rcrd->borrowed_amount;
+                $temp_ar['loan_req_date'] = $single_rcrd->requested_date;
+                $temp_ar['bank'] = Bank::find(VmtEmployee::where('userid',   $user_id)->first()->bank_id)->bank_name;
+                array_push($response,  $temp_ar);
+                unset($temp_ar);
+            }
+        }
+        return $response;
     }
 }
