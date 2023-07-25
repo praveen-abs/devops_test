@@ -57,6 +57,14 @@ class VmtMainDashboardController extends Controller
     public function index(Request $request,VmtDashboardService $VmtDashboardService)
     {
 
+          $client =  VmtClientMaster::get()->count();
+
+          if($client == 1){
+
+            return view('on_run_first_client_onboarding');
+
+          }else{
+
         if (auth()->user()->active == 0) {
 
 
@@ -368,6 +376,8 @@ class VmtMainDashboardController extends Controller
         else{
             return "No Roles assigned for this user. Kindly contact the admin";
         }
+
+      }
     }
 
     public function showMainDashboardPage(Request $request){

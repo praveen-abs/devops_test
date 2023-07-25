@@ -220,8 +220,13 @@ class VmtProfilePagesService
         $response['short_name_Color'] = shortNameBGColor($user_short_name);
 
         $user_client_data = User::where('id', $user_id)->first();
+       
 
         $response['client_details'] = VmtClientMaster::where('id', $user_client_data->client_id)->first();
+
+        if(empty( $response['client_details'])){
+            $response['client_details'] ='';
+        }
 
         $general_info = \DB::table('vmt_client_master')->first();
 
