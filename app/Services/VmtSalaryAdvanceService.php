@@ -702,36 +702,37 @@ class VmtSalaryAdvanceService
         return $getempdetails;
     }
 
-    public function salAdvSettingEdit($record_id,$user_id){
+    public function salAdvSettingEdit($record_id, $user_id)
+    {
 
-            foreach($user_id as $single_userid){
+        foreach ($user_id as $single_userid) {
 
-              $new_emp_assign = new VmtEmpAssignSalaryAdvSettings;
-              $new_emp_assign->user_id  = $single_userid;
-              $new_emp_assign->salary_adv_id  = $record_id;
-              $new_emp_assign->save();
-
-            }
+            $new_emp_assign = new VmtEmpAssignSalaryAdvSettings;
+            $new_emp_assign->user_id  = $single_userid;
+            $new_emp_assign->salary_adv_id  = $record_id;
+            $new_emp_assign->save();
+        }
     }
-    public function salAdvSettingDelete($user_id){
+    public function salAdvSettingDelete($user_id)
+    {
 
-            foreach($user_id as $single_userid){
+        foreach ($user_id as $single_userid) {
 
-              $new_emp_assign = VmtEmpAssignSalaryAdvSettings::where('user_id',$single_userid)->first();
-              $new_emp_assign->delete();
-
-            }
+            $new_emp_assign = VmtEmpAssignSalaryAdvSettings::where('user_id', $single_userid)->first();
+            $new_emp_assign->delete();
+        }
     }
 
-    public function salAdvAmtApprovedEmp(){
+    public function salAdvAmtApprovedEmp()
+    {
 
-           $get_details =  VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting','vmt_emp_assign_salary_adv_setting.id','=','vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
-           ->where('sal_adv_crd_sts','0')->get();
+        $get_details =  VmtEmpSalAdvDetails::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.id', '=', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id')
+            ->where('sal_adv_crd_sts', '0')->get();
 
         //    dd($get_details);
 
-           $getsaldetails = [];
-           foreach($get_details as $single_details){
+        $getsaldetails = [];
+        foreach ($get_details as $single_details) {
 
             $simam['user_id'] = $single_details->user_id;
             $simam['request_id'] = $single_details->request_id;
@@ -739,29 +740,24 @@ class VmtSalaryAdvanceService
             $simam['borrowed_amount'] = $single_details->borrowed_amount;
             $simam['requested_date'] = $single_details->requested_date;
             $simam['dedction_date'] = $single_details->dedction_date;
-            $simam['json_flow'] = json_decode($single_details->emp_approver_flow,true);
+            $simam['json_flow'] = json_decode($single_details->emp_approver_flow, true);
 
-                array_push($getsaldetails,$simam);
-           }
+            array_push($getsaldetails, $simam);
+        }
 
 
-           $res11 = [];
-           foreach($getsaldetails as $single_getdetails){
+        $res11 = [];
+        foreach ($getsaldetails as $single_getdetails) {
 
-            for($i=0; $i<count($single_getdetails['json_flow']); $i++){
+            for ($i = 0; $i < count($single_getdetails['json_flow']); $i++) {
 
-                if($single_getdetails['json_flow'][$i]['status'] == 1){
+                if ($single_getdetails['json_flow'][$i]['status'] == 1) {
 
-                    array_push($res11,$single_getdetails);
+                    array_push($res11, $single_getdetails);
                 }
-
             }
-
-    }
-    dd($res11);
-
-
-
+        }
+        dd($res11);
     }
 
 
@@ -1744,13 +1740,13 @@ class VmtSalaryAdvanceService
                 $loan_detail = new VmtInterestFreeLoanTransaction;
                 $loan_detail->emp_loan_details_id = $loan_detail_id;
                 $loan_detail->expected_emi =  $borrowed_amount / $tenure_months;
-                if($i==0){
+                if ($i == 0) {
                     $loan_detail->payroll_date =  $deduction_starting_month;
                 }
-                $loan_detail->payroll_date =Carbon::parse( $deduction_starting_month)->addMonth($i);
+                $loan_detail->payroll_date = Carbon::parse($deduction_starting_month)->addMonth($i);
                 $loan_detail->save();
 
-               // $posts = VmtInterestFreeLoanTransaction::where('status', '=', 1)->whereDate('created_at', '=', $month)->get();
+                // $posts = VmtInterestFreeLoanTransaction::where('status', '=', 1)->whereDate('created_at', '=', $month)->get();
             }
             //dd(gettype($deduction_starting_month));
 
@@ -1825,5 +1821,45 @@ class VmtSalaryAdvanceService
             'message' => "enableOrDisableLoanSettings",
             'data' => $msg
         ]);
+    }
+
+    public function getApprovedRequestedForLoanAndAdvance()
+    {
+        //For Interest Free Loan
+        $interest_free_loan_query = VmtEmployeeInterestFreeLoanDetails::get();
+        foreach ($interest_free_loan_query as $key => $single_record) {
+            foreach (json_decode($single_record->approver_flow, true) as $single_approver) {
+                if ($single_approver['status'] != 1) {
+                    $interest_free_loan_query->forget($key);
+                    break;
+                }
+            }
+        }
+
+        //For Interest With Loan
+        $loan_with_interest_query = VmtEmpInterestLoanDetails::get();
+        foreach ($loan_with_interest_query as $key => $single_record) {
+            foreach (json_decode($single_record->approver_flow, true) as $single_approver) {
+                if ($single_approver['status'] != 1) {
+                    $loan_with_interest_query->forget($key);
+                    break;
+                }
+            }
+        }
+
+        //For Salary Advance 
+        $sal_adv_query = VmtEmpSalAdvDetails::get();
+        foreach ($sal_adv_query as $key => $single_record) {
+            foreach (json_decode($single_record->emp_approver_flow, true) as $single_approver) {
+                if ($single_approver['status'] != 1) {
+                    $sal_adv_query->forget($key);
+                    break;
+                }
+            }
+        }
+        //For Travel 
+        $response = array();
+
+        
     }
 }
