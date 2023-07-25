@@ -19,9 +19,8 @@
 
             <!--  -->
             <div>
-                <button class=" rounded-md px-4 py-1 border border-blue-600 text-blue-600 fs-6 h-10"
+                <button class=" rounded-md px-4 py-1 border  fs-6 h-10"
                     @click="btn_download = !btn_download">
-                    <p class=" position-relative right-3">Download</p>
                     <div id="btn-download" style=" position: absolute; right: 0;"
                         :class="[btn_download == true ? toggleClass : 'toggleClass', 'toggleClass']">
                         <svg width="22px" height="16px" viewBox="0 0 22 16">
@@ -32,6 +31,8 @@
                             <path d="M8,1 L8,11" class="svg-out"></path>
                         </svg>
                     </div>
+                    <p class=" position-relative left-2">Download</p>
+                    
                 </button>
 
             </div>
@@ -61,17 +62,6 @@ const btn_download = ref(false);
 
 <style lang="sass" scoped>
 
-.p-multiselect-label
-    position: relative !important
-    bottom:14px !important
-.p-placeholder 
-  position: relative !important
-  bottom:14px !important
- 
-
-
-.p-multiselect-trigger-icon .pi .pi-chevron-down
-
 #btn-download
   cursor: pointer
   display: block
@@ -83,7 +73,7 @@ const btn_download = ref(false);
   //centering
   position: absolute
   top: calc(50% - 24px)
-  left: calc(85% - 24px)
+  left: calc(14% - 24px)
   &:hover
     background: rgba(#223254,.03)
   svg
@@ -92,7 +82,7 @@ const btn_download = ref(false);
     transform: translate3d(0,0,0)
     polyline,
     path
-      stroke: #0077FF
+      stroke: #000
       stroke-width: 2
       stroke-linecap: round
       stroke-linejoin: round
