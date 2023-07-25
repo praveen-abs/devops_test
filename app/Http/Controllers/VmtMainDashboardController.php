@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use App\Models\VmtGeneralSettings;
-use App\Models\VmtGeneralInfo;
+use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtEmployee;
 use App\Models\vmt_dashboard_posts;
@@ -39,7 +39,6 @@ use App\Models\VmtEmployeeOfficeDetails;
 use App\Mail\PMSReviewCompleted;
 use App\Models\VmtPraise;
 use App\Http\Controllers\VmtEmployeeController;
-use App\Models\VmtClientMaster;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -55,8 +54,16 @@ class VmtMainDashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index(Request $request,VmtDashboardService $VmtDashboardService)
     {
+
+          $client =  VmtClientMaster::get()->count();
+
+          if($client == 1){
+
+            return view('on_run_first_client_onboarding');
+
+          }else{
 
         if (auth()->user()->active == 0) {
 
@@ -122,22 +129,22 @@ class VmtMainDashboardController extends Controller
             }
 
         } else
-            if (Str::contains(currentLoggedInUserRole(), ["Manager"])) {
-                if (!$request->session()->has('client_id')) {
-                    //get the employee client_code
-                    $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
+        if (Str::contains(currentLoggedInUserRole(), ["Manager"])) {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
-                    $this->updateSessionVariables($assigned_client_id);
-                }
-            } else
-                if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
-                    if (!$request->session()->has('client_id')) {
-                        //get the employee client_code
-                        $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
+                $this->updateSessionVariables($assigned_client_id);
+            }
+        } else
+        if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
+            if (!$request->session()->has('client_id')) {
+                //get the employee client_code
+                $assigned_client_id = getEmployeeClientDetails(auth()->user()->id);
 
-                        $this->updateSessionVariables($assigned_client_id);
-                    }
-                }
+                $this->updateSessionVariables($assigned_client_id);
+            }
+        }
 
         //Promote user to Manager if any employees reporting him
         $reporteesCount = VmtEmployeeOfficeDetails::where('l1_manager_code', auth()->user()->user_code)->get()->count();
@@ -204,20 +211,29 @@ class VmtMainDashboardController extends Controller
 
         //dd($dashboardEmployeeEventsData);
         //get the last attendance data for the current user
+
+        $last_checkout_data = $VmtDashboardService->fetchEmpLastAttendanceStatus(auth()->user()->user_code);
+
         $checked = VmtEmployeeAttendance::where('user_id', auth()->user()->id)
             ->orderBy('created_at', 'DESC')->first();
         $effective_hours = "";
 
         //If user already checkout, then send time difference to blade
-        if (isset($checked->checkout_time)) {
+        if(!empty($checked->checkout_time)){
             $to = Carbon::createFromFormat('H:i:s', $checked->checkout_time);
+          }
+          if(!empty($checked->checkin_time)){
+             $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
+          }
 
-            $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
 
+          if(!empty($to) && !empty($from)){
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+          }
+
 
             // dd($effective_hours);
-        }
+
 
         $dashboardpost = vmt_dashboard_posts::all();
         // $holidays = vmtHolidays::orderBy('holiday_date', 'ASC')->get();
@@ -345,7 +361,6 @@ class VmtMainDashboardController extends Controller
         // get praise data
         $praiseData = VmtPraise::orderBy('created_at', 'DESC')->get();
 
-
         if (Str::contains(currentLoggedInUserRole(), ["Super Admin", "Admin", "HR", "Manager"])) {
             return view('vmt_hr_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData'));
         }
@@ -358,7 +373,11 @@ class VmtMainDashboardController extends Controller
             if (Str::contains(currentLoggedInUserRole(), ["Employee"])) {
                 return view('vmt_employee_dashboard', compact('dashboardEmployeeEventsData', 'checked', 'effective_hours', 'holidays', 'polling', 'dashboardpost', 'json_dashboardCountersData', 'announcementData', 'praiseData'));
             }
+        else{
+            return "No Roles assigned for this user. Kindly contact the admin";
+        }
 
+      }
     }
 
     public function showMainDashboardPage(Request $request){
@@ -686,6 +705,15 @@ class VmtMainDashboardController extends Controller
         $request->month = date("n");
 
         return $serviceVmtDashboardService->fetchAttendanceDailyReport_PerMonth($request->user_code, $request->year, $request->month);
+    }
+    public function fetchEmpLastAttendanceStatus(Request $request, VmtDashboardService $serviceVmtDashboardService)
+    {
+
+        $request->user_code = auth()->user()->user_code;
+
+
+        return $serviceVmtDashboardService->fetchEmpLastAttendanceStatus( $request->user_code);
+        //return  $serviceVmtAttendanceService->getLastAttendanceStatus($request->user_code);
     }
 
 

@@ -21,8 +21,25 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Exception;
 
+
+
+
+
 class VmtSalaryAdvanceController extends Controller
 {
+
+    public function showSAemployeeView()
+    {
+        return view('salaryAndLoanAdvance.SAEmployee_view');
+    }
+    public function showSAapprovalView()
+    {
+        return view('salaryAndLoanAdvance.SA_approval_view');
+    }
+    public function showSAsettingsView()
+    {
+        return view('salaryAndLoanAdvance.SA_settings_view');
+    }
 
     public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
@@ -62,6 +79,11 @@ class VmtSalaryAdvanceController extends Controller
 
         return $vmtSalaryAdvanceService->SalAdvApproverFlow();
     }
+    public function getEmpsaladvDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->getEmpsaladvDetails($request->user_id);
+    }
 
 
     public function saveTravelAdvanceSettings(Request $request)
@@ -71,19 +93,19 @@ class VmtSalaryAdvanceController extends Controller
 
     public function saveIntersetAndIntersetFreeLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        //dd($request->all());
+
 
         $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
             $request->loan_type,
-            $request->client_id,
-            $request->loan_applicable_type,
-            $request->min_month_served,
+            $request->selectClientID,
+            $request->precent_Or_Amt,
+            $request->minEligibile,
             $request->max_loan_limit,
-            $request->percent_of_ctc,
+            $request->availPerInCtc,
             $request->loan_amt_interest,
-            $request->deduction_starting_months,
-            $request->max_tenure_months,
-            $request->approver_flow
+            $request->deductMethod,
+            $request->maxTenure,
+            $request->approvalflow
         );
 
         return $response;
@@ -95,6 +117,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
+        // $request->loan_type = "InterestFreeLoan";
         $response = $vmtSalaryAdvanceService->showEligibleInterestFreeLoanDetails($request->loan_type);
         return  $response;
     }
@@ -142,32 +165,67 @@ class VmtSalaryAdvanceController extends Controller
 
     public function applyLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $request['loan_type'] = 'InterestWithLoan';
-        $request['loan_setting_id'] = 1;
-        $request['eligible_amount'] = '500000';
-        $request['borrowed_amount'] = '100000';
-        $request['interest_rate'] = '2.5';
-        $request['deduction_starting_month'] = '2023-07-21';
-        $request['deduction_ending_month'] = '2023';
-        $request['emi_per_month'] = '4271';
-        $request['tenure_months'] = '24';
-        $request['reason'] = 'Testing';
+        $loan_type = $request->loan_type;
+        $loan_setting_id = $request->details['loan_settings_id'];
+        $eligible_amount = $request->minEligibile;
+        $borrowed_amount = $request->required_amount;
+        $interest_rate = $request->interest_rate;
+        $deduction_starting_month = $request->EMI_Start_Month;
+        $deduction_ending_month = $request->EMI_End_Month;
+        $emi_per_month = $request->M_EMI;
+        $tenure_months = $request->Term;
+        $reason = $request->Reason;
+
+        // dd($request->all());
         $response = $vmtSalaryAdvanceService->applyLoan(
-            $request->loan_type,
-            $request->loan_setting_id,
-            $request->eligible_amount,
-            $request->borrowed_amount,
-            $request->interest_rate,
-            $request->deduction_starting_month,
-            $request->deduction_ending_month,
-            $request->emi_per_month,
-            $request->tenure_months,
-            $request->reason,
+            $loan_type,
+            $loan_setting_id,
+            $eligible_amount,
+            $borrowed_amount,
+            $interest_rate,
+            $deduction_starting_month,
+            $deduction_ending_month,
+            $emi_per_month,
+            $tenure_months,
+            $reason,
         );
         return $response;
     }
-    public function fetchEmployeeForLoanApprovals(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
-           $response = $vmtSalaryAdvanceService->fetchEmployeeForLoanApprovals();
-           return $response;
+    public function fetchEmployeeForLoanApprovals(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type = $request->loan_type;
+        $response = $vmtSalaryAdvanceService->fetchEmployeeForLoanApprovals($loan_type);
+        return $response;
+    }
+
+    public function rejectOrApproveLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $request['record_id'] = 1;
+        $request['loan_type'] = 'InterestFreeLoan';
+        $request['status'] = 1;
+        $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
+            $request->loan_type,
+            $request->record_id,
+            $request->status,
+        );
+
+        return $response;
+    }
+
+    public function rejectOrApprovedSaladv(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        $request->record_id = 17;
+        $request->status = 1;
+
+        return $vmtSalaryAdvanceService->rejectOrApprovedSaladv($request->record_id, $request->status);
+    }
+
+    public function EmployeeLoanHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type = $request->loan_type;
+        $user_id = auth()->user()->id;
+        $response = $vmtSalaryAdvanceService->EmployeeLoanHistory($user_id, $loan_type);
+        return $response;
     }
 }

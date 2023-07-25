@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestEmail;
 use App\Models\VmtEmployeeDocuments;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\vmtInvEmp_Fsp_Popups;
@@ -46,6 +47,7 @@ use App\Services\VmtAttendanceService;
 use App\Mail\WelcomeMail;
 use App\Models\VmtDocuments;
 use App\Jobs\sendemailjobs;
+use Illuminate\Support\Facades\Validator;
 
 
 class VmtTestingController extends Controller
@@ -249,29 +251,68 @@ class VmtTestingController extends Controller
     public function testSendBulkMail()
     {
 
-        $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
+        // $array_mail = ["sheltonfdo23@gmail.com"];
 
-        $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->client_logo;
+        // $client_id=User::where('user_code',$user_code)->first();
 
-        $response = array();
-        try {
+        // $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
-            foreach ($array_mail as $recipient) {
-                $isSent = \Mail::to($recipient)->send(new WelcomeMail("emp_code 123", 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+        // $image_view = url('/') . $VmtClientMaster->client_logo;
 
-                $temp[$recipient] = $isSent;
+        // $response = array();
+        // try {
 
-                array_push($response, $temp);
+        //     foreach ($array_mail as $recipient) {
+                $isSent = \Mail::to('sheltonfdo23@gmail.com')->send(new WelcomeMail());
+
+                return $isSent ? "Success" : "failure";
+
+                // $temp[$recipient] = $isSent;
+
+    //             array_push($response, $temp);
+    //         }
+
+    //         return response()->json([
+    //             "output" => $response
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         dd("Error : " . $e);
+    //     }
+    }
+
+    public function sendHTMLEmail(Request $request) {
+
+        try{
+
+            $validator = Validator::make(
+                $request->all(),
+                $rules = [
+                    "email" => 'required',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                ]
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
             }
 
-            return response()->json([
-                "output" => $response
-            ]);
-        } catch (\Exception $e) {
-            dd("Error : " . $e);
+            $isSent = \Mail::to($request->email)->send(new TestEmail($request->email));
+
+            return "success";
         }
-    }
+        catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "",
+                "data" => $e->getMessage(),
+            ]);
+        }
+     }
 
     public function exportattenance(Request $request)
     {

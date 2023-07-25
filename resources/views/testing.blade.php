@@ -615,7 +615,7 @@ Email Notification to the Employee, Once the Manager Uploaded their KRA/KPI
                                     text-align:center;
                                     font-weight: 600;
                                     margin:0;">
-                                        ABSpayroll Automated System.
+                                        ABS_OKR Automated System.
                                     </p>
                                 </td>
                             </tr>

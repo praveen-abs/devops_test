@@ -6,7 +6,10 @@
     use App\Models\VmtEmployee;
     use App\Models\VmtPMS_KPIFormAssignedModel;
     use App\Models\VmtPMS_KPIFormDetailsModel;
-    use App\Models\VmtGeneralInfo;
+    use Dompdf\Dompdf;
+     use Dompdf\Options;
+     use Carbon\Carbon;
+
     use App\Models\VmtTempEmployeeProofDocuments;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
@@ -16,6 +19,7 @@
     use App\Models\VmtEmpPaygroup;
     use App\Models\VmtPaygroup;
 
+    use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
     use App\Models\VmtEmployeePaySlipV2;
@@ -24,6 +28,7 @@
     use App\Models\VmtUserMailStatus;
     use App\Models\VmtEmployeePayslipStatus;
     use App\Models\VmtEmployeeMailStatus;
+    use App\Models\VmtEmployeeStatutoryDetails;
     use App\Models\VmtPayroll;
     use App\Mail\QuickOnboardLink;
     use App\Services\VmtApprovalsService;
@@ -208,7 +213,70 @@
 //                                              ->whereMonth('vmt_payroll.payroll_date',$month)
 //                                             ->where('users.is_ssa','0')
 //                                             ->where('users.active','1')
-//                                             ->get(['payroll_date','users.name','users.id']);
+//                                             ->get(['payroll_date','users.name','users.id']);                                                                        // "max_loan_amount as max_eligible_amount",
+                                                                        // "loan_amt_interest as interest_rate",
+                                                                        // "deduction_starting_months",
+                                                                        // "max_tenure_months",
+//                                                                         $multiple_months=array();
+
+
+//                                                                         $user_id=auth()->user()->id;
+//         $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
+//         $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
+
+
+//      $client_data = Users::where('id',auth()->user()->id)->first();
+
+
+
+
+
+//             $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
+
+//             $loan_setting_count =count($loan_withinterest_setting_data);
+//             for($i=0; $i<$loan_setting_count; $i++)
+//             {
+//             $deduction_months = array();
+
+//             for($j=1; $j<=$loan_withinterest_setting_data[$i]->deduction_starting_months; $j++)
+//             {
+//                $deduction_months[]= Carbon::now()->addMonths($j)->format('Y-m-d');
+//             }
+
+//             $loan_withinterest_setting_data[$i]->deduction_starting_months = $deduction_months;
+//            }
+//             //array_push( $loan_withinterest_setting_data,$deduction_starting_months);
+
+// dd( $loan_withinterest_setting_data );
+
+
+
+//             $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
+
+//            foreach ($loan_withinterest_setting_data as $key => $singledata) {
+
+// echo ($singledata['deduction_starting_months']);
+//             $deduction_months = array();
+
+//             for($j=1; $<=$singledata['deduction_starting_months']; $i++)
+//             {
+//                $deduction_months[]= Carbon::now()->addMonths($j)->format('Y-m-d');
+//             }
+
+//             $$singledata['deduction_starting_months']= $deduction_months;
+//            }
+//             //array_push( $loan_withinterest_setting_data,$deduction_starting_months);
+
+// dd( $loan_withinterest_setting_data );
+
+
+
+
+
+
+
+
+
 // $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
 //         for($i=0; $i < count($payroll_month); $i++)
 //         {
@@ -220,59 +288,26 @@
 // dd($payroll_available_months);
 
 
-// $last_join_emp_code= VmtEmployee::orderBy('created_at', 'desc')->first('doj');
-// dd($last_join_emp_code->toarray());
+// $query_docs = User::whereIn('id',[174, 177, 179])->get();
+// dd($query_docs);
 
 
-// $paygroup_components =VmtPaygroupComps::where('paygroup_id',1)->get(['id'])->destroy;
-// VmtPaygroupComps::destroy($paygroup_components);
-// $paygroup_comps =VmtPaygroupComps::where('paygroup_id','41');
 
-// if(!empty($paygroup_comps)){
-// $data1 =$paygroup_comps->get(['id']);
-// }
-// $emp_paygroup_components =VmtEmpPaygroup::where('paygroup_id',42);
-//                 if(!empty($emp_paygroup_components)){
-//                     $data =$emp_paygroup_components->get(['id']);
-//                 }
-//                 dd( $data);
-//                  VmtEmpPaygroup::destroy( $data);
-//                  VmtPaygroupComps::destroy( $data1);
-// $response=array();
-$paygroup_structure_comps =VmtPaygroup::get();
+// $timestamp = (strtotime('2023-03-01 08:56:04'));
+// $date = date('Y-j-n', $timestamp);
+// $time = date('H:i:s', $timestamp);
+// echo ($date .'<br>'.$time)
 
-                $response =array();
-               $i=0;
-              foreach ($paygroup_structure_comps as $key => $Single_structure) {
-                $creator_user_name =User::where('id',$Single_structure->creator_user_id)->first();
-                $paygroup_structure_comps[$i]['creator_user_name']=$creator_user_name->name;
-                $paygroup_structure_comps['paygroup_comps'] =$this->fetchPaygroupAssignedEmployee();
-                $paygroup_structure_comps['paygroup_assign_employee'] =$this->fetchPaygroupAssignedComponents();
-                $paygroup_structure_comps[$i]['no_of_employees']=count($paygroup_structure_comps['paygroup_assign_employee']);
-               $i++;
-              }
+// $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+//                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+//                         ->whereDate('date', '2023-06-26')
+//                         ->where('user_Id', 'PLIPL009')
+//                         ->first(['check_out_time']);
 
-dd($paygroup_structure_comps);
+//                         dd($attendanceCheckOut );
 
 
-       function fetchPaygroupAssignedEmployee(){
-
-                    $paygroup_assigned_emp_id =VmtEmpPaygroup::where('paygroup_id','1')->pluck('user_id');
-
-                  $paygroup_assigned_employees = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-                                        ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-                                        ->join('vmt_client_master', 'vmt_client_master.id', '=', 'users.client_id')
-                                        ->where('process', '<>', 'S2 Admin')
-                                        ->whereIn('users.id',$paygroup_assigned_emp_id)
-                                        ->select(
-                                            'users.name',
-                                            'users.user_code',
-                                            'vmt_department.name as department_name',
-                                            'vmt_employee_office_details.designation',
-                                            'vmt_employee_office_details.work_location',
-                                            'vmt_client_master.client_name',
-                                            )
-                                        ->get();
+                        //dd($attendanceCheckOut );
 
     //                     uploadDocument($client_id,$fileObject){
 
@@ -323,38 +358,116 @@ dd($paygroup_structure_comps);
     //     return "success";
 
 
-$flowCheck	="1";
+// $flowCheck	="1";
 
-$assignment_period_year =	"2023";
-$calendar_type	="financial_year";
-$hidden_calendar_year=	"April+-+2022+to+March+-+2023";
-$frequency	="quarterly";
-$assignment_period_start=	"q3";
-$department=	"6";
-$employees =['246','247','248'];
-$reviewer[]="245";
-$hr_id	="245";
-$selected_kpi_form_id=	"1";
+// $assignment_period_year =	"2023";
+// $calendar_type	="financial_year";
+// $hidden_calendar_year=	"April+-+2022+to+March+-+2023";
+// $frequency	="quarterly";
+// $assignment_period_start=	"q3";
+// $department=	"6";
+// $employees =['246','247','248'];
+// $reviewer[]="245";
+// $hr_id	="245";
+// $selected_kpi_form_id=	"1";
 
-    //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
-     $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
-    //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
-               $comments_employee = '';
-    $login_Link = request()->getSchemeAndHttpHost();
+//     //$reviewerMailId  = VmtEmployee::join('vmt_employee_office_details',  'user_id', '=', 'vmt_employee_details.userid')->whereIn('userid', explode(',',$kpi_AssignedTable->reviewer_id))->pluck('officical_mail','userid')->toArray();
+//      $assigneeName = User::whereIn('id',$employees)->pluck('name')->first();
+//     //             $assignerName = User::where('id',auth::user()->id)->pluck('name')->first();
+//                $comments_employee = '';
+//     $login_Link = request()->getSchemeAndHttpHost();
 
 
-     $is_sent=\Mail::to('vvishva185@gmail.com')
-                        ->send(new VmtPMSMail_Assignee("none",$flowCheck,
-                                                       $assigneeName,
-                                                       $hidden_calendar_year." - ".strtoupper($assignment_period_start),
-                                                       'vishnu',
-                                                       $comments_employee,
-                                                       $login_Link));
-if($is_sent){
-    echo 'hii';
-}else{
-    echo 'bye';
-}
+//      $is_sent=\Mail::to('vvishva185@gmail.com')
+//                         ->send(new VmtPMSMail_Assignee("none",$flowCheck,
+//                                                        $assigneeName,
+//                                                        $hidden_calendar_year." - ".strtoupper($assignment_period_start),
+//                                                        'vishnu',
+//                                                        $comments_employee,
+//                                                        $login_Link));
+// if($is_sent){
+//     echo 'hii';
+// }else{
+//     echo 'bye';
+// }
+// $query_document =VmtDocuments::all();
+//              $query_doc_id = array();
+//           foreach ($query_document as $key => $Singledocid)
+//             {
+//                 $query_doc_id[] = $Singledocid;
+//             }
+
+//              $query_user_doc_id = array();
+//           foreach ($query_doc_id as $key => $Singledocid)
+//             {
+//                 $query_user_doc_id[] = VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$Singledocid['id'])->first();
+//              }
+
+//              dd(  $query_doc_id );
+//              $reponse= array_diff($query_user_doc_id,$query_doc_id);
+
+
+
+
+            //     $query_document =VmtDocuments::all()->toarray();
+
+            //     $query_user_doc_id = VmtEmployeeDocuments::where('user_id','236')->get()->toarray();
+
+
+            //     $present_doc= $query_document->diff($query_user_doc_id);
+
+            //     $missing_doc=$query_document->diff($present_doc);
+            //  $emp_documents=array();
+            //  foreach ($present_doc as $key => $singledata) {
+
+            //      if($docid){
+            //         $emp_documents[$key]=
+            //         $emp_documents[$key]['document_name']=VmtDocuments::where('id',$singledata->id)->first()->document_name;
+            //      }else{
+            //         $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+            //         $emp_documents[$j]['status']=null;
+            //      }
+            //      $i++;
+            //     }
+
+        //      $missing_doc_id= $query_document->diff($query_user_doc_id);
+        //      $present_doc_id= $query_document->diff($missing_doc);
+        //      $emp_documents=array();
+        //                $i=0;
+        //      foreach ($present_doc_id as $key => $singledocid) {
+        //              $emp_documents[$i]= VmtEmployeeDocuments::where('user_id','236')->where('doc_id',$singledocid)->first();
+        //              $emp_documents[$i]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+        //              $i++;
+        //            }
+        //            $j=$i;
+        //    foreach ($missing_doc_id as $key => $singledocid) {
+        //               $emp_documents[$j]['document_name']=VmtDocuments::where('id',$singledocid)->first()->document_name;
+        //               $emp_documents[$j]['status']=null;
+        //               $j++;
+        //          }
+
+
+// $data =array();
+         $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
+
+// // dd($employees_aadhar_number);
+//         // $aadhar_number = array_filter($employees_aadhar_number, static function($employees_aadhar_number){
+//         //     return $employees_aadhar_number !== null;
+//         // } );
+
+// dd($aadhar_number);
+//         $data['aadhar_number']=array_values($aadhar_number);
+
+
+//          array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
+//         dd($data);
+
+        //
+        $string = array_combine(
+    ['newKey1', 'newKey2', 'newKey3'],
+    array_values(['oldKey1' => 1, 'oldKey2' => 2, 'oldKey3' => 3])
+   );
+        dd($string);
 
     ?>
 

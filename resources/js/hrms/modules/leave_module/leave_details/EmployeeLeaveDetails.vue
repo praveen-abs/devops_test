@@ -1,19 +1,18 @@
 <template>
     <LeaveBalance />
-    <div class="mt-13 row">
+    <div class="mt-3 row">
         <div class="col-sm-12 col-xl-12 col-md-12 col-lg-12">
             <div class="mb-0 card leave-history">
-                <div class="card-body flex justify-between">
+                <div class="card-body">
                     <h6 class="mb-4 text-lg font-semibold text-gray-900 modal-title">
                         Leave history
                     </h6>
-                    <Calendar view="month" dateFormat="mm/yy" class="rounded-lg " v-model="selectedLeaveDate" @date-select="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)" placeholder="Select Month" />
-                    <!-- <div class="d-flex justify-content-end mb-2">
+                    <div class="d-flex justify-content-end mb-2">
                         <label for="" class="my-2 text-lg font-semibold">Select Month</label>
                         <Calendar view="month" dateFormat="mm/yy" class="mx-4 " v-model="selectedLeaveDate"
                             style=" border: 1px solid orange; border-radius: 7px; height: 38px;" />
                         <Button class="h-10 mb-2 btn btn-orange" label="Submit"
-                            @click="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)" />-->
+                            @click="leaveModuleStore.getEmployeeLeaveHistory(selectedLeaveDate.getMonth() + 1, selectedLeaveDate.getFullYear(), statuses)" />
                     </div>
 
 
@@ -91,6 +90,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
     <Dialog header="Header" v-model:visible="leaveModuleStore.canShowLeaveDetails"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '50vw', borderTop: '5px solid #002f56' }"
@@ -233,13 +233,3 @@ async function showLeaveDetails(leave_record_id) {
  }
 
 </script>
-
-<style>
-.p-calendar .p-inputtext {
-    flex: 1 1 auto;
-    width: 1%;
-    border: 1px solid orange;
-    border-radius: 8px;
-    height: 33px;
-  }
-</style>

@@ -41,6 +41,7 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
     protected $client_name;
     protected $client_logo_path;
     protected $employee_details;
+    protected $total_row;
 
     function __construct($employee_details,$reimbursement_data,$legal_entity,$month_name,$year,$client_name, $client_logo_path,$totals){
         $this->employee_details = $employee_details;

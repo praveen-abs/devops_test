@@ -497,6 +497,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log(data);
         other_exe_80EE.user_code = service.current_user_code;
         other_exe_80EE.fs_id = data.fs_id;
+        fetchotherExe()
+
     };
     const get80EEASlotData = (data) => {
         other_exe_80EEA.id = data.id
@@ -504,6 +506,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log(data);
         other_exe_80EEA.user_code = service.current_user_code;
         other_exe_80EEA.fs_id = data.fs_id;
+        fetchotherExe()
     };
     const get80EEBSlotData = (data) => {
         other_exe_80EEB.id = data.id
@@ -511,13 +514,15 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log(data);
         other_exe_80EEB.user_code = service.current_user_code;
         other_exe_80EEB.fs_id = data.fs_id;
+        fetchotherExe()
+
     };
 
     const Dec80EE = ref();
     const Dec80EEA = ref();
     const Dec80EEB = ref();
 
-    const fetchotherExe = async () => {
+    const fetchotherExe =  () => {
         axios
             .post("/investments/fetchOtherExemption", {
                 user_code: service.current_user_code,
@@ -794,6 +799,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         console.log(data);
         sop.user_code = service.current_user_code;
         sop.fs_id = data.fs_id;
+        fetchPropertyType()
         // sop.id = data.id;
     };
     const getLopSlotData = (data) => {
@@ -801,6 +807,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log(data);
         lop.user_code = service.current_user_code;
         lop.fs_id = data.fs_id;
+        fetchPropertyType()
+
         // lop.id = data.id;
     };
     const getDlopSlotData = (data) => {
@@ -808,6 +816,8 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // console.log(data);
         dlop.user_code = service.current_user_code;
         dlop.fs_id = data.fs_id;
+        fetchPropertyType()
+
         // dlop.id = data.id;
     };
 

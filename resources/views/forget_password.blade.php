@@ -94,7 +94,7 @@
                                     <form action="#}" method="POST" class="login-form">
                                         <div class="d-flex align-items-center justify-content-center mb-3 ">
                                             <div class="login-top-img">
-                                                <img src="{{ URL::asset($generalInfo->client_logo) }}" alt=""
+                                                <img src="{{ URL::asset($logoSrc) }}" alt=""
                                                     class="">
                                                 <!-- <img src="{{ URL::asset('assets/images/vasa.jpg') }}" alt="" class="w-100 h-100"> -->
                                             </div>

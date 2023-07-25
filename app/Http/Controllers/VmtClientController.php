@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
 use App\Mail\WelcomeClientMail;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 use Illuminate\Support\Facades\Validator;
 use App\Services\VmtClientService;
@@ -39,11 +40,13 @@ class VmtClientController extends Controller
      */
     public function store(Request $request)
     {
-           // dd($request->all());
+        //    dd($request->all());
        $VmtClientMaster = VmtClientMaster::where('id','1')->orderBy('created_at', 'DESC')->first();
        try
        {
             $vmtClient  =  new VmtClientMaster;
+            $vmtClient->abs_client_code  = $request->abs_client_code;
+            $vmtClient->client_fullname  = $request->client_full_name;
             $vmtClient->client_code  = $request->client_code;
             $vmtClient->client_name  = $request->client_name;
             $vmtClient->contract_start_date  = $request->contract_start_date;
@@ -53,7 +56,7 @@ class VmtClientController extends Controller
             $vmtClient->company_pan  = $request->company_pan;
             $vmtClient->gst_no  = $request->gst_no;
             $vmtClient->epf_reg_number  = $request->epf_reg_number;
-            $vmtClient->esic_reg_number  = $request->esic_reg_number.
+            $vmtClient->esic_reg_number  = $request->esic_reg_number;
             $vmtClient->prof_tax_reg_number  = $request->prof_tax_reg_number;
             $vmtClient->lwf_reg_number  = $request->lwf_reg_number;
             $vmtClient->authorised_person_name  = $request->authorised_person_name;
@@ -62,34 +65,62 @@ class VmtClientController extends Controller
             $vmtClient->authorised_person_contact_email  = $request->authorised_person_contact_email;
             $vmtClient->billing_address  = $request->billing_address;
             $vmtClient->shipping_address  = $request->shipping_address;
-            if (request()->has('doc_uploads')) {
+            if ($request->doc_uploads) {
                 $docUploads = request()->file('doc_uploads');
                 $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
                 $docUploadsPath = public_path('/images/');
                 $docUploads->move($docUploadsPath, $docUploadsName);
+                $docUploadpath = '/images/'.$docUploadsName;
             }
-            $vmtClient->doc_uploads  = $request->docUploadsName;
+            if($request->client_logo){
+
+                $file_path_exist = $request->client_full_name;
+
+                $file = $request->file('client_logo') ;
+                $fileName =  $file->getClientOriginalName();
+                $destinationPath = public_path().'/assets/clients/'.$file_path_exist.'/logos/';
+                $file->move($destinationPath,$fileName);
+                $storepath  = '/assets/clients/'.$file_path_exist.'/logos/'.$fileName;
+            }
+            $vmtClient->client_logo  = $storepath;
+            $vmtClient->doc_uploads  = $docUploadpath;
             $vmtClient->product  = $request->product;
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
 
+
             $image_view = url('/').$VmtClientMaster->client_logo;
-            if (\Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
+
+            \Mail::to($request->authorised_person_contact_email)->send(new WelcomeClientMail(
                                                             $request->client_name ,
                                                             $request->authorised_person_contact_email,
                                                             'Abs@123123',
                                                              request()->getSchemeAndHttpHost() ,
                                                              "",
-                                                             $image_view)
-                                                        )
-                ) {
+                                                             $image_view,
+                                                             $request->abs_client_code)
+            );
                 return "Saved";
-            } else {
-                return "Error";
-            }
+        }
+        catch (TransportException $e) {
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'client onboarded successfully.',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
         }
         catch (\Throwable $e) {
-            return "Error".$e;
+            return response()->json(
+                [
+                    'status' => 'failure',
+                    'error' => $e->getMessage(),
+                ]
+            );
         }
     }
 
@@ -100,7 +131,7 @@ class VmtClientController extends Controller
 
     public function fetchAllClients(Request $request)
     {
-        return json_encode( VmtClientMaster::all());
+        return json_encode( VmtClientMaster::where('id','<>',1)->get());
     }
 
     public function getABSClientCode(Request $request, VmtClientService $serviceVmtClientService){

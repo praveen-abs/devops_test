@@ -1,5 +1,5 @@
 <template>
-     <div class="card">
+     <div class="card"  style="width: 100%; height: 260px">
                 <div class="card-body">
                   <div
                     class="card-title d-flex align-items-center justify-content-between"
@@ -7,7 +7,7 @@
                   >
                     <span class="text-primary">Leave Request</span>
                   </div>
-                  <ul class="leave-request-wrapper">
+                  <!-- <ul class="leave-request-wrapper">
                     <li class="leave-request-content">
                       <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
@@ -54,7 +54,7 @@
                         >
                       </div>
                     </li>
-                  </ul>
+                  </ul> -->
                 </div>
               </div>
 </template>

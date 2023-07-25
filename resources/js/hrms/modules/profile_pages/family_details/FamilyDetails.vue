@@ -89,7 +89,7 @@
                     </Column>
                     <Column field="phone_number" header="Phone" style="min-width: 12rem">
                     </Column>
-                    <Column :exportable="false" header="Action" style="min-width:8rem">
+                    <Column :exportable="false" header="Action" style="min-width:20rem">
                         <template #body="slotProps">
 
                             <button class="mr-3 btn btn-success"  @click="diolog_EditFamilyDetails(slotProps.data)">Edit</button>
