@@ -65,6 +65,7 @@ class VmtSalaryAdvanceService
 
         $current_client_id = auth()->user()->client_id;
 
+
         try {
 
             $queryGetDept = Department::select('id', 'name')->get();

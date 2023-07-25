@@ -1,5 +1,5 @@
 <template>
-    <div class="border-0 attendance-wrapper card w-100 box-shadow-md" style="height: 180px;">
+    <div class="border-0 attendance-wrapper card w-100 box-shadow-md" style="height: 200px;">
         <div class="card-body">
           <div class="mb-2 d-flex justify-content-between align-items-center">
             <span class="text-primary font-semibold fs-6">Current Month</span>

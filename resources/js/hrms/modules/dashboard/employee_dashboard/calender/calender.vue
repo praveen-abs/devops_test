@@ -50,8 +50,8 @@ label {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,4 +118,27 @@ label {
     border-radius: 50px 50px 0px;
     position: relative;
     top: 3px;
-}*/</style>
+}*/
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+  }
+
+
+</style>

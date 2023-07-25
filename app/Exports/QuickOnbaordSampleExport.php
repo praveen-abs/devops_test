@@ -49,17 +49,17 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
 
     public function startCell(): string
     {
-        return 'A2';
+        return 'A1';
     }
     public function styles(Worksheet $sheet)
     {
         //For First Row
-        $sheet->mergeCells('A1:T1')->setCellValue('A1', $this->title);
-        $sheet->getStyle('A1:T1')->getFill()
+      //  $sheet->mergeCells('A1:T1')->setCellValue('A1', $this->title);
+        $sheet->getStyle('A1:U1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
-        $sheet->getStyle('A1:T1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-        $sheet->getStyle('A1:T1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:U1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+        $sheet->getStyle('A1:U1')->getAlignment()->setHorizontal('center');
     }
 
     public function headings(): array
@@ -84,7 +84,8 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
             'Physically Handicapped',
             'Pan Number',
             'Aadhaar Number',
-            $this->salary
+            'Compensatory Type',
+            'Amount',
         ];
     }
 
@@ -120,6 +121,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 'No',
                 'ABCTY1234D',
                 '0000 1111 2222',
+                '',
                 '18000'
 
             ]
@@ -144,6 +146,7 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $legal_entity_column = 'H';
                 $departments_column = 'I';
                 $marital_column = 'O';
+                $compansation_column = 'T';
                 $manager_code_column = 'L';
                 $mobile_num_column = 'D';
 
@@ -186,18 +189,18 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_entity->setFormula1($legal_entity_option);
 
                 // set dropdown list for Legal Entity
-                $validation_dep = $event->sheet->getCell("{$departments_column}3")->getDataValidation();
-                $validation_dep->setType(DataValidation::TYPE_LIST);
-                $validation_dep->setErrorStyle(DataValidation::STYLE_INFORMATION);
-                $validation_dep->setAllowBlank(false);
-                $validation_dep->setShowInputMessage(true);
-                $validation_dep->setShowErrorMessage(true);
-                $validation_dep->setShowDropDown(true);
-                $validation_dep->setErrorTitle('Input error');
-                $validation_dep->setError('Selected Department is not in list.');
-                $validation_dep->setPromptTitle('Select Department from list');
-                $validation_dep->setPrompt('Please pick a Department from the drop-down list.');
-                $validation_dep->setFormula1($departments_option);
+                // $validation_dep = $event->sheet->getCell("{$departments_column}3")->getDataValidation();
+                // $validation_dep->setType(DataValidation::TYPE_LIST);
+                // $validation_dep->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                // $validation_dep->setAllowBlank(false);
+                // $validation_dep->setShowInputMessage(true);
+                // $validation_dep->setShowErrorMessage(true);
+                // $validation_dep->setShowDropDown(true);
+                // $validation_dep->setErrorTitle('Input error');
+                // $validation_dep->setError('Selected Department is not in list.');
+                // $validation_dep->setPromptTitle('Select Department from list');
+                // $validation_dep->setPrompt('Please pick a Department from the drop-down list.');
+                // $validation_dep->setFormula1($departments_option);
 
                 //set dropdown list for marital status
                 $validation_mar_sts = $event->sheet->getCell("{$marital_column}3")->getDataValidation();
@@ -214,18 +217,47 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 $validation_mar_sts->setFormula1($marital_option);
 
                 //set dropdown list for managercode
-                $validation_mangr_code = $event->sheet->getCell("{$manager_code_column}3")->getDataValidation();
-                $validation_mangr_code->setType(DataValidation::TYPE_LIST);
-                $validation_mangr_code->setErrorStyle(DataValidation::STYLE_WARNING);
-                $validation_mangr_code->setAllowBlank(false);
-                $validation_mangr_code->setShowInputMessage(true);
-                $validation_mangr_code->setShowErrorMessage(true);
-                $validation_mangr_code->setShowDropDown(true);
-                $validation_mangr_code->setErrorTitle('Input error');
-                $validation_mangr_code->setError('Selected Option is not in list.');
-                $validation_mangr_code->setPromptTitle('Select Manager Code from list');
-                $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
-                $validation_mangr_code->setFormula1($manager_code_option);
+                // $validation_mangr_code = $event->sheet->getCell("{$manager_code_column}3")->getDataValidation();
+                // $validation_mangr_code->setType(DataValidation::TYPE_LIST);
+                // $validation_mangr_code->setErrorStyle(DataValidation::STYLE_WARNING);
+                // $validation_mangr_code->setAllowBlank(false);
+                // $validation_mangr_code->setShowInputMessage(true);
+                // $validation_mangr_code->setShowErrorMessage(true);
+                // $validation_mangr_code->setShowDropDown(true);
+                // $validation_mangr_code->setErrorTitle('Input error');
+                // $validation_mangr_code->setError('Selected Option is not in list.');
+                // $validation_mangr_code->setPromptTitle('Select Manager Code from list');
+                // $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
+                // $validation_mangr_code->setFormula1($manager_code_option);
+
+                
+                //set dropdown list for CompansationType
+                $validation_compansation = $event->sheet->getCell("{$compansation_column}3")->getDataValidation();
+                $validation_compansation->setType(DataValidation::TYPE_LIST);
+                $validation_compansation->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_compansation->setAllowBlank(false);
+                $validation_compansation->setShowInputMessage(true);
+                $validation_compansation->setShowErrorMessage(true);
+                $validation_compansation->setShowDropDown(true);
+                $validation_compansation->setErrorTitle('Input error');
+                $validation_compansation->setError('Selected Option is not in list.');
+                $validation_compansation->setPromptTitle('Select Compansation Type  from list');
+                $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
+                $validation_compansation->setFormula1('"CTC - Monthly,GROSS - Monthly,TAKE HOME - Monthly"');
+
+                //set dropdown list for handicapped column
+                $validation_Q = $event->sheet->getCell("Q3")->getDataValidation();
+                $validation_Q->setType(DataValidation::TYPE_LIST);
+                $validation_Q->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_Q->setAllowBlank(false);
+                $validation_Q->setShowInputMessage(true);
+                $validation_Q->setShowErrorMessage(true);
+                $validation_Q->setShowDropDown(true);
+                $validation_Q->setErrorTitle('Input error');
+               //$validation_compansation->setError('Selected Option is not in list.');
+               // $validation_compansation->setPromptTitle('Select Compansation Type  from list');
+               // $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
+               $validation_Q->setFormula1('"Yes,No"');
 
                 //validation For Mobile Number
                 // $validation_mobile = $event->sheet->getCell("{$mobile_num_column}3")->getDataValidation();
@@ -245,9 +277,11 @@ class QuickOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeading
                 for ($i = 3; $i <= $row_count; $i++) {
                     $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$legal_entity_column}{$i}")->setDataValidation(clone    $validation_entity);
-                    $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
+                  //  $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
                     $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
-                    $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
+                 //   $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
+                    $event->sheet->getCell("{$compansation_column}{$i}")->setDataValidation(clone    $validation_compansation);
+                    $event->sheet->getCell("Q{$i}")->setDataValidation(clone    $validation_Q);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
                 }
 

@@ -209,7 +209,9 @@
                                 <p class="text-muted f-12 fw-bold">
                                     Department
                                     <a href="#" class="edit-icon" v-if="_instance_profilePagesStore.employeeDetails
-                                                .is_ssa == 1" @click="dailogDepartment = true"><i class="ri-pencil-fill"></i></a>
+                                    .Current_login_user.org_role == 1 ||_instance_profilePagesStore.employeeDetails
+                                    .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
+                                    .Current_login_user.org_role == 3 " @click="dailogDepartment = true"><i class="ri-pencil-fill"></i></a>
                                 </p>
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                     .get_employee_office_details.department_id
@@ -225,10 +227,14 @@
                                 <p class="text-muted f-12 fw-bold">
                                     Reporting To
                                     <a href="#" v-if="_instance_profilePagesStore.employeeDetails
-                                                .is_ssa == 1" class="edit-icon" @click="dailogReporting
+                                    .Current_login_user.org_role == 1 ||_instance_profilePagesStore.employeeDetails
+                                    .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
+                                    .Current_login_user.org_role == 3  " class="edit-icon" @click="dailogReporting
                 = true"><i class="ri-pencil-fill"></i>
+                
                                     </a>
                                 </p>
+                            
                                 <p v-if="_instance_profilePagesStore.employeeDetails
                                     .get_employee_office_details.l1_manager_code
                                     " class="f-12 fw-bold">

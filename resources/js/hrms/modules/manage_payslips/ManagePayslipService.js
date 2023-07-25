@@ -132,29 +132,53 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
 
     }
 
+    function downloadFileObject(base64String,employeeName ,payslipMonth) {
+        const linkSource = base64String;
+        const downloadLink = document.createElement("a");
+        const fileName = `${employeeName}-${payslipMonth}.pdf`;
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    }
     async function downloadPayslip(user_code, month, year, status) {
 
         // show_dialogconfirmation.value= false;
 
-        let selectedDate = new Date(selectedPayRollDate.value)
-        axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF', {
-            user_code: user_code,
-            month: month,
-            year: year,
-            status: status
-        }).then((response) => {
-            console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify( response.data.data));
-            var newdata = `data:application/pdf;base64,${response.data.data}`;
-            var newWindow = window.open(newdata, '_blank');
-            newWindow.location.reload();
+        console.log("Downloading payslip PDF.....");
 
-        })
-            .catch((data) => {
-                console.log(data);
 
-             })//.finally(() => {
-            //     getAllEmployeesPayslipDetails(selectedDate.getMonth() + 1, selectedDate.getFullYear())
-            // })
+        let month_payroll = parseInt(dayjs(payroll_month).month()) + 1;
+        let year_payroll = dayjs(payroll_month).year();
+
+        //split the payroll_month into month and year
+
+        await axios.post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF',
+            {
+                uid: getURLParams_UID(),
+                user_code: user_code,
+                month: formattedMonth,
+                year: formattedYear
+            }).then((response) => {
+                //  console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
+                console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));
+
+                if(response.data.data){
+                    let base64String = response.data.data
+                    let employeeName = response.data.emp_name
+                    let payslipMonth = response.data.emp_month
+                    if (base64String.startsWith("JVB")) {
+                        base64String = "data:application/pdf;base64," + base64String;
+                        downloadFileObject(base64String,employeeName,payslipMonth);
+                    } else if (base64String.startsWith("data:application/pdf;base64")) {
+                        downloadFileObject(base64String);
+                    }
+                }else{
+                    console.log("Response Url Not Found");
+                }
+
+
+
+            })
 
     }
 

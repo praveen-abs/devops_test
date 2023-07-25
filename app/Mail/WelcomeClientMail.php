@@ -21,8 +21,9 @@ class WelcomeClientMail extends Mailable
     protected $loginLink;
     protected $filename;
     protected $image_view;
+    protected $abs_client;
 
-    public function __construct($uClientName, $uEmail, $uPassowrd, $loginLink, $filename , $image_view )
+    public function __construct($uClientName, $uEmail, $uPassowrd, $loginLink, $filename , $image_view , $abs_client)
     {
         //
         $this->clientName = $uClientName;
@@ -31,6 +32,7 @@ class WelcomeClientMail extends Mailable
         $this->loginLink  = $loginLink;
         $this->filename   = $filename;
         $this->image_view   = $image_view;
+        $this->abs_client   = $abs_client;
     }
 
     /**
@@ -46,7 +48,8 @@ class WelcomeClientMail extends Mailable
                     ->with('uEmail', $this->uEmail)
                     ->with('uPassowrd', $this->uPassowrd)
                     ->with('loginLink', $this->loginLink)
-                    ->with('image_view', $this->image_view);
+                    ->with('image_view', $this->image_view)
+                    ->with('abs_client', $this->abs_client);
 
         //Only for Employee Onboarding
         if($this->filename != "")

@@ -16,6 +16,9 @@
     use App\Mail\ApproveRejectEmpDetails;
     use App\Mail\VmtPMSMail_Assignee;
     use App\Models\User;
+    use App\Models\VmtEmpPaygroup;
+    use App\Models\VmtPaygroup;
+
     use App\Models\VmtEmployeeAttendance;
     use App\Models\VmtEmployeePayroll;
     use App\Models\VmtEmployeePaySlip;
@@ -214,37 +217,37 @@
                                                                         // "loan_amt_interest as interest_rate",
                                                                         // "deduction_starting_months",
                                                                         // "max_tenure_months",
-                                                                        $multiple_months=array();
+//                                                                         $multiple_months=array();
 
 
-                                                                        $user_id=auth()->user()->id;
-        $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
-        $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
+//                                                                         $user_id=auth()->user()->id;
+//         $doj=Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
+//         $avaliable_int_loans=VmtInterestFreeLoanSettings::orderBy('min_month_served','DESC')->get();
 
 
-     $client_data = Users::where('id',auth()->user()->id)->first();
+//      $client_data = Users::where('id',auth()->user()->id)->first();
 
 
 
 
 
-            $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
+//             $loan_withinterest_setting_data =VmtLoanInterestSettings::get();
 
-            $loan_setting_count =count($loan_withinterest_setting_data);
-            for($i=0; $i<$loan_setting_count; $i++)
-            {
-            $deduction_months = array();
+//             $loan_setting_count =count($loan_withinterest_setting_data);
+//             for($i=0; $i<$loan_setting_count; $i++)
+//             {
+//             $deduction_months = array();
 
-            for($j=1; $j<=$loan_withinterest_setting_data[$i]->deduction_starting_months; $j++)
-            {
-               $deduction_months[]= Carbon::now()->addMonths($j)->format('Y-m-d');
-            }
+//             for($j=1; $j<=$loan_withinterest_setting_data[$i]->deduction_starting_months; $j++)
+//             {
+//                $deduction_months[]= Carbon::now()->addMonths($j)->format('Y-m-d');
+//             }
 
-            $loan_withinterest_setting_data[$i]->deduction_starting_months = $deduction_months;
-           }
-            //array_push( $loan_withinterest_setting_data,$deduction_starting_months);
+//             $loan_withinterest_setting_data[$i]->deduction_starting_months = $deduction_months;
+//            }
+//             //array_push( $loan_withinterest_setting_data,$deduction_starting_months);
 
-dd( $loan_withinterest_setting_data );
+// dd( $loan_withinterest_setting_data );
 
 
 
@@ -272,8 +275,8 @@ dd( $loan_withinterest_setting_data );
 
 
 
-           ?>
-=========
+
+
 // $payroll_month=VmtPayroll::whereYear('payroll_date','2022')->groupby('payroll_date')->pluck('payroll_date');
 //         for($i=0; $i < count($payroll_month); $i++)
 //         {
@@ -285,8 +288,26 @@ dd( $loan_withinterest_setting_data );
 // dd($payroll_available_months);
 
 
-$query_docs = User::whereIn('id',[174, 177, 179])->get();
-dd($query_docs);
+// $query_docs = User::whereIn('id',[174, 177, 179])->get();
+// dd($query_docs);
+
+
+
+// $timestamp = (strtotime('2023-03-01 08:56:04'));
+// $date = date('Y-j-n', $timestamp);
+// $time = date('H:i:s', $timestamp);
+// echo ($date .'<br>'.$time)
+
+// $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
+//                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
+//                         ->whereDate('date', '2023-06-26')
+//                         ->where('user_Id', 'PLIPL009')
+//                         ->first(['check_out_time']);
+
+//                         dd($attendanceCheckOut );
+
+
+                        //dd($attendanceCheckOut );
 
     //                     uploadDocument($client_id,$fileObject){
 
@@ -425,13 +446,28 @@ dd($query_docs);
         //               $j++;
         //          }
 
-//dd($emp_documents);
 
-// $time = date('H:i:s', $currentTime);
-        dd( $date);
+// $data =array();
+         $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
+
+// // dd($employees_aadhar_number);
+//         // $aadhar_number = array_filter($employees_aadhar_number, static function($employees_aadhar_number){
+//         //     return $employees_aadhar_number !== null;
+//         // } );
+
+// dd($aadhar_number);
+//         $data['aadhar_number']=array_values($aadhar_number);
 
 
+//          array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
+//         dd($data);
 
+        //
+        $string = array_combine(
+    ['newKey1', 'newKey2', 'newKey3'],
+    array_values(['oldKey1' => 1, 'oldKey2' => 2, 'oldKey3' => 3])
+   );
+        dd($string);
 
     ?>
 

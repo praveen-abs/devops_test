@@ -173,8 +173,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pms-forms-mgmt', [App\Http\Controllers\PMS\VmtPMSFormsMgmtController::class, 'showPMSFormsMgmtPage'])->name('showPMSFormsMgmtPage');
 
     //Attendance - AJAX
-    Route::get('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
-    Route::get('/fetch-team-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamMembers'])->name('fetch-team-members');
+    Route::post('/fetch-attendance-user-timesheet', [App\Http\Controllers\VmtAttendanceController::class, 'fetchUserTimesheet'])->name('fetch-attendance-user-timesheet');
+    Route::post('/fetch-team-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamMembers'])->name('fetch-team-members');
     Route::get('/fetch-org-members', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgMembers'])->name('fetch-org-members');
     //Route::get('/fetch-org-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchOrgEmployeesPendingLeaves'])->name('fetch-org-leaves');
     Route::post('/fetch-team-leaves-balance', [App\Http\Controllers\VmtAttendanceController::class, 'fetchTeamEmployeesPendingLeaves'])->name('fetch-team-leaves');
@@ -424,12 +424,15 @@ Route::middleware(['auth'])->group(function () {
     // store employee
     Route::post('vmt-employee-store', 'App\Http\Controllers\VmtEmployeeController@storeEmployeeData');
 
-   Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal_Quick');
+    Route::post('/vmt-employee-onboard', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@processEmployeeOnboardForm_Normal');
+    Route::post('/quicktesting', [App\Http\Controllers\VmtOnboardingTestingController::class,'storeBulkOnboardEmployees']);
 
     Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
 
+ // onboarding data
 
+      Route::get('/onboarding/getEmployeeMandatoryDetails', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'getEmployeeMandatoryDetails'])->name('getEmployeeMandatoryDetails');
 
     // Bulk upload employees for quick Onboarding
     Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
@@ -513,7 +516,7 @@ Route::middleware(['auth'])->group(function () {
     //Paygroup module
     Route::get('/Paygroup/fetchPayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayRollComponents'])->name('fetchPayRollComponents');
     Route::post('/Paygroup/CreatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayRollComponents'])->name('CreatePayRollComponents');
-    Route::post('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
+    Route::post('/Paygroup/UpdatePayRollEarningsComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollEarningsComponents'])->name('UpdatePayRollEarningsComponents');
     Route::post('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
     Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
 
@@ -525,8 +528,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/AddReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddReimbursementComponents'])->name('AddReimbursementComponents');
     Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
 
+  // Salary software integration
+    Route::get('/Paygroup/fetchPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
+    Route::post('/Paygroup/addPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollAppIntegrations'])->name('addPayrollAppIntegrations');
+    Route::post('/Paygroup/EnableDisableAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableAppIntegration'])->name('EnableDisableAppIntegration');
+
 
     //paygroup structure
+    Route::get('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
+    //Route::get('/Paygroup/ShowAssignEmployeelist', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'ShowAssignEmployeelist'])->name('ShowAssignEmployeelist');
+   // Route::get('/Paygroup/getAllDropdownFilterSetting', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'getAllDropdownFilterSetting'])->name('getAllDropdownFilterSetting');
     Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');

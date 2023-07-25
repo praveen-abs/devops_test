@@ -81,7 +81,16 @@
             {{ dateFormat(slotProps.data.leaverequest_date, "dd-mm-yyyy, h:MM TT") }}
           </template>
         </Column>
-        <Column field="leave_type" header="Leave Type"></Column>
+        <Column field="leave_type" header="Leave Type">
+        <template  #body="slotProps">
+          <h1 v-if="slotProps.data.leave_type=='Casual/Sick Leave'">
+            SL/CL
+          </h1>
+          <div>
+
+          </div>
+        </template>
+      </Column>
         <Column field="start_date" header="Start Time">
           <template #body="slotProps">
             <!-- {{ slotProps.data.reimbursement_date }} -->
@@ -113,7 +122,6 @@
         </Column>
         <Column field="reviewer_name" header="Approver Name"></Column>
         <Column field="reviewer_comments" header="Approver Comments"></Column>
-
         <Column field="status" header="Status" icon="pi pi-check">
           <template #body="{ data }">
             <Tag :value="data.status" :severity="getSeverity(data.status)" />

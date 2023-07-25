@@ -527,6 +527,12 @@ $i=array_keys($excelRowdata_row);
             $data['emp_payroll_month'] = $payroll_month;
             $data['employee_code'] = $user->user_code;
 
+         $emp_name = $user->name;
+
+         $month =strtotime( $payroll_month->payroll_date);
+
+         $emp_pay_month =  date("F", $month);
+
         $data['employee_name'] = $user->name;
         // dd( $data['employee_name']);
         $data['employee_office_details'] = VmtEmployeeOfficeDetails::where('user_id', $user->id)->first();
@@ -558,6 +564,8 @@ $i=array_keys($excelRowdata_row);
         return response()->json([
             'status' => 'success',
             'message' => "",
+            'emp_name' => $emp_name,
+            'emp_month' => $emp_pay_month,
             'data' =>$response
         ]);
 
