@@ -723,6 +723,18 @@ class VmtCorrectionController extends Controller
         $data_array = [];
         $isAllRecordsValid = true;
 
+        $corrected_data =$data;
+
+        foreach ($corrected_data[0] as &$Single_data) {
+
+               if (array_key_exists('doj', $Single_data)) {
+
+                   $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
+               }
+
+       }
+       unset($Single_data);
+
         $rules = [];
         $responseJSON = [
             'status' => 'none',
@@ -731,7 +743,7 @@ class VmtCorrectionController extends Controller
         ];
 
         // $excelRowdata = $data[0][0];
-        $excelRowdata_row = $data;
+        $excelRowdata_row = $corrected_data;
         $currentRowInExcel = 0;
         if(empty($excelRowdata_row )){
             return $rowdata_response = [

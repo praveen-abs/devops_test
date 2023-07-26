@@ -463,11 +463,19 @@
 //         dd($data);
 
         //
-        $string = array_combine(
-    ['newKey1', 'newKey2', 'newKey3'],
-    array_values(['oldKey1' => 1, 'oldKey2' => 2, 'oldKey3' => 3])
-   );
-        dd($string);
+        $date='06/06/2023';
+
+        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
+
+
+        // }
+        $processed_date = DateTime::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+        $data = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(45170)->format('Y-m-d');
+        dd( $data);
+
+       // $string= Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+      //DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');
+       // dd($string);
 
     ?>
 
