@@ -22,17 +22,17 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     const canShowLoading = ref(false);
 
     /*  Payroll Setup Structure
-        
+
         1) general payroll Setup
 
         2)Pf & Esi Setting
-        
+
         3)Salary components
             1)Earnings
             2)Adhoc Components
             3)Reimbursement
             4)Accounting Code
-            
+
         4)Salary structure - Paygroups
 
         5)finance Setting
@@ -45,6 +45,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     const dailogNewSalaryComponents = ref(false);
     const salaryComponentsUpdated = ref(false)
+    const adhocComponentsUpdated = ref(false)
 
     const salaryComponents = reactive({
         typeOfComp: null,
@@ -59,13 +60,14 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         isTaxable: 0,
         isCalcShowProBasis: 0,
         isShowInPayslip: 0,
-        isConsiderForEPF: null,
-        isConsiderForESI: null,
+        isConsiderForEPF: 0,
+        isConsiderForESI: 0,
+        category_id: 1,
     })
 
     const adhocComponents = ref({
         category_id: 3,
-        category_type: 'adhoc'
+        category_type: 'allowance'
     })
 
     const deductionComponents = ref({
@@ -77,6 +79,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         category_id: 4,
         category_type: 'reimbursement'
     })
+
 
     const salaryComponentsSource = ref()
 
@@ -101,7 +104,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         if (key == 1) {
 
             if (salaryComponentsUpdated.value) {
-                axios.post('/Paygroup/UpdatePayRollComponents', salaryComponents)
+                axios.post('/Paygroup/UpdatePayRollEarningsComponents', salaryComponents)
                     .finally(() => {
                         restChars()
                         canShowLoading.value = false
@@ -120,51 +123,71 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
                 for (var key in adhocComponents.value) {
                     form_data.append(key, adhocComponents.value[key]);
                 }
-                   axios.post(adhocUrl,form_data)
-                   .finally(() => {
-                    restChars()
-                    canShowLoading.value = false
-                    getSalaryComponents()
-                })
-            } else
-                if (key == 2) {
-                    for (var key in deductionComponents.value) {
-                        form_data.append(key, deductionComponents.value[key]);
-                    }
-                       axios.post(adhocUrl,form_data)
-                       .finally(() => {
-                        restChars()
-                        canShowLoading.value = false
-                        getSalaryComponents()
-                    })
-                } else
-                    if (key == 4) {
-                        for (var key in reimbursementComponents.value) {
-                            form_data.append(key, reimbursementComponents.value[key]);
-                        }
-                        axios.post(reimbursmenturl,form_data)
+                if (adhocComponentsUpdated.value) {
+                    axios.post('/Paygroup/UpdateAdhocAllowDetectComp', form_data)
                         .finally(() => {
                             restChars()
                             canShowLoading.value = false
                             getSalaryComponents()
                         })
+                } else {
+                    axios.post(adhocUrl, form_data)
+                        .finally(() => {
+                            restChars()
+                            canShowLoading.value = false
+                            getSalaryComponents()
+                        })
+                }
+
+            } else
+                if (key == 2) {
+                    for (var key in deductionComponents.value) {
+                        form_data.append(key, deductionComponents.value[key]);
+                    }
+                    if (adhocComponentsUpdated.value) {
+                        axios.post('/Paygroup/UpdateAdhocAllowDetectComp', form_data)
+                            .finally(() => {
+                                restChars()
+                                canShowLoading.value = false
+                                getSalaryComponents()
+                            })
+                    } else {
+                        axios.post(adhocUrl, form_data)
+                            .finally(() => {
+                                restChars()
+                                canShowLoading.value = false
+                                getSalaryComponents()
+                            })
+                    }
+                } else
+                    if (key == 4) {
+                        for (var key in reimbursementComponents.value) {
+                            form_data.append(key, reimbursementComponents.value[key]);
+                        }
+                        axios.post(reimbursmenturl, form_data)
+                            .finally(() => {
+                                restChars()
+                                canShowLoading.value = false
+                                getSalaryComponents()
+                            })
                     }
                     else {
                         console.log("No More options");
                     }
-           console.log(form_data);         
+        console.log(form_data);
 
     }
 
     const editNewSalaryComponent = (boolean, data) => {
+        console.log(data);
         dailogNewSalaryComponents.value = true
         salaryComponentsUpdated.value = boolean
         salaryComponents.name = data.comp_name,
             salaryComponents.id = data.id,
             salaryComponents.typeOfComp = data.comp_type_id,
             salaryComponents.nameInPayslip = data.comp_name_payslip,
-            salaryComponents.typeOfCalc = data.calculation_method,
-            salaryComponents.amount = null,
+            salaryComponents.typeOfCalc = parseInt(data.calculation_method_id),
+            salaryComponents.amount = data.flat_amount,
             salaryComponents.status = data.status,
             salaryComponents.isPartOfEmpSalStructure = data.is_part_of_empsal_structure,
             salaryComponents.isTaxable = data.is_taxable,
@@ -174,19 +197,24 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
             salaryComponents.isConsiderForESI = data.esi
     }
 
-    const editAdhocSalaryComponents = (currentRowData,key) =>{
+    const editAdhocSalaryComponents = (currentRowData, key, boolean) => {
         console.log(currentRowData);
-        if(key == 2){
-            deductionComponents.value = {...currentRowData}
-        }else
-        if(key == 3){
-            adhocComponents.value = {...currentRowData}
-        }else
-        if(key == 4){
-            reimbursementComponents.value = {...currentRowData}
-        }else{
-            console.log("No More options");
-        }
+        if (key == 2) {
+            adhocComponentsUpdated.value = true
+            let type = { category_type: 'deduction' }
+            deductionComponents.value = { ...type, ...currentRowData }
+        } else
+            if (key == 3) {
+                adhocComponentsUpdated.value = true
+                let type = { category_type: 'allowance' }
+                adhocComponents.value = { ...type, ...currentRowData }
+            } else
+                if (key == 4) {
+                    adhocComponentsUpdated.value = true
+                    reimbursementComponents.value = { ...currentRowData }
+                } else {
+                    console.log("No More options");
+                }
     }
 
 
@@ -217,6 +245,29 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     }
 
 
+    // Accounting Code
+
+    const accountingCodeSource = ref()
+    const accountingCode = ref({})
+
+    const getAccountingSoftware = () => {
+        let accountingSoftwareUrl = `/Paygroup/fetchPayrollAppIntegrations`
+        axios.get(accountingSoftwareUrl).then(res => {
+            accountingCodeSource.value = res.data.data
+            console.log(res.data.data);
+        })
+    }
+
+    const saveAccountingCode = (data) => {
+        console.log(data);
+        axios.post('/Paygroup/addPayrollAppIntegrations',data)
+    }
+
+    const enableAccountingSoftware = (data,checked) =>{
+        console.log(data,checked);
+    }
+
+
     // Salary structure
 
     const dailogNewSalaryStructure = ref(false);
@@ -236,9 +287,9 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     const employeeSource = ref()
 
     const getsalaryStructure = (async () => {
-        let salaryyStructureUrl = `/Paygroup/fetchPayRollComponents`
+        let salaryyStructureUrl = `/Paygroup/fetchPayGroupEmpComponents`
         await axios.get(salaryyStructureUrl).then(res => {
-            salaryComponentsSource.value = res.data
+            salaryStructureSource.value = Object.values(res.data)
         })
     })
 
@@ -279,13 +330,17 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     return {
         // Varaible Declaration
         canShowLoading,
+
         // Salary Components - Earnings
         dailogNewSalaryComponents, salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent, editNewSalaryComponent, deleteSalaryComponent,
         // Salary Components - Adhoc Components and Deduction and Reimbursement Components
-        adhocComponents, deductionComponents, reimbursementComponents,editAdhocSalaryComponents,
+        adhocComponents, deductionComponents, reimbursementComponents, editAdhocSalaryComponents,
+        // Salary Components - Accounting Code
+        getAccountingSoftware, saveAccountingCode,accountingCode,accountingCodeSource,enableAccountingSoftware,
+
 
         // Salary Structure - Paygroup
         dailogNewSalaryStructure, salaryStructure, salaryStructureSource, getsalaryStructure, saveNewsalaryStructure, addsalaryComponents,
     }
 
-})    
+})

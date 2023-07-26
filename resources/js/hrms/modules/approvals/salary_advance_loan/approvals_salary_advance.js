@@ -37,6 +37,7 @@ import InputNumber from 'primevue/inputnumber';
 import SelectButton from 'primevue/selectbutton';
 import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
+import OverlayPanel from 'primevue/overlaypanel';
 
 
 
@@ -77,5 +78,6 @@ app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('SelectButton' ,SelectButton)
 app.component('Checkbox' ,Checkbox)
+app.component('OverlayPanel' ,OverlayPanel)
 
 app.mount("#approvals_salary_advance");

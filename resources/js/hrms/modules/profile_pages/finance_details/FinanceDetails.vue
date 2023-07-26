@@ -33,24 +33,20 @@
                             <ul class="personal-info">
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Last Processed</div>
-                                    <div class="text"
-                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
-                                        :key="index">
-                                        <h1 class="" v-if="item">
+                                    <div class="text">
+                                        <h1 class="" v-if="_instance_profilePagesStore.employeeDetails.payroll_summary.payroll_date">
                                             <!-- {{  dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary[0].payroll_date).format('DD-MMM-YYYY') }} -->
                                             <!-- {{ item.payroll_date }} -->
-                                            {{ dayjs(item.payroll_date ).format('DD-MMM-YYYY')  }}
+                                            {{ dayjs(_instance_profilePagesStore.employeeDetails.payroll_summary.payroll_date ).format('DD-MMM-YYYY')  }}
                                         </h1>
                                         <h1 v-else> - </h1>
                                     </div>
                                 </li>
                                 <li class="pb-1 border-bottom-liteAsh">
                                     <div class="title">Total Working Days</div>
-                                    <div class="text"
-                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary"
-                                        :key="index">
+                                    <div class="text">
 
-                                        <h1 v-if="item">{{ item.worked_Days }}</h1>
+                                        <h1 v-if="_instance_profilePagesStore.employeeDetails.payroll_summary.worked_Days">{{ _instance_profilePagesStore.employeeDetails.payroll_summary.worked_Days }}</h1>
 
                                         <h1 v-else>
                                             -
@@ -59,9 +55,8 @@
                                 </li>
                                 <li class="pb-1 ">
                                     <div class="title">Loss Of Pay(LOP)</div>
-                                    <div class="text"
-                                        v-for="(item, index) in _instance_profilePagesStore.employeeDetails.payroll_summary" :key="index">
-                                        <h1 v-if="item">{{ item.lop }}</h1>
+                                    <div class="text" >
+                                        <h1 v-if="_instance_profilePagesStore.employeeDetails.payroll_summary.lop">{{  _instance_profilePagesStore.employeeDetails.payroll_summary.lop }}</h1>
                                         <h1 v-else>
                                             -
                                         </h1>
@@ -292,7 +287,10 @@
                     <div class="card-body">
                         <h6 class="mb-2 fw-bold fs-15">Statutory Information
                             <span class="personal-edit">
-                                <a href="#" class="edit-icon" @click="onClick_EditButton_Statutory_Info()">
+                                <a href="#" class="edit-icon"  v-if="_instance_profilePagesStore.employeeDetails
+                                .Current_login_user.org_role == 1 ||_instance_profilePagesStore.employeeDetails
+                                .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
+                                .Current_login_user.org_role == 3  " @click="onClick_EditButton_Statutory_Info()">
                                     <i class="ri-pencil-fill"></i>
                                 </a>
                             </span>
@@ -319,17 +317,19 @@
                                     </div>
                                     <div class="col">
                                         <label class="ml-2">EPF Number</label>
-                                        <InputNumber placeholder="EPF Number" class="w-100 mt-1"
+                                        <!-- <InputNumber placeholder="EPF Number" class="w-100 mt-1"
                                             v-model="statutory_information.epf_no" inputId="withoutgrouping"
-                                            :useGrouping="false" />
+                                            :useGrouping="false" /> -->
+                                            <InputText @keypress="isSpecialChars($event)"   v-model="statutory_information.epf_no" class="w-100  mt-1" type="text" placeholder="EPF Number" />
                                     </div>
                                 </div>
                                 <div class="row ">
                                     <div class="col ">
                                         <label class=" ml-1">UAN Number</label>
-                                        <InputNumber placeholder="EPF Number" class="w-100" minlength="12" maxlength="12"
+                                        <!-- <InputNumber placeholder="EPF Number" class="w-100" minlength="12" maxlength="12"
                                             v-model="statutory_information.uan_no" inputId="withoutgrouping"
-                                            :useGrouping="false" />
+                                            :useGrouping="false" /> -->
+                                            <InputText @keypress="isSpecialChars($event)"  v-model="statutory_information.uan_no" class="w-100" type="text" placeholder="EPF Number" />
                                     </div>
                                     <div class="col ml-2">
                                         <label class="ml-2">ESIC
@@ -342,9 +342,10 @@
                                 <div class="row">
                                     <div class="col-6 ">
                                         <label for="" class=" ml-2">ESIC Number</label>
-                                        <InputNumber placeholder="EPF Number" class="w-100  mt-1" minlength="12"
+                                        <!-- <InputNumber placeholder="EPF Number" class="w-100  mt-1" minlength="12"
                                             maxlength="12" v-model="statutory_information.esic_no" inputId="withoutgrouping"
-                                            :useGrouping="false" />
+                                            :useGrouping="false" /> -->
+                                            <InputText @keypress="isSpecialChars($event)"   v-model="statutory_information.esic_no" class="w-100  mt-1" type="text" placeholder="EPF Number" />
                                     </div>
                                     <div class="col">
                                     </div>
@@ -716,6 +717,12 @@ const submitForm = () => {
 const isLetter = (e) => {
     let char = String.fromCharCode(e.keyCode); // Get the character
     if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+
+const isSpecialChars = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z0-9]+$/.test(char)) return true; // Match with regex
     else e.preventDefault(); // If not match, don't add to input text
 }
 

@@ -35,6 +35,7 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     protected $month_name;
     protected $year;
     protected $client_name;
+    protected $total_row;
     function __construct($reimbursements_details,$totals,$legal_entity,$month_name,$year,$client_name){
         $this->reimbursements_details=$reimbursements_details;
         $this->totals=$totals;

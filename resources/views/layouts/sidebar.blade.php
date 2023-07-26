@@ -239,17 +239,12 @@
                                             class="py-1 nav-link sidebar"><span>Manage WelcomeMail Status</span></a>
                                     </li>
                                 @endcan
-                                <li class="nav-item ">
-                                    <a href="{{ url('/updateMasterdataUploads') }}"
-                                        class="py-1 nav-link sidebar"><span>Master Correction</span></a>
-                                </li>
                                 @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
                                 <li class="nav-item ">
                                     <a href="{{ route('showRolesPermissionsPage') }}"
                                         class="py-1 nav-link sidebar"><span>Roles & Permissions</span></a>
                                 </li>
                             @endcan
-
                             </ul>
                         </div>
                     </li>

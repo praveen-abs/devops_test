@@ -45,6 +45,8 @@ class VmtClientController extends Controller
        try
        {
             $vmtClient  =  new VmtClientMaster;
+            $vmtClient->abs_client_code  = $request->abs_client_code;
+            $vmtClient->client_fullname  = $request->client_full_name;
             $vmtClient->client_code  = $request->client_code;
             $vmtClient->client_name  = $request->client_name;
             $vmtClient->contract_start_date  = $request->contract_start_date;
@@ -54,7 +56,7 @@ class VmtClientController extends Controller
             $vmtClient->company_pan  = $request->company_pan;
             $vmtClient->gst_no  = $request->gst_no;
             $vmtClient->epf_reg_number  = $request->epf_reg_number;
-            $vmtClient->esic_reg_number  = $request->esic_reg_number.
+            $vmtClient->esic_reg_number  = $request->esic_reg_number;
             $vmtClient->prof_tax_reg_number  = $request->prof_tax_reg_number;
             $vmtClient->lwf_reg_number  = $request->lwf_reg_number;
             $vmtClient->authorised_person_name  = $request->authorised_person_name;
@@ -68,8 +70,20 @@ class VmtClientController extends Controller
                 $docUploadsName = 'doc_'.time() . '.' . $docUploads->getClientOriginalExtension();
                 $docUploadsPath = public_path('/images/');
                 $docUploads->move($docUploadsPath, $docUploadsName);
+                $docUploadpath = '/images/'.$docUploadsName;
             }
-            $vmtClient->doc_uploads  = $request->docUploadsName;
+            if($request->client_logo){
+
+                $file_path_exist = $request->client_full_name;
+
+                $file = $request->file('client_logo') ;
+                $fileName =  $file->getClientOriginalName();
+                $destinationPath = public_path().'/assets/clients/'.$file_path_exist.'/logos/';
+                $file->move($destinationPath,$fileName);
+                $storepath  = '/assets/clients/'.$file_path_exist.'/logos/'.$fileName;
+            }
+            $vmtClient->client_logo  = $storepath;
+            $vmtClient->doc_uploads  = $docUploadpath;
             $vmtClient->product  = $request->product;
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
@@ -83,7 +97,8 @@ class VmtClientController extends Controller
                                                             'Abs@123123',
                                                              request()->getSchemeAndHttpHost() ,
                                                              "",
-                                                             $image_view)
+                                                             $image_view,
+                                                             $request->abs_client_code)
             );
                 return "Saved";
         }
@@ -116,7 +131,7 @@ class VmtClientController extends Controller
 
     public function fetchAllClients(Request $request)
     {
-        return json_encode( VmtClientMaster::all());
+        return json_encode( VmtClientMaster::where('id','<>',1)->get());
     }
 
     public function getABSClientCode(Request $request, VmtClientService $serviceVmtClientService){
