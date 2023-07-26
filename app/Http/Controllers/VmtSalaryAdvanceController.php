@@ -365,11 +365,11 @@ class VmtSalaryAdvanceController extends Controller
 
     public function enableOrDisableLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $loan_type = $request->loan_type;
+        $loan_type = $request->loanType;
         $status = $request->Status;
-        //$loan_id = $request->loan_id;
-        dd($request->all());
-        $loan_id=6;
+        $loan_id = $request->loan_ID;
+        // dd($request->all());
+        // $loan_id=6;
         $response = $vmtSalaryAdvanceService->enableOrDisableLoanSettings($loan_type, $loan_id,$status);
         return $response;
     }

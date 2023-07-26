@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::table('vmt_emp_int_loan_details', function (Blueprint $table) {
             $table->text('loan_status')->after('loan_crd_sts');
             $table->text('reviewer_cmds')->nullable()->after('loan_status');
-            $table->date('paid_date')->after('reviewer_cmds');
-            $table->text('UTR_number')->after('paid_date');
+            $table->date('paid_date')->nullable()->after('reviewer_cmds');
+            $table->text('UTR_number')->nullable()->after('paid_date');
         });
     }
 
