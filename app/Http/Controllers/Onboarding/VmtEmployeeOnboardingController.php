@@ -450,12 +450,26 @@ class VmtEmployeeOnboardingController extends Controller
         // insert the employee to database for quick onboarding
      private function storeQuickOnboardEmployees($data,  $employeeService)
         {
+//dd($data);
             //For output jsonresponse
+            $onboard_data =$data;
             $data_array = [];
             //For validation
             $isAllRecordsValid = true;
             $rules = [];
-            $excelRowdata_row = $data;
+
+            foreach ($onboard_data[0] as &$Single_data) {
+
+                    if (array_key_exists('doj', $Single_data)) {
+
+                        $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
+                    }
+
+            }
+            unset($Single_data);
+
+
+            $excelRowdata_row = $onboard_data;
             $currentRowInExcel = 0;
 
         if(empty($excelRowdata_row )){
@@ -597,6 +611,7 @@ class VmtEmployeeOnboardingController extends Controller
 
      private function storeSingleRecord_QuickEmployee($row,VmtEmployeeService $employeeService)
         {
+
              $message = $row['employee_code']  ." not imported ";
              $status = 'failure';
              try {
@@ -673,9 +688,19 @@ class VmtEmployeeOnboardingController extends Controller
             $isAllRecordsValid = true;
 
             $rules = [];
+           $onboard_data =$data;
 
-            // $excelRowdata = $data[0][0];
-            $excelRowdata_row = $data;
+             foreach ($onboard_data[0] as &$Single_data) {
+
+                    if (array_key_exists('doj', $Single_data)) {
+
+                        $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
+                    }
+
+            }
+            unset($Single_data);
+
+            $excelRowdata_row = $onboard_data;
             $currentRowInExcel = 0;
         if(empty($excelRowdata_row )){
             return $rowdata_response = [
