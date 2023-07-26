@@ -460,7 +460,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             foreach ($onboard_data[0] as &$Single_data) {
 
-                    if (array_key_exists('doj', $Single_data)) {
+                    if (array_key_exists('doj', $Single_data) && is_int($Single_data['doj'])) {
 
                         $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
                     }
@@ -613,6 +613,7 @@ class VmtEmployeeOnboardingController extends Controller
         {
 
              $message = $row['employee_code']  ." not imported ";
+
              $status = 'failure';
              try {
 
@@ -641,7 +642,7 @@ class VmtEmployeeOnboardingController extends Controller
                 return $rowdata_response = [
                     'status' => $status,
                     'message' => $message,
-                    'mail_status' =>$mail_message,
+                    'mail_status' =>$mail_message??'',
                     'data' =>$response['data']
                 ];
             }
@@ -649,6 +650,7 @@ class VmtEmployeeOnboardingController extends Controller
                 return $rowdata_response = [
                     'status' => $status,
                     'message' => $message,
+                    'mail_status'=>'failure',
                     'error_fields' =>  $e->getMessage()." ".$e->getline(),
                 ];
 
@@ -692,7 +694,7 @@ class VmtEmployeeOnboardingController extends Controller
 
              foreach ($onboard_data[0] as &$Single_data) {
 
-                    if (array_key_exists('doj', $Single_data)) {
+                    if (array_key_exists('doj', $Single_data) &&is_int($Single_data['doj'])) {
 
                         $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
                     }

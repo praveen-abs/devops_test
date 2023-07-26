@@ -19,6 +19,7 @@ use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtMaritalStatus;
 use App\Models\Bank;
+use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtWorkShifts;
@@ -727,14 +728,40 @@ class VmtCorrectionController extends Controller
 
         foreach ($corrected_data[0] as &$Single_data) {
 
-               if (array_key_exists('doj', $Single_data)) {
+               if (array_key_exists('dob', $Single_data) && is_int($Single_data['dob'])) {
+
+                   $Single_data['dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dob'])->format('Y-m-d');
+               }
+               if (array_key_exists('doj', $Single_data) && is_int($Single_data['doj'])) {
 
                    $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
+               }
+               if (array_key_exists('dol', $Single_data) && is_int($Single_data['dol'])) {
+
+                   $Single_data['dol'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['dol'])->format('Y-m-d');
+               }
+               if (array_key_exists('father_dob', $Single_data) && is_int($Single_data['father_dob'])) {
+
+                   $Single_data['father_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['father_dob'])->format('Y-m-d');
+               }
+               if (array_key_exists('mother_dob', $Single_data) && is_int($Single_data['mother_dob'])) {
+
+                   $Single_data['mother_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['mother_dob'])->format('Y-m-d');
+               }
+               if (array_key_exists('spouse_dob', $Single_data) && is_int($Single_data['spouse_dob'])) {
+
+                   $Single_data['spouse_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['spouse_dob'])->format('Y-m-d');
+               }
+
+               if (array_key_exists('child_dob', $Single_data) && is_int($Single_data['child_dob'])) {
+
+                   $Single_data['child_dob'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['child_dob'])->format('Y-m-d');
                }
 
        }
        unset($Single_data);
 
+//dd($corrected_data);
         $rules = [];
         $responseJSON = [
             'status' => 'none',
@@ -761,8 +788,8 @@ class VmtCorrectionController extends Controller
                 'employee_code' =>'required|exists:users,user_code' ,
                 'name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'email' => 'nullable',
-                'doj' => 'nullable|date',
-                'dob' => 'nullable|date|before:-18 years',
+                'doj' => 'nullable',
+                'dob' => 'nullable',
                 'epf_number' => 'nullable|required_unless:epf_number,!=,NULL',
                 'esic_number' => 'nullable|required_unless:esic_number,!=,NULL',
                 'uan_number' => 'nullable|required_unless:uan_number,!=,NULL',
@@ -862,6 +889,7 @@ class VmtCorrectionController extends Controller
                 'basic' => 'required|numeric',
                 'hra' => 'required|numeric',
                 'statutory_bonus' => 'required|numeric',
+                'special_allowance' => 'required|numeric',
                 'child_education_allowance' => 'required|numeric',
                 'lta' => 'required|numeric',
                 'transport_allowance' => 'required|numeric',
@@ -872,6 +900,7 @@ class VmtCorrectionController extends Controller
                 'epf_employer_contribution' => 'required|numeric',
                 'epf_employee_contribution' => 'required|numeric',
                 'esic_employer_contribution' => 'required|numeric',
+                'esic_employee_contribution' => 'required|numeric',
                 'insurance' => 'required|numeric',
                 'professional_tax' => 'required|numeric',
                 'labour_welfare_fund' => 'required|numeric',
@@ -883,6 +912,7 @@ class VmtCorrectionController extends Controller
             $messages = [
                 'numeric' => 'Field <b>:attribute</b> should be numeric',
                 'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
+              //  'date_format' => 'Field <b>:attribute</b> should have the following format DD/MM/YYYY ',
                 'in' => 'Field <b>:attribute</b> should have the following values : :values .',
                 'required' => 'Field <b>:attribute</b> is required',
                 'regex' => 'Field <b>:attribute</b> is invalid',
@@ -950,6 +980,7 @@ class VmtCorrectionController extends Controller
     private function storeSingleRecord_MasterEmployee($row)
 
     {
+
         //DB level validation
 
           try{
@@ -1008,6 +1039,7 @@ class VmtCorrectionController extends Controller
                 $dob=$data["dob"] ?? '';
                 $update_employee_data->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
                 $update_employee_data->dob   =  $dob ? $this->getdateFormatForDb($dob) : '';
+                $update_employee_data->gender   =    $data["gender"] ?? '';
                 $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
                 $update_employee_data->mobile_number  = $data_mobile_number;
                 $update_employee_data->aadhar_number = $data["aadhar_number"] ?? '';
@@ -1023,9 +1055,40 @@ class VmtCorrectionController extends Controller
                 $update_employee_data->bank_id   = !empty($bank_id) ? $bank_id->id : '';
 
                 $update_employee_data->bank_account_number  = $data["bank_account_number"] ?? '';
+                $update_employee_data->nationality = $data["nationality"] ?? '';
+                $update_employee_data->physically_challenged  = $data["physically_challenged"] ?? 'no';
                 $update_employee_data->bank_ifsc_code  = $data["bank_ifsc_code"] ?? '';
                 $update_employee_data->current_address_line_1   = $data["current_address"] ?? '';
+                $update_employee_data->permanent_address_line_1   = $data["permanent_address"] ?? '';
                 $update_employee_data->save();
+
+                $update_empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
+
+                if($update_empOffice->exists())
+                {
+                    $update_empOffice = $update_empOffice->first();
+
+                }
+                else
+                {
+                    $update_empOffice = new VmtEmployeeOfficeDetails;
+                }
+                    //dd($data);
+                    $confirmation_period= $data['confirmation_period'] ?? '';
+                    $update_empOffice->user_id = $user_id;
+                    $update_empOffice->department_id = $data["department"] ?? '';
+                    $update_empOffice->process = $data["process"] ?? '';
+                    $update_empOffice->designation = $data["designation"] ?? '';
+                    $update_empOffice->cost_center = $data["cost_center"] ?? '';
+                    $update_empOffice->probation_period  = $data['probation_period'] ?? '';
+                    $update_empOffice->confirmation_period  = $confirmation_period ? $this->getdateFormatForDb( $confirmation_period,$user_id) : '';
+                    $update_empOffice->holiday_location  = $data["holiday_location"] ?? '';
+                    $update_empOffice->l1_manager_code  = $data["l1_manager_code"] ?? '';
+                    $update_empOffice->work_location  = $data["work_location"] ?? '';
+                    $update_empOffice->officical_mail  = $data["officical_mail"] ?? '';
+                    $update_empOffice->official_mobile  = $data["official_mobile"] ?? '';
+                    $update_empOffice->emp_notice  = $data["emp_notice"] ?? '';
+                    $update_empOffice->save();
 
 
                 if(!empty($data['father_name'])){
@@ -1039,6 +1102,11 @@ class VmtCorrectionController extends Controller
                         $emp_father_data = new VmtEmployeeFamilyDetails;
                     }
                     $emp_father_data->name =   $data['father_name'];
+                    $emp_father_data->save();
+                    if(!empty($data["dob_father"])){
+                        $dob_father=$data["dob_father"];
+                        $emp_father_data->dob = $this->getdateFormatForDb( $dob_father,$user_id);
+                        }
                     $emp_father_data->save();
                 }
                 if(!empty($data['mother_name'])){
@@ -1054,6 +1122,11 @@ class VmtCorrectionController extends Controller
                     }
                     $emp_mother_data->name =   $data['mother_name'];
                     $emp_mother_data->save();
+                    if(!empty($data["dob_mother"])){
+                        $dob_mother=$data["dob_mother"];
+                        $emp_mother_data->dob = $this->getdateFormatForDb( $dob_mother,$user_id) ;
+                        $emp_mother_data->save();
+                        }
                 }
                 if( !empty($data['spouse_name'])){
 
@@ -1068,6 +1141,11 @@ class VmtCorrectionController extends Controller
                         $emp_spouse_data->name =   $data['spouse_name'];
                         $emp_spouse_data->save();
                     }
+                    if(!empty($data["dob_spouse"])){
+                        $dob_spouse =  $data["dob_spouse"];
+                        $emp_spouse_data->dob = $this->getdateFormatForDb(  $dob_spouse,$user_id);
+                        $emp_spouse_data->save();
+                    }
                     $emp_spouse_male_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('gender','male')->where('relationship','Spouse');
 
                     if($emp_spouse_male_data->exists()){
@@ -1079,8 +1157,27 @@ class VmtCorrectionController extends Controller
                         $emp_spouse_data->name =   $data['spouse_name'];
                         $emp_spouse_data->save();
                     }
+                    if(!empty($data["dob_spouse"])){
+                        $dob_spouse =  $data["dob_spouse"];
+                        $emp_spouse_data->dob = $this->getdateFormatForDb(  $dob_spouse,$user_id);
+                        $emp_spouse_data->save();
+                    }
 
+                    $emp_chlid_data = VmtEmployeeFamilyDetails::where('user_id',$user_id)->where('relationship','Child');
+                } if ($emp_chlid_data->exists()){
+                    $emp_chlid_data =  new VmtEmployeeFamilyDetails;
+                    $emp_chlid_data->user_id  = $user_id;
+                    $emp_chlid_data->name =   $data['child_name'];
+                    $emp_chlid_data->relationship = 'Children';
+                    $emp_chlid_data->gender = '';
+
+            if(!empty($data["child_dob"])){
+                    $child_dob= $data["child_dob"];
+                    $emp_chlid_data->dob = $this->getdateFormatForDb( $child_dob,$user_id) ;
+                    }
+                    $emp_chlid_data->save();
                 }
+
 
                 $newEmployee_statutoryDetails =VmtEmployeeStatutoryDetails::where('user_id',$user_id);
                 if($newEmployee_statutoryDetails->exists()){
@@ -1107,14 +1204,17 @@ class VmtCorrectionController extends Controller
                 $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
                 $compensatory->child_education_allowance = $data["child_education_allowance"] ?? '' ;
                 $compensatory->lta = $data["lta"] ?? '' ;
+                $compensatory->transport_allowance = $data["special_allowance"] ?? '' ;
                 $compensatory->transport_allowance = $data["transport_allowance"] ?? '' ;
                 $compensatory->medical_allowance = $data["medical_allowance"] ?? '' ;
                 $compensatory->education_allowance = $data["education_allowance"] ?? '' ;
                 $compensatory->other_allowance = $data["other_allowance"] ?? '' ;
                 $compensatory->gross = $data["gross"] ?? '' ;
                 $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '' ;
-                $compensatory->epf_employee_contribution = $data["epf_employee_contribution"] ?? '' ;
                 $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '' ;
+                $compensatory->epf_employee = $data["epf_employee_contribution"] ?? '' ;
+                $compensatory->esic_employee = $data["esic_employee_contribution"] ?? '' ;
+                $compensatory->cic = $data["ctc"] ?? '' ;
                 $compensatory->insurance = $data["insurance"] ?? '' ;
                 $compensatory->dearness_allowance = $data["dearness_allowance"] ?? '' ;
                 $compensatory->professional_tax = $data["professional_tax"] ?? '' ;
@@ -1147,23 +1247,27 @@ class VmtCorrectionController extends Controller
 
 
             try{
+                $processed_date =null;
                 //Check if its in proper format
-                $processed_date = \DateTime::createFromFormat('d-m-Y', $date);
+                $processed_date_one = \DateTime::createFromFormat('d-m-Y', $date);
+                $processed_date_three = \DateTime::createFromFormat('Y-m-d', $date);
+                $processed_date_two = \DateTime::createFromFormat('d/m/Y', $date);
 
                 //If date is in 'd-m-y' format, then convert into one
-                if( $processed_date)
+                if( $processed_date_one)
                 {
                     //Then convert to Y-m-d
-                    $processed_date =  $processed_date->format('Y-m-d');
+                    $processed_date =  $processed_date_one->format('Y-m-d');
 
-                }
-                else
-                {
-                    //If date is not in 'd-m-y' format, then convert into 'd-m-y'
+                }else if(!empty($processed_date_two)){
 
-                    $processed_date = DateTime::createFromFormat('Y-m-d', $date);
-                    $processed_date->format('Y-m-d');
+                    $processed_date =   $processed_date_two->format('Y-m-d');
+
+                }else{
+
+                    $processed_date =$processed_date_three->format('Y-m-d');
                 }
+
 
                 return $processed_date;
             }

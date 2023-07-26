@@ -11,6 +11,7 @@
      use Carbon\Carbon;
 
     use App\Models\VmtTempEmployeeProofDocuments;
+    use App\Models\VmtMaritalStatus;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
@@ -469,9 +470,12 @@
 
 
         // }
-        $processed_date = DateTime::createFromFormat('d/m/Y', $date)->format('Y-m-d');
-        $data = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(45170)->format('Y-m-d');
-        dd( $data);
+
+
+        $result =VmtMaritalStatus::where('name','UNMARRIED')->first();
+
+        dd($result);
+
 
        // $string= Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
       //DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');

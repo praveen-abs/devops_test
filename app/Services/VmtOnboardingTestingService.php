@@ -1006,26 +1006,27 @@ class VmtOnboardingTestingService {
 
         try{
             //Check if its in proper format
-            $processed_date = \DateTime::createFromFormat('d-m-Y', $date);
+            $processed_date =null;
+            //Check if its in proper format
+            $processed_date_one = \DateTime::createFromFormat('d-m-Y', $date);
+            $processed_date_three = \DateTime::createFromFormat('Y-m-d', $date);
+            $processed_date_two = \DateTime::createFromFormat('d/m/Y', $date);
 
             //If date is in 'd-m-y' format, then convert into one
-            if( $processed_date)
+            if( $processed_date_one)
             {
                 //Then convert to Y-m-d
-                $processed_date =  $processed_date->format('Y-m-d');
+                $processed_date =  $processed_date_one->format('Y-m-d');
 
+            }else if(!empty($processed_date_two)){
+
+                $processed_date =   $processed_date_two->format('Y-m-d');
+
+            }else{
+
+                $processed_date =$processed_date_three->format('Y-m-d');
             }
-            else
-            {
-                //If date is not in 'd-m-y' format, then convert into 'd-m-y'
 
-                $processed_date = DateTime::createFromFormat('Y-m-d', $date);
-
-                if($processed_date){
-
-                    $processed_date->format('Y-m-d');
-                }
-            }
 
             return $processed_date;
         }
