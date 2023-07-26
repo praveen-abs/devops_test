@@ -51,27 +51,49 @@
                 <div class="row ml-1 mr-3 mt-2 ">
 
 
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
+                    <div class="col-12 border-1 rounded-md  h-[100px] d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
                         v-for="(item, index) in salaryStore.interestwithLoanHistory" :key="index">
+                        <div class="row w-full">
+                            <div class="col-4">
+                                <h1 class="  text-[15px]">Settings Name : {{ item.name }}</h1>
+                            </div>
+                            <div class="col-4">
+                                <h1 class=" text-[15px] text-center">Client Name: {{ item.client_name }}</h1>
+                            </div>
+                            <div class="col-4">
+                                <button class=" underline text-blue-400 fs-5 float-right"
+                                @click="viewDetails(item.setting_prev_details,item)">View Details</button>
+                            </div>
+                        </div>
+                        <div class="row w-full">
+                            <div class="col-4">
+                                <h1 class=" text-[15px]"> {{
+                                    item.dedction_period }} months.</h1>
+                            </div>
+                            <div class="col-4">
+                                <h1 class=" text-[15px] text-center">Loan Amount Interest : {{item.setting_prev_details.loan_amt_interest}} %</h1>
+                            </div>
+                            <div class="col-4">
+                                <h1 class=" text-[15px] text-right" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
+                                <h1 class=" text-[15px] text-right" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">maximum Loan Amount: {{item.setting_prev_details.max_loan_amount}}</h1>
+                            </div>
+                        </div>
                 
                         <div class="w-100 d-flex justify-content-between align-items-center">
-                            <h1 class="  fs-5">Settings Name : {{ item.name }}</h1>
-                            <h1 class=" fs-5">Client Name: {{ item.client_name }}</h1>
+                      
+                         
 
-                            <button class=" underline text-blue-400 fs-5 "
-                                @click="viewDetails(item.setting_prev_details)">View Details</button>
+                           
                         </div>
                         <div class="w-100 d-flex justify-content-between align-items-center">
                             <div>
-                                <h1 class=" fs-5"> {{
-                                    item.dedction_period }} months.</h1>
+                              
                             </div>
                             <div>
-                                <h1 class=" fs-5">Loan Amount Interest : {{item.setting_prev_details.loan_amt_interest}} %</h1>
+                              
                             </div>
 
-                            <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
-                            <h1 class="fs-5" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">maximum Loan Amount: {{item.setting_prev_details.max_loan_amount}}</h1>
+
                         </div>
                         <!-- {{ item }} -->
                     </div>
@@ -155,7 +177,7 @@ function selectClientId(data) {
 }
 
 const Name = [];
-function viewDetails(setting_prev_details) {
+function viewDetails(setting_prev_details,item) {
 
 
     //    lwif.name = ""
@@ -176,12 +198,12 @@ function viewDetails(setting_prev_details) {
 
 salaryStore.lwif.name  = setting_prev_details.name;
 
-salaryStore.lwif.selectClientID = setting_prev_details.client_name ;
+salaryStore.lwif.selectClientID = item.client_name ;
 
 salaryStore.lwif.minEligibile = setting_prev_details.min_month_served
 salaryStore.lwif.precent_Or_Amt = setting_prev_details.loan_applicable_type
 salaryStore.lwif.availPerInCtc = setting_prev_details.percent_of_ctc
-salaryStore.lwif.deductMethod = setting_prev_details.deduction_starting_months
+// salaryStore.lwif.deductMethod = setting_prev_details.deduction_starting_months
 salaryStore.lwif.loan_amt_interest  =setting_prev_details.loan_amt_interest
 salaryStore.lwif.maxTenure  =setting_prev_details.max_tenure_months
 

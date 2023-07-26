@@ -149,7 +149,7 @@
                         <div class="row">
                             <div class="col-7 d-flex justify-content-start align-items-center">
                                 <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1"
-                                    name="dectmeth" value="1" />
+                                    name="dectmeth" :value="1" />
                                 <label for="" class="mx-3 fs-5 clr-dark" style="line-height: 25px;">Begin
                                     deducting
                                     the EMI in the
@@ -161,7 +161,7 @@
                         <div class="my-1 row">
                             <div class="col-7 d-flex justify-content-start align-items-center">
                                 <RadioButton v-model="salaryStore.lwif.deductMethod" inputId="ingredient1"
-                                    name="dectmeth" value="emi" />
+                                    name="dectmeth" :value="'emi'" />
                                 <label for="" class="mx-3 fs-5 clr-dark">Employee can select the month when
                                     they
                                     would like their EMI
@@ -313,7 +313,7 @@
                 <button class="btn btn btn-primary" v-if="salaryStore.EnableAndDisable == 1" @click="EnableDisable(0)">Disable</button>
                 <!-- submitForm -->
                 <!-- {{ salaryStore.EnableAndDisable }} -->
-                <button class="mx-4 btn btn-primary" v-if="!salaryStore.EnableAndDisable" @click="submitForm">Save</button>
+                <button class="mx-4 btn btn-primary" v-if="salaryStore.EnableAndDisable=== ''" @click="submitForm">Save</button>
 
         </div>
     </div>

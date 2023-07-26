@@ -620,7 +620,7 @@ function sendEmpDetails(val,id){
 }
 
 function EnableDisable(val){
-
+salaryStore.create_new_from = 1;
 salaryStore.sal_adv_reset();
 useSettingStore.SendEnableAndDisable( );
 console.log(val);
@@ -633,6 +633,7 @@ console.log(val);
 // }
 
 function savechanges(){
+    salaryStore.create_new_from = 1;
     console.log(salaryStore.sa.eligibleEmployee);
     useSettingStore.sendSavechanges( settings_id.value , setEligibleEmployee.value )
 }

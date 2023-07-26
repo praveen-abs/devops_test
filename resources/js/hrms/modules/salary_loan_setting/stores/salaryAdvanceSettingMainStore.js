@@ -62,7 +62,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     // Enable btn disable for loan and salary advance settings
 
-    const EnableAndDisable = ref();
+    const EnableAndDisable = ref('');
 
 
     // Eligible Employees
@@ -164,7 +164,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
        selectedOption1.value = ""
        selectedOption2.value = ""
        selectedOption3.value = ""
-       EnableAndDisable.value = ""
+       EnableAndDisable.value = ''
        resetFilters.value= ""
        eligbleEmployeeSource.value = ""
        SalaryEmpDetails.value = ""
@@ -367,7 +367,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectedOption1.value = ""
         selectedOption2.value = ""
         selectedOption3.value = ""
-        EnableAndDisable.value = null;
+        EnableAndDisable.value = '';
     }
 
 
@@ -533,7 +533,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         selectedOption1.value = ""
         selectedOption2.value = ""
         selectedOption3.value = ""
-        EnableAndDisable.value = null
+        EnableAndDisable.value = ''
     }
 
     const saveLoanWithInterest = () => {

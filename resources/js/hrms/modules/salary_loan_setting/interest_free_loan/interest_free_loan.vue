@@ -52,25 +52,38 @@
 
                 <div class="row ml-1 mr-3 mt-2 ">
 
-                    <div class="col-12 border-1 rounded-md h-28 d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
+                    <div class="col-12 border-1 rounded-md h-[100px] d-flex flex-column align-items-center justify-content-between p-3 even-card shadow-sm mb-2 blink"
                         v-for="(item, index) in salaryStore.interestFreeLoanHistory" :key="index">
-                        <!-- {{ }} -->{{ item.settings }}
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <h1 class="  fs-5">Settings Name : {{ item.name }}</h1>
-                         <h1 class=" fs-5">Client Name: {{ item.client_name }}</h1>
-                    
-                            <button class=" underline text-blue-400 fs-5 "
-                                @click="viewDetails(item.setting_prev_details)">View Details</button>
-                        </div>
-                        <div class="w-100 d-flex justify-content-between align-items-center">
-                            <div>
-                                <h1 class=" fs-5" > {{
-                                    item.dedction_period }}  months. </h1>
+
+                        <div class="row w-full">
+                            <div class="col-4 " >
+                                <h1 class="  text-[15px]">Settings Name : {{ item.name }}</h1>
+                            </div> 
+                            <div class="col-4 ">
+                                <h1 class="   text-[15px] text-center">Client Name: {{ item.client_name }}</h1>
+                            </div>
+                            <div class="col-4 ">
+                                <button class=" underline text-blue-400  text-[15px] float-right "
+                                @click="viewDetails(item.setting_prev_details,item)">View Details</button>
                             </div>
 
-                            <h1 class=" fs-5" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
-                            <h1 class="fs-5" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">maximum Loan Amount: {{item.setting_prev_details.max_loan_amount}}</h1>
-                          
+                        </div>
+                        <div class="row w-full">
+                            <div class="col-4">
+                                <div class=" d-flex justify-content-start">
+                                    <h1 class=" text-[15px] text-left mb-2" > {{
+                                        item.dedction_period }}  months. </h1>
+                                </div>
+                              
+                            </div>
+                            <div class="col-4">
+                                <h1 class=" text-[15px] text-green-500 text-center" v-if="item.setting_prev_details.active==1">Active</h1>
+                                <h1 class="   text-[15px] text-red-500 text-center" v-if="item.setting_prev_details.active==0">Disable</h1>
+                            </div>
+                            <div class="col-4">
+                                <h1 class=" text-[15px] float-right" v-if="item.setting_prev_details.loan_applicable_type == 'percnt' " >{{ item.loan_type }} : {{ item.perct }}%</h1>
+                                <h1 class=" text-[15px] float-right" v-if="item.setting_prev_details.loan_applicable_type =='fixed'">maximum Loan Amount: {{item.setting_prev_details.max_loan_amount}}</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -162,18 +175,19 @@ const submitForm = () => {
 
 const Name = [];
 
-function viewDetails(setting_prev_details) {
+function viewDetails(setting_prev_details,item) {
 
     CreateLoanFreeNewFrom.value = 2;
 
     salaryStore.ifl.name = setting_prev_details.name;
 
-    salaryStore.ifl.selectClientID = setting_prev_details.client_name ;
+    salaryStore.ifl.selectClientID = item.client_name ;
 
     salaryStore.ifl.minEligibile = setting_prev_details.min_month_served
     salaryStore.ifl.precent_Or_Amt = setting_prev_details.loan_applicable_type
     salaryStore.ifl.availPerInCtc = setting_prev_details.percent_of_ctc
     salaryStore.ifl.deductMethod = setting_prev_details.deduction_starting_months
+    salaryStore.ifl.maxTenure  =setting_prev_details.max_tenure_months
 
 
     if (setting_prev_details.deduction_starting_months == 1) {
