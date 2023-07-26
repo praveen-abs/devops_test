@@ -176,7 +176,7 @@ function viewDetails(setting_prev_details) {
 
 salaryStore.lwif.name  = setting_prev_details.name;
 
-salaryStore.lwif.selectClientID = setting_prev_details.client_id ;
+salaryStore.lwif.selectClientID = setting_prev_details.client_name ;
 
 salaryStore.lwif.minEligibile = setting_prev_details.min_month_served
 salaryStore.lwif.precent_Or_Amt = setting_prev_details.loan_applicable_type

@@ -57,6 +57,8 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     const response_message = ref();
     const canShowPopup = ref()
     const AssignedClients = ref([]);
+    const interstfreeloanPage =  ref(1);
+    const loanWithInterestPage = ref(1);
 
     // Enable btn disable for loan and salary advance settings
 
@@ -218,6 +220,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                     // "Salary Advance Succesfully",
                     icon: "success",
                 }).then((res) => {
+                    sal_adv_reset();
                    
                     create_new_from.value = 1;
                 })
@@ -240,7 +243,6 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
             canShowLoading.value = false;
             approvalFormat.splice(0, approvalFormat.length);
             sal_adv_reset();
-
         })
         console.log(sa);
     }
@@ -283,7 +285,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 }),
                 icon: "success",
             }).then((res) => {
-                sal_adv_reset();
+               create_new_from.value= 1;
+               interstfreeloanPage.value = 1;
+               loanWithInterestPage.value = 1;
             })
         }
         else if (res.status == "failure") {
@@ -293,7 +297,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
                 icon: "error",
                 showCancelButton: false,
             }).then((res) => {
-                sal_adv_reset();
+             
+                interstfreeloanPage.value = 1;
+                loanWithInterestPage.value = 1;
+                create_new_from.value= 1;
             })
 
         }
@@ -819,6 +826,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         getInterestFreeAndInterestWithLoanHistory, interestFreeLoanHistory,interestwithLoanHistory,
 
         EnableAndDisable,
+
+        interstfreeloanPage,
+        loanWithInterestPage
+
 
 
     };

@@ -76,8 +76,6 @@
 
             </div>
 
-
-
             <div v-if="salaryStore.create_new_from == '2'" class="row">
                 <div class="col-10">
                     <div class="my-4 flex align-items-center">

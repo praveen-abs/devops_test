@@ -21,7 +21,7 @@
         <h1 class="text-xl w-5  xl:text-2xl">Select organization</h1>
         <div class="">
             <div class="d-flex flex-col position-relative">
-                <MultiSelect v-model="salaryStore.ifl.selectClientID" :options="salaryStore.ClientsName"
+                <MultiSelect v-model="salaryStore.ifl.selectClientID" v-if="!salaryStore.EnableAndDisable"  :options="salaryStore.ClientsName"
                     optionLabel="client_name" optionValue="id" placeholder="Select Branches" :maxSelectedLabels="3"
                     class="w-full  md:w-18rem" :class="[
                         v$.selectClientID.$error ? 'p-invalid' : '',
@@ -29,6 +29,8 @@
                 <span v-if="v$.selectClientID.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
                     {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
                 </span>
+                <InputText type="text" placeholder="Name of Interest free loan" disabled  v-if="salaryStore.EnableAndDisable" v-model="salaryStore.ifl.name"
+                class="w-full d-flex justify-items-center md:w-18rem" />
             </div>
 
         </div>
@@ -275,7 +277,9 @@ const salaryStore = salaryAdvanceSettingMainStore();
 
 const useSettingStore = loanSettingsStore();
 
+
 const interest_free_loans = ref(2);
+
 
 const rules = computed(() => {
     return {
@@ -295,6 +299,7 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         salaryStore.saveInterestfreeLoan();
+        interest_free_loans.value = salaryStore.interstfreeloanPage
     } else {
         console.log('Form failed submitted.')
     }
@@ -304,6 +309,7 @@ const submitForm = () => {
 function EnableDisable(val){
 
     salaryStore.resetIfl();
+    interest_free_loans.value=1;
     useSettingStore.SendEnableAndDisable(val,'InterestFreeLoan');
 }
 

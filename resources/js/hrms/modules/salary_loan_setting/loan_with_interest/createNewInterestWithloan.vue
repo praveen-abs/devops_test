@@ -6,11 +6,24 @@
 <div>
     <div class="col-12 ">
 
+        <div class="my-4 d-flex justify-content-between w-8 align-items-center">
+            <h1 class="text-xl  xl:text-2xl">Name of the Loan With Interest</h1>
+            <div class=" position-relative ">
+                <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.lwif.name"
+                    class="w-full d-flex justify-items-center md:w-18rem" :class="[
+                        v$.name.$error ? 'p-invalid ' : '',
+                    ]" />
+                <span v-if="v$.name.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
+                    {{ v$.name.required.$message.replace("Value", "Client Name") }}
+                </span>
+            </div>
+        </div>
+
 
         <div class="d-flex justify-content-between align-items-center mt-5 w-8" style="width: 480px;">
             <h1 class="text-xl  xl:text-2xl">Select organization</h1>
             <div class="d-flex flex-col position-relative">
-                <MultiSelect v-model="salaryStore.lwif.selectClientID" :options="salaryStore.ClientsName"
+                <MultiSelect v-model="salaryStore.lwif.selectClientID" v-if="!salaryStore.EnableAndDisable" :options="salaryStore.ClientsName"
                     optionLabel="client_name" optionValue="id" placeholder="Select Branches"
                     :maxSelectedLabels="3" class="w-full  md:w-18rem" :class="[
                         v$.selectClientID.$error ? 'p-invalid' : '',
@@ -19,22 +32,13 @@
                     class="text-red-400 fs-6 font-semibold position-absolute top-14">
                     {{ v$.selectClientID.required.$message.replace("Value", "Client Name") }}
                 </span>
+                <InputText type="text" placeholder="Give Salary Advance a Name" disabled  v-if="salaryStore.EnableAndDisable" v-model="salaryStore.lwif.selectClientID"
+                class="w-full d-flex justify-items-center md:w-18rem" />
             </div>
 
         </div>
 
-        <div class="my-4 d-flex justify-content-between w-8 align-items-center">
-                        <h1 class="text-xl  xl:text-2xl">Name of the Loan With Interest</h1>
-                        <div class=" position-relative ">
-                            <InputText type="text" placeholder="Give Salary Advance a Name" v-model="salaryStore.lwif.name"
-                                class="w-full d-flex justify-items-center md:w-18rem" :class="[
-                                    v$.name.$error ? 'p-invalid ' : '',
-                                ]" />
-                            <span v-if="v$.name.$error" class="text-red-400 fs-6 font-semibold position-absolute top-12">
-                                {{ v$.name.required.$message.replace("Value", "Client Name") }}
-                            </span>
-                        </div>
-                    </div>
+
 
         <h1 class="mt-10 fs-4 ">Eligible Amount</h1>
         <p class="my-2 fs-5 ">The employees not eligible for Interest Free Loan can also claim the Loan with
@@ -347,6 +351,7 @@ onMounted(() => {
     opt.value = "Department";
     salaryStore.getClientsName('loan_with_int');
     salaryStore.getCurrentStatus('loan_with_int');
+   
 })
 
 
@@ -369,11 +374,14 @@ const submitForm = () => {
         // if ANY fail validation
         console.log('Form successfully submitted.')
         salaryStore.saveLoanWithInterest();
+        CreateLoanWithNew.value = salaryStore.loanWithInterestPage;
+
     } else {
         console.log('Form failed submitted.')
     }
 
 }
+
 
 function cancel_btn(){
     CreateLoanWithNew.value = 1;
@@ -382,6 +390,7 @@ function cancel_btn(){
 
 function EnableDisable(val){
     salaryStore.RestLwif();
+    CreateLoanWithNew.value = 1;
     loanStores.SendEnableAndDisable(val,'InterestWithLoan');
     
 }
