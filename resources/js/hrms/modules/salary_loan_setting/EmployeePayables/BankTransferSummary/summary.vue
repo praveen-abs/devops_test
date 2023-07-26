@@ -16,7 +16,7 @@
                         <p class="text-[12px] md:text-[13px] xl:text-[16px] text-gray-700 mt-2">188 Employees</p>
                     </div>
                     <div>
-                        <button class="bg-gray-200 p-2 rounded-md mt-2 w-[90px]  text-[12px]  xl:text-[13px] " >Not Paid</button>
+                        <button class="bg-gray-200 p-2 rounded-md shadow-md mt-2 w-[90px]  text-[12px]  xl:text-[13px] " >Not Paid</button>
                     </div>
                 </div>
               </div>

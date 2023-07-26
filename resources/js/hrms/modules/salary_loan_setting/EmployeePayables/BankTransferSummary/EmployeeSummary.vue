@@ -21,7 +21,7 @@
 
     </div>
     <div style="position: relative; " class="">
-      <div class="d-flex justify-content-between border align-items-center w-full">
+      <div class="d-flex justify-content-between  align-items-center w-full">
 
         <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed border-none border-0" id="pills-tab" role="tablist">
           <li class=" nav-item" role="presentation">
@@ -63,11 +63,14 @@
           </li>
         </ul>
 
-        <div class=" w-3 border ">
-          <span class=" border ">
-            <i class="pi pi-search" style="position: relative; " />
-            <InputText placeholder="Search" class=" w-[150px]" style="height: 3em " />
-          </span>
+        <div class=" w-4  d-flex justify-content-center align-items-center ">
+          <div class=" mx-2">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                <InputText placeholder="Search" 
+                    class=" " style="height: 3em" />
+            </span>
+        </div>
           <button class=" rounded-md px-4 py-1 border  fs-6 h-10" @click="btn_download = !btn_download"> 
             <div id="btn-download" style=" position: absolute; right: 0;"
               :class="[btn_download == true ? toggleClass : 'toggleClass', 'toggleClass']">
