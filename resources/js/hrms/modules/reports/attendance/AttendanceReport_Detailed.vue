@@ -60,7 +60,8 @@
                     <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10" v-model="end_date" />
                 </div>
                 <div class="">
-                    <button class="btn btn-primary py-auto" @click="onclickDownloadExcelSheet(start_date,end_date)">generate</button>
+                    <button class="btn btn-primary py-auto"
+                        @click="onclickDownloadExcelSheet(start_date, end_date)">generate</button>
                 </div>
                 <div></div>
                 <div></div>
@@ -220,12 +221,16 @@ function onclickDownloadExcelSheet(start_date, end_date) {
     axios.post(window.location.origin + '/reports/generate-detailed-attendance-report', {
         start_date: moment(start_date).format('YYYY-MM-DD'),
         end_date: moment(end_date).format('YYYY-MM-DD')
-    }).then((response) => {
+    },{responseType: 'blob'}).then((response) => {
         console.log(response.data);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(response.data);
+        link.download = ` Basic Report.xlsx`;
+        link.click();
     })
         .catch((error) => {
             console.log(error.toJSON());
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false
         })
 }
