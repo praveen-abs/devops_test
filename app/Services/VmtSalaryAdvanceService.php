@@ -61,6 +61,10 @@ class VmtSalaryAdvanceService
         return (json_encode($approver_flow, true));
     }
 
+    public function applyLoanAndAdvanceMail(){
+        
+    }
+
     public function getAllDropdownFilterSetting()
     {
 
