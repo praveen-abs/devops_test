@@ -69,7 +69,13 @@ use App\Models\VmtClientMaster;
     {{-- <div id="EmpSalaryAdvanceLoan"></div> --}}
 
     @vite('resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js')
-    <div id="on_run_client_onboarding"></div>
+    <!-- <div id="on_run_client_onboarding"></div> -->
+
+
+    @vite( 'resources/js/hrms/modules/login_Page/login_Page.js')
+    <div id="login_Page"></div>
+
+
 
 </body>
 

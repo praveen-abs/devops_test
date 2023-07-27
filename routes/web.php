@@ -501,7 +501,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF', [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');
     Route::post('/payroll/paycheck/sendMail_employeePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'sendMail_employeePayslip'])->name('sendMail_employeePayslip');
     Route::post('/payroll/paycheck/updatePayslipReleaseStatus', [App\Http\Controllers\VmtPayCheckController::class, 'updatePayslipReleaseStatus'])->name('update-PayslipReleaseStatus');
-    Route::post('/payroll/paycheck/updatePayslipReleaseStatus', [App\Http\Controllers\VmtPayCheckController::class, 'updatePayslipReleaseStatus'])->name('update-PayslipReleaseStatus');
+ 
 
     Route::get('/payroll/setup', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
     Route::get('payroll/work_location', [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
@@ -980,6 +980,9 @@ Route::get('/forgetPassword', 'App\Http\Controllers\Auth\LoginController@showFor
 
 Route::post('/send-passwordresetlink', [App\Http\Controllers\Auth\LoginController::class, 'sendPasswordResetLink'])->name('vmt-send-passwordresetlink');
 Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginController@processSignedPasswordResetLink')->name('vmt-signed-passwordresetlink');
+
+//login page v3
+Route::get('/showLoginPage', [App\Http\Controllers\Auth\LoginController::class,'showLoginPage'])->name('showLoginPage');
 
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
