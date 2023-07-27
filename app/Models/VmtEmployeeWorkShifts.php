@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class VmtEmployeeWorkShifts extends Model
 {
     use HasFactory;
-
+    public $timestamps = false;
     protected $table = 'vmt_employee_workshifts';
 }

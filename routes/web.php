@@ -780,6 +780,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
 
 
+
     //Configrations
     ////Attendance Settings
     Route::get('/configurations/attendance_settings', [App\Http\Controllers\VmtAttendanceSettingsController::class, 'showAttendanceSettingsPage'])->name('showAttendanceSettingsPage');
