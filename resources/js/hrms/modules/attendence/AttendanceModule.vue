@@ -154,19 +154,22 @@
         <div class="mb-0 ">
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
+
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto" v-if="useTimesheet.currentEmployeeAttendanceLength > 0">
                             <Transition name="fade">
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                                 <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                             </Transition>
-
+                        </div>
+                        <div class="mr-4 card pb-10" v-else>
+                            <img src="../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
                         </div>
                     </div>
 
                     <div class="tab-pane fade " id="team" role="tabpanel">
-                        <div class="flex" v-if="teamList">
+                        <div class="flex" v-if="teamListLength > 0">
                             <div class="min-w-max">
                                 <EmployeeList :source="teamList" :is-team="true" />
                             </div>
@@ -185,7 +188,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade " id="org" role="tabpanel">
-                        <div class="flex" v-if="orgList">
+                        <div class="flex" v-if="orgListLength > 0">
                             <div class="min-w-max">
                                 <EmployeeList :source="orgList" :is-team="false" />
                             </div>
@@ -198,6 +201,10 @@
                                 </Transition>
                             </div>
                         </div>
+                        <div class="mr-4 card pb-10" v-else>
+                            <img src="../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
+                            <!-- <p class="my-2 font-semibold fs-3 text-center">You are not eligible to apply salary advance</p> -->
+                        </div>
 
                     </div>
                 </div>
@@ -209,6 +216,9 @@
     <LcRegularization />
     <EgRegularization />
     <ViewSelfieImage />
+    <div style="display: none;">
+        <LeaveApply />
+    </div>
 </template>
 
 
@@ -224,6 +234,9 @@ import MipRegularization from './timesheet/components/MipRegularization.vue';
 import LcRegularization from './timesheet/components/LcRegularization.vue';
 import EgRegularization from './timesheet/components/EgRegularization.vue';
 import ViewSelfieImage from './timesheet/components/ViewSelfieImage.vue'
+import LeaveApply from '../leave_module/leave_apply/LeaveApply.vue'
+
+
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
 
@@ -233,18 +246,23 @@ const teamList = ref()
 const orgList = ref()
 const service = Service()
 
+const teamListLength = ref(0);
+const orgListLength = ref(0);
+
 onMounted(() => {
     Service()
 
-
     setTimeout(() => {
         useTimesheet.getTeamList(service.current_user_code).then(res => {
-        teamList.value = Object.values(res.data)
-    })
+            teamList.value = Object.values(res.data)
+            teamListLength.value = res.data.length
+        })
     }, 3000);
 
     useTimesheet.getOrgList().then(res => {
         orgList.value = Object.values(res.data)
+        orgListLength.value = res.data.length
+
     })
 
     setTimeout(() => {
