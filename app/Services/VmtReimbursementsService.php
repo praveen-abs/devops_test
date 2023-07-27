@@ -56,6 +56,34 @@ class VmtReimbursementsService {
         ]);
     }
 
+    public function getReimbursementClaimTypes()
+    {
+        try{
+
+            $reimbursement_claim_types = VmtReimbursements::all(['id','reimbursement_type']);
+            $response = array();
+
+            foreach($reimbursement_claim_types as $singleRecord)
+            {
+                array_push($response, [
+                    "label" => $singleRecord->reimbursement_type,
+                    "value" => $singleRecord->reimbursement_type,
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Fetched Reimbursement claim types',
+                'data'=> $response
+            ]);
+        }
+        catch(\Exception $e){
+
+        }
+    }
+
+
+
     public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $entry_mode, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
     {
 
