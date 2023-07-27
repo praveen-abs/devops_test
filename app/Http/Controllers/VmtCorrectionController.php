@@ -19,6 +19,7 @@ use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtBloodGroup;
 use App\Models\VmtMaritalStatus;
 use App\Models\Bank;
+use App\Models\Department;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
 use App\Models\VmtEmployeeFamilyDetails;
@@ -846,6 +847,18 @@ class VmtCorrectionController extends Controller
                         },
                     ],
                 'spouse_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'department' =>['nullable',
+                function ($attribute, $value, $fail) {
+
+                    if($value !== 'NULL'){
+                        $result =Department::where('name',$value)->first();
+
+                        if (empty($result)) {
+                            $fail($value .'<b>:doesnt exist in application.Kindly create one' );
+                        }
+                    }
+                },
+            ],
                 //'blood_group' =>'nullable|required_unless:blood_group,!=,NULL&exists:vmt_bloodgroup,name&regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
                 'blood_group' => ['nullable',
                         function ($attribute, $value, $fail) {
@@ -1073,10 +1086,14 @@ class VmtCorrectionController extends Controller
                 {
                     $update_empOffice = new VmtEmployeeOfficeDetails;
                 }
-                    //dd($data);
+                    //dd($data['department']);
                     $confirmation_period= $data['confirmation_period'] ?? '';
                     $update_empOffice->user_id = $user_id;
-                    $update_empOffice->department_id = $data["department"] ?? '';
+                    if(!empty($data['department']) && $data['department'] !='NULL'){
+
+                        $department_id=Department::where('name',$data['department'])->first();
+                        $update_empOffice->department_id = $department_id ?? ''; // => "lk"
+                        }
                     $update_empOffice->process = $data["process"] ?? '';
                     $update_empOffice->designation = $data["designation"] ?? '';
                     $update_empOffice->cost_center = $data["cost_center"] ?? '';
