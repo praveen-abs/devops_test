@@ -1,4 +1,5 @@
 <template>
+
     <div class=" attendance-wrapper">
         <div class="mb-2 card left-line">
             <div class="py-1 card-body">
@@ -156,15 +157,12 @@
                 <div class="tab-content" id="pills-tabContent">
 
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="overflow-x-auto" v-if="useTimesheet.currentEmployeeAttendanceLength > 0">
+                        <div class="overflow-x-auto">
                             <Transition name="fade">
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                                 <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                             </Transition>
-                        </div>
-                        <div class="mr-4 card pb-10" v-else>
-                            <img src="../../assests/images/svg_oops.svg" alt="" srcset="" class="w-5 p-6 m-auto">
                         </div>
                     </div>
 

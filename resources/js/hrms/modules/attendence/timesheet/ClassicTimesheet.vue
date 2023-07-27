@@ -249,14 +249,18 @@
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
                                     </p>
                                     <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
+                                        v-if="singleAttendanceDay.isMOP"
                                             :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
                                             style="font-size: 1rem" class="px-1"></i>
-                                        <i :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
-                                            style="font-size: 1rem"></i>
-                                        <i :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
-                                            style="font-size: 1rem"></i>
-                                        <i :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
-                                            style="font-size: 1rem"></i>
+                                        <i v-else-if="singleAttendanceDay.isLC"
+                                         :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
+                                            style="font-size: 1rem" class="px-1" ></i>
+                                        <i v-else-if="singleAttendanceDay.isEG"
+                                        :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
+                                            style="font-size: 1rem" class="px-1"></i>
+                                        <i v-else-if="singleAttendanceDay.isMIP"
+                                        :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
+                                            style="font-size: 1rem" class="px-1"></i>
                                     </p>
                                 </div>
 
