@@ -129,6 +129,7 @@ onMounted(async () => {
 
     await employee_service.getModeOfTransport();
 
+    await employee_service.getReimbursementClaimTypes();
 
 });
 </script>

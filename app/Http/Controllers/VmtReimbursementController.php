@@ -11,6 +11,10 @@ class VmtReimbursementController extends Controller
        return view('approvals.vmt_employee_reimbursements');
     }
 
+    public function getReimbursementClaimTypes(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+        return $serviceVmtReimbursementsService->getReimbursementClaimTypes();
+    }
+
     public function getModeOfTransports(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
         return $serviceVmtReimbursementsService->getModeOfTransports();
     }
