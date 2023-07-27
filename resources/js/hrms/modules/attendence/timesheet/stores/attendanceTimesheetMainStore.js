@@ -20,6 +20,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const mipDetails = ref({})
     const lcDetails = ref({})
     const egDetails = ref({})
+    const absentRegularizationDetails = ref({})
     const selfieDetails = ref({})
 
 
@@ -289,6 +290,46 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             })
 
     }
+    //  Applying for Attendance Regularization
+
+
+
+    const applyAbsentRegularization = () => {
+        classicTimesheetSidebar.value = false
+        canShowLoading.value = true
+        axios.post('api/attendance/applyRequestAbsentRegularization', {
+            user_code: service.current_user_code,
+            attendance_date: absentRegularizationDetails.value.date,
+            regularization_type: "Absent",
+            checkin_time: absentRegularizationDetails.value.start_time,
+            checkout_time: absentRegularizationDetails.value.end_time,
+            reason: absentRegularizationDetails.value.reason,
+            custom_reason: absentRegularizationDetails.value.custom_reason ? absentRegularizationDetails.value.custom_reason : "",
+        })
+            .then((res) => {
+                getSelectedEmployeeAttendance()
+                let message = res.data.message
+                console.log(message);
+                if (res.data.status == 'success') {
+                    Swal.fire(
+                        'Good job!',
+                        'Attendance Regularized Successful',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Fill!',
+                        `${message}`,
+                        'error'
+                    )
+                }
+            }).finally(() => {
+                canShowLoading.value = false
+            })
+
+    }
+
+
 
 
     // View check in and out selfie Images
@@ -377,7 +418,11 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         //   EG
         onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie, onClickSViewSelfie, selfieDetails, switchTimesheet
+        dialog_Selfie, onClickSViewSelfie, selfieDetails, switchTimesheet,
+        // Absent regularization
+        absentRegularizationDetails, applyAbsentRegularization,
+
+
 
 
     }
