@@ -739,7 +739,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/reports/basic-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showDetailedAttendanceReport'])->name('showDetailedAttendanceReport');
-    Route::get('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
+    Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
@@ -779,6 +779,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
+
 
 
     //Configrations
@@ -984,6 +985,10 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
+//task schedular
+
+Route::get('/sendBirthdayNotificationtoEmployee', [App\Http\Controllers\VmtEmployeeBirthdayController::class, 'sendBirthdayNotificationtoEmployee']);
+Route::get('/sendAniversaryNotificationtoEmployee', [App\Http\Controllers\VmtEmployeeBirthdayController::class, 'sendAniversaryNotificationtoEmployee']);
 
 //TESTING ROUTES
 //// SASS TESTING
