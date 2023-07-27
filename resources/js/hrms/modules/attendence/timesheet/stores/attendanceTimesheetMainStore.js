@@ -28,6 +28,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const dialog_Lc = ref(false)
     const dialog_Eg = ref(false)
     const dialog_Selfie = ref(false)
+    const classicTimesheetSidebar = ref(false)
 
     const currentEmployeeAttendance = ref()
     const currentEmployeeAttendanceLength = ref(0)
@@ -54,7 +55,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(144, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log("Selected employee attendance : "+res.data);
             currentEmployeeAttendance.value = Object.values(res.data)
             currentEmployeeAttendanceLength.value = Object.values(res.data).length
@@ -184,6 +185,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                 }
             }).finally(() => {
                 canShowLoading.value = false
+                classicTimesheetSidebar.value = false
             })
 
     }
@@ -213,7 +215,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                     )
                 }
             }).finally(() => {
-                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
+                classicTimesheetSidebar.value = false
             })
 
     }
@@ -247,7 +249,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                     )
                 }
             }).finally(() => {
-                getSelectedEmployeeAttendance(174, useCalendar.getMonth, useCalendar.getYear)
+                classicTimesheetSidebar.value = false
             })
 
     }
@@ -342,6 +344,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         // Timesheet Data source
         getEmployeeAttendance, currentEmployeeAttendance,currentEmployeeAttendanceLength, getSelectedEmployeeOrgDetails,
         getTeamList, getOrgList, getSelectedEmployeeTeamDetails, getSelectedEmployeeAttendance,
+
+        // Classic timesheet Sidebar
+
+        classicTimesheetSidebar,
 
 
         currentlySelectedTeamMemberUserId,

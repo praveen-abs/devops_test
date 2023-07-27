@@ -1,5 +1,5 @@
 <template>
-    <Sidebar v-model:visible="visibleRight" position="right" class="w-full md:w-20rem lg:w-30rem">
+    <Sidebar v-model:visible="useTimesheet.classicTimesheetSidebar" position="right" class="w-full md:w-20rem lg:w-30rem">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
@@ -350,7 +350,7 @@ const useTimesheet = useAttendanceTimesheetMainStore()
 const service = Service()
 
 const getSelectedCellValues = (selectedCells) => {
-    visibleRight.value = true
+    useTimesheet.classicTimesheetSidebar = true
     currentlySelectedCellRecord.value = { ...selectedCells }
 
     if (selectedCells.isLC) {
@@ -563,7 +563,6 @@ const leaveShortFormat = (leave_type) => {
 }
 
 
-const visibleRight = ref(false)
 
 const calendarStore = useCalendarStore();
 
