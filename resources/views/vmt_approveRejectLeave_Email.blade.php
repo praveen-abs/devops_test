@@ -107,7 +107,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                               <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
                                   <td>
-                                    <p style="margin-top: 40px; font-weight: 600">Dear {{ $employeeName }}</p>
+                                    <p style="margin-top: 40px; font-weight: 700;">Dear {{ $employeeName }}</p>
                                   </td>
                                 </tr>
                               </table>

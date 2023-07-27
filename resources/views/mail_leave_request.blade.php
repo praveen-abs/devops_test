@@ -205,6 +205,11 @@ $bank_names = \DB::table('vmt_banks')->get();
                                         </td>
                                       </tr>
                                     </table>
+                                    <table style="width:100%;">
+                                      <tr style="width:100%;">
+                                        <td style="width:100%;" ><p style="text-align: center;" > testing mail template </p></td>
+                                      </tr>
+                                    </table>
                                     <table style="margin-left: 16px; margin-right: 16px;" cellpadding="0" cellspacing="0" role="presentation">
                                       <tr>
                                         <td>
@@ -288,7 +293,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                     </tr>
                     <tr style="padding-left: 8px">
                       <td style="padding-top: 8px">
-                        <table class="sm-w-full" align="center" style="margin-top: 8px; width: 200px" cellpadding="0" cellspacing="0" role="presentation">
+                        <table class="sm-w-full" align="center" style="margin-top: 8px; width: 180px; " cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td align="center" style="width: 25%;">
                               <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/" target="_blank"><img src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png" alt="LinkedIn" style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0;"></a>
