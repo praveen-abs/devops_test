@@ -639,58 +639,55 @@ class VmtInvestmentsController extends Controller
             $total_tax_income['sno'] = "h";
             $total_tax_income['section'] = "Total Taxable Income";
             $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $SumOfHousPropsInOld - round($ExemptionsUnder80s));
+            $total_old_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $SumOfHousPropsInOld - round($ExemptionsUnder80s));
             $total_tax_income['new_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
+            $total_new_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
 
             // tax liability calculation old regime
 
-            // dd($total_tax_income['old_regime']);
+            if($total_old_tax < 250000){
+                $old_regime_tax = 0;
+            }else if($total_old_tax > 250000 && $total_old_tax <= 500000){
+                $old_regime_tax = $total_old_tax * 5 / 100 ;
 
-            if($total_tax_income['old_regime'] < 250000){
-                             $old_regime_tax = 0;
-            }else if($total_tax_income['old_regime'] > 250000 && $total_tax_income['old_regime'] <= 500000){
-                        $old_regime_tax = $total_tax_income['old_regime'] * 5 / 100 ;
+            }else if($total_old_tax > 500000 && $total_old_tax <= 750000){
+                $old_regime_tax = $total_old_tax * 20  / 100 ;
 
-            }else if($total_tax_income['old_regime'] > 500000 && $total_tax_income['old_regime'] <= 750000){
-                        $old_regime_tax = $total_tax_income['old_regime'] * 20  / 100 ;
+            }else if($total_old_tax > 750000 && $total_old_tax <= 1000000){
+                $old_regime_tax = $total_old_tax * 20  / 100 ;
 
-            }else if($total_tax_income['old_regime'] > 750000 && $total_tax_income['old_regime'] <= 1000000){
-                $old_regime_tax = $total_tax_income['old_regime'] * 20  / 100 ;
+            }else if($total_old_tax > 1000000 && $total_old_tax <= 1250000){
+                $old_regime_tax = $total_old_tax * 30 / 100 ;
 
-            }else if($total_tax_income['old_regime'] > 1000000 && $total_tax_income['old_regime'] <= 1250000){
-                $old_regime_tax = $total_tax_income['old_regime'] * 30 / 100 ;
+            }else if($total_old_tax > 1250000 && $total_old_tax <= 1500000){
+                $old_regime_tax = $total_old_tax * 30 / 100 ;
 
-            }else if($total_tax_income['old_regime'] > 1250000 && $total_tax_income['old_regime'] <= 1500000){
-                $old_regime_tax = $total_tax_income['old_regime'] * 30 / 100 ;
-
-            }else if($total_tax_income['old_regime'] > 1250000 && $total_tax_income['old_regime'] <= 1500000){
-                $old_regime_tax = $total_tax_income['old_regime'] * 30 / 100 ;
+            }else if($total_old_tax > 1250000 && $total_old_tax <= 1500000){
+                $old_regime_tax = $total_old_tax * 30 / 100 ;
             }
-
 
             // tax liability calculation new regime
 
-            if($total_tax_income['new_regime'] < 250000){
+            if( $total_new_tax < 250000){
                              $new_regime_tax = 0;
-            }else if($total_tax_income['new_regime'] > 250000 && $total_tax_income['new_regime'] <= 500000){
-                        $new_regime_tax = $total_tax_income['new_regime'] * 5 / 100 ;
+            }else if( $total_new_tax > 250000 &&  $total_new_tax <= 500000){
+                        $new_regime_tax =  $total_new_tax * 5 / 100 ;
 
-            }else if($total_tax_income['new_regime'] > 500000 && $total_tax_income['new_regime'] <= 750000){
-                        $new_regime_tax = $total_tax_income['new_regime'] * 10  / 100 ;
+            }else if( $total_new_tax > 500000 &&  $total_new_tax <= 750000){
+                        $new_regime_tax =  $total_new_tax * 10  / 100 ;
 
-            }else if($total_tax_income['new_regime'] > 750000 && $total_tax_income['new_regime'] <= 1000000){
-                $new_regime_tax = $total_tax_income['new_regime'] * 15  / 100 ;
+            }else if( $total_new_tax > 750000 &&  $total_new_tax <= 1000000){
+                $new_regime_tax =  $total_new_tax * 15  / 100 ;
 
-            }else if($total_tax_income['new_regime'] > 1000000 && $total_tax_income['new_regime'] <= 1250000){
-                $new_regime_tax = $total_tax_income['new_regime'] * 20 / 100 ;
+            }else if( $total_new_tax > 1000000 && $total_new_tax <= 1250000){
+                $new_regime_tax =  $total_new_tax * 20 / 100 ;
 
-            }else if($total_tax_income['new_regime'] > 1250000 && $total_tax_income['new_regime'] <= 1500000){
-                $new_regime_tax = $total_tax_income['new_regime'] * 25 / 100 ;
+            }else if( $total_new_tax > 1250000 &&  $total_new_tax <= 1500000){
+                $new_regime_tax = $total_new_tax * 25 / 100 ;
 
-            }else if($total_tax_income['new_regime'] > 1250000 && $total_tax_income['new_regime'] <= 1500000){
-                $new_regime_tax = $total_tax_income['new_regime'] * 30 / 100 ;
+            }else if( $total_new_tax > 1250000 &&  $total_new_tax <= 1500000){
+                $new_regime_tax = $total_new_tax * 30 / 100 ;
             }
-
-
 
 
             $total_tax_laibilty['sno'] = "i";
