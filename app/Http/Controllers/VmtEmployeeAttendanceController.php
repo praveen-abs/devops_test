@@ -28,7 +28,7 @@ class VmtEmployeeAttendanceController extends Controller
 {
     public function generateDetailedAttendanceReports(Request $request,VmtAttendanceReportsService $attendance_report_service)
     {
-
+       dd($request->all());
         $start_date = '2023-06-26';
         $end_date = '2023-07-15';
         return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date,$end_date)), 'Attendance.xlsx');
