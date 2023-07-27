@@ -1,5 +1,5 @@
 <template>
-    <Sidebar v-model:visible="useTimesheet.classicTimesheetSidebar" position="right" class="w-full md:w-20rem lg:w-30rem">
+    <Sidebar v-model:visible="useTimesheet.classicTimesheetSidebar" position="right" class="w-full md:w-2rem lg:w-30rem">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
@@ -8,14 +8,16 @@
             <div class="rounded-lg bg-red-50 p-3 my-3">
                 <p class="text-center font-semibold fs-6">Absent</p>
 
-                <div class="flex justify-center mx-6 my-3">
-                    <a class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer " href="/attendance-leave">Apply leave</a>
-                    <p class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer">Regularize</p>
+                <div class="flex justify-center gap-x-20 my-3">
+                    <a class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer "
+                        href="/attendance-leave">Apply leave</a>
+                    <a class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer" @click="attendanceRegularizationDialog = true">Regularize</a>
                 </div>
             </div>
-            <div class="my-2 bg-red-50 rounded-lg p-3" v-if="false">
+
+            <div class="my-2 bg-orange-50 rounded-lg p-3 py-4 transition-all duration-700" v-if="attendanceRegularizationDialog">
                 <div class="flex">
-                    <div class="w-6"><label class="font-medium fs-6 text-gray-700">Date</label></div>
+                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Date</label></div>
                     <div class="">
                         <span class="text-ash-medium fs-15" id="current_date">{{ currentlySelectedCellRecord.date
                         }}</span>
@@ -24,25 +26,26 @@
                     </div>
                 </div>
                 <div class="flex my-4">
-                    <div class="w-6"><label class="font-medium fs-6 text-gray-700">Check In Time</label>
+                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
                     </div>
-                    <div class="">
-                        9.30AM
-                    </div>
+                    <span class=" p-input-icon-right">
+                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                        <i class="pi pi-clock" />
+                    </span>
                 </div>
                 <div class="flex">
-                    <div class="w-6"><label class="font-medium fs-6 text-gray-700">Check Out Time</label>
+                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
                     </div>
-                    <div class="">
-                        6.30PM
-                    </div>
+                    <span class=" p-input-icon-right">
+                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                        <i class="pi pi-clock" />
+                    </span>
                 </div>
-                <div v-if="type == 'EG'">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
+                            <div class="col-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
 
-                            <div class="col-6" v-if="source.eg_status == 'None'">
+                            <div class="col-6">
                                 <select name="reason" class="form-select btn-line-orange" id="reason_lc">
                                     <option selected hidden disabled>
                                         Choose Reason
@@ -54,10 +57,6 @@
                                     <option value="Others">Others</option>
                                 </select>
                             </div>
-                            <!-- <div class="col-6" v-else>
-                                <p class="max-w-min p-1" :class="findStatus(source.eg_status)"> {{ source.eg_status }}
-                                </p>
-                            </div> -->
                         </div>
                     </div>
                     <!-- <div class="col-12 " v-if="useTimesheet.egDetails.reason == 'Others'">
@@ -69,13 +68,12 @@
                             </div>
                         </div>
                     </div> -->
+                    <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
+                        <button type="button" class="btn btn-orange">Apply</button>
+                    </div>
 
-                    <!-- <div v-if="!source.eg_status == 'None'" class="text-end btn btn-orange">Apply</div> -->
                 </div>
             </div>
-        </div>
-
-
 
         <div class="rounded-lg bg-orange-50 p-3" v-if="!currentlySelectedCellRecord.isAbsent">
             <p class="font-sans font-bold fs-6">Check-in</p>
@@ -201,11 +199,9 @@
             <Top />
 
             <!-- Finding Days -->
-            <div v-for="day in daysOfTheWeek" class="text-center text-sm md:text-base lg:text-lg font-medium border py-2">
+            <div v-for="day in daysOfTheWeek" class="text-center text-sm md:text-base lg:text-lg font-semibold border py-2">
                 {{ day.substring(0, 3) }}
             </div>
-
-
 
             <div v-if="firstDayOfCurrentMonth > 0" v-for="day in firstDayOfCurrentMonth" :key="day"
                 class=" w-full border opacity-50 "></div>
@@ -252,10 +248,16 @@
                                     <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
                                     </p>
-                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}</p>
-
-                                    <p class=""><i :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
-                                            style="font-size: 1rem"></i></p>
+                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
+                                            :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
+                                            style="font-size: 1rem" class="px-1"></i>
+                                        <i :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
+                                            style="font-size: 1rem"></i>
+                                        <i :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
+                                            style="font-size: 1rem"></i>
+                                        <i :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
+                                            style="font-size: 1rem"></i>
+                                    </p>
                                 </div>
 
                             </div>
@@ -339,12 +341,8 @@ const useLeave = useLeaveService()
 
 const currentlySelectedCellRecord = ref({})
 
+const attendanceRegularizationDialog = ref(false)
 
-const tabs = ref([
-    { title: 'LC Regularization', content: 'Content 1' },
-    { title: 'Eg Regularization', content: 'Content 2' },
-    { title: 'Title 3', content: 'Content 3' }
-]);
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 const service = Service()
@@ -385,30 +383,30 @@ const findAttendanceStatus = (data) => {
                         return 'border-l-4 border-gray-500 bg-gray-50 text-gray-600 font-medium fs-5'
 
                     } else {
-                        return 'border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5'
+                        return 'border-l-4 border-red-500 bg-red-50 text-red-600 font-medium fs-5 '
                     }
     } else {
         if (data.lc_status) {
-            return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 font-medium fs-5'
+            return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 font-medium fs-5 rounded-lg'
 
         } else
             if (data.mip_status) {
-                return 'border-l-4 border-blue-500 bg-blue-50 text-blue-600 font-medium fs-5'
+                return 'border-l-4 border-blue-500 bg-blue-50 text-blue-600 font-medium fs-5 rounded-lg'
 
             } else
                 if (data.eg_status) {
-                    return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 font-medium fs-5'
+                    return 'border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 font-medium fs-5 rounded-lg'
 
                 }
-                // else
-                //     if (data.mop_status) {
-                //         return 'border-l-4 border-blue-500 bg-blue-50 text-blue-600 font-medium fs-5'
+                else
+                    if (data.mop_status) {
+                        return 'border-l-4 border-blue-500 bg-blue-50 text-blue-600 font-medium fs-5 rounded-lg'
 
-                //     }
-                else {
-                    return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
+                    }
+                    else {
+                        return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5 rounded-lg'
 
-                }
+                    }
     }
 }
 
@@ -480,7 +478,7 @@ const find = (data) => {
                     return 'Early going'
 
                 } else
-                    if (data.mip_status) {
+                    if (data.mop_status) {
                         return 'Missed out punch'
 
                     } else {
