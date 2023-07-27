@@ -10,7 +10,7 @@
                 </div>
             </div>
         </div>
-        <div class=" col-12" v-if="type == 'LC' || type == 'MIP'">
+        <div class="col-12" v-if="type == 'LC' || type == 'MIP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
@@ -30,12 +30,9 @@
                 </div>
             </div>
         </div>
-        <div v-if="type == 'LC'">
-
-            <div class="col-12">
+            <div class="col-12" v-if="type == 'LC'" >
                 <div class="row">
                     <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
-
                     <div class="col-6" v-if="source.lc_status == 'None'">
                         <select name="reason" class="form-select btn-line-orange" id="reason_lc"
                             v-model="useTimesheet.lcDetails.reason">
@@ -54,8 +51,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 " v-if="useTimesheet.lcDetails.reason == 'Others'">
-                <div class="row">
+            <div class="col-12 "  v-if="type == 'LC'">
+                <div class="row"  v-if="useTimesheet.lcDetails.reason == 'Others'">
                     <div class="col-12">
                         <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
                             placeholder="Reason here...." v-model="useTimesheet.lcDetails.custom_reason"></textarea>
@@ -63,10 +60,9 @@
                 </div>
             </div>
 
-            <div v-if="source.lc_status == 'None'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-                <button type="button" class="btn btn-orange" @click="useTimesheet.applyLcRegularization()">Apply</button>
+            <div  v-if="type == 'LC'"  class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
+                <button v-if="source.lc_status == 'None'" type="button" class="btn btn-orange" @click="useTimesheet.applyLcRegularization()">Apply</button>
             </div>
-        </div>
         <div v-if="type == 'MIP'">
             <div class="col-12">
                 <div class="row">

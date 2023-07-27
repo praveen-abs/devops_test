@@ -8,8 +8,8 @@
             <div class="rounded-lg bg-red-50 p-3 my-3">
                 <p class="text-center font-semibold fs-6">Absent</p>
 
-                <div class="flex justify-center mx-8 my-3">
-                    <p class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer">Apply leave</p>
+                <div class="flex justify-center mx-6 my-3">
+                    <a class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer " href="/attendance-leave">Apply leave</a>
                     <p class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer">Regularize</p>
                 </div>
             </div>
@@ -227,7 +227,7 @@
                     class="hidden md:block"
                     @click="!singleAttendanceDay.isAbsent ? getSelectedCellValues(singleAttendanceDay) : singleAttendanceDay.absent_status.includes('Not Applied') ? getSelectedCellValues(singleAttendanceDay) : ''">
 
-                    <div >
+                    <div>
                         <div
                             class="w-full h-full text-xs md:text-sm lg:text-base text-left transition-colors font-semibold relative">
                             <div class="flex justify-center">
@@ -246,7 +246,8 @@
                             <div v-else
                                 class=" py-1 flex space-x-1 items-center  overflow-hidden  hover: cursor-pointer rounded-sm hp"
                                 :class="[find(singleAttendanceDay).length > 20 ? 'whitespace-normal' : 'whitespace-nowrap']">
-                                <div v-if="isFutureDate(day)" class="w-full my-3  p-2.5  rounded-sm mr-3 flex font-semibold "
+                                <div v-if="isFutureDate(day)"
+                                    class="w-full my-3  p-2.5  rounded-sm mr-3 flex font-semibold "
                                     style="max-width: 140px;" :class="findAttendanceStatus(singleAttendanceDay)">
                                     <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
@@ -332,8 +333,9 @@ import dayjs from "dayjs";
 import moment from "moment";
 import { Service } from "../../Service/Service.js";
 import AttendanceRegularization from './components/ClassicAttendanceRegularizationSidebar.vue'
+import { useLeaveService } from "../../leave_module/leave_apply/leave_apply_service";
 
-
+const useLeave = useLeaveService()
 
 const currentlySelectedCellRecord = ref({})
 

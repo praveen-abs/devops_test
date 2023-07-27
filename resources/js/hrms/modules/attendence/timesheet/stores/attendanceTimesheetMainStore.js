@@ -30,6 +30,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const dialog_Selfie = ref(false)
 
     const currentEmployeeAttendance = ref()
+    const currentEmployeeAttendanceLength = ref(0)
     const currentlySelectedTeamMemberUserId = ref()
     const currentlySelectedTeamMemberAttendance = ref()
     const currentlySelectedOrgMemberUserId = ref()
@@ -53,9 +54,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(144, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log("Selected employee attendance : "+res.data);
             currentEmployeeAttendance.value = Object.values(res.data)
+            currentEmployeeAttendanceLength.value = Object.values(res.data).length
         }).finally(() => {
             canShowLoading.value = false
         })
@@ -338,8 +340,9 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     return {
         // Timesheet Data source
-        getEmployeeAttendance, currentEmployeeAttendance, getSelectedEmployeeOrgDetails,
+        getEmployeeAttendance, currentEmployeeAttendance,currentEmployeeAttendanceLength, getSelectedEmployeeOrgDetails,
         getTeamList, getOrgList, getSelectedEmployeeTeamDetails, getSelectedEmployeeAttendance,
+
 
         currentlySelectedTeamMemberUserId,
         currentlySelectedTeamMemberAttendance,
