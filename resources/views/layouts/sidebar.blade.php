@@ -220,6 +220,7 @@
                                 <li class="nav-item ">
                                     <a href="{{ route('page-not-found') }}"
                                         class="py-1 nav-link sidebar"><span>Exit</span></a>
+
                                 </li>
                                 @if (!Str::contains(getCurrentClientName(), 'Vasa'))
                                     <li class="nav-item ">
@@ -243,6 +244,13 @@
                                         class="py-1 nav-link sidebar"><span>Roles & Permissions</span></a>
                                 </li>
                             @endcan
+                            @if (Str::contains(currentLoggedInUserRole(), ['Super Admin']))
+                            <li class="nav-item ">
+                                <a href="{{ url('/updateMasterdataUploads') }}"
+                                    class="py-1 nav-link sidebar"><span>Master Update</span></a>
+
+                            </li>
+                            @endif
                             </ul>
                         </div>
                     </li>

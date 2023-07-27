@@ -589,7 +589,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         let formData = new FormData();
         formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
         formData.append("emp_client_code", employee_onboarding.emp_client_code);
-        formData.append("employee_code", employee_onboarding.employee_code);
+        formData.append("employee_code", `${employee_onboarding.emp_client_code}${employee_onboarding.employee_code}`);
         formData.append("doj", employee_onboarding.doj ? moment(employee_onboarding.doj).format('YYYY-MM-DD') : employee_onboarding.doj);
         formData.append("aadhar_number", employee_onboarding.aadhar_number);
         formData.append("passport_number", employee_onboarding.passport_number);

@@ -11,6 +11,7 @@
      use Carbon\Carbon;
 
     use App\Models\VmtTempEmployeeProofDocuments;
+    use App\Models\VmtMaritalStatus;
     use App\Models\VmtEmployeeOfficeDetails;
     use App\Models\VmtClientMaster;
     use App\Mail\ApproveRejectEmpDetails;
@@ -463,11 +464,22 @@
 //         dd($data);
 
         //
-        $string = array_combine(
-    ['newKey1', 'newKey2', 'newKey3'],
-    array_values(['oldKey1' => 1, 'oldKey2' => 2, 'oldKey3' => 3])
-   );
-        dd($string);
+        $date='06/06/2023';
+
+        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
+
+
+        // }
+
+
+        $result =VmtMaritalStatus::where('name','UNMARRIED')->first();
+
+        dd($result);
+
+
+       // $string= Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+      //DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');
+       // dd($string);
 
     ?>
 

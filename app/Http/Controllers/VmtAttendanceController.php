@@ -11,6 +11,7 @@ use App\Mail\RequestLeaveMail;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Models\VmtClientMaster;
 use App\Models\User;
+use App\Models\VmtEmployee;
 use App\Models\VmtEmployeeAttendance;
 use App\Models\VmtEmployeeLeaves;
 use App\Models\VmtEmployeeCompensatoryLeave;
@@ -236,7 +237,7 @@ class VmtAttendanceController extends Controller
     public function applyLeaveRequest(Request $request, VmtNotificationsService $serviceNotificationsService)
     {
 
-        try{
+        try {
             // dd($request ->all());
 
             //get manager of this employee
@@ -325,7 +326,7 @@ class VmtAttendanceController extends Controller
                     }
                 } else {
                     //If its not half day leave, then its fullday or custom days
-                    $diff = intval($request->no_of_days)." ";
+                    $diff = intval($request->no_of_days) . " ";
                 }
 
                 $mailtext_total_leave = $diff . " Day(s)";
@@ -432,10 +433,9 @@ class VmtAttendanceController extends Controller
             ];
 
             return $response;
-        }
-        catch(TransportException $e){
+        } catch (TransportException $e) {
 
-           return [
+            return [
                 'status' => 'success',
                 'message' => 'Leave Request applied successfully.',
                 'mail_status' => 'failure',
@@ -443,9 +443,8 @@ class VmtAttendanceController extends Controller
                 'error' => $e->getMessage(),
                 'error_verbose' => $e
             ];
-        }
-        catch(\Exception $e){
-           return [
+        } catch (\Exception $e) {
+            return [
                 'status' => 'failure',
                 'message' => 'Error while applying leave request. Please contact the Admin.',
                 'mail_status' => 'failure',
@@ -523,8 +522,23 @@ class VmtAttendanceController extends Controller
 
     public function fetchLeavePolicyDetails(Request $request)
     {
-        return VmtLeaves::all();
+        $currentuser_gender = getCurrentUserGender();
+
+        if ($currentuser_gender == 'male') {
+            $query_leavePolicyDetails = VmtLeaves::where('leave_type', '<>', 'Maternity Leave')->get();
+        } else 
+        if ($currentuser_gender == 'female') {
+            $query_leavePolicyDetails = VmtLeaves::where('leave_type', '<>', 'Paternity Leave')->get();
+        }
+        else
+        {
+            return "invalid gender";
+        }
+
+        return $query_leavePolicyDetails;
     }
+
+
 
     /**
      * dayWiseStaffAttendance
@@ -582,6 +596,7 @@ class VmtAttendanceController extends Controller
     public function getShiftTimeForEmployee($user_id, $checkin_time, $checkout_time)
     {
         $emp_work_shift = VmtEmployeeWorkShifts::where('user_id', $user_id)->where('is_active', '1')->get();
+
         if (count($emp_work_shift) == 1) {
             $regularTime  = VmtWorkShifts::where('id', $emp_work_shift->first()->work_shift_id)->first();
             return  $regularTime;
@@ -602,6 +617,10 @@ class VmtAttendanceController extends Controller
                     return  $regularTime;
                 }
             }
+        }
+        else
+        {
+            return null;
         }
     }
 
@@ -644,11 +663,12 @@ class VmtAttendanceController extends Controller
                 //dd(sessionGetSelectedClientCode());
 
                 //If direction is only "in" or empty or "-"
-                if (sessionGetSelectedClientCode() == "DM" ||
+                if (
+                    sessionGetSelectedClientCode() == "DM" ||
 
                     sessionGetSelectedClientCode() == "VASA" || sessionGetSelectedClientCode() == "PSC" || sessionGetSelectedClientCode() == "IMA"  || sessionGetSelectedClientCode() == "LAL"
-                    || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC")
-                    {
+                    || sessionGetSelectedClientCode() == "PLIPL" || sessionGetSelectedClientCode() == "DMC"
+                ) {
 
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MAX(date) as check_out_time'))
@@ -656,14 +676,13 @@ class VmtAttendanceController extends Controller
                         ->where('user_Id', $userCode)
                         ->first(['check_out_time']);
 
-                       // if($dateString == "2023-07-05")
-                       //     dd($dateString);
+                    // if($dateString == "2023-07-05")
+                    //     dd($dateString);
                     $attendanceCheckIn = \DB::table('vmt_staff_attenndance_device')
                         ->select('user_Id', \DB::raw('MIN(date) as check_in_time'))
                         ->whereDate('date', $dateString)
                         ->where('user_Id', $userCode)
                         ->first(['check_in_time']);
-
                 } else //If direction is only "in" and "out"
                 {
                     $attendanceCheckOut = \DB::table('vmt_staff_attenndance_device')
@@ -793,7 +812,7 @@ class VmtAttendanceController extends Controller
             foreach ($value as $singleValue) {
                 //Find the employee_workshift. Right now, we are getting from web/mobile checkin only.
                 //For Biometric, we cant know which shift since the biometric table has no column for storing it
-          //dd($singleValue["vmt_employee_workshift_id"]);
+                //dd($singleValue["vmt_employee_workshift_id"]);
                 //If we found 'vmt_employee_workshift_id', then store it. Else store NULL. In future, we have get shift details from biometric attendance
                 // if (!empty($singleValue["vmt_employee_workshift_id"])) {
                 //     $attendanceResponseArray[$key]["vmt_employee_workshift_id"] = $singleValue["vmt_employee_workshift_id"];
@@ -851,13 +870,20 @@ class VmtAttendanceController extends Controller
         foreach ($attendanceResponseArray as $key => $value) {
 
               $shift_time=$this->getShiftTimeForEmployee($value['user_id'],$value['checkin_time'],$value['checkout_time']);
+
+              //If no shift assigned to user, then return null
+              if(!$shift_time)
+              {
+                return 0;
+              }
+
               $attendanceResponseArray[$key]['vmt_employee_workshift_id']= $shift_time->id;
               $attendanceResponseArray[$key]['workshift_code']= $shift_time->shift_code;
               $attendanceResponseArray[$key]['workshift_name']= $shift_time->shift_name;
             //dd($attendanceResponseArray[$key]['vmt_employee_workshift_id']);
 
             //dd($query_workShifts[$currentdate_workshift]->shift_start_time);
-               //dd( $attendanceResponseArray);
+            //dd( $attendanceResponseArray);
             $checkin_time = $attendanceResponseArray[$key]["checkin_time"];
             $checkout_time = $attendanceResponseArray[$key]["checkout_time"];
             //dd($checkin_time);
@@ -1628,17 +1654,17 @@ class VmtAttendanceController extends Controller
     public function fetchOrgLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
         //dd($request->all());
-        if(!empty($request->all())){
-            $start_date=$request->start_date;
-            $end_date=$request->end_date;
+        if (!empty($request->all())) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
             $end_date_ar = explode("-", $end_date);
             $month = $end_date_ar[1];
-        }else{
-            $org_time= VmtOrgTimePeriod::where('status',1)->first();
-           $today=Carbon::now();
-           $start_date=$org_time->start_date;
-           $end_date=$today->format('Y-m-d');
-           $month=$today->format('m');
+        } else {
+            $org_time = VmtOrgTimePeriod::where('status', 1)->first();
+            $today = Carbon::now();
+            $start_date = $org_time->start_date;
+            $end_date = $today->format('Y-m-d');
+            $month = $today->format('m');
         }
 
         $response = $serviceVmtAttendanceService->fetchOrgLeaveBalance($start_date,  $end_date, $month);
@@ -1648,23 +1674,24 @@ class VmtAttendanceController extends Controller
     public function fetchTeamLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
-        if(!empty($request->all())){
-            $start_date=$request->start_date;
-            $end_date=$request->end_date;
+        if (!empty($request->all())) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
             $end_date_ar = explode("-", $end_date);
             $month = $end_date_ar[1];
-        }else{
-            $org_time= VmtOrgTimePeriod::where('status',1)->first();
-           $today=Carbon::now();
-           $start_date=$org_time->start_date;
-           $end_date=$today->format('Y-m-d');
-           $month=$today->format('m');
+        } else {
+            $org_time = VmtOrgTimePeriod::where('status', 1)->first();
+            $today = Carbon::now();
+            $start_date = $org_time->start_date;
+            $end_date = $today->format('Y-m-d');
+            $month = $today->format('m');
         }
         $response = $serviceVmtAttendanceService->teamLeaveBalance($start_date,  $end_date, $month);
         return $response;
     }
 
-    public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
         return $serviceVmtAttendanceService->fetchAttendanceStatus($request->user_code, $request->date);
     }
 }
