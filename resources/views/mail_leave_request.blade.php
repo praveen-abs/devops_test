@@ -71,6 +71,10 @@ $bank_names = \DB::table('vmt_banks')->get();
       .sm-text-sm {
         font-size: 14px !important
       }
+      .text-scr{
+        line-height: 20px !important;
+        font-size:20px !important;
+      }
     }
   </style>
 </head>
@@ -147,7 +151,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                           </tr>
                           <tr>
                             <td style="padding-top: 12px; padding-bottom: 12px; text-align: center">
-                              <p style="margin: 0 0 12px; font-size: 30px; line-height: 24px">Hi <span style="margin: 0 0 12px; font-size: 30px; font-weight: 600; line-height: 24px">{{ $managerName }}</span></p>
+                              <p style="margin: 0 0 12px; font-size: 30px; line-height: 24px" class="text-scr">Hi <span class="text-scr" style=" margin: 0 0 12px; font-size: 30px; font-weight: 600; line-height: 24px">{{ $managerName }}</span></p>
                             </td>
                           </tr>
                           <tr>
@@ -187,8 +191,8 @@ $bank_names = \DB::table('vmt_banks')->get();
                                           </table>
                                         </td>
                                         <td style="text-align: left;">
-                                          <p>{{ $employeeName }}</p>
-                                          <p>{{ $emp_designation }}</p>
+                                          <p style="color: #334155">{{ $employeeName }}</p>
+                                          <p style="color: #334155">{{ $emp_designation }}</p>
                                         </td>
                                       </tr>
                                     </table>
@@ -210,9 +214,9 @@ $bank_names = \DB::table('vmt_banks')->get();
                                         <td style="width:100%;" ><p style="text-align: center;" > testing mail template </p></td>
                                       </tr>
                                     </table>
-                                    <table style="margin-left: 16px; margin-right: 16px;" cellpadding="0" cellspacing="0" role="presentation">
-                                      <tr>
-                                        <td>
+                                    <table style="margin-left: 16px; width:100%; margin-right: 16px;" cellpadding="0" cellspacing="0" role="presentation">
+                                      <tr style="width:100%;">
+                                        <td style="width:100%;">
                                           <p style="text-align: center; font-size: 14px; font-weight: 600">{{ $reason }}. </p>
                                         </td>
                                       </tr>

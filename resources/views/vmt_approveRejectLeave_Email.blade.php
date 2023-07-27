@@ -107,23 +107,23 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                               <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
                                   <td>
-                                    <p style="margin-top: 40px; font-weight: 700;">Dear {{ $employeeName }}</p>
+                                    <p style="margin-top: 40px; font-weight: 700; color: #334155">Dear {{ $employeeName }}</p>
                                   </td>
                                 </tr>
                               </table>
                             </td>
                           </tr>
                           <tr>
-                            <td style="padding-top: 12px; padding-bottom: 12px">
+                            <td style="padding-top: 12px; padding-bottom: 12px; color: #334155 ">
                               <p>This is to Inform you that your leave request has been {{ $leave_status }} by your line manager {{ $managerName }}</p>
                             </td>
                           </tr>
                           <tr style="width: 200px">
                             <td>
-                              <table style="width: 240px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); border: 1px solid gainsboro" align="center" cellpadding="0" cellspacing="0" role="presentation">
+                              <table style="background-color: #D0DBF0; width: 240px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); border: 1px solid gainsboro" align="center" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr style="border-radius: 12px;">
                                   <td align="center" style="border-radius: 12px;">
-                                    <p style="font-weight: 600; color: #1e3a8a">leave Request {{ $leave_status }}</p>
+                                    <p style="font-weight: 600;  color: #334155">leave Request {{ $leave_status }}</p>
                                     <table align="center" style="margin-bottom: 20px; height: 80px; width: 80px; border-radius: 9999px; " cellpadding="0" cellspacing="0" role="presentation">
                                       <tr>
                                         @if($empAvatar['type'] == "avatar")

@@ -110,7 +110,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                               <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr>
                                   <td>
-                                    <p style="margin-top: 40px; font-weight: 600">Dear {{ $employeeName }}</p>
+                                    <p style="margin-top: 40px; font-weight: 600; color: #334155;">Dear {{ $employeeName }}</p>
                                   </td>
                                 </tr>
                               </table>
@@ -118,12 +118,12 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           </tr>
                           <tr>
                             <td style="padding-top: 12px; padding-bottom: 12px">
-                              <p> This is to inform you that your “Attendance Regularizations” request has been {{ $status }} by your line manager {{ $managerName }} .</p>
+                              <p style="color: #334155"> This is to inform you that your “Attendance Regularizations” request has been {{ $status }} by your line manager {{ $managerName }} .</p>
                             </td>
                           </tr>
-                          <tr style="width: 200px">
+                          <tr style="width: 200px ; ">
                             <td>
-                              <table style="width: 240px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); border: 1px solid gainsboro" align="center" cellpadding="0" cellspacing="0" role="presentation">
+                              <table style="width: 240px; background-color: #D0DBF0;  border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); border: 1px solid gainsboro" align="center" cellpadding="0" cellspacing="0" role="presentation">
                                 <tr style="border-radius: 12px;">
                                   <td align="center" style="border-radius: 12px;">
                                     <p style="font-weight: 600; color: #1e3a8a"> Regularizations {{ $status }}</p>

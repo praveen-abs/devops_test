@@ -1257,7 +1257,7 @@ class VmtAttendanceController extends Controller
 
         $emp_avatar = json_decode(newgetEmployeeAvatarOrShortName(auth::user()->id),true);
 
-        dd($emp_avatar);
+        // dd($emp_avatar);
 
         $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
             auth::user()->name,
