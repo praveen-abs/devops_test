@@ -1,5 +1,4 @@
 <template>
-
     <div class=" attendance-wrapper">
         <div class="mb-2 card left-line">
             <div class="py-1 card-body">
@@ -155,14 +154,11 @@
         <div class="mb-0 ">
             <div class="card-body">
                 <div class="tab-content" id="pills-tabContent">
-
                     <div class="tab-pane fade active show" id="timesheet" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="overflow-x-auto">
-                            <Transition name="fade">
-                                <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
-                                    :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
-                                <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
-                            </Transition>
+                            <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
+                                :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                            <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
                         </div>
                     </div>
 
@@ -172,12 +168,10 @@
                                 <EmployeeList :source="teamList" :is-team="true" />
                             </div>
                             <div class="overflow-x-auto ml-2 w-100 rounded-lg">
-                                <Transition name="fade">
-                                    <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
-                                        :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
-                                    <ClassicTimesheet v-else
-                                        :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
-                                </Transition>
+                                <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
+                                    :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                <ClassicTimesheet v-else
+                                    :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                             </div>
                         </div>
                         <div class="mr-4 card pb-10" v-else>
@@ -191,12 +185,10 @@
                                 <EmployeeList :source="orgList" :is-team="false" />
                             </div>
                             <div class="overflow-x-auto ml-2 w-100 rounded-lg">
-                                <Transition name="fade">
-                                    <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
-                                        :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
-                                    <ClassicTimesheet v-else
-                                        :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
-                                </Transition>
+                                <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
+                                    :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
+                                <ClassicTimesheet v-else
+                                    :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
                             </div>
                         </div>
                         <div class="mr-4 card pb-10" v-else>
