@@ -311,7 +311,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
                 let message = res.data.message
                 console.log(message);
                 if (res.data.status == 'success') {
-                    Swal.fire(W
+                    Swal.fire(
                         'Good job!',
                         'Attendance Regularized Successful',
                         'success'
