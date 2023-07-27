@@ -22,14 +22,17 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
     const employee_reimbursement = reactive({
         type_id: 1,
         claim_type: "",
-        claim_amount: Number,
-        eligible_amount: Number,
+        claim_amount: 0,
+        eligible_amount: 0,
         date_of_dispatch: "",
         proof_of_delivery: "",
         reimbursment_remarks: "",
         employee_reimbursement_attachment: ''
     });
 
+    const reimbursement_claim_types = ref([
+        { label: "None", value: "None" },
+    ]);
 
     // getting Proof of reimbursements
 
@@ -64,22 +67,28 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         });
     };
 
+    // Reimbursement Claim types
+    async function getReimbursementClaimTypes(){
+
+        let url_all_reimbursements = "/reimbursements/getReimbursementClaimTypes";
+
+        console.log("AJAX URL : " + url_all_reimbursements);
+
+        await axios.get(url_all_reimbursements).then((response) => {
+            reimbursement_claim_types.value = response.data.data;
+            console.log("getReimbursementClaimTypes() : "+response.data);
+        });
+
+    }
+
 
     const onclickSwitchToReimbursmentTab = () => {
         reimbursementsScreen.value = true;
         localconverganceScreen.value = false;
     };
 
-    // Reimbursement Claim types
 
-    const reimbursment_claim_types = ref([
-        { label: "Mobile Bills", value: "Mobile Bills" },
-        { label: "Accommodation", value: "Accommodation" },
-        { label: "Travel Expenses", value: "Travel Expenses" },
-        { label: "Miscellaneous", value: "Miscellaneous" },
-        { label: "Medical Expenses", value: "Medical Expenses" },
-        { label: "Others", value: "Others" },
-    ]);
+
 
 
 
@@ -152,6 +161,10 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         });
     };
 
+
+    async function saveReimbursementClaimsData(){
+        console.log("Saving Reimbursement Claims data : "+JSON.stringify(employee_reimbursement) );
+    }
 
     const post_data_for_local_convergance = () => {
 
@@ -336,13 +349,15 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         loading_spinner,
         amount_calculation,
         getModeOfTransport,
+        getReimbursementClaimTypes,
         // employee_reimbursement
+        saveReimbursementClaimsData,
 
         employee_reimbursement_attachment_upload,
         onclickSwitchToReimbursmentTab,
 
         reimbursement_datas,
-        reimbursment_claim_types,
+        reimbursement_claim_types,
         onclickOpenReimbursmentDailog,
 
 
