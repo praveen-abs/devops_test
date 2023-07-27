@@ -984,6 +984,10 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
+//task schedular
+
+Route::get('/sendBirthdayNotificationtoEmployee', [App\Http\Controllers\VmtEmployeeBirthdayController::class, 'sendBirthdayNotificationtoEmployee']);
+Route::get('/sendAniversaryNotificationtoEmployee', [App\Http\Controllers\VmtEmployeeBirthdayController::class, 'sendAniversaryNotificationtoEmployee']);
 
 //TESTING ROUTES
 //// SASS TESTING

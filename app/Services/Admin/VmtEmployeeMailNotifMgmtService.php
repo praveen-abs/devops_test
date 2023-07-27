@@ -32,7 +32,7 @@ class VmtEmployeeMailNotifMgmtService {
     public function getAllEmployees_WelcomeMailStatus_Details(){
 
         $user_email= User::leftjoin('vmt_employee_mail_status','vmt_employee_mail_status.user_id','users.id')
-        ->where('users.active','<>','-1')
+        ->where('users.active','','0')
         ->where('users.is_ssa','<>','1')
         ->select(
                 'users.User_code as empcode',
