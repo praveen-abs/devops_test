@@ -9,10 +9,12 @@ use App\Models\VmtInvFormSection;
 use App\Models\VmtInvEmpFormdata;
 use App\Models\VmtInvFEmpAssigned;
 use App\Http\Controllers\Controller;
+use App\Models\VmtOrgTimePeriod;
 use App\Services\VmtInvestmentsService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\VmtEmpInvRentalDetails;
+use Carbon\Carbon;
 
 
 
@@ -490,7 +492,7 @@ class VmtInvestmentsController extends Controller
         $total_tax_income = array('sno' => 'g', 'section' => 'Total Taxable Income', 'old_regime' => 0, 'new_regime' => 0);
         $total_tax_laibilty = array('sno' => 'h', 'section' => 'Total Tax Laibility', 'old_regime' => 0, 'new_regime' => 0);
 
-        $sumOfHra = 0;
+        $sumOfHradeclared = 0;
         $sumOfReimbersument = 0;
         $sumOfOtherSourceOfIncome = 0;
         $totalRentPaid = 0;
@@ -500,13 +502,12 @@ class VmtInvestmentsController extends Controller
         $ExemptionsUnder80s = 0;
         $SumOfHousPropsInNew = 0;
         $SumOfHousPropsInOld = 0;
+         $tax_calc_new_redime = 0;
         $otherAllowance = 0;
         $sumOfOtherExemptionDec = 0;
         $sumOfOtherExemptionMax = 0;
 
         foreach ($v_form_template as $dec_amt) {
-
-            // dd($dec_amt);
 
             $perviousEmployeeProfessionalTax = 1000;
 
@@ -515,18 +516,29 @@ class VmtInvestmentsController extends Controller
             $year = $dob["year"];
             $empAge = ($current_year - $year);
 
+           $current_financial = VmtOrgTimePeriod::where('status',"1")->first();
+           $finance_month = Carbon::parse($current_financial->end_date);
+            $doj = Carbon::parse($dec_amt['doj']);
+
+             $joining_months =  ($doj)->diffInMonths($finance_month);
+
+             if($joining_months > 12){
+                $joinmonth = 12;
+             }else{
+                $joinmonth = $joining_months;
+             }
+
 
             $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
             $hraTotalRent = (json_decode($dec_amt["json_popups_value"], true));
             // $empHra = $dec_amt['hra'] * 12;
             $empBasic = $dec_amt['basic'] * 12;
 
-            $otherAllowance = intval($sumOfHra) - intval($empBasic * 10 / 100);
+            $hraexamtions = intval($sumOfHradeclared) - intval($empBasic * 10 / 100);
 
             if ($dec_amt['section_group'] == "HRA") {
-                $sumOfHra += $hraTotalRent['total_rent_paid'];
+                $sumOfHradeclared += $hraTotalRent['total_rent_paid'];
                 // $totalSumOfExemption += $hraTotalRent['total_rent_paid'];
-
             }
 
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
@@ -571,6 +583,8 @@ class VmtInvestmentsController extends Controller
                 $SumOfHousPropsInOld += $totalIntersetPaid['income_loss'];
                 if ($totalIntersetPaid['property_type'] == "Let Out Property") {
                     $SumOfHousPropsInNew = $totalIntersetPaid['income_loss'];
+
+                    $tax_calc_new_redime += $totalIntersetPaid['income_loss'];
                 }
             }
 
@@ -578,8 +592,8 @@ class VmtInvestmentsController extends Controller
             // sum pervious employee gross with actual gross
             $total_gross['sno'] = "a";
             $total_gross['section'] = "Total Gross Salary";
-            $total_gross['old_regime'] = round($dec_amt['gross'] * 12);
-            $total_gross['new_regime'] = round($dec_amt['gross'] * 12);
+            $total_gross['old_regime'] = round($dec_amt['gross'] * $joinmonth);
+            $total_gross['new_regime'] = round($dec_amt['gross'] * $joinmonth);
 
 
 
@@ -595,14 +609,11 @@ class VmtInvestmentsController extends Controller
             $Reimbursement['old_regime'] = $sumOfReimbersument;
             $Reimbursement['new_regime'] = $sumOfReimbersument;
 
-
-
-
             // Allowance Tax
 
             $allowance_tax['sno'] = "d";
             $allowance_tax['section'] = "Less: Allowances to the extent exempt under section 10";
-            $allowance_tax['old_regime'] = intval($otherAllowance) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta']);
+            $allowance_tax['old_regime'] = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta']);
             $allowance_tax['new_regime'] = 0;
 
 
@@ -616,24 +627,76 @@ class VmtInvestmentsController extends Controller
             // Values in negative
             $tax_on_emp['sno'] = "f";
             $tax_on_emp['section'] = "Add: Income or loss from house property (Section 24)";
-            $tax_on_emp['old_regime'] = intval($standardDeducation) + $professional_tax * 12;
-            $tax_on_emp['new_regime'] = $standardDeducation;
+            $tax_on_emp['old_regime'] = $SumOfHousPropsInOld;
+            $tax_on_emp['new_regime'] = $tax_calc_new_redime;
 
 
             $exemption['sno'] = "g";
             $exemption['section'] = "Deduction under Chapter VI-A";
             $exemption['old_regime'] = round($ExemptionsUnder80s);
-            $exemption['new_regime'] = round($ExemptionsUnder80s);
+            $exemption['new_regime'] = 0;
 
             $total_tax_income['sno'] = "h";
             $total_tax_income['section'] = "Total Taxable Income";
-            $total_tax_income['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + intval($dec_amt['professional_tax']) * 12 + $sumOfHra + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta']) + $ExemptionsUnder80s)));
-            $total_tax_income['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $ExemptionsUnder80s)));
+            $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $SumOfHousPropsInOld - round($ExemptionsUnder80s));
+            $total_tax_income['new_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
+
+            // tax liability calculation old regime
+
+            // dd($total_tax_income['old_regime']);
+
+            if($total_tax_income['old_regime'] < 250000){
+                             $old_regime_tax = 0;
+            }else if($total_tax_income['old_regime'] > 250000 && $total_tax_income['old_regime'] <= 500000){
+                        $old_regime_tax = $total_tax_income['old_regime'] * 5 / 100 ;
+
+            }else if($total_tax_income['old_regime'] > 500000 && $total_tax_income['old_regime'] <= 750000){
+                        $old_regime_tax = $total_tax_income['old_regime'] * 20  / 100 ;
+
+            }else if($total_tax_income['old_regime'] > 750000 && $total_tax_income['old_regime'] <= 1000000){
+                $old_regime_tax = $total_tax_income['old_regime'] * 20  / 100 ;
+
+            }else if($total_tax_income['old_regime'] > 1000000 && $total_tax_income['old_regime'] <= 1250000){
+                $old_regime_tax = $total_tax_income['old_regime'] * 30 / 100 ;
+
+            }else if($total_tax_income['old_regime'] > 1250000 && $total_tax_income['old_regime'] <= 1500000){
+                $old_regime_tax = $total_tax_income['old_regime'] * 30 / 100 ;
+
+            }else if($total_tax_income['old_regime'] > 1250000 && $total_tax_income['old_regime'] <= 1500000){
+                $old_regime_tax = $total_tax_income['old_regime'] * 30 / 100 ;
+            }
+
+
+            // tax liability calculation new regime
+
+            if($total_tax_income['new_regime'] < 250000){
+                             $new_regime_tax = 0;
+            }else if($total_tax_income['new_regime'] > 250000 && $total_tax_income['new_regime'] <= 500000){
+                        $new_regime_tax = $total_tax_income['new_regime'] * 5 / 100 ;
+
+            }else if($total_tax_income['new_regime'] > 500000 && $total_tax_income['new_regime'] <= 750000){
+                        $new_regime_tax = $total_tax_income['new_regime'] * 10  / 100 ;
+
+            }else if($total_tax_income['new_regime'] > 750000 && $total_tax_income['new_regime'] <= 1000000){
+                $new_regime_tax = $total_tax_income['new_regime'] * 15  / 100 ;
+
+            }else if($total_tax_income['new_regime'] > 1000000 && $total_tax_income['new_regime'] <= 1250000){
+                $new_regime_tax = $total_tax_income['new_regime'] * 20 / 100 ;
+
+            }else if($total_tax_income['new_regime'] > 1250000 && $total_tax_income['new_regime'] <= 1500000){
+                $new_regime_tax = $total_tax_income['new_regime'] * 25 / 100 ;
+
+            }else if($total_tax_income['new_regime'] > 1250000 && $total_tax_income['new_regime'] <= 1500000){
+                $new_regime_tax = $total_tax_income['new_regime'] * 30 / 100 ;
+            }
+
+
+
 
             $total_tax_laibilty['sno'] = "i";
             $total_tax_laibilty['section'] = "Total Tax Laibility";
-            $total_tax_laibilty['old_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInOld + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + intval($dec_amt['professional_tax']) * 12 + $sumOfHra + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta']) + $ExemptionsUnder80s)));
-            $total_tax_laibilty['new_regime'] = round(abs(($dec_amt['gross'] * 12) - ($SumOfHousPropsInNew + $sumOfOtherSourceOfIncome + $sumOfReimbersument + $standardDeducation + $ExemptionsUnder80s)));
+            $total_tax_laibilty['old_regime'] = $old_regime_tax ;
+            $total_tax_laibilty['new_regime'] = $new_regime_tax;
             $total_tax_laibilty['age'] = $empAge;
             $total_tax_laibilty['regime'] = $dec_amt['regime'];
             $total_tax_laibilty['last_updated'] = $dec_amt['updated_at'];
@@ -653,6 +716,7 @@ class VmtInvestmentsController extends Controller
             $total_tax_laibilty
 
         );
+
         return ($res);
     }
 
