@@ -448,38 +448,78 @@
         //          }
 
 
-// $data =array();
-         $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
 
-// // dd($employees_aadhar_number);
-//         // $aadhar_number = array_filter($employees_aadhar_number, static function($employees_aadhar_number){
-//         //     return $employees_aadhar_number !== null;
-//         // } );
+       $gross =50001;
 
-// dd($aadhar_number);
-//         $data['aadhar_number']=array_values($aadhar_number);
+       $basic =$gross/100*50;
 
+       $hra =$basic/100*50;
 
-//          array_push($data,$employees_user_code,$employees_email,$employees_mobile_number);
-//         dd($data);
+       $communication_allowance = 0;
 
-        //
-        $date='06/06/2023';
+       $food_allowance = 0;
 
-        // if (preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
+       if($gross > 40000){
+        $communication_allowance =2000;
+       }
 
+       $leave_travel_allowance = 0;
 
-        // }
+       if($gross > 50000){
+        $leave_travel_allowance =2000;
+       }
 
-
-        $result =VmtMaritalStatus::where('name','UNMARRIED')->first();
-
-        dd($result);
+       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
 
 
-       // $string= Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
-      //DateTime::createFromFormat('Y-m-d', $date)->format('d-m-Y');
-       // dd($string);
+       $epf_employer = 0;
+       $epf_employee = 0;
+
+       if(($gross - $hra) > 15000){
+
+        $epf_employer = 15000/100*12;
+        $epf_employee = 15000/100*12;
+       }else{
+        $epf_employer = round(($gross - $hra)/100*12);
+        $epf_employee =round(($gross - $hra)/100*12);
+       }
+
+       $esi_employer = 0;
+       $esi_employee = 0;
+
+       if($gross < 21000){
+
+        $esi_employer = round($gross/100*3.25);
+        $esi_employee = round($gross/100*3.25);
+
+       }
+       $insurance =0;
+
+       $professional_tax = 208;
+
+       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+
+       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+
+
+
+dd([ 'basic' =>$basic,
+     'hra'=> $hra,
+     'communication_allowance'=>$communication_allowance,
+     'leave_travel_allowance' =>$leave_travel_allowance,
+     'food_allowance' =>$food_allowance,
+     'special_allowance'=>$special_allowance,
+     'gross'=>$gross,
+     'epf_employer' =>  $epf_employer,
+     'esi_employer' =>$esi_employer,
+     'insurance '  =>$insurance,
+     'ctc' =>$ctc,
+     'epf_employee' =>$epf_employee ,
+     'esi_employee ' =>$esi_employee,
+     'professional_tax' =>$professional_tax,
+     'net_take_home' =>$net_take_home,
+
+]);
 
     ?>
 
