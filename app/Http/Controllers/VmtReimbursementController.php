@@ -44,9 +44,8 @@ class VmtReimbursementController extends Controller
                                                                                         reimbursement_type: $request->reimbursement_type,
                                                                                         entry_mode: $request->entry_mode,
                                                                                         claim_amount: $request->claim_amount,
-                                                                                        distance_travelled: $request->distance_travelled,
                                                                                         file_upload: $request->file_upload,
-                                                                                        user_comments:   $request->user_comments);
+                                                                                        reimbursement_remarks:   $request->reimbursement_remarks);
 
     }
 

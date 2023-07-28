@@ -526,7 +526,7 @@ class VmtAttendanceController extends Controller
 
         if ($currentuser_gender == 'male') {
             $query_leavePolicyDetails = VmtLeaves::where('leave_type', '<>', 'Maternity Leave')->get();
-        } else 
+        } else
         if ($currentuser_gender == 'female') {
             $query_leavePolicyDetails = VmtLeaves::where('leave_type', '<>', 'Paternity Leave')->get();
         }
@@ -1181,6 +1181,30 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
+        /*
+        Fetch Absent Regularization data
+
+        Todo : Need to restrict employee access
+    */
+    public function fetchAbsentRegularizationData(Request $request, VmtAttendanceService $attendanceService)
+    {
+
+        $response = null;
+
+        //Check whether the current employee is Manager
+
+        if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
+            //fetch team level data
+            $response = $attendanceService->fetchAbsentRegularizationData(auth()->user()->user_code, null, null);
+        } else {
+
+            //Fetch all data
+            $response = $attendanceService->fetchAbsentRegularizationData(null, null, null);
+        }
+
+        return $response;
+    }
+
 
     /*
         Fetch all regularization data.
@@ -1383,6 +1407,19 @@ class VmtAttendanceController extends Controller
                 'data' => $e->getmessage()
             ];
         }
+    }
+
+    public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->applyRequestAbsentRegularization(user_code : $request->user_code,
+                                                                                attendance_date: $request->attendance_date,
+                                                                                regularization_type : $request->regularization_type,
+                                                                                checkin_time : $request->checkin_time,
+                                                                                checkout_time : $request->checkout_time,
+                                                                                reason : $request->reason,
+                                                                                custom_reason : $request->custom_reason
+                                                                            );
+
     }
 
     public function approveRejectAttendanceRegularization(Request $request, VmtNotificationsService $serviceVmtNotificationsService)

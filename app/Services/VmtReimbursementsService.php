@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class VmtReimbursementsService {
     protected $instance;
@@ -86,7 +87,7 @@ class VmtReimbursementsService {
         }
     }
 
-    public function saveReimbursementData_Claims($user_code, $date, $reimbursement_type, $claim_amount, $user_comments, $file_upload, $entry_mode){
+    public function saveReimbursementData_Claims($user_code, $date, $reimbursement_type, $claim_amount, $reimbursement_remarks, $file_upload, $entry_mode){
 
         $validator = Validator::make(
             $data = [
@@ -94,7 +95,7 @@ class VmtReimbursementsService {
                     'date' => $date,
                     'reimbursement_type' => $reimbursement_type,
                     'claim_amount' => $claim_amount,
-                    'user_comments'=> $user_comments,
+                    'reimbursement_remarks'=> $reimbursement_remarks,
                     'file_upload'=> $file_upload,
                     'entry_mode'=> $entry_mode,
                 ],
@@ -103,7 +104,7 @@ class VmtReimbursementsService {
                     'date' => 'required',
                     'reimbursement_type' => 'required|exists:vmt_reimbursements,reimbursement_type',
                     'claim_amount' => 'required',
-                    'user_comments'=> 'required',
+                    'reimbursement_remarks'=> 'required',
                     'file_upload'=> 'required',
                     'entry_mode'=> 'required',
                 ],
@@ -145,11 +146,39 @@ class VmtReimbursementsService {
                 $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
                 $emp_reimbursement_data->status = "Pending";
                 $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
-
-                //reimbursement details
-                $emp_reimbursement_data->user_comments = $user_comments ?? "";
-
+                $emp_reimbursement_data->user_comments = $reimbursement_remarks ?? "";
                 $emp_reimbursement_data->total_expenses  = $claim_amount;
+
+                //Convert the BASE64 file to disk file and save the path in DB
+                    //$claims_doc_file_path = base64_decode($file_upload);
+
+                    $base64_data = base64_decode( explode('base64,',$file_upload)[1] );
+                    $extension = explode('/', mime_content_type($file_upload))[1];
+                   // dd("File Extension : ".$extension);
+                    //dd("File Data : ".$base64_data);
+
+                    $date = date('d-m-Y_H-i-s');
+                    $fileName =  'ClaimsDoc_'. $user_code .'__'. $date . '.' . $extension;
+
+                    $path = $user_code . '/reimbursement_documents';
+
+                    if(Storage::disk('private')->put($path."/".$fileName, $base64_data))
+                    {
+                        //File saved successfully
+                        $emp_reimbursement_data->doc_path = $path."/".$fileName;
+
+                    }
+                    else
+                    {
+
+                        return response()->json([
+                            'status' => 'failure',
+                            'message'=> 'Error while saving the document file. Please check the uploaded file.',
+                            'data'=> ''
+                        ]);
+                    }
+
+
 
                 $emp_reimbursement_data->save();
 

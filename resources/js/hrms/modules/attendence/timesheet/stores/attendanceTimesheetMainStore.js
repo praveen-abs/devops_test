@@ -300,10 +300,10 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const applyAbsentRegularization = () => {
         classicTimesheetSidebar.value = false
         canShowLoading.value = true
-        axios.post('api/attendance/applyRequestAbsentRegularization', {
+        axios.post('/attendance-req-absent-regularization', {
             user_code: service.current_user_code,
             attendance_date: absentRegularizationDetails.value.date,
-            regularization_type: "Absent",
+            regularization_type: "Absent Regularization",
             checkin_time: absentRegularizationDetails.value.start_time,
             checkout_time: absentRegularizationDetails.value.end_time,
             reason: absentRegularizationDetails.value.reason,

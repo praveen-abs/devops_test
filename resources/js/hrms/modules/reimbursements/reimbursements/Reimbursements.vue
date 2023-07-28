@@ -86,11 +86,9 @@
                 <div class="field">
                     <label class="mb-3">File Upload</label>
                     <div class="formgrid">
-                        <input @change="
-                            employee_service.employee_reimbursement_attachment_upload(
-                                $event
-                            )
-                            " ref="employee_service.employee_reimbursement_attachment" type="file" id="upload" hidden />
+                        <input @change="employee_service.onClaimsDocumentUploaded($event)"
+                        ref="employee_service.employee_reimbursement_attachment" type="file" id="upload" hidden />
+
                         <label id="file_upload" for="upload">Choose file</label>
                     </div>
                 </div>

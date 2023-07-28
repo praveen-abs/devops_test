@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <!-- <div>
         <Toast />
         <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
@@ -96,9 +96,9 @@
                     <template #body="{ data }">
                         <Tag :value="data.status" :severity="getSeverity(data.status)" />
                     </template>
-                    <!-- <template #body="{ data }">
+                  <template #body="{ data }">
             <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
-          </template> -->
+          </template> 
                     <template #filter="{ filterModel, filterCallback }">
                         <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses"
                             placeholder="Select" class="p-column-filter" :showClear="true">
@@ -118,8 +118,8 @@
                 </Column>
                 <Column field="" header="Action">
                     <template #body="slotProps">
-                        <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
-                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
+                     <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
+                        <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> 
                         <span style="width: 250px;display: block;" v-if="slotProps.data.status == 'Pending'">
                             <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
                                 @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
@@ -131,6 +131,44 @@
                 </Column>
             </DataTable>
         </div>
+    </div> -->
+
+
+    <!-- 
+
+     -->
+
+     <div class="Leave_dashboard">
+        <div class="p-2 pb-0 mb-3 bg-white rounded-lg shadow tw-card left-line" style="background-color: white;">
+            <div class="flex justify-between">
+                    <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab" role="tablist">
+                    <li class="nav-item text-muted" role="presentation">
+                        <a class="pb-2 nav-link active" data-bs-toggle="tab" href="#leave_balance" aria-selected="true"
+                            role="tab">
+                            Attendance Regularization</a>
+                    </li>
+ 
+                    <li class="nav-item text-muted " role="presentation" >
+                        <a class="pb-2 mx-4 nav-link" data-bs-toggle="tab" href="#team_leaveBalance" aria-selected="false"
+                            tabindex="-1" role="tab">
+                              Absent Regularization</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="tab-content h-[100vh]" id="pills-tabContent">
+
+            <div class="tab-pane show fade active" id="leave_balance" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <attendance_regularization />
+            </div>
+            <div class="tab-pane fade show " id="team_leaveBalance" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <absent_Regularization />
+            </div>
+
+
+        </div>
     </div>
 
     <!-- {{ att_regularization[0].employee_avatar }} -->
@@ -141,6 +179,8 @@ import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import attendance_regularization from "./attendance_regularization.vue";
+import absent_Regularization from "./absent_Regularization.vue";
 import moment from "moment";
 
 let att_regularization = ref();

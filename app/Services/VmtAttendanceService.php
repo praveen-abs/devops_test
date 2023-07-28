@@ -104,6 +104,71 @@ class VmtAttendanceService
         return $allEmployees_lateComing;
     }
 
+
+    public function fetchAbsentRegularizationData($manager_user_code = null, $month, $year)
+    {
+
+
+        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+
+        $allEmployees_lateComing = null;
+
+        //If manager ID not set, then show all employees
+        if (empty($manager_user_code)) {
+            if (empty($month) && empty($year))
+                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::all();
+            else
+                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereYear('attendance_date', $year)
+                    ->whereMonth('attendance_date', $month)
+                    ->get();
+        } else {
+            //If manager ID set, then show only the team level employees
+
+            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
+
+
+            if (empty($month) && empty($year))
+                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', $employees_id)->get();
+            else
+                $allEmployees_lateComing = VmtEmployeeAbsentRegularization::whereIn('user_id', $employees_id)
+                    ->whereYear('attendance_date', $year)
+                    ->whereMonth('attendance_date', $month)
+                    ->get();
+        }
+
+        //dd($map_allEmployees->toArray());
+        //dd($allEmployees_lateComing->toArray());
+
+        foreach ($allEmployees_lateComing as $singleItem) {
+
+            //check whether user_id from regularization table exists in USERS table
+            if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+
+                //If reviewer_id = 0, then its not yet reviewed
+                if ($singleItem->reviewer_id != 0) {
+                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
+                }
+            } else {
+                //  dd("Missing User ID : " . $singleItem->user_id);
+            }
+        }
+
+        // dd($allEmployees_lateComing);
+        // return [
+        //     "status"=>"success",
+        //     "message"=>"",
+        //     "data"=>$allEmployees_lateComing
+        // ];
+
+        return $allEmployees_lateComing;
+    }
+
+
+
     /*
         Get the employee's compensatory work days (Worked on holidays and also in leave days(Eg: Sun , Sat))
         This wont check whether these comp days are used by emps
@@ -1237,6 +1302,7 @@ class VmtAttendanceService
             $messages = [
                 'required' => 'Field :attribute is missing',
                 'exists' => 'Field :attribute is invalid',
+                'in' => 'Field :attribute is invalid',
             ]
 
         );
@@ -1295,22 +1361,30 @@ class VmtAttendanceService
             $VmtClientMaster = VmtClientMaster::first();
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
-
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+            $isSent = null;
 
+            if(empty($manager_details))
+            {
+                //Manager mail is empty or no manager assigned. Cant send mail
 
-            $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                $query_user->name,
-                $query_user->user_code,
-                $emp_avatar,
-                $attendance_date,
-                $manager_details->name,
-                $manager_details->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $custom_reason,
-                "Pending"
-            ));
+            }
+            else
+            {
+                //If Manager mail is available, then send mail
+                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                    $query_user->name,
+                    $query_user->user_code,
+                    $emp_avatar,
+                    $attendance_date,
+                    $manager_details->name,
+                    $manager_details->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $custom_reason,
+                    "Pending"
+                ));
+            }
 
             if ($isSent) {
                 $mail_status = "Mail sent successfully";
@@ -1340,7 +1414,7 @@ class VmtAttendanceService
         catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ applyRequestAbsentRegularization() ] ",
+                'message' => "Error[ applyRequestAbsentRegularization() ] ".$e->getMessage(),
                 'data' => $e->getMessage()
             ]);
         }
