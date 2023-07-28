@@ -173,7 +173,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                             <p
                                                                 style="margin: 0 0 12px; font-size: 30px; line-height: 24px">
                                                                 Dear <span
-                                                                    style="margin: 0 0 12px; font-size: 30px; font-weight: 600; line-height: 24px">{{ $approverName }}</span>
+                                                                    style="margin: 0 0 12px; font-size: 30px; font-weight: 600; line-height: 24px">{{ $employeeName }}</span>
                                                             </p>
                                                         </td>
                                                     </tr>
@@ -181,7 +181,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                         <td>
                                                             <p class="sm-text-sm"
                                                                 style="margin: 0 0 16px; color: #334155; -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto">
-                                                                This is to acknowledge the loan request you submitted to
+                                                                This is to acknowledge the {{$loanType}} request you submitted to
                                                                 your manager.We understand that financial needs can
                                                                 arise
                                                                 unexpectedy, and we are here to support our employees in
@@ -195,6 +195,14 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                                 style="margin: 0 0 16px; color: #334155; -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto">
                                                                 We appreciate your openness and trust in approaching us regarding this matter. Rest assured that your requets is being
                                                                 carefully reviewed by the appropriate department, and we will provide you with a decision as soon as possible
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="sm-text-sm"
+                                                                style="margin: 0 0 16px; color: #334155; -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto">
+                                                                Thank you once again for reaching out, and we wil be in touch with an update soon.
                                                             </p>
                                                         </td>
                                                     </tr>

@@ -644,9 +644,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/approvals/onboarding-bulkdocs-approve-reject', [App\Http\Controllers\VmtApprovalsController::class, 'processBulkDocumentApprovals'])->name('processBulkDocumentApprovals');
     Route::post('/approvals/onboarding/isAllOnboardingDocumentsApproved', [App\Http\Controllers\VmtApprovalsController::class, 'isAllOnboardingDocumentsApproved'])->name('isAllOnboardingDocumentsApproved');
     Route::post('/reimbursements/saveReimbursementsData', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementsData'])->name('saveReimbursementsData');
-    Route::post('/reimbursements/saveReimbursementData_Claims', [App\Http\Controllers\VmtReimbursementController::class, 'saveReimbursementData_Claims'])->name('saveReimbursementData_Claims');
     Route::get('/reimbursements/getModeOfTransports', [App\Http\Controllers\VmtReimbursementController::class, 'getModeOfTransports'])->name('getModeOfTransports');
-    Route::get('/reimbursements/getReimbursementClaimTypes', [App\Http\Controllers\VmtReimbursementController::class, 'getReimbursementClaimTypes'])->name('getReimbursementClaimTypes');
 
     Route::post('/getLocalConveyanceCost', [App\Http\Controllers\VmtReimbursementController::class, 'getLocalConveyanceCost'])->name('getLocalConveyanceCost');
     Route::post('/testCreateLocalCovergance', [App\Http\Controllers\VmtReimbursementController::class, 'testCreateLocalCovergance'])->name('testCreateLocalCovergance');
@@ -740,7 +738,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/reports/basic-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showBasicAttendanceReport'])->name('showBasicAttendanceReport');
     Route::get('/reports/detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'showDetailedAttendanceReport'])->name('showDetailedAttendanceReport');
-    Route::post('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
+    Route::get('/reports/generate-detailed-attendance-report', [App\Http\Controllers\VmtEmployeeAttendanceController::class, 'generateDetailedAttendanceReports'])->name('generateDetailedAttendanceReports');
 
     //Pay Check Reports
     Route::get('/reports/generate-annual-earned-report', [App\Http\Controllers\VmtReportsController::class, 'generateAnnualEarnedReport'])->name('generateAnnualEarnedReport');
@@ -780,7 +778,6 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
-
 
 
     //Configrations
@@ -902,6 +899,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
     Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
+ 
+    Route::get('/testing-karthi',[App\Http\Controllers\VmtSalaryAdvanceController::class,'testingKarthi']);
 
     Route::get('/get-pending-requested-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'getApprovedRequestedForLoanAndAdvance'])->name('getApprovedRequestedForLoanAndAdvance');
     //loan with intrest
@@ -997,10 +996,6 @@ Route::get('/signed-passwordresetlink', 'App\Http\Controllers\Auth\LoginControll
 //
 Route::get('syncStaffAttendanceFromDeviceDatabase', [App\Http\Controllers\VmtStaffAttendanceController::class, 'syncStaffAttendanceFromDeviceDatabase']);
 
-//task schedular
-
-Route::get('/sendBirthdayNotificationtoEmployee', [App\Http\Controllers\VmtEmployeeBirthdayController::class, 'sendBirthdayNotificationtoEmployee']);
-Route::get('/sendAniversaryNotificationtoEmployee', [App\Http\Controllers\VmtEmployeeBirthdayController::class, 'sendAniversaryNotificationtoEmployee']);
 
 //TESTING ROUTES
 //// SASS TESTING

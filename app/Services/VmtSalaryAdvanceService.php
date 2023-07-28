@@ -30,6 +30,8 @@ use App\Models\VmtClientMaster;
 use Mail;
 use App\Mail\ApproveRejectLoanAndSaladvMail;
 use App\Mail\ApproverejectloanMail;
+use App\Mail\EmpApplyLoanMail;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 
 
@@ -61,8 +63,35 @@ class VmtSalaryAdvanceService
         return (json_encode($approver_flow, true));
     }
 
-    public function applyLoanAndAdvanceMail(){
-        
+    public function applyLoanAndAdvanceMail($user_id, $requestid, $loan_type, $emp_image)
+    {
+        $status = "success";
+        try {
+
+            $emp_name = User::where('id', $user_id)->first()->name;
+            // dd( $emp_name);
+            $emp_mail = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->officical_mail;
+            $isSent    = \Mail::to($emp_mail)
+                ->send(new EmpApplyLoanMail(
+                    $emp_name,
+                    $loan_type,
+                    $requestid,
+                    request()->getSchemeAndHttpHost(),
+                    $emp_image
+                ));
+
+
+            $data['msg'] = $loan_type . " Applied Successfully";
+        } catch (TransportException $e) {
+            $status = 'failure';
+            $data['msg'] = $loan_type . ' Applied Successfully due to some techinal error mail not send';
+            $data['error'] = $e->getMessage();
+            $data['error_verbose'] = $e;
+        }
+
+        $response['status'] = $status;
+        $response['data'] = $data;
+        return $response;
     }
 
     public function getAllDropdownFilterSetting()
@@ -984,9 +1013,7 @@ class VmtSalaryAdvanceService
         }
         $exp_month = $doj->diffInMonths(Carbon::now());
         //dd(36);
-        // dd($avaliable_int_loans);
         foreach ($avaliable_int_loans as $single_record) {
-
             if ($single_record->min_month_served <= $exp_month) {
                 $applicable_loan_info['loan_settings_id'] = $single_record->id;
                 if ($single_record->loan_applicable_type == 'fixed') {
@@ -1079,7 +1106,7 @@ class VmtSalaryAdvanceService
 
         try {
             if ($loan_type == 'InterestFreeLoan') {
-
+                $type = 'Interest Free Loan';
                 $loan_details = new VmtEmployeeInterestFreeLoanDetails;
                 $loan_details->vmt_int_free_loan_id = $loan_setting_id;
 
@@ -1104,6 +1131,7 @@ class VmtSalaryAdvanceService
                 }
                 $settings_flow = VmtInterestFreeLoanSettings::where('id', $loan_setting_id)->first()->approver_flow;
             } else if ($loan_type = 'InterestWithLoan') {
+                $type = 'Interest With Loan';
                 $loan_details = new VmtEmpInterestLoanDetails;
                 $loan_details->vmt_int_loan_id = $loan_setting_id;
                 if (empty($getallintrestwithemp)) {
@@ -1125,7 +1153,7 @@ class VmtSalaryAdvanceService
                         $loan_details->request_id = $requestid;
                     }
                 }
-
+                 
                 $settings_flow = VmtLoanInterestSettings::where('id', $loan_setting_id)->first()->approver_flow;
                 $loan_details->interest_rate = $interest_rate;
             } else {
@@ -1147,47 +1175,12 @@ class VmtSalaryAdvanceService
             $loan_details->loan_crd_sts = 0;
             $loan_details->loan_status = 'Pending';
             $loan_details->save();
-
-            // if ($loan_type == 'InterestFreeLoan') {
-
-            //    $loan_settings_mail =  VmtEmployeeInterestFreeLoanDetails::where('request_id',$loan_details->request_id)->first();
-
-            // } else if ($loan_type = 'InterestWithLoan') {
-
-            //     $loan_settings_mail = VmtEmpInterestLoanDetails::where('request_id', $loan_details->request_id)->first();
-
-            // }
-
-            //     $simm =  json_decode(($loan_settings_mail->approver_flow), true);
-
-            //     foreach ($simm as $single_simma) {
-            //         if ($single_simma['order'] == 1) {
-            //             $approver_details = User::where('id', $single_simma['approver'])->first();
-            //         }
-            //     }
-
-
-            //     $isSent    = \Mail::to($approver_details->email)
-            //         ->send(new ApproveRejectLoanAndSaladvMail(
-            //             $approver_details->name,
-            //             // $emp_details->name,
-            //             // $emp_details->user_code,
-            //             request()->getSchemeAndHttpHost(),
-            //             // $emp_details->sal_adv_status,
-            //         ));
-
-            //     if ($isSent) {
-            //         $sima = "success";
-            //     } else {
-            //         $sima = "failure";
-            //     }
-
-            //     dd($sima);
-
-
+            $emp_img = json_decode(newgetEmployeeAvatarOrShortName($user_id), true);
+            $mail_sts = $this->applyLoanAndAdvanceMail($user_id,  $loan_details->request_id, $type,  $emp_img);
             return response()->json([
                 'status' => 'Success',
-                'message' => 'Loan Applied Sucessfully',
+                'message' => $mail_sts['data']['msg'],
+                'data'=>$mail_sts['data']
 
             ]);
         } catch (Exception $e) {

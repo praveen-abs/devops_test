@@ -377,4 +377,11 @@ class VmtSalaryAdvanceController extends Controller
            $response = $vmtSalaryAdvanceService->getApprovedRequestedForLoanAndAdvance();
            return $response;
     }
+
+    public function testingKarthi(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $emp_image = json_decode(newgetEmployeeAvatarOrShortName(144),true);
+       // dd( $emp_image);
+        $response = $vmtSalaryAdvanceService->applyLoanAndAdvanceMail(144,"ABSIF001","InterestFreeLoan",$emp_image);
+        return $response;
+    }
 }
