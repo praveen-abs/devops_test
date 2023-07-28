@@ -53,10 +53,12 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
+
+    /* Get currently login employee daily attendance */
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(156, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log("Selected employee attendance : " + res.data);
             currentEmployeeAttendance.value = Object.values(res.data)
             currentEmployeeAttendanceLength.value = Object.values(res.data).length
@@ -65,6 +67,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         })
     }
 
+    /* Get currently selected team employee daily attendance */
     const getSelectedEmployeeTeamDetails = (user_id, isteam) => {
         isTeamOrg.value = isteam
         currentlySelectedTeamMemberUserId.value = user_id
@@ -76,6 +79,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         })
     }
 
+    /* Get currently selected organization employee daily attendance */
 
     const getSelectedEmployeeOrgDetails = (user_id, isteam) => {
         isTeamOrg.value = isteam
@@ -88,6 +92,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         })
     }
 
+    /* Get currently login employee team list  */
+
     const getTeamList = async (user_code) => {
         console.log(user_code);
         return axios.post('/fetch-team-members', {
@@ -98,9 +104,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getOrgList = async () => {
         return axios.get('/fetch-org-members')
     }
-
-
-
 
 
 
@@ -139,6 +142,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     */
 
+    /* Creating constructor for Attendance Regularization request */
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
 
         let AttendanceRegularizeFormat = {
@@ -290,10 +294,9 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             })
 
     }
-    //  Applying for Attendance Regularization
 
 
-
+    //  Applying for Absent  Regularization
     const applyAbsentRegularization = () => {
         classicTimesheetSidebar.value = false
         canShowLoading.value = true
@@ -330,8 +333,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
-
-
     // View check in and out selfie Images
 
     const onClickSViewSelfie = (attendance) => {
@@ -341,18 +342,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     // Helper Functions
-
-    //  error message
-    const errorMessege = (value) => {
-        let date = ''
-        if (value) {
-            if (date < value) {
-                console.log('');
-            }
-        }
-    }
-
-
 
     //  Finding Difference between start date and end date
 
