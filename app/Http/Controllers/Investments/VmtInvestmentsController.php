@@ -588,6 +588,12 @@ class VmtInvestmentsController extends Controller
                 }
             }
 
+            if($SumOfHousPropsInOld > 200000){
+                    $sumofhouseproperty = 200000;
+            }else{
+                $sumofhouseproperty = $SumOfHousPropsInOld ;
+            }
+
 
             // sum pervious employee gross with actual gross
             $total_gross['sno'] = "a";
@@ -627,7 +633,7 @@ class VmtInvestmentsController extends Controller
             // Values in negative
             $tax_on_emp['sno'] = "f";
             $tax_on_emp['section'] = "Add: Income or loss from house property (Section 24)";
-            $tax_on_emp['old_regime'] = $SumOfHousPropsInOld;
+            $tax_on_emp['old_regime'] = $sumofhouseproperty;
             $tax_on_emp['new_regime'] = $tax_calc_new_redime;
 
 
@@ -638,8 +644,8 @@ class VmtInvestmentsController extends Controller
 
             $total_tax_income['sno'] = "h";
             $total_tax_income['section'] = "Total Taxable Income";
-            $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $SumOfHousPropsInOld - round($ExemptionsUnder80s));
-            $total_old_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $SumOfHousPropsInOld - round($ExemptionsUnder80s));
+            $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $sumofhouseproperty - round($ExemptionsUnder80s));
+            $total_old_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $sumofhouseproperty - round($ExemptionsUnder80s));
             $total_tax_income['new_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
             $total_new_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
 
