@@ -20,7 +20,7 @@ class VmtEmployeeBirthdayController extends Controller
     public function sendBirthdayNotificationtoEmployee(){
 
         $isEmailSent =null;
-        $birth_date = Carbon::now()->addDay()->format('m-d');
+        $birth_date = Carbon::now()->format('m-d');
 
         $usersWithBirthdays = VmtEmployee::join('users','vmt_employee_details.userid','=','users.id')
                                           ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
@@ -47,7 +47,7 @@ class VmtEmployeeBirthdayController extends Controller
     }
     public function sendAniversaryNotificationtoEmployee(){
 
-        $anniversary_date = Carbon::now()->addDay()->format('m-d');;
+        $anniversary_date = Carbon::now()->format('m-d');;
 
         $users_With_anniversary = VmtEmployee::join('users','vmt_employee_details.userid','=','users.id')
                                           ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
