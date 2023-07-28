@@ -1181,6 +1181,30 @@ class VmtAttendanceController extends Controller
         return $response;
     }
 
+        /*
+        Fetch Absent Regularization data
+
+        Todo : Need to restrict employee access
+    */
+    public function fetchAbsentRegularizationData(Request $request, VmtAttendanceService $attendanceService)
+    {
+
+        $response = null;
+
+        //Check whether the current employee is Manager
+
+        if (Str::contains(currentLoggedInUserRole(), ['Manager'])) {
+            //fetch team level data
+            $response = $attendanceService->fetchAbsentRegularizationData(auth()->user()->user_code, null, null);
+        } else {
+
+            //Fetch all data
+            $response = $attendanceService->fetchAbsentRegularizationData(null, null, null);
+        }
+
+        return $response;
+    }
+
 
     /*
         Fetch all regularization data.
