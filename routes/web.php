@@ -924,9 +924,7 @@ Route::middleware(['auth'])->group(function () {
 
 // generate payslip
 
-Route::get('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
-
-
+Route::post('/generatePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'generatePayslip'])->name('generatePayslip');
 
 
 

@@ -61,13 +61,17 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import html2pdf from 'html2pdf.js';
-import { ref } from 'vue';
+import { ref , onMounted } from 'vue';
 const contentToConvert = ref(null);
+
+const getpayslipdetails = ref();
 
 const downloadPdf = () => {
     const element = contentToConvert.value;
     if (!element) return;
+
 
     const opt = {
         margin: 10,
@@ -78,6 +82,18 @@ const downloadPdf = () => {
     };
 
     html2pdf().from(element).set(opt).save();
+
+
+    onMounted(() => {
+        axios.post('/generatePayslip',
+            {
+                user_code: 'BA002',
+                payroll_date : '2022-07-01',
+            }).then((response) => {
+                getpayslipdetails.value = response.data;
+                console.log(response.data);
+            });
+    })
 };
 
 </script>

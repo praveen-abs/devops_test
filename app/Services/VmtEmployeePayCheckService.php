@@ -1124,20 +1124,24 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
 
 public function generatePayslip($user_code, $payroll_date){
 
-    $user_code = "BA002";
-    $payroll_date  = "2022-07-01";
+    // $user_code = "BA002";
+    // $payroll_date  = "2022-07-01";
 
     $getpayslip    =  VmtPayroll::join('vmt_client_master','vmt_client_master.id','=','vmt_payroll.client_id')
                                 ->join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
                                 ->join('users','users.id','=','vmt_emp_payroll.user_id')
                                 ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
+                                ->join('vmt_employee_details','vmt_employee_details.userid','=','users.id')
+                                ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                                ->join('vmt_employee_statutory_details','vmt_employee_statutory_details.user_id','=','users.id')
+                                ->join('vmt_department','vmt_department.id','=','vmt_employee_office_details.department_id')
+                                ->join('vmt_banks','vmt_banks.id','=','vmt_employee_details.bank_id')
                                 ->where('user_code' , $user_code )
                                 ->where('payroll_date' , $payroll_date )
+                                ->get()->toArray();
 
-    ->get()->toArray();
 
-
-    // Remove empty value
+    // Remove empty value in array
 
     $get_payslip_details = [];
         foreach($getpayslip as $single_payslip){
@@ -1149,7 +1153,7 @@ public function generatePayslip($user_code, $payroll_date){
             }
                  array_push($get_payslip_details,$single_payslip);
         }
-        return ($get_payslip_details);
+        return dd($get_payslip_details);
 
 
 
