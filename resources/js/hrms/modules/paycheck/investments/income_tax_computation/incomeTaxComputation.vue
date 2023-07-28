@@ -35,6 +35,9 @@
                 </div>
             </div>
         </div>
+<!-- {{ grossEarnings }}
+{{ dynamicheaders }} -->
+
         <div class="my-4 card">
             <div class="card-body">
                 <div class="flex ">
@@ -48,12 +51,19 @@
                 </div>
                 <div class="">
                     <div class="table-responsive">
-                        <DataTable :rows="1" dataKey="id" scrollable>
+                        <DataTable :rows="1" dataKey="id" scrollable :value="grossEarnings">
                             <template #empty> No Data Found. </template>
                             <template #loading> Loading customers data. Please wait. </template>
-                            <Column field="particulars" header="Salary Breakup" frozen class="font-bold">
+                            <Column v-for="col of dynamicheaders" :key="col.headers"  :field="col.headers"  :header="col.headers">
+                                <template #body="{data,field}">
+                                    {{ field }}
+                                       {{ data[field] }}
+                                </template>
+                            </Column>
+                            <!-- <Column field="date" header="Salary Breakup" frozen class="font-bold">
                             </Column>
                             <Column field="new_regime" header="Apr 23"></Column>
+
                             <Column field="old_regime" header="May 23"></Column>
                             <Column field="old_regime" header="June 23 "></Column>
                             <Column field="old_regime" header="July 23 "></Column>
@@ -64,7 +74,7 @@
                             <Column field="old_regime" header="Dec 23 "></Column>
                             <Column field="old_regime" header="Jan 23 "></Column>
                             <Column field="old_regime" header="Feb 23 "></Column>
-                            <Column field="old_regime" header="Mar 23 "></Column>
+                            <Column field="old_regime" header="Mar 23 "></Column> -->
                         </DataTable>
                     </div>
                 </div>
@@ -99,7 +109,7 @@
                     </DataTable>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="my-4 card">
             <div class="card-body">
                 <div>
@@ -154,3 +164,36 @@
         </div>
     </div>
 </template>
+
+
+
+<script setup>
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+
+
+
+const sample = ref([])
+
+const dynamicheaders = ref([])
+const grossEarnings  = ref()
+
+const getDynamicHeaders = () =>{
+    grossEarnings.value.forEach(element => {
+         dynamicheaders.value.push({headers:element.date})
+    });
+}
+
+onMounted(()=>{
+    axios.get('/grossEarningsFromEmployment').then(res=>{
+        grossEarnings.value = Object.values(res.data)
+        // Object.values(res.data).forEach(element => {
+        //       sample.value.push(element.all[0])
+        //       console.log(sample.value);
+        // });
+        // sample.value = Object.values(res.data.all)
+    }).finally(()=>{
+        getDynamicHeaders()
+    })
+})
+</script>

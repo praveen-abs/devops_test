@@ -861,6 +861,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/investments/TaxDeclaration', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxDeclaration']);
     Route::post('/investments/saveRegime', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'saveEmpTaxRegime']);
     Route::get('/investments/investment-summary', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'declarationSummaryCalculation']);
+    Route::get('/monthTaxDeductionDetails', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'monthTaxDeductionDetails']);
+    Route::get('/grossEarningsFromEmployment', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'grossEarningsFromEmployment']);
+    Route::get('/taxableIncomeFromAllHeads', [App\Http\Controllers\Investments\VmtInvestmentsController::class, 'taxableIncomeFromAllHeads']);
+
 
     //Salary Advance
 

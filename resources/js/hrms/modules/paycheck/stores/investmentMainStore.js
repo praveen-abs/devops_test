@@ -821,6 +821,16 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         // dlop.id = data.id;
     };
 
+
+    /*
+
+    If house property is greater than 2,50,000
+
+
+
+    */
+
+
     const editHouseProps = (currentRowData) => {
         // console.log(currentRowData);
         if (

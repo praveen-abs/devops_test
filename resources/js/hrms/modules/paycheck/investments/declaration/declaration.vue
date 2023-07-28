@@ -94,7 +94,7 @@
                     {{ slotProps.data.sno }}.
                 </template>
             </Column>
-            <Column field="section" header="" style=" width: 26rem; text-align: left !important;">
+            <Column field="section" header="" style=" width: 30rem; text-align: left !important;">
                 <template #header>
                     <p style="font-weight: 501;">
                         Particulars
@@ -102,7 +102,7 @@
                 </template>
                 <template #body="slotProps">
                     <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Taxable Income'">
-                        {{ slotProps.data.section }} <strong>(a + b + c + d + e + f)</strong>
+                        {{ slotProps.data.section }}
                     </p>
                     <p style="font-weight: 501;" v-else>
                         {{ slotProps.data.section }}
@@ -116,11 +116,11 @@
                     </p>
                 </template>
                 <template #body="slotProps">
-                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                    <!-- <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
                         {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.old_regime
                             , 'old', slotProps.data.age)) }}
-                    </p>
-                    <p style="font-weight: 501;" v-else>
+                    </p> -->
+                    <p style="font-weight: 501;">
                         {{ investmentStore.formatCurrency(slotProps.data.old_regime) }}
                     </p>
                 </template>
@@ -132,11 +132,10 @@
                     </p>
                 </template>
                 <template #body="slotProps">
-                    <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
-                        {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.new_regime
-                            , 'new', slotProps.data.age)) }}
-                    </p>
-                    <p style="font-weight: 501;" v-else>
+                    <!-- <p style="font-weight: 501;" v-if="slotProps.data.section == 'Total Tax Laibility'">
+                        {{ investmentStore.formatCurrency(formula.taxCalculation(slotProps.data.new_regime, 'new', slotProps.data.age)) }}
+                    </p> -->
+                    <p style="font-weight: 501;">
                         {{ investmentStore.formatCurrency(slotProps.data.new_regime) }}
                     </p>
                 </template>
@@ -251,7 +250,7 @@
                         </Column>
                     </DataTable>
                 </div>
-                <!-- <div class="my-6">
+            <div class="my-6">
                     <div>
                         <p class="my-2 font-semibold fs-5">Month- Month Tax Deduction Details</p>
                         <p class="my-2 font-semibold fs-6">Below deductions are based on your declared amount. Tax amount
@@ -277,28 +276,30 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <DataTable :paginator="true" :rows="1" dataKey="id" scrollable>
+                        <DataTable :paginator="true" :rows="1" dataKey="id" scrollable :value="monthWiseData">
                             <template #empty> No Data Found. </template>
                             <template #loading> Loading customers data. Please wait. </template>
                             <Column field="particulars" header="Month" frozen class="font-bold">
                                 <template #body>
-                                    <p>
+                                    <p class="font-semibold fs-6">
                                         Monthly Tax
                                     </p>
                                 </template>
                             </Column>
-                            <Column field="new_regime" header="Apr 23"></Column>
-                            <Column field="old_regime" header="May 23"></Column>
-                            <Column field="old_regime" header="June 23 "></Column>
-                            <Column field="old_regime" header="July 23 "></Column>
-                            <Column field="new_regime" header="Aug 23"></Column>
-                            <Column field="old_regime" header="Sep 23"></Column>
-                            <Column field="old_regime" header="Oct 23 "></Column>
-                            <Column field="old_regime" header="Nov 23 "></Column>
-                            <Column field="old_regime" header="Dec 23 "></Column>
-                            <Column field="old_regime" header="Jan 23 "></Column>
-                            <Column field="old_regime" header="Feb 23 "></Column>
-                            <Column field="old_regime" header="Mar 23 "></Column>
+                            <Column v-for="col of monthWiseData" :key="col"  :header="col.month" class="font-semibold">
+                                <template #body="{data}">
+                                    <p class="font-semibold fs-6">
+                                    {{data.monthy_tax}}
+                                    </p>
+                                </template>
+                            </Column>
+                            <!-- <Column  class="font-bold" v-for="(col,i) in monthWiseData" :key="i">
+                                <template #header="{data}">
+                                    {{data.month}}
+                                </template>
+
+
+                            </Column> -->
                         </DataTable>
                     </div>
                     <div class="flex my-3">
@@ -308,7 +309,7 @@
                             payments other than salary.
                         </p>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -371,6 +372,11 @@ onMounted(() => {
     fetchTaxableIncomeInfo()
     console.log(new Date().getFullYear() - 1);
 
+    axios.get('/monthTaxDeductionDetails').then(res=>{
+        monthWiseData.value = res.data
+    })
+
+
 
 })
 
@@ -383,6 +389,7 @@ const formula = investmentFormulaStore()
 const tax_deduction = ref()
 const total_gross = ref()
 const total_taxable = ref()
+const monthWiseData = ref()
 
 const amount = ref()
 const regime = ref()
