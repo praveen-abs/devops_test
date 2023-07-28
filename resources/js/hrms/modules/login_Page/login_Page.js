@@ -24,7 +24,9 @@ import ToastService from 'primevue/toastservice';
 import ProgressSpinner from 'primevue/progressspinner';
 import InputText from "primevue/inputtext";
 import Calendar from "primevue/calendar";
+import Password from 'primevue/password';
 import { createPinia } from "pinia";
+
 
 import login_Page from './login_Page.vue';
 
@@ -52,5 +54,7 @@ app.component('Dropdown',Dropdown);
 app.component('ProgressSpinner',ProgressSpinner);
 app.component('InputText', InputText)
 app.component('Calendar', Calendar)
+app.component('Password', Password)
+
 
 app.mount("#login_Page");
