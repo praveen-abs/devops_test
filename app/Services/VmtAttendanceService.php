@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\VmtOrgTimePeriod;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 class VmtAttendanceService
 {
@@ -1324,11 +1325,24 @@ class VmtAttendanceService
                 'mail_status' => $mail_status,
                 'data' => ''
             ]);
-        } catch (\Exception $e) {
+        }
+        catch (TransportException $e) {
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Absent Regularization applied successfully',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
+        }
+        catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
                 'message' => "Error[ applyRequestAbsentRegularization() ] ",
-                'data' => $e
+                'data' => $e->getMessage()
             ]);
         }
     }

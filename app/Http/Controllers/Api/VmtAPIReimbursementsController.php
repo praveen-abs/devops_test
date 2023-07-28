@@ -22,6 +22,18 @@ class VmtAPIReimbursementsController extends Controller
 
     }
 
+    public function saveReimbursementData_Claims(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+
+        return $serviceVmtReimbursementsService->saveReimbursementData_Claims( user_code: $request->user_code,
+                                                                                        date : $request->date,
+                                                                                        reimbursement_type: $request->reimbursement_type,
+                                                                                        entry_mode: $request->entry_mode,
+                                                                                        claim_amount: $request->claim_amount,
+                                                                                        file_upload: $request->file_upload,
+                                                                                        user_comments:   $request->user_comments);
+
+    }
+
 
     public function getReimbursementVehicleTypes(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
         return $serviceVmtReimbursementsService->getReimbursementVehicleTypes();
@@ -29,6 +41,10 @@ class VmtAPIReimbursementsController extends Controller
 
     public function getReimbursementTypes(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
         return $serviceVmtReimbursementsService->getReimbursementTypes();
+    }
+
+    public function getReimbursementClaimTypes(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){
+        return $serviceVmtReimbursementsService->getReimbursementClaimTypes();
     }
 
     public function isReimbursementAppliedOrNot(Request $request, VmtReimbursementsService $serviceVmtReimbursementsService){

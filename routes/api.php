@@ -67,8 +67,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Reimbursements
     Route::post('/reimbursements/save_reimbursement_data', [VmtAPIReimbursementsController::class, 'saveReimbursementData']);
+    Route::post('/reimbursements/save_reimbursement_claims', [VmtAPIReimbursementsController::class, 'saveReimbursementData_Claims']);
     Route::get('/reimbursements/getReimbursementVehicleTypes', [VmtAPIReimbursementsController::class, 'getReimbursementVehicleTypes']);
     Route::get('/reimbursements/getReimbursementTypes', [VmtAPIReimbursementsController::class, 'getReimbursementTypes']);
+    Route::get('/reimbursements/getReimbursementClaimTypes', [App\Http\Controllers\VmtReimbursementController::class, 'getReimbursementClaimTypes'])->name('getReimbursementClaimTypes');
+
     Route::post('/reimbursements/isReimbursementAppliedOrNot', [VmtAPIReimbursementsController::class, 'isReimbursementAppliedOrNot']);
 
     ////Attendance

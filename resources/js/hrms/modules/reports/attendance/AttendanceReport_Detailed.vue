@@ -59,7 +59,7 @@
                     <p>End date</p>
                     <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10" v-model="end_date" />
                 </div>
-                <div class="">
+                <div class=" d-flex justify-content-center align-items-end  ">
                     <button class="btn btn-primary py-auto"
                         @click="onclickDownloadExcelSheet(start_date, end_date)">generate</button>
                 </div>
