@@ -1,5 +1,5 @@
 <template>
-    <QuickOnboarding />
+    <!-- <QuickOnboarding /> -->
     <!-- <input type="file" name="" id="" @change="json($event)">
     <div class="table-responsive">
 
@@ -23,6 +23,14 @@
         </DataTable>
 
     </div> -->
+
+    <div ref="contentToConvert">
+        <!-- Your HTML content to be converted to PDF -->
+        <h1>Hello, this is the content to be converted to PDF!</h1>
+        <!-- Add the content you want to include in the PDF here -->
+    </div>
+
+    <button @click="downloadAsPDF">Download as PDF</button>
 </template>
 
 
@@ -32,6 +40,15 @@
 import { ref } from 'vue';
 
 import QuickOnboarding from '../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
+import usePdfGenerator from '../hrms/components/PdfGenerator'
+
+const contentToConvert = ref(null);
+
+const { generateAndDownloadPDF } = usePdfGenerator();
+
+const downloadAsPDF = () => {
+  generateAndDownloadPDF(contentToConvert.value, 'high_quality_pdf.pdf');
+};
 
 const items = ref([
     { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
