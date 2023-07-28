@@ -295,7 +295,7 @@ function processApproveReject() {
     console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
     axios
-        .post(window.location.origin + "/attendance-regularization-approvals", {
+        .post(window.location.origin + "/approveRejectAbsentRegularization", {
             id: currentlySelectedRowData.id,
             status:
                 currentlySelectedStatus == "Approve"

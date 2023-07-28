@@ -28,6 +28,9 @@
             <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
             <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
         </div>
+        <div class="w-full d-flex justify-center mt-12">
+            <Textarea v-model="reviewer_comment" v-if="reject == 'Reject'" rows="3" cols="30" class="border rounded-md" />
+        </div>
         <template #footer>
             <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
             <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
@@ -148,6 +151,8 @@ let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
 const loading = ref(true);
+const reject = ref('');
+const reviewer_comment = ref();
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -185,6 +190,7 @@ function ajax_GetAttRegularizationData() {
 function showConfirmDialog(selectedRowData, status) {
     canShowConfirmation.value = true;
     currentlySelectedStatus = status;
+    reject.value = status;
     currentlySelectedRowData = selectedRowData;
 
     console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
@@ -262,7 +268,8 @@ function processApproveReject() {
                     : currentlySelectedStatus == "Reject"
                         ? "Rejected"
                         : currentlySelectedStatus,
-            status_text: "",
+                        status_text: reviewer_comment.value,
+                        
         })
         .then((response) => {
             console.log("Response : " + response);

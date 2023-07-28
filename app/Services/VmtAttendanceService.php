@@ -15,7 +15,7 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtClientMaster;
 use App\Models\VmtEmployeesLeavesAccrued;
 use App\Models\Department;
-
+use App\Mail\VmtAbsentMail_Regularization;
 use App\Services\VmtNotificationsService;
 
 use App\Mail\VmtAttendanceMail_Regularization;
@@ -1372,7 +1372,7 @@ class VmtAttendanceService
             else
             {
                 //If Manager mail is available, then send mail
-                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAbsentMail_Regularization(
                     $query_user->name,
                     $query_user->user_code,
                     $emp_avatar,
@@ -1604,6 +1604,87 @@ class VmtAttendanceService
             'status' => 'success',
             'message' => 'Regularization done successfully!',
             'notification_status' => $res_notification,
+            'mail_status' => $mail_status,
+            'data' => [],
+        ];
+    }
+    public function approveRejectAbsentRegularization($approver_user_code, $record_id, $status, $status_text)
+    {
+        // dd($approver_user_code, $record_id, $status, $status_text);
+        //Get the user_code
+        $query_user = User::where('user_code', $approver_user_code)->first();
+        $user_id = $query_user->id;
+
+        $data = VmtEmployeeAbsentRegularization::find($record_id);
+        //dd(!empty($data) && $data->exists());
+
+        if (!empty($data) && $data->exists()) {
+            $data->reviewer_id = $user_id;
+            $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
+            $data->status = $status;
+            $data->reviewer_comments = $status_text ?? '---';
+
+            $data->save();
+        } else {
+            return $responseJSON = [
+                'status' => 'failure',
+                'message' => 'Record not found',
+                'mail_status' => '',
+                'data' => [],
+            ];
+        }
+
+        //Send mail to Employee
+
+        $mail_status = "";
+
+        //Get employee details
+        $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
+
+        //dd($employee_details->officical_mail);
+
+
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
+        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($query_user->id));
+
+        $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAbsentMail_Regularization(
+            $employee_details->name,
+            $employee_details->user_code,
+            $emp_avatar,
+            $data->attendance_date,
+            $query_user->name,
+            $query_user->user_code,
+            request()->getSchemeAndHttpHost(),
+            $image_view,
+            $status_text,
+            $status
+        ));
+
+        if ($isSent) {
+            $mail_status = "Mail sent successfully";
+        } else {
+            $mail_status = "There was one or more failures.";
+        }
+        // if ($status == 'Approved') {
+
+        //     $attendance_regularization_type = 'manager_approves_attendance_reg';
+        // } else if ($status == 'Rejected') {
+
+        //     $attendance_regularization_type = 'manager_rejects_attendance_reg';
+        // }
+
+        // $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
+        //     notif_user_id: $data->user_id,
+        //     attendance_regularization_type: $attendance_regularization_type,
+        //     manager_user_code: $approver_user_code,
+        // );
+
+        return $responseJSON = [
+            'status' => 'success',
+            'message' => 'Regularization done successfully!',
+           // 'notification_status' => $res_notification,
             'mail_status' => $mail_status,
             'data' => [],
         ];

@@ -8,6 +8,7 @@ use App\Services\VmtEmployeeLeaveModel;
 use App\Services\VmtAttendanceService;
 use App\Mail\ApproveRejectLeaveMail;
 use App\Mail\RequestLeaveMail;
+use App\Mail\VmtAbsentMail_Regularization;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Models\VmtClientMaster;
 use App\Models\User;
@@ -1421,11 +1422,21 @@ class VmtAttendanceController extends Controller
                                                                             );
 
     }
+    public function approveRejectAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->approveRejectAbsentRegularization(approver_user_code : $request->user_code,
+                                                                                record_id: $request->record_id,
+                                                                                status : $request->status,
+                                                                                status_text : $request->status_text,
+                                                                             );
+
+    }
 
     public function approveRejectAttendanceRegularization(Request $request, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
-        //dd($request->all());
+        // dd($request->all());
+      
 
         $status = "failure";
         $message = "Invalid request. Kindly contact the HR/Admin";
