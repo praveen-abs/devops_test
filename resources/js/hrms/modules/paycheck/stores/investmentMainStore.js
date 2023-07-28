@@ -326,8 +326,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
                 fs_id: hra_fs[0],
             })
             .then((res) => {
-                console.log(Object.values(res.data));
-                hra_data.value = Object.values(res.data.rent_details);
+                res.data ? hra_data.value = Object.values(res.data.rent_details) : ''
                 sumOfTotalRentPaid.value = res.data.dec_amt[0].sumofRentPaid
                 if (Object.values(res.data).length == 0) {
                     AddHraButtonDisabled.value = false;
@@ -522,7 +521,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     const Dec80EEA = ref();
     const Dec80EEB = ref();
 
-    const fetchotherExe =  () => {
+    const fetchotherExe = () => {
         axios
             .post("/investments/fetchOtherExemption", {
                 user_code: service.current_user_code,
@@ -825,9 +824,6 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
     /*
 
     If house property is greater than 2,50,000
-
-
-
     */
 
 
@@ -997,7 +993,7 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
             });
             console.log("declaration amount :" + declared_amt);
             taxSavingInvestments.declared_amt = declared_amt;
-            taxSavingInvestments.max_limit = parseInt(max_limit) + parseInt(declared_amt) ;
+            taxSavingInvestments.max_limit = parseInt(max_limit) + parseInt(declared_amt);
 
         })
     }
@@ -1074,6 +1070,61 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         dlop.interest = null;
         dlop.income_loss = null;
     };
+
+
+    /*
+    Tax declaration
+    */
+
+
+    const tax_deduction = ref()
+    const total_gross = ref()
+    const total_taxable = ref()
+    const regime = ref()
+    const age = ref()
+    const lastUpdated = ref()
+
+
+
+
+
+    const fetchTaxableIncomeInfo = async () => {
+        await axios.get('/investments/TaxDeclaration').then(res => {
+            tax_deduction.value = res.data
+            if (res.data[7].regime == 'old') {
+                total_gross.value = res.data[6].old_regime
+            } else {
+                total_gross.value = res.data[6].new_regime
+            }
+
+            total_taxable.value = res.data[7].old_regime
+            age.value = res.data[7].age
+            regime.value = res.data[7].regime
+            lastUpdated.value = res.data[7].last_updated
+        }).finally(() => {
+            canShowLoading.value = false
+            disableRegime(lastUpdated.value)
+        })
+    }
+
+    const disableRegime = (value) => {
+
+        let currentDate = new Date();
+        let updatedDate = '';
+
+        if (value) {
+            updatedDate = new Date(value);
+        } else {
+            updatedDate = new Date();
+        }
+
+        if (updatedDate >= currentDate) {
+            return true
+        } else {
+            return false
+        }
+
+    }
 
     return {
         fetchotherExe,
@@ -1181,7 +1232,12 @@ export const investmentMainStore = defineStore("investmentMainStore", () => {
         metrocitiesOption,
         lenderTypeOption,
         employeDoj,
-        sumOfTotalRentPaid
+        sumOfTotalRentPaid,
+
+
+        // Tax declaration
+
+        fetchTaxableIncomeInfo,tax_deduction,total_gross,regime,age,lastUpdated,disableRegime
 
     };
 });

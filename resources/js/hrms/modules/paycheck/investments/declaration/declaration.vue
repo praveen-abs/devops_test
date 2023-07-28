@@ -64,10 +64,10 @@
                     </div>
                     <div class="text-end">
                         <button class="px-4 text-lg btn btn-orange" @click="switch_regime_dailog = true"
-                            :disabled="!disableRegime(lastUpdated)">Switch Regime</button>
+                            :disabled="!investmentStore.disableRegime(lastUpdated)">Switch Regime</button>
                     </div>
                 </div>
-                <div v-if="disableRegime(lastUpdated)"
+                <div v-if="investmentStore.disableRegime(lastUpdated)"
                     class="flex h-full py-2 my-4 bg-orange-100 border-l-4 rounded-lg border-l-orange-400">
                     <i class="mx-2 my-1 font-bold text-orange-500 pi pi-info-circle" style="font-size: 1.5rem"></i>
                     <p class="ml-2 font-semibold text-black fs-5 ">
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <DataTable :value="tax_deduction" dataKey="id">
+        <DataTable :value="investmentStore.tax_deduction" dataKey="id">
             <template #empty> No Data Found. </template>
             <template #loading> Loading customers data. Please wait. </template>
             <Column header="#">
@@ -369,12 +369,12 @@ const data = ref()
 onMounted(() => {
     investmentStore.canShowLoading = true
     investmentStore.fetchInvestmentSummary()
-    fetchTaxableIncomeInfo()
+    investmentStore.fetchTaxableIncomeInfo()
     console.log(new Date().getFullYear() - 1);
 
-    axios.get('/monthTaxDeductionDetails').then(res=>{
-        monthWiseData.value = res.data
-    })
+    // axios.get('/monthTaxDeductionDetails').then(res=>{
+    //     monthWiseData.value = res.data
+    // })
 
 
 
@@ -452,28 +452,10 @@ const fetchTaxableIncomeInfo = async () => {
         lastUpdated.value = res.data[7].last_updated
     }).finally(() => {
         investmentStore.canShowLoading = false
-        disableRegime(lastUpdated.value)
+        investmentStore.disableRegime(lastUpdated.value)
     })
 }
 
-const disableRegime = (value) => {
-
-    let currentDate = new Date();
-    let updatedDate = '';
-
-    if (value) {
-        updatedDate = new Date(value);
-    } else {
-        updatedDate = new Date();
-    }
-
-    if (updatedDate >= currentDate) {
-        return true
-    } else {
-        return false
-    }
-
-}
 
 </script>
 
