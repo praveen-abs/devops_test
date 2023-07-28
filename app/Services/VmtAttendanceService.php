@@ -1237,6 +1237,7 @@ class VmtAttendanceService
             $messages = [
                 'required' => 'Field :attribute is missing',
                 'exists' => 'Field :attribute is invalid',
+                'in' => 'Field :attribute is invalid',
             ]
 
         );
@@ -1295,22 +1296,30 @@ class VmtAttendanceService
             $VmtClientMaster = VmtClientMaster::first();
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
-
             $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+            $isSent = null;
 
+            if(empty($manager_details))
+            {
+                //Manager mail is empty or no manager assigned. Cant send mail
 
-            $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                $query_user->name,
-                $query_user->user_code,
-                $emp_avatar,
-                $attendance_date,
-                $manager_details->name,
-                $manager_details->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $custom_reason,
-                "Pending"
-            ));
+            }
+            else
+            {
+                //If Manager mail is available, then send mail
+                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                    $query_user->name,
+                    $query_user->user_code,
+                    $emp_avatar,
+                    $attendance_date,
+                    $manager_details->name,
+                    $manager_details->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $custom_reason,
+                    "Pending"
+                ));
+            }
 
             if ($isSent) {
                 $mail_status = "Mail sent successfully";
@@ -1340,7 +1349,7 @@ class VmtAttendanceService
         catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ applyRequestAbsentRegularization() ] ",
+                'message' => "Error[ applyRequestAbsentRegularization() ] ".$e->getMessage(),
                 'data' => $e->getMessage()
             ]);
         }
