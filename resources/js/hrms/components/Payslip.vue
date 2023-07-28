@@ -1,58 +1,59 @@
 <template>
     <div>
         <!-- Your HTML content goes here -->
-        <div ref="contentToConvert" >
-          <div class="p-4 bg-white">
-            <div class=" grid grid-cols-2">
-                <div>
-                    <p>Payslip <strong>2023</strong></p>
-                    <p>organization</p>
-                    <p>Address</p>
-                </div>
-                <div>
-                    <img class="h-16 float-right" src="../../../images/brand_avatar.png" alt="">
-                </div>
-            </div>
-            <div class="my-4  grid grid-cols-1">
-                <p class="font-semibold">Narasimman</p>
-                <div class="border-t-2 border-t-black w-full"></div>
-                <div class=" grid grid-cols-4 p-2 my-2 line-after-four-divs">
-                    <div class="my-2">
-                        <p class="text-lg font-medium text-gray-700">Employee Code</p>
-                        <p class="font-semibold fs-6">BA002</p>
-                    </div>
-                </div>
-                <div class="border-t-2 border-t-black w-full"></div>
-            </div>
-
-
-            <div class="my-2 grid grid-cols-1">
-                <p class="font-medium">Salary Details</p>
-                <div class="border-t-2 border-t-black w-full"></div>
-                <div class=" grid grid-cols-4 p-2 line-after-four-divs">
-                    <div class="my-2">
-                        <p class="text-lg font-medium text-gray-700">Employee Code</p>
-                        <p class="font-semibold fs-6">BA002</p>
-                    </div>
-                </div>
-                <div class=" grid grid-cols-2 p-2">
+        <div ref="contentToConvert">
+            <div class="p-4 bg-white" v-for="empDetails in getpayslipdetails" :key="empDetails">
+                {{ empDetails }}
+                <div class=" grid grid-cols-2">
                     <div>
-                        <p class="font-semibold text-lg">Earnings</p>
-                        <div class="grid grid-cols-2 p-2">
-                            <p class="text-lg font-medium text-black">Employee Code</p>
+                        <p>Payslip <strong>{{new Date(empDetails.payroll_date).getMonth()}}</strong></p>
+                        <p>{{empDetails.client_fullname}}</p>
+                        <p>Address</p>
+                    </div>
+                    <div>
+                        <img class="h-16 float-right" src="../../../images/brand_avatar.png" alt="">
+                    </div>
+                </div>
+                <div class="my-4  grid grid-cols-1">
+                    <p class="font-semibold">Narasimman</p>
+                    <div class="border-t-2 border-t-black w-full"></div>
+                    <div class=" grid grid-cols-4 p-2 my-2 line-after-four-divs">
+                        <div class="my-2">
+                            <p class="text-lg font-medium text-gray-700">Employee Code</p>
                             <p class="font-semibold fs-6">BA002</p>
                         </div>
                     </div>
-                    <div>
-                        <p class="font-semibold text-lg">Contributions</p>
-                        <div class="grid grid-cols-2 p-2">
-                            <p class="text-lg font-medium text-black">Employee Code</p>
+                    <div class="border-t-2 border-t-black w-full"></div>
+                </div>
+
+
+                <div class="my-2 grid grid-cols-1">
+                    <p class="font-medium">Salary Details</p>
+                    <div class="border-t-2 border-t-black w-full"></div>
+                    <div class=" grid grid-cols-4 p-2 line-after-four-divs">
+                        <div class="my-2">
+                            <p class="text-lg font-medium text-gray-700">Employee Code</p>
                             <p class="font-semibold fs-6">BA002</p>
+                        </div>
+                    </div>
+                    <div class=" grid grid-cols-2 p-2">
+                        <div>
+                            <p class="font-semibold text-lg">Earnings</p>
+                            <div class="grid grid-cols-2 p-2">
+                                <p class="text-lg font-medium text-black">Employee Code</p>
+                                <p class="font-semibold fs-6">BA002</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-lg">Contributions</p>
+                            <div class="grid grid-cols-2 p-2">
+                                <p class="text-lg font-medium text-black">Employee Code</p>
+                                <p class="font-semibold fs-6">BA002</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-          </div>
         </div>
 
 
@@ -63,7 +64,7 @@
 <script setup>
 import axios from 'axios';
 import html2pdf from 'html2pdf.js';
-import { ref , onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 const contentToConvert = ref(null);
 
 const getpayslipdetails = ref();
@@ -82,19 +83,18 @@ const downloadPdf = () => {
     };
 
     html2pdf().from(element).set(opt).save();
-
-
-    onMounted(() => {
-        axios.post('/generatePayslip',
-            {
-                user_code: 'BA002',
-                payroll_date : '2022-07-01',
-            }).then((response) => {
-                getpayslipdetails.value = response.data;
-                console.log(response.data);
-            });
-    })
 };
+
+onMounted(() => {
+    axios.post('/generatePayslip',
+        {
+            user_code: 'BA002',
+            payroll_date: '2022-07-01',
+        }).then((response) => {
+            getpayslipdetails.value = response.data;
+            console.log(response.data);
+        });
+})
 
 </script>
 
