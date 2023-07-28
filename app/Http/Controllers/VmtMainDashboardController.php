@@ -57,6 +57,14 @@ class VmtMainDashboardController extends Controller
     public function index(Request $request,VmtDashboardService $VmtDashboardService)
     {
 
+          $client =  VmtClientMaster::get()->count();
+
+          if($client == 0){
+
+            return view('on_run_first_client_onboarding');
+
+          }else{
+
         if (auth()->user()->active == 0) {
 
 
@@ -217,10 +225,11 @@ class VmtMainDashboardController extends Controller
           if(!empty($checked->checkin_time)){
              $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
           }
-          if(!empty($from) && !empty($to) ){
-            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
 
-         }
+
+          if(!empty($to) && !empty($from)){
+            $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
+          }
 
 
             // dd($effective_hours);
@@ -367,6 +376,8 @@ class VmtMainDashboardController extends Controller
         else{
             return "No Roles assigned for this user. Kindly contact the admin";
         }
+
+      }
     }
 
     public function showMainDashboardPage(Request $request){

@@ -63,7 +63,7 @@
                         class="fa fa-exclamation-circle text-muted ms-2" data-bs-toggle="tooltip" data-bs-placement="top"
                         title=".png,jpg.jpeg"></i></p>
                 <div class="d-flex justify-content-center align-items-center">
-                    <img class="img-xl rounded-circle" src="{{ URL::asset('assets/images/avatar-1.jpg') }}" />
+
                     <input type="file" id="upload" hidden @click="integration.app_logo_attachment" />
                     <label id="file_upload" for="upload">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="0.3"

@@ -147,8 +147,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
         console.log("Downloading payslip PDF.....");
 
 
-        let month = parseInt(dayjs(payroll_month).month()) + 1;
-        let year = dayjs(payroll_month).year();
+        let month_payroll = parseInt(dayjs(payroll_month).month()) + 1;
+        let year_payroll = dayjs(payroll_month).year();
 
         //split the payroll_month into month and year
 
@@ -156,8 +156,8 @@ export const useManagePayslipStore = defineStore("managePayslipStore", () => {
             {
                 uid: getURLParams_UID(),
                 user_code: user_code,
-                month: month,
-                year: year
+                month: formattedMonth,
+                year: formattedYear
             }).then((response) => {
                 //  console.log("Response [getEmployeePayslipDetailsAsPDF] : " + response.data.data);
                 console.log(" Response [downloadPayslipReleaseStatus] : " + JSON.stringify(response.data.data));

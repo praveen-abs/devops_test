@@ -12,6 +12,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 import { createApp } from "vue";
+import { createPinia } from "pinia";
 import VueSweetalert2 from 'vue-sweetalert2';
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
@@ -55,12 +56,15 @@ import NormalOnboarding from './NormalOnboarding.vue'
 
 
 const app = createApp(NormalOnboarding);
+const pinia=createPinia()
+
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(VueSweetalert2);
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);

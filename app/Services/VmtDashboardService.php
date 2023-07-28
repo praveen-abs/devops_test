@@ -428,10 +428,11 @@ class VmtDashboardService{
           if(!empty($checked->checkin_time)){
              $from = Carbon::createFromFormat('H:i:s', $checked->checkin_time);
           }
+
+
           if(!empty($from) && !empty($to) ){
             $effective_hours = gmdate('H:i:s', $to->diffInSeconds($from));
-
-         }
+          }
 
 
                // dd($effective_hours);

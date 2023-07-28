@@ -71,7 +71,7 @@
                 </Column>
                 <Column field="regularization_type" header="Type" style="min-width: 10rem;">
                     <template  #body="slotProps">
-                        <div class="text-center border p-2">
+                        <div class="text-center  p-2">
                             {{ slotProps.data.regularization_type }}
                         </div>
                     </template>

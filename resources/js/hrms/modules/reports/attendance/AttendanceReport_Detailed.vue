@@ -2,30 +2,21 @@
     <div>
         <!-- <ConfirmDialog></ConfirmDialog> -->
         <Toast />
-        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '25vw'}" :modal="true" :closable="false" :closeOnEscape="false">
+        <Dialog header="Header" v-model:visible="canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
-                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s" aria-label="Custom ProgressSpinner"/>
+                <ProgressSpinner style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
             </template>
             <template #footer>
                 <h5 style="text-align: center;">Please wait...</h5>
             </template>
         </Dialog>
-
-        <Dialog header="Confirmation" v-model:visible="canShowConfirmation" :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '350px'}" :modal="true" >
-            <div class="confirmation-content">
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to {{currentlySelectedStatus}}?</span>
-            </div>
-            <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text"/>
-            </template>
-        </Dialog>
         <div>
-            <div>Calander Type :
+            <!-- <div>Calander Type :
                 <select v-model="selected_options_calendar_type.value">
                     <option v-for="option in options_calendar_type" :value="option.value">
-                        {{ option.name}}
+                        {{ option.name }}
                     </option>
                 </select>
             </div>
@@ -33,7 +24,7 @@
             <div>Year :
                 <select v-model="selected_options_year.value">
                     <option v-for="option in options_year" :value="option.value">
-                        {{ option.name}}
+                        {{ option.name }}
                     </option>
                 </select>
             </div>
@@ -41,7 +32,7 @@
             <div>Legal Entity :
                 <select v-model="selected_options_calendar_type.value">
                     <option v-for="option in options_assignment_period" :value="option.value">
-                        {{ option.name}}
+                        {{ option.name }}
                     </option>
                 </select>
             </div>
@@ -49,93 +40,112 @@
             <div>Department :
                 <select v-model="selected_options_calendar_type.value">
                     <option v-for="option in options_assignment_period" :value="option.value">
-                        {{ option.name}}
+                        {{ option.name }}
                     </option>
                 </select>
             </div>
 
             <div>
-                <Button type="button" icon="pi pi-check-circle" class="p-button-success Button"  label="Download Excel"  @click="onclickDownloadExcelSheet(1)" style="height: 2em;" />
+                <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Download Excel"
+                    @click="onclickDownloadExcelSheet(1)" style="height: 2em;" />
+            </div> -->
+
+            <div class="grid grid-cols-4 gap-6 p-2">
+                <div>
+                    <p>Start date</p>
+                    <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10" v-model="start_date" />
+                </div>
+                <div>
+                    <p>End date</p>
+                    <Calendar inputId="icon" dateFormat="dd-mm-yy" :showIcon="true" class="h-10" v-model="end_date" />
+                </div>
+                <div class=" d-flex justify-content-center align-items-end  ">
+                    <button class="btn btn-primary py-auto"
+                        @click="onclickDownloadExcelSheet(start_date, end_date)">generate</button>
+                </div>
+                <div></div>
+                <div></div>
             </div>
-
             <DataTable :value="data_pmsforms" :paginator="true" :rows="10" dataKey="id"
-                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-                    responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-                    v-model:filters="filters" filterDisplay="menu" :loading="loading2"
-                    :globalFilterFields="['name','status']">
-                    <template #empty>
-                      No Employee found
-                    </template>
-                    <template #loading>
-                        Loading customers data. Please wait.
-                    </template>
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+                <template #empty>
+                    No Employee found
+                </template>
+                <template #loading>
+                    Loading customers data. Please wait.
+                </template>
 
-                <Column field="employee_name" header="Employee Name" >
+                <Column field="employee_name" header="Employee Name">
                     <template #body="slotProps">
                         {{ slotProps.data.employee_name }}
                     </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true"   />
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="department" header="Designation" >
+                <Column field="department" header="Designation">
                     <template #body="slotProps">
                         {{ slotProps.data.designation }}
                     </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true"   />
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="department" header="Department" >
+                <Column field="department" header="Department">
                     <template #body="slotProps">
                         {{ slotProps.data.department }}
                     </template>
-                    <template #filter="{filterModel,filterCallback}">
-                        <InputText v-model="filterModel.value" @input="filterCallback()"  placeholder="Search" class="p-column-filter" :showClear="true"   />
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
 
-                <Column field="employee_name" header="PD" >
+                <Column field="employee_name" header="PD">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="HD" >
+                <Column field="employee_name" header="HD">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="HO" >
+                <Column field="employee_name" header="HO">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="OD" >
+                <Column field="employee_name" header="OD">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="SL/CL" >
+                <Column field="employee_name" header="SL/CL">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="EL" >
+                <Column field="employee_name" header="EL">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="SL" >
+                <Column field="employee_name" header="SL">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="CL" >
+                <Column field="employee_name" header="CL">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
                 </Column>
-                <Column field="employee_name" header="ML" >
+                <Column field="employee_name" header="ML">
                     <template #body="slotProps">
                         {{ slotProps.data.pd }}
                     </template>
@@ -146,85 +156,84 @@
 </template>
 <script setup>
 
-    import { ref, onMounted } from 'vue';
-    import axios from 'axios'
-    import {FilterMatchMode,FilterOperator} from 'primevue/api';
+import { ref, onMounted } from 'vue';
+import axios from 'axios'
+import { FilterMatchMode, FilterOperator } from 'primevue/api';
+import moment from 'moment';
 
-    const selected_options_calendar_type =  {   "name" : "Choose", "value":""} ;
-    const options_calendar_type = [
-                                     {   "name" : "Choose", "value":""},
-                                     {   "name" : "Financial Year", "value":"financial_year"},
-                                     {   "name" : "Calendar Year", "value":"calendar_year"}
-                                ];
 
-    const selected_options_year =  {   "name" : "Choose", "value":""} ;
-    const options_year  = [
-                                     {   "name" : "Choose", "value":""},
-                                     {   "name" : "April - 2021 to March - 2022", "value":"April - 2021 to March - 2022"},
-                                     {   "name" : "April - 2022 to March - 2023", "value":"April - 2022 to March - 2023"}
-                                ];
+const canShowLoading = ref(false)
+const start_date = ref()
+const end_date = ref()
 
-    const selected_assignment_period =  {   "name" : "Choose", "value":""} ;
-    const options_assignment_period  = [
-                                     {   "name" : "Choose", "value":""},
-                                     {   "name" : "Q1", "value":"q1"},
-                                     {   "name" : "Q2", "value":"q2"},
-                                     {   "name" : "Q3", "value":"q3"},
-                                     {   "name" : "Q4", "value":"q4"},
-                                ];
+const selected_options_calendar_type = { "name": "Choose", "value": "" };
+const options_calendar_type = [
+    { "name": "Choose", "value": "" },
+    { "name": "Financial Year", "value": "financial_year" },
+    { "name": "Calendar Year", "value": "calendar_year" }
+];
 
-    const filters = ref({
-            global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-            employee_name: {
-             value: null,
-                     matchMode: FilterMatchMode.STARTS_WITH,
-                     matchMode:FilterMatchMode.EQUALS,
-                     matchMode:FilterMatchMode.CONTAINS,
+const selected_options_year = { "name": "Choose", "value": "" };
+const options_year = [
+    { "name": "Choose", "value": "" },
+    { "name": "April - 2021 to March - 2022", "value": "April - 2021 to March - 2022" },
+    { "name": "April - 2022 to March - 2023", "value": "April - 2022 to March - 2023" }
+];
 
-            },
-    });
+const selected_assignment_period = { "name": "Choose", "value": "" };
+const options_assignment_period = [
+    { "name": "Choose", "value": "" },
+    { "name": "Q1", "value": "q1" },
+    { "name": "Q2", "value": "q2" },
+    { "name": "Q3", "value": "q3" },
+    { "name": "Q4", "value": "q4" },
+];
 
-    const data_pmsforms = ref();
+const filters = ref({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    employee_name: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
 
-    onMounted(() => {
-        let url = window.location.origin + '/fetch-regularization-approvals';
+    },
+});
 
-        console.log("AJAX URL : " + url);
+const data_pmsforms = ref();
 
-        axios.get(url)
-            .then((response) => {
-                console.log("Axios : " + response.data);
-                data_pmsforms.value = response.data;
-            });
+onMounted(() => {
+    let url = window.location.origin + '/fetch-regularization-approvals';
+
+    console.log("AJAX URL : " + url);
+
+    axios.get(url)
+        .then((response) => {
+            console.log("Axios : " + response.data);
+            data_pmsforms.value = response.data;
+        });
+})
+
+
+function onclickDownloadExcelSheet(start_date, end_date) {
+
+    canShowLoading.value = true
+    axios.post(window.location.origin + '/reports/generate-detailed-attendance-report', {
+        start_date: moment(start_date).format('YYYY-MM-DD'),
+        end_date: moment(end_date).format('YYYY-MM-DD')
+    },{responseType: 'blob'}).then((response) => {
+        console.log(response.data);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(response.data);
+        link.download = ` Basic Report.xlsx`;
+        link.click();
     })
-
-
-    function onclickDownloadExcelSheet(selected_pmsform_id) {
-
-        console.log("Processing Rowdata : "+ JSON.stringify(selected_pmsform_id));
-
-
-        axios.get(window.location.origin + '/report-download-pmsforms', {
-            pms_form_id: selected_pmsform_id,
-        }).then((response) => {
-            let blob = new Blob([response.data], { type: 'data:application/vnd.ms-excel' });
-            let fileURL = window.URL.createObjectURL(blob);
-
-            var fileLink = document.createElement('a');
-            fileLink.href = fileURL;
-
-            // it forces the name of the downloaded file
-            fileLink.download = 'pdf_name.xlsx';
-
-            // triggers the click event
-            fileLink.click();
-
-            console.log(response);
-        })
         .catch((error) => {
             console.log(error.toJSON());
-        });
-    }
+        }).finally(() => {
+            canShowLoading.value = false
+        })
+}
 
 
 </script>
@@ -232,82 +241,93 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap');
 
 
-.p-datatable .p-datatable-thead >tr>th{
+.p-datatable .p-datatable-thead>tr>th {
     text-align: center;
     padding: 1.3rem 1rem;
     border: 1px solid #dee2e6;
-      border-top-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
     border-width: 0 0 1px 0;
     font-weight: 600;
     color: #fff;
     background: #003056;
     transition: box-shadow 0.2s;
     font-size: 13px;
+
     .p-column-title {
         color: #fff;
         font-size: 13px;
     }
+
     .p-column-filter {
         width: 100%;
-      }
-      #pv_id_2 {
+    }
+
+    #pv_id_2 {
         height: 30px;
-      }
+    }
+
     .p-fluid .p-dropdown .p-dropdown-label {
         margin-top: -10px;
-      }
-      .p-dropdown .p-dropdown-label.p-placeholder{
-        margin-top: -12px;
-      }
+    }
 
-    .p-column-filter-menu-button{
+    .p-dropdown .p-dropdown-label.p-placeholder {
+        margin-top: -12px;
+    }
+
+    .p-column-filter-menu-button {
         color: white;
         margin-left: 10px;
 
     }
+
     .p-column-filter-menu-button:hover {
-        color:white;
+        color: white;
         border-color: transparent;
         background: #023e70;
-      }
+    }
 
-  }
-  .p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
+}
+
+.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
     margin-bottom: 0.5rem;
     visibility: hidden;
     position: absolute;
-  }
+}
 
-  .p-button .p-component .p-button-sm{
+.p-button .p-component .p-button-sm {
     background-color: #003056;
-  }
+}
 
-.p-datatable .p-datatable-tbody > tr{
+.p-datatable .p-datatable-tbody>tr {
     font-size: 13px;
-    .employee_name{
+
+    .employee_name {
         font-weight: bold;
         font-size: 13.5px;
     }
 
 
-  }
-  .p-datatable .p-datatable-tbody > tr > td {
+}
+
+.p-datatable .p-datatable-tbody>tr>td {
     text-align: left;
     border: 1px solid #dee2e6;
-      border-top-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
-      border-left-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
     border-width: 0 0 1px 0;
     padding: 1rem 0.6rem;
 
-  }
-  .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
+}
+
+.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
     width: 20%;
-  }
+}
+
 //   .main-content{
 //     width: 105%;
 //   }
@@ -322,6 +342,7 @@
     font-weight: 700;
 
 }
+
 .p-button.p-component.p-button-success.Button {
     padding: 8px;
 }
@@ -330,76 +351,87 @@
     font-weight: 700;
     color: #ff2634;
 }
+
 .p-button.p-component.p-button-danger.Button {
     padding: 8px;
-  }
+}
 
-  .p-confirm-dialog-icon.pi.pi-exclamation-triangle {
+.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
     color: red;
-  }
-  .p-button.p-component.p-confirm-dialog-accept {
+}
+
+.p-button.p-component.p-confirm-dialog-accept {
     background-color: #003056;
-  }
-  .p-button.p-component.p-confirm-dialog-reject.p-button-text {
+}
+
+.p-button.p-component.p-confirm-dialog-reject.p-button-text {
     color: #003056;
-  }
-  .p-column-filter-overlay-menu .p-column-filter-buttonbar {
+}
+
+.p-column-filter-overlay-menu .p-column-filter-buttonbar {
     padding: 1.25rem;
     position: absolute;
     visibility: hidden;
-  }
-  .p-datatable .p-datatable-thead > tr > th .p-column-filter {
+}
+
+.p-datatable .p-datatable-thead>tr>th .p-column-filter {
     width: 53%;
-  }
-  .p-datatable .p-datatable-thead > tr > th .p-column-filter-menu-button {
+}
+
+.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
     color: white;
     border-color: transparent;
 
-  }
-  .p-column-filter-menu-button.p-column-filter-menu-button-open{
+}
+
+.p-column-filter-menu-button.p-column-filter-menu-button-open {
     background: none;
-  }
+}
 
- .p-column-filter-menu-button.p-column-filter-menu-button-active{
+.p-column-filter-menu-button.p-column-filter-menu-button-active {
     background: none;
 
-  }
+}
 
 
- /* For Sort */
+/* For Sort */
 
- .p-datatable .p-sortable-column:not(.p-highlight):hover {
+.p-datatable .p-sortable-column:not(.p-highlight):hover {
     background: #003056;
-    color:white;
-  }
-  .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-      color:white
-  }
-   .p-datatable .p-sortable-column.p-highlight {
-    background: #003056;
-    color:white;
-  }
+    color: white;
+}
 
-  .p-datatable .p-sortable-column.p-highlight:hover {
+.p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
+    color: white
+}
+
+.p-datatable .p-sortable-column.p-highlight {
     background: #003056;
-    color:white;
-  }
-  .p-datatable .p-sortable-column:focus {
+    color: white;
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover {
+    background: #003056;
+    color: white;
+}
+
+.p-datatable .p-sortable-column:focus {
     box-shadow: none;
     outline: none;
     color: white;
-  }
-  .p-datatable .p-sortable-column .p-sortable-column-icon{
-    color:white
-  }
-  .pi-sort-amount-down::before {
+}
+
+.p-datatable .p-sortable-column .p-sortable-column-icon {
+    color: white
+}
+
+.pi-sort-amount-down::before {
     content: "\e9a0";
     color: white;
-  }
-  .pi-sort-amount-up-alt::before {
+}
+
+.pi-sort-amount-up-alt::before {
     content: "\e9a2";
     color: white;
-  }
-
-
+}
 </style>

@@ -10,10 +10,10 @@
                         <div class="card-body flex">
                             <div>
                                 <div class="text-left" style="width: 170px;">
-                                    <p class=" text-muted fw-bold f-15" style="width: 210px;">
+                                    <p class=" text-muted font-semibold fs-5" style="width: 210px;">
                                         {{ events.name }}
                                     </p>
-                                    <p class="f-14 fw-bold text-orange program-day mt-2">
+                                    <p class="fs-6 fw-bold text-orange program-day mt-2">
                                         {{ dayjs(events.dob).format('DD') }}th {{ dayjs(events.dob).format('MMM') }}
                                     </p>
                                 </div>

@@ -220,8 +220,13 @@ class VmtProfilePagesService
         $response['short_name_Color'] = shortNameBGColor($user_short_name);
 
         $user_client_data = User::where('id', $user_id)->first();
+       
 
         $response['client_details'] = VmtClientMaster::where('id', $user_client_data->client_id)->first();
+
+        if(empty( $response['client_details'])){
+            $response['client_details'] ='';
+        }
 
         $general_info = \DB::table('vmt_client_master')->first();
 
@@ -235,7 +240,7 @@ class VmtProfilePagesService
 
         $response['Current_login_user'] = User::where('id',auth()->user()->id)->first();
 
-        $response['payroll_summary'] = VmtEmployeePaySlipV2::join('vmt_emp_payroll', 'vmt_emp_payroll.id', '=', 'vmt_employee_payslip_v2.emp_payroll_id')
+        $payroll_summary = VmtEmployeePaySlipV2::join('vmt_emp_payroll', 'vmt_emp_payroll.id', '=', 'vmt_employee_payslip_v2.emp_payroll_id')
             ->join('vmt_payroll', 'vmt_payroll.id', 'vmt_emp_payroll.payroll_id')
             ->join('users', 'users.id', 'vmt_emp_payroll.user_id')
             ->where('users.id', '=', $user_id)
@@ -246,6 +251,12 @@ class VmtProfilePagesService
                 'vmt_employee_payslip_v2.lop'
             ]);
 
+            if(!empty($payroll_summary)){
+
+                 $response['payroll_summary'] =$payroll_summary;
+            }else{
+                $response['payroll_summary'] ='';
+            }
         //Add the documents details
 
         $response['avatar'] = $this->getProfilePicture($response->user_code);

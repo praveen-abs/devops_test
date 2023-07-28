@@ -439,6 +439,24 @@ function getEmployeeAvatarOrShortName($user_id)
     }
 }
 
+function getCurrentUserGender(){
+
+    $currentuserid = auth()->user()->id;
+    $emp_gender = VmtEmployee::where('userid', $currentuserid)->first()->gender;
+    $lowerCaseGender =  strtolower($emp_gender);
+
+    if ($lowerCaseGender == 'male') {
+        return "male";
+    } else 
+    if ($lowerCaseGender == 'female') {
+        return "female";
+    }
+    else
+    {
+        return "invalid gender";
+    }
+}
+
 function newgetEmployeeAvatarOrShortName($user_id)
 {
 

@@ -49,7 +49,7 @@
         <template #header>
             <h6 class="mb-4 modal-title fs-21">
                 Leave Request</h6>
-        </template>
+    </template>
 
 
         <!-- Select leave type Dropdown -->
@@ -62,7 +62,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <div class="form-group">
-                            <Dropdown editable @change="service.Permission" style="  height: 38px;font-weight: 500;"
+                            <Dropdown  @change="service.Permission" style="  height: 38px;font-weight: 500;"
                                 class="w-full" v-model="service.leave_data.selected_leave" :options="service.leave_types"
                                 optionLabel="leave_type" optionValue="leave_type" placeholder="Select Leave Type" :class="[
                                     v$.selected_leave.$error ? 'p-invalid' : '',
@@ -118,7 +118,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.full_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
+                            :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
                                 f$.full_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
                         <span v-if="f$.full_day_leave_date.$error" class="font-semibold text-red-400 fs-6">
@@ -138,7 +138,7 @@
                     </div>
                     <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
                         <Calendar inputId="icon" v-model="service.leave_data.half_day_leave_date" dateFormat="dd-mm-yy"
-                            :showIcon="true" style="width: 350px;" :minDate="first_day_of_the_month" :class="[
+                            :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
                                 h$.half_day_leave_date.$error ? 'p-invalid' : '',
                             ]" />
                         <span v-if="h$.half_day_leave_date.$error" class="font-semibold text-red-400 fs-6">
@@ -248,19 +248,37 @@
                 <!-- Permisson -->
 
                 <div v-if="service.Permission_format" class="mb-2 row">
+                    <div  class="mb-3 row">
+                        <div class="mb-3 col-md-12 col-sm-12 col-lg-4 col-xl-5 col-xxl-5 mb-md-0">
+                            <label for="">Date<span class="text-danger">*</span>
+                            </label>
+                        </div>
+                        <div class="mb-3 col-md-12 col-sm-12 col-lg-8 col-xl-6 col-xxl-6 mb-md-0">
+                            <Calendar inputId="icon" v-model="service.leave_data.permission_date" dateFormat="dd-mm-yy"
+                                :showIcon="true" style="width: 350px;" :maxDate="new Date()" :class="[
+                                    p$.permission_date.$error ? 'p-invalid' : '',
+                                ]" />
+                            <span v-if="p$.permission_date.$error" class="font-semibold text-red-400 fs-6">
+                                {{ p$.permission_date.required.$message.replace( "Value", "Date"  ) }}
+                            </span>
+                        </div>
+                    </div>
                     <div class="mb-3 col-md-4 mb-md-0">
                         <div class="form-group">
                             <div class="floating">
 
                                 <label for="" class="float-label">Start time</label>
-                                <span class=" p-input-icon-right">
+                                <span class=" p-input-icon-right"  >
                                     <Calendar inputId="time12" v-model="service.leave_data.permission_start_time"
-                                        :timeOnly="true" hourFormat="12" icon="your-icon" />
+                                        :timeOnly="true" hourFormat="12" icon="your-icon"  :class="[
+                                            p$.permission_start_time.$error ? 'p-invalid' : '',
+                                        ]" />
                                     <i class="pi pi-clock" />
                                 </span>
-
                             </div>
-
+                            <span v-if="p$.permission_start_time.$error" class="font-semibold text-red-400 fs-6">
+                                {{ p$.permission_start_time.required.$message.replace( "Value", "Permission start time") }}
+                            </span>
                         </div>
                     </div>
                     <div class="mb-3 col-md-3 mb-md-0 ms-5">
@@ -286,13 +304,15 @@
                                 <span class=" p-input-icon-right">
                                     <Calendar inputId="time12" v-model="service.leave_data.permission_end_time"
                                         :timeOnly="true" hourFormat="12" icon="your-icon"
-                                        @date-select="service.time_difference" />
+                                        @date-select="service.time_difference" :class="[
+                                            p$.permission_end_time.$error ? 'p-invalid' : '',
+                                        ]" />
                                     <i class="pi pi-clock" />
                                 </span>
-
-
-
                             </div>
+                            <span v-if="p$.permission_end_time.$error" class="font-semibold text-red-400 fs-6">
+                                {{ p$.permission_end_time.required.$message.replace( "Value", "Permission end time") }}
+                            </span>
                         </div>
                     </div>
 
@@ -325,7 +345,7 @@
                         </MultiSelect>
                         <p class="opacity-50 fs-10">(note:Worked dates will get expired after 60 days)</p>
                         <span v-if="cp$.selected_compensatory_leaves.$error" class="font-semibold text-red-400 fs-6">
-                            {{ cp$.selected_compensatory_leaves.required.$message.replace( "Value", "Compensatory Working Date's "  )}}
+                            {{ cp$.selected_compensatory_leaves.required.$message.replace( "Value", "Compensatory Working Date's ")}}
                         </span>
                     </div>
                     <div class="mb-3 col-md-4 col-sm-12 col-lg-4 col-xl-4 col-xxl-3 mb-md-0 ">
@@ -506,6 +526,16 @@ const reason_rules = computed(() => {
     }
 })
 
+
+ const permissionRules = computed(() => {
+    return {
+        permission_date: { required },
+        permission_start_time: { required },
+        permission_total_time: { required },
+        permission_end_time: { required },
+    }
+})
+
 const compNegative = (value) =>{
     if(value < 0){
         return false
@@ -527,6 +557,7 @@ const h$ = useValidate(half_day_rules, service.leave_data)
 const c$ = useValidate(custom_day_rules, service.leave_data)
 const cp$ = useValidate(compen_day_rules, service.leave_data)
 const r$ = useValidate(reason_rules, service.leave_data)
+const p$ = useValidate(permissionRules,service.leave_data)
 
 const v$ = useValidate(rules, service.leave_data)
 
@@ -534,7 +565,6 @@ const submitForm = () => {
     v$.value.$validate() // checks all inputs
     if (!v$.value.$error) {
         // if ANY fail validation
-        console.log('Form successfully submitted.')
         console.log(service.leave_data.selected_leave);
 
         if(service.leave_data.selected_leave.includes('Compensatory')){
@@ -590,14 +620,13 @@ const submitForm = () => {
         } else {
             console.log('Form failed validation')
         }
-    }else if(service.leave_data.selected_leave.includes('Permissions')){
-        console.log(service.leave_data.permission_total_time);
-        if (!h$.value.$error) {
-            // if ANY fail validation
-            console.log('Form successfully submitted.')
+    }
+    if(service.leave_data.selected_leave.includes('Permission')){
+        p$.value.$validate()
+        if (!p$.value.$error) {
             r$.value.$validate()
             if (!r$.value.$error) {
-                service.Submit()
+             service.Submit()
             }
         } else {
             console.log('Form failed validation')

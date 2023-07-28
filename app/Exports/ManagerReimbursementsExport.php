@@ -84,6 +84,8 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
 
+        //For Remove Grid Lines
+        $sheet->setShowGridlines(false);
         //For First Row
         $sheet->mergeCells('A1:D1')->setCellValue('A1', "Legal Entity : ".$this->legal_entity);
         $sheet->getStyle('A1:D1')->getFont()->setBold(true);
