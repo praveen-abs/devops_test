@@ -78,11 +78,96 @@ class VmtReimbursementsService {
             ]);
         }
         catch(\Exception $e){
-
+            return response()->json([
+                'status' => 'failure',
+                'message'=> 'Error while getting Reimbursement Claim Types',
+                'data'=> $e->getMessage()
+            ]);
         }
     }
 
+    public function saveReimbursementData_Claims($user_code, $date, $reimbursement_type, $claim_amount, $user_comments, $file_upload, $entry_mode){
 
+        $validator = Validator::make(
+            $data = [
+                    'user_code' => $user_code,
+                    'date' => $date,
+                    'reimbursement_type' => $reimbursement_type,
+                    'claim_amount' => $claim_amount,
+                    'user_comments'=> $user_comments,
+                    'file_upload'=> $file_upload,
+                    'entry_mode'=> $entry_mode,
+                ],
+                $rules = [
+                    'user_code' => 'required|exists:users,user_code',
+                    'date' => 'required',
+                    'reimbursement_type' => 'required|exists:vmt_reimbursements,reimbursement_type',
+                    'claim_amount' => 'required',
+                    'user_comments'=> 'required',
+                    'file_upload'=> 'required',
+                    'entry_mode'=> 'required',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                    "exists" => "Field :attribute is invalid",
+                ]
+            );
+
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
+
+            try{
+
+
+                //check if reimbursements already applied for the given date by the user..
+                $query_reimbursements_exists = VmtEmployeeReimbursements::where('user_id', User::where('user_code', $user_code)->first()->id)
+                                                ->where('date', $date);
+
+
+                if($query_reimbursements_exists->exists())
+                {
+                    return response()->json([
+                        "status" => "failure",
+                        "message" => "Reimbursement Claims already applied for the given date",
+                        "data"=> ""
+                    ]);
+                }
+
+                //Save the reimbursement data
+                $emp_reimbursement_data = new VmtEmployeeReimbursements;
+                $emp_reimbursement_data->date = $date;
+                $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
+                $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
+                $emp_reimbursement_data->status = "Pending";
+                $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
+
+                //reimbursement details
+                $emp_reimbursement_data->user_comments = $user_comments ?? "";
+
+                $emp_reimbursement_data->total_expenses  = $claim_amount;
+
+                $emp_reimbursement_data->save();
+
+                return response()->json([
+                    'status' => 'success',
+                    'message'=> 'Reimbursement Claims details saved successfully',
+                    'data'=> ''
+                ]);
+            }
+            catch(\Exception $e){
+                return response()->json([
+                    'status' => 'failure',
+                    'message'=> 'Failed to save Reimbursement Claims data !',
+                    'data'=> $e->getMessage()
+                ]);
+            }
+
+    }
 
     public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $entry_mode, $vehicle_type, $from, $to, $distance_travelled, $user_comments)
     {
