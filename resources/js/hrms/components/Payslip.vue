@@ -2,12 +2,11 @@
     <div>
         <!-- Your HTML content goes here -->
         <div ref="contentToConvert">
-            <div class="p-4 bg-white" v-for="empDetails in getpayslipdetails" :key="empDetails">
-                {{ empDetails }}
+            <div class="p-4 bg-white">
                 <div class=" grid grid-cols-2">
                     <div>
-                        <p>Payslip <strong>{{new Date(empDetails.payroll_date).getMonth()}}</strong></p>
-                        <p>{{empDetails.client_fullname}}</p>
+                        <!-- <p>Payslip <strong>{{new Date(empDetails.payroll_date).getMonth()}}</strong></p> -->
+                        <!-- <p>{{empDetails.client_fullname}}</p> -->
                         <p>Address</p>
                     </div>
                     <div>
@@ -17,8 +16,9 @@
                 <div class="my-4  grid grid-cols-1">
                     <p class="font-semibold">Narasimman</p>
                     <div class="border-t-2 border-t-black w-full"></div>
-                    <div class=" grid grid-cols-4 p-2 my-2 line-after-four-divs">
-                        <div class="my-2">
+                    <div class=" grid grid-cols-4 p-2 my-2 line-after-four-divs" >
+                        <div class="my-2"  v-for="empDetails in getpayslipdetails" :key="empDetails">
+                            {{ empDetails }}
                             <p class="text-lg font-medium text-gray-700">Employee Code</p>
                             <p class="font-semibold fs-6">BA002</p>
                         </div>
