@@ -277,4 +277,11 @@ class VmtPayCheckController extends Controller
 
      }
 
+
+     public function generatePayslip(Request $request, VmtEmployeePayCheckService $employeePaySlipService){
+
+        return $employeePaySlipService->generatePayslip($request->user_code, $request->payroll_date);
+
+
+     }
 }

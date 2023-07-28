@@ -1120,6 +1120,52 @@ $response['single_payslip_detail'][0]['PAYROLL_MONTH']=$query_payslip->payroll_d
             ]);
         }
 
-
     }
+
+public function generatePayslip($user_code, $payroll_date){
+
+    $user_code = "BA002";
+    $payroll_date  = "2022-07-01";
+
+    $getpayslip    =  VmtPayroll::join('vmt_client_master','vmt_client_master.id','=','vmt_payroll.client_id')
+                                ->join('vmt_emp_payroll','vmt_emp_payroll.payroll_id','=','vmt_payroll.id')
+                                ->join('users','users.id','=','vmt_emp_payroll.user_id')
+                                ->join('vmt_employee_payslip_v2','vmt_employee_payslip_v2.emp_payroll_id','=','vmt_emp_payroll.id')
+                                ->where('user_code' , $user_code )
+                                ->where('payroll_date' , $payroll_date )
+
+    ->get()->toArray();
+
+
+    // Remove empty value
+
+    $get_payslip_details = [];
+        foreach($getpayslip as $single_payslip){
+            foreach($single_payslip as $key => $single_details){
+
+                if($single_details == "0" || $single_details == null || $single_details == "" ){
+                    unset($single_payslip[$key]);
+                }
+            }
+                 array_push($get_payslip_details,$single_payslip);
+        }
+        return ($get_payslip_details);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
 }
