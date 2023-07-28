@@ -6,6 +6,7 @@ import { required, email, minLength, sameAs, helpers } from '@vuelidate/validato
 import axios from "axios";
 import { inject } from "vue";
 import { useToast } from "primevue/usetoast";
+import { value } from "dom7";
 
 
 
@@ -362,7 +363,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const validateFile = (value) => {
-
         if (value) {
             if (value.type == 'image/jpeg' || value.type == 'image/png' || value.type == 'application/pdf') {
                 return true
@@ -372,8 +372,15 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         } else {
             return true
         }
+    }
 
-
+    const isMarried = (value) => {
+        console.log(employee_onboarding.marital_status);
+        if (employee_onboarding.marital_status == 2) {
+            return false
+        } else {
+            return true
+        }
     }
 
     const rules = computed(() => {
@@ -528,36 +535,13 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             mother_name: { required },
             dob_mother: { required },
             spouse_name: {
-                // required: helpers.withMessage('Spouse name is required', () => {
-                //     console.log(employee_onboarding.marital_status.name);
-                //     if (employee_onboarding.marital_status == 2) {
-                //         return false
-                //     } else {
-                //         return true
-
-                //     }
-                // })
+                isMarried: helpers.withMessage('Spouse name is required', isMarried)
             },
-            wedding_date: {},
             spouse_gender: {
-                // required: helpers.withMessage('Spouse gender is required', () => {
-                //     if (employee_onboarding.marital_status == 2) {
-                //         return false
-                //     } else {
-                //         return true
-
-                //     }
-                // })
+                isMarried: helpers.withMessage('Spouse gender is required', isMarried)
             },
             dob_spouse: {
-                // required: helpers.withMessage('Spouse dob is required', () => {
-                //     if (employee_onboarding.marital_status == 2) {
-                //         return false
-                //     } else {
-                //         return true
-
-                //     }
-                // })
+                isMarried: helpers.withMessage('Spouse dob is required', isMarried)
             },
 
             // Compensatory
@@ -657,7 +641,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         formData.append("emp_notice", employee_onboarding.emp_notice);
         formData.append(
             "confirmation_period",
-            employee_onboarding.confirmation_period ?   moment(employee_onboarding.confirmation_period).format('YYYY-MM-DD') : employee_onboarding.confirmation_period
+            employee_onboarding.confirmation_period ? moment(employee_onboarding.confirmation_period).format('YYYY-MM-DD') : employee_onboarding.confirmation_period
         );
         formData.append("father_name", employee_onboarding.father_name);
         if (employee_onboarding.dob_father == '') {
@@ -735,7 +719,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         axios
             .post("/vmt-employee-onboard", formData)
             .then((response) => {
-                if(response.status == 'success'){
+                if (response.data.status == 'success') {
                     Swal.fire({
                         title: response.data.status = "success",
                         text: response.data.message,
@@ -749,12 +733,12 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                         }
 
                     });
-                }else{
+                } else {
                     Swal.fire(
                         'Failure',
                         `${response.data.message}`,
                         'error'
-                      )
+                    )
                 }
 
 
