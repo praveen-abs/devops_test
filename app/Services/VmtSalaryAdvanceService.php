@@ -71,7 +71,7 @@ class VmtSalaryAdvanceService
             $emp_name = User::where('id', $user_id)->first()->name;
             // dd( $emp_name);
             $emp_mail = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->officical_mail;
-            $isSent    = \Mail::to($emp_mail)
+            $empApplyLoanMail = \Mail::to($emp_mail)
                 ->send(new EmpApplyLoanMail(
                     $emp_name,
                     $loan_type,
@@ -79,8 +79,8 @@ class VmtSalaryAdvanceService
                     request()->getSchemeAndHttpHost(),
                     $emp_image
                 ));
-
-
+            $approveRejectLoanAndSaladvMail = 
+          
             $data['msg'] = $loan_type . " Applied Successfully";
         } catch (TransportException $e) {
             $status = 'failure';
