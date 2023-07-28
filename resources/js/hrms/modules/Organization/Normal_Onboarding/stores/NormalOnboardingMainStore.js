@@ -6,6 +6,7 @@ import { required, email, minLength, sameAs, helpers } from '@vuelidate/validato
 import axios from "axios";
 import { inject } from "vue";
 import { useToast } from "primevue/usetoast";
+import { value } from "dom7";
 
 
 
@@ -362,18 +363,24 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
 
 
     const validateFile = (value) => {
-
-        if(value){
+        if (value) {
             if (value.type == 'image/jpeg' || value.type == 'image/png' || value.type == 'application/pdf') {
                 return true
             } else {
                 return false
             }
-        }else{
+        } else {
             return true
         }
+    }
 
-
+    const isMarried = (value) => {
+        console.log(employee_onboarding.marital_status);
+        if (employee_onboarding.marital_status == 2) {
+            return false
+        } else {
+            return true
+        }
     }
 
     const rules = computed(() => {
@@ -381,8 +388,6 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         return {
             employee_code: {},
             employee_name: { required },
-            dob: {
-            },
             gender: {},
             passport_number: {},
             passport_date: {},
@@ -530,41 +535,18 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
             mother_name: { required },
             dob_mother: { required },
             spouse_name: {
-                // required: helpers.withMessage('Spouse name is required', () => {
-                //     console.log(employee_onboarding.marital_status.name);
-                //     if (employee_onboarding.marital_status == 2) {
-                //         return false
-                //     } else {
-                //         return true
-
-                //     }
-                // })
+                isMarried: helpers.withMessage('Spouse name is required', isMarried)
             },
-            wedding_date: {},
             spouse_gender: {
-                // required: helpers.withMessage('Spouse gender is required', () => {
-                //     if (employee_onboarding.marital_status == 2) {
-                //         return false
-                //     } else {
-                //         return true
-
-                //     }
-                // })
+                isMarried: helpers.withMessage('Spouse gender is required', isMarried)
             },
             dob_spouse: {
-                // required: helpers.withMessage('Spouse dob is required', () => {
-                //     if (employee_onboarding.marital_status == 2) {
-                //         return false
-                //     } else {
-                //         return true
-
-                //     }
-                // })
+                isMarried: helpers.withMessage('Spouse dob is required', isMarried)
             },
 
             // Compensatory
 
-            cic:{},
+            cic: {},
 
             // Personal Documents
 
@@ -600,7 +582,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         formData.append("pan_number", employee_onboarding.pan_number);
         formData.append("passport_date", employee_onboarding.passport_date);
         formData.append("AccountNumber", employee_onboarding.AccountNumber);
-        formData.append("dob", employee_onboarding.doj ? moment(employee_onboarding.dob).format('YYYY-MM-DD') : employee_onboarding.doj);
+        formData.append("dob", employee_onboarding.dob ? moment(employee_onboarding.dob).format('YYYY-MM-DD') : employee_onboarding.dob);
         formData.append("mobile_number", employee_onboarding.mobile_number);
         formData.append("dl_no", employee_onboarding.dl_no);
         formData.append("blood_group_name", employee_onboarding.blood_group_name);
@@ -659,7 +641,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         formData.append("emp_notice", employee_onboarding.emp_notice);
         formData.append(
             "confirmation_period",
-            employee_onboarding.confirmation_period
+            employee_onboarding.confirmation_period ? moment(employee_onboarding.confirmation_period).format('YYYY-MM-DD') : employee_onboarding.confirmation_period
         );
         formData.append("father_name", employee_onboarding.father_name);
         if (employee_onboarding.dob_father == '') {
@@ -737,23 +719,28 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
         axios
             .post("/vmt-employee-onboard", formData)
             .then((response) => {
-                // currentObj.success = response.data.success;
-                // console.log("response" + response.data);
-                // console.log(Object(response.data));
-                Swal.fire({
-                    title: response.data.status = "success",
-                    text: response.data.message,
-                    icon: "success",
-                    showCancelButton: false,
-                }).then((result) => {
-                    if (checkIsQuickOrNormal.value == 'quick') {
-
-                        if (response.data.can_redirect == "1") {
-                            window.location.reload();
+                if (response.data.status == 'success') {
+                    Swal.fire({
+                        title: response.data.status = "success",
+                        text: response.data.message,
+                        icon: "success",
+                        showCancelButton: false,
+                    }).then((result) => {
+                        if (checkIsQuickOrNormal.value == 'quick') {
+                            if (response.data.can_redirect == "1") {
+                                window.location.reload();
+                            }
                         }
-                    }
 
-                });
+                    });
+                } else {
+                    Swal.fire(
+                        'Failure',
+                        `${response.data.message}`,
+                        'error'
+                    )
+                }
+
 
                 employee_onboarding.save_draft_messege = response.data;
 
@@ -789,17 +776,22 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                         RequiredDocument.value = true
                     }
                 } else
-                if(isEmployeeOnboard == 1)
-                 {
-                    if (!v$.value.$error) {
-                        // if ANY fail validation
-                        console.log('Form successfully submitted.')
-                        submit()
-                        v$.value.$reset()
-                    } else {
-                        console.log('Form failed validation')
+                    if (isEmployeeOnboard == 1) {
+                        if (!v$.value.$error) {
+                            // if ANY fail validation
+                            console.log('Form successfully submitted.')
+                            submit()
+                            v$.value.$reset()
+                        } else {
+                            console.log('Form failed validation')
+                            toast.add({
+                                severity: "error",
+                                summary: "Invalid",
+                                detail: "fill mandatory fields",
+                                life: 3000,
+                            });
+                        }
                     }
-                }
             }
 
         } else {
@@ -1344,10 +1336,142 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     })
 
 
+
+
     const compen_disable = ref(true)
 
 
 
+    const restChars = () => {
+        employee_onboarding.can_onboard_employee = 1
+        employee_onboarding.emp_client_code = ''
+        employee_onboarding.employee_code = ""
+        employee_onboarding.doj = ""
+        employee_onboarding.aadhar_number = ""
+        employee_onboarding.passport_number = ""
+        employee_onboarding.bank_id = ""
+        employee_onboarding.bank_name = ""
+        employee_onboarding.employee_name = ""
+        employee_onboarding.gender = ""
+        employee_onboarding.pan_number = ""
+        employee_onboarding.passport_date = ""
+        employee_onboarding.AccountNumber = ""
+        employee_onboarding.dob = ""
+        employee_onboarding.mobile_number = ""
+        employee_onboarding.dl_no = ""
+        employee_onboarding.blood_group_name = ""
+        employee_onboarding.blood_group_id = ""
+        employee_onboarding.bank_ifsc = ""
+        employee_onboarding.marital_status = ""
+        employee_onboarding.marital_status_id = ""
+        employee_onboarding.email = ""
+        employee_onboarding.nationality = ""
+        employee_onboarding.physically_challenged = ""
+        employee_onboarding.first_letter_emp_name = ''
+        employee_onboarding.second_letter_emp_name = ''
+
+        // person Detials End
+
+        // Address detials
+
+        // Current Address Detials Start
+
+        employee_onboarding.current_address_line_1 = ""
+        employee_onboarding.current_address_line_2 = ""
+        employee_onboarding.current_country = ""
+        employee_onboarding.current_state = ""
+        employee_onboarding.current_country_id = ""
+        employee_onboarding.current_state_id = ""
+        employee_onboarding.current_city = ""
+        employee_onboarding.current_pincode = ""
+
+        // Current Address Details End
+
+        // Permanant Address Start
+
+        employee_onboarding.permanent_address_line_1 = ""
+        employee_onboarding.permanent_address_line_2 = ""
+        employee_onboarding.permanent_country = ""
+        employee_onboarding.permanent_state = ""
+        employee_onboarding.permanent_country_id = ""
+        employee_onboarding.permanent_state_id = ""
+        employee_onboarding.permanent_city = ""
+        employee_onboarding.permanent_pincode = ""
+
+        // Permanant Address end
+
+        // Office Detials Start
+
+        employee_onboarding.department = ""
+        employee_onboarding.department_id = ""
+        employee_onboarding.process = ""
+        employee_onboarding.designation = ""
+        employee_onboarding.cost_center = ""
+        employee_onboarding.probation_period = ""
+        employee_onboarding.work_location = ""
+        employee_onboarding.l1_manager_code = ""
+        employee_onboarding.l1_manager_code_id = ""
+        employee_onboarding.holiday_location = ""
+        employee_onboarding.officical_mail = ""
+        employee_onboarding.official_mobile = ""
+        employee_onboarding.emp_notice = ""
+        employee_onboarding.confirmation_period = ""
+
+        // Office Details End
+
+        // family Details Start
+
+        employee_onboarding.father_name = ""
+        employee_onboarding.dob_father = ""
+        employee_onboarding.father_gender = "Male"
+        employee_onboarding.father_age = ""
+        employee_onboarding.mother_name = ""
+        employee_onboarding.dob_mother = ""
+        employee_onboarding.mother_gender = "Female"
+        employee_onboarding.mother_age = ""
+        employee_onboarding.spouse_name = ""
+        employee_onboarding.wedding_date = ""
+        employee_onboarding.spouse_gender = ""
+        employee_onboarding.dob_spouse = ""
+        employee_onboarding.no_of_children = ""
+
+        // family Details End
+
+        //   compensatory Detials start
+
+        employee_onboarding.basic = ""
+        employee_onboarding.hra = ""
+        employee_onboarding.statutory_bonus = ""
+        employee_onboarding.child_education_allowance = ""
+        employee_onboarding.food_coupon = ""
+        employee_onboarding.lta = ""
+        employee_onboarding.other_allowance = ""
+        employee_onboarding.special_allowance = ""
+        employee_onboarding.graduity = ""
+        employee_onboarding.cic = ""
+        employee_onboarding.insurance = ""
+        employee_onboarding.epf_employee = ""
+        employee_onboarding.epf_employer_contribution = ""
+        employee_onboarding.esic_employee = ""
+        employee_onboarding.esic_employer_contribution = ""
+        employee_onboarding.professional_tax = ""
+        employee_onboarding.labour_welfare_fund = ""
+        employee_onboarding.net_income = "0"
+        employee_onboarding.total_ctc = 0
+
+        // Personal Documents Start
+
+        employee_onboarding.AadharCardFront = ""
+        employee_onboarding.AadharCardBack = ""
+        employee_onboarding.PanCardDoc = ""
+        employee_onboarding.DrivingLicenseDoc = ""
+        employee_onboarding.EductionDoc = ""
+        employee_onboarding.VoterIdDoc = ""
+        employee_onboarding.RelievingLetterDoc = ""
+        employee_onboarding.PassportDoc = ""
+
+        employee_onboarding.save_draft_messege = ""
+    }
 
 
     return {

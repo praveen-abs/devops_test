@@ -142,16 +142,9 @@
                                     'p-invalid': v$.spouse_name.$error,
                                 }" v-model="service.employee_onboarding.spouse_name" />
 
-                            <span v-if="(v$.spouse_name.$error) ||
-                                v$.spouse_name.$pending.$response
-                                " class="p-error">
-                                {{
-                                    v$.spouse_name.required.$message.replace(
-                                        "Value",
-                                        "Spouse Name"
-                                    )
-                                }}
-                            </span>
+                                <span v-if="v$.spouse_name.$error" class="font-medium text-red-400 fs-6">
+                                    {{ v$.spouse_name.$errors[0].$message }}
+                                </span>
                         </div>
                     </div>
 
@@ -164,16 +157,9 @@
                                     'p-invalid': v$.dob_spouse.$error,
                                 }" @date-select="service.fnCalculateAge" />
 
-                            <span v-if="(v$.dob_spouse.$error) ||
-                                v$.dob_spouse.$pending.$response
-                                " class="p-error">
-                                {{
-                                    v$.dob_spouse.required.$message.replace(
-                                        "Value",
-                                        "Spouse Date of Birth"
-                                    )
-                                }}
-                            </span>
+                                <span v-if="v$.spouse_name.$error" class="font-medium text-red-400 fs-6">
+                                    {{ v$.spouse_name.$errors[0].$message }}
+                                </span>
                         </div>
                     </div>
                     <div v-if="service.isSpouseDisable" class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -192,18 +178,9 @@
                                     'is-invalid': v$.spouse_gender.$error,
                                 }, service.readonly.spouse ? 'bg-gray-200' : '']" :readonly="true" />
 
-
-
-                            <span v-if="(v$.spouse_gender.$error) ||
-                                v$.spouse_gender.$pending.$response
-                                " class="p-error">
-                                {{
-                                    v$.spouse_gender.required.$message.replace(
-                                        "Value",
-                                        "Spouse Gender"
-                                    )
-                                }}
-                            </span>
+                                <span v-if="v$.spouse_name.$error" class="font-medium text-red-400 fs-6">
+                                    {{ v$.spouse_name.$errors[0].$message }}
+                                </span>>
                         </div>
                     </div>
                     <div v-if="service.isSpouseDisable" class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
@@ -230,11 +207,9 @@
                             <label for="" class="float-label">Date of Wedding</label>
 
                             <Calendar inputId="icon" showIcon v-model="service.employee_onboarding.wedding_date" editable
-                                dateFormat="dd-mm-yy" placeholder="Date of Wedding" style="width: 350px;" :class="{
-                                    'p-invalid': v$.wedding_date.$error,
-                                }" @date-select="fnCalculateAge" />
+                                dateFormat="dd-mm-yy" placeholder="Date of Wedding" style="width: 350px;"  @date-select="fnCalculateAge" />
 
-                            <span v-if="(v$.wedding_date.$error) ||
+                            <!-- <span v-if="(v$.wedding_date.$error) ||
                                 v$.wedding_date.$pending.$response
                                 " class="p-error">
                                 {{
@@ -243,7 +218,7 @@
                                         "Date Of Wedding"
                                     )
                                 }}
-                            </span>
+                            </span> -->
                         </div>
                     </div>
                 </div>

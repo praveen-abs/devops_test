@@ -10,7 +10,8 @@
                         <div class="floating">
                             <label for="" class="float-label">Employee Code</label>
                             <div class="p-inputgroup flex-1">
-                                <span v-if="service.readonly.isDisableClientCode" class="p-inputgroup-addon font-semibold text-sm text-black ">
+                                <span v-if="service.readonly.isDisableClientCode"
+                                    class="p-inputgroup-addon font-semibold text-sm text-black ">
                                     {{ service.clientCode
                                     }}</span>
                                 <InputText
@@ -18,7 +19,7 @@
                                     class="capitalize form-onboard-form form-control textbox" type="text"
                                     :readonly="service.readonly.is_emp_code_quick"
                                     v-model="service.employee_onboarding.employee_code" placeholder="Employee Code"
-                                    @input="userCodeExists" @keypress="isNumber($event)" />
+                                    @focusout="userCodeExists" @keypress="isNumber($event)" />
                             </div>
                             <span v-if="service.user_code_exists" class="p-error">Employee code Already Exists</span>
 
@@ -55,19 +56,28 @@
                             <label for="" class="float-label">Date of Birth</label>
                             <Calendar inputId="icon" dropzone="true" v-model="service.employee_onboarding.dob" showIcon
                                 editable dateFormat="dd-mm-yy" placeholder="Date of birth" style="width: 350px;" class=""
-                                :maxDate="service.beforeYears(new Date())" />
+                                :maxDate="service.beforeYears(new Date())" :class="{
+                                    'p-invalid':
+                                        v$.dob.$error,
+                                }" />
 
-                            <!-- <span v-if="v$.dob.$error" class="font-medium text-red-600 fs-6">
-                                {{ v$.dob.$errors[0].$message }}
-                            </span> -->
+                            <span v-if="(v$.dob.$error) ||
+                                v$.dob.$pending.$response
+                                " class="p-error">
+                                {{
+                                    v$.dob.required.$message.replace(
+                                        "Value",
+                                        "Dob "
+                                    )
+                                }}</span>
                         </div>
                     </div>
                     <div class="mb-2 col-md-6 col-sm-12 col-xs-12 col-lg-3 col-xl-3">
                         <div class="floating">
                             <label for="" class="float-label">Marital Status <span class="text-danger">*</span></label>
                             <Dropdown v-model="service.employee_onboarding.marital_status" :options="service.maritalDetails"
-                                optionLabel="name" optionValue="id" placeholder="Select Martial Status" @change="service.spouseDisable"
-                                class="p-error" :class="{
+                                optionLabel="name" optionValue="id" placeholder="Select Martial Status"
+                                @change="service.spouseDisable" class="p-error" :class="{
                                     'p-invalid':
                                         v$.marital_status.$error,
                                 }" />
@@ -131,7 +141,7 @@
                         </div>
 
                         <span class="text-danger" v-if="service.is_mobile_no_exists">
-                            Mobile Number Is Already Exists
+                            Mobile Number is already exists
                         </span>
                         <span v-if="(v$.mobile_number.$error) ||
                             v$.mobile_number.$pending.$response
@@ -373,7 +383,8 @@ const v$ = useValidate(service.rules, service.employee_onboarding);
 
 
 const userCodeExists = () => {
-    let user_code = service.employee_onboarding.employee_code;
+    let user_code = `${service.employee_onboarding.emp_client_code}${service.employee_onboarding.employee_code}`;
+    console.log(user_code);
     axios
         .get(`/user-code-exists/${user_code}`)
         .then((res) => {
