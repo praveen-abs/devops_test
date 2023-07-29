@@ -1166,7 +1166,6 @@ class VmtEmployeePayCheckService
             ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
-            ->where('payroll_date', $payroll_date)
             ->get(
                 [
                    'vmt_employee_payslip_v2.month_days',
