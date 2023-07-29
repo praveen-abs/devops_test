@@ -365,7 +365,12 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text, $serviceVmtNotificationsService = $serviceVmtNotificationsService);
+        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
+                                approver_user_code : $request->approver_user_code,
+                                record_id : $request->record_id,
+                                status : $request->status,
+                                status_text : $request->status_text,
+                                serviceVmtNotificationsService : $serviceVmtNotificationsService);
 
         return $response;
 
