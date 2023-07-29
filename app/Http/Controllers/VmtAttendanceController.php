@@ -1290,6 +1290,16 @@ class VmtAttendanceController extends Controller
                                                                             );
 
     }
+
+    public function getAttendanceRegularizationStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->getAttendanceRegularizationStatus(
+            user_code : $request->user_code,
+            regularization_date : $request->regularization_date,
+            regularization_type : $request->regularization_type
+        );
+    }
+
     public function approveRejectAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
         return $serviceVmtAttendanceService->approveRejectAbsentRegularization(approver_user_code : $request->user_code,
