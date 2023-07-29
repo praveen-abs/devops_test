@@ -30,159 +30,16 @@
 
         </div>
     </div>
-
-    <!-- {{ att_regularization[0].employee_avatar }} -->
 </template>
+
+
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
 import attendance_regularization from "./attendance_regularization.vue";
 import absent_Regularization from "./absent_Regularization.vue";
-import moment from "moment";
-
-let att_regularization = ref();
-let canShowConfirmation = ref(false);
-let canShowLoadingScreen = ref(false);
-const confirm = useConfirm();
-const toast = useToast();
-const loading = ref(true);
-
-const filters = ref({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    employee_name: {
-        value: null,
-        matchMode: FilterMatchMode.STARTS_WITH,
-        matchMode: FilterMatchMode.EQUALS,
-        matchMode: FilterMatchMode.CONTAINS,
-    },
-
-    status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
-});
-
-const statuses = ref(["Pending", "Approved", "Rejected"]);
-
-let currentlySelectedStatus = null;
-let currentlySelectedRowData = null;
-
-onMounted(() => {
-    ajax_GetAttRegularizationData();
-});
-
-function ajax_GetAttRegularizationData() {
-    let url = window.location.origin + "/fetch-att-regularization-data";
-
-    console.log("AJAX URL : " + url);
-
-    axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
-        att_regularization.value = Object.values(response.data);
-        loading.value = false;
-    });
-}
-
-function showConfirmDialog(selectedRowData, status) {
-    canShowConfirmation.value = true;
-    currentlySelectedStatus = status;
-    currentlySelectedRowData = selectedRowData;
-
-    console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
-}
-
-function hideConfirmDialog(canClearData) {
-    canShowConfirmation.value = false;
-
-    if (canClearData) resetVars();
-}
-
-function resetVars() {
-    currentlySelectedStatus = "";
-    currentlySelectedRowData = null;
-}
-
-const getSeverity = (status) => {
-    switch (status) {
-        case 'Rejected':
-            return 'danger';
-
-        case 'Approved':
-            return 'success';
-
-
-        case 'Pending':
-            return 'warning';
-
-    }
-};
-
-////PrimeVue ConfirmDialog code -- Keeping here for reference
-//const confirm = useConfirm();
-
-// function confirmDialog(selectedRowData, status) {
-//     console.log("Showing confirm dialog now...");
-
-//     confirm.require({
-//         message: 'Are you sure you want to proceed?',
-//         header: 'Confirmation',
-//         icon: 'pi pi-exclamation-triangle',
-//         accept: () => {
-//             toast.add({severity:'info', summary:'Confirmed', detail:'You have '+status, life: 3000});
-//         },
-//         reject: () => {
-//             console.log("Rejected");
-//             //toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-//         }
-//     });
-// }
-
-const css_statusColumn = (data) => {
-    return [
-        {
-            pending: data.status === "Pending",
-            approved: data.status === "Approved",
-            rejected: data.status === "Rejected",
-        },
-    ];
-};
-
-function processApproveReject() {
-    hideConfirmDialog(false);
-
-    canShowLoadingScreen.value = true;
-
-    console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
-
-    axios
-        .post(window.location.origin + "/approveRejectAbsentRegularization", {
-            id: currentlySelectedRowData.id,
-            status:
-                currentlySelectedStatus == "Approve"
-                    ? "Approved"
-                    : currentlySelectedStatus == "Reject"
-                        ? "Rejected"
-                        : currentlySelectedStatus,
-            status_text: "",
-        })
-        .then((response) => {
-            console.log("Response : " + response);
-
-            canShowLoadingScreen.value = false;
-
-            toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
-            ajax_GetAttRegularizationData();
-
-            resetVars();
-        })
-        .catch((error) => {
-            canShowLoadingScreen.value = false;
-            resetVars();
-
-            console.log(error.toJSON());
-        });
-}
 </script>
+
+
+
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
 
