@@ -1,12 +1,4 @@
 
-@extends('layouts.master')
-@section('title')
-    @lang('translation.dashboards')
-@section('css')
-<link rel="stylesheet" href="{{ URL::asset('/assets/premassets/css/onboarding.css') }}">
-@endsection
-@endsection
-@section('content')
 <!-- @vite('resources/js/hrms/modules/exit/exit.js')
 <div id="Exit"></div> -->
 
@@ -19,6 +11,5 @@
 <!-- @vite('resources/js/hrms/modules/attendence/AttendanceModule.js')
 <div id="AttendanceModule"></div> -->
 
-@vite('resources/js/app.js')
-<div id="app"></div>
-@endsection
+@vite('resources/js/hrms/modules/Home/Home.js')
+<div id="Home"></div>

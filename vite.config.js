@@ -10,8 +10,10 @@ export default defineConfig({
             input: [
                 'resources/scss/main.scss',
                 'resources/scss/views/main_dashboard.scss',
-
                 'resources/js/app.js',
+
+                // Home
+                'resources/js/hrms/modules/Home/Home.js',
 
                 //Main dashboard
                 'resources/js/hrms/modules/dashboard/dashboard.js',
@@ -140,9 +142,9 @@ export default defineConfig({
                 'resources/js/hrms/modules/payroll/payroll_setting/payroll_setup/payroll_setup.js',
 
                 // super Admin screen
-              'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
-               // Admin screen roles And Permission
-              'resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js',
+                'resources/js/hrms/modules/approvals/roles_permission/RolesAndPermission.js',
+                // Admin screen roles And Permission
+                'resources/js/hrms/modules/approvals/roles_permission/AdminRoleAndPermission/AdminRolesPermission.js',
 
 
                 //PMS forms management
@@ -172,7 +174,7 @@ export default defineConfig({
                 //approvals_salary_advance
                 'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js',
 
-                // login page 
+                // login page
                 'resources/js/hrms/modules/login_Page/login_Page.js'
 
 
