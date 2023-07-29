@@ -111,6 +111,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                     </p>
                                     <div style="text-align: right">
                                         <a role="button"
+                                        href="https://ardens.in/"
                                             style="
                                         background-color: #003056;
                                         color: #fff;
@@ -142,6 +143,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
             <tr>
                 <td colspan="8" style="padding: 20px 30px;text-align:center;">
                     <a role="button"
+                    href="https://ardens.in/company/about-us/"
                         style="border:2px solid #003056;
                     color:#003056;
                     background-color:transparent;
@@ -206,9 +208,10 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                             <h5
                                                 style="font-size: 15px;margin:0;
                                         color: #ff3900;">
-                                                8+</h5>
+                                                172+</h5>
                                             <p style="margin: 0;color: #003056;">
-                                                cities
+                                                Enterpreneurs
+                                                served
                                             </p>
                                         </div>
 
@@ -217,28 +220,27 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                 style="font-size: 15px;
                                                 margin:0;
                                         color: #ff3900;">
-                                                10+</h5>
+                                                100+</h5>
                                             <p style="margin: 0;color: #003056;text-align:center">
-                                                Partners
-                                            </p>
-                                        </div>
-                                        <div style="padding: 0 10px 0 10px;text-align:center">
-                                            <h5
-                                                style="font-size: 15px;margin:0;
-                                        color: #ff3900;">
-                                                42+</h5>
-                                            <p style="margin: 0;color: #003056;">
                                                 Clients Served
                                             </p>
                                         </div>
                                         <div style="padding: 0 10px 0 10px;text-align:center">
                                             <h5
                                                 style="font-size: 15px;margin:0;
-                                            color: #ff3900;">
-                                                100+</h5>
+                                        color: #ff3900;">
+                                                8+</h5>
                                             <p style="margin: 0;color: #003056;">
-                                                Entrepreneurs
-                                                Served
+                                                Cities
+                                            </p>
+                                        </div>
+                                        <div style="padding: 0 10px 0 10px;text-align:center">
+                                            <h5
+                                                style="font-size: 15px;margin:0;
+                                            color: #ff3900;">
+                                                10+</h5>
+                                            <p style="margin: 0;color: #003056;">
+                                                Partners
                                             </p>
                                         </div>
 
@@ -269,6 +271,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                             <tr>
                                 <td colspan="8">
                                     <div style="text-align: center">
+                                        <h6
                                          style="margin:0;font-size:18px;color:#003056;">Login
                                             to your account
                                         </h6>
@@ -279,9 +282,9 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                         </p>
                                         <div style="padding-bottom:5px ">
                                             <p style="margin:0;">
-                                                Client Code
+                                                Client Email
                                             </p>
-                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">{{ $abs_client }}</p>
+                                            <p style="padding:5px 0;margin: 0;color:#FF4D00;font-weight:600;">{{ $uEmail }}</p>
                                         </div>
                                         <div style="padding-bottom:5px ">
                                             <p style="margin: 0;">Client Password </p>
