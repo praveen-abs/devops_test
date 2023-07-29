@@ -154,6 +154,11 @@ const filters = ref({
 });
 
 
+
+onUpdated(() => {
+    canShowConfirmation ? reviewer_comment.value = null : ''
+})
+
 onMounted(() => {
     getAbsentRegularization();
 })
