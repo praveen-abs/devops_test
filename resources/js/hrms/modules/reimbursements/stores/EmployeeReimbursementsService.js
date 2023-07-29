@@ -20,28 +20,45 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
     const reimbursements_dailog = ref(false);
 
     const employee_reimbursement = reactive({
-        type_id: 1,
         claim_type: "",
-        claim_amount: Number,
-        eligible_amount: Number,
+        claim_amount: 0,
+        eligible_amount: 0,
         date_of_dispatch: "",
         proof_of_delivery: "",
         reimbursment_remarks: "",
         employee_reimbursement_attachment: ''
     });
 
+    const reimbursement_claim_types = ref([
+        { label: "None", value: "None" },
+    ]);
 
     // getting Proof of reimbursements
 
-    const employee_reimbursement_attachment_upload = (e) => {
+    function onClaimsDocumentUploaded(e){
 
-        // Get uploaded file
-        employee_reimbursement.employee_reimbursement_attachment = e.target.files[0];
+        let uploadedFile = 0;
+        console.log(e);
 
-        // Print to console
-        console.log(employee_reimbursement.employee_reimbursement_attachment.file);
+        // Check if file is selected
+        if (e.target.files && e.target.files[0]) {
+
+            // Get uploaded file
+            uploadedFile = e.target.files[0];
+
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                console.log(reader.result);
+                // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+                employee_reimbursement.employee_reimbursement_attachment = reader.result;
+            };
+           reader.readAsDataURL(uploadedFile);
+
+            // Print to console
+            console.log("Uploaded Claims Document in BASE64  : "+employee_reimbursement.employee_reimbursement_attachment);
+        }
+
     }
-
 
     const onclickOpenReimbursmentDailog = () => {
         submitted.value = false;
@@ -64,22 +81,28 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         });
     };
 
+    // Reimbursement Claim types
+    async function getReimbursementClaimTypes(){
+
+        let url_all_reimbursements = "/reimbursements/getReimbursementClaimTypes";
+
+        console.log("AJAX URL : " + url_all_reimbursements);
+
+        await axios.get(url_all_reimbursements).then((response) => {
+            reimbursement_claim_types.value = response.data.data;
+            console.log("getReimbursementClaimTypes() : "+response.data);
+        });
+
+    }
+
 
     const onclickSwitchToReimbursmentTab = () => {
         reimbursementsScreen.value = true;
         localconverganceScreen.value = false;
     };
 
-    // Reimbursement Claim types
 
-    const reimbursment_claim_types = ref([
-        { label: "Mobile Bills", value: "Mobile Bills" },
-        { label: "Accommodation", value: "Accommodation" },
-        { label: "Travel Expenses", value: "Travel Expenses" },
-        { label: "Miscellaneous", value: "Miscellaneous" },
-        { label: "Medical Expenses", value: "Medical Expenses" },
-        { label: "Others", value: "Others" },
-    ]);
+
 
 
 
@@ -152,6 +175,62 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         });
     };
 
+
+    async function saveReimbursementClaimsData(){
+        console.log("Saving Reimbursement Claims data : "+JSON.stringify(employee_reimbursement) );
+
+        axios.post('/reimbursements/saveReimbursementData_Claims', {
+            "user_code" : service.current_user_code,
+            "date" : new Date().toJSON().slice(0,10),
+            "reimbursement_type" : employee_reimbursement.claim_type,
+            "claim_amount": employee_reimbursement.claim_amount,
+            "reimbursement_remarks" : employee_reimbursement.reimbursment_remarks,
+            "file_upload": employee_reimbursement.employee_reimbursement_attachment,
+            "entry_mode" : "web",
+        }).then((response) => {
+
+            if (response.data.status == "success") {
+                    reimbursements_dailog.value =false;
+                    toast.add({
+                        severity: "success",
+                        summary: "Saved",
+                        detail: "Reimbursement Claims Added",
+                        life: 3000,
+                    });
+
+                }
+                else
+                if (response.data.status == "failure") {
+                    toast.add({
+                        severity: "error",
+                        summary: "Error",
+                        detail: "Failed to save Local Coveyance due to following errors : " + JSON.stringify(response.data.message),
+                        life: 6000,
+                    });
+
+                    console.log("Failure Response : " + response.data.data);
+                }
+                else {
+                    toast.add({
+                        severity: "error",
+                        summary: "Error",
+                        detail: "Unknown error occured due to following : " + JSON.stringify(response.data.message),
+                        life: 6000,
+                    });
+                }
+
+                console.log(response);
+
+            }).catch(err => {
+                console.log("Catch Response : "+res);
+            })
+            .finally(res => {
+                console.log("Finally Response : "+res);
+            });
+
+
+
+    }
 
     const post_data_for_local_convergance = () => {
 
@@ -336,13 +415,15 @@ export const employee_reimbursment_service = defineStore("employee_reimbursment_
         loading_spinner,
         amount_calculation,
         getModeOfTransport,
+        getReimbursementClaimTypes,
         // employee_reimbursement
+        saveReimbursementClaimsData,
 
-        employee_reimbursement_attachment_upload,
         onclickSwitchToReimbursmentTab,
+        onClaimsDocumentUploaded,
 
         reimbursement_datas,
-        reimbursment_claim_types,
+        reimbursement_claim_types,
         onclickOpenReimbursmentDailog,
 
 

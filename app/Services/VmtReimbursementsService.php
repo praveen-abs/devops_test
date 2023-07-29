@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\VmtEmployeeReimbursements;
 use App\Models\VmtReimbursements;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class VmtReimbursementsService {
     protected $instance;
@@ -54,6 +55,147 @@ class VmtReimbursementsService {
             'message'=> 'Fetched Mode of transport types',
             'data'=> $response
         ]);
+    }
+
+    public function getReimbursementClaimTypes()
+    {
+        try{
+
+            $reimbursement_claim_types = VmtReimbursements::all(['id','reimbursement_type']);
+            $response = array();
+
+            foreach($reimbursement_claim_types as $singleRecord)
+            {
+                array_push($response, [
+                    "label" => $singleRecord->reimbursement_type,
+                    "value" => $singleRecord->reimbursement_type,
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message'=> 'Fetched Reimbursement claim types',
+                'data'=> $response
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'failure',
+                'message'=> 'Error while getting Reimbursement Claim Types',
+                'data'=> $e->getMessage()
+            ]);
+        }
+    }
+
+    public function saveReimbursementData_Claims($user_code, $date, $reimbursement_type, $claim_amount, $reimbursement_remarks, $file_upload, $entry_mode){
+
+        $validator = Validator::make(
+            $data = [
+                    'user_code' => $user_code,
+                    'date' => $date,
+                    'reimbursement_type' => $reimbursement_type,
+                    'claim_amount' => $claim_amount,
+                    'reimbursement_remarks'=> $reimbursement_remarks,
+                    'file_upload'=> $file_upload,
+                    'entry_mode'=> $entry_mode,
+                ],
+                $rules = [
+                    'user_code' => 'required|exists:users,user_code',
+                    'date' => 'required',
+                    'reimbursement_type' => 'required|exists:vmt_reimbursements,reimbursement_type',
+                    'claim_amount' => 'required',
+                    'reimbursement_remarks'=> 'required',
+                    'file_upload'=> 'required',
+                    'entry_mode'=> 'required',
+                ],
+                $messages = [
+                    "required" => "Field :attribute is missing",
+                    "exists" => "Field :attribute is invalid",
+                ]
+            );
+
+
+            if($validator->fails()){
+                return response()->json([
+                        'status' => 'failure',
+                        'message' => $validator->errors()->all()
+                ]);
+            }
+
+            try{
+
+
+                //check if reimbursements already applied for the given date by the user..
+                $query_reimbursements_exists = VmtEmployeeReimbursements::where('user_id', User::where('user_code', $user_code)->first()->id)
+                                                ->where('date', $date);
+
+
+                if($query_reimbursements_exists->exists())
+                {
+                    return response()->json([
+                        "status" => "failure",
+                        "message" => "Reimbursement Claims already applied for the given date",
+                        "data"=> ""
+                    ]);
+                }
+
+                //Save the reimbursement data
+                $emp_reimbursement_data = new VmtEmployeeReimbursements;
+                $emp_reimbursement_data->date = $date;
+                $emp_reimbursement_data->reimbursement_type_id = VmtReimbursements::where('reimbursement_type',$reimbursement_type)->first()->id;
+                $emp_reimbursement_data->user_id = User::where('user_code',$user_code)->first()->id;
+                $emp_reimbursement_data->status = "Pending";
+                $emp_reimbursement_data->entry_mode = empty($entry_mode) ? "" : $entry_mode;
+                $emp_reimbursement_data->user_comments = $reimbursement_remarks ?? "";
+                $emp_reimbursement_data->total_expenses  = $claim_amount;
+
+                //Convert the BASE64 file to disk file and save the path in DB
+                    //$claims_doc_file_path = base64_decode($file_upload);
+
+                    $base64_data = base64_decode( explode('base64,',$file_upload)[1] );
+                    $extension = explode('/', mime_content_type($file_upload))[1];
+                   // dd("File Extension : ".$extension);
+                    //dd("File Data : ".$base64_data);
+
+                    $date = date('d-m-Y_H-i-s');
+                    $fileName =  'ClaimsDoc_'. $user_code .'__'. $date . '.' . $extension;
+
+                    $path = $user_code . '/reimbursement_documents';
+
+                    if(Storage::disk('private')->put($path."/".$fileName, $base64_data))
+                    {
+                        //File saved successfully
+                        $emp_reimbursement_data->doc_path = $path."/".$fileName;
+
+                    }
+                    else
+                    {
+
+                        return response()->json([
+                            'status' => 'failure',
+                            'message'=> 'Error while saving the document file. Please check the uploaded file.',
+                            'data'=> ''
+                        ]);
+                    }
+
+
+
+                $emp_reimbursement_data->save();
+
+                return response()->json([
+                    'status' => 'success',
+                    'message'=> 'Reimbursement Claims details saved successfully',
+                    'data'=> ''
+                ]);
+            }
+            catch(\Exception $e){
+                return response()->json([
+                    'status' => 'failure',
+                    'message'=> 'Failed to save Reimbursement Claims data !',
+                    'data'=> $e->getMessage()
+                ]);
+            }
+
     }
 
     public function saveReimbursementData_LocalConveyance($user_code, $date, $reimbursement_type, $entry_mode, $vehicle_type, $from, $to, $distance_travelled, $user_comments)

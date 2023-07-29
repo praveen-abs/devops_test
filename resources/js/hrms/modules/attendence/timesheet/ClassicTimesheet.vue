@@ -1,5 +1,5 @@
 <template>
-    <Sidebar v-model:visible="useTimesheet.classicTimesheetSidebar" position="right" class="w-full md:w-2rem lg:w-30rem">
+    <Sidebar v-model:visible="visibleRight" position="right" class="w-full md:w-2rem lg:w-30rem">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
@@ -11,11 +11,12 @@
                 <div class="flex justify-center gap-x-20 my-3">
                     <a class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer "
                         href="/attendance-leave">Apply leave</a>
-                    <a class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer" @click="attendanceRegularizationDialog = true">Regularize</a>
+                    <a class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer"
+                        @click="attendanceRegularizationDialog = true">Regularize</a>
                 </div>
             </div>
-
-            <div class="my-2 bg-orange-50 rounded-lg p-3 py-4 transition-all duration-700" v-if="attendanceRegularizationDialog">
+            <div class="my-2 bg-orange-50 rounded-lg p-3 py-4 transition-all duration-700"
+                v-if="attendanceRegularizationDialog">
                 <div class="flex">
                     <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Date</label></div>
                     <div class="">
@@ -29,7 +30,8 @@
                     <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
                     </div>
                     <span class=" p-input-icon-right">
-                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
+                            v-model="useTimesheet.absentRegularizationDetails.start_time" />
                         <i class="pi pi-clock" />
                     </span>
                 </div>
@@ -37,43 +39,42 @@
                     <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
                     </div>
                     <span class=" p-input-icon-right">
-                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon" />
+                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
+                            v-model="useTimesheet.absentRegularizationDetails.end_time" />
                         <i class="pi pi-clock" />
                     </span>
                 </div>
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
-
-                            <div class="col-6">
-                                <select name="reason" class="form-select btn-line-orange" id="reason_lc">
-                                    <option selected hidden disabled>
-                                        Choose Reason
-                                    </option>
-                                    <option value="Permission">Permission</option>
-                                    <option value="Technical Error">Technical Error</option>
-                                    <option value="Technical Error">Official</option>
-                                    <option value="Technical Error">Personal</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                            </div>
+                    <div class="flex my-4">
+                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
+                        <div>
+                            <select name="reason" class="form-select btn-line-orange w-52" id="reason_lc"
+                                v-model="useTimesheet.absentRegularizationDetails.reason">
+                                <option selected hidden disabled>
+                                    Choose Reason
+                                </option>
+                                <option value="Permission">Permission</option>
+                                <option value="Technical Error">Technical Error</option>
+                                <option value="Technical Error">Official</option>
+                                <option value="Technical Error">Personal</option>
+                                <option value="Others">Others</option>
+                            </select>
                         </div>
-                    </div>
-                    <!-- <div class="col-12 " v-if="useTimesheet.egDetails.reason == 'Others'">
-                        <div class="row">
-                            <div class="col-12">
-                                <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                                    placeholder="Reason here...."
-                                    v-model="useTimesheet.egDetails.custom_reason"></textarea>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-                        <button type="button" class="btn btn-orange">Apply</button>
-                    </div>
-
                 </div>
+                <div class="col-12 " v-if="useTimesheet.absentRegularizationDetails.reason == 'Others'">
+                    <div class="row">
+                        <div class="col-12">
+                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                                placeholder="Reason here...."
+                                v-model="useTimesheet.absentRegularizationDetails.custom_reason"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
+                    <button type="button" class="btn btn-orange" @click="useTimesheet.applyAbsentRegularization">Apply</button>
+                </div>
+
             </div>
+        </div>
 
         <div class="rounded-lg bg-orange-50 p-3" v-if="!currentlySelectedCellRecord.isAbsent">
             <p class="font-sans font-bold fs-6">Check-in</p>
@@ -248,19 +249,15 @@
                                     <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
                                     </p>
-                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
-                                        v-if="singleAttendanceDay.isMOP"
+                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i v-if="singleAttendanceDay.isMOP"
                                             :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
                                             style="font-size: 1rem" class="px-1"></i>
-                                        <i v-else-if="singleAttendanceDay.isLC"
-                                         :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
-                                            style="font-size: 1rem" class="px-1" ></i>
-                                        <i v-else-if="singleAttendanceDay.isEG"
-                                        :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
+                                        <i v-else-if="singleAttendanceDay.isLC" :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
                                             style="font-size: 1rem" class="px-1"></i>
-                                        <i v-else-if="singleAttendanceDay.isMIP"
-                                        :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
+                                        <i   v-else-if="singleAttendanceDay.isEG" :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
                                             style="font-size: 1rem" class="px-1"></i>
+                                        <i   v-else-if="singleAttendanceDay.isMIP" :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
+                                            style="font-size: 1rem"  class="px-1"></i>
                                     </p>
                                 </div>
 
@@ -350,9 +347,10 @@ const attendanceRegularizationDialog = ref(false)
 
 const useTimesheet = useAttendanceTimesheetMainStore()
 const service = Service()
+const visibleRight = ref(false)
 
 const getSelectedCellValues = (selectedCells) => {
-    useTimesheet.classicTimesheetSidebar = true
+    visibleRight.value = true
     currentlySelectedCellRecord.value = { ...selectedCells }
 
     if (selectedCells.isLC) {
@@ -366,7 +364,9 @@ const getSelectedCellValues = (selectedCells) => {
     }
     if (selectedCells.isMOP) {
         useTimesheet.mopDetails = { ...selectedCells }
-
+    }
+    if (selectedCells.isAbsent) {
+        useTimesheet.absentRegularizationDetails = { ...selectedCells }
     }
 }
 

@@ -55,11 +55,11 @@
             </div>
 
             <Dialog v-model:visible="employee_service.reimbursements_dailog" :style="{ width: '450px' }"
-                header="Reimbursement Detials" :modal="true" class="p-fluid">
+                header="Reimbursement Details" :modal="true" class="p-fluid">
                 <div class="field">
                     <label for="name">Claim Type</label>
                     <Dropdown v-model="employee_service.employee_reimbursement.claim_type"
-                        :options="employee_service.reimbursment_claim_types" optionLabel="label" optionValue="value"
+                        :options="employee_service.reimbursement_claim_types" optionLabel="label" optionValue="value"
                         placeholder="Select Claim Type"></Dropdown>
                 </div>
 
@@ -67,7 +67,7 @@
                     <div class="field col">
                         <label for="Claim Amount">Claim Amount</label>
                         <InputNumber v-model="employee_service.employee_reimbursement.claim_amount" mode="currency"
-                            currency="INR" locale="en-IN" />
+                            currency="INR" locale="en-IN" integeronly />
                     </div>
 
                     <div class="field col">
@@ -84,13 +84,11 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="mb-3">file Upload</label>
+                    <label class="mb-3">File Upload</label>
                     <div class="formgrid">
-                        <input @change="
-                            employee_service.employee_reimbursement_attachment_upload(
-                                $event
-                            )
-                            " ref="employee_service.employee_reimbursement_attachment" type="file" id="upload" hidden />
+                        <input @change="employee_service.onClaimsDocumentUploaded($event)"
+                        ref="employee_service.employee_reimbursement_attachment" type="file" id="upload" hidden />
+
                         <label id="file_upload" for="upload">Choose file</label>
                     </div>
                 </div>
@@ -103,7 +101,7 @@
                             ? false
                             : true
                         " icon="pi pi-check" style="height: 30px; background: rgb(255 135 38); color: white"
-                        @click="employee_service.post_reimbursment_data" />
+                        @click="employee_service.saveReimbursementClaimsData()" />
                 </template>
             </Dialog>
         </div>

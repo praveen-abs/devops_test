@@ -20,6 +20,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const mipDetails = ref({})
     const lcDetails = ref({})
     const egDetails = ref({})
+    const absentRegularizationDetails = ref({})
     const selfieDetails = ref({})
 
 
@@ -52,10 +53,12 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
+
+    /* Get currently login employee daily attendance */
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(156, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log("Selected employee attendance : " + res.data);
             currentEmployeeAttendance.value = Object.values(res.data)
             currentEmployeeAttendanceLength.value = Object.values(res.data).length
@@ -64,6 +67,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         })
     }
 
+    /* Get currently selected team employee daily attendance */
     const getSelectedEmployeeTeamDetails = (user_id, isteam) => {
         isTeamOrg.value = isteam
         currentlySelectedTeamMemberUserId.value = user_id
@@ -75,6 +79,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         })
     }
 
+    /* Get currently selected organization employee daily attendance */
 
     const getSelectedEmployeeOrgDetails = (user_id, isteam) => {
         isTeamOrg.value = isteam
@@ -87,6 +92,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         })
     }
 
+    /* Get currently login employee team list  */
+
     const getTeamList = async (user_code) => {
         console.log(user_code);
         return axios.post('/fetch-team-members', {
@@ -97,9 +104,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getOrgList = async () => {
         return axios.get('/fetch-org-members')
     }
-
-
-
 
 
 
@@ -138,10 +142,11 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     */
 
+    /* Creating constructor for Attendance Regularization request */
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
 
         let AttendanceRegularizeFormat = {
-            attendance_user: selectedDayRegularizationRecord.user_id,
+            user_code: service.current_user_code,
             regularization_type: selectedAttendanceRegularizationType,
             attendance_date: selectedDayRegularizationRecord.date,
             user_time: selectedDayRegularizationRecord.checkin_time,
@@ -291,6 +296,43 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     }
 
 
+    //  Applying for Absent  Regularization
+    const applyAbsentRegularization = () => {
+        classicTimesheetSidebar.value = false
+        canShowLoading.value = true
+        axios.post('/attendance-req-absent-regularization', {
+            user_code: service.current_user_code,
+            attendance_date: absentRegularizationDetails.value.date,
+            regularization_type: "Absent Regularization",
+            checkin_time: absentRegularizationDetails.value.start_time,
+            checkout_time: absentRegularizationDetails.value.end_time,
+            reason: absentRegularizationDetails.value.reason,
+            custom_reason: absentRegularizationDetails.value.custom_reason ? absentRegularizationDetails.value.custom_reason : "",
+        })
+            .then((res) => {
+                getSelectedEmployeeAttendance()
+                let message = res.data.message
+                console.log(message);
+                if (res.data.status == 'success') {
+                    Swal.fire(
+                        'Good job!',
+                        'Attendance Regularized Successful',
+                        'success'
+                    )
+                } else {
+                    Swal.fire(
+                        'Fill!',
+                        `${message}`,
+                        'error'
+                    )
+                }
+            }).finally(() => {
+                canShowLoading.value = false
+            })
+
+    }
+
+
     // View check in and out selfie Images
 
     const onClickSViewSelfie = (attendance) => {
@@ -300,18 +342,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     // Helper Functions
-
-    //  error message
-    const errorMessege = (value) => {
-        let date = ''
-        if (value) {
-            if (date < value) {
-                console.log('');
-            }
-        }
-    }
-
-
 
     //  Finding Difference between start date and end date
 
@@ -377,7 +407,11 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         //   EG
         onClickShowMopRegularization, applyEgRegularization, egDetails, dialog_Eg,
         // Selfie
-        dialog_Selfie, onClickSViewSelfie, selfieDetails, switchTimesheet
+        dialog_Selfie, onClickSViewSelfie, selfieDetails, switchTimesheet,
+        // Absent regularization
+        absentRegularizationDetails, applyAbsentRegularization,
+
+
 
 
     }
