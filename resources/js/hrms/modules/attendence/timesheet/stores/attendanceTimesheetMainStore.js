@@ -146,7 +146,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
 
         let AttendanceRegularizeFormat = {
-            attendance_user: selectedDayRegularizationRecord.user_id,
+            user_code: service.current_user_code,
             regularization_type: selectedAttendanceRegularizationType,
             attendance_date: selectedDayRegularizationRecord.date,
             user_time: selectedDayRegularizationRecord.checkin_time,
