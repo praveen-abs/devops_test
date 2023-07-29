@@ -1290,6 +1290,16 @@ class VmtAttendanceController extends Controller
                                                                             );
 
     }
+
+    public function getAttendanceRegularizationStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->getAttendanceRegularizationStatus(
+            user_code : $request->user_code,
+            regularization_date : $request->regularization_date,
+            regularization_type : $request->regularization_type
+        );
+    }
+
     public function approveRejectAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
         return $serviceVmtAttendanceService->approveRejectAbsentRegularization(approver_user_code : $request->user_code,
@@ -1300,84 +1310,17 @@ class VmtAttendanceController extends Controller
 
     }
 
-    public function approveRejectAttendanceRegularization(Request $request, VmtNotificationsService $serviceVmtNotificationsService)
+    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
         // dd($request->all());
-      
+        return $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
+                                        approver_user_code : $request->approver_user_code,
+                                        record_id : $request->record_id,
+                                        status : $request->status,
+                                        status_text : $request->status_text,
+                                        serviceVmtNotificationsService : $serviceVmtNotificationsService);
 
-        $status = "failure";
-        $message = "Invalid request. Kindly contact the HR/Admin";
-
-        $data = VmtEmployeeAttendanceRegularization::find($request->id);
-
-        if ($data->exists()) {
-            $data->reviewer_id = auth::user()->id;
-            $data->reviewer_reviewed_date = Carbon::today()->setTimezone('Asia/Kolkata');
-            $data->status = $request->status;
-            $data->reviewer_comments = $request->status_text ?? '---';
-
-            $data->save();
-
-            $status = "success";
-            $message = "Attendance Regularization is completed.";
-        }
-
-        //Send mail to Employee
-
-        $mail_status = "";
-
-        //Get employee details
-        $employee_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-            ->where('users.id', $data->user_id)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
-
-        //dd($employee_details->officical_mail);
-
-
-        $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->client_logo;
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName(auth::user()->id));
-
-        $isSent    = \Mail::to($employee_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-            $employee_details->name,
-            $employee_details->user_code,
-            $emp_avatar,
-            $data->attendance_date,
-            auth::user()->name,
-            auth::user()->user_code,
-            request()->getSchemeAndHttpHost(),
-            $image_view,
-            $request->status_text,
-            $request->status
-        ));
-        if ($request->status == 'Approved') {
-
-            $attendance_regularization_type = 'manager_approves_attendance_reg';
-        } else if ($request->status == 'Rejected') {
-
-            $attendance_regularization_type = 'manager_rejects_attendance_reg';
-        }
-        $res_notification = $serviceVmtNotificationsService->send_attendance_regularization_FCMNotification(
-            notif_user_id: $data->user_id,
-            attendance_regularization_type: $attendance_regularization_type,
-            manager_user_code: auth::user()->user_code,
-        );
-
-        if ($isSent) {
-            $mail_status = "Mail sent successfully";
-        } else {
-            $mail_status = "There was one or more failures.";
-        }
-
-
-
-        return $responseJSON = [
-            'status' => 'success',
-            'message' => 'Regularization done successfully!',
-            'notification_status' => $res_notification,
-            'mail_status' => $mail_status,
-            'data' => [],
-        ];
     }
 
     public function showLeavePolicyDocument(Request $request)
