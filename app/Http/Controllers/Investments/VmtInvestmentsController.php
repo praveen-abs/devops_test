@@ -496,7 +496,7 @@ class VmtInvestmentsController extends Controller
         $sumOfHradeclared = 0;
         $sumOfReimbersument = 0;
         $sumOfOtherSourceOfIncome = 0;
-        $totalRentPaid = 0;
+        $chapter80s = 0;
         $sumof80s = 0;
         $standardDeducation = 0;
         $professional_tax = 0;
@@ -548,15 +548,15 @@ class VmtInvestmentsController extends Controller
                 $sumof80s += $dec_amt['dec_amount'];
 
                 if ($sumof80s > 150000) {
-                    $chapter80s = $sumof80s;
-                } else {
                     $chapter80s = 150000;
+                } else {
+                    $chapter80s = $sumof80s;
                 }
             }
 
             if ($dec_amt['section_group'] == "Other Excemptions ") {
 
-                 if($dec_amt['max_amount'] > $dec_amt['dec_amount']){
+                 if( $dec_amt['dec_amount'] > $dec_amt['max_amount']){
                      $chapterexe += $dec_amt['max_amount'];
                  }else{
                     $chapterexe += $dec_amt['dec_amount'];
@@ -603,7 +603,7 @@ class VmtInvestmentsController extends Controller
             if($SumOfHousPropsInOld > 200000){
                     $sumofhouseproperty = 200000;
             }else{
-                $sumofhouseproperty = $SumOfHousPropsInOld ;
+                $sumofhouseproperty = $SumOfHousPropsInOld;
             }
 
 
@@ -651,7 +651,7 @@ class VmtInvestmentsController extends Controller
 
             $exemption['sno'] = "g";
             $exemption['section'] = "Deduction under Chapter VI-A";
-            $exemption['old_regime'] = $chapterexe;
+            $exemption['old_regime'] = $chapter80s + $chapterexe;
             $exemption['new_regime'] = 0;
 
             $total_tax_income['sno'] = "h";
