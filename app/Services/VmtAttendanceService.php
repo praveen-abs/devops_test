@@ -1712,7 +1712,7 @@ class VmtAttendanceService
         catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ approveRejectAttendanceRegularization() ] ".$e->getMessage(),
+                'message' => "Error[ approveRejectAttendanceRegularization() ) ] ".$e->getMessage(),
                 'data' => $e->getMessage()
             ]);
         }
