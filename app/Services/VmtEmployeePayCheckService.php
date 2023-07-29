@@ -445,6 +445,8 @@ class VmtEmployeePayCheckService
             $data['employee_details'] = VmtEmployee::where('userid', $user->id)->first();
             $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->first();
 
+
+            return ($data);
             $query_client = VmtClientMaster::find($user->client_id);
 
             $data['client_logo'] = $query_client->client_logo;
@@ -1104,10 +1106,24 @@ class VmtEmployeePayCheckService
     public function generatePayslip($user_code, $payroll_date)
     {
 
-        // $user_code = "BA002";
-        // $payroll_date  = "2022-07-01";
+        $user_code = "BA002";
+        $payroll_date  = "2022-07-01";
 
-        $getpayslip    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+        // $getpayslip    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+        //     ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+        //     ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+        //     ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+        //     ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+        //     ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+        //     ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+        //     ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+        //     ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+        //     ->where('user_code', $user_code)
+        //     ->where('payroll_date', $payroll_date)
+        //     ->get()->toArray();
+
+
+      $getpersonal['personal_details']    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
             ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
@@ -1118,53 +1134,226 @@ class VmtEmployeePayCheckService
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
             ->where('payroll_date', $payroll_date)
-            ->get()->toArray();
+            ->get(
+                [
+                    'users.name',
+                    'vmt_employee_details.doj',
+                    'vmt_department.name as department_name',
+                    'vmt_employee_office_details.designation',
+                    'vmt_employee_details.pan_number',
+                    'vmt_employee_details.bank_ifsc_code',
+                    'vmt_employee_statutory_details.uan_number',
+                    'vmt_banks.bank_name',
+                    'vmt_employee_statutory_details.epf_number',
+                    'vmt_department.name as department_name'
+                ]
+            )->toArray();
 
 
-        $getEmployeeDetails = User::join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+      $getpersonal['salary_details']    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+            ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+            ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+            ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+            ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
             ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
             ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-            // ->join('vmt_department', 'vmt_department.name', '=', 'vmt_employee_office_details.department_id')
+            ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
             ->get(
                 [
-                    'name', 'doj', 'designation', 'pan_number', 'bank_ifsc_code', 'pan_number', 'uan_number', 'bank_name', 'epf_number',
-                    // 'vmt_department.name as department_name'
+                   'vmt_employee_payslip_v2.month_days',
+                   'vmt_employee_payslip_v2.worked_Days',
+                   'vmt_employee_payslip_v2.arrears_Days',
+                   'vmt_employee_payslip_v2.lop',
                 ]
-            );
+            )->toArray();
+
+      $getearnings =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+            ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+            ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+            ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+            ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+            ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+            ->where('user_code', $user_code)
+            ->where('payroll_date', $payroll_date)
+            ->get(
+                [
+                    'vmt_employee_payslip_v2.basic',
+                    'vmt_employee_payslip_v2.hra',
+                    'vmt_employee_payslip_v2.earned_stats_bonus',
+                    'vmt_employee_payslip_v2.other_earnings',
+                    'vmt_employee_payslip_v2.earned_spl_alw',
+                    'vmt_employee_payslip_v2.travel_conveyance',
+                    'vmt_employee_payslip_v2.earned_child_edu_allowance',
+                ]
+            )->toArray();
+
+            $getpersonal['earnings'] = [];
+            foreach ($getearnings as $single_payslip) {
+                        foreach ($single_payslip as $key => $single_details) {
+
+                            if ($single_details == "0" || $single_details == null || $single_details == "") {
+                                unset($single_payslip[$key]);
+                            }
+                        }
+                        array_push($getpersonal['earnings'], $single_payslip);
+                    }
+
+               $total_value = 0;
+               foreach($getpersonal['earnings'][0] as $single_simma){
+                $total_value += ((int)$single_simma);
+               }
+               $getpersonal['earnings'][0]['Total_earnings'] = $total_value;
+
+
+               $getcontribution =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+               ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+               ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+               ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+               ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+               ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+               ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+               ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+               ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+               ->where('user_code', $user_code)
+               ->where('payroll_date', $payroll_date)
+               ->get(
+                   [
+                       'vmt_employee_payslip_v2.epf_ee',
+                       'vmt_employee_payslip_v2.employee_esic',
+                       'vmt_employee_payslip_v2.vpf',
+                   ]
+               )->toArray();
+
+               $getpersonal['contribution'] = [];
+               foreach ($getcontribution as $single_payslip) {
+                           foreach ($single_payslip as $key => $single_details) {
+
+                               if ($single_details == "0" || $single_details == null || $single_details == "") {
+                                   unset($single_payslip[$key]);
+                               }
+                           }
+                           array_push($getpersonal['contribution'], $single_payslip);
+                       }
+
+                  $total_value = 0;
+                  foreach($getpersonal['contribution'][0] as $single_simma){
+                   $total_value += ((int)$single_simma);
+                  }
+                  $getpersonal['contribution'][0]['Total_contribution'] = $total_value;
+
+
+               $gettaxdeduction =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+               ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+               ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+               ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+               ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+               ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+               ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+               ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+               ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+               ->where('user_code', $user_code)
+               ->where('payroll_date', $payroll_date)
+               ->get(
+                   [
+                       'vmt_employee_payslip_v2.prof_tax',
+                       'vmt_employee_payslip_v2.lwf',
+                       'vmt_employee_payslip_v2.income_tax',
+                       'vmt_employee_payslip_v2.sal_adv',
+                       'vmt_employee_payslip_v2.canteen_dedn',
+                       'vmt_employee_payslip_v2.other_deduc',
+                   ]
+               )->toArray();
+
+
+               $getpersonal['Tax & Deduction'] = [];
+               foreach ($gettaxdeduction as $single_payslip) {
+                           foreach ($single_payslip as $key => $single_details) {
+
+                               if ($single_details == "0" || $single_details == null || $single_details == "") {
+                                   unset($single_payslip[$key]);
+                               }
+                           }
+                           array_push($getpersonal['Tax & Deduction'], $single_payslip);
+                       }
+
+                  $total_value = 0;
+                  foreach($getpersonal['Tax & Deduction'][0] as $single_simma){
+                   $total_value += ((int)$single_simma);
+                  }
+                  $getpersonal['Tax & Deduction'][0]['Total_deduction'] = $total_value;
+
+                    // return($getpersonal);
+                $total_amount   = ($getpersonal['earnings'][0]['Total_earnings']) - ($getpersonal['contribution'][0]['Total_contribution']) - ($getpersonal['Tax & Deduction'][0]['Total_deduction'] );
+
+                    $getpersonal['over_all']  = ["Net Salary Payable " => $total_amount,
+                                                "Net Salary in words" => numberToWord($total_amount),
+                                                ];
+
+                    dd($getpersonal);
+
+
+
+
+
+        // foreach( $getpersonal['Earnings'] as $getearnings){
+
+        //     // dd($getearnings);
+        //     $simma = ($getearnings['basic'] + $getearnings['hra'] +$getearnings['travel_conveyance'] +$getearnings['earned_spl_alw'] +$getearnings['earned_child_edu_allowance'] + $getearnings['earned_stats_bonus']);
+        // }
+        //     dd($simma);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
         // Remove empty value in array
 
-        $get_payslip_details = [];
-        $get_employee_salary_details = [];
-        $get_employee_earnings = [];
+    //     $get_payslip_details = [];
+    //     $get_employee_salary_details = [];
+    //     $get_employee_earnings = [];
 
-        foreach ($getpayslip as $single_payslip) {
-            foreach ($single_payslip as $key => $single_details) {
+    //     foreach ($getpayslip as $single_payslip) {
+    //         foreach ($single_payslip as $key => $single_details) {
 
-                if ($single_details == "0" || $single_details == null || $single_details == "") {
-                    unset($single_payslip[$key]);
-                }
-            }
-            array_push($get_payslip_details, $single_payslip);
-        }
+    //             if ($single_details == "0" || $single_details == null || $single_details == "") {
+    //                 unset($single_payslip[$key]);
+    //             }
+    //         }
+    //         array_push($get_payslip_details, $single_payslip);
+    //     }
 
-        // Getting Employee Details
-        $get_employee_details = [];
-        foreach ($getEmployeeDetails as $single_employee_details) {
-            foreach ($single_employee_details as $key => $single_details) {
 
-                if ($single_details == "0" || $single_details == null || $single_details == " ") {
-                    unset($single_employee_details[$key]);
-                }
-            }
-            array_push($get_employee_details, $single_employee_details);
-        }
+}
 
-        return $get_employee_details;
-    }
 }
