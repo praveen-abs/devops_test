@@ -1600,7 +1600,7 @@ class VmtAttendanceService
                 'approver_user_code' => 'required|exists:users,user_code',
                 'record_id' => 'required|exists:vmt_employee_attendance_regularizations,id',
                 'status' => 'required',
-                'status_text' => 'required',
+                'status_text' => 'nullable',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
