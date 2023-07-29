@@ -1127,7 +1127,6 @@ class VmtEmployeePayCheckService
             // ->join('vmt_department', 'vmt_department.name', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
-            ->where('payroll_date', $payroll_date)
             ->get(
                 [
                     'name', 'doj', 'designation', 'pan_number', 'bank_ifsc_code', 'pan_number', 'uan_number', 'bank_name', 'epf_number',
