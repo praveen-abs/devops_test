@@ -445,8 +445,6 @@ class VmtEmployeePayCheckService
             $data['employee_details'] = VmtEmployee::where('userid', $user->id)->first();
             $data['employee_statutory_details'] = VmtEmployeeStatutoryDetails::where('user_id', $user->id)->first();
 
-
-            return ($data);
             $query_client = VmtClientMaster::find($user->client_id);
 
             $data['client_logo'] = $query_client->client_logo;
@@ -1107,20 +1105,26 @@ class VmtEmployeePayCheckService
     {
 
         $user_code = "BA002";
-        $payroll_date  = "2022-07-01";
+        $payroll_date  = "2023-06-01";
 
-        // $getpayslip    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
-        //     ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
-        //     ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
-        //     ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
-        //     ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
-        //     ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
-        //     ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
-        //     ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
-        //     ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
-        //     ->where('user_code', $user_code)
-        //     ->where('payroll_date', $payroll_date)
-        //     ->get()->toArray();
+        $getpersonal['client_details']  =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+            ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
+            ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
+            ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
+            ->join('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            ->join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
+            ->join('vmt_employee_statutory_details', 'vmt_employee_statutory_details.user_id', '=', 'users.id')
+            ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
+            ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
+            ->where('user_code', $user_code)
+            ->where('payroll_date', $payroll_date)
+            ->get(
+                [
+                    'vmt_client_master.client_fullname',
+                    'vmt_client_master.client_logo',
+                    'vmt_client_master.address',
+                ]
+            )->toArray();
 
 
       $getpersonal['personal_details']    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
@@ -1137,13 +1141,15 @@ class VmtEmployeePayCheckService
             ->get(
                 [
                     'users.name',
+                    'users.user_code',
                     'vmt_employee_details.doj',
                     'vmt_department.name as department_name',
                     'vmt_employee_office_details.designation',
                     'vmt_employee_details.pan_number',
+                    'vmt_banks.bank_name',
+                    'vmt_employee_details.bank_account_number',
                     'vmt_employee_details.bank_ifsc_code',
                     'vmt_employee_statutory_details.uan_number',
-                    'vmt_banks.bank_name',
                     'vmt_employee_statutory_details.epf_number',
                     'vmt_department.name as department_name'
                 ]
@@ -1291,11 +1297,11 @@ class VmtEmployeePayCheckService
                     // return($getpersonal);
                 $total_amount   = ($getpersonal['earnings'][0]['Total_earnings']) - ($getpersonal['contribution'][0]['Total_contribution']) - ($getpersonal['Tax & Deduction'][0]['Total_deduction'] );
 
-                    $getpersonal['over_all']  = ["Net Salary Payable " => $total_amount,
+                    $getpersonal['over_all']  = [["Net Salary Payable " => $total_amount,
                                                 "Net Salary in words" => numberToWord($total_amount),
-                                                ];
+                                                ]];
 
-                    dd($getpersonal);
+                    return dd($getpersonal);
 
 
 
