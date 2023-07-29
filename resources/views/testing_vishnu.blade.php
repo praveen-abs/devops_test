@@ -448,90 +448,92 @@
 
 
 
-//        $gross =50001;
+       $gross =50000;
 
-//        $basic =$gross/100*50;
+       $basic =$gross/100*60;
 
-//        $hra =$basic/100*50;
+       $hra =$basic/100*50;
 
-//        $communication_allowance = 0;
+       $communication_allowance = 0;
 
-//        $food_allowance = 0;
+       $food_allowance = 0;
 
-//        if($gross > 40000){
-//         $communication_allowance =2000;
-//        }
+       if($gross > 40000){
+        $communication_allowance =2000;
+       }
 
-//        $leave_travel_allowance = 0;
+       $leave_travel_allowance = 0;
 
-//        if($gross > 50000){
-//         $leave_travel_allowance =2000;
-//        }
+       if($gross > 50000){
+        $leave_travel_allowance =2000;
+       }
 
-//        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
-
-
-//        $epf_employer = 0;
-//        $epf_employee = 0;
-
-//        if(($gross - $hra) > 15000){
-
-//         $epf_employer = 15000/100*12;
-//         $epf_employee = 15000/100*12;
-//        }else{
-//         $epf_employer = round(($gross - $hra)/100*12);
-//         $epf_employee =round(($gross - $hra)/100*12);
-//        }
-
-//        $esi_employer = 0;
-//        $esi_employee = 0;
-
-//        if($gross < 21000){
-
-//         $esi_employer = round($gross/100*3.25);
-//         $esi_employee = round($gross/100*3.25);
-
-//        }
-//        $insurance =0;
-
-//        $professional_tax = 208;
-
-//        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
-
-//        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+       $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
 
 
+       $epf_employer = 0;
+       $epf_employee = 0;
 
-// dd([ 'basic' =>$basic,
-//      'hra'=> $hra,
-//      'communication_allowance'=>$communication_allowance,
-//      'leave_travel_allowance' =>$leave_travel_allowance,
-//      'food_allowance' =>$food_allowance,
-//      'special_allowance'=>$special_allowance,
-//      'gross'=>$gross,
-//      'epf_employer' =>  $epf_employer,
-//      'esi_employer' =>$esi_employer,
-//      'insurance '  =>$insurance,
-//      'ctc' =>$ctc,
-//      'epf_employee' =>$epf_employee ,
-//      'esi_employee ' =>$esi_employee,
-//      'professional_tax' =>$professional_tax,
-//      'net_take_home' =>$net_take_home,
+       if(($gross - $hra) > 15000){
 
-//]);
+        $epf_employer = 15000/100*12;
+        $epf_employee = 15000/100*12;
+       }else{
+        $epf_employer = ($gross - $hra)/100*12;
+        $epf_employee =($gross - $hra)/100*12;
+       }
 
-$anniversary_date = Carbon::now()->addDay()->format('m-d');;
+       $esi_employer = 0;
+       $esi_employee = 0;
 
-$users_With_anniversary = VmtEmployee::join('users','vmt_employee_details.userid','=','users.id')
-                                  ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
-                                  ->whereRaw("DATE_FORMAT(doj, '%m-%d') = '$anniversary_date'")
-                                  ->where('users.active','<>','-1')
-                                  ->get();
+       if($gross > 21000){
+        $esi_employer = 0;
+       $esi_employee = 0;
 
-dd($users_With_anniversary);
-$result = $date1->eq($date2);
+       }else{
+        $esi_employer = $gross/100*3.25;
+        $esi_employee = $gross/100*0.75;
+       }
+       $insurance =0;
 
-dd($result);
+       $professional_tax = 208;
+
+       $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+
+       $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+
+
+
+dd([ 'basic' =>$basic,
+     'hra'=> $hra,
+     'communication_allowance'=>$communication_allowance,
+     'leave_travel_allowance' =>$leave_travel_allowance,
+     'food_allowance' =>$food_allowance,
+     'special_allowance'=>$special_allowance,
+     'gross'=>$gross,
+     'epf_employer' =>  $epf_employer,
+     'esi_employer' =>$esi_employer,
+     'insurance '  =>$insurance,
+     'ctc' =>$ctc,
+     'epf_employee' =>$epf_employee ,
+     'esi_employee ' =>$esi_employee,
+     'professional_tax' =>$professional_tax,
+     'net_take_home' =>$net_take_home,
+
+]);
+
+// $anniversary_date = Carbon::now()->addDay()->format('m-d');;
+
+// $users_With_anniversary = VmtEmployee::join('users','vmt_employee_details.userid','=','users.id')
+//                                   ->join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+//                                   ->whereRaw("DATE_FORMAT(doj, '%m-%d') = '$anniversary_date'")
+//                                   ->where('users.active','<>','-1')
+//                                   ->get();
+
+// dd($users_With_anniversary);
+// $result = $date1->eq($date2);
+
+// dd($result);
 
     ?>
 

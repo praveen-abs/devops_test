@@ -30,6 +30,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Late coming regularization  Begins-->
         <div class="col-12" v-if="type == 'LC'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
@@ -41,29 +43,47 @@
                         </option>
                         <option value="Permission">Permission</option>
                         <option value="Technical Error">Technical Error</option>
-                        <option value="Technical Error">Official</option>
-                        <option value="Technical Error">Personal</option>
+                        <option value="Official">Official</option>
+                        <option value="Personal">Personal</option>
                         <option value="Others">Others</option>
                     </select>
                 </div>
                 <div class="col-6" v-else>
-                    <p class="max-w-min p-1" :class="findStatus(source.lc_status)"> {{ source.lc_status }}</p>
+                    <p class="max-w-min p-1"> {{ source.lc_reason }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-12 " v-if="type == 'LC'">
-            <div class="row" v-if="useTimesheet.lcDetails.reason == 'Others'">
-                <div class="col-12">
-                    <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                        placeholder="Reason here...." v-model="useTimesheet.lcDetails.custom_reason"></textarea>
+        <div class="row" v-if="type == 'LC'">
+            <div class="col-12" v-if="useTimesheet.lcDetails.reason == 'Others'">
+                <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                    placeholder="Reason here...." v-model="useTimesheet.lcDetails.custom_reason"></textarea>
+            </div>
+            <div class="col-12" v-else-if="source.lc_reason == 'Others'">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="font-medium fs-6 text-gray-700">Custom reason</label>
+                    </div>
+                    <div class="col-6">
+                        <p class="pl-3"> {{ source.lc_reason_custom }}</p>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <div class="row" v-if="type == 'LC'">
+            <div class="col-6">
+                <label class="font-medium fs-6 text-gray-700">Status</label>
+            </div>
+            <div class="col-6">
+                <p class="max-w-min ml-3 p-1" :class="findStatus(source.lc_status)"> {{ source.lc_status }}</p>
+            </div>
+        </div>
         <div v-if="type == 'LC'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
             <button v-if="source.lc_status == 'None'" type="button" class="btn btn-orange"
                 @click="useTimesheet.applyLcRegularization()">Apply</button>
         </div>
+        <!-- Late coming regularization  Ends-->
+
+        <!-- Missed In Punch regularization  Begins-->
         <div class="col-12" v-if="type == 'MIP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
@@ -75,29 +95,49 @@
                         </option>
                         <option value="Permission">Permission</option>
                         <option value="Technical Error">Technical Error</option>
-                        <option value="Technical Error">Official</option>
-                        <option value="Technical Error">Personal</option>
+                        <option value="Official">Official</option>
+                        <option value="Personal">Personal</option>
                         <option value="Others">Others</option>
                     </select>
-
                 </div>
                 <div class="col-6" v-else>
-                    <p class="max-w-min p-1" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
+                    <p class="max-w-min p-1"> {{ source.mip_reason }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-12 " v-if="type == 'MIP'" >
+        <div class="col-12 " v-if="type == 'MIP'">
             <div class="row" v-if="useTimesheet.mipDetails.reason == 'Others'">
                 <div class="col-12">
                     <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
                         v-model="useTimesheet.mipDetails.custom_reason" placeholder="Reason here...."></textarea>
                 </div>
             </div>
+            <div class="col-12" v-else-if="source.mip_reason == 'Others'">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="font-medium fs-6 text-gray-700">Custom reason</label>
+                    </div>
+                    <div class="col-6">
+                        <p class="ml-3"> {{ source.mip_reason_custom }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
+        <div class="row" v-if="type == 'MIP'">
+            <div class="col-6">
+                <label class="font-medium fs-6 text-gray-700">Status</label>
+            </div>
+            <div class="col-6">
+                <p class="p-1 ml-3 min-w-max" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
+            </div>
+        </div>
         <div v-if="source.mip_status == 'None'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
             <button type="button" class="btn btn-orange" @click="useTimesheet.applyMipRegularization()">Apply</button>
         </div>
+        <!-- Missed In Punch regularization  Ends-->
+
+
+        <!-- Early Going regularization  Begins-->
         <div class="col-12" v-if="type == 'EG'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
@@ -109,13 +149,13 @@
                         </option>
                         <option value="Permission">Permission</option>
                         <option value="Technical Error">Technical Error</option>
-                        <option value="Technical Error">Official</option>
-                        <option value="Technical Error">Personal</option>
+                        <option value="Official">Official</option>
+                        <option value="Personal">Personal</option>
                         <option value="Others">Others</option>
                     </select>
                 </div>
                 <div class="col-6" v-else>
-                    <p class="max-w-min p-1" :class="findStatus(source.eg_status)"> {{ source.eg_status }}</p>
+                    <p class="ml-3"> {{ source.eg_reason }}</p>
                 </div>
             </div>
         </div>
@@ -126,11 +166,32 @@
                         placeholder="Reason here...." v-model="useTimesheet.egDetails.custom_reason"></textarea>
                 </div>
             </div>
+            <div class="col-12" v-else-if="source.eg_reason == 'Others'">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="font-medium fs-6 text-gray-700">Custom reason</label>
+                    </div>
+                    <div class="col-6">
+                        <p class="ml-3"> {{ source.eg_reason_custom }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-if="type == 'EG'">
+            <div class="col-6">
+                <label class="font-medium fs-6 text-gray-700">Status</label>
+            </div>
+            <div class="col-6">
+                <p class="max-w-min p-1 ml-3" :class="findStatus(source.eg_status)"> {{ source.eg_status }}</p>
+            </div>
         </div>
         <div v-if="type == 'EG'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
             <button v-if="source.eg_status == 'None'" type="button" class="btn btn-orange"
                 @click="useTimesheet.applyEgRegularization()">Apply</button>
         </div>
+        <!-- Early Going regularization  Ends-->
+
+        <!-- Missed Out Punch regularization  Ends-->
         <div class="col-12" v-if="type == 'MOP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
@@ -142,22 +203,40 @@
                         </option>
                         <option value="Permission">Permission</option>
                         <option value="Technical Error">Technical Error</option>
-                        <option value="Technical Error">Official</option>
-                        <option value="Technical Error">Personal</option>
+                        <option value="Official">Official</option>
+                        <option value="Personal">Personal</option>
                         <option value="Others">Others</option>
                     </select>
                 </div>
                 <div class="col-6" v-else>
-                    <p class="max-w-min p-1" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
+                    <p class=" ml-3"> {{ source.mop_reason }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-12 " v-if="useTimesheet.mopDetails.reason == 'None'">
-            <div class="row">
+        <div class="col-12 " v-if="type == 'MOP'">
+            <div class="row" v-if="useTimesheet.mopDetails.reason == 'Others'">
                 <div class="col-12">
                     <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                        placeholder="Reason here...." v-model="useTimesheet.mopDetails.reason"></textarea>
+                        placeholder="Reason here...." v-model="useTimesheet.mopDetails.custom_reason"></textarea>
                 </div>
+            </div>
+            <div class="col-12" v-else-if="source.mop_reason == 'Others'">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="font-medium fs-6 text-gray-700 p-1">Custom reason</label>
+                    </div>
+                    <div class="col-6">
+                        <p class="ml-3"> {{ source.mop_reason_custom }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" v-if="type == 'MOP'">
+            <div class="col-6" v-if="!source.mop_status == 'None'">
+                <label class="font-medium fs-6 text-gray-700">Status</label>
+            </div>
+            <div class="col-6" v-if="!source.mop_status == 'None'">
+                <p class="max-w-min p-1 ml-3" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
             </div>
         </div>
         <div v-if="type == 'MOP'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
@@ -165,6 +244,7 @@
                 @click="useTimesheet.applyMopRegularization()">Apply</button>
         </div>
     </div>
+    <!-- Missed Out Punch regularization  Ends-->
 </template>
 
 <script setup>

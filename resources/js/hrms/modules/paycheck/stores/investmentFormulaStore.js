@@ -17,13 +17,13 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
     const tax_amt = ref()
 
     const taxCalculation = (total_income, regime, age) => {
-        /*  Old Regime Calcualtion Using Total Income Of Employeer and Employeer Age 
+        /*  Old Regime Calcualtion Using Total Income Of Employeer and Employeer Age
 
         total income = Employeer Total Income
         regime = is Old or New
-        age = Employeer Age 
+        age = Employeer Age
 
-        Net Taxable Income              New Tax Regime 	     Old Tax Regime 
+        Net Taxable Income              New Tax Regime 	     Old Tax Regime
         Up to Rs 2.5 lakh	                 Exempt	          Exempt
         Rs 2,50,001 to Rs 5 lakh	           5%	            5%
         Rs 5,00,001 to Rs 7.5 lakh	           10%	            20%
@@ -37,7 +37,7 @@ export const investmentFormulaStore = defineStore("investmentFormulaStore", () =
         console.log("total income :" + total_income)
         console.log("employee age:" + age);
 
-        // Old Regime Tax Calculation 
+        // Old Regime Tax Calculation
 
         if (regime == 'old') {
             // If the Employeer Age is Less than 60 Years
