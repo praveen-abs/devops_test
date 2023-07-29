@@ -702,7 +702,7 @@ class VmtAttendanceService
             $rules = [
                 'record_id' => 'required|exists:vmt_employee_leaves,id',
                 'approver_user_code' => 'required|exists:users,user_code',
-                'status' => 'required',
+                'status' => ['required', Rule::in(['Approved','Rejected'])],
                 'review_comment' => 'nullable',
             ],
             $messages = [
@@ -1599,7 +1599,7 @@ class VmtAttendanceService
             $rules = [
                 'approver_user_code' => 'required|exists:users,user_code',
                 'record_id' => 'required|exists:vmt_employee_attendance_regularizations,id',
-                'status' => 'required',
+                'status' => ['required', Rule::in(['Approved','Rejected'])],
                 'status_text' => 'nullable',
             ],
             $messages = [
