@@ -10,22 +10,22 @@
                         <p>Address</p>
                     </div>
                     <div>
-                        <img class="h-16 float-right" src="../../../images/brand_avatar.png" alt="">
+                        <img class="h-16 float-right"
+                            src="https://thumbs.dreamstime.com/b/logo-icon-vector-logos-icons-set-social-media-flat-banner-vectors-svg-eps-jpg-jpeg-paper-texture-glossy-emblem-wallpaper-210442240.jpg"
+                            alt="">
                     </div>
                 </div>
                 <div class="my-4  grid grid-cols-1">
                     <p class="font-semibold">Narasimman</p>
                     <div class="border-t-2 border-t-black w-full"></div>
-                    <div class=" grid grid-cols-4 p-2 my-2 line-after-four-divs" >
-                        <div class="my-2"  v-for="empDetails in getpayslipdetails" :key="empDetails">
-                            {{ empDetails }}
-                            <p class="text-lg font-medium text-gray-700">Employee Code</p>
-                            <p class="font-semibold fs-6">BA002</p>
+                    <div class=" grid grid-cols-4 p-2 my-2">
+                        <div class="my-2" v-for="empDetails in getpayslipdetails" :key="empDetails">
+                            <p class="text-lg font-medium text-gray-700">{{ empDetails.title }}</p>
+                            <p class="font-semibold fs-6">{{ empDetails.value }}</p>
                         </div>
                     </div>
                     <div class="border-t-2 border-t-black w-full"></div>
                 </div>
-
 
                 <div class="my-2 grid grid-cols-1">
                     <p class="font-medium">Salary Details</p>
@@ -55,8 +55,6 @@
                 </div>
             </div>
         </div>
-
-
         <button @click="downloadPdf">Download PDF</button>
     </div>
 </template>
@@ -85,16 +83,51 @@ const downloadPdf = () => {
     html2pdf().from(element).set(opt).save();
 };
 
+
+
+
 onMounted(() => {
     axios.post('/generatePayslip',
         {
             user_code: 'BA002',
             payroll_date: '2022-07-01',
         }).then((response) => {
-            getpayslipdetails.value = response.data;
-            console.log(response.data);
+            response.data.forEach(element => {
+                let obj = Object.entries(element).map(item => {
+                    return {
+                        title: item[0],
+                        value: item[1]
+                    };
+                });
+                getpayslipdetails.value = obj
+            });
+
+        }).finally(() => {
+
         });
 })
+
+
+
+
+// let obj = response.data.map(item => {
+//                     return {
+//                         title: Object.keys(item),
+//                         value: Object.values(item)
+//                     };
+//                 });
+
+//                 for (let i = 0; i < obj.length; i++) {
+//                     const singleRowData = obj[i];
+
+//                     for (let j = 0; j < singleRowData.length; j++) {
+//                         const value = singleRowData[j];
+//                         const title = singleRowData[j];
+//                         let
+//                         currentDupes.value.push(value)
+//                     }
+//                 }
+
 
 </script>
 
