@@ -225,7 +225,44 @@ class VmtPayrollComponentsController extends Controller
         return $response;
 
     }
+    public function CreatePayrollEpf(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        // dd($request->all());
+            $response = $serviceVmtPayrollComponentsService->CreatePayrollEpf(
+            $request->epf_number,
+            $request->epf_deduction_cycle,
+            $request->is_epf_num_default,
+            $request->epf_rule,
+            $request->epf_contrib_type,
+            $request->pro_rated_lop_status,
+            $request->can_consider_salcomp_pf,
+            $request->employer_contrib_in_ctc,
+            $request->employer_edli_contri_in_ctc,
+            $request->admin_charges_in_ctc,
+            $request->override_pf_contrib_rate,
+            $request->status,
+        );
 
+        return $response;
+    }
+    public function CreatePayrollEsi(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        // dd($request->all());
+
+            $response = $serviceVmtPayrollComponentsService->CreatePayrollEsi(
+            $request->esi_number,
+            $request->esi_deduction_cycle,
+            $request->state,
+            $request->location,
+            $request->employee_contribution_rate,
+            $request->employer_contribution_rate,
+            $request->employer_contribution_in_ctc,
+            $request->override_pf_contrib_rate,
+            $request->status,
+        );
+
+        return $response;
+    }
 
     // public function ShowPaySlipTemplateMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     // {
