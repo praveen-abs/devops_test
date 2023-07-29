@@ -180,133 +180,6 @@ try{
         }
 
 
- public function importQuickOnboardEmployeesExcelData(Request $request, VmtOnboardingTestingService $VmtOnboardingTestingService)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xls,xlsx'
-        ]);
-
-        $importDataArry = \Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-
-       // return $this->storeQuickOnboardEmployees($importDataArry, $VmtOnboardingTestingService);
-    }
-
-        // insert the employee to database for quick onboarding
-    // public function storeQuickOnboardEmployees( Request $request )
-    //     {
-
-    //         dd($request->all());
- /*      testing stage       */
-
-        //     For output jsonresponse
-        //     $data=$request->all();
-        //     $data_array = [];
-        //     //For validation
-        //     $isAllRecordsValid = true;
-        //     $rules = [];
-        //     $excelRowdata_row = $data;
-        //     $currentRowInExcel = 0;
-
-        // if(empty($excelRowdata_row )){
-        //     return $rowdata_response = [
-        //         'status' => 'failure',
-        //         'message' => 'Please fill the excel',
-        //     ];
-        // }else{
-
-        //     foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-
-        //         $currentRowInExcel++;
-        //         //Validation
-        //         $rules = [
-        //             'employee_code' => ['distinct',
-        //                  function ($attribute, $value, $fail) {
-
-        //                      $emp_client_code = preg_replace('/\d+/', '', $value );
-
-        //                      $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
-
-        //                      if (!$result) {
-        //                          $fail('No matching client exists for the given Employee Code : '.$value);
-        //                      }
-        //                  },
-        //              ],
-        //             'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-        //             'email' => 'nullable|email:strict|unique:users,email',
-        //             'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-        //             'doj' => 'required|date',
-        //             'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',
-        //             'designation' => 'required',
-        //             'basic' => 'required|numeric|min:0|not_in:0',
-        //             'hra' => 'required|numeric',
-        //             'statutory_bonus' => 'required|numeric',
-        //             'child_education_allowance' => 'required|numeric',
-        //             'food_coupon' => 'required|numeric',
-        //             'lta' => 'required|numeric',
-        //             'special_allowance' => 'required|numeric',
-        //             'other_allowance' => 'required|numeric',
-        //             'epf_employer_contribution' => 'required|numeric',
-        //             'esic_employer_contribution' => 'required|numeric',
-        //             'insurance' => 'required|numeric',
-        //             'graduity' => 'required|numeric',
-        //             'epf_employee' => 'required|numeric',
-        //             'esic_employee' => 'required|numeric',
-        //             'professional_tax' => 'required|numeric',
-        //             'labour_welfare_fund' => 'required|numeric',
-        //         ];
-
-        //         $messages = [
-        //             'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
-        //             'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-        //             'not_in' => 'Field <b>:attribute</b> should be greater than zero: :values .',
-        //             'required' => 'Field <b>:attribute</b> is required',
-        //             'regex' => 'Field <b>:attribute</b> is invalid',
-        //             'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-        //             'unique' => 'Field <b>:attribute</b> should be unique',
-        //             'numeric' => 'Field <b>:attribute</b> is invalid',
-        //             'email' => 'Field <b>:attribute</b> is invalid'
-        //         ];
-
-        //         $validator = Validator::make($excelRowdata, $rules, $messages);
-
-        //         if (!$validator->passes()) {
-        //             $rowDataValidationResult = [
-        //                 'row_number' => $currentRowInExcel,
-        //                 'status' => 'failure',
-        //                 'message' => 'In Excel Row : ' . $currentRowInExcel . ' has following error(s)',
-        //                 'data' => json_encode($validator->errors()),
-        //             ];
-
-        //             array_push($data_array, $rowDataValidationResult);
-        //             $isAllRecordsValid = false;
-        //           }
-        //      }
-        //  }
-
-        //    //for each
-        //     //Runs only if all excel records are valid
-        //     if ($isAllRecordsValid) {
-        //         foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-        //             $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$VmtOnboardingTestingService);
-        //             array_push($data_array, $rowdata_response);
-        //         }
-        //      $response = [
-        //          'status' => $rowdata_response['status'],
-        //          'message' => "Excelsheet data import success",
-        //          'data' =>$data_array
-        //       ];
-
-        //     }else{
-        //      $response = [
-        //          'status' => 'failure',
-        //          'message' =>"Please fix the below excelsheet data",
-        //          'data' =>$data_array
-        //       ];
-        //     }
-
-        //     return response()->json($response);
-
-        //}
 
         public function storeQuickOnboardEmployees( Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService )
         {
@@ -375,7 +248,7 @@ try{
         }
 
         public function storeBulkOnboardEmployees(Request $request,VmtOnboardingTestingService $VmtOnboardingTestingService){
-dd($request->all());
+
             $data = $request->all();
             $data_array =array();
             $onboard_data =array();

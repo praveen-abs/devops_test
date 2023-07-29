@@ -625,6 +625,9 @@ class VmtOnboardingTestingService {
         //save statutory data of employee
 
         //save compensatory data of employee
+        $salary_data = $this->get_Employee_compensatory_calculation($data['amount']);
+
+        dd($salary_data);
             $compensatory = Compensatory::where('user_id',$user_id);
 
             if($compensatory->exists())
@@ -635,28 +638,30 @@ class VmtOnboardingTestingService {
             {
                 $compensatory = new Compensatory;
             }
+
             $compensatory->user_id = $user_id;
-            $compensatory->basic = $data["basic"] ?? '';
-            $compensatory->hra = $data["hra"] ?? '';
+            $compensatory->basic = $salary_data['basic'] ?? '';
+            $compensatory->hra = $salary_data['hra'] ?? '';
             $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
             $compensatory->child_education_allowance = $data["child_education_allowance"] ?? '' ;
             $compensatory->food_coupon = $data["food_coupon"] ?? '' ;
-            $compensatory->lta = $data["lta"] ?? '' ;
-            $compensatory->special_allowance = $data["special_allowance"] ?? '' ;
+            $compensatory->lta = $salary_data['leave_travel_allowance'] ?? '' ;
+            $compensatory->food_allowance = $salary_data['food_allowance'] ?? '' ;
+            $compensatory->communication_allowance = $salary_data['communication_allowance'] ?? '' ;
+            $compensatory->special_allowance = $salary_data['special_allowance'] ?? '' ;
             $compensatory->other_allowance = $data["other_allowance"] ?? '' ;
-            $compensatory->gross = $data["gross"] ?? '' ;
-            $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '' ;
-            $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '' ;
-            $compensatory->insurance = $data["insurance"] ?? '' ;
+            $compensatory->gross = $salary_data['gross'] ?? '' ;
+            $compensatory->epf_employer_contribution = $salary_data['epf_employer'] ?? '' ;
+            $compensatory->esic_employer_contribution = $salary_data['esi_employer'] ?? '' ;
+            $compensatory->insurance = $salary_data['insurance'] ?? '' ;
             $compensatory->graduity = $data["graduity"] ?? '' ;
-            $compensatory->cic = $data["cic"] ?? '' ;
-            $compensatory->epf_employee = $data["epf_employee"] ?? '' ;
-            $compensatory->esic_employee = $data["esic_employee"] ?? '' ;
-            $compensatory->professional_tax = $data["professional_tax"] ?? '' ;
+            $compensatory->cic = $salary_data['ctc'] ?? '' ;
+            $compensatory->epf_employee = $salary_data['epf_employee'] ?? '' ;
+            $compensatory->esic_employee =$salary_data['esi_employee'] ?? '' ;
+            $compensatory->professional_tax =$salary_data['professional_tax'] ?? '' ;
             $compensatory->labour_welfare_fund = $data["labour_welfare_fund"] ?? '' ;
-            $compensatory->net_income = $data["net_income"] ?? '' ;
+            $compensatory->net_income = $salary_data['net_take_home'] ?? '' ;
             $compensatory->save();
-
 
                 return $response=([
                     'status' => 'success',
@@ -839,7 +844,12 @@ class VmtOnboardingTestingService {
                     $familyMember->save();
                 }
 
+                $salary_data = $this->get_Employee_compensatory_calculation($data['amount']);
+
             //save compensatory data of employee
+
+            $salary_data = $this->get_Employee_compensatory_calculation($data['amount']);
+            
                 $compensatory = Compensatory::where('user_id',$user_id);
 
                 if($compensatory->exists())
@@ -850,26 +860,29 @@ class VmtOnboardingTestingService {
                 {
                     $compensatory = new Compensatory;
                 }
+
                 $compensatory->user_id = $user_id;
-                $compensatory->basic = $data["basic"] ?? '';
-                $compensatory->hra = $data["hra"] ?? '';
+                $compensatory->basic = $salary_data['basic'] ?? '';
+                $compensatory->hra = $salary_data['hra'] ?? '';
                 $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
                 $compensatory->child_education_allowance = $data["child_education_allowance"] ?? '' ;
                 $compensatory->food_coupon = $data["food_coupon"] ?? '' ;
-                $compensatory->lta = $data["lta"] ?? '' ;
-                $compensatory->special_allowance = $data["special_allowance"] ?? '' ;
+                $compensatory->lta = $salary_data['leave_travel_allowance'] ?? '' ;
+                $compensatory->food_allowance = $salary_data['food_allowance'] ?? '' ;
+                $compensatory->communication_allowance = $salary_data['communication_allowance'] ?? '' ;
+                $compensatory->special_allowance = $salary_data['special_allowance'] ?? '' ;
                 $compensatory->other_allowance = $data["other_allowance"] ?? '' ;
-                $compensatory->gross = $data["gross"] ?? '' ;
-                $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '' ;
-                $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '' ;
-                $compensatory->insurance = $data["insurance"] ?? '' ;
+                $compensatory->gross = $salary_data['gross'] ?? '' ;
+                $compensatory->epf_employer_contribution = $salary_data['epf_employer'] ?? '' ;
+                $compensatory->esic_employer_contribution = $salary_data['esi_employer'] ?? '' ;
+                $compensatory->insurance = $salary_data['insurance'] ?? '' ;
                 $compensatory->graduity = $data["graduity"] ?? '' ;
-                $compensatory->cic = $data["cic"] ?? '' ;
-                $compensatory->epf_employee = $data["epf_employee"] ?? '' ;
-                $compensatory->esic_employee = $data["esic_employee"] ?? '' ;
-                $compensatory->professional_tax = $data["professional_tax"] ?? '' ;
+                $compensatory->cic = $salary_data['ctc'] ?? '' ;
+                $compensatory->epf_employee = $salary_data['epf_employee'] ?? '' ;
+                $compensatory->esic_employee =$salary_data['esi_employee'] ?? '' ;
+                $compensatory->professional_tax =$salary_data['professional_tax'] ?? '' ;
                 $compensatory->labour_welfare_fund = $data["labour_welfare_fund"] ?? '' ;
-                $compensatory->net_income = $data["net_income"] ?? '' ;
+                $compensatory->net_income = $salary_data['net_take_home'] ?? '' ;
                 $compensatory->save();
                 return $response=([
                     'status' => 'success',
@@ -888,7 +901,82 @@ class VmtOnboardingTestingService {
         ]);
         }
     }
+    public function get_Employee_compensatory_calculation($amount){
 
+    try{
+
+        $comp_amt_data = array();
+        $gross = $amount;
+
+        $basic =$gross/100*50;
+
+        $hra =$basic/100*50;
+
+        $communication_allowance = 0;
+
+        $food_allowance = 0;
+
+        if($gross > 40000){
+         $communication_allowance =2000;
+        }
+
+        $leave_travel_allowance = 0;
+
+        if($gross > 50000){
+         $leave_travel_allowance =2000;
+        }
+
+        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+
+
+        $epf_employer = 0;
+        $epf_employee = 0;
+
+        if(($gross - $hra) > 15000){
+
+         $epf_employer = 15000/100*12;
+         $epf_employee = 15000/100*12;
+        }else{
+         $epf_employer = ($gross - $hra)/100*12;
+         $epf_employee =($gross - $hra)/100*12;
+        }
+
+        $esi_employer = 0;
+        $esi_employee = 0;
+
+        if($gross > 21000){
+         $esi_employer = 0;
+        $esi_employee = 0;
+
+        }else{
+         $esi_employer = $gross/100*3.25;
+         $esi_employee = $gross/100*0.75;
+        }
+        $insurance =0;
+
+        $professional_tax = 208;
+
+        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+
+        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+
+
+        array_push($comp_amt_data,$gross,$basic,$hra, $communication_allowance,$food_allowance,$special_allowance, $leave_travel_allowance,
+                    $epf_employer,$epf_employee, $esi_employer,$esi_employee ,$insurance, $professional_tax, $ctc,$net_take_home );
+
+        return $comp_amt_data;
+
+       }catch(\Exception $e){
+
+        return $response=([
+            'status' => 'failure',
+            'message' => 'Error while saving record ',
+            'data' =>$e->getMessage()." ".$e->getline()
+
+        ]);
+        }
+
+    }
 
     public function uploadDocument($emp_id,$fileObject, $onboard_document_type){
 

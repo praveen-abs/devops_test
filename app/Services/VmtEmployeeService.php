@@ -628,7 +628,7 @@ class VmtEmployeeService
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
-            $compensatory->cic = $data["cic"] ?? '';
+            $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
@@ -836,7 +836,7 @@ class VmtEmployeeService
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
             $compensatory->dearness_allowance = $data["dearness_allowance"] ?? '';
-            $compensatory->cic = $data["ctc_cost_to_company"] ?? '';
+            $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
