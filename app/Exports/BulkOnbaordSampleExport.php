@@ -130,46 +130,9 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     }
 
 
-    public function array(): array
-    {
+    // public function array(): array
+    // {
 
-        return [
-            [
-                'ABS0001',
-                'Name',
-                'abs@gmail.com',
-                '0912345678',
-                'Male',
-                '28-06-2000',
-                '14-11-2022',
-                '',
-                'It',
-                '',
-                'Chennai',
-                'ABSM001',
-                '0912345678',
-                'test@gmail.com',
-                'Single',
-                '',
-                'Father Name',
-                'Mother Name',
-                'Spouse Name',
-                'B Positive',
-                'No',
-                'ABCTY1234D',
-                '0000 1111 2222',
-                'Axis Bank',
-                'AXIB0028901',
-                '24898240942',
-                'UAN0945049',
-                'Yes',
-                '942904',
-                'Current Address',
-                'Permanent Address',
-                'CTC - Monthly',
-                '18000',
-            ]
-        ];
     }
 
     public function map($row): array

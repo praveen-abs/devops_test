@@ -1,10 +1,10 @@
 <template>
     <div>
-        <DataTable :value="arrayAbsent" :paginator="true" :rows="10" dataKey="id"
+        <DataTable :value="arrayAbsentRegularization" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
+            :rowsPerPageOptions="[5, 10, 25]"  sortField="attendance_date" :sortOrder="-1"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-            v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+            v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
             <template #empty> No Employeee found. </template>
             <template #loading> Loading customers data. Please wait. </template>
 
@@ -27,32 +27,43 @@
                         class="p-column-filter" :showClear="true" />
                 </template>
             </Column>
-
-
-
-
-            <Column class="font-bold" field="attendance_date" header="Attendance Date">
+            <Column class="font-bold" field="attendance_date" :sortable="true" header="Attendance Date">
                 <template #body="slotProps">
                     {{ dayjs(slotProps.data.attendance_date).format('DD-MMM-YYYY') }}
                 </template>
 
             </Column>
-
             <Column class="font-bold" field="regularization_type" header="Regularization Type"> </Column>
             <Column class="font-bold" field="checkin_time" header="Checkin Time"> </Column>
             <Column class="font-bold" field="checkout_time" header="Checkout Time"> </Column>
             <Column class="font-bold" field="reason" header="Reason"> </Column>
             <Column class="font-bold" field="custom_reason" header="Custom Reason"> </Column>
 
-            <Column class="font-bold" field="reviewer_comments" header="Reviewer Comments"> </Column>
-            <Column class="font-bold" field="reviewer_reviewed_date" header="Reviewed Date"> </Column>
+            <Column field="reviewer_name" header="Approve Name">
+                <template #body="slotProps">
+                    <p class="text-bold">{{ slotProps.data.reviewer_name ? slotProps.data.reviewer_name : '---' }}</p>
+                </template>
+            </Column>
+            <Column field="reviewer_comments" header="Approve Comments">
+                <template #body="slotProps">
+                    <p class="text-bold">
+                        {{ slotProps.data.reviewer_comments ? slotProps.data.reviewer_comments : '---' }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="reviewer_reviewed_date" header="Reviewed Date">
+                <template #body="slotProps">
+                    <p class="text-bold">
+                        {{ slotProps.data.reviewer_reviewed_date ? slotProps.data.reviewer_reviewed_date : '---' }}
+                    </p>
+                </template>
+            </Column>
+
+
             <Column class="font-bold" field="status" header="Status">
                 <template #body="{ data }">
                     <Tag :value="data.status" :severity="getSeverity(data.status)" />
                 </template>
-                <!-- <template #body="{ data }">
-    <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
-  </template> -->
                 <template #filter="{ filterModel, filterCallback }">
                     <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses"
                         placeholder="Select" class="p-column-filter" :showClear="true">
@@ -72,8 +83,6 @@
             </Column>
             <Column class="font-bold" field="" header="Action">
                 <template #body="slotProps">
-                    <!-- <Button icon="pi pi-check" class="p-button-success"  @click="confirmDialog(slotProps.data,'Approved')" label="Approval" />
-                <Button icon="pi pi-times" class="p-button-danger" @click="confirmDialog(slotProps.data,'Rejected')" label="Rejected" /> -->
                     <span style="width: 250px;display: block;" v-if="slotProps.data.status == 'Pending'">
                         <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
                             @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
@@ -81,22 +90,17 @@
                             style="margin-left: 8px; height: 2em" @click="showConfirmDialog(slotProps.data, 'Reject')" />
                     </span>
                 </template>
-
             </Column>
-
-
-
         </DataTable>
 
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
             :breakpoints="{ '960px': '80vw', '640px': '90vw' }" :style="{ width: '380px' }" :modal="true">
             <div class="confirmation-content">
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
-                <div class="w-full d-flex justify-center mt-12">
-                    <Textarea v-model="reviewer_comment" v-if="reject == 'Reject'" rows="3" cols="30" class="border rounded-md" />
-                </div>
-
+                <i class="mr-2 pi pi-exclamation-triangle text-red-600" style="font-size: 1.3rem" />
+                <span class="my-auto">Are you sure you want to {{ currentlySelectedStatus }}?</span>
+            </div>
+            <div class="w-full flex justify-left p-2" v-if="reject == 'Reject'">
+                <Textarea v-model="reviewer_comment" rows="3" cols="30" class="border rounded-md" />
             </div>
             <template #footer>
                 <Button label="Yes" icon="pi pi-check" @click="processApproveReject" class="p-button-text" autofocus />
@@ -118,27 +122,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject, onUpdated } from "vue";
 import axios from "axios";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-import moment from "moment";
+import { FilterMatchMode } from "primevue/api";
 import dayjs from 'dayjs';
 import { Service } from "../../Service/Service";
+import { useToast } from "primevue/usetoast";
 
 
 
-
-import { useNow, useDateFormat } from '@vueuse/core'
-
-const arrayAbsent = ref();
+const toast = useToast();
+const arrayAbsentRegularization = ref();
 const service = Service();
-// const current_user_code = Service();
+const swal = inject("$swal");
+
 const canShowConfirmation = ref(false);
 const canShowLoadingScreen = ref(false);
 const reject = ref('');
-const treer = ref()
 const reviewer_comment = ref();
 
 let currentlySelectedStatus = null;
@@ -156,18 +156,20 @@ const filters = ref({
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
+onUpdated(() => {
+    canShowConfirmation ? reviewer_comment.value = null : ''
+})
 
 onMounted(() => {
     getAbsentRegularization();
 })
 
 async function getAbsentRegularization() {
-
+    canShowLoadingScreen.value = true
     await axios.get('/fetch-absent-regularization-data').then((res) => {
-        arrayAbsent.value = res.data;
-        console.log(arrayAbsent.value);
+        arrayAbsentRegularization.value = res.data;
     }).finally(() => {
-
+        canShowLoadingScreen.value = false
     })
 
 }
@@ -191,10 +193,8 @@ function showConfirmDialog(selectedRowData, status) {
     canShowConfirmation.value = true;
     currentlySelectedStatus = status;
     reject.value = status;
-
     currentlySelectedRowData = selectedRowData;
-
-    console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+    // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog() {
@@ -203,14 +203,13 @@ function hideConfirmDialog() {
 
 function processApproveReject() {
     hideConfirmDialog(false);
-
     canShowLoadingScreen.value = true;
-
-    console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+    // console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
     axios
         .post('/approveRejectAbsentRegularization', {
             record_id: currentlySelectedRowData.id,
+            approver_user_code: service.current_user_code,
             status:
                 currentlySelectedStatus == "Approve"
                     ? "Approved"
@@ -221,25 +220,28 @@ function processApproveReject() {
             user_code: service.current_user_code,
         })
         .then((response) => {
-            console.log("Response : " + response);
-
-            canShowLoadingScreen.value = false;
-
-            toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
-            ajax_GetAttRegularizationData();
-
-            // resetVars();
+            if (response.data.status == 'success') {
+                toast.add({
+                    severity: "success",
+                    summary: "Success",
+                    detail: 'Your request has been recorded successfully',
+                    life: 3000,
+                });
+            } else {
+                Swal.fire(
+                    'Failure',
+                    `${response.data.message}`,
+                    'error'
+                )
+            }
+            getAbsentRegularization();
         })
         .catch((error) => {
             canShowLoadingScreen.value = false;
-            // resetVars();
-
-            // console.log(error.toJSON());
-        }).finally(()=>{
-            getAbsentRegularization();
+        }).finally(() => {
+            canShowLoadingScreen.value = false;
+            reviewer_comment.value = null
         })
 }
-
-
 
 </script>

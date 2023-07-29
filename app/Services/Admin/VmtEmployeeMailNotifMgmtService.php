@@ -33,7 +33,6 @@ class VmtEmployeeMailNotifMgmtService {
 
         $user_email= User::leftjoin('vmt_employee_mail_status','vmt_employee_mail_status.user_id','users.id')
         ->where('users.active','','0')
-        ->where('users.is_ssa','<>','1')
         ->select(
                 'users.User_code as empcode',
                 'users.name as empname',
@@ -41,7 +40,6 @@ class VmtEmployeeMailNotifMgmtService {
                 'vmt_employee_mail_status.welcome_mail_status',
                 'vmt_employee_mail_status.onboard_docs_approval_mail_status',
                 'vmt_employee_mail_status.acc_activation_mail_status'
-
 
               )
         ->get();
