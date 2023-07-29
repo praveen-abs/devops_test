@@ -5,10 +5,10 @@
             <div class="flex-1 text-center hidden lg:flex w-[100%] ">
                 <div class=" w-[100%] bg-contain bg-center bg-no-repeat relative">
                     <img src="../../assests/images/login-page-img.png" alt="" class="w-[100%] h-[100vh]">
-                    <div class=" absolute bottom-[50%] left-[20%] font-medium font-sans d-flex justify-center ">
-                        <h1 class="text-[72px] text-white font-['Quicksand'] ">Great</h1>
-                        <div class="px-3 mt-2  h-[80px]  ">
-                            <h1 class="text-[24px] w-[300px] text-left leading-[40px] text-white font-['Poppins'] ">Company begins with a
+                    <div class="absolute bottom-[50%] left-[15%]  font-medium font-sans d-flex justify-center xl:absolute xl:bottom-[50%] xl:left-[20%] ">
+                        <h1 class="text-[64px] text-white font-['Quicksand'] xl:text-[72px] ">Great</h1>
+                        <div class="px-3 mt-2  h-[80px]">
+                            <h1 class="text-[20px] w-[300px] text-left leading-[40px] text-white font-['Poppins'] xl:text-[24px] ">Company begins with a
                                 Decision</h1>
                             <!-- <h1 class="text-[24px] text-left text-white my-3">
                                 
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="mt-[14px]  d-flex justify-content-center">
-                                <div class="w-[180px] py-2 bg-[#E6E6E6] d-flex justify-content-center rounded-md">
+                                <div class="w-[240px] py-2 bg-[#E6E6E6] d-flex justify-content-between rounded-md">
                                     <img src="../../assests/images/Google logo.png" alt=""  class="mx-2"  style="width: 40px; height:40px" >
                                     <img src="../../assests/images/Linkedin logo.png" alt="" class="mx-2" style="width: 40px; height:40px" >
                                     <img src="../../assests/images/Microsoft logo.png" alt=""  class="mx-2"  style="width: 40px; height:40px" >
@@ -68,17 +68,17 @@
                                 </div>
                                
                                 <div class=" flex justify-center relative top-3">
-                                    <div class="w-[164px]">
+                                    <div class="w-[120px]">
                                         <img src="../../assests/images/Playstore Logo.png"  class="" alt="">
                                     </div>
-                                    <div class="w-[164px] mx-2">
+                                    <div class="w-[120px] mx-2">
                                         <img src="../../assests/images/App Store Logo.png" class="w-full h-full"  alt="">
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-center  relative top-6  ">
-                                <div class=" flex justify-center mt-[10px] w-[200px] ">
-                                    <p class="text-[14px] text-[#8B8B8B] font-['Poppins'] ">Powered by</p>
+                            <div class="d-flex justify-content-center  relative top-8  ">
+                                <div class=" flex justify-center mt-[10px] w-[150px] ">
+                                    <p class="text-[12px] text-[#8B8B8B] font-['Poppins'] ">Powered by</p>
                                 <div class="w-[148px]">
                                     <img src="../../assests/images/evangelist.png" alt="" class="w-full h-full">
                                 </div>
