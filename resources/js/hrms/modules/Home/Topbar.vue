@@ -49,9 +49,9 @@
                         <div v-if="isOpen" class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded">
                             <!-- Dropdown content goes here -->
                             <ul>
-                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">Option 1</li>
+                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">View profile</li>
                                 <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">Option 2</li>
-                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">Option 3</li>
+                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">Sign out</li>
                             </ul>
                         </div>
                     </transition>
