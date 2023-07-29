@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useNow, useDateFormat } from '@vueuse/core'
@@ -208,7 +208,7 @@ function processApproveReject() {
     axios
         .post('/approveRejectAbsentRegularization', {
             record_id: currentlySelectedRowData.id,
-            user_code: service.current_user_code,
+            approver_user_code: service.current_user_code,
             status:
                 currentlySelectedStatus == "Approve"
                     ? "Approved"
@@ -222,18 +222,19 @@ function processApproveReject() {
             console.log("Response : " + response);
             canShowLoadingScreen.value = false;
             if (response.data.status == 'success') {
+                toast.add({
+                    severity: "success",
+                    summary: "Success",
+                    detail: 'Your request has been recorded successfully',
+                    life: 3000,
+                });
+            } else {
                 Swal.fire(
-                    'Good job!',
-                    'Your request has been recorded successfully',
-                    'success'
+                    'Failure',
+                    `${response.data.message}`,
+                    'error'
                 )
             }
-            toast.add({
-                severity: "error",
-                summary: "Failure",
-                detail: `${response.data.message}`,
-                life: 3000,
-            });
             ajax_GetAttRegularizationData();
         })
         .catch((error) => {
