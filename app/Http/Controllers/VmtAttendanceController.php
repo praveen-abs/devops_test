@@ -1309,7 +1309,7 @@ class VmtAttendanceController extends Controller
                                         record_id : $request->record_id,
                                         status : $request->status,
                                         status_text : $request->status_text,
-                                        $serviceVmtNotificationsService);
+                                        serviceVmtNotificationsService : $serviceVmtNotificationsService);
 
     }
 
