@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VmtClientMaster;
 use App\Mail\WelcomeClientMail;
 use Symfony\Component\Mailer\Exception\TransportException;
+use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Validator;
 use App\Services\VmtClientService;
@@ -87,6 +89,23 @@ class VmtClientController extends Controller
             $vmtClient->product  = $request->product;
             $vmtClient->subscription_type   = $request->subscription_type;
             $vmtClient->save();
+
+            $client_users =  new User;
+            $client_users->name = $request->authorised_person_name;
+            $client_users->user_code = $request->authorised_person_contact_email;
+            $client_users->client_id = $vmtClient->id;
+            $client_users->email = $request->authorised_person_contact_email;
+            $client_users->active = 1 ;
+            $client_users->password = Hash::make('Abs@123123');
+            $client_users->is_admin = 0;
+            $client_users->is_onboarded = 1;
+            $client_users->onboard_type = 'client_onboard';
+            $client_users->is_default_password_updated = 1;
+            $client_users->org_role = 2 ;
+            $client_users->is_ssa = 0;
+            $client_users->can_login = 1 ;
+            $client_users->save();
+
 
 
             $image_view = url('/').$VmtClientMaster->client_logo;
