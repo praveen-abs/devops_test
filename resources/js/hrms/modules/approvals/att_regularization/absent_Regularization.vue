@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, inject, onUpdated } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useNow, useDateFormat } from '@vueuse/core'
@@ -153,6 +153,11 @@ const filters = ref({
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
+
+
+onUpdated(() => {
+    canShowConfirmation ? reviewer_comment.value = null : ''
+})
 
 onMounted(() => {
     getAbsentRegularization();

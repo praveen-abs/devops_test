@@ -131,7 +131,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, inject, onUpdated } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
 import { useConfirm } from "primevue/useconfirm";
@@ -149,6 +149,13 @@ const reject = ref('');
 const reviewer_comment = ref();
 const service = Service();
 const swal = inject("$swal");
+
+
+
+onUpdated(() => {
+    canShowConfirmation ? reviewer_comment.value = null : ''
+})
+
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -228,7 +235,7 @@ function processApproveReject() {
 
     axios
         .post(window.location.origin + "/attendance-regularization-approvals", {
-            id: currentlySelectedRowData.id,
+            record_id: currentlySelectedRowData.id,
             approver_user_code: service.current_user_code,
             status:
                 currentlySelectedStatus == "Approve"
