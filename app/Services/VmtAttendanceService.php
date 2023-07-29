@@ -702,13 +702,14 @@ class VmtAttendanceService
             $rules = [
                 'record_id' => 'required|exists:vmt_employee_leaves,id',
                 'approver_user_code' => 'required|exists:users,user_code',
-                'status' => 'required',
+                'status' => ['required', Rule::in(['Approved','Rejected'])],
                 'review_comment' => 'nullable',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
                 'exists' => 'Field :attribute is invalid',
                 'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
             ]
         );
 
@@ -1446,6 +1447,7 @@ class VmtAttendanceService
                 "required" => "Field :attribute is missing",
                 "exists" => "Field :attribute is invalid",
                 "required_with" => "Field :attribute is missing",
+                'in' => 'Field :attribute is invalid',
             ]
         );
 
@@ -1500,34 +1502,48 @@ class VmtAttendanceService
                 ////Send mail to Manager
 
                 $mail_status = "";
+                $isSent ="";
 
                 //Get manager details
                 $manager_usercode = VmtEmployeeOfficeDetails::where('user_id', $user_id)->first()->l1_manager_code;
                 $manager_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                     ->where('users.user_code', $manager_usercode)->first(['users.name', 'users.user_code', 'vmt_employee_office_details.officical_mail']);
 
-                //dd($manager_details);
+
+                //Check if manager's mail exists or not
+                if(!empty($manager_details))
+                {
+                    //dd($manager_details);
 
 
-                $VmtClientMaster = VmtClientMaster::first();
-                $image_view = url('/') . $VmtClientMaster->client_logo;
+                    $VmtClientMaster = VmtClientMaster::first();
+                    $image_view = url('/') . $VmtClientMaster->client_logo;
 
 
-                $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
+                    $emp_avatar = json_decode(getEmployeeAvatarOrShortName($user_id));
 
 
-                $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
-                    $query_user->name,
-                    $query_user->user_code,
-                    $emp_avatar,
-                    $attendance_date,
-                    $manager_details->name,
-                    $manager_details->user_code,
-                    request()->getSchemeAndHttpHost(),
-                    $image_view,
-                    $custom_reason,
-                    "Pending"
-                ));
+                    $isSent    = \Mail::to($manager_details->officical_mail)->send(new VmtAttendanceMail_Regularization(
+                        $query_user->name,
+                        $query_user->user_code,
+                        $emp_avatar,
+                        $attendance_date,
+                        $manager_details->name,
+                        $manager_details->user_code,
+                        request()->getSchemeAndHttpHost(),
+                        $image_view,
+                        $custom_reason,
+                        "Pending"
+                    ));
+
+                    if ($isSent) {
+                        $mail_status = "Mail sent successfully";
+                    } else {
+                        $mail_status = "There was one or more failures.";
+                    }
+
+                }
+
 
                 if ($regularization_type == 'LC') {
 
@@ -1550,11 +1566,7 @@ class VmtAttendanceService
                 );
 
 
-                if ($isSent) {
-                    $mail_status = "Mail sent successfully";
-                } else {
-                    $mail_status = "There was one or more failures.";
-                }
+
 
                 return [
                     'status' => 'success',
@@ -1599,13 +1611,14 @@ class VmtAttendanceService
             $rules = [
                 'approver_user_code' => 'required|exists:users,user_code',
                 'record_id' => 'required|exists:vmt_employee_attendance_regularizations,id',
-                'status' => 'required',
+                'status' => ['required', Rule::in(['Approved','Rejected'])],
                 'status_text' => 'nullable',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
                 'exists' => 'Field :attribute is invalid',
                 'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
             ]
         );
 
