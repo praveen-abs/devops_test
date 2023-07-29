@@ -1,5 +1,5 @@
 <template>
-    <Sidebar v-model:visible="useTimesheet.classicTimesheetSidebar" position="right" class="w-full md:w-2rem lg:w-30rem">
+    <Sidebar v-model:visible="visibleRight" position="right" class="w-full md:w-2rem lg:w-30rem">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
@@ -353,9 +353,23 @@ const useTimesheet = useAttendanceTimesheetMainStore()
 const service = Service()
 const visibleRight = ref(false)
 
+
+
+
+
+// const toCloseSideBar = (val) => {
+//     console.log(val);
+//     visibleRight.value = val
+// }
+
+
+
+
+
 const getSelectedCellValues = (selectedCells) => {
-    useTimesheet.classicTimesheetSidebar = true
-    // visibleRight.value = true
+    // useTimesheet.classicTimesheetSidebar = true
+    visibleRight.value = true
+
     currentlySelectedCellRecord.value = { ...selectedCells }
 
     if (selectedCells.isLC) {
@@ -377,7 +391,7 @@ const getSelectedCellValues = (selectedCells) => {
 
 
 const findAttendanceStatus = (data) => {
-    console.log(data);
+    // console.log(data);
     if (data.isAbsent) {
         if (data.absent_status.includes('Approved')) {
             return 'border-l-4 border-green-500 bg-green-50 text-green-600 font-medium fs-5'
@@ -420,7 +434,7 @@ const findAttendanceStatus = (data) => {
 }
 
 const findAttendanceMode = (attendance_mode) => {
-    console.log(attendance_mode);
+    // console.log(attendance_mode);
     if (attendance_mode == "biometric")
         // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
         return 'fas fa-fingerprint fs-12'
@@ -557,6 +571,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    sidebar: {
+        type: Boolean,
+        required: true
+    }
 
 });
 
@@ -795,4 +813,5 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}</style>
+}
+</style>
