@@ -1600,7 +1600,7 @@ class VmtAttendanceService
                 'approver_user_code' => 'required|exists:users,user_code',
                 'record_id' => 'required|exists:vmt_employee_attendance_regularizations,id',
                 'status' => 'required',
-                'status_text' => 'required',
+                'status_text' => 'nullable',
             ],
             $messages = [
                 'required' => 'Field :attribute is missing',
@@ -1712,7 +1712,7 @@ class VmtAttendanceService
         catch (\Exception $e) {
             return response()->json([
                 'status' => 'failure',
-                'message' => "Error[ approveRejectAttendanceRegularization() ] ".$e->getMessage(),
+                'message' => "Error[ approveRejectAttendanceRegularization() ) ] ".$e->getMessage(),
                 'data' => $e->getMessage()
             ]);
         }
