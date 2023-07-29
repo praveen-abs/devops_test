@@ -1126,7 +1126,7 @@ class VmtEmployeePayCheckService
                 ]
             )->toArray();
 
-
+                    // dd($getpersonal['client_details'] );
       $getpersonal['personal_details']    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
@@ -1156,7 +1156,7 @@ class VmtEmployeePayCheckService
             )->toArray();
 
 
-      $getpersonal['salary_details']    =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+      $getpersonal['salary_details'] =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
             ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
@@ -1166,6 +1166,7 @@ class VmtEmployeePayCheckService
             ->join('vmt_department', 'vmt_department.id', '=', 'vmt_employee_office_details.department_id')
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
+            ->where('payroll_date', $payroll_date)
             ->get(
                 [
                    'vmt_employee_payslip_v2.month_days',
@@ -1195,6 +1196,7 @@ class VmtEmployeePayCheckService
                     'vmt_employee_payslip_v2.earned_spl_alw',
                     'vmt_employee_payslip_v2.travel_conveyance',
                     'vmt_employee_payslip_v2.earned_child_edu_allowance',
+                    'vmt_employee_payslip_v2.overtime',
                 ]
             )->toArray();
 
@@ -1300,45 +1302,20 @@ class VmtEmployeePayCheckService
                                                 "Net Salary in words" => numberToWord($total_amount),
                                                 ]];
 
-                    return dd($getpersonal);
+                       dd($getpersonal);
+
+            $user = User::where('user_code', $user_code)->first();
+
+            $query_client = VmtClientMaster::find($user->client_id);
+
+            $client_name = $query_client->client_name;
+
+            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
 
 
+            $html =  view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $getpersonal);
 
-
-
-        // foreach( $getpersonal['Earnings'] as $getearnings){
-
-        //     // dd($getearnings);
-        //     $simma = ($getearnings['basic'] + $getearnings['hra'] +$getearnings['travel_conveyance'] +$getearnings['earned_spl_alw'] +$getearnings['earned_child_edu_allowance'] + $getearnings['earned_stats_bonus']);
-        // }
-        //     dd($simma);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    return $html;
 
 
 
