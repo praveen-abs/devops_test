@@ -462,6 +462,7 @@ class VmtInvestmentsController extends Controller
             ->get(
                 [
                     'vmt_inv_section_group.section_group',
+                    'vmt_inv_section.max_amount',
                     'vmt_inv_emp_formdata.dec_amount',
                     'vmt_inv_emp_formdata.json_popups_value',
                     'vmt_employee_compensatory_details.gross',
@@ -496,6 +497,7 @@ class VmtInvestmentsController extends Controller
         $sumOfReimbersument = 0;
         $sumOfOtherSourceOfIncome = 0;
         $totalRentPaid = 0;
+        $sumof80s = 0;
         $standardDeducation = 0;
         $professional_tax = 0;
         $perviousEmployeeProfessionalTax = 0;
@@ -506,6 +508,7 @@ class VmtInvestmentsController extends Controller
         $otherAllowance = 0;
         $sumOfOtherExemptionDec = 0;
         $sumOfOtherExemptionMax = 0;
+        $chapterexe =0;
 
         foreach ($v_form_template as $dec_amt) {
 
@@ -542,23 +545,32 @@ class VmtInvestmentsController extends Controller
             }
 
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+                $sumof80s += $dec_amt['dec_amount'];
+
+                if ($sumof80s > 150000) {
+                    $chapter80s = $sumof80s;
+                } else {
+                    $chapter80s = 150000;
+                }
             }
+
             if ($dec_amt['section_group'] == "Other Excemptions ") {
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
-            }
-            if ($dec_amt['section_group'] == "Previous Employer Income") {
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+
+                 if($dec_amt['max_amount'] > $dec_amt['dec_amount']){
+                     $chapterexe += $dec_amt['max_amount'];
+                 }else{
+                    $chapterexe += $dec_amt['dec_amount'];
+                 }
             }
 
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+                // $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
                 $sumOfOtherSourceOfIncome = $dec_amt['dec_amount'];
-                $ExemptionsUnder80s += $dec_amt['dec_amount'];
+                // $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
 
             if ($dec_amt['gross'] >= 50000) {
@@ -639,7 +651,7 @@ class VmtInvestmentsController extends Controller
 
             $exemption['sno'] = "g";
             $exemption['section'] = "Deduction under Chapter VI-A";
-            $exemption['old_regime'] = round($ExemptionsUnder80s);
+            $exemption['old_regime'] = $chapterexe;
             $exemption['new_regime'] = 0;
 
             $total_tax_income['sno'] = "h";
