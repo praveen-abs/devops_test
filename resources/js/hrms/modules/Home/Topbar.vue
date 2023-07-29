@@ -28,13 +28,13 @@
                 <input type="text" name="" id="" class="border-1 border-gray-700 p-2 rounded-lg" placeholder="Search....">
             </div>
             <div class="flex justify-evenly">
-                <button>
+                <button class="p-2 rounded-lg hover:bg-gray-400" >
                     <img src="./assests/icons/setting.svg" alt="" class="h-6 w-6">
                 </button>
-                <button class="mx-6">
+                <button class="mx-6 p-2 rounded-lg hover:bg-gray-400">
                     <img src="./assests/icons/notification.svg" alt="" class="h-6 w-6">
                 </button>
-                <button>
+                <button class="p-2 rounded-lg hover:bg-gray-400" >
                     <img src="./assests/icons/exit.svg" alt="" class="h-6 w-6">
                 </button>
                 <div class="relative" @click="isOpen = !isOpen">
