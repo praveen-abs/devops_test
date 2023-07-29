@@ -1447,6 +1447,7 @@ class VmtAttendanceService
                 "required" => "Field :attribute is missing",
                 "exists" => "Field :attribute is invalid",
                 "required_with" => "Field :attribute is missing",
+                'in' => 'Field :attribute is invalid',
             ]
         );
 
@@ -1607,6 +1608,7 @@ class VmtAttendanceService
                 'required' => 'Field :attribute is missing',
                 'exists' => 'Field :attribute is invalid',
                 'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
             ]
         );
 
