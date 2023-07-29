@@ -6,9 +6,8 @@
 
 
             <!-- Main content -->
+            sim
 
-
-            simma
 
         </div>
     </div>
@@ -19,6 +18,13 @@
 
 import Topbar from './Topbar.vue';
 import Sidebar from './Sidebar.vue';
+
+
+import { ref } from 'vue';
+
+const isOpen = ref(false);
+const isOpens = ref(false);
+
 
 </script>
 
