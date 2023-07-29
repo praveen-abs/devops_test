@@ -94,7 +94,8 @@
                 <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
                 <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
                 <div class="w-full d-flex justify-center mt-12">
-                    <Textarea v-model="reviewer_comment" v-if="reject == 'Reject'" rows="3" cols="30" class="border rounded-md" />
+                    <Textarea v-model="reviewer_comment" v-if="reject == 'Reject'" rows="3" cols="30"
+                        class="border rounded-md" />
                 </div>
 
             </div>
@@ -118,27 +119,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject, onUpdated } from "vue";
 import axios from "axios";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-import moment from "moment";
+import { useNow, useDateFormat } from '@vueuse/core'
+
 import dayjs from 'dayjs';
 import { Service } from "../../Service/Service";
 
-
-
-
-import { useNow, useDateFormat } from '@vueuse/core'
-
 const arrayAbsent = ref();
 const service = Service();
-// const current_user_code = Service();
+const swal = inject("$swal");
+
+
+
 const canShowConfirmation = ref(false);
 const canShowLoadingScreen = ref(false);
 const reject = ref('');
-const treer = ref()
 const reviewer_comment = ref();
 
 let currentlySelectedStatus = null;
@@ -156,6 +153,11 @@ const filters = ref({
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
+
+
+onUpdated(() => {
+    canShowConfirmation ? reviewer_comment.value = null : ''
+})
 
 onMounted(() => {
     getAbsentRegularization();
@@ -211,6 +213,7 @@ function processApproveReject() {
     axios
         .post('/approveRejectAbsentRegularization', {
             record_id: currentlySelectedRowData.id,
+            approver_user_code: service.current_user_code,
             status:
                 currentlySelectedStatus == "Approve"
                     ? "Approved"
@@ -222,24 +225,30 @@ function processApproveReject() {
         })
         .then((response) => {
             console.log("Response : " + response);
-
             canShowLoadingScreen.value = false;
-
-            toast.add({ severity: "success", summary: "Info", detail: "Success", life: 3000 });
+            if (response.data.status == 'success') {
+                toast.add({
+                    severity: "success",
+                    summary: "Success",
+                    detail: 'Your request has been recorded successfully',
+                    life: 3000,
+                });
+            } else {
+                Swal.fire(
+                    'Failure',
+                    `${response.data.message}`,
+                    'error'
+                )
+            }
             ajax_GetAttRegularizationData();
-
-            // resetVars();
         })
         .catch((error) => {
             canShowLoadingScreen.value = false;
-            // resetVars();
-
-            // console.log(error.toJSON());
-        }).finally(()=>{
+        }).finally(() => {
             getAbsentRegularization();
+            reviewer_comment.value = null
         })
 }
-
 
 
 </script>
