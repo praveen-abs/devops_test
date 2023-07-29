@@ -1,9 +1,8 @@
 <template>
-    <Sidebar v-model:visible="visibleRight" position="right" class="w-full md:w-2rem lg:w-30rem">
+    <Sidebar v-model:visible="useTimesheet.classicTimesheetSidebar" position="right" class="w-full md:w-2rem lg:w-30rem">
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
-        <!-- {{ currentlySelectedCellRecord }} -->
         <div v-if="currentlySelectedCellRecord.isAbsent">
             <div class="rounded-lg bg-red-50 p-3 my-3">
                 <p class="text-center font-semibold fs-6">Absent</p>
@@ -20,8 +19,8 @@
                 <div class="flex">
                     <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Date</label></div>
                     <div class="">
-                        <span class="text-ash-medium fs-15" id="current_date">{{ currentlySelectedCellRecord.date
-                        }}</span>
+                        <span class="text-ash-medium fs-15" id="current_date">
+                            {{ currentlySelectedCellRecord.date }}</span>
                         <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
                             id="attendance_date">
                     </div>
@@ -44,21 +43,21 @@
                         <i class="pi pi-clock" />
                     </span>
                 </div>
-                    <div class="flex my-4">
-                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
-                        <div>
-                            <select name="reason" class="form-select btn-line-orange w-52" id="reason_lc"
-                                v-model="useTimesheet.absentRegularizationDetails.reason">
-                                <option selected hidden disabled>
-                                    Choose Reason
-                                </option>
-                                <option value="Permission">Permission</option>
-                                <option value="Technical Error">Technical Error</option>
-                                <option value="Technical Error">Official</option>
-                                <option value="Technical Error">Personal</option>
-                                <option value="Others">Others</option>
-                            </select>
-                        </div>
+                <div class="flex my-4">
+                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
+                    <div>
+                        <select name="reason" class="form-select btn-line-orange w-52" id="reason_lc"
+                            v-model="useTimesheet.absentRegularizationDetails.reason">
+                            <option selected hidden disabled>
+                                Choose Reason
+                            </option>
+                            <option value="Permission">Permission</option>
+                            <option value="Technical Error">Technical Error</option>
+                            <option value="Technical Error">Official</option>
+                            <option value="Technical Error">Personal</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-12 " v-if="useTimesheet.absentRegularizationDetails.reason == 'Others'">
                     <div class="row">
@@ -70,7 +69,8 @@
                     </div>
                 </div>
                 <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-                    <button type="button" class="btn btn-orange" @click="useTimesheet.applyAbsentRegularization">Apply</button>
+                    <button type="button" class="btn btn-orange"
+                        @click="useTimesheet.applyAbsentRegularization">Apply</button>
                 </div>
 
             </div>
@@ -249,15 +249,19 @@
                                     <p class="font-sans w-2"> <i class="text-green-800 font-semibold text-sm"
                                             :class="findAttendanceMode(singleAttendanceDay.attendance_mode_checkin)"></i>
                                     </p>
-                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i v-if="singleAttendanceDay.isMOP"
+                                    <p class="font-sans fs-6  mx-2">{{ find(singleAttendanceDay) }}<i
+                                            v-if="singleAttendanceDay.isMOP"
                                             :class="icons(singleAttendanceDay.isMOP, singleAttendanceDay.mop_status)"
                                             style="font-size: 1rem" class="px-1"></i>
-                                        <i v-else-if="singleAttendanceDay.isLC" :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
+                                        <i v-else-if="singleAttendanceDay.isLC"
+                                            :class="icons(singleAttendanceDay.isLC, singleAttendanceDay.lc_status)"
                                             style="font-size: 1rem" class="px-1"></i>
-                                        <i   v-else-if="singleAttendanceDay.isEG" :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
+                                        <i v-else-if="singleAttendanceDay.isEG"
+                                            :class="icons(singleAttendanceDay.isEG, singleAttendanceDay.eg_status)"
                                             style="font-size: 1rem" class="px-1"></i>
-                                        <i   v-else-if="singleAttendanceDay.isMIP" :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
-                                            style="font-size: 1rem"  class="px-1"></i>
+                                        <i v-else-if="singleAttendanceDay.isMIP"
+                                            :class="icons(singleAttendanceDay.isMIP, singleAttendanceDay.mip_status)"
+                                            style="font-size: 1rem" class="px-1"></i>
                                     </p>
                                 </div>
 
@@ -350,7 +354,8 @@ const service = Service()
 const visibleRight = ref(false)
 
 const getSelectedCellValues = (selectedCells) => {
-    visibleRight.value = true
+    useTimesheet.classicTimesheetSidebar = true
+    // visibleRight.value = true
     currentlySelectedCellRecord.value = { ...selectedCells }
 
     if (selectedCells.isLC) {
@@ -790,5 +795,4 @@ onUpdated(() => {
     border-radius: 2px;
     font-size: 8px !important;
     text-align: center;
-}
-</style>
+}</style>

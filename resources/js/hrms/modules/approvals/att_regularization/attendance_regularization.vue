@@ -1,15 +1,5 @@
 <template>
     <div>
-        <Dialog header="Header" v-model:visible="loading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-            <template #header>
-                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
-            </template>
-            <template #footer>
-                <h5 style="text-align: center">Please wait...</h5>
-            </template>
-        </Dialog>
         <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
             :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
             <template #header>
@@ -22,18 +12,17 @@
         </Dialog>
 
         <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
-            :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '350px' }" :modal="true">
+            :breakpoints="{ '960px': '80vw', '640px': '90vw' }" :style="{ width: '380px' }" :modal="true">
             <div class="confirmation-content">
-                <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
-                <span>Are you sure you want to {{ currentlySelectedStatus }}?</span>
+                <i class="mr-2 pi pi-exclamation-triangle text-red-600" style="font-size: 1.3rem" />
+                <span class="my-auto">Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
-            <div class="w-full d-flex justify-center mt-12">
-                <Textarea v-model="reviewer_comment" v-if="reject == 'Reject'" rows="3" cols="30"
-                    class="border rounded-md" />
+            <div class="w-full flex justify-left p-2" v-if="reject == 'Reject'">
+                <Textarea v-model="reviewer_comment" rows="3" cols="30" class="border rounded-md" />
             </div>
             <template #footer>
-                <Button label="Yes" icon="pi pi-check" @click="processApproveReject()" class="p-button-text" autofocus />
-                <Button label="No" icon="pi pi-times" @click="hideConfirmDialog(true)" class="p-button-text" />
+                <Button label="Yes" icon="pi pi-check" @click="processApproveReject" class="p-button-text" autofocus />
+                <Button label="No" icon="pi pi-times" @click="canShowConfirmation = false" class="p-button-text" />
             </template>
         </Dialog>
 
@@ -42,7 +31,7 @@
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 :rowsPerPageOptions="[5, 10, 25]"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-                v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
+                v-model:filters="filters" filterDisplay="menu"  :globalFilterFields="['name', 'status']">
                 <template #empty> No Employeee found. </template>
                 <template #loading> Loading customers data. Please wait. </template>
 
@@ -144,7 +133,6 @@ let canShowConfirmation = ref(false);
 let canShowLoadingScreen = ref(false);
 const confirm = useConfirm();
 const toast = useToast();
-const loading = ref(true);
 const reject = ref('');
 const reviewer_comment = ref();
 const service = Service();
@@ -170,7 +158,6 @@ const filters = ref({
 });
 
 const statuses = ref(["Pending", "Approved", "Rejected"]);
-
 let currentlySelectedStatus = null;
 let currentlySelectedRowData = null;
 
@@ -179,14 +166,14 @@ onMounted(() => {
 });
 
 function ajax_GetAttRegularizationData() {
+    canShowLoadingScreen.value = true
     let url = window.location.origin + "/fetch-att-regularization-data";
-
-    console.log("AJAX URL : " + url);
-
+    // console.log("AJAX URL : " + url);
     axios.get(url).then((response) => {
-        console.log("Axios : " + response.data);
+        // console.log("Axios : " + response.data);
         att_regularization.value = Object.values(response.data);
-        loading.value = false;
+    }).finally(()=>{
+        canShowLoadingScreen.value = false
     });
 }
 
@@ -195,13 +182,11 @@ function showConfirmDialog(selectedRowData, status) {
     currentlySelectedStatus = status;
     reject.value = status;
     currentlySelectedRowData = selectedRowData;
-
-    console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+    // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
 }
 
 function hideConfirmDialog(canClearData) {
     canShowConfirmation.value = false;
-
     if (canClearData) resetVars();
 }
 
@@ -230,8 +215,7 @@ const getSeverity = (status) => {
 function processApproveReject() {
     hideConfirmDialog(false);
     canShowLoadingScreen.value = true;
-
-    console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+    // console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
 
     axios
         .post(window.location.origin + "/attendance-regularization-approvals", {
@@ -247,9 +231,7 @@ function processApproveReject() {
 
         })
         .then((response) => {
-            console.log("Response : " + response);
-            ajax_GetAttRegularizationData();
-
+            // console.log("Response : " + response);
             if (response.data.status == 'success') {
                 toast.add({
                     severity: "success",
@@ -270,10 +252,11 @@ function processApproveReject() {
         .catch((error) => {
             canShowLoadingScreen.value = false;
             resetVars();
-            console.log(error.toJSON());
+            // console.log(error.toJSON());
         }).finally(() => {
             reviewer_comment.value = null
             canShowLoadingScreen.value = false;
+            ajax_GetAttRegularizationData();
         });
 }
 </script>
