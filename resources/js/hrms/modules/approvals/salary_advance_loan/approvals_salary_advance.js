@@ -44,13 +44,13 @@ import OverlayPanel from 'primevue/overlaypanel';
 import approvals_salary_advance from './approvals_salary_advance.vue'
 
 const app = createApp(approvals_salary_advance);
-const pinia=createPinia()
+const pinia=createPinia();
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-app.use(pinia)
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);

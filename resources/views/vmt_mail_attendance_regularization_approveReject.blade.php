@@ -133,7 +133,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                         Kindly visit the HRMS portal for more details.
                                                         <a class="" type="button"href="info@abshrms.com"
                                                             style="text-decoration:none;cursor: pointer;font-weight:600">
-                                                            demo.abshrms.com
+                                                            info@abshrms
                                                         </a>
                                                     </td>
                                                 </tr>
