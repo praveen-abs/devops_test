@@ -1421,6 +1421,96 @@ class VmtAttendanceService
         }
     }
 
+    public function getAttendanceRegularizationStatus($user_code, $regularization_date, $regularization_type){
+
+        //Sample Input : ABS1006, 2023-07-29, LC
+        //Sample Output : JSON structure of table row
+
+        $validator = Validator::make(
+            $data = [
+                "user_code" => $user_code,
+                "regularization_date" => $regularization_date,
+                "regularization_type" => $regularization_type,
+            ],
+            $rules = [
+                'user_code' => 'required|exists:users,user_code',
+                'regularization_type' => ['required', Rule::in(['LC','EG','MIP','MOP','Absent Regularization'])],
+                'regularization_date' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'in' => 'Field :attribute is invalid',
+            ]
+
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+
+            $user_id = User::where('user_code', $user_code)->first()->id;
+
+            if(Str::contains($regularization_type, ['LC','EG','MIP','MOP']))
+            {
+
+                //Check if already request applied
+                $data = VmtEmployeeAttendanceRegularization::where('attendance_date', $regularization_date)
+                    ->where('user_id',  $user_id)
+                    ->where('regularization_type',  $regularization_type);
+
+                if ($data->exists()) {
+
+                    //Adding 'is_exists' key for quick checking in frontend
+                    $data = [ "is_exists" => 1,
+                        "data" => $data->get()
+                    ];
+
+                    return $responseJSON = [
+                        'status' => 'success',
+                        'message' => 'Attendance Regularization status fetched successfully',
+                        'data' => $data
+                    ];
+                }
+                else
+                {
+                    //If data doesnt exists, then send 0
+
+                    return $responseJSON = [
+                        'status' => 'success',
+                        'message' => 'Attendance Regularization status fetched successfully',
+                        'data' => [
+                            "is_exists" => 0
+                        ]
+                    ];
+                }
+
+
+            }
+            else
+            if(Str::contains($regularization_type, ['Absent Regularization']))
+            {
+
+            }
+
+            //,'Absent Regularization'
+
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error while fetching Attendance Regularization Status",
+                'data' => "Error[ getAttendanceRegularizationStatus() ] ".$e->getMessage(),
+            ]);
+        }
+
+    }
+
     public function applyRequestAttendanceRegularization($user_code, $attendance_date, $regularization_type, $user_time, $regularize_time, $reason, $custom_reason, VmtNotificationsService $serviceVmtNotificationsService)
     {
 

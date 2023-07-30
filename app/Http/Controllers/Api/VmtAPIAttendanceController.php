@@ -376,6 +376,16 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
+    public function getAttendanceRegularizationStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->getAttendanceRegularizationStatus(
+                                                user_code : $request->user_code,
+                                                regularization_date : $request->regularization_date,
+                                                regularization_type : $request->regularization_type
+                                            );
+    }
+
+
     public function getAttendanceRegularizationData(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 
         //Validate the request

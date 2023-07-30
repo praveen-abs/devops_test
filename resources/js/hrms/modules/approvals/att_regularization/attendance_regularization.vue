@@ -29,9 +29,9 @@
         <div>
             <DataTable :value="att_regularization" :paginator="true" :rows="10" dataKey="id"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                :rowsPerPageOptions="[5, 10, 25]"
+                :rowsPerPageOptions="[5, 10, 25]" sortField="attendance_date" :sortOrder="-1"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-                v-model:filters="filters" filterDisplay="menu"  :globalFilterFields="['name', 'status']">
+                v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
                 <template #empty> No Employeee found. </template>
                 <template #loading> Loading customers data. Please wait. </template>
 
@@ -54,7 +54,7 @@
                             class="p-column-filter" :showClear="true" />
                     </template>
                 </Column>
-                <Column field="attendance_date" header="Date" :sortable="true" style="min-width: 10rem;">
+                <Column field="attendance_date" header="Date" :sortable="true" style="min-width: 10rem;" >
                     <template #body="slotProps">
                         <h1 class="text-right "> {{ moment(slotProps.data.attendance_date).format('DD-MM-YYYY') }}</h1>
                     </template>
@@ -71,7 +71,6 @@
                 <Column field="regularize_time" header="Regularize Time" style="min-width: 10rem;"></Column>
                 <Column field="reason_type" header="Reason" style="min-width: 18rem;">
                     <template #body="slotProps">
-
                         <span v-if="slotProps.data.reason_type == 'Others'">
                             {{ slotProps.data.custom_reason }}
                         </span>
@@ -79,8 +78,27 @@
 
                     </template>
                 </Column>
-                <Column field="reviewer_comments" header="Approve Comments"></Column>
-                <Column field="reviewer_reviewed_date" header="Reviewed Date"></Column>
+
+
+                <Column field="reviewer_name" header="Approve Name">
+                    <template #body="slotProps">
+                        <p class="text-bold">{{ slotProps.data.reviewer_name ? slotProps.data.reviewer_name : '---' }}</p>
+                    </template>
+                </Column>
+                <Column field="reviewer_comments" header="Approve Comments">
+                    <template #body="slotProps">
+                        <p class="text-bold">
+                            {{ slotProps.data.reviewer_comments ? slotProps.data.reviewer_comments : '---' }}
+                        </p>
+                    </template>
+                </Column>
+                <Column field="reviewer_reviewed_date" header="Reviewed Date">
+                    <template #body="slotProps">
+                        <p class="text-bold">
+                            {{ slotProps.data.reviewer_reviewed_date ? slotProps.data.reviewer_reviewed_date : '---' }}
+                        </p>
+                    </template>
+                </Column>
 
                 <Column field="status" header="Status" icon="pi pi-check">
                     <template #body="{ data }">
@@ -172,7 +190,7 @@ function ajax_GetAttRegularizationData() {
     axios.get(url).then((response) => {
         // console.log("Axios : " + response.data);
         att_regularization.value = Object.values(response.data);
-    }).finally(()=>{
+    }).finally(() => {
         canShowLoadingScreen.value = false
     });
 }

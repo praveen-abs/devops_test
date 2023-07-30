@@ -2,7 +2,7 @@
     <div>
         <DataTable :value="arrayAbsentRegularization" :paginator="true" :rows="10" dataKey="id"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
+            :rowsPerPageOptions="[5, 10, 25]"  sortField="attendance_date" :sortOrder="-1"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
             v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
             <template #empty> No Employeee found. </template>
@@ -27,7 +27,7 @@
                         class="p-column-filter" :showClear="true" />
                 </template>
             </Column>
-            <Column class="font-bold" field="attendance_date" header="Attendance Date">
+            <Column class="font-bold" field="attendance_date" :sortable="true" header="Attendance Date">
                 <template #body="slotProps">
                     {{ dayjs(slotProps.data.attendance_date).format('DD-MMM-YYYY') }}
                 </template>
@@ -39,8 +39,27 @@
             <Column class="font-bold" field="reason" header="Reason"> </Column>
             <Column class="font-bold" field="custom_reason" header="Custom Reason"> </Column>
 
-            <Column class="font-bold" field="reviewer_comments" header="Reviewer Comments"> </Column>
-            <Column class="font-bold" field="reviewer_reviewed_date" header="Reviewed Date"> </Column>
+            <Column field="reviewer_name" header="Approve Name">
+                <template #body="slotProps">
+                    <p class="text-bold">{{ slotProps.data.reviewer_name ? slotProps.data.reviewer_name : '---' }}</p>
+                </template>
+            </Column>
+            <Column field="reviewer_comments" header="Approve Comments">
+                <template #body="slotProps">
+                    <p class="text-bold">
+                        {{ slotProps.data.reviewer_comments ? slotProps.data.reviewer_comments : '---' }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="reviewer_reviewed_date" header="Reviewed Date">
+                <template #body="slotProps">
+                    <p class="text-bold">
+                        {{ slotProps.data.reviewer_reviewed_date ? slotProps.data.reviewer_reviewed_date : '---' }}
+                    </p>
+                </template>
+            </Column>
+
+
             <Column class="font-bold" field="status" header="Status">
                 <template #body="{ data }">
                     <Tag :value="data.status" :severity="getSeverity(data.status)" />
@@ -81,8 +100,7 @@
                 <span class="my-auto">Are you sure you want to {{ currentlySelectedStatus }}?</span>
             </div>
             <div class="w-full flex justify-left p-2" v-if="reject == 'Reject'">
-                <Textarea v-model="reviewer_comment" rows="3" cols="30"
-                    class="border rounded-md" />
+                <Textarea v-model="reviewer_comment" rows="3" cols="30" class="border rounded-md" />
             </div>
             <template #footer>
                 <Button label="Yes" icon="pi pi-check" @click="processApproveReject" class="p-button-text" autofocus />
