@@ -5,18 +5,17 @@
                 {{ current_session }}
             </p>
             <div class="text-gray-900 font-bold text-xl mb-2"> {{ service.current_user_name }}</div>
-
-
-              <label class="flex items-center relative w-max cursor-pointer select-none">
-                <p class="text-gray-700 text-base">
-                    general shift
-                </p>
-                <input type="checkbox" v-model="welcome_card.check" @change="getTime"
-                    class="appearance-none transition-colors cursor-pointer w-14 h-5 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-blue-500 bg-red-500" />
-                <span class="absolute font-medium text-xs uppercase right-1 text-white"> OFF </span>
-                <span class="absolute font-medium text-xs uppercase right-8 text-white"> ON </span>
-                <span class="w-7 h-7 right-7 absolute rounded-full transform transition-transform bg-gray-200" />
-            </label>
+            <div class="flex my-2">
+                <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
+                <p class="fs-6 my-auto">General Shift</p>
+                <label class="switch-checkbox f-12 text-muted mx-2">
+                    <input type="checkbox" id="checkin_function" class="f-13 text-muted"
+                        v-model="welcome_card.check" @change="getTime" />
+                    <span class="slider-checkbox check-inw round">
+                        <span class="slider-checkbox-text"> </span>
+                    </span>
+                </label>
+            </div>
             <div >
                 <p class="text-sm text-gray-600 flex items-center">
                     Time duration<span>90</span>
@@ -281,5 +280,125 @@ input:checked {
   input:checked ~ span:last-child {
     --tw-translate-x: 1.75rem; /* translate-x-7 */
   }
+
+
+  .switch-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 115px;
+    height: 25px;
+}
+
+.switch-checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-checkbox-text {
+    color: #000;
+    position: absolute;
+    top: 2px;
+    left: 23px;
+    font-size: 10px;
+}
+
+.slider-checkbox {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 1px solid #d9d0d0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px;
+    background-color: white;
+    width: 75px;
+    -webkit-transition: 0.4s;
+    height: 22px;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),
+        rgb(0 0 0 / 16%) 0px 1px 4px;
+    transition: 0.4s;
+}
+
+.slider-checkbox.check-out:before {
+    background-color: green;
+}
+
+.slider-checkbox.check-in:before {
+    background-color: green;
+}
+
+input:checked + .slider > .slider-text:after {
+    content: "Checkout";
+    color: red;
+}
+
+input + .slider > .slider-text:after {
+    content: "Check In";
+}
+
+.slider-checkbox:before {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 0px;
+    border-radius: 50%;
+    bottom: 0px;
+    color: #ffffff;
+    background-color: #008000;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    content: "\f011";
+    font-family: FontAwesome !important;
+    padding: 0px 4px 0px 3px;
+    font-size: 15px;
+}
+
+input:checked + .slider-checkbox > .slider-checkbox-text {
+    left: 2px;
+    color: #fff;
+}
+
+input:checked + .slider-checkbox.check-out {
+    background-color: #f0657070;
+    color: #ff0000;
+}
+
+input:checked + .slider-checkbox.check-in {
+    background-color: #f0657070;
+    color: #ff0000;
+}
+
+input:focus + .slider-checkbox {
+    box-shadow: 0 0 1px #7cfc00;
+}
+
+input:checked + .slider-checkbox:before {
+    -webkit-transform: translateX(65px);
+    -ms-transform: translateX(65px);
+    transform: translateX(65px);
+    left: -13px;
+    background-color: #f0f0f6;
+}
+
+input:checked + .slider-checkbox.check-out:before {
+    color: white;
+    background-color: red;
+}
+
+input:checked + .slider-checkbox.check-in:before {
+    color: white;
+    background-color: red;
+}
+
+input:checked + .slider-checkbox > .slider-checkbox-text:after {
+    content: "Checkout";
+    color: red;
+}
+
+input + .slider-checkbox > .slider-checkbox-text:after {
+    content: "Check In";
+}
 
 </style>

@@ -33,7 +33,9 @@
         </div>
         <div class="grid grid-rows-3 grid-flow-col gap-4 my-3">
             <div class="col-span-2  grid grid-cols-2 gap-5">
-                <div class="bg-white rounded-lg">1</div>
+                <div class="bg-white rounded-lg max-h-min">
+                   <LeaveBalance />
+                </div>
                 <div class="bg-white rounded-lg">1</div>
             </div>
             <div class="row-span-2 col-span-2 bg-white">event</div>

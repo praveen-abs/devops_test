@@ -2,20 +2,29 @@
     <!-- <div style="display: none;">
         <LeaveApply />
     </div> -->
-    <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type" class="bg-gray-200 max-w-sm ">
-        <div class="flex  ">
-            <div class="leave-balance-container">
-                <div class="m-auto leave-balance-available">
-                    <span class="">{{ leaveBalance.leave_balance }}</span>
-                    <span class="">/</span>
-                    <span class="">{{ leaveBalance.avalied_leaves }}</span>
+
+
+    <div>
+        <p>Leave Balance</p>
+        <div class="overflow-x-scroll h-full">
+            <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type" class="bg-gray-200 max-w-sm my-2 p-2 rounded-lg ">
+                <div class="flex ">
+                    <div class="leave-balance-container">
+                        <div class="leave-balance-available">
+                            <span class="">{{ leaveBalance.leave_balance }}</span>
+                            <span class="">/</span>
+                            <span class="">{{ leaveBalance.avalied_leaves }}</span>
+                        </div>
+                    </div>
+                    <div class="">
+                        <p class=" font-semibold text-lg text-primary">{{ leaveBalance.leave_type }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="">
-                <p class=" font-semibold text-lg text-primary">{{ leaveBalance.leave_type }}</p>
             </div>
         </div>
     </div>
+
+
 </template>
 
 <script setup>

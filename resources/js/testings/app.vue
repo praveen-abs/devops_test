@@ -1,197 +1,58 @@
 <template>
-    <div class="row">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-6"><label class="font-medium fs-6 text-gray-700">Date</label></div>
-                <div class="col-6">
-                    <span class="text-ash-medium fs-15" id="current_date">{{ source.date }}</span>
-                    <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
-                        id="attendance_date">
-                </div>
-            </div>
+    <div class="carousel">
+      <div class="carousel-items">
+        <div v-for="(item, index) in items" :key="index" class="carousel-item" :class="{ active: currentIndex === index }">
+          {{ item }}
         </div>
-        <div class=" col-12" v-if="type == 'LC' || type == 'MIP'">
-            <div class="row">
-                <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
-                        as</label>
-                </div>
-                <div class="col-6">
-                    9.30AM
-                </div>
-            </div>
-        </div>
-        <div class=" col-12" v-if="type == 'EG' || type == 'MOP'">
-            <div class="row">
-                <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
-                        as</label>
-                </div>
-                <div class="col-6">
-                    6.30PM
-                </div>
-            </div>
-        </div>
-        <div v-if="type == 'LC'">
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
-                    <div class="col-6" v-if="source.lc_status">
-                        <p class="max-w-min p-1" :class="findStatus(source.lc_status)"> {{ source.lc_status }}</p>
-                    </div>
-                    <div class="col-6" v-else>
-                        <select name="reason" class="form-select btn-line-orange" id="reason_lc">
-                            <option selected hidden disabled>
-                                Choose Reason
-                            </option>
-                            <option value="Permission">Permission</option>
-                            <option value="Technical Error">Technical Error</option>
-                            <option value="Technical Error">Official</option>
-                            <option value="Technical Error">Personal</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 " v-if="false">
-                <div class="row">
-                    <div class="col-12">
-                        <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                            placeholder="Reason here...."></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div v-if="!source.lc_status" class="text-end btn btn-orange">Apply</div>
-        </div>
-        <div v-if="type == 'MIP'">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
-                    <div class="col-6" v-if="source.mip_status">
-                        <p class="max-w-min p-1" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
-                    </div>
-                    <div class="col-6" v-else>
-                        <select name="reason" class="form-select btn-line-orange" id="reason_lc">
-                            <option selected hidden disabled>
-                                Choose Reason
-                            </option>
-                            <option value="Permission">Permission</option>
-                            <option value="Technical Error">Technical Error</option>
-                            <option value="Technical Error">Official</option>
-                            <option value="Technical Error">Personal</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 " v-if="false">
-                <div class="row">
-                    <div class="col-12">
-                        <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                            placeholder="Reason here...."></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div v-if="!source.mip_status" class="text-end btn btn-orange">Apply</div>
-        </div>
-        <div v-if="type == 'EG'">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
-                    <div class="col-6" v-if="source.eg_status">
-                        <p class="max-w-min p-1" :class="findStatus(source.eg_status)"> {{ source.eg_status }}</p>
-                    </div>
-                    <div class="col-6" v-else>
-                        <select name="reason" class="form-select btn-line-orange" id="reason_lc">
-                            <option selected hidden disabled>
-                                Choose Reason
-                            </option>
-                            <option value="Permission">Permission</option>
-                            <option value="Technical Error">Technical Error</option>
-                            <option value="Technical Error">Official</option>
-                            <option value="Technical Error">Personal</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 " v-if="false">
-                <div class="row">
-                    <div class="col-12">
-                        <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                            placeholder="Reason here...."></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div v-if="!source.eg_status" class="text-end btn btn-orange">Apply</div>
-        </div>
-        <div v-if="type == 'MOP'">
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6"><label class="font-medium fs-6 text-gray-700">Reason</label></div>
-                    <div class="col-6" v-if="source.mop_status">
-                        <p class="max-w-min p-1" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
-                    </div>
-                    <div class="col-6" v-else>
-                        <select name="reason" class="form-select btn-line-orange" id="reason_lc">
-                            <option selected hidden disabled>
-                                Choose Reason
-                            </option>
-                            <option value="Permission">Permission</option>
-                            <option value="Technical Error">Technical Error</option>
-                            <option value="Technical Error">Official</option>
-                            <option value="Technical Error">Personal</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 " v-if="false">
-                <div class="row">
-                    <div class="col-12">
-                        <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                            placeholder="Reason here...."></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div v-if="!source.mop_status" class="text-end btn btn-orange">Apply</div>
-        </div>
-
-
+      </div>
+      <button @click="changeSlide(-1)" class="change-button">Previous</button>
+      <button @click="changeSlide(1)" class="change-button">Next</button>
     </div>
-</template>
+  </template>
 
-<script setup>
+  <script setup>
+  import { ref } from 'vue';
 
-const props = defineProps({
-    source: {
-        type: Object,
-        required: true
-    },
-    type: {
-        type: String,
-        required: true
-    }
-})
+  const items = ref(['Item 1', 'Item 2', 'Item 3', 'Item 4']);
+  const currentIndex = ref(0);
 
+  const changeSlide = (step) => {
+    currentIndex.value = (currentIndex.value + step + items.length) % items.length;
+  };
+  </script>
 
-const findStatus = (data) => {
+  <style>
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    if (data.includes('Approved')) {
-        return ' bg-green-50 text-green-600  fs-6 rounded-lg'
-    } else
-        if (data.includes('Rejected')) {
-            return ' bg-red-50 text-red-600  fs-6 rounded-lg'
-        } else
-            if (data.includes('Pending')) {
-                return 'border-yellow-500 bg-yellow-50 text-yellow-600  fs-6 rounded-lg'
-            } else
-                if (data.includes('Revoked')) {
-                    return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
+  .carousel-items {
+    display: flex;
+    overflow: hidden;
+    width: 300px;
+    margin-bottom: 16px;
+  }
 
-                }
-}
-</script>
+  .carousel-item {
+    flex: 0 0 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease;
+  }
+
+  .carousel-item.active {
+    transform: translateX(0);
+  }
+
+  .carousel-item:not(.active) {
+    transform: translateX(-100%);
+  }
+
+  .change-button {
+    margin: 0 4px;
+  }
+  </style>
