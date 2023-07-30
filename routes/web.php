@@ -525,7 +525,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/CreatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayRollComponents'])->name('CreatePayRollComponents');
     Route::post('/Paygroup/UpdatePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdatePayRollComponents'])->name('UpdatePayRollComponents');
     Route::post('/Paygroup/DeletePayRollComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'DeletePayRollComponents'])->name('DeletePayRollComponents');
-    Route::post('/Paygroup/EnableDisableComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'EnableDisableComponents'])->name('EnableDisableComponents');
+    Route::post('/Paygroup/authorizeComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeComponents'])->name('authorizeComponents');
 
     // Salary Adhoc Components
     Route::post('/Paygroup/AddAdhocAllowDetectComp', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddAdhocAllowanceDetectionComp'])->name('AddAdhocAllowanceDetectionComp');
@@ -535,11 +535,29 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/Paygroup/AddReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'AddReimbursementComponents'])->name('AddReimbursementComponents');
     Route::post('/Paygroup/UpdateReimbursementComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'UpdateReimbursementComponents'])->name('UpdateReimbursementComponents');
 
+    //salary App Integration
+    Route::post('/Paygroup/fetchPayrollAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayrollAppIntegration'])->name('fetchPayrollAppIntegration');
+    Route::post('/Paygroup/addPayrollAppIntegrations', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPayrollAppIntegrations'])->name('addPayrollAppIntegrations');
+    Route::post('/Paygroup/authorizeAppIntegration', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeAppIntegration'])->name('authorizeAppIntegration');
 
     //paygroup structure
+    Route::post('/Paygroup/fetchPayGroupEmpComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'fetchPayGroupEmpComponents'])->name('fetchPayGroupEmpComponents');
     Route::post('/Paygroup/addPaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'addPaygroupCompStructure'])->name('addPaygroupCompStructure');
     Route::post('/Paygroup/updatePaygroupCompStructure', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePaygroupCompStructure'])->name('updatePaygroupCompStructure');
     Route::post('/Paygroup/deletePaygroupComponents', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deletePaygroupComponents'])->name('deletePaygroupComponents');
+
+
+    //Employee Epf employee
+    Route::post('/Paygroup/CreatePayrollEpf', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayrollEpf'])->name('CreatePayrollEpf');
+    Route::post('/Paygroup/updatePayrollEpf', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePayrollEpf'])->name('updatePayrollEpf');
+    Route::post('/Paygroup/deleteEpfEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEpfEmployee'])->name('deleteEpfEmployee');
+    Route::post('/Paygroup/authorizeEpfEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEpfEmployee'])->name('authorizeEpfEmployee');
+
+    //Employee Esi employee
+    Route::post('/Paygroup/CreatePayrollEsi', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'CreatePayrollEsi'])->name('CreatePayrollEsi');
+    Route::post('/Paygroup/updatePayrollEsi', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'updatePayrollEsi'])->name('updatePayrollEsi');
+    Route::post('/Paygroup/deleteEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'deleteEsiEmployee'])->name('deleteEsiEmployee');
+    Route::post('/Paygroup/authorizeEsiEmployee', [App\Http\Controllers\Payroll\VmtPayrollComponentsController::class, 'authorizeEsiEmployee'])->name('authorizeEsiEmployee');
 
     // testing template
     Route::get('/testingController', [App\Http\Controllers\VmtTestingController::class, 'index'])->name('testingController');
