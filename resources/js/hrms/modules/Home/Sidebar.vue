@@ -9,10 +9,9 @@
         </div>
         <template v-for="(menu, index) in menuItems" :key="index" class="relative">
             <div class="">
-                <a v-if="open" role="button" @click="toggleMenu(index)" v-on:mouseover="isOpen(index)"
-                    v-on:mouseleave="isOpen(index)" :class="{
+                <a v-if="open" role="button" @click="toggleMenu(index)"  :class="{
                         'bg-gray-400': isOpen(index),
-                    }" class=" flex items-center rounded-l-md my-2 py-1  w-full  relative left-3 hover:bg-gray-400">
+                    }" class=" flex items-center rounded-l-md my-1 py-1  w-full  relative left-3 hover:bg-gray-400">
                     <span>
                         <svg width="20" height="20" class="mx-2" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +27,7 @@
                     <i :class="menu.arrow_icon" class=" text-white  absolute  right-4"></i>
                 </a>
                 <button v-else @click="toggleMenu(index)" :class="{
-                    ' bg-yellow-400 text-[001820]  w-[40px] relative left-2  text-[#F6F6F6] d-flex justify-content-center  ': isOpen(index),
+                    ' bg-yellow-400 text-[001820]  w-[40px] relative left-2  text-[#F6F6F6] flex justify-center  ': isOpen(index),
                 }"
                     class=" py-2   w-[60px]  flex justify-start items-center text-[#001820] :hover:  rounded-l hover:bg-yellow-400">
                     <svg width="20" height="20" class="mx-2" viewBox="0 0 24 24" fill="none"
@@ -43,25 +42,12 @@
                 </button>
 
                 <!-- sub menu -->
-
-                <!-- <transition enter-active-class="transition ease-out duration-200 transform"
-                        enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
-                        leave-active-class="transition ease-in duration-100 transform"
-                        leave-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
-                        <div v-if="isOpen" class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded">
-                            <ul>
-                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">View profile</li>
-                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">Option 2</li>
-                                <li class="py-2 px-4 cursor-pointer hover:bg-gray-100">Sign out</li>
-                            </ul>
-                        </div>
-                    </transition> -->
                 <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
                     <div v-if="subMenuDisable" class="w-48 ">
-                        <div v-if="isOpen(index)" v-on:mouseover="isOpen(index)" v-on:mouseleave="isOpen(index)"
+                        <div v-if="isOpen(index)"
                             :class="[open ? 'absolute !text-white left-[200px] w-32 bg-black rounded shadow-lg' : 'absolute left-20 w-32 bg-black rounded shadow-lg']">
                             <ul class="p-2">
                                 <li v-for="(item, subIndex) in menu.subItems" :key="subIndex"

@@ -1,6 +1,38 @@
 <template>
+    <!-- <div class="max-w-sm w-full lg:max-w-full lg:flex"> -->
+    <!-- <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+        style="background-image: url('/img/card-left.jpg')" title="Woman holding a mug">
+    </div> -->
+    <div
+        class="rounded-lg border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div class="mb-8"  v-for="item in EmpDetials">
+            <p class="text-sm text-gray-600 flex items-center">
+                {{ current_session }}
+            </p>
+            <div class="text-gray-900 font-bold text-xl mb-2"> {{ service.current_user_name }}</div>
+
+
+              <label class="flex items-center relative w-max cursor-pointer select-none">
+                <p class="text-gray-700 text-base">
+                    general shift
+                </p>
+                <input type="checkbox" v-model="welcome_card.check" @change="getTime"
+                    class="appearance-none transition-colors cursor-pointer w-14 h-5 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-blue-500 bg-red-500" />
+                <span class="absolute font-medium text-xs uppercase right-1 text-white"> OFF </span>
+                <span class="absolute font-medium text-xs uppercase right-8 text-white"> ON </span>
+                <span class="w-7 h-7 right-7 absolute rounded-full transform transition-transform bg-gray-200" />
+            </label>
+            <div >
+                <p class="text-sm text-gray-600 flex items-center">
+                    Time duration<span>90</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <!-- </div> -->
     <!-- {{ EmpDetials }} -->
-    <div class="border-0 card w-100 box-shadow-md">
+    <!-- <div class="border-0 card w-100 box-shadow-md">
         <div class="card-body">
             <div class="row">
                 <div class="col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 col-xxl-9" v-for="item in EmpDetials">
@@ -65,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '25vw' }">
         <div class="modal-content">
@@ -80,7 +112,7 @@
                 </div>
                 <div class="mt-2">
                     <h4 class="mb-2">Welcome {{ service.current_user_name }}</h4>
-                    <p class="mb-4 text-muted" v-if="checkInMessege" >{{ checkInMessege }}</p>
+                    <p class="mb-4 text-muted" v-if="checkInMessege">{{ checkInMessege }}</p>
                     <p class="mb-4 text-muted" v-else>Have a good day !</p>
                     <div class="gap-2 hstack justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal">
@@ -168,7 +200,7 @@ async function gettime() {
 }
 
 const getTime = () => {
-    EmpDetials.value.splice(0,EmpDetials.value.length)
+    EmpDetials.value.splice(0, EmpDetials.value.length)
     if (welcome_card.check == true) {
         welcome_card.check_in = new Date().toLocaleTimeString();
         welcome_card.checked = true;
@@ -185,7 +217,7 @@ const getTime = () => {
     usedashboard
         .updateCheckin_out({
             checked: welcome_card.checked,
-        }).then((res=>{
+        }).then((res => {
             checkInMessege.value = res.data.message
         }))
         .finally(() => {
@@ -247,4 +279,13 @@ const resetChars = () => {
     margin-right: 0;
     display: none;
 }
+
+input:checked {
+    background-color: #22c55e; /* bg-green-500 */
+  }
+
+  input:checked ~ span:last-child {
+    --tw-translate-x: 1.75rem; /* translate-x-7 */
+  }
+
 </style>
