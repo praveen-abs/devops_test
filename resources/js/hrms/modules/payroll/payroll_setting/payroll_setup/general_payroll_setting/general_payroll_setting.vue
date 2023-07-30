@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full  border">
-        <div class="flex mt-3 w-4 d-flex justify-content-between align-items-center pt-4 ml-6 ">
+    <div class="w-full  border p-4">
+        <div class="flex mt-3 d-flex justify-content-between align-items-center pt-4 ml-6 ">
             <div class="">
                 <p class=" fw-semibold text-gray-600 fs-14">Payroll and attendance end date settings</p>
             </div>
@@ -9,8 +9,8 @@
                     @click="active_Btn = !active_Btn"></i>
             </div>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6">
-            <div class="w-4 p-4 my-2 bg-gray-100 shadow-md rounded-lg  border-1 ">
+        <div class="grid grid-cols-5 gap-4">
+            <div class=" col-span-2 p-4 my-2 bg-gray-100 shadow-md rounded-lg  border-1 ">
                 <div class="my-2">
                     <h5 class="my-2 font-semibold fs-13">Pay Frequency</h5>
                     <div class="flex gap-8 justify-evenly">
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="w-8 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class=" col-span-3 p-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <Transition>
                     <div class="p-2 bg-orange-100 rounded mt-2" v-if="active_Btn">
                         This change is of most importance and has a widespread impact on the salaries of all employees. We
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="mx-6 ">
-            <div class="flex w-4 pt-4">
+            <div class="flex pt-4">
                 <p class="fs-14 text-gray-600">Attendance cut-off cycle</p>
                 <div>
                     <i class="pi pi-pencil mr-3 cursor-pointer" style="font-size: 1rem" @click='active_Btn2 = !active_Btn2'></i>
@@ -88,8 +88,8 @@
             </div>
         </div>
 
-        <div class="flex grid-cols-2 gap-6 mx-6">
-            <div class="w-4 p-4 my-2 bg-gray-100 rounded-lg  border-1 shadow-sm">
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2 p-4 my-2 bg-gray-100 rounded-lg  border-1 shadow-sm">
                 <div class="my-4">
                     <!-- <h1 style="color: #4E4E4E;">4E4E4E</h1> -->
                     <h6 class="my-2 fs-14 font-semibold text-black-alpha-70">
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="w-8 px-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
+            <div class="col-span-3 px-4 my-4 border-gray-400 rounded-lg shadow-md border-1">
                 <Transition>
                     <div class="bg-orange-100 p-2 rounded mt-4  " v-if="active_Btn2">
                         <i class="fa fa-exclamation-triangle ml-2 mb-3" style="width: 25px;" aria-hidden="true"></i>
@@ -161,8 +161,8 @@
         <div class="mx-6 mt-4">
             <p class="fs-14 text-gray-600">Pay Peroid Calculation</p>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6 my-2">
-            <div class="w-4 p-4  bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2 p-4  bg-gray-100 border-gray-400 rounded-lg shadow-md border-1">
                 <div class="">
                     <h5 class="my-1 text-lg font-semibold text-black-alpha-70">Pay days in month</h5>
                     <div class="flex gap-8 justify-evenly">
@@ -210,7 +210,7 @@
                 </div>
             </div>
 
-            <div class="w-6 leading-8">
+            <div class="col-span-3 leading-8">
                 <div class="my-">
                     <p style="line-height: 25px;" class=" text-gray-600  fs-13">
                         <strong class="mr-2">NOTE :</strong>
@@ -235,8 +235,8 @@
         <div class="mx-6 mt-4 ">
             <p class=" text-gray-600 fs-14">Currency and Compensation</p>
         </div>
-        <div class="flex grid-cols-2 gap-6 mx-6  mb-40">
-            <div class="w-4 p-4 my-2 bg-gray-100  rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2 p-4 my-2 bg-gray-100  rounded-lg shadow-md border-1">
                 <div class="">
                     <h5 class="my-2 text-lg font-semibold">Currency</h5>
                     <div class="flex gap-8 justify-evenly">
@@ -262,7 +262,7 @@
                 </div>
             </div>
 
-            <div class="w-6 p-4 my-4">
+            <div class="col-span-3 p-4 my-4">
                 <div class="my-2">
                     <strong>EXPLANATION :</strong>
                     <p class="my-2 text-gray-600">

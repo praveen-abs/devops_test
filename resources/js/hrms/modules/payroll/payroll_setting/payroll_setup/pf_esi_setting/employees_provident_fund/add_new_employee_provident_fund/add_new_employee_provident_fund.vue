@@ -9,7 +9,7 @@
         </div> -->
         <div class="row">
             <div class="col-6 d-flex px-4">
-                <p>EPF Details</p>
+                <p class="text-md">EPF Details</p>
                 <button @click="openPosition('top')"><i class="pi pi-pencil"></i>
                 </button>
             </div>
@@ -22,11 +22,11 @@
 
             </div>
         </div>
-        <div class="flex gap-6 mx-1">
-            <div class="flex w-6 p-4 my-1 bg-gray-100 rounded-lg shadow-md border-1">
-                <div class="w-6 mr-3">
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2  p-3 my-1 bg-gray-100 rounded-lg shadow-md border-1">
+                <div class="mr-3">
                     <div class="my-1 ">
-                        <h5 class="my-2 text-lg font-semibold">EPF Number</h5>
+                        <h5 class="my-2 fs-6 font-semibold">EPF Number</h5>
                         <div class="flex gap-8 justify-evenly ">
                             <div class="w-full">
                                 <InputText class="w-full h-10" />
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
+                        <h5 class="my-2 fs-6 font-semibold">
                             Deduction Cycle
                         </h5>
                         <div class="flex gap-8 justify-evenly">
@@ -44,11 +44,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-6 pl-4 pt-6">
+                <div class=" pl-4 ">
                     <input type="checkbox" class="mr-3 rounded-sm" style="width: 18px ; height: 20px;" name="" id=""
                         >
-                    <label for="" class=" text-gray-600 fs-5">Is Default</label>
-                    <p class=" text-gray-600 w-full mt-1">
+                    <label for="" class=" text-gray-600 fs-6">Is Default</label>
+                    <p class=" text-gray-600 w-full mt-1 text-sm">
                         (Note: Once employees are onboarded they will be automatically enrolled in this PF scheme. Any
                         modifications to the enrolement can only be made before the start of payroll processing )
                     </p>
@@ -56,7 +56,7 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class=" col-span-3 p-4 my-4  rounded-lg shadow-md border-1">
                 <div class="mx-2 my-4 d-flex align-center">
                     <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;">
                     <label for="" class="fs-6  text-gray-600">Employer's Contribution is included in the CTC.</label>
@@ -79,16 +79,16 @@
             <p class="fs-5 fw-semibold">Employee/Employeer Contribution</p>
             <p class="text-gray-600">Note: The Contribution made by both employers and employees will remain the same</p>
         </div>
-        <div class="flex gap-6 ">
-            <div class="w-6">
-                <div class="p-4 my-4 bg-gray-100 rounded-lg shadow-md border-1">
+        <div class="grid grid-cols-5 gap-4">
+            <div class="col-span-2">
+                <div class="p-3 my-4 bg-gray-100 rounded-lg shadow-md border-1">
                     <div class="my-4">
                         <h5 class="my-2 text-lg font-semibold">
                             Select the Rule
                         </h5>
                         <div class="flex gap-8 justify-evenly ">
                             <div class=" w-full ">
-                                <Dropdown class=" w-20rem" />
+                                <Dropdown class="w-full" />
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                         </h5>
                         <div class="flex gap-8 justify-evenly">
                             <div class=" w-full ">
-                                <Dropdown class=" w-20rem" />
+                                <Dropdown class=" w-full" />
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
 
             </div>
 
-            <div class="w-6 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class="col-span-3 p-4 my-4  rounded-lg shadow-md border-1">
                 <h1 class="my-2 text-xl font-bold">
                     Example
                 </h1>
@@ -157,13 +157,13 @@
 
             <div class=" d-flex ">
                 <i class="pi pi-user-plus fs-4 mx-2 text-primary"></i>
-                <p class=" text-primary fw-semibold fs-5 ">Assign Employees</p>
+                <p class=" text-primary font-semibold text-lg ">Assign Employees</p>
             </div>
         </div>
         <div>
-            <p class=" fs-5"><Strong class="mx-1 fs-5">40</Strong>
+            <p class=" fs-6"><Strong class="mx-1 fs-6">40</Strong>
                 Employees Assigned
-                <button class=" text-primary fs-6 fs-8">View/Edit</button>
+                <button class=" text-primary fs-6">View/Edit</button>
             </p>
         </div>
     </div>

@@ -3,23 +3,23 @@
   <ConfirmDialog></ConfirmDialog>
   <div class="w-full m-auto">
     <h1 class="text-white font-semibold fs-4 py-2 mx-2">Payroll Setting</h1>
-    <div class="mt-3 tabs">
-      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
+    <div class="mt-3 tabs w-full  grid grid-cols-6">
+      <a class="d-flex font-semibold fs-6" @click="activetab = 1" :class="[activetab === 1 ? 'active' : '']"
         ><div class="md:text-sm">1</div> <p style="width: 200px;">General payroll Setting</p></a
       >
-      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
+      <a class="d-flex font-semibold fs-6" @click="activetab = 2" :class="[activetab === 2 ? 'active' : '']"
         ><div>2</div>PF & ESI Setting</a
       >
-      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
+      <a class="d-flex font-semibold fs-6" @click="activetab = 3" :class="[activetab === 3 ? 'active' : '']"
         ><div>3</div>Salary Components</a
       >
-      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
+      <a class="d-flex font-semibold fs-6" @click="activetab = 4" :class="[activetab === 4 ? 'active' : '']"
         ><div>4</div>Salary Structure</a
       >
-      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
+      <a class="d-flex font-semibold fs-6" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
         ><div>5</div>Finance Setting
       </a>
-      <a class="w-2 d-flex font-semibold fs-6" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
+      <a class="d-flex font-semibold fs-6" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div>
         Statutory Filling</a
       >
     </div>
