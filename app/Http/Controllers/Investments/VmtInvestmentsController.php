@@ -329,6 +329,7 @@ class VmtInvestmentsController extends Controller
         $sumOfOtherSourceIncome = 0;
         $totalSumOfExemption = 0;
         $sumOfOtherExemptionDec = 0;
+        $chapterexe = 0;
 
 
         foreach ($v_form_template as $dec_amt) {
@@ -352,7 +353,7 @@ class VmtInvestmentsController extends Controller
                 $hra['dec_amount'] = $sumOfHra;
                 $hra['proof_submitted'] = 0;
                 $hra['amount_rejected'] = 0;
-                $hra['amount_accepted'] = 0;
+                $hra['amount_accepted'] = $sumOfHra;
                 // dd($hraTotalRent);
                 // dd($hra);
             }
@@ -381,16 +382,35 @@ class VmtInvestmentsController extends Controller
                 $otherExemption['section_name'] = $dec_amt['section_group'];
                 $otherExemption['dec_amount'] = $sumOfotherExemption;
                 $otherExemption['proof_submitted'] = 0;
-                if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
-                    $otherExemption['amount_rejected'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
-                } else {
-                    $otherExemption['amount_rejected'] = 0;
-                }
-                if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
-                    $otherExemption['amount_accepted'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
-                } else {
-                    $otherExemption['amount_accepted'] = 0;
-                }
+
+                if($dec_amt['max_amount'] == 0){
+                    $chapterexe += $dec_amt['dec_amount'];
+                     }
+
+                  if( $dec_amt['dec_amount'] > $dec_amt['max_amount']){
+                    $chapterexe += $dec_amt['max_amount'];
+
+                    }
+                    if( $dec_amt['dec_amount'] < $dec_amt['max_amount']){
+                        $chapterexe += $dec_amt['dec_amount'];
+                    }
+
+                $otherExemption['amount_accepted'] = $chapterexe;
+
+                $otherExemption['amount_rejected'] = $chapterexe - $sumOfotherExemption ;
+
+
+
+                // if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
+                //     $otherExemption['amount_rejected'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
+                // } else {
+                //     $otherExemption['amount_rejected'] = 0;
+                // }
+                // if ($sumOfotherExemption > $sumOfOtherExemptionDec) {
+                //     $otherExemption['amount_accepted'] = $sumOfOtherExemptionDec - $sumOfotherExemption;
+                // } else {
+                //     $otherExemption['amount_accepted'] = 0;
+                // }
             }
             if ($dec_amt['section_group'] == "House Properties ") {
                 $totalIntersetPaid = (json_decode($dec_amt["json_popups_value"], true));
@@ -399,7 +419,20 @@ class VmtInvestmentsController extends Controller
                 $houseProperty['dec_amount'] = $sumOfHouseProperty;
                 $houseProperty['proof_submitted'] = 0;
                 $houseProperty['amount_rejected'] = 0;
-                $houseProperty['amount_accepted'] = 0;
+
+                if($sumOfHouseProperty > 200000){
+                    $houseProperty['amount_accepted'] = 200000;
+                }else{
+                    $houseProperty['amount_accepted'] = $sumOfHouseProperty;
+                }
+                if($sumOfHouseProperty > 200000){
+                    $houseProperty['amount_rejected'] = 200000 - $sumOfHouseProperty;
+                }else{
+                    $houseProperty['amount_rejected'] = 0;
+                }
+
+
+
             }
             if ($dec_amt['section_group'] == "Reimbersument ") {
                 $sumOfReimbersument += $dec_amt['dec_amount'];
@@ -408,7 +441,7 @@ class VmtInvestmentsController extends Controller
                 $reimbersument['dec_amount'] = $sumOfReimbersument;
                 $reimbersument['proof_submitted'] = 0;
                 $reimbersument['amount_rejected'] = 0;
-                $reimbersument['amount_accepted'] = 0;
+                $reimbersument['amount_accepted'] = $sumOfReimbersument;
             }
             if ($dec_amt['section_group'] == "Previous Employer Income") {
                 $sumOfPreviousEmployerIncome += $dec_amt['dec_amount'];
@@ -417,7 +450,7 @@ class VmtInvestmentsController extends Controller
                 $previousEmployerIncome['dec_amount'] = $sumOfPreviousEmployerIncome;
                 $previousEmployerIncome['proof_submitted'] = 0;
                 $previousEmployerIncome['amount_rejected'] = 0;
-                $previousEmployerIncome['amount_accepted'] = 0;
+                $previousEmployerIncome['amount_accepted'] = $sumOfPreviousEmployerIncome;
             }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
@@ -427,7 +460,7 @@ class VmtInvestmentsController extends Controller
                 $otherSourceIncome['dec_amount'] = $sumOfOtherSourceIncome;
                 $otherSourceIncome['proof_submitted'] = 0;
                 $otherSourceIncome['amount_rejected'] = 0;
-                $otherSourceIncome['amount_accepted'] = 0;
+                $otherSourceIncome['amount_accepted'] = $sumOfOtherSourceIncome;
             }
         }
         // dd($sumOfOtherExemptionDec);
@@ -556,11 +589,17 @@ class VmtInvestmentsController extends Controller
 
             if ($dec_amt['section_group'] == "Other Excemptions ") {
 
-                 if( $dec_amt['dec_amount'] > $dec_amt['max_amount']){
-                     $chapterexe += $dec_amt['max_amount'];
-                 }else{
+                 if($dec_amt['max_amount'] == 0){
                     $chapterexe += $dec_amt['dec_amount'];
                  }
+
+                  if( $dec_amt['dec_amount'] > $dec_amt['max_amount']){
+                    $chapterexe += $dec_amt['max_amount'];
+
+                }
+                    if( $dec_amt['dec_amount'] < $dec_amt['max_amount']){
+                        $chapterexe += $dec_amt['dec_amount'];
+                    }
             }
 
             if ($dec_amt['section_group'] == "Reimbersument ") {
@@ -616,14 +655,14 @@ class VmtInvestmentsController extends Controller
 
 
             $Other_Source['sno'] = "b";
-            $Other_Source['section'] = "Other Source of Income";
+            $Other_Source['section'] = "Add: Other Source of Income";
             $Other_Source['old_regime'] = $sumOfOtherSourceOfIncome;
             $Other_Source['new_regime'] =  $sumOfOtherSourceOfIncome;
 
 
 
             $Reimbursement['sno'] = "c";
-            $Reimbursement['section'] = "Reimbursement Exemptions";
+            $Reimbursement['section'] = "Less: Reimbursement Exemptions";
             $Reimbursement['old_regime'] = $sumOfReimbersument;
             $Reimbursement['new_regime'] = $sumOfReimbersument;
 
@@ -635,11 +674,11 @@ class VmtInvestmentsController extends Controller
             $allowance_tax['new_regime'] = 0;
 
 
-            $tax_on_emp['sno'] = "e";
-            $tax_on_emp['section'] = "Less: Deductions under section 16";
+            $tax_section_16['sno'] = "e";
+            $tax_section_16['section'] = "Less: Deductions under section 16";
             // Sum Previous Employer Standard Deduction  and Previous Employer PT
-            $tax_on_emp['old_regime'] = intval($standardDeducation) + $professional_tax * 12;
-            $tax_on_emp['new_regime'] = $standardDeducation;
+            $tax_section_16['old_regime'] = intval($standardDeducation) + $professional_tax * 12;
+            $tax_section_16['new_regime'] = $standardDeducation;
 
 
             // Values in negative
@@ -650,14 +689,17 @@ class VmtInvestmentsController extends Controller
 
 
             $exemption['sno'] = "g";
-            $exemption['section'] = "Deduction under Chapter VI-A";
+            $exemption['section'] = "Less: Deduction under Chapter VI-A";
             $exemption['old_regime'] = $chapter80s + $chapterexe;
             $exemption['new_regime'] = 0;
 
             $total_tax_income['sno'] = "h";
             $total_tax_income['section'] = "Total Taxable Income";
-            $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $sumofhouseproperty - round($ExemptionsUnder80s));
-            $total_old_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) + $sumofhouseproperty - round($ExemptionsUnder80s));
+            //                                                  a                              b                                c                                                           d                                                       f                         g
+            $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) - $sumofhouseproperty - ($chapter80s + $chapterexe));
+            $total_old_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) - $sumofhouseproperty - ($chapter80s + $chapterexe));
+
+
             $total_tax_income['new_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
             $total_new_tax = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - 0 + $tax_calc_new_redime - 0 );
 
@@ -725,10 +767,12 @@ class VmtInvestmentsController extends Controller
             $Other_Source,
             $Reimbursement,
             $allowance_tax,
+            $tax_section_16,
             $tax_on_emp,
             $exemption,
             $total_tax_income,
-            $total_tax_laibilty
+            $total_tax_laibilty,
+
 
         );
 
