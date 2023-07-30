@@ -41,7 +41,7 @@
 
 
     </div>
-    <div class="tab-pane fade active" id="pills-offer-completed" role="tabpanel"
+    <div class="tab-pane fade " id="pills-offer-completed" role="tabpanel"
         aria-labelledby="pills-offer-completed-tab">
             <div class="card-body">
                 <div class="my-4 offer-pending-content">
