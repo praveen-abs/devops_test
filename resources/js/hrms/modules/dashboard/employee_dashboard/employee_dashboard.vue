@@ -23,21 +23,21 @@
   </div> -->
     <div class="p-3">
         <div class="grid grid-cols-3 gap-4">
-            <div >
+            <div>
                 <WelcomeCard />
             </div>
-            <div class="bg-red-300">count</div>
-            <div class="bg-red-300">carsouekl</div>
+            <div>
+                <LeaveDetials />
+            </div>
+            <div class="bg-white rounded-lg">carsouekl</div>
         </div>
         <div class="grid grid-rows-3 grid-flow-col gap-4 my-3">
-            <div class="col-span-2 bg-red-300">
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="bg-red-300">balance </div>
-                    <div class="bg-red-300 px-2">calender</div>
-                </div>
+            <div class="col-span-2  grid grid-cols-2 gap-5">
+                <div class="bg-white rounded-lg">1</div>
+                <div class="bg-white rounded-lg">1</div>
             </div>
-            <div class="row-span-2 col-span-2 bg-red-300">event</div>
-            <div class="row-span-4 bg-red-300">log</div>
+            <div class="row-span-2 col-span-2 bg-white">event</div>
+            <div class="row-span-4 bg-white rounded-lg">log</div>
 
         </div>
 
