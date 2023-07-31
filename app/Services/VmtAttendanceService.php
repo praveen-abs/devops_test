@@ -3110,8 +3110,8 @@ class VmtAttendanceService
         try {
             $user_id = user::where('user_code', $user_code)->first()->id;
             $month = Carbon::now()->format('m');
-            
-             
+
+
             $total_count['pending_count']  = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Pending')->count();
             $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)->whereMonth('attendance_date', $month)
@@ -3132,5 +3132,33 @@ class VmtAttendanceService
                 'data' => $e
             ]);
         }
+    }
+
+    public function getPendingAttendadnceRegularization($user_code, $year, $month)
+    {
+
+        $response = array();
+        if ($year == null) {
+            $year = Carbon::now()->format('Y');
+        }
+        if ($month == null) {
+            $month = carbon::now()->format('m');
+        }
+        $user_id = user::where('user_code', $user_code)->first()->id;
+        $employees = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
+        foreach ($employees as $singleemployee) {
+            $temp_arr = array();
+            $att_reg_query = VmtEmployeeAttendanceRegularization::where('user_id', $singleemployee->user_id)->whereYear('attendance_date', $year)
+                ->where('status', 'Pending');
+            if ($att_reg_query->exists()) {
+                $temp_arr['name'] = User::where('id', $singleemployee->user_id)->first()->name;
+                $temp_arr['user_code'] =  User::where('id', $singleemployee->user_id)->first()->user_code;
+                $temp_arr['regularization_details'] = $att_reg_query->get();
+                array_push($response, $temp_arr);
+                unset($temp_arr);
+            }
+        }
+
+        dd($response);
     }
 }
