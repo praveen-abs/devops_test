@@ -52,15 +52,21 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                         title="">
                                                 </td>
                                             </tr>
-
+                                            {{-- <tr>
+                                                <td colspan="4" align="left" class="border-less"
+                                                    style="padding:10px ;">
+                                                    SUB – Absent Regularization Approval from Mr/Ms/Mrs Xyz
+                                                </td>
+                                            </tr> --}}
                                             <tr>
                                                 <td colspan="4" align="left" class="border-less"
                                                     style="padding:10px ;">
 
-                                                    <p class="text-strong " style="margin: 0px 0px 0px ">Dear {{ $employeeName }},</p>
+                                                    <p class="text-strong " style="margin: 0px 0px 0px ">Dear
+                                                        {{ $managerName }}</p>
                                                     <p class="" style="  ">
-                                                        This is to inform you that your “Attendance Regularizations” request has been   {{ $status }}  by your line manager <b class="f-14"> {{ $managerName }}<b>  .</p>
-                                                    </p>
+                                                        You have been sent the following “Absent Regularizations”
+                                                        request for approval. Please review the below details</p>
 
 
                                                 </td>
@@ -70,23 +76,24 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
                             </tr>
                             <tr>
-                                <td align="center"
-                                    style="padding:0px 40px 0px;"
-                                    colspan="">
+                                <td align="center" style="padding:0px 40px 0px;" colspan="">
                                     <div class=""
                                         style="height:auto;width:90%;border-radius:5px;padding:10px;margin:auto;">
-                                        <table style="table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
+                                        <table
+                                            style="table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
                                             <tbody>
 
                                                 <tr>
                                                     <td colspan="8"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:20px;"
                                                         align="center">
-                                                        Regularizations {{ $status }}
+                                                        Absent Regularizations
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="8" align="center">
+
+
                                                         <table>
                                                             <tbody>
                                                                 <tr>
@@ -123,21 +130,43 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                                     <td colspan="8"
                                                         style="color:#002f56;font-weight:600;font-size:20px;padding-bottom:20px;"
                                                         align="center">
-                                                        {{$managerName}}
+                                                        {{ $employeeName }}
                                                     </td>
                                                 </tr>
 
-
                                                 <tr>
-                                                    <td colspan="8" style="" align="center">
-                                                        Kindly visit the HRMS portal for more details.
-                                                        <a class="" type="button"href="info@abshrms.com"
-                                                            style="text-decoration:none;cursor: pointer;font-weight:600">
-                                                            info@abshrms
+                                                    <td colspan="8" style="" align="center"
+                                                        style="padding-bottom:0px;">
+                                                        <p style="padding-bottom:10px;">Approve or Reject this request
+                                                            using the buttons below.</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4" style="" align="right">
+
+                                                        <a class="" type="button"
+                                                            href="{{ $loginLink }}/attendance-regularization-approvals"
+                                                            style="text-decoration:none;cursor: pointer; margin-right:30px;color:#ffffff;padding: 7px 30px;border: 2px solid #90f10c;background: #90f10c;border-radius: 4px;font-weight:600">
+                                                            Approve
+                                                        </a>
+                                                    </td>
+                                                    <td colspan="4" style="" align="left">
+
+                                                        <a class="" type="button"
+                                                            href="{{ $loginLink }}/attendance-regularization-approvals"
+                                                            style="text-decoration:none;cursor: pointer;margin-left:30px;color:#ffffff;padding: 7px 30px;border: 2px solid #f12d0c;background: #ff2500;border-radius: 4px;font-weight:600">
+                                                            Reject
                                                         </a>
                                                     </td>
                                                 </tr>
-
+                                                <tr>
+                                                    <td colspan="8" style="" align="center">
+                                                        <p style="padding-top:0px;font-size:12px;"><span
+                                                                style="color:#fa9530;"> Note - </span>When rejecting a
+                                                            regularization request, kindly include the reason for
+                                                            rejection in the response email</p>
+                                                    </td>
+                                                </tr>
                                             </tbody>
 
                                         </table>
@@ -151,8 +180,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                             <tr>
                                                 <td align="center" style="padding:10px 0px 0px 0px">
                                                     This e-mail was generatd from ABShrms if you think this is
-                                                    SPAM,please do report to<a
-                                                    href="info@abshrms.com"
+                                                    SPAM,please do report to<a href="info@abshrms.com"
                                                         style="text-decoration: none;color:none;"> info<span
                                                             style="color:#fa9530;">@abshrms.com</span></a>
                                                 </td>
@@ -219,7 +247,6 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 </td>
 
                             </tr>
-
 
                         </tbody>
                     </table>

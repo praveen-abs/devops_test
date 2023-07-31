@@ -85,7 +85,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
         isTeamOrg.value = isteam
         currentlySelectedOrgMemberUserId.value = user_id
         getEmployeeAttendance(user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
-            console.log(Object.values(res.data));
+            // console.log(Object.values(res.data));
             currentlySelectedOrgMemberAttendance.value = Object.values(res.data)
         }).finally(() => {
             canShowLoading.value = false
@@ -95,7 +95,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     /* Get currently login employee team list  */
 
     const getTeamList = async (user_code) => {
-        console.log(user_code);
+        // console.log(user_code);
         return axios.post('/fetch-team-members', {
             user_code: user_code
         })
@@ -117,7 +117,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     */
 
     const findAttendanceMode = (attendance_mode) => {
-        console.log(attendance_mode);
+        // console.log(attendance_mode);
         if (attendance_mode == "biometric")
             // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
             return 'fas fa-fingerprint fs-12'
@@ -146,7 +146,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
 
         let AttendanceRegularizeFormat = {
-            attendance_user: selectedDayRegularizationRecord.user_id,
+            user_code: service.current_user_code,
             regularization_type: selectedAttendanceRegularizationType,
             attendance_date: selectedDayRegularizationRecord.date,
             user_time: selectedDayRegularizationRecord.checkin_time,
@@ -169,7 +169,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyLcRegularization = () => {
-        classicTimesheetSidebar.value = false
+        att.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
@@ -312,7 +312,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             .then((res) => {
                 getSelectedEmployeeAttendance()
                 let message = res.data.message
-                console.log(message);
+                // console.log(message);
                 if (res.data.status == 'success') {
                     Swal.fire(
                         'Good job!',

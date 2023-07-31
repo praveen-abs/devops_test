@@ -1,94 +1,148 @@
 <template>
     <div>
-        <DataTable  :value="arrayAbsent" :paginator="true" :rows="10" dataKey="id"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rowsPerPageOptions="[5, 10, 25]"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
-        v-model:filters="filters" filterDisplay="menu" :loading="loading2" :globalFilterFields="['name', 'status']">
-        <template #empty> No Employeee found. </template>
-        <template #loading> Loading customers data. Please wait. </template>
+        <DataTable :value="arrayAbsentRegularization" :paginator="true" :rows="10" dataKey="id"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            :rowsPerPageOptions="[5, 10, 25]"  sortField="attendance_date" :sortOrder="-1"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll"
+            v-model:filters="filters" filterDisplay="menu" :globalFilterFields="['name', 'status']">
+            <template #empty> No Employeee found. </template>
+            <template #loading> Loading customers data. Please wait. </template>
 
-        <Column class="font-bold" field="employee_name" header="Employee Name">
-            <template #body="slotProps">
-                <div class="flex justify-content-center align-items-center">
-                    <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'" if
-                        class="p-2 w-3 h-18 text-semibold rounded-full bg-blue-900 text-white" >{{
-                            JSON.parse(slotProps.data.employee_avatar).data }} </p>
+            <Column class="font-bold" field="employee_name" header="Employee Name">
+                <template #body="slotProps">
+                    <div class="flex justify-content-center align-items-center">
+                        <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'" if
+                            class="p-2 w-3 h-18 text-semibold rounded-full bg-blue-900 text-white">{{
+                                JSON.parse(slotProps.data.employee_avatar).data }} </p>
 
-                    <img v-else class="rounded-circle img-md w-3 userActive-status profile-img"
-                        style="height: 30px !important;"
-                        :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
-                        alt="" />
-                    <p class=" text-left pl-2">{{ slotProps.data.employee_name }} </p>
-                </div>
+                        <img v-else class="rounded-circle img-md w-3 userActive-status profile-img"
+                            style="height: 30px !important;"
+                            :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
+                            alt="" />
+                        <p class=" text-left pl-2">{{ slotProps.data.employee_name }} </p>
+                    </div>
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                        class="p-column-filter" :showClear="true" />
+                </template>
+            </Column>
+            <Column class="font-bold" field="attendance_date" :sortable="true" header="Attendance Date">
+                <template #body="slotProps">
+                    {{ dayjs(slotProps.data.attendance_date).format('DD-MMM-YYYY') }}
+                </template>
+
+            </Column>
+            <Column class="font-bold" field="regularization_type" header="Regularization Type"> </Column>
+            <Column class="font-bold" field="checkin_time" header="Checkin Time"> </Column>
+            <Column class="font-bold" field="checkout_time" header="Checkout Time"> </Column>
+            <Column class="font-bold" field="reason" header="Reason"> </Column>
+            <Column class="font-bold" field="custom_reason" header="Custom Reason"> </Column>
+
+            <Column field="reviewer_name" header="Approve Name">
+                <template #body="slotProps">
+                    <p class="text-bold">{{ slotProps.data.reviewer_name ? slotProps.data.reviewer_name : '---' }}</p>
+                </template>
+            </Column>
+            <Column field="reviewer_comments" header="Approve Comments">
+                <template #body="slotProps">
+                    <p class="text-bold">
+                        {{ slotProps.data.reviewer_comments ? slotProps.data.reviewer_comments : '---' }}
+                    </p>
+                </template>
+            </Column>
+            <Column field="reviewer_reviewed_date" header="Reviewed Date">
+                <template #body="slotProps">
+                    <p class="text-bold">
+                        {{ slotProps.data.reviewer_reviewed_date ? slotProps.data.reviewer_reviewed_date : '---' }}
+                    </p>
+                </template>
+            </Column>
+
+
+            <Column class="font-bold" field="status" header="Status">
+                <template #body="{ data }">
+                    <Tag :value="data.status" :severity="getSeverity(data.status)" />
+                </template>
+                <template #filter="{ filterModel, filterCallback }">
+                    <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses"
+                        placeholder="Select" class="p-column-filter" :showClear="true">
+                        <template #value="slotProps">
+                            <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{
+                                slotProps.value
+                            }}</span>
+                            <span v-else>{{ slotProps.placeholder }}</span>
+                        </template>
+                        <template #option="slotProps">
+                            <span :class="'customer-badge status-' + slotProps.option">{{
+                                slotProps.option
+                            }}</span>
+                        </template>
+                    </Dropdown>
+                </template>
+            </Column>
+            <Column class="font-bold" field="" header="Action">
+                <template #body="slotProps">
+                    <span style="width: 250px;display: block;" v-if="slotProps.data.status == 'Pending'">
+                        <Button type="button" icon="pi pi-check-circle" class="p-button-success Button" label="Approval"
+                            @click="showConfirmDialog(slotProps.data, 'Approve')" style="height: 2em" />
+                        <Button type="button" icon="pi pi-times-circle" class="p-button-danger Button" label="Rejected"
+                            style="margin-left: 8px; height: 2em" @click="showConfirmDialog(slotProps.data, 'Reject')" />
+                    </span>
+                </template>
+            </Column>
+        </DataTable>
+
+        <Dialog header="Confirmation" v-model:visible="canShowConfirmation"
+            :breakpoints="{ '960px': '80vw', '640px': '90vw' }" :style="{ width: '380px' }" :modal="true">
+            <div class="confirmation-content">
+                <i class="mr-2 pi pi-exclamation-triangle text-red-600" style="font-size: 1.3rem" />
+                <span class="my-auto">Are you sure you want to {{ currentlySelectedStatus }}?</span>
+            </div>
+            <div class="w-full flex justify-left p-2" v-if="reject == 'Reject'">
+                <Textarea v-model="reviewer_comment" rows="3" cols="30" class="border rounded-md" />
+            </div>
+            <template #footer>
+                <Button label="Yes" icon="pi pi-check" @click="processApproveReject" class="p-button-text" autofocus />
+                <Button label="No" icon="pi pi-times" @click="canShowConfirmation = false" class="p-button-text" />
             </template>
-            <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
-                    class="p-column-filter" :showClear="true" />
+        </Dialog>
+
+        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
             </template>
-        </Column>
-
-
-
-
-        <Column class="font-bold" field="attendance_date" header="Attendance Date"> 
-            <template #body="slotProps">
-                {{dayjs(slotProps.data.attendance_date).format('DD-MMM-YYYY')}}
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
             </template>
-           
-        </Column>
-
-        <Column class="font-bold" field="regularization_type" header="Regularization Type"> </Column>
-        <Column class="font-bold" field="checkin_time" header="Checkin Time"> </Column>
-        <Column class="font-bold" field="checkout_time" header="Checkout Time"> </Column>
-        <Column class="font-bold" field="reason" header="Reason"> </Column>
-        <Column class="font-bold" field="custom_reason" header="Custom Reason"> </Column>
-  
-        <Column class="font-bold" field="reviewer_comments" header="Reviewer Comments"> </Column>
-        <Column class="font-bold" field="reviewer_reviewed_date" header="Reviewed Date"> </Column>
-        <Column class="font-bold" field="status" header="Status">
-            <template #body="{ data }">
-                <Tag :value="data.status" :severity="getSeverity(data.status)" />
-            </template>
-            <!-- <template #body="{ data }">
-    <span :class="'customer-badge status-' + data.status">{{ data.status }}</span>
-  </template> -->
-            <template #filter="{ filterModel, filterCallback }">
-                <Dropdown v-model="filterModel.value" @change="filterCallback()" :options="statuses"
-                    placeholder="Select" class="p-column-filter" :showClear="true">
-                    <template #value="slotProps">
-                        <span :class="'customer-badge status-' + slotProps.value" v-if="slotProps.value">{{
-                            slotProps.value
-                        }}</span>
-                        <span v-else>{{ slotProps.placeholder }}</span>
-                    </template>
-                    <template #option="slotProps">
-                        <span :class="'customer-badge status-' + slotProps.option">{{
-                            slotProps.option
-                        }}</span>
-                    </template>
-                </Dropdown>
-            </template>
-        </Column>
-
-
-
-    </DataTable>
+        </Dialog>
     </div>
-
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject, onUpdated } from "vue";
 import axios from "axios";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-import moment from "moment";
+import { FilterMatchMode } from "primevue/api";
 import dayjs from 'dayjs';
-import { useNow, useDateFormat } from '@vueuse/core'
+import { Service } from "../../Service/Service";
+import { useToast } from "primevue/usetoast";
 
-const arrayAbsent = ref();
+
+
+const toast = useToast();
+const arrayAbsentRegularization = ref();
+const service = Service();
+const swal = inject("$swal");
+
+const canShowConfirmation = ref(false);
+const canShowLoadingScreen = ref(false);
+const reject = ref('');
+const reviewer_comment = ref();
+
+let currentlySelectedStatus = null;
+let currentlySelectedRowData = null;
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -102,18 +156,20 @@ const filters = ref({
     status: { value: 'Pending', matchMode: FilterMatchMode.EQUALS },
 });
 
+onUpdated(() => {
+    canShowConfirmation ? reviewer_comment.value = null : ''
+})
 
-onMounted(()=>{
+onMounted(() => {
     getAbsentRegularization();
 })
 
-async function getAbsentRegularization(){
-
-    await axios.get('/fetch-absent-regularization-data').then((res)=>{
-        arrayAbsent.value = res.data;
-        console.log(arrayAbsent.value);
-    }).finally(()=>{
-
+async function getAbsentRegularization() {
+    canShowLoadingScreen.value = true
+    await axios.get('/fetch-absent-regularization-data').then((res) => {
+        arrayAbsentRegularization.value = res.data;
+    }).finally(() => {
+        canShowLoadingScreen.value = false
     })
 
 }
@@ -133,6 +189,59 @@ const getSeverity = (status) => {
     }
 };
 
+function showConfirmDialog(selectedRowData, status) {
+    canShowConfirmation.value = true;
+    currentlySelectedStatus = status;
+    reject.value = status;
+    currentlySelectedRowData = selectedRowData;
+    // console.log("Selected Row Data : " + JSON.stringify(selectedRowData));
+}
 
+function hideConfirmDialog() {
+    canShowConfirmation.value = false;
+}
+
+function processApproveReject() {
+    hideConfirmDialog(false);
+    canShowLoadingScreen.value = true;
+    // console.log("Processing Rowdata : " + JSON.stringify(currentlySelectedRowData));
+
+    axios
+        .post('/approveRejectAbsentRegularization', {
+            record_id: currentlySelectedRowData.id,
+            approver_user_code: service.current_user_code,
+            status:
+                currentlySelectedStatus == "Approve"
+                    ? "Approved"
+                    : currentlySelectedStatus == "Reject"
+                        ? "Rejected"
+                        : currentlySelectedStatus,
+            status_text: reviewer_comment.value,
+            user_code: service.current_user_code,
+        })
+        .then((response) => {
+            if (response.data.status == 'success') {
+                toast.add({
+                    severity: "success",
+                    summary: "Success",
+                    detail: 'Your request has been recorded successfully',
+                    life: 3000,
+                });
+            } else {
+                Swal.fire(
+                    'Failure',
+                    `${response.data.message}`,
+                    'error'
+                )
+            }
+            getAbsentRegularization();
+        })
+        .catch((error) => {
+            canShowLoadingScreen.value = false;
+        }).finally(() => {
+            canShowLoadingScreen.value = false;
+            reviewer_comment.value = null
+        })
+}
 
 </script>

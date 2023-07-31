@@ -149,6 +149,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/attendance-req-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAttendanceRegularization'])->name('attendance-req-regularization');
     Route::post('/attendance-req-absent-regularization', [App\Http\Controllers\VmtAttendanceController::class, 'applyRequestAbsentRegularization'])->name('attendance-req-absent-regularization');
+    Route::post('/approveRejectAbsentRegularization', [App\Http\Controllers\VmtAttendanceController::class, 'approveRejectAbsentRegularization'])->name('approveRejectAbsentRegularization');
+    Route::post('/attendance/getAttendanceRegularizationStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceRegularizationStatus'])->name('getAttendanceRegularizationStatus');
     Route::post('/fetch-regularization-data', [App\Http\Controllers\VmtAttendanceController::class, 'fetchRegularizationData'])->name('fetch-regularization-data');
     Route::get('/getAttendanceStatus', [App\Http\Controllers\VmtAttendanceController::class, 'getAttendanceStatus'])->name('getAttendanceStatus');
 

@@ -158,7 +158,7 @@
                         <div class="overflow-x-auto">
                             <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                 :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
-                            <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" />
+                            <ClassicTimesheet v-else :single-attendance-day="useTimesheet.currentEmployeeAttendance" :sidebar="useTimesheet.classicTimesheetSidebar" />
                         </div>
                     </div>
 
@@ -171,7 +171,7 @@
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
                                 <ClassicTimesheet v-else
-                                    :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" />
+                                    :single-attendance-day="useTimesheet.currentlySelectedTeamMemberAttendance" :sidebar="useTimesheet.classicTimesheetSidebar" />
                             </div>
                         </div>
                         <div class="mr-4 card pb-10" v-else>
@@ -188,7 +188,7 @@
                                 <DetailedTimesheet v-if="useTimesheet.switchTimesheet == 'Detailed'"
                                     :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
                                 <ClassicTimesheet v-else
-                                    :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance" />
+                                    :single-attendance-day="useTimesheet.currentlySelectedOrgMemberAttendance"  :sidebar="useTimesheet.classicTimesheetSidebar"/>
                             </div>
                         </div>
                         <div class="mr-4 card pb-10" v-else>
@@ -257,7 +257,7 @@ onMounted(() => {
 
     setTimeout(() => {
         useTimesheet.getSelectedEmployeeAttendance()
-    }, 500);
+    }, 600);
 
 
 })
