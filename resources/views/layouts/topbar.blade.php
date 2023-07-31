@@ -2,13 +2,18 @@
 
 use App\Models\User;
 
-$query_clientMaster = \DB::table('vmt_client_master')->first();
+ if(sessionGetSelectedClientName()){
 
-if ($query_clientMaster) {
-    $logoSrc = $query_clientMaster->client_logo;
-} else {
-    $logoSrc = '';
-}
+  if(sessionGetSelectedClientName() == 'All'){
+      $logoSrc = sessionGetSelectedClientLogo();
+    }else{
+     $logoSrc = sessionGetSelectedClientLogo();
+    }
+
+ }else{
+     $logoSrc =  getClientLogo();
+  }
+
 ?>
 
 
