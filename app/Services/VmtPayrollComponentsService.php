@@ -1879,4 +1879,52 @@ class VmtPayrollComponentsService{
             ]);
         }
     }
+    public function removeEmpAbryPmrpy( $user_id,$scheme_type)
+    {
+        $validator = Validator::make(
+            $data = [
+                'user_id' => $user_id,
+                'scheme_type' => $scheme_type,
+            ],
+            $rules = [
+                'user_id' => 'required',
+                'scheme_type' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
+            ]
+
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        try{
+                  if($scheme_type == 'pmrpy_scheme'){
+                    $remove_Pmrpy_data =VmtEmpAbryPmrpy::whereIn('user_id',$user_id)->where('pmrpy_scheme_status','1');
+                    $remove_Pmrpy_data->delete();
+                  }else if($scheme_type == 'abry_scheme'){
+                    $remove_Abry_data =VmtEmpAbryPmrpy::where('abry_scheme_status','1')->whereIn('user_id',$user_id);
+                    $remove_Abry_data->delete();
+                  }
+
+            return response()->json([
+                "status" => "success",
+                "message" => 'employees removed successfully',
+                "data" => '',
+            ]);
+
+         }catch(\Exception $e){
+            return response()->json([
+                "status" => "failure",
+                "message" => "Unable to removed employees ",
+                "data" => $e->getmessage(),
+            ]);
+        }
+    }
 }

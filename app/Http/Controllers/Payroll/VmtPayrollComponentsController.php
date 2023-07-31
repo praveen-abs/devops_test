@@ -324,6 +324,25 @@ class VmtPayrollComponentsController extends Controller
 
         return $response;
     }
+    public function CreateEmpAbryPmrpy(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->CreateEmpAbryPmrpy(
+        $request->user_id,
+        $request->abry_scheme_status,
+        $request->pmrpy_scheme_status
+    );
+
+        return $response;
+    }
+    public function removeEmpAbryPmrpy(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
+    {
+        $response =$serviceVmtPayrollComponentsService->removeEmpAbryPmrpy(
+        $request->user_id,
+        $request->scheme_type,
+    );
+
+        return $response;
+    }
 
     // public function ShowPaySlipTemplateMgmtPage(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     // {

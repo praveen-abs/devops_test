@@ -11,20 +11,18 @@ class VmtPayrollSettingsController extends Controller
              //dd($request->all());
 
             $response =$serviceVmtPayrollSettingsService->saveGenralPayrollSettings(
-                $request->name,
-                $request->typeOfComp,
-                $request->typeOfCalc,
-                $request->amount,
-                $request->percentage,
-                $request->nameInPayslip,
-                $request->isConsiderForEPF,
-                $request->isConsiderForESI,
-                $request->category_id,
-                $request->isPartOfEmpSalStructure,
-                $request->isTaxable,
-                $request->isCalcShowProBasis,
-                $request->isShowInPayslip,
-                $request->status
+                $request->pay_frequency,
+                $request->payperiod_start_month,
+                $request->payperiod_end_date,
+                $request->payment_date,
+                $request->currency_type,
+                $request->remuneration_type,
+                $request->att_cutoff_period_id,
+                $request->post_attendance_cutoff_date,
+                $request->emp_attedance_cutoff_date,
+                $request->paydays_in_month,
+                $request->include_weekoffs,
+                $request->include_holidays
             );
 
             return $response;
