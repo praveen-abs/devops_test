@@ -2,17 +2,17 @@
     <div class="flex justify-between mx-5 my-4">
         <div>
         </div>
-        <div>
+        <!-- <div>
             <button>
                 <router-link class=" mx-4 btn btn-border-orange" :to="`/employees_provident_fundVue/non_pf_employees`">Non PF employee</router-link>
             </button>
             <button class="btn btn-orange">Add new</button>
 
-        </div>
+        </div> -->
     </div>
 
 
-    <div id="table">
+    <!-- <div id="table">
         <DataTable :value="products">
             <Column field="product" header="Code"></Column>
             <Column field="lastYearSale" header="Name"></Column>
@@ -20,10 +20,10 @@
             <Column field="thisYearProfit" header="Quantity"></Column>
         </DataTable>
 
-    </div>
+    </div> -->
 
-    <!-- <non_pf_employees />
-    <add_new_employee_provident_fund /> -->
+    <!-- <non_pf_employees /> -->
+    <add_new_employee_provident_fund />
 </template>
 
 

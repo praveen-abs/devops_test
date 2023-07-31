@@ -26,6 +26,11 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         1) general payroll Setup
 
         2)Pf & Esi Setting
+            1)Employee provident fund
+            2)Employee state insurance
+            3)Aatmanirbhar Bharat Yojana(ABRY)Scheme
+            4)Pradhan Matri Rojgar Protsahan Yojana(PMRPY)Scheme
+
 
         3)Salary components
             1)Earnings
@@ -39,6 +44,17 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         6)Statutory Filling
 
      */
+
+
+    // PF ESI Setting
+
+    //  - Employee provident fund
+
+
+
+
+
+
 
 
     // Salary Components - Earnings
@@ -260,11 +276,11 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     const saveAccountingCode = (data) => {
         console.log(data);
-        axios.post('/Paygroup/addPayrollAppIntegrations',data)
+        axios.post('/Paygroup/addPayrollAppIntegrations', data)
     }
 
-    const enableAccountingSoftware = (data,checked) =>{
-        console.log(data,checked);
+    const enableAccountingSoftware = (data, checked) => {
+        console.log(data, checked);
     }
 
 
@@ -336,7 +352,7 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         // Salary Components - Adhoc Components and Deduction and Reimbursement Components
         adhocComponents, deductionComponents, reimbursementComponents, editAdhocSalaryComponents,
         // Salary Components - Accounting Code
-        getAccountingSoftware, saveAccountingCode,accountingCode,accountingCodeSource,enableAccountingSoftware,
+        getAccountingSoftware, saveAccountingCode, accountingCode, accountingCodeSource, enableAccountingSoftware,
 
 
         // Salary Structure - Paygroup
