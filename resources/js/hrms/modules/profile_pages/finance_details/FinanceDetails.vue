@@ -292,6 +292,7 @@
                                 .Current_login_user.org_role == 2 || _instance_profilePagesStore.employeeDetails
                                 .Current_login_user.org_role == 3  " @click="onClick_EditButton_Statutory_Info()">
                                     <i class="ri-pencil-fill"></i>
+
                                 </a>
                             </span>
                         </h6>
@@ -317,18 +318,12 @@
                                     </div>
                                     <div class="col">
                                         <label class="ml-2">EPF Number</label>
-                                        <!-- <InputNumber placeholder="EPF Number" class="w-100 mt-1"
-                                            v-model="statutory_information.epf_no" inputId="withoutgrouping"
-                                            :useGrouping="false" /> -->
                                             <InputText @keypress="isSpecialChars($event)"   v-model="statutory_information.epf_no" class="w-100  mt-1" type="text" placeholder="EPF Number" />
                                     </div>
                                 </div>
                                 <div class="row ">
                                     <div class="col ">
                                         <label class=" ml-1">UAN Number</label>
-                                        <!-- <InputNumber placeholder="EPF Number" class="w-100" minlength="12" maxlength="12"
-                                            v-model="statutory_information.uan_no" inputId="withoutgrouping"
-                                            :useGrouping="false" /> -->
                                             <InputText @keypress="isSpecialChars($event)"  v-model="statutory_information.uan_no" class="w-100" type="text" placeholder="EPF Number" />
                                     </div>
                                     <div class="col ml-2">
@@ -342,9 +337,6 @@
                                 <div class="row">
                                     <div class="col-6 ">
                                         <label for="" class=" ml-2">ESIC Number</label>
-                                        <!-- <InputNumber placeholder="EPF Number" class="w-100  mt-1" minlength="12"
-                                            maxlength="12" v-model="statutory_information.esic_no" inputId="withoutgrouping"
-                                            :useGrouping="false" /> -->
                                             <InputText @keypress="isSpecialChars($event)"   v-model="statutory_information.esic_no" class="w-100  mt-1" type="text" placeholder="EPF Number" />
                                     </div>
                                     <div class="col">
