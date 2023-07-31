@@ -1,6 +1,31 @@
 <template>
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 flex flex-col justify-between leading-normal">
+        <div class="mb-8"  v-for="item in EmpDetials">
+            <p class="text-sm text-gray-600 flex items-center">
+                {{ current_session }}
+            </p>
+            <div class="text-gray-900 font-bold text-xl mb-2"> {{ service.current_user_name }}</div>
+            <div class="flex my-2">
+                <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
+                <p class="fs-6 my-auto">General Shift</p>
+                <label class="switch-checkbox f-12 text-muted mx-2">
+                    <input type="checkbox" id="checkin_function" class="f-13 text-muted"
+                        v-model="welcome_card.check" @change="getTime" />
+                    <span class="slider-checkbox check-inw round">
+                        <span class="slider-checkbox-text"> </span>
+                    </span>
+                </label>
+            </div>
+            <div >
+                <p class="text-sm text-gray-600 flex items-center">
+                    Time duration<span>90</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
     <!-- {{ EmpDetials }} -->
-    <div class="border-0 card w-100 box-shadow-md">
+    <!-- <div class="border-0 card w-100 box-shadow-md">
         <div class="card-body">
             <div class="row">
                 <div class="col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 col-xxl-9" v-for="item in EmpDetials">
@@ -65,7 +90,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '25vw' }">
         <div class="modal-content">
@@ -80,7 +105,7 @@
                 </div>
                 <div class="mt-2">
                     <h4 class="mb-2">Welcome {{ service.current_user_name }}</h4>
-                    <p class="mb-4 text-muted" v-if="checkInMessege" >{{ checkInMessege }}</p>
+                    <p class="mb-4 text-muted" v-if="checkInMessege">{{ checkInMessege }}</p>
                     <p class="mb-4 text-muted" v-else>Have a good day !</p>
                     <div class="gap-2 hstack justify-content-center">
                         <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal">
@@ -168,7 +193,7 @@ async function gettime() {
 }
 
 const getTime = () => {
-    EmpDetials.value.splice(0,EmpDetials.value.length)
+    EmpDetials.value.splice(0, EmpDetials.value.length)
     if (welcome_card.check == true) {
         welcome_card.check_in = new Date().toLocaleTimeString();
         welcome_card.checked = true;
@@ -185,7 +210,7 @@ const getTime = () => {
     usedashboard
         .updateCheckin_out({
             checked: welcome_card.checked,
-        }).then((res=>{
+        }).then((res => {
             checkInMessege.value = res.data.message
         }))
         .finally(() => {
@@ -247,4 +272,133 @@ const resetChars = () => {
     margin-right: 0;
     display: none;
 }
+
+input:checked {
+    background-color: #22c55e; /* bg-green-500 */
+  }
+
+  input:checked ~ span:last-child {
+    --tw-translate-x: 1.75rem; /* translate-x-7 */
+  }
+
+
+  .switch-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 115px;
+    height: 25px;
+}
+
+.switch-checkbox input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-checkbox-text {
+    color: #000;
+    position: absolute;
+    top: 2px;
+    left: 23px;
+    font-size: 10px;
+}
+
+.slider-checkbox {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    border: 1px solid #d9d0d0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50px;
+    background-color: white;
+    width: 75px;
+    -webkit-transition: 0.4s;
+    height: 22px;
+    box-shadow: inset -5px -5px 9px rgb(255 255 255 / 45%), inset 5px 5px 9px rgb(197 197 197 / 30%),
+        rgb(0 0 0 / 16%) 0px 1px 4px;
+    transition: 0.4s;
+}
+
+.slider-checkbox.check-out:before {
+    background-color: green;
+}
+
+.slider-checkbox.check-in:before {
+    background-color: green;
+}
+
+input:checked + .slider > .slider-text:after {
+    content: "Checkout";
+    color: red;
+}
+
+input + .slider > .slider-text:after {
+    content: "Check In";
+}
+
+.slider-checkbox:before {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 0px;
+    border-radius: 50%;
+    bottom: 0px;
+    color: #ffffff;
+    background-color: #008000;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    content: "\f011";
+    font-family: FontAwesome !important;
+    padding: 0px 4px 0px 3px;
+    font-size: 15px;
+}
+
+input:checked + .slider-checkbox > .slider-checkbox-text {
+    left: 2px;
+    color: #fff;
+}
+
+input:checked + .slider-checkbox.check-out {
+    background-color: #f0657070;
+    color: #ff0000;
+}
+
+input:checked + .slider-checkbox.check-in {
+    background-color: #f0657070;
+    color: #ff0000;
+}
+
+input:focus + .slider-checkbox {
+    box-shadow: 0 0 1px #7cfc00;
+}
+
+input:checked + .slider-checkbox:before {
+    -webkit-transform: translateX(65px);
+    -ms-transform: translateX(65px);
+    transform: translateX(65px);
+    left: -13px;
+    background-color: #f0f0f6;
+}
+
+input:checked + .slider-checkbox.check-out:before {
+    color: white;
+    background-color: red;
+}
+
+input:checked + .slider-checkbox.check-in:before {
+    color: white;
+    background-color: red;
+}
+
+input:checked + .slider-checkbox > .slider-checkbox-text:after {
+    content: "Checkout";
+    color: red;
+}
+
+input + .slider-checkbox > .slider-checkbox-text:after {
+    content: "Check In";
+}
+
 </style>

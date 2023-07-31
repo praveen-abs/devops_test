@@ -3,12 +3,8 @@
         <Sidebar />
         <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
             <Topbar />
-
-
             <!-- Main content -->
-            sim
-
-
+            <Dashboard />
         </div>
     </div>
 </template>
@@ -18,12 +14,20 @@
 
 import Topbar from './Topbar.vue';
 import Sidebar from './Sidebar.vue';
+import Dashboard from '../dashboard/dashboard.vue'
 
 
 import { ref } from 'vue';
 
 const isOpen = ref(false);
 const isOpens = ref(false);
+
+const isDay = ref(true);
+
+const toggleDayNight = () => {
+    isDay.value = !isDay.value;
+};
+
 
 
 </script>

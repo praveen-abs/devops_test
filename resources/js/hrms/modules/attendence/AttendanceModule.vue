@@ -257,7 +257,7 @@ onMounted(() => {
 
     setTimeout(() => {
         useTimesheet.getSelectedEmployeeAttendance()
-    }, 500);
+    }, 600);
 
 
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="height: 210px;">
+    <!-- <div class="row" style="height: 210px;">
     <div class="col-sm-12 col-md-6 col-xl-4 col-lg-4 col-xxl-4">
       <WelcomeCard />
     </div>
@@ -20,7 +20,30 @@
     <div class="h-3 col-sm-12 col-md-6 col-xl-4 col-lg-4 d-flex col-xxl-4" style="height: 380px;">
       <Calender />
     </div>
-  </div>
+  </div> -->
+    <div class="p-3">
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+                <WelcomeCard />
+            </div>
+            <div>
+                <LeaveDetials />
+            </div>
+            <div class="bg-white rounded-lg">carsouekl</div>
+        </div>
+        <div class="grid grid-rows-3 grid-flow-col gap-4 my-3">
+            <div class="col-span-2  grid grid-cols-2 gap-5">
+                <div class="bg-white rounded-lg max-h-min">
+                   <LeaveBalance />
+                </div>
+                <div class="bg-white rounded-lg">1</div>
+            </div>
+            <div class="row-span-2 col-span-2 bg-white">event</div>
+            <div class="row-span-4 bg-white rounded-lg">log</div>
+
+        </div>
+
+    </div>
 </template>
 
 <script setup>
@@ -34,25 +57,23 @@ import HolidayWidget from "./holiday_widget/holiday_widget.vue";
 
 
 <style>
-
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888888;
-  border-radius: 5px;
+    background: #888888;
+    border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+    background: #a1a1a1;
 }
-
 </style>

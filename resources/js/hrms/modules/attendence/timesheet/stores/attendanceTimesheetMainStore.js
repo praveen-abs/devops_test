@@ -58,7 +58,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const getSelectedEmployeeAttendance = () => {
 
         canShowLoading.value = true
-        getEmployeeAttendance(141, useCalendar.getMonth, useCalendar.getYear).then(res => {
+        getEmployeeAttendance(service.current_user_id, useCalendar.getMonth, useCalendar.getYear).then(res => {
             console.log("Selected employee attendance : " + res.data);
             currentEmployeeAttendance.value = Object.values(res.data)
             currentEmployeeAttendanceLength.value = Object.values(res.data).length
@@ -169,7 +169,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyLcRegularization = () => {
-        classicTimesheetSidebar.value = false
+        att.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
