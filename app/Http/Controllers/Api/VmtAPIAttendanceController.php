@@ -475,4 +475,28 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     }
 
+    public function getCountForAttRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+        if($validator->fails()){
+            return response()->json([
+                    'status' => 'failure',
+                    'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response =  $serviceVmtAttendanceService->getCountForAttRegularization($request->user_code);
+
+        return $response;
+
+    }
+
 }
