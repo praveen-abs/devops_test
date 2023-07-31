@@ -90,10 +90,27 @@ class VmtSalaryAdvanceService
                                 ->where('user_id', $single_order['approver'])->first();
                             }
                         }
-                }else{
-                        //loan details
+                }else if($loan_type == "Interest Free Loan"){
 
+                    $order_first =  json_decode(($applied_loan_details->approver_flow), true);
+                    foreach ($order_first as $single_order) {
+                            if ($single_order['order'] == 1) {
+                                $approver_details = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                                ->where('user_id', $single_order['approver'])->first();
+                   }
                 }
+            }else if($loan_type == "Interest With Loan"){
+
+                $order_first =  json_decode(($applied_loan_details->approver_flow), true);
+                foreach ($order_first as $single_order) {
+                        if ($single_order['order'] == 1) {
+                            $approver_details = User::join('vmt_employee_office_details','vmt_employee_office_details.user_id','=','users.id')
+                            ->where('user_id', $single_order['approver'])->first();
+                }
+             }
+
+            }
+
 
             $approveRejectLoanAndSaladvMail   = \Mail::to($approver_details->officical_mail)
                 ->send(new ApproveRejectLoanAndSaladvMail(
@@ -103,6 +120,7 @@ class VmtSalaryAdvanceService
                     $loan_type,
                     $applied_loan_details->borrowed_amount,
                     $applied_loan_details->dedction_date,
+                    $applied_loan_details->tenure_months,
                     request()->getSchemeAndHttpHost(),
                     $emp_image
                 ));
@@ -434,6 +452,18 @@ class VmtSalaryAdvanceService
                     $EmpApplySalaryAmt->sal_adv_crd_sts = "0";
                     $EmpApplySalaryAmt->sal_adv_status = "Pending";
                     $EmpApplySalaryAmt->save();
+
+
+                    $emp_details =  User::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
+                    ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
+                    ->where('vmt_emp_sal_adv_details.id', $EmpApplySalaryAmt->id)
+                    ->first();
+
+                $emp_img = json_decode(newgetEmployeeAvatarOrShortName($current_user_id), true);
+                $mail_sts = $this->applyLoanAndAdvanceMail($current_user_id, $EmpApplySalaryAmt->request_id, $request_type, $emp_img , $emp_details);
+
+
+                dd($mail_sts);
 
                     // $emp_details =  User::join('vmt_emp_assign_salary_adv_setting', 'vmt_emp_assign_salary_adv_setting.user_id', '=', 'users.id')
                     //     ->join('vmt_emp_sal_adv_details', 'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id', '=', 'vmt_emp_assign_salary_adv_setting.id')
@@ -1206,8 +1236,27 @@ class VmtSalaryAdvanceService
             $loan_details->loan_crd_sts = 0;
             $loan_details->loan_status = 'Pending';
             $loan_details->save();
+
+
+            if($loan_type == "InterestFreeLoan"){
+
+                $emp_details = VmtInterestFreeLoanSettings::join('vmt_emp_int_free_loan_details','vmt_emp_int_free_loan_details.vmt_int_free_loan_id' ,'=','vmt_int_free_loan_settings.id')
+                ->join('users','users.id','=','vmt_emp_int_free_loan_details.user_id')
+                ->where('vmt_emp_int_free_loan_details.id', $loan_details->id)
+                ->first();
+
+            }else if ($loan_type == "InterestWithLoan"){
+
+                $emp_details = VmtLoanInterestSettings::join('vmt_emp_int_loan_details','vmt_emp_int_loan_details.vmt_int_loan_id','=','vmt_loan_interest_settings.id')
+                ->join('users','users.id','=','vmt_emp_int_loan_details.user_id')
+                ->where('vmt_emp_int_loan_details.id',$loan_details->id)
+                ->first();
+
+            }
+
             $emp_img = json_decode(newgetEmployeeAvatarOrShortName($user_id), true);
-            $mail_sts = $this->applyLoanAndAdvanceMail($user_id,  $loan_details->request_id, $type,  $emp_img);
+            $mail_sts = $this->applyLoanAndAdvanceMail($user_id,  $loan_details->request_id, $type,  $emp_img , $emp_details);
+
             return response()->json([
                 'status' => 'Success',
                 'message' => $mail_sts['data']['msg'],

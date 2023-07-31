@@ -188,15 +188,29 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                   </td>
                                   <td>{{ $borrowed_Amount }}</td>
                                 </tr>
+
+                                @if (!empty($requested_date))
                                 <tr>
-                                  <td>
-                                    <p style="font-weight: 600;">Repayment Tenure</p>
-                                  </td>
-                                  <td>
-                                    <p style="margin-right: 8px; font-weight: 600;">-</p>
-                                  </td>
-                                  <td>{{ $requested_date }}</td>
-                                </tr>
+                                    <td>
+                                      <p style="font-weight: 600;">Repayment Tenure</p>
+                                    </td>
+                                    <td>
+                                      <p style="margin-right: 8px; font-weight: 600;">-</p>
+                                    </td>
+                                    <td>{{ $requested_date }}</td>
+                                  </tr>
+                                @else
+                                <tr>
+                                    <td>
+                                      <p style="font-weight: 600;">Tenure Month</p>
+                                    </td>
+                                    <td>
+                                      <p style="margin-right: 8px; font-weight: 600;">-</p>
+                                    </td>
+                                    <td>{{ $tenure_month }}</td>
+                                  </tr>
+                                @endif
+
                                 {{-- <tr>
                                   <td>
                                     <p style="font-weight: 600;">Previous Balance</p>
