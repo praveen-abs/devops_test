@@ -25,10 +25,11 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
      protected $loanType;
      protected $borrowed_Amount;
      protected $requested_date;
+     protected $tenure_month;
      protected $link;
      protected $emp_image;
 
-    public function __construct($approverName,$employeeName,$requestID,$loanType,$borrowed_Amount,$requested_date,$link,$emp_image)
+    public function __construct($approverName,$employeeName,$requestID,$loanType,$borrowed_Amount,$requested_date, $tenure_month ,$link,$emp_image)
     {
         $this->approverName = $approverName;
 
@@ -41,6 +42,8 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
         $this->borrowed_Amount = $borrowed_Amount;
 
         $this->requested_date = $requested_date;
+
+        $this->tenure_month = $tenure_month;
 
         $this->link = $link;
 
@@ -61,6 +64,7 @@ class ApproveRejectLoanAndSaladvMail extends Mailable
                     ->with('loanType', $this->loanType)
                     ->with('borrowed_Amount', $this->borrowed_Amount)
                     ->with('requested_date', $this->requested_date)
+                    ->with('tenure_month', $this->tenure_month)
                     ->with('link',  $this->link)
                     ->with('emp_image',  $this->emp_image);
 
