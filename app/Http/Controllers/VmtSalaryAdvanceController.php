@@ -380,8 +380,13 @@ class VmtSalaryAdvanceController extends Controller
 
     public function testingKarthi(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
         $emp_image = json_decode(newgetEmployeeAvatarOrShortName(144),true);
-       // dd( $emp_image);
-        $response = $vmtSalaryAdvanceService->applyLoanAndAdvanceMail(144,"ABSIF001","InterestFreeLoan",$emp_image);
+        $status = 'Rejected';
+        $emp_id=144;
+        $approver_user_id = auth()->user()->id;
+        $loan_details_id =1;
+        $loan_type ='Interest Free Loan';
+       //dd( $emp_image);
+        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status,$loan_type,$approver_user_id,$loan_details_id,$emp_image);
         return $response;
     }
 }
