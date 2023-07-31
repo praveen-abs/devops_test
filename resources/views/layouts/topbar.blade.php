@@ -139,7 +139,7 @@ use App\Models\User;
 
                             <div class="choose-client-wrapper">
                                 @foreach ($clientsList as $client)
-                                    <div class="choose-client justify-content-between d-flex p-2  border-bottom-liteAsh  align-items-center  @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif>"
+                                    <div class="choose-client justify-content-between overscroll-y-auto d-flex p-2  border-bottom-liteAsh  align-items-center  @if (!empty($currentClientID) && $currentClientID == $client->id) bg-ash @endif>"
                                         data-client_id="{{ $client->id }}">
                                         <div class="d-flex mx-2   align-items-center">
                                             <div class="mx-2 p-1 border d-flex align-items-center  rounded border-1"
