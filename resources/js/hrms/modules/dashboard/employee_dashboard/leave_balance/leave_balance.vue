@@ -4,27 +4,28 @@
     </div> -->
 
 
-    <div>
-        <p>Leave Balance</p>
-        <div class="overflow-x-scroll h-full">
-            <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type" class="bg-gray-200 max-w-sm my-2 p-2 rounded-lg ">
-                <div class="flex ">
-                    <div class="leave-balance-container">
-                        <div class="leave-balance-available">
-                            <span class="">{{ leaveBalance.leave_balance }}</span>
-                            <span class="">/</span>
-                            <span class="">{{ leaveBalance.avalied_leaves }}</span>
+    <div class="bg-white rounded-lg overflow-hidden p-2" style="height: 200px;">
+        <span class="text-primary font-semibold fs-6">Leave Balance</span>
+        <div class="bg-white rounded-lg overflow-x-scroll h-full">
+            <div class="px-auto">
+                <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"
+                    class="bg-gray-200 max-w-xs my-2 p-2 mx-auto rounded-lg ">
+                    <div class="flex px-2">
+                        <div class="leave-balance-container py-auto">
+                            <div class="leave-balance-available">
+                                <span class="">{{ leaveBalance.leave_balance }}</span>
+                                <span class="">/</span>
+                                <span class="">{{ leaveBalance.avalied_leaves }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="">
-                        <p class=" font-semibold text-lg text-primary">{{ leaveBalance.leave_type }}</p>
+                        <div class="px-1">
+                            <p class=" font-semibold text-sm text-primary">{{ leaveBalance.leave_type }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </template>
 
 <script setup>

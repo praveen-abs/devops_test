@@ -2,7 +2,7 @@
     <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
         <div class="px-6 py-4">
             <p class="text-gray-700 text-base">
-                current month - <span class="font-bold text-xl mb-2">June</span>
+                current month - <span class="font-semibold text-xl mb-2">June</span>
             </p>
             <div class="grid grid-cols-3 gap-4 mt-4">
                 <div class="bg-gray-200 rounded-lg p-3">

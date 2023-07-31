@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-black  transition-all duration-700 overflow-x-scroll pt-2 h-screen" ref="content"
+    <nav class="bg-black  transition-all duration-700 overflow-x-scroll pt-2  h-screen" ref="content"
         :class="[!open ? 'w-[72px] ' : 'w-56 px-3']">
         <div class=" flex justify-center">
             <button class="mb-[25px] " @click="toggleSwitch">

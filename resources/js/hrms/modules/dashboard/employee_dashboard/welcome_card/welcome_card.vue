@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-4 flex flex-col justify-between leading-normal">
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white p-3 flex flex-col justify-between leading-normal">
         <div class="mb-8"  v-for="item in EmpDetials">
             <p class="text-sm text-gray-600 flex items-center">
                 {{ current_session }}
@@ -18,7 +18,7 @@
             </div>
             <div >
                 <p class="text-sm text-gray-600 flex items-center">
-                    Time duration<span>90</span>
+                    Time duration:<span>09:30</span>
                 </p>
             </div>
         </div>

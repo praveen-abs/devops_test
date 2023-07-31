@@ -1,5 +1,39 @@
 <template>
-    <div class="my-3 event-wrapper">
+    <div class="bg-white rounded-lg p-2">
+        <span class="text-primary font-semibold fs-6">Events</span>
+
+        <div class="h-[500px] overflow-x-scroll">
+            <div class="grid grid-cols-3">
+                <div class=" relative  w-[250px] rounded-lg">
+                    <div class=" bg-green-800 h-[100px] rounded-lg">
+                        <p class="semibold text-xl text-center text-white my-2">Happy Birthday</p>
+                    </div>
+                    <div class="absolute top-10 w-full z-30 ">
+                        <div class="grid grid-cols-2 w-11/12 bg-slate-100 mx-auto rounded-lg">
+                            <div class="">
+                                <img src="../../../assests/sampleAvatar.jpg" alt="">
+                            </div>
+                            <div class="h-full">
+                                <div class="py-10">
+                                    <p class="font-semibold text-lg text-center text-black my-auto">Narasimma</p>
+                                    <p class="font-medium text-md text-center text-black my-auto">Developer</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-center my-2">
+                            <button class=" border-2 border-gray-300 rounded-lg p-1 px-10 hover:bg-gray-100">Wish Narasimma</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <!-- <div class="my-3 event-wrapper">
         <div class="mb-0 overflow-x-hidden overflow-y-auto border-0 card">
             <div class="card-body">
                 <div class="mb-3 f-18 text-primary" id=""> <span class="text-primary font-semibold fs-5">Events</span>
@@ -38,10 +72,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
-    <div id="wishes_popup" class="modal fade" role="dialog">
+    <!-- <div id="wishes_popup" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
             <div class="modal-content">
                 <div class="py-2 border-0 modal-header">
@@ -53,8 +87,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- {{-- <p for="" class="text-muted f-14 fw-bold">Commants here</p> --}} -->
-                    <textarea name="" id="" cols="" placeholder="Commants here...." rows="2"
+                    {{-- <p for="" class="text-muted f-14 fw-bold">Commants here</p> --}} -->
+    <!-- <textarea name="" id="" cols="" placeholder="Commants here...." rows="2"
                         class="resize-none form-control"></textarea>
                     <div class="text-end">
                         <button class="mt-2 btn btn-border-orange" id=""><i class="fa fa-paper-plane me"
@@ -63,7 +97,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  -->
 </template>
 
 <script setup>

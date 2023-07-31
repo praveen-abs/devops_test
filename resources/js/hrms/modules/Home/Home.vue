@@ -1,23 +1,27 @@
 <template>
-    <div class="flex flex-row h-full relative">
+    <loadingSpinner v-if="loading" />
+    <div class="flex flex-row h-screen overflow-hidden relative " v-else>
         <Sidebar />
         <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
             <Topbar />
             <!-- Main content -->
-            <Dashboard />
+            <div class="overflow-x-scroll">
+                <Dashboard />
+            </div>
+
         </div>
     </div>
 </template>
 
 
 <script setup>
-
+import loadingSpinner from '../../components/LoadingSpinner.vue'
 import Topbar from './Topbar.vue';
 import Sidebar from './Sidebar.vue';
 import Dashboard from '../dashboard/dashboard.vue'
 
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const isOpen = ref(false);
 const isOpens = ref(false);
@@ -27,6 +31,15 @@ const isDay = ref(true);
 const toggleDayNight = () => {
     isDay.value = !isDay.value;
 };
+
+
+const loading = ref(true)
+
+onMounted(() => {
+    setTimeout(() => {
+        loading.value = false
+    }, 2000);
+})
 
 
 

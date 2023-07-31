@@ -21,7 +21,8 @@
       <Calender />
     </div>
   </div> -->
-    <div class="p-3">
+
+    <div class="p-3 overflow-auto h-screen">
         <div class="grid grid-cols-3 gap-4">
             <div>
                 <WelcomeCard />
@@ -29,20 +30,43 @@
             <div>
                 <LeaveDetials />
             </div>
-            <div class="bg-white rounded-lg">carsouekl</div>
-        </div>
-        <div class="grid grid-rows-3 grid-flow-col gap-4 my-3">
-            <div class="col-span-2  grid grid-cols-2 gap-5">
-                <div class="bg-white rounded-lg max-h-min">
-                   <LeaveBalance />
-                </div>
-                <div class="bg-white rounded-lg">1</div>
+            <div class="bg-white rounded-lg">
+                <p class="flex justify-between align-middle">HolidayWidget</p>
             </div>
-            <div class="row-span-2 col-span-2 bg-white">event</div>
-            <div class="row-span-4 bg-white rounded-lg">log</div>
-
+        </div>
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-8">
+                <div class="grid grid-cols-2 gap-4 my-2">
+                    <div>
+                        <LeaveBalance />
+                    </div>
+                    <div>
+                        <Calender />
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 ">
+                    <div>
+                        <events />
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-4 my-2">
+                <Notification />
+            </div>
         </div>
 
+
+        <!-- <div class="grid grid-rows-3 grid-flow-col gap-4 my-3">
+            <div class="row-span-1 col-span-3  grid grid-cols-2 gap-4 " >
+                <div >
+                    <LeaveBalance />
+                </div>
+                <div class="bg-white rounded-lg h-2/4 ">1</div>
+            </div>
+            <div class="row-span-2 col-span-3 bg-white">event</div>
+            <div class="row-span-4 col-span-4 bg-white rounded-lg">log</div>
+
+        </div> -->
     </div>
 </template>
 
@@ -53,6 +77,7 @@ import Notification from "./notifications/notification.vue";
 import LeaveBalance from "./leave_balance/leave_balance.vue";
 import Calender from "./calender/calender.vue";
 import HolidayWidget from "./holiday_widget/holiday_widget.vue";
+import events from "../events/events.vue";
 </script>
 
 
