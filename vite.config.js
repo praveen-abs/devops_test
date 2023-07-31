@@ -14,6 +14,9 @@ export default defineConfig({
 
                 // Home
                 'resources/js/hrms/modules/Home/Home.js',
+                'resources/js/hrms/modules/Home/Sidebar.js',
+                'resources/js/hrms/modules/Home/Topbar.js',
+
 
                 //Main dashboard
                 'resources/js/hrms/modules/dashboard/dashboard.js',

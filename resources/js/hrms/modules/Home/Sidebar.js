@@ -1,7 +1,7 @@
-import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../assests/tailwind.css';
+import "../../assests/tailwind.css";
+
 
 
 import { createApp } from "vue";
@@ -9,7 +9,6 @@ import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
 import Sidebar from 'primevue/sidebar';
-import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -40,9 +39,9 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import SelectButton from 'primevue/selectbutton';
 
-import AttendanceModule from './AttendanceModule.vue'
+import NavSidebar from './Sidebar.vue'
 
-const app = createApp(AttendanceModule);
+const app = createApp(NavSidebar);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
@@ -82,5 +81,5 @@ app.component('Accordion',Accordion)
 app.component('AccordionTab',AccordionTab)
 app.component('SelectButton',SelectButton)
 
-app.mount("#AttendanceModule");
+app.mount("#Sidebar");
 

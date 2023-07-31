@@ -15,10 +15,6 @@ clearstatcache();
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon_abs.png')}}">
     @include('layouts.head-css')
     <style>
-
-
-
-
         .credit {
             font-size: 16px;
             color: rgba(191, 191, 191, 0.36);
@@ -181,29 +177,28 @@ clearstatcache();
         <div id="loading-content" class="loading-content"></div>
     </section> -->
 {{-- @yield('loading') --}}
-<div id="layout-wrapper">
-    @include('layouts.topbar')
-
+<div class="flex flex-row h-screen overflow-hidden relative ">
     @if (Auth::user()->active == 0)
-        @include('layouts.sidebar_dummy')
+    @vite('resources/js/hrms/modules/Home/Sidebar.js')
+    <div id="Sidebar"></div>
     @else
-        @include('layouts.sidebar')
+    @vite('resources/js/hrms/modules/Home/Sidebar.js')
+    <div id="Sidebar"></div>
     @endif
 
-    <!-- ============================================================== -->
-    <!-- Start right Content here -->
-    <!-- ============================================================== -->
-    <div class="main-content">
-        <div class="page-content">
-            <div class="container-fluid">
-                @yield('content')
+    <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
+        @vite('resources/js/hrms/modules/Home/Topbar.js')
+        <div id="Topbar"></div>
+        <div class="main-content ">
+            <div class="page-content ">
+                <div class="container-fluid overflow-x-scroll  h-screen">
+                    <!-- Main content -->
+                    <!-- <div class="overflow-x-scroll h-screen"> -->
+                    @yield('content')
+                </div>
             </div>
-            <!-- container-fluid -->
         </div>
-        <!-- End Page-content -->
-        @include('layouts.footer')
     </div>
-    <!-- end main content-->
 </div>
 
 <div style="z-index: 11">

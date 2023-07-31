@@ -11,8 +11,8 @@
                 <div v-for="leaveBalance in useDashboard.leaveBalancePerMonthSource" :key="leaveBalance.leave_type"
                     class="bg-gray-200 max-w-xs my-2 p-2 mx-auto rounded-lg ">
                     <div class="flex px-2">
-                        <div class="leave-balance-container py-auto">
-                            <div class="leave-balance-available">
+                        <div class="py-auto">
+                            <div class="">
                                 <span class="">{{ leaveBalance.leave_balance }}</span>
                                 <span class="">/</span>
                                 <span class="">{{ leaveBalance.avalied_leaves }}</span>

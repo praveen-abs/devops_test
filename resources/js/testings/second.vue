@@ -1,143 +1,79 @@
 <template>
-    <QuickOnboarding />
-    <!-- <input type="file" name="" id="" @change="json($event)">
-    <div class="table-responsive">
+    <div class="image-slider">
+      <transition name="fade" mode="out-in">
+        <img :src="currentImage" :key="currentImage" alt="Holiday Image" />
+      </transition>
+      <div class="controls">
+        <button @click="prevImage">Previous</button>
+        <button @click="nextImage">Next</button>
+      </div>
+    </div>
+  </template>
 
-        <DataTable ref="dt" dataKey="id" :paginator="true" :rows="10" :value="employee_documents"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
-            <Column header="File Name" field="Employee code" style="min-width: 8rem">
-            </Column>
-
-            <Column field="Employee Name" header="Status" style="min-width: 12rem">
-
-            </Column>
-
-            <Column field="Email" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Aadhar" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Account No" header="Reason " style="min-width: 12rem"></Column>
-            <Column field="Bank Name" header="Reason " style="min-width: 12rem"></Column> F
-
-        </DataTable>
-
-    </div> -->
-</template>
+  <script setup>
+  import { ref, computed, onMounted } from 'vue';
 
 
+  const currentIndex = ref(0);
 
-<script setup>
+  const currentImage = computed(() => images[currentIndex.value]);
 
-import { ref } from 'vue';
+  function nextImage() {
+    currentIndex.value = (currentIndex.value + 1) % images.length;
+  }
 
-import QuickOnboarding from '../hrms/modules/Organization/QuickOnboarding/QuickOnboarding.vue'
+  function prevImage() {
+    currentIndex.value = (currentIndex.value - 1 + images.length) % images.length;
+  }
 
-const items = ref([
-    { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-    { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-    { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-    { age: 38, first_name: 'Jami', last_name: 'Carney' }
-])
+  // Autoplay functionality (optional)
+  const autoplayInterval = 5000; // Set the time in milliseconds
+  let autoplayTimer;
 
+  function startAutoplay() {
+    autoplayTimer = setInterval(nextImage, autoplayInterval);
+  }
 
-const employee_documents = ref()
+  function stopAutoplay() {
+    clearInterval(autoplayTimer);
+  }
 
+  onMounted(startAutoplay);
+  </script>
 
+  <style scoped>
+  .image-slider {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+  }
 
-const parseExcel = (file) => {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s;
+  }
 
-    // let file = e.target.files[0]
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0;
+  }
 
-    // console.log(file);
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
 
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-        var data = e.target.result;
-        var workbook = XLSX.read(data, {
-            type: 'binary'
-        });
-
-        workbook.SheetNames.forEach(function (sheetName) {
-            // Here is your object
-            var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-            var json_object = JSON.stringify(XL_row_object);
-            console.log(json_object);
-
-        })
-
-    };
-
-    reader.onerror = function (ex) {
-        console.log(ex);
-    };
-
-    reader.readAsBinaryString(file);
-};
-
-
-const json = (e) => {
-
-    var file = e.target.files[0];
-    // input canceled, return
-    if (!file) return;
-
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        const data = reader.result;
-        var workbook = XLSX.read(data, { type: 'binary' });
-        var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-
-        // header: 1 instructs xlsx to create an 'array of arrays'
-        var result = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-        const jsonData = workbook.SheetNames.reduce((initial, name) => {
-            const sheet = workbook.Sheets[name];
-            initial[name] = XLSX.utils.sheet_to_json(sheet);
-            return initial;
-        }, {});
-
-        console.log(jsonData);
-        employee_documents.value = jsonData.Sheet1
-
-        // data preview
-
-        // console.log(result);
-
-    };
-    reader.readAsArrayBuffer(file);
-}
-
-
-const download = () => {
-    const data = XLSX.utils.json_to_sheet(items)
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, data, 'data')
-    XLSX.writeFile(wb, 'demo.xlsx')
-}
-
-</script>
-
-
-<style scoped>
-.result-table {
-    width: 50%;
-    text-align: center;
-}
-
-.download-btn {
-    background-color: DodgerBlue;
+  button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    color: white;
-    padding: 12px 30px;
-    margin: 12px 0;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 20px;
-}
+  }
 
-/* Darker background on mouse-over */
-.download-btn:hover {
-    background-color: RoyalBlue;
-}
-</style>
+  button:hover {
+    background-color: #0056b3;
+  }
+  </style>

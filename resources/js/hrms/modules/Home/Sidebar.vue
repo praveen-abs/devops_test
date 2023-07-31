@@ -1,6 +1,6 @@
 <template>
-    <nav class="bg-black  transition-all duration-700 overflow-x-scroll pt-2  h-screen" ref="content"
-        :class="[!open ? 'w-[72px] ' : 'w-56 px-3']">
+    <nav class="bg-black  transition-all duration-700 overflow-x-scroll pt-2 h-screen" ref="content"
+        :class="[!open ? 'w-[54px] ' : 'w-56 px-3']">
         <div class=" flex justify-center">
             <button class="mb-[25px] " @click="toggleSwitch">
                 <img src="../../assests/images/ABS Logo(1).png" alt="" v-if="!isActive">
@@ -26,11 +26,11 @@
                         {{ menu.label }}</span>
                     <i :class="menu.arrow_icon" class=" text-white  absolute  right-4"></i>
                 </a>
-                <button v-else @click="toggleMenu(index)" :class="{
+                <a role="button" v-else @click="toggleMenu(index)" :class="{
                     ' bg-yellow-400 text-[001820]  w-[40px] relative left-2  text-[#F6F6F6] flex justify-center  ': isOpen(index),
                 }"
-                    class=" py-2   w-[60px]  flex justify-start items-center text-[#001820] :hover:  rounded-l hover:bg-yellow-400">
-                    <svg width="20" height="20" class="mx-2" viewBox="0 0 24 24" fill="none"
+                    class=" py-2   w-[60px]  flex justify-center items-center text-[#001820] :hover:  rounded-l hover:bg-yellow-400">
+                    <svg width="15" height="15" class="mx-2" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path :d="menu.icon" fill="white" />
                         <path :d="menu.icon1" fill="white" />
@@ -39,7 +39,7 @@
                         <path :d="menu.icon4" viewBox="0 0 24 14" stroke-width="menu.stroke_width" fill="white" />
                     </svg>
 
-                </button>
+                </a>
 
                 <!-- sub menu -->
                 <transition enter-active-class="transition ease-out duration-200 transform"

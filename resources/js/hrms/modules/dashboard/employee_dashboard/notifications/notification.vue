@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white h-2/6 rounded-lg overflow-hidden p-2">
+    <div class="bg-white h-[700px] rounded-lg overflow-hidden p-2">
         <div class="mb-3 card-title flex items-center justify-between" id="">
             <span class="text-primary font-semibold fs-6">Notifications</span>
             <i v-badge="filterNotificationLength(useDashboard.allNotificationSource)" class="pi pi-bell p-overlay-badge px-4"

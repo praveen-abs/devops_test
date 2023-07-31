@@ -1,11 +1,11 @@
 <template>
-    <div class="bg-white rounded-lg p-2">
+    <div class="bg-white rounded-lg p-2 mb-16">
         <span class="text-primary font-semibold fs-6">Events</span>
 
         <div class="h-[500px] overflow-x-scroll">
-            <div class="grid grid-cols-3">
-                <div class=" relative  w-[250px] rounded-lg">
-                    <div class=" bg-green-800 h-[100px] rounded-lg">
+            <div class="grid grid-cols-4 gap-4">
+                <div class=" relative  w-[180px] rounded-lg my-8 " v-for="data in 9">
+                    <div class=" bg-green-800 h-[100px] rounded-lg ">
                         <p class="semibold text-xl text-center text-white my-2">Happy Birthday</p>
                     </div>
                     <div class="absolute top-10 w-full z-30 ">
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="flex justify-center my-2">
-                            <button class=" border-2 border-gray-300 rounded-lg p-1 px-10 hover:bg-gray-100">Wish Narasimma</button>
+                            <!-- <button class=" border-2 border-gray-300 rounded-lg p-1 px-10 hover:bg-gray-100">Wish Narasimma</button> -->
                         </div>
                     </div>
                 </div>

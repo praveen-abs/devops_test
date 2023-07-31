@@ -682,15 +682,15 @@ select,button,.accordion-button {
     margin-top: 70px;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
     .main-content {
         margin-left: 250px;
     }
-}
+} */
 
 .main-content {
     transition: all 0.1s ease-out;
-    margin-left: 100px;
+    /* margin-left: 100px; */
     overflow: hidden;
 }
 
@@ -16478,7 +16478,7 @@ ul {
 
 @media (min-width: 768px) {
     .main-content {
-        margin-left: 230px;
+        /* margin-left: 230px; */
     }
 }
 
