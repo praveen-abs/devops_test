@@ -250,7 +250,6 @@ class VmtAttendanceService
 
         //Get all the comp work days
         $emp_comp_off_days = $this->fetchEmployeeCompensatoryOffDays($user_id);
-        dd(  $emp_comp_off_days );
 
         //dd($emp_comp_off_days);
 
