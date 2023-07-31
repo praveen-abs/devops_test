@@ -363,35 +363,28 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
     public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
 
-        //Validate the request
-        $validator = Validator::make(
-            $request->all(),
-            $rules = [
-                'approver_user_code' => 'required|exists:users,user_code',
-                'record_id' => 'required|integer',
-                'status' => 'required',
-                'status_text' => 'required',
-            ],
-            $messages = [
-                'required' => 'Field :attribute is missing',
-                'exists' => 'Field :attribute is invalid',
-                'integer' => 'Field :attribute should be integer',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
-            ]);
-        }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization($request->approver_user_code, $request->record_id, $request->status, $request->status_text, $serviceVmtNotificationsService = $serviceVmtNotificationsService);
+        $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
+                                approver_user_code : $request->approver_user_code,
+                                record_id : $request->record_id,
+                                status : $request->status,
+                                status_text : $request->status_text,
+                                serviceVmtNotificationsService : $serviceVmtNotificationsService);
 
         return $response;
 
     }
+
+    public function getAttendanceRegularizationStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+
+        return $serviceVmtAttendanceService->getAttendanceRegularizationStatus(
+                                                user_code : $request->user_code,
+                                                regularization_date : $request->regularization_date,
+                                                regularization_type : $request->regularization_type
+                                            );
+    }
+
 
     public function getAttendanceRegularizationData(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
 

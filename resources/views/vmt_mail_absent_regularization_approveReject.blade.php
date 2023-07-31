@@ -59,7 +59,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
 
                                                     <p class="text-strong " style="margin: 0px 0px 0px ">Dear {{ $employeeName }},</p>
                                                     <p class="" style="  ">
-                                                        This is to inform you that your “Attendance Regularizations” request has been   {{ $status }}  by your line manager <b class="f-14"> {{ $managerName }}<b>  .</p>
+                                                        This is to inform you that your “Absent Regularizations” request has been   {{ $status }}  by your line manager <b class="f-14"> {{ $managerName }}<b>  .</p>
                                                     </p>
 
 

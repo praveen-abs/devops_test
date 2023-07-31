@@ -31,6 +31,8 @@ class VmtEmployeeAttendanceController extends Controller
       
         $start_date = $request->start_date;
         $end_date = $request->end_date;
+        // $start_date ='2023-06-26';
+        // $end_date ='2023-07-26';
         return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date,$end_date)), 'Attendance.xlsx');
 
     }
