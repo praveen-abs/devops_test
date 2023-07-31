@@ -218,7 +218,7 @@ class VmtAttendanceService
             //Test : End
 
             $trimmed_date = substr($singleAttendanceDate, 5);
-
+            //dd( $work_leave_days);
 
             //Check whether not worked in Holidays or not in work_leave days
             if (!in_array($trimmed_date, $array_query_holidays) && !in_array($day, $work_leave_days)) {
@@ -250,6 +250,7 @@ class VmtAttendanceService
 
         //Get all the comp work days
         $emp_comp_off_days = $this->fetchEmployeeCompensatoryOffDays($user_id);
+        dd(  $emp_comp_off_days );
 
         //dd($emp_comp_off_days);
 
@@ -2973,7 +2974,7 @@ class VmtAttendanceService
         foreach ($all_active_user as $single_user) {
             $total_leave_balance = 0;
             $overall_leave_balance = $this->calculateEmployeeLeaveBalance($single_user->id, $start_date, $end_date);
-            dd($overall_leave_balance);
+           // dd($overall_leave_balance);
             $leavetypeAndBalanceDetails = $this->leavetypeAndBalanceDetails($single_user->id, $start_date, $end_date, $month);
             //dd($leavetypeAndBalanceDetails);
             $each_user['user_code'] = $single_user->user_code;
