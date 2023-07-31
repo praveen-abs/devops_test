@@ -354,9 +354,14 @@ class VmtInvestmentsController extends Controller
                 $hra['proof_submitted'] = 0;
                 $hra['amount_rejected'] = 0;
                 $hra['amount_accepted'] = $sumOfHra;
-                // dd($hraTotalRent);
-                // dd($hra);
+
             }
+
+            $empBasic = $dec_amt['basic'] * 12;
+
+            $hraexamtions = intval($sumOfHra) - intval($empBasic * 10 / 100);
+
+
             if ($dec_amt['section_group'] == "Section 80C & 80CC ") {
 
                 $sumOfSec += $dec_amt['dec_amount'];
@@ -534,6 +539,7 @@ class VmtInvestmentsController extends Controller
         $standardDeducation = 0;
         $professional_tax = 0;
         $perviousEmployeeProfessionalTax = 0;
+        $sumOfpreviousempincome =0;
         $ExemptionsUnder80s = 0;
         $SumOfHousPropsInNew = 0;
         $SumOfHousPropsInOld = 0;
@@ -606,6 +612,10 @@ class VmtInvestmentsController extends Controller
                 $sumOfReimbersument += $dec_amt['dec_amount'];
                 // $ExemptionsUnder80s += $dec_amt['dec_amount'];
             }
+            if ($dec_amt['section_group'] == "Previous Employer Income") {
+                $sumOfpreviousempincome += $dec_amt['dec_amount'];
+                // $ExemptionsUnder80s += $dec_amt['dec_amount'];
+            }
 
             if ($dec_amt['section_group'] == "Other Source Of  Income") {
                 $sumOfOtherSourceOfIncome = $dec_amt['dec_amount'];
@@ -660,21 +670,25 @@ class VmtInvestmentsController extends Controller
             $Other_Source['new_regime'] =  $sumOfOtherSourceOfIncome;
 
 
+            $pre_emp_income['sno'] = "c";
+            $pre_emp_income['section'] = "Add: Previous Employer Income ";
+            $pre_emp_income['old_regime'] = $sumOfpreviousempincome;
+            $pre_emp_income['new_regime'] = 0;
 
-            $Reimbursement['sno'] = "c";
+            $Reimbursement['sno'] = "d";
             $Reimbursement['section'] = "Less: Reimbursement Exemptions";
             $Reimbursement['old_regime'] = $sumOfReimbersument;
             $Reimbursement['new_regime'] = $sumOfReimbersument;
 
-            // Allowance Tax
 
-            $allowance_tax['sno'] = "d";
+
+            $allowance_tax['sno'] = "e";
             $allowance_tax['section'] = "Less: Allowances to the extent exempt under section 10";
             $allowance_tax['old_regime'] = intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta']);
             $allowance_tax['new_regime'] = 0;
 
 
-            $tax_section_16['sno'] = "e";
+            $tax_section_16['sno'] = "f";
             $tax_section_16['section'] = "Less: Deductions under section 16";
             // Sum Previous Employer Standard Deduction  and Previous Employer PT
             $tax_section_16['old_regime'] = intval($standardDeducation) + $professional_tax * 12;
@@ -682,18 +696,18 @@ class VmtInvestmentsController extends Controller
 
 
             // Values in negative
-            $tax_on_emp['sno'] = "f";
+            $tax_on_emp['sno'] = "g";
             $tax_on_emp['section'] = "Add: Income or loss from house property (Section 24)";
             $tax_on_emp['old_regime'] = $sumofhouseproperty;
             $tax_on_emp['new_regime'] = $tax_calc_new_redime;
 
 
-            $exemption['sno'] = "g";
+            $exemption['sno'] = "h";
             $exemption['section'] = "Less: Deduction under Chapter VI-A";
             $exemption['old_regime'] = $chapter80s + $chapterexe;
             $exemption['new_regime'] = 0;
 
-            $total_tax_income['sno'] = "h";
+            $total_tax_income['sno'] = "i";
             $total_tax_income['section'] = "Total Taxable Income";
             //                                                  a                              b                                c                                                           d                                                       f                         g
             $total_tax_income['old_regime'] = (round($dec_amt['gross'] * $joinmonth) + $sumOfOtherSourceOfIncome - $sumOfReimbersument - (intval($hraexamtions) + intval($dec_amt['child_education_allowance']) + intval($dec_amt['lta'])) - $sumofhouseproperty - ($chapter80s + $chapterexe));
@@ -750,7 +764,7 @@ class VmtInvestmentsController extends Controller
             }
 
 
-            $total_tax_laibilty['sno'] = "i";
+            $total_tax_laibilty['sno'] = "j";
             $total_tax_laibilty['section'] = "Total Tax Laibility";
             $total_tax_laibilty['old_regime'] = $old_regime_tax ;
             $total_tax_laibilty['new_regime'] = $new_regime_tax;
@@ -765,6 +779,7 @@ class VmtInvestmentsController extends Controller
             $res,
             $total_gross,
             $Other_Source,
+            $pre_emp_income,
             $Reimbursement,
             $allowance_tax,
             $tax_section_16,
