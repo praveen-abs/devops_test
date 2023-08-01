@@ -1303,7 +1303,7 @@ class VmtEmployeePayCheckService
                                                 "Net Salary in words" => numberToWord($total_amount),
                                                 ]];
 
-                       dd($getpersonal);
+                    //    dd($getpersonal);
 
             $user = User::where('user_code', $user_code)->first();
 
@@ -1314,9 +1314,17 @@ class VmtEmployeePayCheckService
             $processed_clientName = strtolower(str_replace(' ', '', $client_name));
 
 
-            $html =  view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $getpersonal);
+            $html =  view('vmt_payslip_templates.default_payslipTwo', $getpersonal);
 
-                    return $html;
+                    // return $html;
+
+                    $pdf = new Dompdf();
+                    $pdf->loadhtml($html, 'UTF-8');
+                    $pdf->setPaper('A4', 'portrait');
+                    $pdf->render();
+                    $pdf->stream("payslip.pdf");
+
+            return $pdf;
 
 
 
