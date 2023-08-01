@@ -541,7 +541,7 @@ table.no-padding tr td {
 
 /* by george 70px to 50px  */
 .page-content {
-    padding: calc(0px + 1.rem) calc(1.rem / 2) 0px calc(1.5rem / 2);
+    padding: calc(50px + 1.rem) calc(1.rem / 2) 20px calc(1.5rem / 2);
 }
 /* sub header (bread-crumb) nav bar */
 .page-title-box {
@@ -1062,7 +1062,7 @@ button.gridjs-sort-desc {
 }
 .nav-tabs-dashed .nav-item .nav-link.active::after {
     content: "";
-    height: 4px;
+    height: 2px;
     width: 100%;
     left: 0px;
     position: absolute;

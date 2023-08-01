@@ -90,10 +90,3 @@ onMounted(async () => {
 
 </script>
 
-
-<style scoped>
-.page-content {
-    padding: calc(50px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
-}
-
-</style>

@@ -37,7 +37,7 @@
 
                 <Column class="font-bold" field="employee_name" header="Employee Name">
                     <template #body="slotProps">
-                        <div class="flex justify-content-center align-items-center">
+                        <!-- <div class="flex justify-content-center align-items-center">
                             <p v-if="JSON.parse(slotProps.data.employee_avatar).type == 'shortname'" if
                                 class="p-2 w-3 h-18 text-semibold rounded-full bg-blue-900 text-white">{{
                                     JSON.parse(slotProps.data.employee_avatar).data }} </p>
@@ -46,8 +46,8 @@
                                 style="height: 30px !important;"
                                 :src="`data:image/png;base64,${JSON.parse(slotProps.data.employee_avatar).data}`" srcset=""
                                 alt="" />
-                            <p class=" text-left pl-2">{{ slotProps.data.employee_name }} </p>
-                        </div>
+                        </div> -->
+                        <p class=" text-left pl-2">{{ slotProps.data.employee_name }} </p>
                     </template>
                     <template #filter="{ filterModel, filterCallback }">
                         <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
@@ -278,3 +278,10 @@ function processApproveReject() {
         });
 }
 </script>
+
+
+<style>
+.page-content {
+    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
+}
+</style>
