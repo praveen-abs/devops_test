@@ -3134,22 +3134,24 @@ class VmtAttendanceService
         }
     }
 
-    public function getPendingAttendadnceRegularization($user_code, $year, $month)
+    public function getPendingAttendadnceRegularization($user_code, $year, $month, $status)
     {
         try {
             $response = array();
-            if ($year == null) {
-                $year = Carbon::now()->format('Y');
-            }
-            if ($month == null) {
-                $month = carbon::now()->format('m');
-            }
             $user_id = user::where('user_code', $user_code)->first()->id;
             $employees = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
             foreach ($employees as $singleemployee) {
                 $temp_arr = array();
-                $att_reg_query = VmtEmployeeAttendanceRegularization::where('user_id', $singleemployee->user_id)->whereYear('attendance_date', $year)
-                    ->where('status', 'Pending');
+                $att_reg_query = VmtEmployeeAttendanceRegularization::where('user_id', $singleemployee->user_id)
+                    ->whereYear('attendance_date', $year)->whereMonth('attendance_date', $month);
+                if ($status == 'Pending') {
+                    $att_reg_query =   $att_reg_query->where('status', 'Pending');
+                } else if ($status == 'Approved') {
+                    $att_reg_query =   $att_reg_query->where('status', 'Approved');
+                } else if ($status == 'Rejected') {
+                    $att_reg_query =   $att_reg_query->where('status', 'Rejected');
+                }
+
                 if ($att_reg_query->exists()) {
                     $temp_arr['name'] = User::where('id', $singleemployee->user_id)->first()->name;
                     $temp_arr['user_code'] =  User::where('id', $singleemployee->user_id)->first()->user_code;
