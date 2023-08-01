@@ -39,9 +39,11 @@
                         <!-- <label class="" for="csd">Contract Start Date{!! required() !!}</label> -->
                         <div class="floating">
                             <label for="" class=" float-label">Contract Start Date</label>
-                            <input type="text" max="9999-12-31" placeholder="Contract Start Date" name="csd"
-                                class="onboard-form form-control textbox" onfocus="(this.type='date')" required
-                                v-model="client_onboarding.contract_start_date" :class="[
+
+                            <!-- <input type="text" max="9999-12-31" placeholder="Contract Start Date" name="csd"
+                                class="onboard-form form-control textbox" onfocus="(this.type='date')" 
+                              /> -->
+                                <Calendar showIcon required class="h-10" v-model="client_onboarding.contract_start_date" :class="[
                                     v$.contract_start_date.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.contract_start_date.$error" class="font-semibold text-red-400 fs-6">
@@ -54,9 +56,10 @@
                         <!-- <label class="" for="ced">Contract End Date{!! required() !!}</label> -->
                         <div class="floating">
                             <label for="" class="float-label">Contract End Date</label>
-                            <input type="text" max="9999-12-31" placeholder="Contract End Date" name="ced"
-                                class="onboard-form form-control textbox" onfocus="(this.type='date')" required
-                                v-model="client_onboarding.contract_end_date" :class="[
+                            <!-- <input type="text" max="9999-12-31" placeholder="Contract End Date" name="ced"
+                                class="onboard-form form-control textbox" onfocus="(this.type='date')" 
+                                /> -->
+                                <Calendar showIcon required  class="h-10" v-model="client_onboarding.contract_end_date" :class="[
                                     v$.contract_end_date.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.contract_end_date.$error" class="font-semibold text-red-400 fs-6">
@@ -283,7 +286,7 @@
                         <!-- <label class="" for="auth_person_name">Authorized Person Name{!! required() !!}</label> -->
                         <div class="floating">
                             <label for="" class="float-label">Authorized Person Name</label>
-                            <input type="text" placeholder="Authorized Person Name" name="auth_person_name"
+                            <input type="text" placeholder="Authorized Person Name"   @keypress="isLetter($event)" name="auth_person_name"
                                 class="onboard-form form-control textbox" pattern="alpha" required
                                 v-model="client_onboarding.authorised_person_name" :class="[
                                     v$.authorised_person_name.$error ? 'border border-red-500' : '',
@@ -301,7 +304,7 @@
                         <div class="floating">
                             <label for="" class="float-label">Authorized Person
                                 Designation</label>
-                            <input type="text" placeholder="Authorized Person Designation" name="auth_person_desig"
+                            <input type="text" @keypress="isLetter($event)" placeholder="Authorized Person Designation" name="auth_person_desig"
                                 class="onboard-form form-control " pattern="alpha" required
                                 v-model="client_onboarding.authorised_person_designation" :class="[
                                     v$.authorised_person_designation.$error ? 'border border-red-500' : '',
@@ -319,10 +322,11 @@
                         <div class="floating">
                             <label for="" class="float-label">Authorized Person Contact
                                 Number</label>
-                            <input type="number" minlength="10" maxlength="10"
+                            <!-- <input type="number" minlength="10" maxlength="10"
                                 placeholder="Authorized Person Contact Number" name="auth_person_contact"
                                 class="onboard-form form-control textbox" required
-                                v-model="client_onboarding.authorised_person_contact_number" :class="[
+                               /> -->
+                                <InputMask class="h-10" id="basic" mask="9999999999" placeholder="999999999"   v-model="client_onboarding.authorised_person_contact_number" :class="[
                                     v$.authorised_person_contact_number.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.authorised_person_contact_number.$error" class="font-semibold text-red-400 fs-6">
@@ -639,6 +643,19 @@ const isAbs = (e)=> {
   if(/^[ABS{3}_CL{2} 0-9]+$/.test(char)) return true; // Match with regex
   else e.preventDefault(); // If not match, don't add to input text
 }
+
+const isLetter = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[A-Za-z_ ]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
+}
+// const isEmail = (e) => {
+//     let char = String.fromCharCode(e.keyCode); // Get the character
+//     if ( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(char)) return true; // Match with regex
+ 
+
+//     else e.preventDefault(); // If not match, don't add to input text
+// }
 
 // function lettersStartWithABS (){
 
