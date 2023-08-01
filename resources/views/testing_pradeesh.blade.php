@@ -59,7 +59,7 @@ use App\Models\VmtClientMaster;
     <div id="AdminRolesPermission"></div> -->
 
     @vite('resources/js/hrms/modules/leave_module/LeaveModule.js')
-        {{-- <div id="LeaveModule"></div> --}}
+        <!-- <div id="LeaveModule"></div> -->
 
 
     @vite('resources\js\hrms\modules\approvals\salary_advance_loan\approvals_salary_advance.js')

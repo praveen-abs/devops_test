@@ -22,6 +22,7 @@
   "node_modules/primeicons/fonts/primeicons.ttf": {
     "file": "assets/primeicons-131bc3bf.ttf",
     "src": "node_modules/primeicons/fonts/primeicons.ttf"
+>>>>>>> 0dc269e3e811806c25df0e00177120b0721a2ccc
   },
   "resources/js/hrms/assests/images/svg_oops.svg": {
     "file": "assets/svg_oops-cc560542.svg",
@@ -54,6 +55,7 @@
   "resources/js/hrms/modules/payroll/assests/calendar.svg": {
     "file": "assets/calendar-11742259.svg",
     "src": "resources/js/hrms/modules/payroll/assests/calendar.svg"
+>>>>>>> 868a22c21d14a39066227a7ffe9997eed496b9e4
   },
   "resources/js/hrms/modules/dashboard/dashboard/girl_walk.jpg": {
     "file": "assets/girl_walk-33da2160.jpg",
@@ -63,6 +65,11 @@
     "file": "assets/present-9cc61f91.svg",
     "src": "resources/js/hrms/modules/dashboard/dashboard/present.svg"
   },
+<<<<<<< HEAD
+  "resources/js/hrms/modules/dashboard/dashboard/girl_walk.jpg": {
+    "file": "assets/girl_walk-33da2160.jpg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/girl_walk.jpg"
+=======
   "resources/js/hrms/modules/dashboard/dashboard/leave.svg": {
     "file": "assets/leave-90c21cd0.svg",
     "src": "resources/js/hrms/modules/dashboard/dashboard/leave.svg"
@@ -1971,6 +1978,13 @@
       "_index.esm-fef4544a.js"
     ],
     "css": [
+<<<<<<< HEAD
+<<<<<<< HEAD
+      "assets/app-341584bf.css"
+=======
+      "assets/app-87a40bdd.css"
+>>>>>>> c4bbf2f4432957558de1cd8bbcc316e14e239874
+=======
       "assets/AttendanceModule-4efd880f.css",
       "assets/tailwind-8f4f3533.css"
     ],
@@ -1999,6 +2013,19 @@
       "assets/primeicons-5e10f102.svg"
     ]
   },
+<<<<<<< HEAD
+<<<<<<< HEAD
+  "resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.css": {
+    "file": "assets/InvFormsMgmt-1b4cda05.css",
+    "src": "resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.css"
+  },
+  "resources/js/hrms/modules/Organization/manage_welcome_mails_status/ManageWelcomeMailStatus.css": {
+    "file": "assets/ManageWelcomeMailStatus-7780b246.css",
+=======
+  "resources/js/hrms/modules/manage_payslips/ManagePayslips.css": {
+    "file": "assets/ManagePayslips-7780b246.css",
+    "src": "resources/js/hrms/modules/configurations/emp_documents/DocumentsSettings.css"
+=======
   "resources/js/app.js": {
     "file": "assets/app-d821bd7e.js",
     "src": "resources/js/app.js",
@@ -2046,6 +2073,7 @@
       "assets/app-a57d27c3.css",
       "assets/tailwind-8f4f3533.css"
     ]
+>>>>>>> 868a22c21d14a39066227a7ffe9997eed496b9e4
   },
   "resources/js/hrms/modules/pms/pms_forms_mgmt/PMSFormsMgmt.css": {
     "file": "assets/PMSFormsMgmt-cb3a1c07.css",
