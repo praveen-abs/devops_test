@@ -1,14 +1,15 @@
 <template>
-    <div class=" rounded overflow-hidden shadow-lg bg-white p-3 flex flex-col justify-between leading-normal h-full">
-        <div class="mb-8"  v-for="item in EmpDetials">
-            <p class="text-sm text-gray-600 flex items-center">
+    <div class=" rounded overflow-hidden shadow-lg bg-white p-3 grid grid-cols-12 gap-4 justify-between leading-normal h-full">
+        <div class="mb-8 col-span-7"  v-for="item in EmpDetials">
+
+            <p class="font-medium fs-6 text-gray-500 flex items-center">
                 {{ current_session }}
             </p>
-            <div class="text-gray-900 font-bold text-xl mb-2"> {{ service.current_user_name }}</div>
+            <div class="text-gray-900 font-bold text-2xl mb-2"> {{ service.current_user_name }}</div>
             <div class="flex my-2">
                 <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
-                <p class="fs-6 my-auto">General Shift</p>
-                <label class="switch-checkbox f-12 text-muted mx-2">
+                <p class="fs-6 my-auto px-2">General Shift</p>
+                <label class="switch-checkbox f-12 text-muted ">
                     <input type="checkbox" id="checkin_function" class="f-13 text-muted"
                         v-model="welcome_card.check" @change="getTime" />
                     <span class="slider-checkbox check-inw round">
@@ -21,6 +22,11 @@
                     Time duration:<span>09:30</span>
                 </p>
             </div>
+        </div>
+        <div class="col-span-5 h-full">
+           <div class=" grid justify-center items-centers my-auto h-full">
+            <img src="../../dashboard/femaleDashboardImage.svg" alt="" srcset="" class="w-full h-full">
+           </div>
         </div>
 
     </div>
@@ -93,7 +99,7 @@
     </div> -->
 
     <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '25vw' }">
-        <div class="modal-content">
+        <div class="modal-content bg-white">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000" class="gliters"
@@ -119,7 +125,7 @@
         </div>
     </Dialog>
     <Dialog v-model:visible="check_out_dailog" modal :style="{ width: '25vw' }">
-        <div class="modal-content">
+        <div class="modal-content bg-white">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
                     <lord-icon src="https://cdn.lordicon.com/dcfqtwxe.json" trigger="loop" delay="2000"

@@ -109,3 +109,32 @@ const useDashboard = useMainDashboardStore()
 
 const width = ref('h-10')
 </script>
+
+
+<style lang="scss">
+
+
+$colors-400: (1:theme('colors.orange.400'),
+2:theme('colors.red.400'),
+3:theme('colors.stone.400'),
+4:theme('colors.green.400'),
+5:theme('colors.indigo.400'),
+6:theme('colors.pink.400'),
+7:theme('colors.amber.400'),
+8:theme('colors.cyan.400'),
+9:theme('colors.blue.400'),
+10:theme('colors.slate.400'),
+);
+
+@each $key,
+$values-100 in $colors-400 {
+@for $i from 1 through 15 {
+
+    .dynamic-background{
+        &:nth-child(#{$key}) {
+            background-color: $values-100;
+        }
+    }
+}
+}
+</style>

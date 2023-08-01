@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-orange-100 rounded-lg overflow-hidden p-3" style="height: 200px;">
+    <div class="bg-[#FFEFE2] rounded-lg overflow-hidden p-3" style="height: 200px;">
        <div class="flex justify-between">
         <span class="text-primary font-semibold fs-6">Calendar</span>
         <!-- <div class="text-gray-900 font-semibold text-md mb-2">Calendar</div> -->
@@ -9,7 +9,7 @@
        </div>
 
         <div class="py-8">
-            <p class="text-orange-400 font-semibold text-3xl mb-2  font-serif">{{ dayjs(new Date()).format('MMMM D, YYYY') }}
+            <p class="text-[#727272] font-semibold text-[36px] mb-2" style="font-family: 'Libre Baskerville', serif;">{{ dayjs(new Date()).format('MMMM D, YYYY') }}
             </p>
             <p class="text-gray-900 font-semibold text-md mb-2">{{ dayjs(new Date()).format('dddd') }}</p>
         </div>
@@ -19,3 +19,7 @@
 <script setup>
 import dayjs from 'dayjs';
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Poppins&display=swap');
+</style>
