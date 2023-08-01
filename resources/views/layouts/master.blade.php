@@ -186,16 +186,14 @@ clearstatcache();
     <div id="Sidebar"></div>
     @endif
 
-    <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
+    <div class="bg-gray-50 text-gray-700  h-screen w-screen">
         @vite('resources/js/hrms/modules/Home/Topbar.js')
         <div id="Topbar"></div>
         <div class="main-content ">
-            <div class="page-content ">
-                <div class="container-fluid overflow-x-scroll  h-screen">
-                    <!-- Main content -->
-                    <!-- <div class="overflow-x-scroll h-screen"> -->
+            <div class="page-content h-screen overflow-x-scroll ">
+                <!-- <div class=" "> -->
                     @yield('content')
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>

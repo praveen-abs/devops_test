@@ -6,9 +6,9 @@
                     <p class="font-semibold text-black fs-2">Tax Deductions FY {{ new Date().getFullYear() }}-{{ new
                         Date().getFullYear() + 1 }}</p>
                 </div>
-                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400 w-7 ">
+                <div class="flex my-1 text-left text-black bg-red-100 border-l-4 rounded-lg border-l-red-400">
                     <i class="mx-2 my-2.5 pi pi-times-circle text-red-500 font-bold" style="font-size: 1.5rem"></i>
-                    <div style="font-weight: 600;" class="px-1 my-2 fs-5 d-flex ">Kindly update your <span
+                    <div style="font-weight: 600;" class="px-1 my-2 fs-5 flex ">Kindly update your <span
                             class="font-semibold text-blue-400 fs-5">PAN</span>to avoid 20$ TDS
                         deduction (if applicable) </div>
                 </div>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="flex justify-between gap-6 my-4">
-                    <div class="w-9">
+                    <div class="">
                         <div class="font-semibold fs-4 ">Your current chosen tax regime is <strong
                                 class="text-blue-500 underline cursor-pointer fs-4"
                                 style="font-family: Verdana, Geneva, Tahoma, sans-serif;"
