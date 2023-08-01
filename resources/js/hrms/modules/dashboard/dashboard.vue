@@ -64,12 +64,19 @@
 
         </div> -->
     <!-- </div> -->
-    <employee_dashboard />
+    <loadingSpinner v-if="useDashboard.canShowLoading" />
+    <transition  v-else enter-active-class="transition ease-out duration-600 transform"
+    enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
+    leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
+    leave-to-class="opacity-0 translate-y-2">
+    <employee_dashboard   />
+</transition>
 </template>
 
 
 <script setup>
 import employee_dashboard from './employee_dashboard/employee_dashboard.vue'
+import loadingSpinner from '../../components/LoadingSpinner.vue'
 import hr_dashboard from './hr_dashboard/hr_dashboard.vue'
 import Events from './events/events.vue'
 import { useMainDashboardStore } from './stores/dashboard_service'

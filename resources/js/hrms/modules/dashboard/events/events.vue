@@ -8,7 +8,7 @@
                     <div class=" bg-green-800 h-[100px] rounded-lg ">
                         <p class="semibold text-xl text-center text-white my-2">Happy Birthday</p>
                     </div>
-                    <div class="absolute top-10 w-full z-30 ">
+                    <div class="absolute top-10 w-full z-10 ">
                         <div class="grid grid-cols-2 w-11/12 bg-slate-100 mx-auto rounded-lg">
                             <div class="">
                                 <img src="../../../assests/sampleAvatar.jpg" alt="">

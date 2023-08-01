@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded overflow-hidden shadow-lg bg-white">
+    <div class="rounded overflow-hidden shadow-lg bg-white h-full">
         <div class="px-6 py-4">
             <p class="text-gray-700 text-base">
                 current month - <span class="font-semibold text-xl mb-2">June</span>

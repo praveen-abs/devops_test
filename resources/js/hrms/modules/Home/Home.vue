@@ -1,6 +1,6 @@
 <template>
-    <loadingSpinner v-if="loading" />
-    <div class="flex flex-row h-screen overflow-hidden relative " v-else>
+    <!-- <loadingSpinner /> -->
+    <div class="flex flex-row h-screen overflow-hidden relative ">
         <Sidebar />
         <div class=" text-gray-700 bg-gray-200 h-screen w-screen">
             <Topbar />

@@ -1,7 +1,7 @@
 <template>
     <div class="col-span-7 flex">
-        <div class="my-auto w-3 ml-1">
-            <SelectButton v-model="useTimesheet.switchTimesheet" :options="options" aria-labelledby="basic" />
+        <div class="my-auto">
+            <SelectButton v-model="useTimesheet.switchTimesheet" :options="options" aria-labelledby="basic" style="width: 170px;" />
         </div>
         <div class="w-full flex justify-center items-center py-4">
             <button @click="calendarStore.decrementMonth(1)">

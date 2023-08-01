@@ -1,5 +1,5 @@
 <template>
-    <div class=" rounded overflow-hidden shadow-lg bg-white p-3 flex flex-col justify-between leading-normal ">
+    <div class=" rounded overflow-hidden shadow-lg bg-white p-3 flex flex-col justify-between leading-normal h-full">
         <div class="mb-8"  v-for="item in EmpDetials">
             <p class="text-sm text-gray-600 flex items-center">
                 {{ current_session }}

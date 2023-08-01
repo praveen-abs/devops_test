@@ -267,7 +267,6 @@ function hasSubClients()
 
 function fetchClients()
 {
-
     return VmtClientMaster::all(['id', 'client_name', 'client_logo']);
 }
 
@@ -447,7 +446,7 @@ function getCurrentUserGender(){
 
     if ($lowerCaseGender == 'male') {
         return "male";
-    } else 
+    } else
     if ($lowerCaseGender == 'female') {
         return "female";
     }
@@ -486,7 +485,7 @@ function newgetEmployeeAvatarOrShortName($user_id)
 
         //Add color
 
-       
+
 
         return json_encode($responseJSON);
     } catch (Throwable $e) {
