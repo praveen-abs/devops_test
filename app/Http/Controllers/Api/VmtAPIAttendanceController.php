@@ -518,20 +518,22 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $request->all(),
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
-           
-
+                 "year"=>'required',
+                 "month"=>'required',
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
                 "exists" => "Field :attribute is invalid"
             ]
         );
+        
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
             ]);
         }
+        
 
         $response =  $serviceVmtAttendanceService->getPendingAttendadnceRegularization($request->user_code,$request->year,$request->month);
 

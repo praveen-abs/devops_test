@@ -3136,29 +3136,41 @@ class VmtAttendanceService
 
     public function getPendingAttendadnceRegularization($user_code, $year, $month)
     {
-
-        $response = array();
-        if ($year == null) {
-            $year = Carbon::now()->format('Y');
-        }
-        if ($month == null) {
-            $month = carbon::now()->format('m');
-        }
-        $user_id = user::where('user_code', $user_code)->first()->id;
-        $employees = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
-        foreach ($employees as $singleemployee) {
-            $temp_arr = array();
-            $att_reg_query = VmtEmployeeAttendanceRegularization::where('user_id', $singleemployee->user_id)->whereYear('attendance_date', $year)
-                ->where('status', 'Pending');
-            if ($att_reg_query->exists()) {
-                $temp_arr['name'] = User::where('id', $singleemployee->user_id)->first()->name;
-                $temp_arr['user_code'] =  User::where('id', $singleemployee->user_id)->first()->user_code;
-                $temp_arr['regularization_details'] = $att_reg_query->get();
-                array_push($response, $temp_arr);
-                unset($temp_arr);
+        try {
+            $response = array();
+            if ($year == null) {
+                $year = Carbon::now()->format('Y');
             }
-        }
+            if ($month == null) {
+                $month = carbon::now()->format('m');
+            }
+            $user_id = user::where('user_code', $user_code)->first()->id;
+            $employees = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
+            foreach ($employees as $singleemployee) {
+                $temp_arr = array();
+                $att_reg_query = VmtEmployeeAttendanceRegularization::where('user_id', $singleemployee->user_id)->whereYear('attendance_date', $year)
+                    ->where('status', 'Pending');
+                if ($att_reg_query->exists()) {
+                    $temp_arr['name'] = User::where('id', $singleemployee->user_id)->first()->name;
+                    $temp_arr['user_code'] =  User::where('id', $singleemployee->user_id)->first()->user_code;
+                    $temp_arr['regularization_details'] = $att_reg_query->get();
+                    array_push($response, $temp_arr);
+                    unset($temp_arr);
+                }
+            }
 
-        dd($response);
+            return response()->json([
+                'status' => 'success',
+                'message' => "",
+                'data' => $response
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getCountForAttRegularization ] ",
+                'data' => $e
+            ]);
+        }
     }
 }
