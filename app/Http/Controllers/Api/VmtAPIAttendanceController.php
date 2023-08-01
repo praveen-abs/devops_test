@@ -520,10 +520,12 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 "user_code" => 'required|exists:users,user_code',
                  "year"=>'required',
                  "month"=>'required',
+                 "status"=>'required|in:Pending,Approved,Rejected',
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
-                "exists" => "Field :attribute is invalid"
+                "exists" => "Field :attribute is invalid",
+                "in"=>"Field :attribute is invalid"
             ]
         );
         
@@ -533,9 +535,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'message' => $validator->errors()->all()
             ]);
         }
-        
-
-        $response =  $serviceVmtAttendanceService->getPendingAttendadnceRegularization($request->user_code,$request->year,$request->month);
+        $response =  $serviceVmtAttendanceService->getPendingAttendadnceRegularization($request->user_code,$request->year,$request->month,$request->status);
 
         return $response;
     }
