@@ -511,7 +511,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         return $response;
     }
 
-    public function getPendingAttendadnceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function getfetchAttendadnceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
         $validator = Validator::make(
@@ -535,7 +535,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'message' => $validator->errors()->all()
             ]);
         }
-        $response =  $serviceVmtAttendanceService->getPendingAttendadnceRegularization($request->user_code,$request->year,$request->month,$request->status);
+        $response =  $serviceVmtAttendanceService->getfetchAttendadnceRegularization($request->user_code,$request->year,$request->month,$request->status);
 
         return $response;
     }
