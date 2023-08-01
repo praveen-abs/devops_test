@@ -3103,20 +3103,26 @@ class VmtAttendanceService
 
         return $response;
     }
-
+   
+    //Get Count of Att req for given manager's team memebers
     public function getCountForAttRegularization($user_code)
     {
-
+                    //  $user_code = "BA011";
         try {
-            $user_id = user::where('user_code', $user_code)->first()->id;
+            $emp_users_query=VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
+            $emp_users_id = array();
+            foreach( $emp_users_query as $single_emp){
+              array_push( $emp_users_id,$single_emp->user_id);
+            }
+
             $month = Carbon::now()->format('m');
 
 
-            $total_count['pending_count']  = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)->whereMonth('attendance_date', $month)
+            $total_count['pending_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Pending')->count();
-            $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)->whereMonth('attendance_date', $month)
+            $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id',$emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Approved')->count();
-            $total_count['rejected_count']   = VmtEmployeeAttendanceRegularization::where('user_id', $user_id)->whereMonth('attendance_date', $month)
+            $total_count['rejected_count']   = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Rejected')->count();
 
             return response()->json([
@@ -3134,7 +3140,7 @@ class VmtAttendanceService
         }
     }
 
-    public function getPendingAttendadnceRegularization($user_code, $year, $month, $status)
+    public function getfetchAttendadnceRegularization($user_code, $year, $month, $status)
     {
         try {
             $response = array();
