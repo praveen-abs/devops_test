@@ -119,7 +119,12 @@ class VmtClientController extends Controller
                                                              $image_view,
                                                              $request->abs_client_code)
             );
-                return "Saved";
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'client onboarded successfully.',
+                ]
+            );
         }
         catch (TransportException $e) {
 
@@ -142,6 +147,8 @@ class VmtClientController extends Controller
             );
         }
     }
+
+
 
     public function showAllClients()
     {

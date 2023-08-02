@@ -1,6 +1,6 @@
 <template>
-        <div class="table-responsive">
-            <DataTable resizableColumns columnResizeMode="expand" ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
+        <div class="table-responsive ">
+            <DataTable  ref="dt" dataKey="fs_id" :paginator="true" :rows="25"
                 :value="investmentStore.housePropertySource" editMode="row" sortField="particular" :sortOrder="-1"
                 v-model:editingRows="investmentStore.editingRowSource"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"

@@ -290,7 +290,6 @@ function hasSubClients()
 
 function fetchClients()
 {
-
     return VmtClientMaster::all(['id', 'client_name', 'client_logo']);
 }
 

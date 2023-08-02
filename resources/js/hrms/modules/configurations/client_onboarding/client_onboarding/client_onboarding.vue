@@ -41,9 +41,9 @@
                             <label for="" class=" float-label">Contract Start Date</label>
 
                             <!-- <input type="text" max="9999-12-31" placeholder="Contract Start Date" name="csd"
-                                class="onboard-form form-control textbox" onfocus="(this.type='date')" 
+                                class="onboard-form form-control textbox" onfocus="(this.type='date')"
                               /> -->
-                                <Calendar showIcon required class="h-10" v-model="client_onboarding.contract_start_date" :class="[
+                                <Calendar showIcon required class="h-10 w-[250px] relative right-2"  v-model="client_onboarding.contract_start_date" :class="[
                                     v$.contract_start_date.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.contract_start_date.$error" class="font-semibold text-red-400 fs-6">
@@ -57,9 +57,9 @@
                         <div class="floating">
                             <label for="" class="float-label">Contract End Date</label>
                             <!-- <input type="text" max="9999-12-31" placeholder="Contract End Date" name="ced"
-                                class="onboard-form form-control textbox" onfocus="(this.type='date')" 
+                                class="onboard-form form-control textbox" onfocus="(this.type='date')"
                                 /> -->
-                                <Calendar showIcon required  class="h-10" v-model="client_onboarding.contract_end_date" :class="[
+                                <Calendar showIcon required  class="h-10 w-[250px] relative right-2" v-model="client_onboarding.contract_end_date" :class="[
                                     v$.contract_end_date.$error ? 'border border-red-500' : '',
                                 ]" />
                             <span v-if="v$.contract_end_date.$error" class="font-semibold text-red-400 fs-6">
@@ -516,6 +516,33 @@ const client_onboarding = reactive({
 
 })
 
+const Reset = ()=>{
+    client_onboarding.client_code= ""
+    client_onboarding.client_name= ""
+    client_onboarding.contract_start_date= ""
+    client_onboarding.contract_end_date= ""
+    client_onboarding.cin_number= ""
+    client_onboarding.company_tan= ""
+    client_onboarding.company_pan= ""
+    client_onboarding.product=""
+    client_onboarding.gst_no= ""
+    client_onboarding.epf_reg_number= ""
+    client_onboarding.esic_reg_number= ""
+    client_onboarding.prof_tax_reg_number= ""
+    client_onboarding.lwf_reg_number= ""
+    client_onboarding.abs_client_code=""
+    client_onboarding.client_full_name=""
+    client_onboarding.client_logo=""
+    client_onboarding.authorised_person_name= ""
+    client_onboarding.authorised_person_designation= ""
+    client_onboarding.authorised_person_contact_number= ""
+    client_onboarding.authorised_person_contact_mail= ""
+    client_onboarding.billing_address= ""
+    client_onboarding.shipping_address= ""
+    client_onboarding.subscription_type=''
+    client_onboarding.doc_uploads=""
+}
+
 
 const rules = computed(() => {
     return {
@@ -601,19 +628,28 @@ const submit = () => {
 
     axios.post('vmt_clientOnboarding', formData,config).then(res => {
         console.log("onboarding successfully");
-        if(res.data == 'Saved'){
-            Swal.fire(
-            'Success!',
-            'Client onboard successfully!',
-            'success'
-         )
-        }else{
-            Swal.fire(
-            'Error!',
-            '!',
-            'error'
-         )
-        }
+        if (res.data.status == "success") {
+                Swal.fire({
+                    title: res.data.status = "success",
+                    text: res.data.message,
+                    // "Salary Advance Succesfully",
+                    icon: "success",
+                }).then((res) => {
+                    Reset();
+                })
+            }
+            else {
+                Swal.fire({
+                    title: res.data.status = "failure",
+                    text: res.data.message,
+                    // "Salary Advance Succesfully",
+                    icon: "error",
+                    showCancelButton: false,
+                }).then((res) => {
+                    // blink_UI.value = res.data.data;
+                    Reset();
+                })
+            }
     }).catch(err => console.log(err)).finally(() => {
         canShowLoading.value = false
     })
@@ -652,7 +688,7 @@ const isLetter = (e) => {
 // const isEmail = (e) => {
 //     let char = String.fromCharCode(e.keyCode); // Get the character
 //     if ( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(char)) return true; // Match with regex
- 
+
 
 //     else e.preventDefault(); // If not match, don't add to input text
 // }
@@ -663,3 +699,19 @@ const isLetter = (e) => {
 // }
 
 </script>
+
+<style>
+.swal2-success-line-tip{
+    left: .3rem !important;
+}
+.swal2-success-line-long{
+    left: 1rem !important;
+}
+.swal2-x-mark-line-left{
+left: 0 !important;
+}
+.swal2-x-mark-line-right{
+right: 0 !important;
+}
+</style>
+<!-- right: 2.6rem !important; -->

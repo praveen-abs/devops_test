@@ -13,6 +13,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     const allNotificationSource = ref([])
     const leaveBalancePerMonthSource = ref([])
     const attenanceReportPerMonth = ref([])
+    const canShowLoading = ref(true)
 
     // Subscribe Main DashBoard Data Source
     // const getMainDashboardSource = (async () => {
@@ -31,7 +32,6 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     // })
 
     async function getMainDashboardData(month, year) {
-
         await axios.get('/getAllNewDashboardDetails').then((response) => {
             allEventSource.value = response.data.all_events.birthday;
             allNotificationSource.value = response.data.all_notification.array_notifications;
@@ -39,7 +39,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
             attenanceReportPerMonth.value = response.data.attenance_report_permonth;
 
         }).finally(() => {
-
+            canShowLoading.value = false
         });
     }
 
@@ -110,7 +110,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
 
     return {
         // varaible Declarations
-        service,
+        service,canShowLoading,
 
       // Welcome Card
         getCurrentlyLoginUser,

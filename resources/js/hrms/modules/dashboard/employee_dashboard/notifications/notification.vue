@@ -11,7 +11,7 @@
                 <div class="p-2">
                     <a class="notify-content text-black">
                         <p class="mb-1 orange-median items-center flex justify-between">
-                            <span class="orange-median font-semibold text-md ">{{ notification.notification_title }}</span>
+                            <span class="orange-median font-semibold text-sm ">{{ notification.notification_title }}</span>
                         </p>
                         <div class="notify-message">
                             <p class="text-xs text-gray-600 font-medium">

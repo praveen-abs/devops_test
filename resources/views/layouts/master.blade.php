@@ -190,7 +190,7 @@ clearstatcache();
         @vite('resources/js/hrms/modules/Home/Topbar.js')
         <div id="Topbar"></div>
         <div class="main-content ">
-            <div class="page-content h-screen overflow-x-scroll ">
+            <div class="page-content h-screen w-full overflow-x-scroll">
                 <!-- <div class=" "> -->
                     @yield('content')
                 <!-- </div> -->

@@ -103,7 +103,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attendance/getAttendanceRegularizationStatus', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationStatus']);
     Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
     Route::post('/attendance/countOfAttendanceRegularization',[VmtAPIAttendanceController::class,'getCountForAttRegularization']);
-    Route::post('/attendance/PendingAttendadnceRegularization',[VmtAPIAttendanceController::class,'getPendingAttendadnceRegularization']);
+    Route::post('/attendance/fetchAttendadnceRegularization',[VmtAPIAttendanceController::class,'getfetchAttendadnceRegularization']);
 
 
     //Payslip API

@@ -171,9 +171,7 @@ dialog>header {
     color: #e63b1f;
 }
 
-.p-dialog-header {
-    /* border-left: #e63b1f 5px solid !important; */
-}
+
 
 .form-selects ::-webkit-scrollbar {
     width: 10px !important;

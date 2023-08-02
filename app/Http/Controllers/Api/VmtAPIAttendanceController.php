@@ -511,29 +511,31 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         return $response;
     }
 
-    public function getPendingAttendadnceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    public function getfetchAttendadnceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
 
         $validator = Validator::make(
             $request->all(),
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
-           
-
+                 "year"=>'required',
+                 "month"=>'required',
+                 "status"=>'required|in:Pending,Approved,Rejected',
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
-                "exists" => "Field :attribute is invalid"
+                "exists" => "Field :attribute is invalid",
+                "in"=>"Field :attribute is invalid"
             ]
         );
+        
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
             ]);
         }
-
-        $response =  $serviceVmtAttendanceService->getPendingAttendadnceRegularization($request->user_code,$request->year,$request->month);
+        $response =  $serviceVmtAttendanceService->getfetchAttendadnceRegularization($request->user_code,$request->year,$request->month,$request->status);
 
         return $response;
     }

@@ -1,7 +1,7 @@
 
 <template>
-    <div class='container'>
-        <div class='loader'>
+    <div class='loading-spinner-container'>
+        <div class='loading-spinner-loader'>
             <div class='loader--dot'></div>
             <div class='loader--dot'></div>
             <div class='loader--dot'></div>
@@ -15,13 +15,13 @@
 
 
 <style scoped>
-.container {
+.loading-spinner-container {
     height: 100vh;
     width: 100vw;
     font-family: Helvetica;
 }
 
-.loader {
+.loading-spinner-loader {
     height: 20px;
     width: 250px;
     position: absolute;
