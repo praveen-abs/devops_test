@@ -31,6 +31,7 @@ use Mail;
 use App\Mail\ApproveRejectLoanAndSaladvMail;
 use App\Mail\ApproverejectloanMail;
 use App\Mail\EmpApplyLoanMail;
+use App\Mail\FinanceApproverejectloanMail;
 use Symfony\Component\Mailer\Exception\TransportException;
 
 
@@ -138,45 +139,74 @@ class VmtSalaryAdvanceService
         return $response;
     }
 
-    public function approveOrRejectLoan($status,  $loan_type, $approver_user_id, $loan_details_id, $emp_image)
+    public function approveOrRejectLoan($status,  $loan_type, $approver_user_id, $loan_details_id, $cmds, $emp_image)
     {
         try {
-            if ($status == 'Interest Free Loan') {
+            if ($loan_type == 'Interest Free Loan') {
                 $loan_detail_query = VmtEmployeeInterestFreeLoanDetails::where('id', $loan_details_id)->first();
-            } else if ($status == 'Loan With Interest') {
+                $designation_flow = VmtInterestFreeLoanSettings::where('id', $loan_detail_query->vmt_int_free_loan_id)->first()->approver_flow;
+            } else if ($loan_type == 'Loan With Interest') {
                 $loan_detail_query = VmtEmpInterestLoanDetails::where('id', $loan_details_id)->first();
-            } else if ($status == 'Salary Advance') {
+                $designation_flow = VmtLoanInterestSettings::where('id', $loan_detail_query->vmt_int_loan_id)->first()->approver_flow;
+            } else if ($loan_type == 'Salary Advance') {
                 $loan_detail_query = VmtEmpSalAdvDetails::join(
                     'vmt_emp_assign_salary_adv_setting',
                     'vmt_emp_assign_salary_adv_setting.id',
                     '=',
                     'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id'
-                )->first([
+                )->where('vmt_emp_sal_adv_details.id', $loan_details_id)->first([
                     'vmt_emp_assign_salary_adv_setting.user_id as user_id',
                     'vmt_emp_sal_adv_details.emp_approver_flow as approver_flow',
-                    'vmt_emp_sal_adv_details.request_id as request_id'
+                    'vmt_emp_sal_adv_details.request_id as request_id',
+                    'vmt_emp_assign_salary_adv_setting.approver_flow as designation_flow'
                 ]);
+                $designation_flow =  $loan_detail_query->designation_flow;
             }
 
             $user_id =  $loan_detail_query->user_id;
             $emp_mail = VmtEmployeeOfficeDetails::where('user_id',  $user_id)->first()->officical_mail;
-            $approver_name = User::where('id',$approver_user_id)->first()->name;
-            $approvalFlow = $loan_detail_query->approver_flow;
-            $next='Testing';
+            $approver_name = User::where('id', $approver_user_id)->first()->name;
+            $approvalFlow = json_decode($loan_detail_query->approver_flow, true);
+            $designation_flow  = json_decode($designation_flow, true);
+            $next = 'Testing';
             if ($status == 'Rejected') {
-                $rejectMail = \mail::to($emp_mail)
-                    ->send(new ApproverejectloanMail(
-                        User::where('id',$approver_user_id)->first()->name,
-                        User::where('id',$user_id)->first()->name,
-                        $loan_detail_query-> request_id,
-                        $status,
-                        request()->getSchemeAndHttpHost(),
-                        $status,
-                        $emp_image,
-                        $next,
-                        $approver_name,
-                    ));
+                foreach ($approvalFlow as $key => $value) {
+                    if (($value['approver']) == $approver_user_id) {
+                        if ($designation_flow[$key]['approver'] == 'fa_user_id') {
+                            
+                            $rejectMail =\Mail::to($emp_mail)
+                                ->send(new FinanceApproverejectloanMail(
+                                    $status,
+                                    $loan_detail_query->request_id,
+                                    User::where('id', $user_id)->first()->name,
+                                    $loan_type,
+                                    $emp_image,
+                                    $cmds,
+                                    request()->getSchemeAndHttpHost(),
+                                ));
+                                dd('worked');
+                        } else {
+                            $rejectMail = \Mail::to($emp_mail)
+                                ->send(new ApproverejectloanMail(
+                                    User::where('id', $approver_user_id)->first()->name,
+                                    User::where('id', $user_id)->first()->name,
+                                    $loan_detail_query->request_id,
+                                    $status,
+                                    request()->getSchemeAndHttpHost(),
+                                    $status,
+                                    $emp_image,
+                                    $cmds,
+                                    $next,
+                                    $approver_name,
+                                    $loan_type
+                                ));
+                        }
+                    }
+                }
+            } else if ($status == 'Approved') {
             }
+
+
             dd($status);
         } catch (TransportException $e) {
             $status = 'failure';

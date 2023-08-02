@@ -385,8 +385,9 @@ class VmtSalaryAdvanceController extends Controller
         $approver_user_id = auth()->user()->id;
         $loan_details_id =1;
         $loan_type ='Interest Free Loan';
+        $cmds='Tesitngn';
        //dd( $emp_image);
-        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status,$loan_type,$approver_user_id,$loan_details_id,$emp_image);
+        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status,$loan_type,$approver_user_id,$loan_details_id,$cmds,$emp_image);
         return $response;
     }
 }
