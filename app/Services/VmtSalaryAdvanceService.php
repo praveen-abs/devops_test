@@ -88,7 +88,7 @@ class VmtSalaryAdvanceService
                 $order_first =  json_decode(($applied_loan_details->emp_approver_flow), true);
                 foreach ($order_first as $single_order) {
                     if ($single_order['order'] == 1) {
-                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']),true);
+                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']), true);
                         $approver_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->where('user_id', $single_order['approver'])->first();
                     }
@@ -98,7 +98,7 @@ class VmtSalaryAdvanceService
                 $order_first =  json_decode(($applied_loan_details->approver_flow), true);
                 foreach ($order_first as $single_order) {
                     if ($single_order['order'] == 1) {
-                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']),true);
+                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']), true);
                         $approver_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->where('user_id', $single_order['approver'])->first();
                     }
@@ -108,7 +108,7 @@ class VmtSalaryAdvanceService
                 $order_first =  json_decode(($applied_loan_details->approver_flow), true);
                 foreach ($order_first as $single_order) {
                     if ($single_order['order'] == 1) {
-                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']),true);
+                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']), true);
                         $approver_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->where('user_id', $single_order['approver'])->first();
                     }
@@ -260,15 +260,15 @@ class VmtSalaryAdvanceService
                                     request()->getSchemeAndHttpHost(),
                                 ));
                         }
+                        $crt_emp_img = json_decode(newgetEmployeeAvatarOrShortName($user_id), true);
                         if ($designation_flow[$key]['approver'] == 'fa_user_id') {
-
                             $approve_mail = \Mail::to($emp_mail)
                                 ->send(new FinanceApproverejectloanMail(
                                     $result,
                                     $loan_detail_query->request_id,
                                     User::where('id', $user_id)->first()->name,
                                     $loan_type,
-                                    $emp_image,
+                                    $crt_emp_img,
                                     $cmds,
                                     request()->getSchemeAndHttpHost(),
                                 ));
@@ -281,7 +281,7 @@ class VmtSalaryAdvanceService
                                     $result,
                                     request()->getSchemeAndHttpHost(),
                                     $result,
-                                    $emp_image,
+                                    $crt_emp_img,
                                     $cmds,
                                     $next,
                                     $designation_flow[$key]['name'],
@@ -1575,7 +1575,7 @@ class VmtSalaryAdvanceService
                 $loan_settings_id =  $loan_details->vmt_int_free_loan_id;
                 $loan_settings_approver_flow = VmtInterestFreeLoanSettings::where('id', $loan_settings_id)->first()->approver_flow;
             } else if ($loan_type == 'InterestWithLoan') {
-                $loan_type_name = 'Interest With Loan';
+                $loan_type_name = 'Loan With Interest';
                 $loan_details = VmtEmpInterestLoanDetails::where('id', $record_id)->first();
                 $loan_settings_id =  $loan_details->vmt_int_loan_id;
                 $loan_settings_approver_flow = VmtLoanInterestSettings::where('id', $loan_settings_id)->first()->approver_flow;
