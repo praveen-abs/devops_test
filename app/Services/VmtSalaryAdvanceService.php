@@ -88,6 +88,7 @@ class VmtSalaryAdvanceService
                 $order_first =  json_decode(($applied_loan_details->emp_approver_flow), true);
                 foreach ($order_first as $single_order) {
                     if ($single_order['order'] == 1) {
+                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']),true);
                         $approver_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->where('user_id', $single_order['approver'])->first();
                     }
@@ -97,6 +98,7 @@ class VmtSalaryAdvanceService
                 $order_first =  json_decode(($applied_loan_details->approver_flow), true);
                 foreach ($order_first as $single_order) {
                     if ($single_order['order'] == 1) {
+                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']),true);
                         $approver_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->where('user_id', $single_order['approver'])->first();
                     }
@@ -106,6 +108,7 @@ class VmtSalaryAdvanceService
                 $order_first =  json_decode(($applied_loan_details->approver_flow), true);
                 foreach ($order_first as $single_order) {
                     if ($single_order['order'] == 1) {
+                        $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($single_order['approver']),true);
                         $approver_details = User::join('vmt_employee_office_details', 'vmt_employee_office_details.user_id', '=', 'users.id')
                             ->where('user_id', $single_order['approver'])->first();
                     }
@@ -123,7 +126,7 @@ class VmtSalaryAdvanceService
                     $applied_loan_details->dedction_date,
                     $applied_loan_details->tenure_months,
                     request()->getSchemeAndHttpHost(),
-                    $emp_image
+                    $appvr_image
                 ));
 
 
