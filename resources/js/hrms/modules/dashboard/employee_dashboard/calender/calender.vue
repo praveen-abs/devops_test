@@ -9,7 +9,7 @@
        </div>
 
         <div class="py-8">
-            <p class="text-[#727272] font-semibold text-[36px] mb-2" style="font-family: 'Libre Baskerville', serif;">{{ dayjs(new Date()).format('MMMM D, YYYY') }}
+            <p class="text-[#d1814c] font-semibold text-[36px] mb-2" style="font-family: 'Libre Baskerville', serif;">{{ dayjs(new Date()).format('MMMM D, YYYY') }}
             </p>
             <p class="text-gray-900 font-semibold text-md mb-2">{{ dayjs(new Date()).format('dddd') }}</p>
         </div>

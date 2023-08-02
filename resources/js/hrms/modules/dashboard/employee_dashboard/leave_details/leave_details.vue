@@ -2,7 +2,7 @@
     <div class="rounded overflow-hidden shadow-lg bg-white h-full">
         <div class="px-6 py-4">
             <p class="font-medium fs-6 text-gray-500">
-                current month - <span class="font-semibold text-xl mb-2">June</span>
+                current month - <span class="font-semibold text-xl mb-2">{{dayjs(new Date()).format('MMMM')}}</span>
             </p>
             <div class="grid grid-cols-3 gap-4 mt-4">
                 <div class="bg-gray-100 rounded-lg p-3">
@@ -38,6 +38,7 @@
 
 import { onMounted, ref, reactive } from "vue";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
+import dayjs from "dayjs";
 
 const useDashboard = useMainDashboardStore();
 
