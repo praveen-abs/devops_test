@@ -44,17 +44,17 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const convertExcelIntoArray = (e) => {
 
-        // canShowloading.value = true
+        canShowloading.value = true
 
-        // var file = selectedFile.value;
-        var file = e.target.files[0];
+        var file = selectedFile.value;
+        // var file = e.target.files[0];
         // input canceled, return
         if (!file) return;
 
-        // setTimeout(() => {
-        //     router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
-        //     canShowloading.value = false
-        // }, 400);
+        setTimeout(() => {
+            router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
+            canShowloading.value = false
+        }, 400);
 
         var reader = new FileReader();
         reader.onload = function (e) {
