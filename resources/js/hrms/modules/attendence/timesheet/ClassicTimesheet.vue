@@ -3,76 +3,85 @@
         <template #header>
             <p class="absolute left-0 mx-4 font-semibold fs-5 ">Attendance Reports</p>
         </template>
-        <div v-if="currentlySelectedCellRecord.isAbsent">
-            <div class="rounded-lg bg-red-50 p-3 my-3">
-                <p class="text-center font-semibold fs-6">Absent</p>
 
-                <div class="flex justify-center gap-x-20 my-3">
-                    <a class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer "
-                        href="/attendance-leave">Apply leave</a>
-                    <a class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer"
-                        @click="attendanceRegularizationDialog = true">Regularize</a>
-                </div>
-            </div>
-            <div class="my-2 bg-orange-50 rounded-lg p-3 py-4 transition-all duration-700"
-                v-if="attendanceRegularizationDialog">
-                <div class="flex">
-                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Date</label></div>
-                    <div class="">
-                        <span class="text-ash-medium fs-15" id="current_date">
-                            {{ currentlySelectedCellRecord.date }}</span>
-                        <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
-                            id="attendance_date">
+        <div v-if="currentlySelectedCellRecord.isAbsent">
+            <div v-if="currentlySelectedCellRecord.absent_reg_status == 'None'">
+                <div class="rounded-lg bg-red-50 p-3 my-3">
+                    <p class="text-center font-semibold fs-6">Absent</p>
+
+                    <div class="flex justify-center gap-x-20 my-3">
+                        <a class="text-left text-blue-500 underline font-semibold fs-6 cursor-pointer "
+                            href="/attendance-leave">Apply leave</a>
+                        <a class="text-right text-blue-500 underline font-semibold fs-6 cursor-pointer"
+                            @click="attendanceRegularizationDialog = true">Regularize</a>
                     </div>
                 </div>
-                <div class="flex my-4">
-                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
-                    </div>
-                    <span class=" p-input-icon-right">
-                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
-                            v-model="useTimesheet.absentRegularizationDetails.start_time" />
-                        <i class="pi pi-clock" />
-                    </span>
-                </div>
-                <div class="flex">
-                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
-                    </div>
-                    <span class=" p-input-icon-right">
-                        <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
-                            v-model="useTimesheet.absentRegularizationDetails.end_time" />
-                        <i class="pi pi-clock" />
-                    </span>
-                </div>
-                <div class="flex my-4">
-                    <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
-                    <div>
-                        <select name="reason" class="form-select btn-line-orange w-52" id="reason_lc"
-                            v-model="useTimesheet.absentRegularizationDetails.reason">
-                            <option selected hidden disabled>
-                                Choose Reason
-                            </option>
-                            <option value="Permission">Permission</option>
-                            <option value="Technical Error">Technical Error</option>
-                            <option value="Technical Error">Official</option>
-                            <option value="Technical Error">Personal</option>
-                            <option value="Others">Others</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-12 " v-if="useTimesheet.absentRegularizationDetails.reason == 'Others'">
-                    <div class="row">
-                        <div class="col-12">
-                            <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
-                                placeholder="Reason here...."
-                                v-model="useTimesheet.absentRegularizationDetails.custom_reason"></textarea>
+                <div class="my-2 bg-orange-50 rounded-lg p-3 py-4 transition-all duration-700"
+                    v-if="attendanceRegularizationDialog">
+                    <div class="flex">
+                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Date</label></div>
+                        <div class="">
+                            <span class="text-ash-medium fs-15" id="current_date">
+                                {{ currentlySelectedCellRecord.date }}</span>
+                            <input type="hidden" class="text-ash-medium form-control fs-15" name="attendance_date"
+                                id="attendance_date">
                         </div>
                     </div>
-                </div>
-                <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
-                    <button type="button" class="btn btn-orange"
-                        @click="useTimesheet.applyAbsentRegularization">Apply</button>
-                </div>
+                    <div class="flex my-4">
+                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
+                        </div>
+                        <span class=" p-input-icon-right">
+                            <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
+                                v-model="useTimesheet.absentRegularizationDetails.start_time" />
+                            <i class="pi pi-clock" />
+                        </span>
+                    </div>
+                    <div class="flex">
+                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
+                        </div>
+                        <span class=" p-input-icon-right">
+                            <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
+                                v-model="useTimesheet.absentRegularizationDetails.end_time" />
+                            <i class="pi pi-clock" />
+                        </span>
+                    </div>
+                    <div class="flex my-4">
+                        <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
+                        <div>
+                            <select name="reason" class="form-select btn-line-orange w-52" id="reason_lc"
+                                v-model="useTimesheet.absentRegularizationDetails.reason">
+                                <option selected hidden disabled>
+                                    Choose Reason
+                                </option>
+                                <option value="Permission">Permission</option>
+                                <option value="Technical Error">Technical Error</option>
+                                <option value="Technical Error">Official</option>
+                                <option value="Technical Error">Personal</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 " v-if="useTimesheet.absentRegularizationDetails.reason == 'Others'">
+                        <div class="row">
+                            <div class="col-12">
+                                <textarea name="custom_reason" id="reasonBox" cols="30" rows="3" class="form-control "
+                                    placeholder="Reason here...."
+                                    v-model="useTimesheet.absentRegularizationDetails.custom_reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
+                        <button type="button" class="btn btn-orange"
+                            @click="useTimesheet.applyAbsentRegularization">Apply</button>
+                    </div>
 
+                </div>
+            </div>
+            <div v-else class="p-3 rounded-lg my-3 "
+                :class="findAbsentStatus(currentlySelectedCellRecord.absent_reg_status)">
+                Absent Regularization applied successful <i
+                    :class="icons(true, currentlySelectedCellRecord.absent_reg_status)" class="py-auto"
+                    style="font-size: 1.2rem"></i>
             </div>
         </div>
 
@@ -90,8 +99,11 @@
                     <p class="font-medium fs-6 text-gray-700">Check In Mode</p>
                     <p class="font-semibold fs-6">:</p>
                     <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkin }}
+
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
+                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkin == 'Mobile'"
+                            class="fa fa-picture-o fs-6"  @click="viewSelfieImage('checkin', currentlySelectedCellRecord.selfie_checkin)" aria-hidden="true"></i>
                     </p>
 
                 </div>
@@ -105,7 +117,8 @@
                 <div class="flex my-1">
                     <p class="font-medium fs-6 text-gray-700">Approval Status</p>
                     <p class="font-semibold fs-6">:</p>
-                    <p class="font-semibold fs-6">{{ findCheckInStatus('checkInStatus', currentlySelectedCellRecord) }}</p>
+                    <p class="font-semibold fs-6">
+                        {{ findCheckInStatus('checkInStatus', currentlySelectedCellRecord) }}</p>
                 </div>
             </div>
         </div>
@@ -122,6 +135,9 @@
                     <p class="font-medium fs-6 text-gray-700">Check out Mode</p>
                     <p class="font-semibold fs-6">:</p>
                     <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkout }}
+                        <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'Mobile'"
+                            class="fa fa-picture-o fs-6" aria-hidden="true"  @click="viewSelfieImage('checkout',currentlySelectedCellRecord.selfie_checkout)"></i>
+
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkout)"></i> -->
                     </p>
@@ -364,6 +380,20 @@ const visibleRight = ref(false)
 
 
 
+const viewSelfieImage = (isSelected ,selectedCells) => {
+    useTimesheet.dialog_Selfie = true
+    if(isSelected == 'checkin'){
+        useTimesheet.selfieDetails =  selectedCells
+    }else
+    if(isSelected == 'checkout'){
+        useTimesheet.selfieDetails =   selectedCells
+    }else{
+        useTimesheet.selfieDetails =  ''
+    }
+
+}
+
+
 
 
 const getSelectedCellValues = (selectedCells) => {
@@ -371,7 +401,6 @@ const getSelectedCellValues = (selectedCells) => {
     visibleRight.value = true
 
     currentlySelectedCellRecord.value = { ...selectedCells }
-
     if (selectedCells.isLC) {
         useTimesheet.lcDetails = { ...selectedCells }
     }
@@ -540,30 +569,54 @@ const findCheckInStatus = (type, data) => {
     }
 
     if (type == 'checkInStatus') {
-        if (data.isLC) {
-            return data.lc_status
+
+        if (data.lc_status == 'None' || data.lc_status == 'None') {
+            return 'Not Applied'
         } else
-            if (data.isMIP) {
-                return data.mip_status
-            } else {
-                return '-'
-            }
+            if (data.lc_status) {
+                return data.lc_status
+            } else
+                if (data.mip_status) {
+                    return data.mip_status
+                } else {
+                    return '-'
+                }
 
     }
 
     if (type == 'checkOutStatus') {
-        if (data.isEG) {
-            return data.eg_status
+        if (data.eg_status == 'None' || data.mop_status == 'None') {
+            return 'Not Applied'
         } else
-            if (data.isMOP) {
-                return data.mop_status
-            } else {
-                return '-'
-            }
+            if (data.eg_status) {
+                return data.eg_status
+            } else
+                if (data.mop_status) {
+                    return data.mop_status
+                } else {
+                    return '-'
+                }
 
     }
 
 
+}
+
+
+const findAbsentStatus = (data) => {
+    if (data.includes('Approved')) {
+        return 'bg-green-50'
+    } else
+        if (data.includes('Pending')) {
+            return 'bg-yellow-50'
+        } else
+            if (data.includes('Rejected')) {
+                return 'bg-red-50'
+            } else
+                if (data.includes('Revoked')) {
+                    return 'bg-slate-50'
+
+                }
 }
 
 const props = defineProps({
@@ -578,6 +631,84 @@ const props = defineProps({
 
 });
 
+const findAttendanceRegularizationStatus = (data) => {
+
+    if (data.isLc) {
+        if (data.lc_status.includes('Approved')) {
+            return ' bg-green-50 text-green-600  fs-6 rounded-lg'
+        } else
+            if (data.lc_status.includes('Rejected')) {
+                return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+            } else
+                if (data.lc_status.includes('Pending')) {
+                    return 'border-yellow-500 bg-yellow-50 text-yellow-600  fs-6 rounded-lg'
+                } else
+                    if (data.lc_status.includes('Revoked')) {
+                        return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
+                    }
+                    else
+                        if (data.lc_status.includes('None')) {
+                            return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                        }
+    } else
+        if (data.isMIP) {
+            if (data.mip_status.includes('Approved')) {
+                return ' bg-green-50 text-green-600  fs-6 rounded-lg'
+            } else
+                if (data.mip_status.includes('Rejected')) {
+                    return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                } else
+                    if (data.mip_status.includes('Pending')) {
+                        return 'border-yellow-500 bg-yellow-50 text-yellow-600  fs-6 rounded-lg'
+                    } else
+                        if (data.mip_status.includes('Revoked')) {
+                            return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
+                        }
+                        else
+                            if (data.mip_status.includes('None')) {
+                                return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                            }
+        } else
+            if (data.isEG) {
+                if (data.eg_status.includes('Approved')) {
+                    return ' bg-green-50 text-green-600  fs-6 rounded-lg'
+                } else
+                    if (data.eg_status.includes('Rejected')) {
+                        return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                    } else
+                        if (data.eg_status.includes('Pending')) {
+                            return 'border-yellow-500 bg-yellow-50 text-yellow-600  fs-6 rounded-lg'
+                        } else
+                            if (data.eg_status.includes('Revoked')) {
+                                return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
+                            }
+                            else
+                                if (data.eg_status.includes('None')) {
+                                    return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                                }
+            } else
+                if (data.isMOP) {
+                    if (data.mop_status.includes('Approved')) {
+                        return ' bg-green-50 text-green-600  fs-6 rounded-lg'
+                    } else
+                        if (data.mop_status.includes('Rejected')) {
+                            return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                        } else
+                            if (data.mop_status.includes('Pending')) {
+                                return 'border-yellow-500 bg-yellow-50 text-yellow-600  fs-6 rounded-lg'
+                            } else
+                                if (data.mop_status.includes('Revoked')) {
+                                    return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
+                                }
+                                else
+                                    if (data.mop_status.includes('None')) {
+                                        return ' bg-red-50 text-red-600  fs-6 rounded-lg'
+                                    }
+                }
+
+
+}
+
 const leaveShortFormat = (leave_type) => {
     if (leave_type == 'Sick Leave / Casual Leave') {
         return SL / CL
@@ -586,6 +717,9 @@ const leaveShortFormat = (leave_type) => {
     }
 
 }
+
+
+
 
 
 
