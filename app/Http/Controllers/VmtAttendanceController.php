@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\VmtEmployeeAbsentRegularization;
 use App\Models\VmtEmployeeWorkShifts;
 use App\Services\VmtEmployeeLeaveModel;
 use App\Services\VmtAttendanceService;
@@ -760,6 +761,7 @@ class VmtAttendanceController extends Controller
                 "isLC" => false, "lc_status" => null, "lc_reason" => null, "lc_reason_custom" => null,
                 "isEG" => false, "eg_status" => null, "eg_reason" => null, "eg_reason_custom" => null,
                 "isMIP" => false, "mip_status" => null, "isMOP" => false, "mop_status" => null,
+                "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null
             );
 
             //echo "Date is ".$fulldate."\n";
@@ -899,6 +901,27 @@ class VmtAttendanceController extends Controller
                 $shiftStartTime  = Carbon::parse($query_workShifts[$currentdate_workshift]->shift_start_time);
                 $shiftEndTime  = Carbon::parse($query_workShifts[$currentdate_workshift]->shift_end_time);
 
+                //Attendance regularization check : When checkin and checkout is null
+                if (empty($checkin_time) && empty($checkout_time)) {
+
+                    //check whether att regularization is done for the given date.
+                    $query_absent_reg = VmtEmployeeAbsentRegularization::where('user_id',$value['user_id'])->where('attendance_date',$key);
+
+                    if($query_absent_reg->exists())
+                    {
+                        $attendanceResponseArray[$key]["absent_reg_status"] =  $query_absent_reg->first()->status;
+                        $attendanceResponseArray[$key]["absent_reg_checkin"] =  $query_absent_reg->first()->checkin_time;
+                        $attendanceResponseArray[$key]["absent_reg_checkout"] =  $query_absent_reg->first()->checkout_time;
+
+
+                    }
+                    else
+                    {
+                        $attendanceResponseArray[$key]["absent_reg_status"] =  'None';
+                    }
+
+
+                }
 
                 //LC Check
                 if (!empty($checkin_time)) {

@@ -16,6 +16,7 @@ use App\Models\VmtWorkShifts;
 use App\Models\VmtClientMaster;
 use App\Mail\VmtAttendanceMail_Regularization;
 use App\Mail\RequestLeaveMail;
+use App\Models\VmtOrgRoles;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DatePeriod;
@@ -71,7 +72,7 @@ class VmtDashboardService{
         $response = array();
         $user_id = User::where('user_code',$user_code)->first()->id;
 
-        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar'])->first();
+        $employee_details_query = User::where('user_code',$user_code)->get(['id','name','avatar','org_role'])->first();
         $employee_designation = VmtEmployeeOfficeDetails::where('user_id',$employee_details_query->id)->first()->designation;
 
         $profile_pic = null;
@@ -132,6 +133,8 @@ class VmtDashboardService{
 
         //Get the employee profile pic
         $response["profile_pic"] = $profile_pic; //BASE 64
+        $response["org_role_id"] = $employee_details_query->org_role;
+        $response["org_role_name"] = VmtOrgRoles::find($employee_details_query->org_role)->name;
 
 
          //Get the Present, Leave, Absent data from above JSON response
