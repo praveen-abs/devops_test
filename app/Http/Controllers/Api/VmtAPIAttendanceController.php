@@ -274,6 +274,18 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         return $response;
     }
 
+
+    public function approveRejectAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
+
+        //Fetch the data
+        return $serviceVmtAttendanceService->approveRejectAbsentRegularization( approver_user_code : $request->approver_user_code,
+                                                                                    record_id : auth()->user()->record_id,
+                                                                                    status : $request->status,
+                                                                                    status_text:$request->status_text);
+
+    }
+
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
     {
 
@@ -528,7 +540,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 "in"=>"Field :attribute is invalid"
             ]
         );
-        
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
