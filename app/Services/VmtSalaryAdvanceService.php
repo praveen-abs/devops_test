@@ -140,7 +140,7 @@ class VmtSalaryAdvanceService
         return $response;
     }
 
-    public function approveOrRejectLoan($status,  $loan_type, $approver_user_id, $loan_details_id, $cmds, $emp_image)
+    public function approveOrRejectLoan($result,  $loan_type, $approver_user_id, $loan_details_id, $cmds, $emp_image)
     {
         try {
             if ($loan_type == 'Interest Free Loan') {
@@ -172,14 +172,14 @@ class VmtSalaryAdvanceService
             $approvalFlow = json_decode($loan_detail_query->approver_flow, true);
             $designation_flow  = json_decode($designation_flow, true);
             $next = '';
-            if ($status == 'Rejected') {
+            if ($result == 'Rejected') {
                 foreach ($approvalFlow as $key => $value) {
                     if (($value['approver']) == $approver_user_id) {
                         if ($designation_flow[$key]['approver'] == 'fa_user_id') {
 
                             $rejectMail = \Mail::to($emp_mail)
                                 ->send(new FinanceApproverejectloanMail(
-                                    $status,
+                                    $result,
                                     $loan_detail_query->request_id,
                                     User::where('id', $user_id)->first()->name,
                                     $loan_type,
@@ -187,16 +187,15 @@ class VmtSalaryAdvanceService
                                     $cmds,
                                     request()->getSchemeAndHttpHost(),
                                 ));
-                            dd('worked');
                         } else {
                             $rejectMail = \Mail::to($emp_mail)
                                 ->send(new ApproverejectloanMail(
                                     User::where('id', $approver_user_id)->first()->name,
                                     User::where('id', $user_id)->first()->name,
                                     $loan_detail_query->request_id,
-                                    $status,
+                                    $result,
                                     request()->getSchemeAndHttpHost(),
-                                    $status,
+                                    $result,
                                     $emp_image,
                                     $cmds,
                                     $next,
@@ -206,49 +205,49 @@ class VmtSalaryAdvanceService
                         }
                     }
                 }
-            } else if ($status == 'Approved') {
+            } else if ($result == 'Approved') {
                 foreach ($approvalFlow as $key => $value) {
-                    if (array_key_exists($key + 1, $approvalFlow)) {
-                        $next_approver = VmtEmployeeOfficeDetails::where('user_id', $approvalFlow[$key + 1]['approver'])->first()->officical_mail;
-                        $next_appr_name =  User::where('id',  $approvalFlow[$key + 1]['approver'])->first()->name;
-                        $emp_name = User::where('id', $user_id)->first()->name;
-                        $requestid =  $loan_detail_query->request_id;
-                        $request_amt = $loan_detail_query->borrowed_amount;
-                        $requested_date = null;
-                        $tenure_month = null;
-                        $emp_image = json_decode(newgetEmployeeAvatarOrShortName($approvalFlow[$key + 1]['approver']), true);
-
-                        if ($loan_type == 'Salary Advance') {
-                            $requested_date = $loan_detail_query->dedction_date;
-                        } else {
-                            $tenure_month = $loan_detail_query->tenure_months;
-                        }
-                        if (array_key_exists('reason', $approvalFlow[$key + 1])) {
-                            $remarks = $approvalFlow[$key + 1]['reason'];
-                        } else {
-                            $remarks = '-';
-                        }
-                        $notf_mail_next_approver =  \Mail::to($next_approver)
-                            ->send(new ManagerApproveloanMail(
-                                $emp_name,
-                                $requestid,
-                                $approver_name,
-                                $next_appr_name,
-                                $loan_type,
-                                $request_amt,
-                                $requested_date,
-                                $tenure_month,
-                                $remarks,
-                                $emp_image,
-                                request()->getSchemeAndHttpHost(),
-                            ));
-                    }
                     if (($value['approver']) == $approver_user_id) {
+                        if (array_key_exists($key + 1, $approvalFlow)) {
+                            $next_approver = VmtEmployeeOfficeDetails::where('user_id', $approvalFlow[$key + 1]['approver'])->first()->officical_mail;
+                            $next_appr_name =  User::where('id',  $approvalFlow[$key + 1]['approver'])->first()->name;
+                            $emp_name = User::where('id', $user_id)->first()->name;
+                            $requestid =  $loan_detail_query->request_id;
+                            $request_amt = $loan_detail_query->borrowed_amount;
+                            $requested_date = null;
+                            $tenure_month = null;
+                            $appvr_image = json_decode(newgetEmployeeAvatarOrShortName($approvalFlow[$key + 1]['approver']), true);
+
+                            if ($loan_type == 'Salary Advance') {
+                                $requested_date = $loan_detail_query->dedction_date;
+                            } else {
+                                $tenure_month = $loan_detail_query->tenure_months;
+                            }
+                            if (array_key_exists('reason', $approvalFlow[$key + 1])) {
+                                $remarks = $approvalFlow[$key + 1]['reason'];
+                            } else {
+                                $remarks = '-';
+                            }
+                            $notf_mail_next_approver =  \Mail::to($next_approver)
+                                ->send(new ManagerApproveloanMail(
+                                    $emp_name,
+                                    $requestid,
+                                    $approver_name,
+                                    $next_appr_name,
+                                    $loan_type,
+                                    $request_amt,
+                                    $requested_date,
+                                    $tenure_month,
+                                    $remarks,
+                                    $appvr_image,
+                                    request()->getSchemeAndHttpHost(),
+                                ));
+                        }
                         if ($designation_flow[$key]['approver'] == 'fa_user_id') {
 
                             $approve_mail = \Mail::to($emp_mail)
                                 ->send(new FinanceApproverejectloanMail(
-                                    $status,
+                                    $result,
                                     $loan_detail_query->request_id,
                                     User::where('id', $user_id)->first()->name,
                                     $loan_type,
@@ -256,36 +255,38 @@ class VmtSalaryAdvanceService
                                     $cmds,
                                     request()->getSchemeAndHttpHost(),
                                 ));
-                            dd('not worked');
                         } else {
                             $approve_mail = \Mail::to($emp_mail)
                                 ->send(new ApproverejectloanMail(
                                     User::where('id', $approver_user_id)->first()->name,
                                     User::where('id', $user_id)->first()->name,
                                     $loan_detail_query->request_id,
-                                    $status,
+                                    $result,
                                     request()->getSchemeAndHttpHost(),
-                                    $status,
+                                    $result,
                                     $emp_image,
                                     $cmds,
                                     $next,
                                     $designation_flow[$key]['name'],
                                     $loan_type
                                 ));
-                            dd('worked');
                         }
                     }
                 }
             }
 
-
-            dd($status);
+            $status = 'success';
+            $data['msg'] = $loan_type . ' ' . $result . ' Successfully';
         } catch (TransportException $e) {
-            $status = 'failure';
-            $data['msg'] = $loan_type . ' ' . $status . ' Successfully due to some techinal error mail not send';
+            $status = 'success';
+            $data['msg'] = $loan_type . ' ' . $result . ' Successfully due to some techinal error mail not send';
             $data['error'] = $e->getMessage();
             $data['error_verbose'] = $e;
         }
+
+        $response['status'] = $status;
+        $response['data'] = $data;
+        return $response;
     }
 
     public function getAllDropdownFilterSetting()
