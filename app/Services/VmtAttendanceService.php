@@ -702,7 +702,7 @@ class VmtAttendanceService
             $rules = [
                 'record_id' => 'required|exists:vmt_employee_leaves,id',
                 'approver_user_code' => 'required|exists:users,user_code',
-                'status' => ['required', Rule::in(['Approved', 'Rejected'])],
+                'status' => ['required', Rule::in(['Approved', 'Rejected','Revoked'])],
                 'review_comment' => 'nullable',
             ],
             $messages = [
