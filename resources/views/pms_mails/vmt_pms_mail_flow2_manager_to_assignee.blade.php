@@ -427,8 +427,18 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                         <tr>
                           <td>
                             <table style="width: 100%; border-radius: 12px; background-color: #fff; padding-left: 32px; padding-right: 32px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)" cellpadding="0" cellspacing="0" role="presentation">
-
                               <tr>
+                                <td style="text-align: center">
+                                    <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
+                                      <tr>
+                                        <td>
+                                          <img src="Accepted Mail Icon.svg" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; height: 64px; width: 64px; border-radius: 9999px; padding: 12px">
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                                <tr>
                                 <td style="padding-top: 12px; padding-bottom: 12px; text-align: center">
                                   <p style="margin: 0 0 12px; font-size: 30px; line-height: 24px">Hi <span style="margin: 0 0 12px; font-size: 30px; font-weight: 600; line-height: 24px">{{ $user_emp_name }}</span></p>
                                 </td>
