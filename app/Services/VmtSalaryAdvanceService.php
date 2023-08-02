@@ -176,17 +176,31 @@ class VmtSalaryAdvanceService
                 foreach ($approvalFlow as $key => $value) {
                     if (($value['approver']) == $approver_user_id) {
                         if ($designation_flow[$key]['approver'] == 'fa_user_id') {
-
-                            $rejectMail = \Mail::to($emp_mail)
-                                ->send(new FinanceApproverejectloanMail(
-                                    $result,
-                                    $loan_detail_query->request_id,
-                                    User::where('id', $user_id)->first()->name,
-                                    $loan_type,
-                                    $emp_image,
-                                    $cmds,
-                                    request()->getSchemeAndHttpHost(),
-                                ));
+                            if (array_key_exists($key - 1, $approvalFlow)) {
+                                $prvs_apvr_mail = VmtEmployeeOfficeDetails::where('user_id', $approvalFlow[$key - 1]['approver'])->first()->officical_mail;
+                                $rejectMail = \Mail::to($emp_mail)
+                                    ->cc($prvs_apvr_mail)
+                                    ->send(new FinanceApproverejectloanMail(
+                                        $result,
+                                        $loan_detail_query->request_id,
+                                        User::where('id', $user_id)->first()->name,
+                                        $loan_type,
+                                        $emp_image,
+                                        $cmds,
+                                        request()->getSchemeAndHttpHost(),
+                                    ));
+                            } else {
+                                $rejectMail = \Mail::to($emp_mail)
+                                    ->send(new FinanceApproverejectloanMail(
+                                        $result,
+                                        $loan_detail_query->request_id,
+                                        User::where('id', $user_id)->first()->name,
+                                        $loan_type,
+                                        $emp_image,
+                                        $cmds,
+                                        request()->getSchemeAndHttpHost(),
+                                    ));
+                            }
                         } else {
                             $rejectMail = \Mail::to($emp_mail)
                                 ->send(new ApproverejectloanMail(
