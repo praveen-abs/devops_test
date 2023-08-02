@@ -1552,11 +1552,13 @@ class VmtSalaryAdvanceService
             $user_id = auth()->user()->id;
             //  dd($loan_type);
             if ($loan_type == 'InterestFreeLoan') {
+                $loan_type_name = 'Interest Free Loan';
                 // dd($record_id);
                 $loan_details = VmtEmployeeInterestFreeLoanDetails::where('id', $record_id)->first();
                 $loan_settings_id =  $loan_details->vmt_int_free_loan_id;
                 $loan_settings_approver_flow = VmtInterestFreeLoanSettings::where('id', $loan_settings_id)->first()->approver_flow;
             } else if ($loan_type == 'InterestWithLoan') {
+                $loan_type_name = 'Interest With Loan';
                 $loan_details = VmtEmpInterestLoanDetails::where('id', $record_id)->first();
                 $loan_settings_id =  $loan_details->vmt_int_loan_id;
                 $loan_settings_approver_flow = VmtLoanInterestSettings::where('id', $loan_settings_id)->first()->approver_flow;
@@ -1585,11 +1587,12 @@ class VmtSalaryAdvanceService
             }
             $loan_details->approver_flow = json_encode($approver_flow, true);
             $loan_details->save();
+            $emp_image = json_decode(newgetEmployeeAvatarOrShortName($user_id), true);
             if ($status == -1) {
-                $message = 'Loan Rejected Successfully';
+                $message = $this->approveOrRejectLoan('Rejected', $loan_type_name, $user_id, $record_id, $reason, $emp_image)['data']['msg'];
                 $msg_sts = 'Success';
             } else if ($status == 1) {
-                $message = 'Loan Approved Successfully';
+                $message = $this->approveOrRejectLoan('Approved', $loan_type_name, $user_id, $record_id, $reason, $emp_image)['data']['msg'];
                 $msg_sts = 'Success';
             } else {
                 $message = 'Error Occured While Approve Loan';
