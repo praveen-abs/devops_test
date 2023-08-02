@@ -3125,11 +3125,7 @@ class VmtAttendanceService
             $total_count['rejected_count']   = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Rejected')->count();
 
-            return response()->json([
-                "status" => "success",
-                "message" => "",
-                "data" => $total_count,
-            ]);
+            return $total_count;
         } catch (\Exception $e) {
             // dd($e);
             return response()->json([
@@ -3144,6 +3140,7 @@ class VmtAttendanceService
     {
         try {
             $response = array();
+            $response['att_reg_count'] = $this->getCountForAttRegularization($user_code);
             $user_id = user::where('user_code', $user_code)->first()->id;
             $employees = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
             foreach ($employees as $singleemployee) {
@@ -3166,7 +3163,6 @@ class VmtAttendanceService
                     unset($temp_arr);
                 }
             }
-
             return response()->json([
                 'status' => 'success',
                 'message' => "",
