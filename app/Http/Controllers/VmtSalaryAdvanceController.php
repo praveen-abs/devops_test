@@ -380,7 +380,7 @@ class VmtSalaryAdvanceController extends Controller
 
     public function testingKarthi(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
         $emp_image = json_decode(newgetEmployeeAvatarOrShortName(144),true);
-        $status = 'Rejected';
+        $status = 'Approved';
         $emp_id=144;
         $approver_user_id = auth()->user()->id;
         $loan_details_id =1;

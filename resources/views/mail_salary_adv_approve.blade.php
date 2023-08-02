@@ -143,7 +143,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td>
                               <p class="sm-text-sm" style="margin: 0 0 16px; color: #334155">
-                                Your {{ $current_approver }} has reviewed and {{ $result }} your loan application, and we have now forwarded it to {{ $next_approver }} for further processing.
+                                Your {{ $current_approver }} has reviewed and {{ $result }} your loan application, and we have now forwarded it to respective team for further processing.
                               </p>
                             </td>
                           </tr>

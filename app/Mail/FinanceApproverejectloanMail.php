@@ -45,18 +45,16 @@ class FinanceApproverejectloanMail extends Mailable
         $subject = "Approved of " . $this->loan_type . " – Request ID " .   $this->request_id;
 
         if ($this->status == "Approved") {
-            $subject = "Rejected of " . $this->loan_type . " Request – Request ID " .  $this->request_id;
-            // $output = $this->view('mail_salary_adv_approve')
-            //     ->subject($subject)
-            //     ->with('approverName', $this->approver_name)
-            //     ->with('employeeName', $this->employeename)
-            //     ->with('requestID', $this->requestid)
-            //     ->with('result', $this->result)
-            //     ->with('link', $this->link)
-            //     ->with('approvalStatus', $this->approvalStatus)
-            //     ->with('emp_image', $this->emp_image)
-            //     ->with('next_approver', $this->next_approver)
-            //     ->with('current_approver', $this->current_approver);
+            $subject = $this->loan_type . " Request Approved – Request ID " .  $this->request_id;
+            $output = $this->view('loan_mails.emp_approve_mail_finance')
+                ->subject($subject)
+                ->with('employeeName', $this->emp_name)
+                ->with('requestID', $this->request_id)
+                ->with('result', $this->status)
+                ->with('link', $this->link)
+                ->with('emp_image', $this->emp_image)
+                ->with('loan_type', $this->loan_type)
+                ->with('reviewer_comments', $this->cmds);
         } else if ($this->status == "Rejected") {
             $subject = "Rejected of " . $this->loan_type . " Request – Request ID " .  $this->request_id;
             $output = $this->view('loan_mails.emp_reject_mail_finance')
