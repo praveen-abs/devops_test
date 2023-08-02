@@ -226,7 +226,7 @@ class VmtSalaryAdvanceService
                             if (array_key_exists('reason', $approvalFlow[$key + 1])) {
                                 $remarks = $approvalFlow[$key + 1]['reason'];
                             } else {
-                                $remarks = '-';
+                                $remarks = $cmds;
                             }
                             $notf_mail_next_approver =  \Mail::to($next_approver)
                                 ->send(new ManagerApproveloanMail(

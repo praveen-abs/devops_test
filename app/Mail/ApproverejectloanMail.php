@@ -74,6 +74,7 @@ class ApproverejectloanMail extends Mailable
                 ->with('link', $this->link)
                 ->with('approvalStatus', $this->approvalStatus)
                 ->with('emp_image', $this->emp_image)
+                ->with('loan_type',$this->loan_type)
                 ->with('next_approver', $this->next_approver)
                 ->with('current_approver', $this->current_approver);
         } else if ($this->result == "Rejected") {
