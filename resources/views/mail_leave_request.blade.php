@@ -211,7 +211,7 @@ $bank_names = \DB::table('vmt_banks')->get();
                                     </table>
                                     <table style="width:100%;">
                                       <tr style="width:100%;">
-                                        <td style="width:100%;" ><p style="text-align: center;" > testing mail template </p></td>
+                                        <td style="width:100%;" ><p style="text-align: center;" >{{ $totalLeaveDatetime }} of {{ $leaveType }} </p></td>
                                       </tr>
                                     </table>
                                     <table style="margin-left: 16px; width:100%; margin-right: 16px;" cellpadding="0" cellspacing="0" role="presentation">
