@@ -43,7 +43,7 @@
                 </a>
 
                 <!-- sub menu -->
-                <transition enter-active-class="transition ease-out duration-200 transform"
+                <!-- <transition enter-active-class="transition ease-out duration-200 transform"
                     enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
@@ -60,7 +60,7 @@
                             </ul>
                         </div>
                     </div>
-                </transition>
+                </transition> -->
 
             </div>
 
