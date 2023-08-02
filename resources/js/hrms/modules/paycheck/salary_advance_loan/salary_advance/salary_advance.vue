@@ -4,7 +4,7 @@
             <div class="flex justify-between gap-6 my-2">
                 <div class="w-8 fs-4">
                     <p class="text-xl font-medium">The company allows employees to request a salary advance of up to <strong
-                            class="text-lg"> 100%</strong> of their monthly salary.</p>
+                            class="text-lg"> {{useEmpStore.percent_salary_amt}}%</strong> of their monthly salary.</p>
                 </div>
 
                 <div class="float-right ">
@@ -43,6 +43,7 @@
             <div class="table-responsive">
                 <!-- {{ useEmpStore.salaryAdvanceEmployeeData }} -->
                 <!-- {{ useEmpStore.arraySalaryDetails }} -->
+              <!-- {{  useEmpStore.arraySalaryDetails}} -->
                 <DataTable :value="useEmpStore.arraySalaryDetails" ref="dt" dataKey="id" :paginator="true" :rows="10"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -61,26 +62,15 @@
                       </template> -->
                     </Column>
 
-                    <Column field="requested_date" header="Paid On " style="min-width: 12rem">
+                    <Column field="" header="Paid On " style="min-width: 12rem">
 
                     </Column>
 
                     <Column field="dedction_date" header="Expected Return" style="min-width: 12rem">
                     </Column>
 
-
-                    <Column field="status" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.status == 0" class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 1" class=" text-green-500">
-                                Approved
-                            </h6>
-                            <h6 v-if="slotProps.data.status == 2" class="text-red-500">
-                              Rejected
-                            </h6>
-                        </template>
+                    <Column field="sal_adv_status" header="Status" style="min-width: 12rem">
+                        {{slotProps.data.sal_adv_status}}
                     </Column>
 
                 </DataTable>
@@ -104,7 +94,7 @@
                 Advance Request</h1>
         </template>
 
-        <div class="flex pb-2 bg-gray-100 rounded-lg gap-7">
+        <div class="flex pb-2 bg-gray-100 rounded-lg gap-3 shadow-md">
             <div class="w-5 p-4 ">
                 <span class="font-semibold">Your Monthly Income</span>
                 <input id="rentFrom_month" v-model="useEmpStore.sa.ymi" readonly
@@ -121,15 +111,16 @@
             </div>
         </div>
 
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
             <span class="font-semibold ">Repayment</span>
             <p class="my-2 text-gray-600 fs-5 text-md ">The advance amount will be deducted from the next month's
-                salary <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong>
-                <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.repdate" optionLabel="date" optionValue="date" placeholder="Select a City" class="w-full md:w-14rem" />
+                salary
+                <!-- <strong class="text-black fs-5">{{dayjs(useEmpStore.sa.repdate).format('DD-MM-YYYY')}}</strong> -->
+                <Dropdown v-model="useEmpStore.sa.repdate" :options="useEmpStore.sa.storeRepDate" optionLabel="date" optionValue="date" placeholder="Select a Date" class="w-full md:w-14rem" />
             </p>
         </div>
 
-        <div class="gap-6 p-4 my-6 bg-gray-100 rounded-lg">
+        <div class="gap-6 p-4 my-3 bg-gray-100 rounded-lg shadow-md">
             <span class="font-semibold ">Reason</span>
             <Textarea class="my-3 capitalize form-control textbox" autoResize type="text" rows="3" v-model="useEmpStore.sa.reason" :class="[  v$.reason.$error ? 'p-invalid' : '' ]" />
             <span v-if="v$.reason.$error" class="font-semibold text-red-400 fs-6">
@@ -143,17 +134,6 @@
         </div>
 
     </Dialog>
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }"
-    :modal="true" :closable="false" :closeOnEscape="false">
-    <template #header>
-      <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-        animationDuration="2s" aria-label="Custom ProgressSpinner" />
-    </template>
-    <template #footer>
-      <h5 style="text-align: center">Please wait...</h5>
-    </template>
-  </Dialog>
 </template>
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
@@ -192,12 +172,15 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        useEmpStore.saveSalaryAdvance()
-        v$.value.$reset()
+        useEmpStore.saveSalaryAdvance();
+        v$.value.$reset();
+
     } else {
         console.log('Form failed validation')
     }
 }
+
+
 
 
 

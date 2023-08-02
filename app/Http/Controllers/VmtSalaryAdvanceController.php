@@ -71,7 +71,13 @@ class VmtSalaryAdvanceController extends Controller
     {
 
         //   dd($request->all());
-        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->cusPerOfSalAdvance, $request->deductMethod, $request->cusDeductMethod, $request->approvalflow);
+        return $vmtSalaryAdvanceService->saveSalaryAdvanceSettings($request->eligibleEmployee, $request->perOfSalAdvance, $request->deductMethod, $request->approvalflow, $request->payroll_cycle, $request->SA);
+    }
+
+    public function settingDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        //   dd($request->all());
+        return $vmtSalaryAdvanceService->settingDetails();
     }
 
     public function SalAdvApproverFlow(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
@@ -83,6 +89,23 @@ class VmtSalaryAdvanceController extends Controller
     {
 
         return $vmtSalaryAdvanceService->getEmpsaladvDetails($request->user_id);
+    }
+
+    public function salAdvSettingEdit(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->salAdvSettingEdit();
+    }
+
+    public function salAdvSettingDelete(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->salAdvSettingDelete();
+    }
+    public function salAdvAmtApprovedEmp(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+
+        return $vmtSalaryAdvanceService->salAdvAmtApprovedEmp();
     }
 
 
@@ -98,6 +121,7 @@ class VmtSalaryAdvanceController extends Controller
         $response = $vmtSalaryAdvanceService->saveIntersetAndIntersetFreeLoanSettings(
             $request->loan_type,
             $request->selectClientID,
+            $request->name,
             $request->precent_Or_Amt,
             $request->minEligibile,
             $request->max_loan_limit,
@@ -110,10 +134,7 @@ class VmtSalaryAdvanceController extends Controller
 
         return $response;
     }
-    public function showInterestFreeLoanEmployeeinfo(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
-    {
-        return $vmtSalaryAdvanceService->showInterestFreeLoanEmployeeinfo();
-    }
+
 
     public function showEligibleInterestFreeLoanDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
@@ -125,16 +146,76 @@ class VmtSalaryAdvanceController extends Controller
     //Gettings Clients Based on Login
     public function getClientForLoanAndAdv(Request $request)
     {
+        //dd($request->status);
+        $column = 'vmt_loan_sal_adv_master.' . $request->status;
         if (VmtClientMaster::count() == 1) {
-            return VmtClientMaster::where('id', sessionGetSelectedClientid())->get();
+            return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
+                    'vmt_client_master.id as id',
+                    'vmt_client_master.abs_client_code as abs_client_code',
+                    'vmt_client_master.client_code as client_code',
+                    'vmt_client_master.client_name as client_name',
+                    $column . ' as status',
+                ]);
         } else {
             if (sessionGetSelectedClientid() == 1) {
-                return VmtClientMaster::all();
+                $client_details_query =  VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->get([
+                    'vmt_client_master.id as id',
+                    'vmt_client_master.abs_client_code as abs_client_code',
+                    'vmt_client_master.client_code as client_code',
+                    'vmt_client_master.client_name as client_name',
+                    $column . ' as status',
+                ]);
+                $client_details = array();
+                foreach ($client_details_query  as $single_details) {
+                    if ($single_details->id != 1) {
+                        array_push($client_details, $single_details);
+                    }
+                }
+                return  $client_details;
             } else {
-                return VmtClientMaster::where('id', sessionGetSelectedClientid())->get();
+                return VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                    ->where('vmt_client_master.id', sessionGetSelectedClientid())->get([
+                        'vmt_client_master.id as id',
+                        'vmt_client_master.abs_client_code as abs_client_code',
+                        'vmt_client_master.client_code as client_code',
+                        'vmt_client_master.client_name as client_name',
+                        $column . ' as status',
+                    ]);
             }
         }
     }
+
+    public function loanAndSalAdvCurrentStatus(Request $request)
+    {
+        $column = $request->Status;
+
+        if (VmtClientMaster::count() == 1) {
+            $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
+        } else {
+            if (sessionGetSelectedClientid() == 1) {
+                $setting_status_query = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')->pluck($column);
+                $setting_status = 0;
+                foreach ($setting_status_query as $single_sts) {
+
+                    if ($single_sts == 1) {
+                        $setting_status = 1;
+                    }
+                }
+            } else {
+                $setting_status = VmtClientMaster::join('vmt_loan_sal_adv_master', '.client_id', '=', 'vmt_client_master.id')
+                    ->where('vmt_client_master.id', sessionGetSelectedClientid())->pluck($column);
+            }
+            $response['status'] = $setting_status;
+            return $response;
+        }
+
+        return response()->json([
+            'status' =>  $setting_status,
+        ]);
+    }
+
     public function loanAndAvanceMasterSettings(Request $request)
     {
         $client_id = $request->client_id;
@@ -169,7 +250,7 @@ class VmtSalaryAdvanceController extends Controller
         $loan_setting_id = $request->details['loan_settings_id'];
         $eligible_amount = $request->minEligibile;
         $borrowed_amount = $request->required_amount;
-        $interest_rate = $request->interest_rate;
+        $interest_rate = $request->Interest_rate;
         $deduction_starting_month = $request->EMI_Start_Month;
         $deduction_ending_month = $request->EMI_End_Month;
         $emi_per_month = $request->M_EMI;
@@ -194,19 +275,20 @@ class VmtSalaryAdvanceController extends Controller
     public function fetchEmployeeForLoanApprovals(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         $loan_type = $request->loan_type;
+        // $loan_type = 'InterestFreeLoan';
+
         $response = $vmtSalaryAdvanceService->fetchEmployeeForLoanApprovals($loan_type);
         return $response;
     }
 
     public function rejectOrApproveLoan(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
-        $request['record_id'] = 1;
-        $request['loan_type'] = 'InterestFreeLoan';
-        $request['status'] = 1;
+        // dd($request->all());
         $response = $vmtSalaryAdvanceService->rejectOrApproveLoan(
             $request->loan_type,
             $request->record_id,
             $request->status,
+            $request->reviewer_comments
         );
 
         return $response;
@@ -215,10 +297,15 @@ class VmtSalaryAdvanceController extends Controller
     public function rejectOrApprovedSaladv(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
 
-        $request->record_id = 17;
-        $request->status = 1;
+        // $request->record_id = 17;
+        // $request->status = 1;
+        // dd($request->all());
 
-        return $vmtSalaryAdvanceService->rejectOrApprovedSaladv($request->record_id, $request->status);
+        return $vmtSalaryAdvanceService->rejectOrApprovedSaladv(
+            $request->record_id,
+            $request->status,
+            $request->reviewer_comments
+        );
     }
 
     public function EmployeeLoanHistory(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
@@ -226,6 +313,80 @@ class VmtSalaryAdvanceController extends Controller
         $loan_type = $request->loan_type;
         $user_id = auth()->user()->id;
         $response = $vmtSalaryAdvanceService->EmployeeLoanHistory($user_id, $loan_type);
+        return $response;
+    }
+
+    public function changeClientIdStsForLoan(Request $request)
+    {
+        $column = $request->loanType;
+        $client_id = $request->client_status;
+        $all_client_id = VmtSalaryAdvanceMasterModel::pluck('client_id');
+        try {
+            foreach ($all_client_id as $single_id) {
+                if (in_array($single_id,  $client_id)) {
+                    $loan_and_sal_adv_settings = VmtSalaryAdvanceMasterModel::where('client_id', $single_id)->first();
+                    $loan_and_sal_adv_settings->$column =  1;
+                    $loan_and_sal_adv_settings->save();
+                } else {
+                    $loan_and_sal_adv_settings = VmtSalaryAdvanceMasterModel::where('client_id', $single_id)->first();
+                    $loan_and_sal_adv_settings->$column =  0;
+                    $loan_and_sal_adv_settings->save();
+                }
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "changeClientIdStsForLoan",
+                "data" => $e->getMessage(),
+            ]);
+        }
+        return response()->json([
+            "status" => "success",
+            "message" => "changeClientIdStsForLoan",
+
+        ]);
+    }
+
+    public function interestAndInterestfreeLoanSettingsDetails(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type = $request->Status;
+      //  $loan_type = 'InterestFreeLoan';
+        $response = $vmtSalaryAdvanceService->interestAndInterestfreeLoanSettingsDetails($loan_type);
+        return  $response;
+    }
+    //this is for interest and interest free transection record
+    public function loanTransectionRecord(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        //$loan_type = $request->loan_type;
+        $loan_type = 'InterestFreeLoan';
+        $loan_details_id = 2;
+        $response = $vmtSalaryAdvanceService->loanTransectionRecord($loan_type, $loan_details_id);
+    }
+
+    public function enableOrDisableLoanSettings(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type = $request->loanType;
+        $status = $request->Status;
+        $loan_id = $request->loan_ID;
+        // dd($request->all());
+        // $loan_id=6;
+        $response = $vmtSalaryAdvanceService->enableOrDisableLoanSettings($loan_type, $loan_id,$status);
+        return $response;
+    }
+    public function getApprovedRequestedForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+           $response = $vmtSalaryAdvanceService->getApprovedRequestedForLoanAndAdvance();
+           return $response;
+    }
+
+    public function testingKarthi(Request $request,VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        $emp_image = json_decode(newgetEmployeeAvatarOrShortName(144),true);
+        $status = 'Rejected';
+        $emp_id=144;
+        $approver_user_id = auth()->user()->id;
+        $loan_details_id =1;
+        $loan_type ='Interest Free Loan';
+       //dd( $emp_image);
+        $response = $vmtSalaryAdvanceService->approveOrRejectLoan($status,$loan_type,$approver_user_id,$loan_details_id,$emp_image);
         return $response;
     }
 }

@@ -771,6 +771,7 @@ class VmtAttendanceService
                 $emp_avatar,
                 $status
             )
+
         );
 
         if ($isSent) {

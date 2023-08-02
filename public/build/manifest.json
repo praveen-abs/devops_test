@@ -1,4 +1,98 @@
 {
+  "node_modules/primevue/resources/images/hue.png": {
+    "file": "assets/hue-024cc884.png",
+    "src": "node_modules/primevue/resources/images/hue.png"
+  },
+  "node_modules/primevue/resources/images/color.png": {
+    "file": "assets/color-473bc8ca.png",
+    "src": "node_modules/primevue/resources/images/color.png"
+  },
+  "node_modules/primeicons/fonts/primeicons.eot": {
+    "file": "assets/primeicons-ce852338.eot",
+    "src": "node_modules/primeicons/fonts/primeicons.eot"
+  },
+  "node_modules/primeicons/fonts/primeicons.woff2": {
+    "file": "assets/primeicons-3824be50.woff2",
+    "src": "node_modules/primeicons/fonts/primeicons.woff2"
+  },
+  "node_modules/primeicons/fonts/primeicons.woff": {
+    "file": "assets/primeicons-90a58d3a.woff",
+    "src": "node_modules/primeicons/fonts/primeicons.woff"
+  },
+  "node_modules/primeicons/fonts/primeicons.ttf": {
+    "file": "assets/primeicons-131bc3bf.ttf",
+    "src": "node_modules/primeicons/fonts/primeicons.ttf"
+  },
+  "resources/js/hrms/assests/images/svg_oops.svg": {
+    "file": "assets/svg_oops-cc560542.svg",
+    "src": "resources/js/hrms/assests/images/svg_oops.svg"
+  },
+  "node_modules/primeicons/fonts/primeicons.svg": {
+    "file": "assets/primeicons-5e10f102.svg",
+    "src": "node_modules/primeicons/fonts/primeicons.svg"
+  },
+  "resources/js/hrms/assests/images/requirement.png": {
+    "file": "assets/requirement-5048f466.png",
+    "src": "resources/js/hrms/assests/images/requirement.png"
+  },
+  "resources/js/hrms/assests/images/no-data.svg": {
+    "file": "assets/no-data-dc25b94b.svg",
+    "src": "resources/js/hrms/assests/images/no-data.svg"
+  },
+  "resources/js/hrms/components/logo.jpg": {
+    "file": "assets/logo-dbabb993.jpg",
+    "src": "resources/js/hrms/components/logo.jpg"
+  },
+  "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg": {
+    "file": "assets/noData-99184d53.svg",
+    "src": "resources/js/hrms/modules/attendence/timesheet/assests/noData.svg"
+  },
+  "resources/js/hrms/assests/images/family.png": {
+    "file": "assets/family-62835d5e.png",
+    "src": "resources/js/hrms/assests/images/family.png"
+  },
+  "resources/js/hrms/modules/payroll/assests/calendar.svg": {
+    "file": "assets/calendar-11742259.svg",
+    "src": "resources/js/hrms/modules/payroll/assests/calendar.svg"
+  },
+  "resources/js/hrms/modules/dashboard/dashboard/girl_walk.jpg": {
+    "file": "assets/girl_walk-33da2160.jpg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/girl_walk.jpg"
+  },
+  "resources/js/hrms/modules/dashboard/dashboard/present.svg": {
+    "file": "assets/present-9cc61f91.svg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/present.svg"
+  },
+  "resources/js/hrms/modules/dashboard/dashboard/leave.svg": {
+    "file": "assets/leave-90c21cd0.svg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/leave.svg"
+  },
+  "resources/js/hrms/modules/dashboard/dashboard/absent.svg": {
+    "file": "assets/absent-af0db57f.svg",
+    "src": "resources/js/hrms/modules/dashboard/dashboard/absent.svg"
+  },
+  "resources/scss/main.scss": {
+    "file": "assets/main-ed6bf366.css",
+    "src": "resources/scss/main.scss",
+    "isEntry": true
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-a57d27c3.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/scss/views/main_dashboard.scss": {
+    "file": "assets/main_dashboard-a9c1194b.css",
+    "src": "resources/scss/views/main_dashboard.scss",
+    "isEntry": true
+  },
+  "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css": {
+    "file": "assets/client_onboarding_master-1737d69d.css",
+    "src": "resources/js/hrms/modules/configurations/client_onboarding/client_onboarding_master.css"
+  },
+  "resources/js/hrms/modules/leave_module/LeaveModule.css": {
+    "file": "assets/LeaveModule-b7afae79.css",
+    "src": "resources/js/hrms/modules/leave_module/LeaveModule.css"
+  },
   "EmployeeDetails.css": {
     "file": "assets/EmployeeDetails-928a7218.css",
     "src": "EmployeeDetails.css"
@@ -1950,7 +2044,8 @@
   },
   "resources/js/hrms/modules/reports/attendance/AttendanceReport_Detailed.js": {
     "css": [
-      "assets/PMSFormsDownloadTable-98903825.css"
+      "assets/AttendanceModule-4efd880f.css",
+      "assets/tailwind-8f4f3533.css"
     ],
     "file": "assets/AttendanceReport_Detailed-e3b64a76.js",
     "imports": [
@@ -1977,7 +2072,20 @@
     "css": [
       "assets/PMSFormsDownloadTable-98903825.css"
     ],
-    "file": "assets/PMSFormsDownloadTable-bf653808.js",
+    "assets": [
+      "assets/color-473bc8ca.png",
+      "assets/hue-024cc884.png",
+      "assets/primeicons-ce852338.eot",
+      "assets/primeicons-3824be50.woff2",
+      "assets/primeicons-90a58d3a.woff",
+      "assets/primeicons-131bc3bf.ttf",
+      "assets/primeicons-5e10f102.svg"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-d821bd7e.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
     "imports": [
       "_toastservice.esm-fb72c8eb.js",
       "_styleclass.esm-81c07f59.js",
@@ -1998,33 +2106,9 @@
   },
   "resources/js/hrms/modules/roles_permission/RolesPermission.js": {
     "css": [
-      "assets/RolesPermission-0da1b364.css"
-    ],
-    "file": "assets/RolesPermission-af315926.js",
-    "imports": [
-      "_toastservice.esm-fb72c8eb.js",
-      "_pinia-6b7af0b1.js",
-      "_styleclass.esm-81c07f59.js",
-      "_dialogservice.esm-9c16f9d1.js",
-      "_confirmationservice.esm-6ca52fda.js",
-      "_progressspinner.esm-3f16429f.js",
-      "_row.esm-6ebc942e.js",
-      "_columngroup.esm-9dd1458e.js",
-      "_fileupload.esm-e2e45c9d.js",
-      "_calendar.esm-09f1d069.js",
-      "_textarea.esm-ab15ce91.js",
-      "_chips.esm-e48a0eb0.js",
-      "_overlaypanel.esm-6ca7216e.js",
-      "_accordion.esm-db1d416d.js",
-      "_accordiontab.esm-a822f384.js",
-      "_treetable.esm-10f9d374.js",
-      "_multiselect.esm-0d20cbb0.js",
-      "_index-0d903406.js",
-      "_progressbar.esm-732e7b80.js",
-      "_badge.esm-786a5ce1.js"
-    ],
-    "isEntry": true,
-    "src": "resources/js/hrms/modules/roles_permission/RolesPermission.js"
+      "assets/app-a57d27c3.css",
+      "assets/tailwind-8f4f3533.css"
+    ]
   },
   "resources/js/hrms/modules/salary_loan_setting/salary_loan_setting.css": {
     "file": "assets/salary_loan_setting-fd86f5ed.css",

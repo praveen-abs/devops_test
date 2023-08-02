@@ -46,12 +46,12 @@
                                     </div>
                                     <div class="col mx-2">
                                         <h1 class="fs-5 my-2">Term</h1>
-                                        {{ useEmpStore.interestFreeLoan.max_tenure_months.month }}
+                                        <!-- {{ useEmpStore.interestFreeLoan.max_tenure_months.month }} -->
 
                                         <!-- <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth" :options="useEmpStore.interestFreeLoan.max_tenure_months" optionLabel="month" placeholder="Select Month" class="w-full md:w-10rem" optionValue="val" /> -->
-
+                                        <!-- {{useEmpStore.max_tenure_month}} -->
                                         <Dropdown v-model="useEmpStore.interestFreeLoan.Term" @change="selectMonth"
-                                            :options="useEmpStore.interestFreeLoan.max_tenure_months" class="w-full md:w-10rem"
+                                            :options="useEmpStore.max_tenure_month" class="w-full md:w-10rem"
                                             optionValue="month" optionLabel="month" placeholder="Select Month"
                                             :class="[v$.Term.$error ? ' border-2 outline-none border-red-500 rounded-lg' : '']" />
                                         <label for="" class="fs-5 ml-2">Month</label>
@@ -153,7 +153,7 @@
             </div>
 
             <div class="table-responsive">
-                {{ useEmpStore.isInterestFreeLoanFeature }}
+                <!-- {{ useEmpStore.isInterestFreeLoanFeature }} -->
                 <DataTable  ref="dt" dataKey="id" :paginator="true" :rows="10" :value="useEmpStore.isInterestFreeLoanFeature"
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     :rowsPerPageOptions="[5, 10, 25]"
@@ -161,52 +161,31 @@
                     responsiveLayout="scroll">
 
                     <Column header="Request ID" field="request_id" style="min-width: 8rem">
-                        <!-- <template #body="slotProps">
-                        {{  slotProps.data.claim_type }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="borrowed_amount" header="Loan Amount" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                        {{ "&#x20B9;" + slotProps.data.claim_amount }}
-                      </template> -->
+
                     </Column>
 
                     <Column field="emi_per_month" header="Monthly EMI" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{ "&#x20B9;" + slotProps.data.eligible_amount }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="tenure_months" header="Tenure" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
 
 
                     <Column field="deduction_starting_month" header="EMI Start Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
 
                     <Column field="deduction_ending_month" header="EMI End Date" style="min-width: 12rem">
-                        <!-- <template #body="slotProps">
-                          {{  slotProps.data.reimbursment_remarks }}
-                        </template> -->
+
                     </Column>
-                    <Column field="loan_crd_sts" header="Status" style="min-width: 12rem">
-                        <template #body="slotProps">
-                            <h6 v-if="slotProps.data.loan_crd_sts == 0 " class="text-orange-500">
-                                Pending
-                            </h6>
-                            <h6 v-if="slotProps.data.loan_crd_sts == 1 " class=" text-green-500">
-                                Approved
-                            <!-- <h6 v-if="slotProps.data.status == 'Rejected'" class="text-red-500">
-                                {{ slotProps.data.status }}-->
-                             </h6>
-                        </template>
+                    <Column field="loan_status" header="Status" style="min-width: 12rem">
+                        {{ slotProps.data.loan_status }}
                     </Column>
 
                 </DataTable>
@@ -217,17 +196,6 @@
     </div>
 
 
-
-    <Dialog header="Header" v-model:visible="useEmpStore.canShowLoading" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-        :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-        <template #header>
-            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-                animationDuration="2s" aria-label="Custom ProgressSpinner" />
-        </template>
-        <template #footer>
-            <h5 style="text-align: center">Please wait...</h5>
-        </template>
-    </Dialog>
 </template>
 
 <script setup>
@@ -241,7 +209,7 @@ import { useNow, useDateFormat } from '@vueuse/core'
 const useEmpStore = useEmpSalaryAdvanceStore();
 
 onMounted(() => {
-    useEmpStore.fetchInterestfreeLoan()
+    useEmpStore.fetchInterestfreeLoan();
     useEmpStore.getinterestfreeloan();
 })
 
@@ -348,7 +316,8 @@ const submitForm = () => {
     if (!v$.value.$error) {
         // if ANY fail validation
         console.log('Form successfully submitted.')
-        useEmpStore.saveInterestfreeLoan()
+        useEmpStore.saveInterestfreeLoan();
+        useEmpStore.fetchInterestfreeLoan();
         v$.value.$reset()
     } else {
         console.log('Form failed validation')
