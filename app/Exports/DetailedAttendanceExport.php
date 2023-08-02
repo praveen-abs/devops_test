@@ -100,24 +100,24 @@ class DetailedAttendanceExport implements FromArray, WithHeadings, ShouldAutoSiz
         $i = 4;
         $j = 1;
         foreach ($this->heading_dates_2 as $single_date) {
-            $sheet->mergeCells(num2alpha($i) . '1:' . num2alpha($i + 3) . '1')->setCellValue(num2alpha($i) . '1', $single_date);
-            $sheet->getStyle(num2alpha($i) . '1:' . num2alpha($i + 3) . '1')->getFill()
+            $sheet->mergeCells(num2alpha($i) . '1:' . num2alpha($i + 4) . '1')->setCellValue(num2alpha($i) . '1', $single_date);
+            $sheet->getStyle(num2alpha($i) . '1:' . num2alpha($i + 4) . '1')->getFill()
                 ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()->setRGB('678391');
-            $sheet->getStyle(num2alpha($i) . '1:' . num2alpha($i + 3) . '1')
+            $sheet->getStyle(num2alpha($i) . '1:' . num2alpha($i + 4) . '1')
                 ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
             if ($j % 2 == 0) {
-                $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + 3) . '2')->getFill()
+                $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + 4) . '2')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('96A3AB');
             } else {
-                $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + 3) . '2')->getFill()
+                $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + 4) . '2')->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()->setRGB('76AABF');
             }
-            $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + 3) . '2')
+            $sheet->getStyle(num2alpha($i) . '2:' . num2alpha($i + 4) . '2')
                 ->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-            $i = $i + 4;
+            $i = $i + 5;
             $j = $j + 1;
         }
 
