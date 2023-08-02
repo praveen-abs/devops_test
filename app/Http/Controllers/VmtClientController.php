@@ -100,7 +100,7 @@ class VmtClientController extends Controller
             $client_users->is_admin = 0;
             $client_users->is_onboarded = 1;
             $client_users->onboard_type = 'client_onboard';
-            $client_users->is_default_password_updated = 1;
+            $client_users->is_default_password_updated = 0;
             $client_users->org_role = 2 ;
             $client_users->is_ssa = 0;
             $client_users->can_login = 1 ;
@@ -119,7 +119,12 @@ class VmtClientController extends Controller
                                                              $image_view,
                                                              $request->abs_client_code)
             );
-                return "Saved";
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'client onboarded successfully.',
+                ]
+            );
         }
         catch (TransportException $e) {
 
