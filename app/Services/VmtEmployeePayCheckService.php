@@ -173,7 +173,7 @@ class VmtEmployeePayCheckService
                             'lwf' => 'required|numeric',
                             'total_deductions' => 'required|numeric',
                             'net_take_home' => 'required|numeric',
-                            'rupees' => 'required|numeric',
+                            'rupees' => 'required',
                             'el_opn_bal' => 'nullable',
                             'availed_el' => 'nullable',
                             'balance_el' => 'nullable',
