@@ -53,7 +53,7 @@ class WelcomeMail extends Mailable
             // ->with('image_view', $this->image_view)
             // ->with('client_code',$this->client_code);
 
-            $output = $this->view('appointment_mail_templates.appointment_Letter_vasa')
+            $output = $this->view('appointment_mail_templates.appointment_Letter_dunamis_machines')
             ->subject('ABShrms - Welcome');
             
 
