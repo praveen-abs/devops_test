@@ -435,8 +435,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
 //onboarding data version2
 
-Route::get('/onboarding/storeQuickOnboardEmployees', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'storeQuickOnboardEmployees'])->name('storeQuickOnboardEmployees');
-Route::get('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'storeBulkOnboardEmployees'])->name('storeBulkOnboardEmployees');
+Route::post('/onboarding/storeQuickOnboardEmployees', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'storeQuickOnboardEmployees'])->name('storeQuickOnboardEmployees');
+Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'storeBulkOnboardEmployees'])->name('storeBulkOnboardEmployees');
 
  // onboarding data
 

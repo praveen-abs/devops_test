@@ -136,7 +136,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const uploadOnboardingFile = (data) => {
-        axios.post('/quicktesting', data).finally(() => {
+        axios.post('/onboarding/storeQuickOnboardEmployees', data).finally(() => {
             data.forEach(element => {
                 toast.add({
                     severity: "success",
