@@ -433,12 +433,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('bulkEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showBulkOnboardUploadPage')->name('bulkEmployeeOnboarding');
     Route::post('vmt-employess/bulk-upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importBulkOnboardEmployeesExcelData');
+//onboarding data version2
+
+Route::get('/onboarding/storeQuickOnboardEmployees', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'storeQuickOnboardEmployees'])->name('storeQuickOnboardEmployees');
+Route::get('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'storeBulkOnboardEmployees'])->name('storeBulkOnboardEmployees');
 
  // onboarding data
 
       Route::get('/onboarding/getEmployeeMandatoryDetails', [App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController::class,'getEmployeeMandatoryDetails'])->name('getEmployeeMandatoryDetails');
 
-    // Bulk upload employees for quick Onboarding
+// Bulk upload employees for quick Onboarding
     Route::get('quickEmployeeOnboarding', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@showQuickOnboardUploadPage')->name('quickEmployeeOnboarding');
     Route::post('vmt-employess/quick-onboarding/upload', 'App\Http\Controllers\Onboarding\VmtEmployeeOnboardingController@importQuickOnboardEmployeesExcelData');
 

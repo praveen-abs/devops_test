@@ -169,7 +169,7 @@ try{
                       }
                   }
               }
-             }catch(Exception $e){
+             }catch(\Exception $e){
                 $response = [
                     'status' => 'failure',
                     'message' => "Error while creating/update Employee details",
