@@ -35,6 +35,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const totalRecordsCount = ref([])
     const errorRecordsCount = ref([])
+    const initialUpdate = ref(false)
+    const isValueUpdated = ref(false)
 
 
     const getExcelForUpload = (e) => {
@@ -104,15 +106,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
             const importedExcelKey = Object.keys(jsonData)[0]
             jsonData[importedExcelKey] ? EmployeeQuickOnboardingSource.value = jsonData[importedExcelKey] : EmployeeQuickOnboardingSource.value = []
+            EmployeeQuickOnboardingSource.value ? getCurrentlyImportedTableDuplicateEntries(EmployeeQuickOnboardingSource.value) : ''
             empReactive.push(EmployeeQuickOnboardingSource.value)
-            // console.log(jsonData[importedExcelKey]);
 
-            // if (EmployeeQuickOnboardingSource.value) {
-            //     isdups()
-            // }
-
-
-            // isdups(DuplicateList.value)
 
             totalRecordsCount.value.push(EmployeeQuickOnboardingSource.value)
 
@@ -189,16 +185,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     // Helper Function
 
 
-    const currentDupes = ref([])
-
-    const findDuplicate = (array) => {
-        console.log(array);
-        let result = array.length !== new Set(array).size ? true : false;
-        console.log("Selected row contains dup's : " + result);
-        return result
-    }
-
-
     /*
 
      Validation - Data format
@@ -215,6 +201,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const existingBankNames = ref()
     const existingDepartments = ref()
     const existingOfficialEmails = ref()
+    const existingBloodgroups = ref()
+    const existingMartialStatus = ref()
 
     const getExistingOnboardingDocuments = () => {
 
@@ -230,6 +218,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 existingBankNames.value = element.bank_name
                 existingDepartments.value = element.department_name
                 existingOfficialEmails.value = element.official_mail
+                existingBloodgroups.value = element.employees_blood_group
+                existingMartialStatus.value = element.employees_marital_status
 
             });
         })
@@ -332,6 +322,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         }
     }
 
+    const isExistsOrNot = (array, e) => {
+        if (array.includes(e)) {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
     const isEnteredNos = (e) => {
         let char = String.fromCharCode(e.keyCode); // Get the character
         if (/^[0-9]+$/.test(char)) return true; // Match with regex
@@ -363,6 +362,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         return existingOfficialEmails.value.includes(e) ? true : false
     }
 
+    const validationEmpCode = ref([])
+
     const getValidationMessages = (data) => {
         let errorMessages = [];
         const digitRegexp = /\w*\d{1,}\w*/;
@@ -371,27 +372,36 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-        // console.log("Usercode:" + data["Employee code"] + isUserExists(data["Employee Code"]));
-        // console.log("Already" + data["Employee code"] + Object.values(data).includes(data["Employee Code"]));
 
-        if (Object.values(data).includes(data["Employee Code"]) || !isUserExists(data["Employee code"])) {
+        console.log(findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee code']));
+
+
+        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee code']) || !isUserExists(data["Employee code"])) {
             errorRecordsCount.value.push('invalid')
         }
         else
-            if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
+            if (findDuplicates(currentlyImportedTableMobileNumberValues.value).includes(data['Mobile Number']) || isValidMobileNumber(data['Mobile Number'])) {
                 errorRecordsCount.value.push('invalid')
-            } else
-                if (isValidAadhar(data['Aadhar']) || isValidMobileNumber(data['Mobile Number'])) {
+            }
+            else
+                if (findDuplicates(currentlyImportedTableEmailValues.value).includes(data['Email']) || isEmail(data['Email'])) {
                     errorRecordsCount.value.push('invalid')
                 }
                 else
-                    if (isValidBankAccountNo(data['Account No'])) {
+                    if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
                         errorRecordsCount.value.push('invalid')
                     }
                     else
-                        if (isValidPancard(data['Pan No']) || isValidBankIfsc(data['Bank ifsc'])) {
+                        if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan Number']) || isValidPancard(data['Pan Number'])) {
                             errorRecordsCount.value.push('invalid')
                         }
+                        else
+                            if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account Number']) || isValidBankAccountNo(data['Account No'])) {
+                                errorRecordsCount.value.push('invalid')
+                            } else
+                                if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
+                                    errorRecordsCount.value.push('invalid')
+                                }
 
 
         return errorMessages;
@@ -534,15 +544,16 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        findDuplicate, currentFiled, getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile,
+        currentFiled, getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile,
         currentlyImportedTableAadharValues, currentlyImportedTablePanValues, currentlyImportedTableAccNoValues, currentlyImportedTableEmailValues, currentlyImportedTableMobileNumberValues,
         // TODO:: Separate
 
-        getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers,
+        getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers, initialUpdate, isValueUpdated,
+        existingMartialStatus,existingBloodgroups,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists, isAadharExists,
+        isOfficialMailExists, isAadharExists,isExistsOrNot,
 
 
 
@@ -550,7 +561,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         // View
 
-        canShowloading, excelRowData, currentDupes,
+        canShowloading, excelRowData,
 
 
         // Onboarding Helper functions

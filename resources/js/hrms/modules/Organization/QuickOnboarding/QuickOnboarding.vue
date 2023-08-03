@@ -99,17 +99,38 @@ import * as XLSX from 'xlsx';
 import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 import { useRouter, useRoute } from "vue-router";
 import { useOnboardingMainStore } from '../stores/OnboardingMainStore';
+import { Service } from '../../Service/Service';
+import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore';
 
 
 const useStore = useOnboardingMainStore()
+const useNormalOnboardingStore = useNormalOnboardingMainStore()
+
 
 onMounted(() => {
     useStore.getExistingOnboardingDocuments()
+    useNormalOnboardingStore.getBasicDeps()
 })
 
 onUpdated(() => {
-    useStore.EmployeeQuickOnboardingSource ? useStore.getCurrentlyImportedTableDuplicateEntries(useStore.EmployeeQuickOnboardingSource) : ''
+
+
+    if (useStore.initialUpdate) {
+        useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
+        useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
+        useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
+        useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
+        useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
+    }
+    // if (useStore.isValueUpdated) {
+    //     useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
+    //     useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
+    //     useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
+    //     useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
+    //     useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
+    // };
 })
+
 
 
 
