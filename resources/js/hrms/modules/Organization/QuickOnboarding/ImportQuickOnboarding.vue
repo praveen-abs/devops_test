@@ -53,7 +53,7 @@
                         </p>
                     </div>
                     <p v-else-if="field == 'Aadhar'"
-                        :class="[!useStore.findDuplicate(data['Employee code']) || useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[ useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Aadhar'] }}
                     </p>
@@ -63,7 +63,7 @@
                         {{ data['Employee Name'] }}
                     </p>
                     <p v-else-if="field == 'Email'"
-                        :class="[useStore.findDuplicate(data['Email'])  || useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[  useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning  cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Email is already exists'"
@@ -71,7 +71,6 @@
                         {{ data['Email'] }}
                     </p>
                     <p v-else-if="field.includes('Mobile Number')"
-                        :class="[ useStore.findDuplicate(data[field])   ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
@@ -81,7 +80,7 @@
                     </p>
 
                     <p v-else-if="field == 'Account No'"
-                        :class="[useStore.findDuplicate(data['Account No']) || useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[ useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Account No'] }}
                     </p>
@@ -93,7 +92,7 @@
                     </p>
 
                     <p v-else-if="field == 'Pan No'"
-                        :class="[useStore.findDuplicate(data['Pan No']) ||useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
@@ -121,37 +120,10 @@
                         {{ data['Department'] }}
                     </p> -->
                     <p v-else-if="field.includes('Official Mail')"
-                        :class="useStore.findDuplicate(data['Official Mail'])  || [useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.isOfficialMailExists(data['Official Mail']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Official Mail'] }}
                     </p>
-
-                    <p v-else-if="field.includes('Basic')" class="font-semibold fs-6">
-                        <input type="text" v-model="data.Basic">
-                        {{ useStore.compensatory_calculation(data['Amount']).basic }}
-                    </p>
-                    <p v-else-if="field.includes('HRA')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).hra }}
-                    </p>
-                    <p v-else-if="field.includes('Special Allowance')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).special }}
-                    </p>
-                    <p v-else-if="field.includes('EPF Employer Contribution')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).epf_employer_contribution }}
-                    </p>
-                    <p v-else-if="field.includes('ESIC Employer Contribution')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).esic_employer_contribution }}
-                    </p>
-                    <p v-else-if="field.includes('EPf Employee')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).epf_employee }}
-                    </p>
-                    <p v-else-if="field.includes('ESIC Employee')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).esic_employee }}
-                    </p>
-                    <p v-else-if="field.includes('Net Income')" class="font-semibold fs-6">
-                        {{ useStore.compensatory_calculation(data['Amount']).net_income }}
-                    </p>
-
 
                     <p v-else class="font-semibold fs-6">
                         {{ data[field] }}

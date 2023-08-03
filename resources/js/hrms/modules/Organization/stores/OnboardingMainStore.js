@@ -26,6 +26,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
 
 
+    const empReactive = reactive([])
     const EmployeeQuickOnboardingSource = ref()
     const EmployeeQuickOnboardingDynamicHeader = ref()
     const selectedFile = ref()
@@ -44,17 +45,17 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const convertExcelIntoArray = (e) => {
 
-        canShowloading.value = true
+        // canShowloading.value = true
 
-        var file = selectedFile.value;
-        // var file = e.target.files[0];
+        // var file = selectedFile.value;
+        var file = e.target.files[0];
         // input canceled, return
         if (!file) return;
 
-        setTimeout(() => {
-            router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
-            canShowloading.value = false
-        }, 400);
+        // setTimeout(() => {
+        //     router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
+        //     canShowloading.value = false
+        // }, 400);
 
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -104,15 +105,12 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
 
             jsonData[importedExcelKey] ? EmployeeQuickOnboardingSource.value = jsonData[importedExcelKey] : EmployeeQuickOnboardingSource.value = []
-
+            empReactive.push(EmployeeQuickOnboardingSource.value)
             console.log(jsonData[importedExcelKey]);
 
             // if (EmployeeQuickOnboardingSource.value) {
             //     isdups()
             // }
-
-
-
 
 
             // isdups(DuplicateList.value)
@@ -138,11 +136,25 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             }
         };
         reader.readAsArrayBuffer(file);
-
+        getMad()
     }
 
 
     const currentFiled = ref()
+
+    let gp = []
+
+    const getMad = () => {
+        empReactive.forEach(ele => {
+            let format = {
+                name: ele.name
+            }
+            gp.push(format)
+
+        })
+
+    }
+    console.log(gp);
 
 
     // Helper Function
@@ -152,10 +164,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const findDuplicate = (array) => {
         console.log(array);
-        let result = array.length !== new Set(array).size ? false : true;
+        let result = array.length !== new Set(array).size ? true : false;
         console.log("Selected row contains dup's : " + result);
         return result
     }
+
 
     const isdups = (elemt) => {
 
@@ -514,7 +527,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        findDuplicate,currentFiled,
+        findDuplicate, currentFiled,
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers,
@@ -529,7 +542,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         // View
 
-        canShowloading, isdups, excelRowData,currentDupes,
+        canShowloading, isdups, excelRowData, currentDupes,
 
 
         // Onboarding Helper functions
