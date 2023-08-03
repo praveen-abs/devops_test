@@ -727,7 +727,7 @@ class VmtEmployeeOnboardingController extends Controller
         private function storeBulkOnboardEmployees($data,$employeeService)
         {
             // dd($data);
-            ini_set('max_execution_time', 300);
+           ini_set('max_execution_time', 300);
             //For output jsonresponse
             $data_array = [];
             //For validation
@@ -854,49 +854,49 @@ class VmtEmployeeOnboardingController extends Controller
                     'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
 
                 ];
-            //     $fail_data =array();
-            //     if(!empty($emp_user_code))
-            //     {$i=0;
-            //       foreach($emp_user_code as $key => $single_user_code){
+                $fail_data =array();
+                if(!empty($emp_user_code))
+                {$i=0;
+                  foreach($emp_user_code as $key => $single_user_code){
 
-            //           if( $key == $i && $single_user_code == $excelRowdata['employee_code']){
+                      if( $key == $i && $single_user_code == $excelRowdata['employee_code']){
 
-            //               $fail_data[$i] = 'Employee Code should be unique :'.' '.$excelRowdata['employee_code'];
-            //            $i++;
-            //        }
-            //       }
+                          $fail_data[$i] = 'Employee Code should be unique :'.' '.$excelRowdata['employee_code'];
+                       $i++;
+                   }
+                  }
 
-            //   }
-            //     if(!empty($emp_email))
-            //     {
-            //         $j=0;
-            //       foreach($emp_email as $key => $single_user_code){
+              }
+                if(!empty($emp_email))
+                {
+                    $j=0;
+                  foreach($emp_email as $key => $single_user_code){
 
-            //            if( $key == $j && $single_user_code == $excelRowdata['email']){
+                       if( $key == $j && $single_user_code == $excelRowdata['email']){
 
-            //                $fail_data[$j] = 'email should be unique :'.' '.$excelRowdata['email'];
-            //                $j++;
-            //            }
-            //       }
+                           $fail_data[$j] = 'email should be unique :'.' '.$excelRowdata['email'];
+                           $j++;
+                       }
+                  }
 
-            //   }
-            //     if(!empty($emp_mobile_number))
-            //     {
-            //         $k=0;
-            //       foreach($emp_mobile_number as $key => $single_user_code){
+              }
+                if(!empty($emp_mobile_number))
+                {
+                    $k=0;
+                  foreach($emp_mobile_number as $key => $single_user_code){
 
-            //              if( $key == $k && $single_user_code == $excelRowdata['mobile_number']){
+                         if( $key == $k && $single_user_code == $excelRowdata['mobile_number']){
 
-            //                $fail_data[$k] = 'mobile_number should be unique :'.' '.$excelRowdata['mobile_number'];
-            //                $k++;
-            //            }
-            //       }
+                           $fail_data[$k] = 'mobile_number should be unique :'.' '.$excelRowdata['mobile_number'];
+                           $k++;
+                       }
+                  }
 
-            //   }
+              }
 
-            //   array_push($emp_user_code,$excelRowdata['employee_code']);
-            //   array_push($emp_email,$excelRowdata['email']);
-            //   array_push($emp_mobile_number,$excelRowdata['mobile_number']);
+              array_push($emp_user_code,$excelRowdata['employee_code']);
+              array_push($emp_email,$excelRowdata['email']);
+              array_push($emp_mobile_number,$excelRowdata['mobile_number']);
 
                 $validator = Validator::make($excelRowdata, $rules, $messages);
 
