@@ -243,6 +243,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isUserExists = (e) => {
+        console.log(e);
         if (existingUserCode.value.includes(e)) {
             return false
         } else {
@@ -269,6 +270,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isValidAadhar = (e) => {
+        console.log(e);
         if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(e) && !existingAadharCards.value.includes(e)) {
             return false
         } else {
@@ -278,14 +280,16 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
 
     const isAadharExists = (e) => {
-        if (existingAadharCards.value.includes(e)) {
+        if (!existingAadharCards.value.includes(e)) {
             return false
         } else {
             return true
         }
     }
     const isValidPancard = (e) => {
-        if (/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/.test(e) && !existingPanCards.value.includes(e)) {
+        let panFormat = ''
+        e ? panFormat = e.toUpperCase() : ''
+        if (/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/.test(panFormat) && existingPanCards.value.includes(panFormat)) {
             return false
         } else {
             return true
@@ -372,10 +376,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-
-        console.log(findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee code']));
-
-
         if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee code']) || !isUserExists(data["Employee code"])) {
             errorRecordsCount.value.push('invalid')
         }
@@ -392,11 +392,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                         errorRecordsCount.value.push('invalid')
                     }
                     else
-                        if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan Number']) || isValidPancard(data['Pan Number'])) {
+                        if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
                             errorRecordsCount.value.push('invalid')
                         }
                         else
-                            if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account Number']) || isValidBankAccountNo(data['Account No'])) {
+                            if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
                                 errorRecordsCount.value.push('invalid')
                             } else
                                 if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
@@ -549,11 +549,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers, initialUpdate, isValueUpdated,
-        existingMartialStatus,existingBloodgroups,
+        existingMartialStatus, existingBloodgroups,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists, isAadharExists,isExistsOrNot,
+        isOfficialMailExists, isAadharExists, isExistsOrNot,
 
 
 

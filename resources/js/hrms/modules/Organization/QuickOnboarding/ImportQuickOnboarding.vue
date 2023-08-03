@@ -1,5 +1,4 @@
 <template>
-    {{ useStore.errorRecordsCount }}
     <div class="grid grid-cols-3 w-8/12 place-content-center mx-auto my-2">
         <!-- <div class="flex">
             <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
@@ -58,7 +57,7 @@
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'User code is already exists'"
-                            v-if="!useStore.isAadharExists(data['Aadhar'])"></i>
+                            v-if="useStore.isAadharExists(data['Aadhar'])"></i>
                         {{ data['Aadhar'] }}
                     </p>
                     <p v-else-if="field == 'Employee Name'"
@@ -99,12 +98,12 @@
                         {{ data['Bank Name'] }}
                     </p>
 
-                    <p v-else-if="field == 'Pan No'"
-                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTablePanValues, data['Pan No']) || useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                    <p v-else-if="field.includes('Pan No')"
+                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTablePanValues, data['Pan No']) || !useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
-                            v-if="useStore.existingPanCards.includes(data['Pan No'])"></i>
+                            v-if="!useStore.isValidPancard(data['Pan No'])"></i>
                         {{ data['Pan No'].toUpperCase() }}
                     </p>
                     <p v-else-if="field == 'DOB'"
@@ -179,6 +178,7 @@ import { onMounted, onUpdated, ref } from 'vue';
 import * as XLSX from 'xlsx';
 import axios from 'axios'
 
+
 import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
@@ -189,16 +189,6 @@ import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/Normal
 
 const useStore = useOnboardingMainStore()
 const useNormalOnboardingStore = useNormalOnboardingMainStore()
-
-
-
-const saveOnboarding = (data) => {
-    console.log(data);
-    axios.post('/quicktesting', data)
-}
-
-
-
 
 const checkingNonEditableFields = (e) => {
 
