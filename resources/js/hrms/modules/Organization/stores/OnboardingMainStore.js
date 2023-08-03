@@ -45,17 +45,17 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const convertExcelIntoArray = (e) => {
 
-        // canShowloading.value = true
+        canShowloading.value = true
 
-        // var file = selectedFile.value;
-        var file = e.target.files[0];
+        var file = selectedFile.value;
+        // var file = e.target.files[0];
         // input canceled, return
         if (!file) return;
 
-        // setTimeout(() => {
-        //     router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
-        //     canShowloading.value = false
-        // }, 400);
+        setTimeout(() => {
+            router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
+            canShowloading.value = false
+        }, 500);
 
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -101,12 +101,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
 
             const importedExcelKey = Object.keys(jsonData)[0]
-            console.log();
-
-
             jsonData[importedExcelKey] ? EmployeeQuickOnboardingSource.value = jsonData[importedExcelKey] : EmployeeQuickOnboardingSource.value = []
             empReactive.push(EmployeeQuickOnboardingSource.value)
-            console.log(jsonData[importedExcelKey]);
+            // console.log(jsonData[importedExcelKey]);
 
             // if (EmployeeQuickOnboardingSource.value) {
             //     isdups()
@@ -136,26 +133,43 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             }
         };
         reader.readAsArrayBuffer(file);
-        getMad()
+
+
     }
 
+    function findDuplicates(arr) {
+        return arr.filter((currentValue, currentIndex) =>
+        arr.indexOf(currentValue) !== currentIndex);
+     }
 
     const currentFiled = ref()
 
-    let gp = []
+    let currentlyImportedTableEmployeeCodeValues = ref([])
+    let currentlyImportedTableEmailValues = ref([])
+    let currentlyImportedTableMobileNumberValues = ref([])
+    let currentlyImportedTablePanValues = ref([])
+    let currentlyImportedTableAadharValues = ref([])
+    let currentlyImportedTableAccNoValues = ref([])
 
-    const getMad = () => {
-        empReactive.forEach(ele => {
-            let format = {
-                name: ele.name
-            }
-            gp.push(format)
 
-        })
-
+    const getMad = (data) => {
+        data.forEach(element => {
+            currentlyImportedTableEmployeeCodeValues.value.push(element['Employee code'])
+            currentlyImportedTableEmailValues.value.push(element['Email'])
+            currentlyImportedTableMobileNumberValues.value.push(element['Mobile Number'])
+            currentlyImportedTablePanValues.value.push(element['Pan No'])
+            currentlyImportedTableAadharValues.value.push(element['Aadhar'])
+            currentlyImportedTableAccNoValues.value.push(element['Account No'])
+        });
     }
-    console.log(gp);
 
+    const  findCurrentTableDups= (duplicateArray,e) =>{
+        if (findDuplicates(duplicateArray).includes(e)) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     // Helper Function
 
@@ -168,40 +182,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         console.log("Selected row contains dup's : " + result);
         return result
     }
-
-
-    const isdups = (elemt) => {
-
-        let mandatoryFields = ["Email"]
-        for (let i = 0; i < excelRowData.value.length; i++) {
-            const singleRowData = excelRowData.value[i];
-
-            for (let j = 0; j < singleRowData.value.length; j++) {
-                const value = singleRowData.value[j];
-                const title = singleRowData.title[j];
-                currentDupes.value.push(value)
-            }
-        }
-
-        const toFindDuplicates = (array) => array.filter((item, index) => array.indexOf(item) !== index)
-        const duplicateElements = toFindDuplicates(currentDupes.value);
-        // console.log(duplicateElements);
-        let uniqueChars = [...new Set(duplicateElements)];
-        console.log(uniqueChars);
-
-        console.log(elemt);
-        if (elemt) {
-            const index = uniqueChars.indexOf(elemt);
-            console.log("Index of duplicate:" + index);
-            if (index > -1) { // only splice array when item is found
-                uniqueChars.splice(index, 1); // 2nd parameter means remove one item only
-            }
-        }
-
-        // console.log(duplicateElements.includes('BA210'));
-    }
-
-
 
 
     /*
@@ -285,6 +265,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const isValidAadhar = (e) => {
         if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(e) && !existingAadharCards.value.includes(e)) {
+            return false
+        } else {
+            return true
+        }
+    }
+
+
+    const isAadharExists = (e) => {
+        if (existingAadharCards.value.includes(e)) {
             return false
         } else {
             return true
@@ -376,9 +365,12 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         else
             if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
                 errorRecordsCount.value.push('invalid')
-            }
-            else
+            }else
                 if (isValidAadhar(data['Aadhar']) || isValidMobileNumber(data['Mobile Number'])) {
+                    errorRecordsCount.value.push('invalid')
+                }
+                else
+                if(isValidBankAccountNo(data['Account No'])){
                     errorRecordsCount.value.push('invalid')
                 }
                 else
@@ -527,14 +519,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        findDuplicate, currentFiled,
+        findDuplicate, currentFiled, getMad,currentlyImportedTableEmployeeCodeValues,findCurrentTableDups,
+        currentlyImportedTableAadharValues,currentlyImportedTablePanValues,currentlyImportedTableAccNoValues,currentlyImportedTableEmailValues,currentlyImportedTableMobileNumberValues,
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists,
+        isOfficialMailExists,isAadharExists,
 
 
 
@@ -542,7 +535,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         // View
 
-        canShowloading, isdups, excelRowData, currentDupes,
+        canShowloading, excelRowData, currentDupes,
 
 
         // Onboarding Helper functions

@@ -1,14 +1,14 @@
 <template>
-    <ImportQuickOnboarding />
     <div class="" v-if="route.params.module == 'quickOnboarding'">
+        <ImportQuickOnboarding />
     </div>
-    <Transition name="fade" v-if="false">
-        <div class="h-screen w-full" >
+    <Transition name="fade" v-else>
+        <div class="h-screen w-full">
             <div class="flex">
                 <div class="w-6 px-2">
                     <p class="font-bold text-2xl">Employee Quick Onboarding</p>
                     <ul class="list-disc p-2 my-3">
-                        <li  class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
+                        <li class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
                                 class="text-blue-300 font-semibold fs-6 cursor-pointer">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
