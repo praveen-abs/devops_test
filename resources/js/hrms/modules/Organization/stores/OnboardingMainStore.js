@@ -13,12 +13,14 @@ import dayjs from "dayjs";
 
 
 
+
 export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () => {
 
 
 
     const service = Service()
     const router = useRouter();
+    const toast = useToast();
     const normalOnboardingSource = useNormalOnboardingMainStore()
 
 
@@ -137,10 +139,23 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     }
 
+    const uploadOnboardingFile = (data) => {
+        axios.post('/quicktesting', data).finally(() => {
+            data.forEach(element => {
+                toast.add({
+                    severity: "success",
+                    summary: `${element['Employee Name']}`,
+                    detail: "Onboarding successfully",
+                    life: 2000,
+                });
+            });
+        })
+    }
+
     function findDuplicates(arr) {
         return arr.filter((currentValue, currentIndex) =>
-        arr.indexOf(currentValue) !== currentIndex);
-     }
+            arr.indexOf(currentValue) !== currentIndex);
+    }
 
     const currentFiled = ref()
 
@@ -152,7 +167,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     let currentlyImportedTableAccNoValues = ref([])
 
 
-    const getMad = (data) => {
+    const getCurrentlyImportedTableDuplicateEntries = (data) => {
         data.forEach(element => {
             currentlyImportedTableEmployeeCodeValues.value.push(element['Employee code'])
             currentlyImportedTableEmailValues.value.push(element['Email'])
@@ -163,7 +178,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         });
     }
 
-    const  findCurrentTableDups= (duplicateArray,e) =>{
+    const findCurrentTableDups = (duplicateArray, e) => {
         if (findDuplicates(duplicateArray).includes(e)) {
             return true
         } else {
@@ -365,18 +380,18 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         else
             if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
                 errorRecordsCount.value.push('invalid')
-            }else
+            } else
                 if (isValidAadhar(data['Aadhar']) || isValidMobileNumber(data['Mobile Number'])) {
                     errorRecordsCount.value.push('invalid')
                 }
                 else
-                if(isValidBankAccountNo(data['Account No'])){
-                    errorRecordsCount.value.push('invalid')
-                }
-                else
-                    if (isValidPancard(data['Pan No']) || isValidBankIfsc(data['Bank ifsc'])) {
+                    if (isValidBankAccountNo(data['Account No'])) {
                         errorRecordsCount.value.push('invalid')
                     }
+                    else
+                        if (isValidPancard(data['Pan No']) || isValidBankIfsc(data['Bank ifsc'])) {
+                            errorRecordsCount.value.push('invalid')
+                        }
 
 
         return errorMessages;
@@ -519,15 +534,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        findDuplicate, currentFiled, getMad,currentlyImportedTableEmployeeCodeValues,findCurrentTableDups,
-        currentlyImportedTableAadharValues,currentlyImportedTablePanValues,currentlyImportedTableAccNoValues,currentlyImportedTableEmailValues,currentlyImportedTableMobileNumberValues,
+        findDuplicate, currentFiled, getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile,
+        currentlyImportedTableAadharValues, currentlyImportedTablePanValues, currentlyImportedTableAccNoValues, currentlyImportedTableEmailValues, currentlyImportedTableMobileNumberValues,
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists,isAadharExists,
+        isOfficialMailExists, isAadharExists,
 
 
 

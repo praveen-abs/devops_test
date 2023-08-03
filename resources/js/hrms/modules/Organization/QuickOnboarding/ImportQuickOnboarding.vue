@@ -146,7 +146,7 @@
             </Column>
             <template #footer>
                 <button class="btn btn-orange mx-auto flex justify-center"
-                    @click="saveOnboarding(useStore.EmployeeQuickOnboardingSource)">Upload</button>
+                    @click="useStore.uploadOnboardingFile(useStore.EmployeeQuickOnboardingSource)">Upload</button>
             </template>
         </DataTable>
     </div>
@@ -188,7 +188,7 @@ const checkingNonEditableFields = (e) => {
 
 
 onUpdated(()=>{
-    useStore.getMad(useStore.EmployeeQuickOnboardingSource)
+    useStore.getCurrentlyImportedTableDuplicateEntries(useStore.EmployeeQuickOnboardingSource)
 })
 
 

@@ -1,4 +1,5 @@
 <template>
+    <Toast />
     <div class="" v-if="route.params.module == 'quickOnboarding'">
         <ImportQuickOnboarding />
     </div>
@@ -93,7 +94,7 @@
 
 <script setup>
 
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import * as XLSX from 'xlsx';
 import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 import { useRouter, useRoute } from "vue-router";
@@ -105,6 +106,11 @@ const useStore = useOnboardingMainStore()
 onMounted(() => {
     useStore.getExistingOnboardingDocuments()
 })
+
+onUpdated(() => {
+    useStore.EmployeeQuickOnboardingSource ? useStore.getCurrentlyImportedTableDuplicateEntries(useStore.EmployeeQuickOnboardingSource) : ''
+})
+
 
 
 const router = useRouter();
