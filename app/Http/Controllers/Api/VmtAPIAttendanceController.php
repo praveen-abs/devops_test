@@ -25,7 +25,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     private $cost_per_km_4wheeler = 4;
 
 
-    public function performAttendanceCheckIn(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function performAttendanceCheckIn(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
         $validator = Validator::make(
             $request->all(),
@@ -44,20 +45,21 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         );
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
-        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin,$request->checkin_lat_long);
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckIn($request->user_code, $request->date, $request->checkin_time, $request->selfie_checkin, $request->work_mode, $request->attendance_mode_checkin, $request->checkin_lat_long);
 
         return $response;
     }
 
 
-    public function performAttendanceCheckOut(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function performAttendanceCheckOut(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
         $validator = Validator::make(
             $request->all(),
@@ -76,20 +78,22 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         );
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
-        $response =  $serviceVmtAttendanceService->performAttendanceCheckOut($request->user_code,
-                                                                             $request->existing_check_in_date,
-                                                                             $request->checkout_time,
-                                                                             $request->selfie_checkout,
-                                                                             $request->work_mode,
-                                                                             $request->attendance_mode_checkout,
-                                                                             $request->checkout_lat_long);
+        $response =  $serviceVmtAttendanceService->performAttendanceCheckOut(
+            $request->user_code,
+            $request->existing_check_in_date,
+            $request->checkout_time,
+            $request->selfie_checkout,
+            $request->work_mode,
+            $request->attendance_mode_checkout,
+            $request->checkout_lat_long
+        );
 
         return $response;
     }
@@ -100,7 +104,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
 
     */
-    public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
         $validator = Validator::make(
             $request->all(),
             $rules = [
@@ -113,10 +118,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             ]
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
@@ -129,7 +134,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
     }
 
-    public function getLastAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getLastAttendanceStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
         $validator = Validator::make(
             $request->all(),
             $rules = [
@@ -141,10 +147,10 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             ]
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
@@ -184,13 +190,13 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         if ($validator->fails()) {
             return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->fetchAttendanceMonthStatsReport($request->user_code,$request->year,$request->month);
+        $response = $serviceVmtAttendanceService->fetchAttendanceMonthStatsReport($request->user_code, $request->year, $request->month);
 
 
         return response()->json([
@@ -198,15 +204,16 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message' => '',
             'data' => $response
         ]);
-
     }
 
-    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeLeaveBalance(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
         return $serviceVmtAttendanceService->getEmployeeLeaveBalance($request->user_code);
     }
 
-    public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService){
+    public function applyLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
 
         $validator = Validator::make(
             $request->all(),
@@ -241,41 +248,43 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         if ($validator->fails()) {
             return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
         $user_id = User::where('user_code', $request->user_code)->first()->id;
 
-        $response = $serviceVmtAttendanceService->applyLeaveRequest( user_id: $user_id,
-                                                                    leave_request_date : $request->leave_request_date,
-                                                                    start_date : $request->start_date,
-                                                                    end_date : $request->end_date,
-                                                                    hours_diff : $request->hours_diff,
-                                                                    no_of_days : $request->no_of_days,
-                                                                    compensatory_work_days_ids : $request->compensatory_work_days_ids,
-                                                                    leave_session : $request->leave_session,
-                                                                    leave_type_name : $request->leave_type_name,
-                                                                    leave_reason : $request->leave_reason,
-                                                                    notifications_users_id : $request->notifications_users_id,
-                                                                    serviceNotificationsService: $serviceVmtNotificationsService
-                                                );
+        $response = $serviceVmtAttendanceService->applyLeaveRequest(
+            user_id: $user_id,
+            leave_request_date: $request->leave_request_date,
+            start_date: $request->start_date,
+            end_date: $request->end_date,
+            hours_diff: $request->hours_diff,
+            no_of_days: $request->no_of_days,
+            compensatory_work_days_ids: $request->compensatory_work_days_ids,
+            leave_session: $request->leave_session,
+            leave_type_name: $request->leave_type_name,
+            leave_reason: $request->leave_reason,
+            notifications_users_id: $request->notifications_users_id,
+            serviceNotificationsService: $serviceVmtNotificationsService
+        );
 
 
         return $response;
     }
 
-    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
+    public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
 
 
         //Fetch the data
-        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status , $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
-
+        return $serviceVmtAttendanceService->approveRejectRevokeLeaveRequest($request->record_id, auth()->user()->user_code, $request->status, $request->review_comment, $serviceNotificationsService = $serviceVmtNotificationsService);
     }
 
 
-    public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getAttendanceDailyReport_PerMonth(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
         //dd("asdf");
         //Validate the request
         $validator = Validator::make(
@@ -294,13 +303,13 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         if ($validator->fails()) {
             return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($request->user_code,$request->year,$request->month);
+        $response = $serviceVmtAttendanceService->fetchAttendanceDailyReport_PerMonth($request->user_code, $request->year, $request->month);
 
 
         return response()->json([
@@ -308,23 +317,24 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message' => '',
             'data' => $response
         ]);
-
     }
 
-    public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function applyRequestAbsentRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
-        return $serviceVmtAttendanceService->applyRequestAbsentRegularization(user_code : $request->user_code,
-                                                                                attendance_date: $request->attendance_date,
-                                                                                regularization_type : $request->regularization_type,
-                                                                                checkin_time : $request->checkin_time,
-                                                                                checkout_time : $request->checkout_time,
-                                                                                reason : $request->reason,
-                                                                                custom_reason : $request->custom_reason
-                                                                            );
-
+        return $serviceVmtAttendanceService->applyRequestAbsentRegularization(
+            user_code: $request->user_code,
+            attendance_date: $request->attendance_date,
+            regularization_type: $request->regularization_type,
+            checkin_time: $request->checkin_time,
+            checkout_time: $request->checkout_time,
+            reason: $request->reason,
+            custom_reason: $request->custom_reason
+        );
     }
 
-    public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
+    public function applyRequestAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
 
         //Validate the request
         $validator = Validator::make(
@@ -347,46 +357,48 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         if ($validator->fails()) {
             return response()->json([
-                        'status' => 'failure',
-                        'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
         //Fetch the data
-        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason, serviceVmtNotificationsService : $serviceVmtNotificationsService);
+        $response = $serviceVmtAttendanceService->applyRequestAttendanceRegularization($request->user_code, $request->attendance_date, $request->regularization_type, $request->user_time, $request->regularize_time, $request->reason, $request->custom_reason, serviceVmtNotificationsService: $serviceVmtNotificationsService);
 
 
         return $response;
-
     }
 
 
-    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService,VmtNotificationsService $serviceVmtNotificationsService){
+    public function approveRejectAttendanceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
+    {
 
 
         //Fetch the data
         $response = $serviceVmtAttendanceService->approveRejectAttendanceRegularization(
-                                approver_user_code : $request->approver_user_code,
-                                record_id : $request->record_id,
-                                status : $request->status,
-                                status_text : $request->status_text,
-                                serviceVmtNotificationsService : $serviceVmtNotificationsService);
+            approver_user_code: $request->approver_user_code,
+            record_id: $request->record_id,
+            status: $request->status,
+            status_text: $request->status_text,
+            serviceVmtNotificationsService: $serviceVmtNotificationsService
+        );
 
         return $response;
-
     }
 
-    public function getAttendanceRegularizationStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getAttendanceRegularizationStatus(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
         return $serviceVmtAttendanceService->getAttendanceRegularizationStatus(
-                                                user_code : $request->user_code,
-                                                regularization_date : $request->regularization_date,
-                                                regularization_type : $request->regularization_type
-                                            );
+            user_code: $request->user_code,
+            regularization_date: $request->regularization_date,
+            regularization_type: $request->regularization_type
+        );
     }
 
 
-    public function getAttendanceRegularizationData(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getAttendanceRegularizationData(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
         //Validate the request
         $validator = Validator::make(
@@ -405,8 +417,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         if ($validator->fails()) {
             return response()->json([
-                    'status' => 'failure',
-                    'message' => $validator->errors()->all()
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
             ]);
         }
 
@@ -420,7 +432,8 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
         ]);
     }
 
-    public function getUnusedCompensatoryDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getUnusedCompensatoryDays(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
         $validator = Validator::make(
             $request->all(),
@@ -434,7 +447,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
 
         );
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 'failure',
                 'message' => $validator->errors()->all()
@@ -451,28 +464,79 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             'message' => '',
             'data' => $response
         ]);
-
     }
 
-    public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeWorkShiftTimings(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
-       return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
-
+        return $serviceVmtAttendanceService->getEmployeeWorkShiftTimings($request->user_code);
     }
-    public function getEmployeeLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getEmployeeLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
-       return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
-
+        return $serviceVmtAttendanceService->getEmployeeLeaveDetails($request->user_code, $request->filter_month, $request->filter_year, $request->filter_leave_status);
     }
-    public function getAllEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getAllEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
-       return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails($request->filter_month,$request->filter_year,$request->filter_leave_status);
-
+        return $serviceVmtAttendanceService->getAllEmployeesLeaveDetails($request->filter_month, $request->filter_year, $request->filter_leave_status);
     }
-    public function getTeamEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService){
+    public function getTeamEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
 
-       return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code,$request->filter_month,$request->filter_year,$request->filter_leave_status);
-
+        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code, $request->filter_month, $request->filter_year, $request->filter_leave_status);
     }
 
+    public function getCountForAttRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid"
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+
+        $response =  $serviceVmtAttendanceService->getCountForAttRegularization($request->user_code);
+
+        return $response;
+    }
+
+    public function getfetchAttendadnceRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            $rules = [
+                "user_code" => 'required|exists:users,user_code',
+                 "year"=>'required',
+                 "month"=>'required',
+                 "status"=>'required|in:Pending,Approved,Rejected',
+            ],
+            $messages = [
+                "required" => "Field :attribute is missing",
+                "exists" => "Field :attribute is invalid",
+                "in"=>"Field :attribute is invalid"
+            ]
+        );
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => $validator->errors()->all()
+            ]);
+        }
+        $response =  $serviceVmtAttendanceService->getfetchAttendadnceRegularization($request->user_code,$request->year,$request->month,$request->status);
+
+        return $response;
+    }
 }

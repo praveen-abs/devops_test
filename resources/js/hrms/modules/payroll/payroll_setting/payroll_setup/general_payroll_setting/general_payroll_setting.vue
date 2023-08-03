@@ -173,15 +173,16 @@
                 </div>
                 <div class="my-4">
                     <h5 class="my-2 text-lg font-semibold">Pay days in month</h5>
-                    <div class="flex gap-8 my-3 justify-evenly">
-                        <div class="w-6 my-2">
-                            <p>Include Week Off's</p>
+                    <div class="flex gap-8 my-3 justify-between ">
+                        <div class=" my-2 ">
+                            <p class=" text-center">Include Week Off's</p>
+                            <p></p>
                         </div>
-                        <div class="flex w-6 ">
-                            <div class="mx-4">
+                        <div class="flex  items-center  ">
+                            <div class="">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
-                                <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
+                                <label class="ml-2 font-bold form-check-label leave_type mx-2" for="">Yes</label>
                             </div>
                             <div>
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
@@ -190,12 +191,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex gap-8 justify-evenly">
-                        <div class="w-6">
+                    <div class="flex gap-8 justify-between">
+                        <div class="">
                             <p>Include Holiday's</p>
                         </div>
-                        <div class="flex w-6">
-                            <div class="mx-4">
+                        <div class="flex  item-center">
+                            <div class="mx-2">
                                 <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                     value="" />
                                 <label class="ml-2 font-bold form-check-label leave_type" for="">Yes</label>
@@ -246,14 +247,14 @@
                     </div>
                 </div>
                 <div class="d-flex flex-column justify-evenly">
-                    <h5 class="text-lg font-semibold w-7 mt-4">Remuneration Types</h5>
-                    <div class="flex flex-column w-6 my-3">
-                        <div class="d-flex  ">
+                    <h5 class="text-lg font-semibold mt-4">Remuneration Types</h5>
+                    <div class="flex flex-column my-3">
+                        <div class=" flex items-center">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                 value="" />
                             <label class="ml-2 text-lg font-semibold from-check-label leave_type" for="">Monthly</label>
                         </div>
-                        <div class="my-3">
+                        <div class="flex my-3 items-center">
                             <input style="height: 20px; width: 20px" class="form-check-input" type="radio" name="" id=""
                                 value="" />
                             <label class="ml-2 text-lg font-semibold form-check-label leave_type" for="">Daliy</label>

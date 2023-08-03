@@ -173,7 +173,7 @@ class VmtEmployeePayCheckService
                             'lwf' => 'required|numeric',
                             'total_deductions' => 'required|numeric',
                             'net_take_home' => 'required|numeric',
-                            'rupees' => 'required|numeric',
+                            'rupees' => 'required',
                             'el_opn_bal' => 'nullable',
                             'availed_el' => 'nullable',
                             'balance_el' => 'nullable',
@@ -1268,6 +1268,7 @@ class VmtEmployeePayCheckService
                                                 ]];
              }
 
+                    //    dd($getpersonal);
 
             $user = User::where('user_code', $user_code)->first();
 
@@ -1280,7 +1281,15 @@ class VmtEmployeePayCheckService
 //dd($getpersonal );
             $html =  view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
 
-                    return $html;
+                    // return $html;
+
+                    $pdf = new Dompdf();
+                    $pdf->loadhtml($html, 'UTF-8');
+                    $pdf->setPaper('A4', 'portrait');
+                    $pdf->render();
+                    $pdf->stream("payslip.pdf");
+
+            return $pdf;
 
 
 

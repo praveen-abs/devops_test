@@ -111,7 +111,7 @@
                         </label>
                     </div>
                     <div class="my-4 d-flex align-items-center">
-                        <input type="checkbox" name="" id="" class="mr-4" style="width: 18px ;height: 20px;">
+                        <input type="checkbox" name="" id="" class="mr-4" style="width: 28px ;height: 20px;">
                         <label for="" class=" text-gray-500">
                             Consider all applicable salary components if PF Wage is less tham 15,000 after loss of pay
                         </label>

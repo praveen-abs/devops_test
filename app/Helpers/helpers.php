@@ -124,6 +124,8 @@ function sessionGetSelectedClientFullName()
         return "";
 }
 
+
+
 function sessionGetSelected_abs_clientcode()
 {
 
@@ -172,6 +174,27 @@ function getClientFullName($user_id)
 
     if (!empty($query_client))
         return $query_client->client_fullname;
+    else
+        return "";
+}
+
+function getClientLogo($user_id)
+{
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
+
+    if (!empty($query_client))
+        return $query_client->client_logo;
+    else
+        return "";
+}
+
+function sessionGetSelectedClientLogo()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_logo;
     else
         return "";
 }
@@ -447,11 +470,13 @@ function getCurrentUserGender()
     if ($lowerCaseGender == 'male') {
         return "male";
     } else
-        if ($lowerCaseGender == 'female') {
-            return "female";
-        } else {
-            return "invalid gender";
-        }
+    if ($lowerCaseGender == 'female') {
+        return "female";
+    }
+    else
+    {
+        return "invalid gender";
+    }
 }
 
 function newgetEmployeeAvatarOrShortName($user_id)
