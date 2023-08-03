@@ -1206,6 +1206,20 @@ class VmtEmployeeOnboardingController extends Controller
         $data['bankaccount_number']=array_values($bankaccount_number);
 
 //get existing employees_bankaccount_number
+        $employees_blood_group =VmtBloodGroup::pluck('name')->toarray();
+        $bankaccount_number = array_filter($employees_blood_group, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
+        $data['employees_blood_group']=array_values($employees_blood_group);
+
+//get existing employees_bankaccount_number
+        $employees_marital_status =VmtMaritalStatus::pluck('name')->toarray();
+        $bankaccount_number = array_filter($employees_marital_status, static function($data){
+            return !is_null($data) && $data !='NULL';
+        });
+        $data['employees_marital_status']=array_values($employees_marital_status);
+
+//get existing employees_bankaccount_number
         $employees_officical_mail =VmtEmployeeOfficeDetails::join('users','users.id','=','vmt_employee_office_details.user_id')
                                                            ->where('active','<>','-1')
                                                            ->pluck('officical_mail')->toarray();
