@@ -159,14 +159,16 @@ class VmtSalaryAdvanceService
                     'vmt_emp_assign_salary_adv_setting.id',
                     '=',
                     'vmt_emp_sal_adv_details.vmt_emp_assign_salary_adv_id'
-                )->where('vmt_emp_sal_adv_details.id', $loan_details_id)->first([
+                )->where('vmt_emp_sal_adv_details.id', $loan_details_id)->first(
+                    [
                     'vmt_emp_assign_salary_adv_setting.user_id as user_id',
                     'vmt_emp_sal_adv_details.emp_approver_flow as approver_flow',
                     'vmt_emp_sal_adv_details.request_id as request_id',
                     'vmt_emp_sal_adv_details.borrowed_amount as borrowed_amount',
                     'vmt_emp_sal_adv_details.dedction_date as dedction_date',
                     'vmt_emp_assign_salary_adv_setting.approver_flow as designation_flow'
-                ]);
+                ]
+            );
 
                 $designation_flow =  $loan_detail_query->designation_flow;
 
@@ -1631,8 +1633,8 @@ class VmtSalaryAdvanceService
 
 
             return response()->json([
-                'status' => 'success',
-                'message' => $message,
+                'status' =>  $msg_sts,
+                'message' =>  $message,
 
             ]);
         } catch (Exception $e) {
