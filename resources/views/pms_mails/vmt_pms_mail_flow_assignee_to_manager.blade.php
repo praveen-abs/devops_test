@@ -316,7 +316,6 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
 
 
 
-
     @elseif ($approvalStatus == 'accepted')
 
     <!DOCTYPE html>
