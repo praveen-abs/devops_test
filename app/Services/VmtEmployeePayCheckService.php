@@ -1105,11 +1105,11 @@ class VmtEmployeePayCheckService
     public function generatePayslip($user_code, $payroll_date)
     {
 
-        $user_code = "BA009";
-        $payroll_date  = "2023-06-01";
+        $user_code = "PSC0060";
+        $payroll_date  = "2023-05-01";
 
 
-        $payroll_data  =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
+        $payroll_data  =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=','vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
             ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
@@ -1120,7 +1120,7 @@ class VmtEmployeePayCheckService
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
             ->where('payroll_date', $payroll_date);
-
+       
         $getpersonal['client_details']  = $payroll_data->get(
                 [
                     'vmt_client_master.client_fullname',
@@ -1281,15 +1281,17 @@ class VmtEmployeePayCheckService
 //dd($getpersonal );
             $html =  view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
 
+            return $html;
+
                     // return $html;
 
-                    $pdf = new Dompdf();
-                    $pdf->loadhtml($html, 'UTF-8');
-                    $pdf->setPaper('A4', 'portrait');
-                    $pdf->render();
-                    $pdf->stream("payslip.pdf");
+                    // $pdf = new Dompdf();
+                    // $pdf->loadhtml($html, 'UTF-8');
+                    // $pdf->setPaper('A4', 'portrait');
+                    // $pdf->render();
+                    // $pdf->stream("payslip.pdf");
 
-            return $pdf;
+            // return $pdf;
 
 
 

@@ -20,6 +20,9 @@
   </style>
   <![endif]-->
   <style>
+    .border{
+      border:1px solid #f3f4f6 !important;
+    }
     .float-right {
       float: right
     }
@@ -54,44 +57,43 @@
                     <tr style="display: flex; width: 100%; align-items: center; justify-content: space-between">
                       <td style="display: flex; width: 100%; flex-direction: column; justify-content: center; padding-left: 40px">
                         <p style="font-size: 35px; font-weight: 600; color: #000">PAYSLIP <span style="font-weight: 400; color: #6b7280"> MAR 2023</span></p>
-                        <p style="font-size: 14px; color: #000; height: 12px">{{ $client_details[0]['client_fullname'] }}</p>
-                        <p style="width: 300px; font-size: 14px; color: #000; margin-bottom: 10px; height: 24px">EGISTERED ADDRESS:
+                        <p style="font-size: 14px; color: #000; height: 4px; margin-top:-20px ">{{ $client_details[0]['client_fullname'] }}</p>
+                        <p style="width: 300px; font-size: 14px; color: #000; margin-bottom: 30px; height: 24px">REGISTERED ADDRESS:
                             {{ $client_details[0]['address'] }}</p>
                       </td>
-                      <td>
-                        <img src='{{ $client_details[0]['client_logo'] }}' width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; width: 200px">
+                      <td style="" border="2">
+                        <img src='{{ $client_details[0]['client_logo'] }}' width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; width: 300px; margin-top:25px;">
                       </td>
                     </tr>
                   </table>
                 </td>
               </tr>
-              <tr style="display: flex; justify-content: center; width: 100%">
+              <tr style="display: flex; justify-content: center; width: 100% ; marign-top:10px;">
                 <td style="margin-left: 50px; width: 100%">
                   <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 100%" cellpadding="0" cellspacing="0" role="none">
                     <tr style="width: 100%;">
                       <td style="width: 100%;">
-                        <p style="position: relative; font-weight: 600; color: #000">{{ $personal_details[0]['name'] }}</p>
-                        <table border="2" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
-                          <tr>
-                          </tr>
+                        <p style="position: relative; font-weight: 600; color: #000 ;  margin-top:50px">Employee Name : {{ $personal_details[0]['name'] }}</p>
+                        <table border="1" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
+
                         </table>
                         <table style="height: 16px; width: 100%" cellpadding="0" cellspacing="0" role="none">
                           <tr style="height: 16px; width: 100%;">
-                            <td>
+                            <td style="width: 25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280">Employee Code</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['user_code'] }}</p>
+                              <p style="display: flex; font-weight: 600; color: #000; font-size: 14px; ">{{ $personal_details[0]['user_code'] }}</p>
                             </td>
-                            <td style="height: 16px;">
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Date Joined</p>
-                              <p style="display: flex; border-width: 1px; border-color: #000; font-weight: 600; color: #000">{{ $personal_details[0]['doj'] }}</p>
+                            <td style="height: 16px;width: 25%">
+                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280; ">Date Joined</p>
+                              <p style="display: flex; border-width: 1px; font-size: 14px;  border-color: #000; font-weight: 600; color: #000">{{ $personal_details[0]['doj'] }}</p>
                             </td>
-                            <td>
+                            <td style="width: 25%">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Department</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['department_name'] }}</p>
+                              <p style="display: flex; font-weight: 600; color: #000;  font-size: 13px;">{{ $personal_details[0]['department_name'] }}</p>
                             </td>
-                            <td style="height: 16px;">
+                            <td style="height: 16px;width: 25%">
                               <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280">Sub Department</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">-</p>
+                              <p style="display: flex; font-weight: 600; color: #000;  font-size: 13px;">-</p>
                             </td>
                           </tr>
                         </table>
@@ -101,21 +103,22 @@
                         </table>
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
-                            <td>
-                              <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Designation</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['designation'] }}</p>
+                            <td class="" style=" width:25%; padding:4px;" >
+                              <p style="display: flex; height: 8px; font-size: 13px; color: #6b7280;">Designation</p>
+                              <p style="display: flex; font-weight: 600; color: #000; font-size: 13px; ">{{ $personal_details[0]['designation'] }}</p>
                             </td>
-                            <td>
+                            <td style=" width:25%; padding:4px;">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Payment Mode</p>
-                              <p style="display: flex; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">-</p>
+                              <p style="display: flex; border-width: 1px; font-size: 13px; border-color: #000; font-weight: 600; color: #000;">-</p>
                             </td>
-                            <td>
+
+                            <td style=" width:25%; padding:4px;">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['bank_name'] }}</p>
+                              <p style="display: flex; font-weight: 600; color: #000; font-size: 13px;">{{ $personal_details[0]['bank_name'] }}</p>
                             </td>
-                            <td>
+                            <td style=" width:25%; padding:4px;">
                               <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank IFSC</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['bank_ifsc_code'] }}</p>
+                              <p style="display: flex; font-weight: 600; color: #000;  font-size: 13px;">{{ $personal_details[0]['bank_ifsc_code'] }}</p>
                             </td>
                           </tr>
                         </table>
@@ -125,23 +128,26 @@
                         </table>
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
-                            <td>
+                            <td style=" width:25%; padding:4px;">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">Bank Account</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['bank_account_number'] }}</p>
+                              <p style="display: flex; font-weight: 600; color: #000; font-size: 13px;">{{ $personal_details[0]['bank_account_number'] }}</p>
                             </td>
-                            <td>
+                            <td style=" width:25%; padding:4px;">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">PAN</p>
-                              <p style="display: flex; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">{{ $personal_details[0]['pan_number'] }}</p>
+                              <p style="display: flex; font-size: 13px; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">{{ $personal_details[0]['pan_number'] }}</p>
                             </td>
-                            <td>
+                            <td style=" width:25%; padding:4px;">
                               <p style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">UAN</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['uan_number'] }}</p>
+                              <p style="display: flex; font-weight: 600; font-size: 13px; color: #000;">{{ $personal_details[0]['uan_number'] }}</p>
                             </td>
-                            <td>
+                            <td style=" width:25%; padding:4px;">
                               <p style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">PF Number</p>
-                              <p style="display: flex; font-weight: 600; color: #000;">{{ $personal_details[0]['epf_number'] }}</p>
+                              <p style="display: flex; font-weight: 600; font-size: 13px; color: #000;">{{ $personal_details[0]['epf_number'] }}</p>
                             </td>
                           </tr>
+                        </table>
+                        <table border="1" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
+
                         </table>
                       </td>
                     </tr>
@@ -153,10 +159,8 @@
                   <table class="sm-w-full" style="margin-right: auto; width: 95%; margin-left: 50px" cellpadding="0" cellspacing="0" role="none">
                     <tr>
                       <td>
-                        <p style="font-weight: 600; color: #000;">{{ $personal_details[0]['name'] }}</p>
-                        <table border="2" style="border-color: #000; width: 100%;" cellpadding="0" cellspacing="0" role="none">
-                          <tr>
-                          </tr>
+                        <p style="height:20px; font-weight: 600; color: #000; margin-top:50px">SALARY DETAILS</p>
+                        <table border="1" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
                         </table>
                         <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                           <tr style="width: 100%;">
@@ -186,62 +190,71 @@
                     </tr>
                     <tr>
                       <td style="display: flex; width: 100%; justify-content: center;">
-                        <table style="width: 50%" cellpadding="0" cellspacing="0" role="none">
-                          <tr>
+                        <table style="height: 20px; width: 50%" cellpadding="0" cellspacing="0" role="none" >
+                          <tr style="height: 1px">
                             <td>
-                              <p style="height: 8px; font-weight: 600; color: #000;">EANINGS</p>
+                              <p style="height: 1px; font-weight: 600; color: #000;">EANINGS</p>
                             </td>
                           </tr>
                           @foreach ($earnings[0] as $key => $single_data)
-                          <tr>
-                            <td>
-                              <p style="height: 8px; color: #000;">{{str_replace('_',' ',$key)}}</p>
+                          <tr style="height: 2px ">
+                            <td  style="">
+                              <p style="height: 2px; color: #000;">{{str_replace('_',' ',$key)}}</p>
                             </td>
-                            <td>
-                              <p style="height: 8px; color: #000;">{{$single_data}}</p>
+                            <td class="" style="display: flex; justify-content:center; align-items:center">
+                              <p style="height: 2px; color: #000;text-align: center;">{{$single_data}}</p>
                             </td>
                           </tr>
                           @endforeach
 
                         </table>
-                        <table style="height: 20px; width: 50%" cellpadding="0" cellspacing="0" role="none">
-                          <tr style="height: 4px">
+                        <table border="1" style="border-color: #f3f4f6; width:1px; height:40vh; marign-left:30px !important;" cellpadding="0" cellspacing="0" role="none">
+                        </table>
+                        <table style="height: 20px; width: 50%; padding-left:10px;" cellpadding="0" cellspacing="0" role="none" >
+                          <tr style="height: 2px">
                             <td>
-                              <p style="height: 8px; font-weight: 600; color: #000;">CONTRIBUTIONS</p>
+                              <p style="height: 2px; font-weight: 600; color: #000;">CONTRIBUTIONS</p>
                             </td>
                           </tr>
                           @foreach ($contribution[0] as $key => $single_data)
 
-                          <tr style="height: 4px;">
-                            <td>
-                              <p style="height: 4px; color: #000;">{{str_replace('_',' ',$key)}}</p>
+                          <tr style="height: 2px;">
+                            <td style="margin-top:-20px">
+                              <p style="height: 2px; color: #000;">{{str_replace('_',' ',$key)}}</p>
                             </td>
                             <td>
-                              <p style="height: 4px; color: #000;">{{$single_data}}</p>
+                              <p style="height: 2px; color: #000;">{{$single_data}}</p>
                             </td>
                           </tr>
                           @endforeach
 
 
-                          <tr style="height: 4px;">
+                          <tr style="height: 2px;">
                             <td>
-                              <p style="height: 4px; font-weight: 700; color: #000">TAXES & DEDUCTIONS</p>
+                              <p style="height: 2px; font-weight: 700; color: #000">TAXES & DEDUCTIONS</p>
                             </td>
                           </tr>
                           @foreach ($Tax_Deduction[0] as $key => $single_data)
 
-                          <tr style="height: 4px;">
+                          <tr style="height: 2px;">
                             <td>
-                              <p style="height: 4px; color: #000;">{{str_replace('_',' ',$key)}}</p>
+                              <p style="height: 2px; color: #000;">{{str_replace('_',' ',$key)}}</p>
                             </td>
                             <td>
-                              <p style="height: 4px; color: #000;">{{$single_data}}</p>
+                              <p style="height: 2px; color: #000;">{{$single_data}}</p>
                             </td>
                           </tr>
                           @endforeach
                         </table>
                       </td>
                       <td> </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <table border="1" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
+                        </table>
+
+                      </td>
                     </tr>
                   </table>
                 </td>
