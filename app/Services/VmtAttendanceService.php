@@ -721,93 +721,122 @@ class VmtAttendanceService
         }
 
 
+        try{
+            //Get the user_code
+            $query_user = User::where('user_code', $approver_user_code)->first();
+            $approver_user_id = $query_user->id;
 
-        //Get the user_code
-        $query_user = User::where('user_code', $approver_user_code)->first();
-        $approver_user_id = $query_user->id;
+            // $approval_status = $request->status;
+            $leave_record = VmtEmployeeLeaves::where('id', $record_id)->first();
+            //dd($leave_record);
+            //dd( $leave_record);
+            //dd( $request->status);
+            if ($status == "Revoked") {
+                $leave_record->is_revoked = "true";
+                $leave_record->status = "Pending";
+            } else {
+                //For Approved or rejected status
+                $leave_record->status = $status;
+            }
 
-        // $approval_status = $request->status;
-        $leave_record = VmtEmployeeLeaves::where('id', $record_id)->first();
-        //dd($leave_record);
-        //dd( $leave_record);
-        //dd( $request->status);
-        if ($status == "Revoked") {
-            $leave_record->is_revoked = "true";
-            $leave_record->status = "Pending";
-        } else {
-            //For Approved or rejected status
-            $leave_record->status = $status;
+            $leave_record->reviewer_user_id = $approver_user_id;
+            $leave_record->reviewer_comments = $review_comment ?? "";
+            $leave_record->reviewed_date = Carbon::now();
+            $leave_record->save();
+
+            //Send mail to the employee
+            $employee_user_id = $leave_record->user_id;
+            $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->first()->officical_mail;
+            $obj_employee = User::where('id', $employee_user_id)->first();
+            $manager_user_id = $leave_record->reviewer_user_id;
+
+            $message = "";
+            $mail_status = "";
+
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
+
+
+            $isSent    = \Mail::to($employee_mail)->send(
+                new ApproveRejectLeaveMail(
+                    $obj_employee->name,
+                    $obj_employee->user_code,
+                    VmtLeaves::find($leave_record->leave_type_id)->leave_type,
+                    User::find($manager_user_id)->name,
+                    User::find($manager_user_id)->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $emp_avatar,
+                    $status
+                )
+
+            );
+
+            if ($isSent) {
+                $mail_status = "success";
+            } else {
+                $mail_status = "failure";
+            }
+
+            if ($status == "Approved") {
+                $text_status = "approved";
+                $leave_module_type = 'manager_approves_leave';
+            } else
+            if ($status == "Rejected") {
+                $text_status = "rejected";
+                $leave_module_type = 'manager_rejects_leave';
+            } else
+            if ($status == "Revoked") {
+                $text_status = "revoked";
+                $leave_module_type = 'manager_withdraw_leave';
+            }
+
+            $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
+
+            if($users_id->exists()){
+               $users_id = $users_id->first()->user_id;
+
+                $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
+                    notif_user_id: User::where('id', $users_id)->first()->user_code,
+                    leave_module_type: $leave_module_type,
+                    manager_user_code: $approver_user_code,
+                );
+
+            }
+
+
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Leave Request ' . $text_status . ' successfully',
+                'mail_status' => $mail_status,
+                'notification' => $res_notification,
+                'error' => '',
+                'error_verbose' => ''
+            ];
+
+            return $response;
+
+        } catch (TransportException $e) {
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Leave Request ' . $text_status . ' successfully',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ approveRejectRevokeLeaveRequest() ] " . $e->getMessage(),
+                'data' => $e->getMessage()
+            ]);
         }
-
-        $leave_record->reviewer_user_id = $approver_user_id;
-        $leave_record->reviewer_comments = $review_comment ?? "";
-        $leave_record->reviewed_date = Carbon::now();
-        $leave_record->save();
-
-        //Send mail to the employee
-        $employee_user_id = $leave_record->user_id;
-        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->first()->officical_mail;
-        $obj_employee = User::where('id', $employee_user_id)->first();
-        $manager_user_id = $leave_record->reviewer_user_id;
-
-        $message = "";
-        $mail_status = "";
-
-        $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->client_logo;
-
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
-
-
-        $isSent    = \Mail::to($employee_mail)->send(
-            new ApproveRejectLeaveMail(
-                $obj_employee->name,
-                $obj_employee->user_code,
-                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                User::find($manager_user_id)->name,
-                User::find($manager_user_id)->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $emp_avatar,
-                $status
-            )
-        );
-
-        if ($isSent) {
-            $mail_status = "success";
-        } else {
-            $mail_status = "failure";
-        }
-
-        if ($status == "Approved") {
-            $text_status = "approved";
-            $leave_module_type = 'manager_approves_leave';
-        } else
-        if ($status == "Rejected") {
-            $text_status = "rejected";
-            $leave_module_type = 'manager_rejects_leave';
-        } else
-        if ($status == "Revoked") {
-            $text_status = "revoked";
-            $leave_module_type = 'manager_withdraw_leave';
-        }
-        $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code)->first()->user_id;
-
-        $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
-            notif_user_id: User::where('id', $users_id)->first()->user_code,
-            leave_module_type: $leave_module_type,
-            manager_user_code: $approver_user_code,
-        );
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Request ' . $text_status . ' successfully',
-            'mail_status' => $mail_status,
-            'notification' => $res_notification,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
     }
 
 
@@ -3103,7 +3132,7 @@ class VmtAttendanceService
 
         return $response;
     }
-   
+
     //Get Count of Att req for given manager's team memebers
     public function getCountForAttRegularization($user_code)
     {
