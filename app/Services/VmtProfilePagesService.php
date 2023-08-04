@@ -185,10 +185,7 @@ class VmtProfilePagesService
             ->first();
 
 
-
-        $response_docs = VmtEmployeeDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_employee_documents.doc_id')
-            ->where('vmt_employee_documents.user_id', $response->id)
-            ->get();
+        $response_docs = $this->getEmployeeAllDocumentDetails($user_id);
         // check wheather employee proof documents approved or not .
         $emp_proof_docs = VmtTempEmployeeProofDocuments::join('vmt_documents', 'vmt_documents.id', '=', 'vmt_temp_employee_proof_documents.doc_id')
             ->where('vmt_temp_employee_proof_documents.user_id', $response->id)
@@ -220,7 +217,7 @@ class VmtProfilePagesService
         $response['short_name_Color'] = shortNameBGColor($user_short_name);
 
         $user_client_data = User::where('id', $user_id)->first();
-       
+
 
         $response['client_details'] = VmtClientMaster::where('id', $user_client_data->client_id)->first();
 
@@ -733,4 +730,77 @@ class VmtProfilePagesService
         }
         return response()->file(storage_path('employees/' . $private_file));
     }
+
+    public function getEmployeeAllDocumentDetails($user_id){
+
+
+        //Validate
+        $validator = Validator::make(
+        $data = [
+            'user_id' => $user_id,
+        ],
+        $rules = [
+            "user_id" => 'required|exists:users,id',
+        ],
+        $messages = [
+            'required' => 'Field :attribute is missing',
+            'exists' => 'Field :attribute is invalid',
+        ]
+
+    );
+
+    if($validator->fails()){
+        return response()->json([
+            'status' => 'failure',
+            'message' => $validator->errors()->all()
+        ]);
+    }
+
+
+    try{
+
+         $query_document =VmtDocuments::all();
+         $query_doc_id = array();
+      foreach ($query_document as $key => $Singledocid)
+        {
+            $query_doc_id[] = $Singledocid;
+        }
+
+         $query_user_doc_id = array();
+      foreach ($query_doc_id as $key => $Singledocid)
+        {
+            $query_user_doc_id[] = VmtEmployeeDocuments::where('user_id',$user_id)->where('doc_id',$Singledocid['id'])->first();
+         }
+
+         $reponse= array_diff($query_user_doc_id,$query_doc_id);
+         $emp_documents=array();
+         $i=0;
+         foreach ($reponse as $key => $docid) {
+
+             if($docid){
+                 $emp_documents[$i]=$docid;
+                 $emp_documents[$i]['document_name']=VmtDocuments::where('id',($key+1))->first()->document_name;
+             }else{
+                  $emp_documents[$i]['document_name']=VmtDocuments::where('id',($key+1))->first()->document_name;
+                  $emp_documents[$i]['status']=null;
+             }
+             $i++;
+       }
+        return $response=([
+            'status' => 'success',
+            'message' => '',
+            'data' => $emp_documents
+        ]);
+
+    }
+    catch(\Exception $e){
+        return $response=([
+            'status' => 'failure',
+            'message' => 'Error while fetching employee document details',
+            'data' => $e
+        ]);
+
+    }
+
+}
 }
