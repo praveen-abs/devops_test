@@ -10,6 +10,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\NamedRange;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -21,7 +23,7 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-//use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -29,7 +31,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping , WithCalculatedFormulas
+class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping , WithCalculatedFormulas ,WithTitle ,WithMultipleSheets
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -61,11 +63,23 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
     {
         //For First Row
         // $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
-        $sheet->getStyle('A1:AG1')->getFill()
+        $sheet->getStyle('A1:BH1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
-        $sheet->getStyle('A1:AG1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-        $sheet->getStyle('A1:AG1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:BH1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+        $sheet->getStyle('A1:BH1')->getAlignment()->setHorizontal('center');
+    }
+    public function title(): string
+    {
+        return 'Sheet1';
+    }
+
+    public function sheets(): array
+    {
+        return [
+            'Worksheet 1' => new FirstSheetExport(),
+            'Worksheet 2' => new SecondSheet(),
+        ];
     }
 
     public function headings(): array
@@ -73,7 +87,7 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
         return [
             'Employee Code',
             'Employee Name',
-            'Official Email',
+            'Official mail',
             'Mobile Number',
             'Gender',
             'Date Of Birth (dd-mmm-yyyy)',
@@ -83,14 +97,15 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
             'Designation',
             'Location',
             'Reporting Manager Employee Code',
-            'Work Phone',
-            'Personal Email',
+            'Official Mobile',
+            'Email',
             'Marital Status',
             'Marriage Date (dd-mmm-yyyy)',
             'Father Name',
             'Mother Name',
             'Spouse Name',
             'Blood Group',
+            'Salary Payment Mode',
             'Physically Handicapped',
             'Pan Number',
             'Aadhaar Number',
@@ -102,31 +117,34 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
             'Prev ESI Number',
             'Current Address',
             'Permanent Address',
-            'Compensatory Type',
-            'Amount',
             'Basic',
             'HRA',
-            'Statutory Bonus',
+            'Dearness Allowance',
+            'VDA',
             'Child Education Allowance',
-            'Food Coupon',
-            'LTA',
+            'Communication Allowance',
+            'Food Allowance',
+            'Travel Reimbursement (LTA)',
             'Special Allowance',
             'Other Allowance',
-            'EPF Employer Contribution',
-            'ESIC Employer Contribution',
-            'Insurance',
-            'Graduity',
-            'EPf Employee',
-            'ESIC Employee',
+            'Vehicle Reimbursement',
+            'Driver Salary',
+            'Washing Allowance',
+            'Unifrom Allowance',
+            'Total Fixed Gross',
+            'Employer EPF',
+            'Employer ESIC',
+            'Employer LWF',
+            'Employer Insurance',
+            'Cost to Company (CTC)',
+            'Employee EPF',
+            'Employee ESIC',
             'Professional Tax',
-            'Labour Welfare Fund',
-            'Net Income',
-            'Pf applicable',
-            'Esic applicable',
-            'Ptax location',
-            'tax regime',
-            'Lwf location',
-            'dearness  allowance'
+            'Employee LWF',
+            'Employee Insurance',
+            'Net Take Home',
+            'Current Address',
+            'Permanent Address',
         ];
     }
 
@@ -196,6 +214,9 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
     public function registerEvents(): array
     {
         return [
+
+
+
             //  handle by a closure.
             AfterSheet::class => function (AfterSheet $event) {
                 // $countries = $event->sheet;
