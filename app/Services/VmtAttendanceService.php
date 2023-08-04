@@ -45,64 +45,93 @@ class VmtAttendanceService
     public function fetchAttendanceRegularizationData($manager_user_code = null, $month, $year)
     {
 
+        $validator = Validator::make(
+            $data = [
+                'manager_user_code' => $manager_user_code,
+                'month' => $month,
+                'year' => $year,
+            ],
+            $rules = [
+                'manager_user_code' => 'required|exists:users,user_code',
+                'month' => 'required',
+                'year' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
+            ]
+        );
 
-        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+        try {
+            $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        $allEmployees_lateComing = null;
+            $allEmployees_lateComing = null;
 
-        //If manager ID not set, then show all employees
-        if (empty($manager_user_code)) {
-            if (empty($month) && empty($year))
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
-            else
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
-                    ->whereMonth('attendance_date', $month)
-                    ->get();
-        } else {
-            //If manager ID set, then show only the team level employees
-
-            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
-
-
-            if (empty($month) && empty($year))
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
-            else
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)
-                    ->whereYear('attendance_date', $year)
-                    ->whereMonth('attendance_date', $month)
-                    ->get();
-        }
-
-        //dd($map_allEmployees->toArray());
-        //dd($allEmployees_lateComing->toArray());
-
-        foreach ($allEmployees_lateComing as $singleItem) {
-
-            //check whether user_id from regularization table exists in USERS table
-            if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-
-                //If reviewer_id = 0, then its not yet reviewed
-                if ($singleItem->reviewer_id != 0) {
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
-                }
+            //If manager ID not set, then show all employees
+            if (empty($manager_user_code)) {
+                if (empty($month) && empty($year))
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+                else
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
+                        ->whereMonth('attendance_date', $month)
+                        ->get();
             } else {
-                //  dd("Missing User ID : " . $singleItem->user_id);
+                //If manager ID set, then show only the team level employees
+
+                $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
+
+
+                if (empty($month) && empty($year))
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
+                else
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)
+                        ->whereYear('attendance_date', $year)
+                        ->whereMonth('attendance_date', $month)
+                        ->get();
             }
+
+            //dd($map_allEmployees->toArray());
+            //dd($allEmployees_lateComing->toArray());
+
+            foreach ($allEmployees_lateComing as $singleItem) {
+
+                //check whether user_id from regularization table exists in USERS table
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+
+                    //If reviewer_id = 0, then its not yet reviewed
+                    if ($singleItem->reviewer_id != 0) {
+                        $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                        $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
+                    }
+                } else {
+                    //  dd("Missing User ID : " . $singleItem->user_id);
+                }
+            }
+
+            // dd($allEmployees_lateComing);
+            // return [
+            //     "status"=>"success",
+            //     "message"=>"",
+            //     "data"=>$allEmployees_lateComing
+            // ];
+
+            return $allEmployees_lateComing;
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching Attendance Regularization data",
+                "data" => $e,
+            ]);
         }
-
-        // dd($allEmployees_lateComing);
-        // return [
-        //     "status"=>"success",
-        //     "message"=>"",
-        //     "data"=>$allEmployees_lateComing
-        // ];
-
-        return $allEmployees_lateComing;
     }
+
+
+
 
 
     public function fetchAbsentRegularizationData($manager_user_code = null, $month, $year)
@@ -702,7 +731,7 @@ class VmtAttendanceService
             $rules = [
                 'record_id' => 'required|exists:vmt_employee_leaves,id',
                 'approver_user_code' => 'required|exists:users,user_code',
-                'status' => ['required', Rule::in(['Approved', 'Rejected','Revoked'])],
+                'status' => ['required', Rule::in(['Approved', 'Rejected', 'Revoked'])],
                 'review_comment' => 'nullable',
             ],
             $messages = [
@@ -3103,16 +3132,16 @@ class VmtAttendanceService
 
         return $response;
     }
-   
+
     //Get Count of Att req for given manager's team memebers
     public function getCountForAttRegularization($user_code)
     {
-                    //  $user_code = "BA011";
+        //  $user_code = "BA011";
         try {
-            $emp_users_query=VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
+            $emp_users_query = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
             $emp_users_id = array();
-            foreach( $emp_users_query as $single_emp){
-              array_push( $emp_users_id,$single_emp->user_id);
+            foreach ($emp_users_query as $single_emp) {
+                array_push($emp_users_id, $single_emp->user_id);
             }
 
             $month = Carbon::now()->format('m');
@@ -3120,7 +3149,7 @@ class VmtAttendanceService
 
             $total_count['pending_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Pending')->count();
-            $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id',$emp_users_id)->whereMonth('attendance_date', $month)
+            $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Approved')->count();
             $total_count['rejected_count']   = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Rejected')->count();
