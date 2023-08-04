@@ -21,6 +21,7 @@ use App\Models\VmtInterestFreeLoanTransaction;
 use App\Models\VmtInterestFreeLoanSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Models\VmtEmpInterestLoanDetails;
+use App\Models\VmtSalaryAdvanceMasterModel;
 use App\Models\VmtPayroll;
 use App\Models\Department;
 use App\Models\State;
@@ -2064,5 +2065,78 @@ class VmtSalaryAdvanceService
             }
         }
         return $response;
+    }
+
+    public function isEligibleForLoanAndAdvance($loan_type)
+    {
+        try {
+            if ($loan_type == "int_free_loan") {
+                $loan_type_name = "Interest Free Loan";
+            } else if ($loan_type == "loan_with_int") {
+                $loan_type_name = "Interest With Loan";
+            } else if ($loan_type == "sal_adv") {
+                $loan_type_name = "Salary Advance";
+            } else {
+                return response()->json([
+                    'status' => 'failure',
+                    'message' => 'Undefined Loan type'
+                ]);
+            }
+            $enable_status = VmtSalaryAdvanceMasterModel::where('client_id', $client_id = sessionGetSelectedClientid())->first()[$loan_type];
+            if ($enable_status == 0) {
+                return response()->json([
+                    'status' => 'failure',
+                    'data' => 0,
+                    'message' =>  $loan_type_name . ' Feature is not enabled for your organization'
+                ]);
+            } else if ($enable_status == 1) {
+                $user_id = auth()->user()->id;
+                $doj = Carbon::parse(VmtEmployee::where('userid', $user_id)->first()->doj);
+                if ($loan_type == 'loan_with_int') {
+                    $avaliable_int_loans = VmtLoanInterestSettings::where('client_id', sessionGetSelectedClientid())
+                        ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+                } else if ($loan_type == 'int_free_loan') {
+                    $avaliable_int_loans = VmtInterestFreeLoanSettings::where('client_id', sessionGetSelectedClientid())
+                        ->where('active', 1)->orderBy('min_month_served', 'DESC')->get();
+                } else if ($loan_type = "sal_adv") {
+                    $assigned_sal_adv = VmtEmpAssignSalaryAdvSettings::where('user_id', $user_id)->first();
+                    if (isset($assigned_sal_adv)) {
+                        return response()->json([
+                            'status' => 'success',
+                            'data' => 1,
+                            'message' =>  "Eligible For " . $loan_type_name
+                        ]);
+                    } else {
+                        return response()->json([
+                            'status' => 'failure',
+                            'data' => 0,
+                            'message' => "You are not eligible for " . $loan_type_name
+                        ]);
+                    }
+                }
+                $exp_month = $doj->diffInMonths(Carbon::now());
+                foreach ($avaliable_int_loans as $single_record) {
+                    if ($single_record->min_month_served <= $exp_month) {
+                        return response()->json([
+                            'status' => 'success',
+                            'data' => 1,
+                            'message' =>  "Eligible For " . $loan_type_name
+                        ]);
+                    }
+                }
+
+                return response()->json([
+                    'status' => 'failure',
+                    'data' => 0,
+                    'message' => "You are not eligible for " . $loan_type_name
+                ]);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Employee Loan History",
+                "data" => $e->getMessage(),
+            ]);
+        }
     }
 }
