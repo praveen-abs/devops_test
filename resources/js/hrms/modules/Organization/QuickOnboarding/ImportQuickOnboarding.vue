@@ -43,13 +43,13 @@
                 style="min-width: 12rem;" :header="col.title">
 
                 <template #body="{ data, field }">
-                    <div v-if="field.includes('Employee code')"
-                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee code']) || !useStore.isUserExists(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                    <div v-if="field.includes('Employee Code')"
+                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
-                                v-if="!useStore.isUserExists(data['Employee code'])"></i>
-                            {{ data['Employee code'] }}
+                                v-if="!useStore.isUserExists(data['Employee Code'])"></i>
+                            {{ data['Employee Code'] }}
                         </p>
                     </div>
                     <p v-else-if="field == 'Aadhar'"
@@ -238,11 +238,6 @@ const onCellEditComplete = (event) => {
 
     for (let index = 0; index < useStore.EmployeeQuickOnboardingSource.length; index++) {
         useStore.getValidationMessages(useStore.EmployeeQuickOnboardingSource[index]);
-        let format = {
-            title: Object.keys(useStore.EmployeeQuickOnboardingSource[index]),
-            value: Object.values(useStore.EmployeeQuickOnboardingSource[index])
-        }
-        useStore.excelRowData.push(format)
     }
 }
 
@@ -289,37 +284,7 @@ const sampleTemplateHeaders = [
 ]
 
 
-
-
-const datn = ref([
-
-    { header: "eid", value: "" },
-    { header: "test", value: [{ name: "test1" }, { name: "test2" }] },
-    { header: "ename", value: "" },
-    { header: "esal", value: [{ name: "val" }, { name: "val1" }] }])
-
-
-const transform = (data) => {
-    const noOfRowaToGenerate = 10;
-    return data.map(({ name, values }) => {
-        const headers = values.reduce((prev, next) =>
-        ({
-            ...prev, [next.header]: Array.isArray
-                (next.value) ? next.value.map(({ name }) => name) : next.value
-        }), {})
-        return {
-            workSheet: name,
-            rows: Array(noOfRowaToGenerate).fill(headers)
-        }
-    })
-}
-// transform(values.value)
-
-
-
 const download = () => {
-
-
     const data = XLSX.utils.json_to_sheet(sampleTemplate.value)
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, data, 'sheet1')
@@ -335,186 +300,3 @@ const Gender = ref([
 
 </script>
 
-
-<!-- <DataTable editMode="cell" @cell-edit-complete="onCellEditComplete" ref="dt" dataKey="id" :paginator="true"
-:rows="5"
-paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-:rowsPerPageOptions="[5, 10, 25]"
-currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
-
-<Column header="Employee code" field="Employee code" style="min-width: 8rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isSpecialChars(data['Employee code']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Employee code'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Employee Name" header="Employee Name" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Employee Name'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Email" header="Email " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Email'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Aadhar" header="Aadhar " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Aadhar'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputMask id="ssn" mask="9999 9999 9999" v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Account No" header="Account No " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Account No'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" minlength="10" maxlength="18" />
-    </template>
-</Column>
-<Column field="Bank Name" header="Bank Name " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Bank Name'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Gender" header="Gender" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Gender']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Gender'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <Dropdown v-model="data[field]" :options="Gender" optionLabel="name" optionValue="name"
-            placeholder="Select Gender" class="w-full" />
-    </template>
-
-</Column>
-<Column field="DOJ" header="DOJ " style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[isNumber(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg border-1' : '']"
-            class="font-semibold fs-6">
-            {{ data['DOJ'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field=" Location" header="Location" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data[' Location']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data[' Location'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="DOB" header="DOB" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[isNumber(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['DOB'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" />
-    </template>
-</Column>
-<Column field="Pan No" header="Pan No" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidPancard(data['Pan No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Pan No'].toUpperCase() }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputMask id="serial" mask="aaaPa9999a" v-model="data[field]" class="uppercase" />
-    </template>
-</Column>
-<Column field="Mobile Number" header="Mobile Number" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[isNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Mobile Number'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText minLength="10" maxLength="10" v-model="data[field]" @keypress="isEnteredNos($event)" />
-    </template>
-</Column>
-<Column field="Department" header="Department" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Department'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="Process" header="Process" style="min-width: 12rem">isEnterLetter
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Process']) ? 'bg-red-100 p-2 rounded-lg' : '']" class="font-semibold fs-6">
-            {{ data['Process'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="Designation" header="Designation" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isLetter(data['Designation']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Designation'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterLetter($event)" />
-    </template>
-</Column>
-<Column field="Bank ifsc" header="Bank ifsc" style="min-width: 12rem">
-    <template #body="{ data }">
-        <p :class="[useStore.isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
-            class="font-semibold fs-6">
-            {{ data['Bank ifsc'] }}
-        </p>
-    </template>
-    <template #editor="{ data, field }">
-        <InputText v-model="data[field]" @keypress="isEnterSpecialChars($event)" />
-    </template>
-</Column>
-
-<template></template>
-
-</DataTable> -->
