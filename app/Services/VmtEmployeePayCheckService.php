@@ -109,89 +109,89 @@ class VmtEmployeePayCheckService
                         $emp_client_code = preg_replace('/\d+/', '', $value);
                         $result = User::where('user_code', $value)->exists();
 
-                            if (!$result) {
-                                $fail('No matching client exists for the given Employee Code : '.$value);
-                                        }
-                                    },
-                                ],
-                            'emp_name' => 'required',
-                            'gender' => 'nullable',
-                            'designation' => 'required',
-                            'department' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                            'location' => 'required',
-                            'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                            'pan_number' => 'nullable',
-                            'aadhar_number' => 'nullable',
-                            'uan' => 'nullable',
-                            'epf_number' => 'nullable',
-                            'esic_number' => 'nullable',
-                            'bank_name' => 'nullable',
-                            'account_number' => 'nullable',
-                            'bank_ifsc_code' => 'nullable',
-                            'payroll_month' => 'required|date',
-                            'basic' => 'required|numeric',
-                            'hra' => 'required|numeric',
-                            'child_edu_allowance' => 'required|numeric',
-                            'spl_alw' => 'required|numeric',
-                            'total_fixed_gross' => 'required|numeric',
-                            'month_days' => 'required|numeric',
-                            'worked_days' => 'required|numeric',
-                            'arrears_days' => 'required|numeric',
-                            'lop' => 'required|numeric',
-                            'earned_basic' => 'required|numeric',
-                            'basic_arrear' => 'required|numeric',
-                            'earned_hra' => 'required|numeric',
-                            'hra_arrear' => 'required|numeric',
-                            'stats_bonus' => 'required|numeric',
-                            'earned_stats_bonus' => 'required|numeric',
-                            'earned_stats_arrear' => 'required|numeric',
-                            'earned_child_edu_allowance' => 'required|numeric',
-                            'child_edu_allowance_arrear' => 'required|numeric',
-                            'earned_spl_alw' => 'required|numeric',
-                            'spl_alw_arrear' => 'required|numeric',
-                            'overtime' => 'required|numeric',
-                            'total_earned_gross' => 'required|numeric',
-                            'pf_wages' => 'required|numeric',
-                            'pf_wages_arrear' => 'required|numeric',
-                            'epfr' => 'required|numeric',
-                            'epfr_arrear' => 'required|numeric',
-                            'edli_charges' => 'required|numeric',
-                            'edli_charges_arrears' => 'required|numeric',
-                            'pf_admin_charges' => 'required|numeric',
-                            'pf_admin_charges_arrears' => 'required|numeric',
-                            'employer_esi' => 'required|numeric',
-                            'employer_lwf' => 'required|numeric',
-                            'ctc' => 'required|numeric',
-                            'epf_ee' => 'required|numeric',
-                            'epf_ee_arrear' => 'required|numeric',
-                            'employee_esic' => 'required|numeric',
-                            'prof_tax' => 'required|numeric',
-                            'income_tax' => 'required|numeric',
-                            'sal_adv' => 'required|numeric',
-                            'canteen_dedn' => 'required|numeric',
-                            'other_deduc' => 'required|numeric',
-                            'lwf' => 'required|numeric',
-                            'total_deductions' => 'required|numeric',
-                            'net_take_home' => 'required|numeric',
-                            'rupees' => 'required',
-                            'el_opn_bal' => 'nullable',
-                            'availed_el' => 'nullable',
-                            'balance_el' => 'nullable',
-                            'sl_opn_bal' => 'nullable',
-                            'availed_sl' => 'nullable',
-                            'balance_sl' => 'nullable',
-                            'rename' => 'nullable',
-                            'email' => 'nullable',
-                            'greetings' => 'nullable',
-                            'travel_conveyance' => 'nullable',
-                            'other_earnings' => 'nullable'
+                        if (!$result) {
+                            $fail('No matching client exists for the given Employee Code : ' . $value);
+                        }
+                    },
+                ],
+                'emp_name' => 'required',
+                'gender' => 'nullable',
+                'designation' => 'required',
+                'department' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'location' => 'required',
+                'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
+                'pan_number' => 'nullable',
+                'aadhar_number' => 'nullable',
+                'uan' => 'nullable',
+                'epf_number' => 'nullable',
+                'esic_number' => 'nullable',
+                'bank_name' => 'nullable',
+                'account_number' => 'nullable',
+                'bank_ifsc_code' => 'nullable',
+                'payroll_month' => 'required|date',
+                'basic' => 'required|numeric',
+                'hra' => 'required|numeric',
+                'child_edu_allowance' => 'required|numeric',
+                'spl_alw' => 'required|numeric',
+                'total_fixed_gross' => 'required|numeric',
+                'month_days' => 'required|numeric',
+                'worked_days' => 'required|numeric',
+                'arrears_days' => 'required|numeric',
+                'lop' => 'required|numeric',
+                'earned_basic' => 'required|numeric',
+                'basic_arrear' => 'required|numeric',
+                'earned_hra' => 'required|numeric',
+                'hra_arrear' => 'required|numeric',
+                'stats_bonus' => 'required|numeric',
+                'earned_stats_bonus' => 'required|numeric',
+                'earned_stats_arrear' => 'required|numeric',
+                'earned_child_edu_allowance' => 'required|numeric',
+                'child_edu_allowance_arrear' => 'required|numeric',
+                'earned_spl_alw' => 'required|numeric',
+                'spl_alw_arrear' => 'required|numeric',
+                'overtime' => 'required|numeric',
+                'total_earned_gross' => 'required|numeric',
+                'pf_wages' => 'required|numeric',
+                'pf_wages_arrear' => 'required|numeric',
+                'epfr' => 'required|numeric',
+                'epfr_arrear' => 'required|numeric',
+                'edli_charges' => 'required|numeric',
+                'edli_charges_arrears' => 'required|numeric',
+                'pf_admin_charges' => 'required|numeric',
+                'pf_admin_charges_arrears' => 'required|numeric',
+                'employer_esi' => 'required|numeric',
+                'employer_lwf' => 'required|numeric',
+                'ctc' => 'required|numeric',
+                'epf_ee' => 'required|numeric',
+                'epf_ee_arrear' => 'required|numeric',
+                'employee_esic' => 'required|numeric',
+                'prof_tax' => 'required|numeric',
+                'income_tax' => 'required|numeric',
+                'sal_adv' => 'required|numeric',
+                'canteen_dedn' => 'required|numeric',
+                'other_deduc' => 'required|numeric',
+                'lwf' => 'required|numeric',
+                'total_deductions' => 'required|numeric',
+                'net_take_home' => 'required|numeric',
+                'rupees' => 'required',
+                'el_opn_bal' => 'nullable',
+                'availed_el' => 'nullable',
+                'balance_el' => 'nullable',
+                'sl_opn_bal' => 'nullable',
+                'availed_sl' => 'nullable',
+                'balance_sl' => 'nullable',
+                'rename' => 'nullable',
+                'email' => 'nullable',
+                'greetings' => 'nullable',
+                'travel_conveyance' => 'nullable',
+                'other_earnings' => 'nullable'
             ];
 
             $messages = [
-                            'required' => 'Field <b>:attribute</b> is required',
-                            'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist',
-                            'regex' =>  'Field <b>:attribute</b> is invalid',
-                            'numeric' =>  'Field <b>:attribute</b> is invalid',
+                'required' => 'Field <b>:attribute</b> is required',
+                'exists' => 'Column <b>:attribute</b> with value <b>:input</b> doesnt not exist',
+                'regex' => 'Field <b>:attribute</b> is invalid',
+                'numeric' => 'Field <b>:attribute</b> is invalid',
             ];
 
             $validator = Validator::make($excelRowdata, $rules, $messages);
@@ -213,7 +213,7 @@ class VmtEmployeePayCheckService
 
         //Runs only if all excel records are valid
         if ($isAllRecordsValid) {
-            foreach ($excelRowdata_row[$i[0]]  as $key => $excelRowdata) {
+            foreach ($excelRowdata_row[$i[0]] as $key => $excelRowdata) {
                 $rowdata_response = $this->storeSingleRecord_EmployeePayslip($excelRowdata);
 
                 array_push($data_array, $rowdata_response);
@@ -260,7 +260,7 @@ class VmtEmployeePayCheckService
             $empPaySlip->designation = $row['designation'];
             $empPaySlip->department = $row['department'] ?? null;
             $empPaySlip->location = $row['location'];
-            $empPaySlip->father_name  = $row['father_name'] ?? null;
+            $empPaySlip->father_name = $row['father_name'] ?? null;
             $empPaySlip->pan_number = $row['pan_number'] ?? null;
             $empPaySlip->aadhar_number = $row['aadhar_number'] ?? null;
             $empPaySlip->uan = $row['uan'] ?? null;
@@ -321,7 +321,7 @@ class VmtEmployeePayCheckService
                 $empPaySlip->pf_wages = $row["pf_wages"];
                 $empPaySlip->pf_wages_arrear = $row["pf_wages_arrear"];
                 $empPaySlip->epfr = $row["epfr"];
-                $empPaySlip->epfr_arrear  = $row["epfr_arrear"];
+                $empPaySlip->epfr_arrear = $row["epfr_arrear"];
                 $empPaySlip->edli_charges = $row["edli_charges"];
                 $empPaySlip->edli_charges_arrears = $row["edli_charges_arrears"];
                 $empPaySlip->pf_admin_charges = $row["pf_admin_charges"];
@@ -454,7 +454,7 @@ class VmtEmployeePayCheckService
             $processed_clientName = strtolower(str_replace(' ', '', $client_name));
 
 
-            $html =  view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $data);
+            $html = view('vmt_payslip_templates.template_payslip_' . $processed_clientName, $data);
 
             return $html;
             return response()->json([
@@ -531,7 +531,7 @@ class VmtEmployeePayCheckService
 
         $month = strtotime($payroll_month->payroll_date);
 
-        $emp_pay_month =  date("F", $month);
+        $emp_pay_month = date("F", $month);
 
         $data['employee_name'] = $user->name;
         // dd( $data['employee_name']);
@@ -559,7 +559,8 @@ class VmtEmployeePayCheckService
         $pdf->render();
 
         //$response=base64_encode($pdf->stream([$client_name.'.pdf']));
-        $response = base64_encode($pdf->output([$client_name . '.pdf']));;
+        $response = base64_encode($pdf->output([$client_name . '.pdf']));
+        ;
 
         return response()->json([
             'status' => 'success',
@@ -639,7 +640,7 @@ class VmtEmployeePayCheckService
                     ::with() works only if you specify the foreign key . Else it will return empty
 
             */
-            $query_payroll_id =  $query_payslip->id;
+            $query_payroll_id = $query_payslip->id;
 
 
             $query_emp_payroll_id = VmtEmployeePayroll::where('user_id', $user_id)->where('payroll_id', $query_payroll_id)->first();
@@ -669,9 +670,27 @@ class VmtEmployeePayCheckService
 
             $response['single_payslip_detail'] = VmtEmployeePaySlipV2::where('emp_payroll_id', '=', $query_emp_payroll_id->id)
                 ->get([
-                    'id', 'emp_payroll_id as PAYROLL_MONTH', 'month_days as MONTH_DAYS', 'worked_Days as Worked_Days', 'lop as LOP', 'arrears_Days as ArrearS_Days', 'basic as BASIC', 'hra as HRA', 'spl_alw as SPL_ALW',
-                    'overtime as Overtime', 'travel_conveyance', 'total_earned_gross as TOTAL_EARNED_GROSS', 'prof_tax as PROF_TAX', 'income_tax', 'sal_adv as SAL_ADV', 'other_deduc as OTHER_DEDUC', 'total_deductions as TOTAL_DEDUCTIONS', 'epfr as EPFR', 'employee_esic as EMPLOYEE_ESIC',
-                    'net_take_home as NET_TAKE_HOME', 'employer_esi as EMPLOYER_ESI'
+                    'id',
+                    'emp_payroll_id as PAYROLL_MONTH',
+                    'month_days as MONTH_DAYS',
+                    'worked_Days as Worked_Days',
+                    'lop as LOP',
+                    'arrears_Days as ArrearS_Days',
+                    'basic as BASIC',
+                    'hra as HRA',
+                    'spl_alw as SPL_ALW',
+                    'overtime as Overtime',
+                    'travel_conveyance',
+                    'total_earned_gross as TOTAL_EARNED_GROSS',
+                    'prof_tax as PROF_TAX',
+                    'income_tax',
+                    'sal_adv as SAL_ADV',
+                    'other_deduc as OTHER_DEDUC',
+                    'total_deductions as TOTAL_DEDUCTIONS',
+                    'epfr as EPFR',
+                    'employee_esic as EMPLOYEE_ESIC',
+                    'net_take_home as NET_TAKE_HOME',
+                    'employer_esi as EMPLOYER_ESI'
                 ]);
 
             $response['single_payslip_detail'][0]['PAYROLL_MONTH'] = $query_payslip->payroll_date;
@@ -1007,7 +1026,7 @@ class VmtEmployeePayCheckService
             $image_view = url('/') . $VmtClientMaster->client_logo;
 
             // $pdf->stream($client_name.'.pdf');
-            $isSent    = \Mail::to($query_user->email)->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
+            $isSent = \Mail::to($query_user->email)->send(new PayslipMail(request()->getSchemeAndHttpHost(), $pdf->output(), $month, $year, $image_view));
 
             if ($isSent) {
                 return response()->json([
@@ -1105,11 +1124,11 @@ class VmtEmployeePayCheckService
     public function generatePayslip($user_code, $payroll_date)
     {
 
-        $user_code = "PSC0060";
-        $payroll_date  = "2023-05-01";
+        $user_code = "BA002";
+        $payroll_date = "2023-05-01";
 
 
-        $payroll_data  =  VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=','vmt_payroll.client_id')
+        $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
             ->join('vmt_emp_payroll', 'vmt_emp_payroll.payroll_id', '=', 'vmt_payroll.id')
             ->join('users', 'users.id', '=', 'vmt_emp_payroll.user_id')
             ->join('vmt_employee_payslip_v2', 'vmt_employee_payslip_v2.emp_payroll_id', '=', 'vmt_emp_payroll.id')
@@ -1120,17 +1139,17 @@ class VmtEmployeePayCheckService
             ->join('vmt_banks', 'vmt_banks.id', '=', 'vmt_employee_details.bank_id')
             ->where('user_code', $user_code)
             ->where('payroll_date', $payroll_date);
-       
-        $getpersonal['client_details']  = $payroll_data->get(
-                [
-                    'vmt_client_master.client_fullname',
-                    'vmt_client_master.client_logo',
-                    'vmt_client_master.address',
-                ]
-            )->toArray();
 
-                    // dd($getpersonal['client_details'] );
-      $getpersonal['personal_details']    = $payroll_data
+        $getpersonal['client_details'] = $payroll_data->get(
+            [
+                'vmt_client_master.client_fullname',
+                'vmt_client_master.client_logo',
+                'vmt_client_master.address',
+            ]
+        )->toArray();
+
+
+        $getpersonal['personal_details'] = $payroll_data
             ->get(
                 [
                     'users.name',
@@ -1149,17 +1168,17 @@ class VmtEmployeePayCheckService
             )->toArray();
 
 
-      $getpersonal['salary_details'] = $payroll_data
+        $getpersonal['salary_details'] = $payroll_data
             ->get(
                 [
-                   'vmt_employee_payslip_v2.month_days',
-                   'vmt_employee_payslip_v2.worked_Days',
-                   'vmt_employee_payslip_v2.arrears_Days',
-                   'vmt_employee_payslip_v2.lop',
+                    'vmt_employee_payslip_v2.month_days',
+                    'vmt_employee_payslip_v2.worked_Days',
+                    'vmt_employee_payslip_v2.arrears_Days',
+                    'vmt_employee_payslip_v2.lop',
                 ]
             )->toArray();
 
-      $getearnings = $payroll_data
+        $getearnings = $payroll_data
             ->get(
                 [
                     'vmt_employee_payslip_v2.basic as Basic',
@@ -1173,146 +1192,151 @@ class VmtEmployeePayCheckService
                 ]
             )->toArray();
 
-            $getpersonal['earnings'] = [];
-            foreach ($getearnings as $single_payslip) {
-                        foreach ($single_payslip as $key => $single_details) {
 
-                            if ($single_details == "0" || $single_details == null || $single_details == "") {
-                                unset($single_payslip[$key]);
-                            }
-                        }
-                        array_push($getpersonal['earnings'], $single_payslip);
-                    }
-
-
-             if(!empty($getpersonal['earnings'])){
-
-                $total_value = 0;
-                foreach($getpersonal['earnings'][0] as $single_data){
-                    $total_value += ((int)$single_data);
-                   }
-                   $getpersonal['earnings'][0]['Total_Earnings'] = $total_value;
-              }
+        $getcontribution = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_payslip_v2.epf_ee as EPF Employee',
+                    'vmt_employee_payslip_v2.employee_esic as ESIC Employee ',
+                    'vmt_employee_payslip_v2.vpf as VPF',
+                ]
+            )->toArray();
 
 
+        $gettaxdeduction = $payroll_data
+            ->get(
+                [
+                    'vmt_employee_payslip_v2.prof_tax as Professional Tax',
+                    'vmt_employee_payslip_v2.lwf as LWF',
+                    'vmt_employee_payslip_v2.income_tax as Income Tax',
+                    'vmt_employee_payslip_v2.sal_adv as Salary Advance',
+                    'vmt_employee_payslip_v2.canteen_dedn as Canteen Deduction',
+                    'vmt_employee_payslip_v2.other_deduc as Other Deduction',
+                ]
+            )->toArray();
 
-               $getcontribution = $payroll_data
-               ->get(
-                   [
-                       'vmt_employee_payslip_v2.epf_ee as EPF Employee',
-                       'vmt_employee_payslip_v2.employee_esic as ESIC Employee ',
-                       'vmt_employee_payslip_v2.vpf as VPF',
-                   ]
-               )->toArray();
+        // Total earnings
 
-               $getpersonal['contribution'] = [];
-               foreach ($getcontribution as $single_payslip) {
-                           foreach ($single_payslip as $key => $single_details) {
+        $getpersonal['earnings'] = [];
+        foreach ($getearnings as $single_payslip) {
+            foreach ($single_payslip as $key => $single_details) {
 
-                               if ($single_details == "0" || $single_details == null || $single_details == "") {
-                                   unset($single_payslip[$key]);
-                               }
-                           }
-                           array_push($getpersonal['contribution'], $single_payslip);
-                       }
-
-             if(!empty($getpersonal['contribution'])){
-
-                  $total_value = 0;
-                  foreach($getpersonal['contribution'][0] as $single_simma){
-                   $total_value += ((int)$single_simma);
-                  }
-                  $getpersonal['contribution'][0]['Total_Contribution'] = $total_value;
-
+                if ($single_details == "0" || $single_details == null || $single_details == "") {
+                    unset($single_payslip[$key]);
                 }
+            }
+            array_push($getpersonal['earnings'], $single_payslip);
+        }
 
-               $gettaxdeduction = $payroll_data
-               ->get(
-                   [
-                       'vmt_employee_payslip_v2.prof_tax as Professional Tax',
-                       'vmt_employee_payslip_v2.lwf as LWF',
-                       'vmt_employee_payslip_v2.income_tax as Income Tax',
-                       'vmt_employee_payslip_v2.sal_adv as Salary Advance',
-                       'vmt_employee_payslip_v2.canteen_dedn as Canteen Deduction',
-                       'vmt_employee_payslip_v2.other_deduc as Other Deduction',
-                   ]
-               )->toArray();
+        if (!empty($getpersonal['earnings'])) {
+            $total_value = 0;
+            foreach ($getpersonal['earnings'][0] as $single_data) {
+                $total_value += ((int) $single_data);
+            }
+            $getpersonal['earnings'][0]['Total_Earnings'] = $total_value;
+        }
 
+        // Total contribution
 
-               $getpersonal['Tax_Deduction'] = [];
-               foreach ($gettaxdeduction as $single_payslip) {
-                           foreach ($single_payslip as $key => $single_details) {
+        $getpersonal['contribution'] = [];
+        foreach ($getcontribution as $single_payslip) {
+            foreach ($single_payslip as $key => $single_details) {
 
-                               if ($single_details == "0" || $single_details == null || $single_details == "") {
-                                   unset($single_payslip[$key]);
-                               }
-                           }
-                           array_push($getpersonal['Tax_Deduction'], $single_payslip);
-                       }
-
-          if(!empty($getpersonal['Tax_Deduction'])){
-
-                  $total_value = 0;
-                  foreach($getpersonal['Tax_Deduction'][0] as $single_data){
-                   $total_value += ((int)$single_data);
-                  }
-                  $getpersonal['Tax_Deduction'][0]['Total_Deduction'] = $total_value;
-
+                if ($single_details == "0" || $single_details == null || $single_details == "") {
+                    unset($single_payslip[$key]);
                 }
-                    // return($getpersonal);
-             if(!empty($getpersonal['earnings']) &&!empty($getpersonal['contribution']) &&!empty($getpersonal['Tax_Deduction'])){
-                $total_amount   = ($getpersonal['earnings'][0]['Total_Earnings']) - ($getpersonal['contribution'][0]['Total_Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total_Deduction'] );
+            }
+            array_push($getpersonal['contribution'], $single_payslip);
+        }
 
-                    $getpersonal['over_all']  = [["Net_Salary_Payable" => $total_amount,
-                                                 "Net_Salary_in_words" => numberToWord($total_amount),
-                                                ]];
-             }
+        if (!empty($getpersonal['contribution'])) {
 
-                    //    dd($getpersonal);
+            $total_value = 0;
+            foreach ($getpersonal['contribution'][0] as $single_simma) {
+                $total_value += ((int) $single_simma);
+            }
+            $getpersonal['contribution'][0]['Total_Contribution'] = $total_value;
 
-            $user = User::where('user_code', $user_code)->first();
+        }
 
-            $query_client = VmtClientMaster::find($user->client_id);
+            // Total deduction
 
-            $client_name = $query_client->client_name;
+        $getpersonal['Tax_Deduction'] = [];
+        foreach ($gettaxdeduction as $single_payslip) {
+            foreach ($single_payslip as $key => $single_details) {
 
-            $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+                if ($single_details == "0" || $single_details == null || $single_details == "") {
+                    unset($single_payslip[$key]);
+                }
+            }
+            array_push($getpersonal['Tax_Deduction'], $single_payslip);
+        }
 
-//dd($getpersonal );
-            $html =  view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
+        if (!empty($getpersonal['Tax_Deduction'])) {
 
-            return $html;
+            $total_value = 0;
+            foreach ($getpersonal['Tax_Deduction'][0] as $single_data) {
+                $total_value += ((int) $single_data);
+            }
+            $getpersonal['Tax_Deduction'][0]['Total_Deduction'] = $total_value;
 
-                    // return $html;
+        }
 
-                    // $pdf = new Dompdf();
-                    // $pdf->loadhtml($html, 'UTF-8');
-                    // $pdf->setPaper('A4', 'portrait');
-                    // $pdf->render();
-                    // $pdf->stream("payslip.pdf");
 
-            // return $pdf;
+        if (!empty($getpersonal['earnings']) && !empty($getpersonal['contribution']) && !empty($getpersonal['Tax_Deduction'])) {
+            $total_amount = ($getpersonal['earnings'][0]['Total_Earnings']) - ($getpersonal['contribution'][0]['Total_Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total_Deduction']);
+
+            $getpersonal['over_all'] = [
+                [
+                    "Net_Salary_Payable" => $total_amount,
+                    "Net_Salary_in_words" => numberToWord($total_amount),
+                ]
+            ];
+        }
+
+
+
+        // $user = User::where('user_code', $user_code)->first();
+
+        // $query_client = VmtClientMaster::find($user->client_id);
+
+        // $client_name = $query_client->client_name;
+
+        // $processed_clientName = strtolower(str_replace(' ', '', $client_name));
+
+
+        $html = view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
+
+        // return $html;
+
+        $pdf = new Dompdf();
+        $pdf->loadhtml($html, 'UTF-8');
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+        $pdf->stream("payslip.pdf");
+
+        return $pdf;
 
 
 
 
         // Remove empty value in array
 
-    //     $get_payslip_details = [];
-    //     $get_employee_salary_details = [];
-    //     $get_employee_earnings = [];
+        //     $get_payslip_details = [];
+        //     $get_employee_salary_details = [];
+        //     $get_employee_earnings = [];
 
-    //     foreach ($getpayslip as $single_payslip) {
-    //         foreach ($single_payslip as $key => $single_details) {
+        //     foreach ($getpayslip as $single_payslip) {
+        //         foreach ($single_payslip as $key => $single_details) {
 
-    //             if ($single_details == "0" || $single_details == null || $single_details == "") {
-    //                 unset($single_payslip[$key]);
-    //             }
-    //         }
-    //         array_push($get_payslip_details, $single_payslip);
-    //     }
+        //             if ($single_details == "0" || $single_details == null || $single_details == "") {
+        //                 unset($single_payslip[$key]);
+        //             }
+        //         }
+        //         array_push($get_payslip_details, $single_payslip);
+        //     }
 
 
-}
+    }
 
 }
