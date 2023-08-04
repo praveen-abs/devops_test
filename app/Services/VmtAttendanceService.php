@@ -841,7 +841,7 @@ class VmtAttendanceService
                 'status' => 'success',
                 'message' => 'Leave Request ' . $text_status . ' successfully',
                 'mail_status' => $mail_status,
-                'notification' => $res_notification,
+                'notification' => $res_notification ?? 'Not sent',
                 'error' => '',
                 'error_verbose' => ''
             ];
