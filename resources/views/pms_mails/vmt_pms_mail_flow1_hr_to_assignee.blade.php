@@ -186,11 +186,18 @@ $bank_names = \DB::table('vmt_banks')->get();
                                                             login and have a great conversation with your reporting
                                                             manager.
                                   </p>
+                                  <tr>
+                                    <td style="text-align: center; margin: 32px 0 4px; padding: 20px 0px; ">
+                                      <a href="{{ $login_Link }}/team-appraisal" class="hover-bg-red-700 sm-mx-3" style="margin-left: 48px; margin-right: 48px; border-radius: 9999px; background-color: #ef4444; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 12px; width: 12px;">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                        Click Here
+                                      </a>
+                                    </td>
+                                  </tr>
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    <a class=""
-                                    href="{{ $login_Link }}">
-                                 Click Here
-                                </a>
+                                    We wish you achieve your greatest goals moving forward.
                                   </p>
                                 </td>
                               </tr>
@@ -272,173 +279,6 @@ $bank_names = \DB::table('vmt_banks')->get();
 
 
 
-
-
-
-
-
-        <table id="wrapper" cellpadding="0" cellspacing="0" width="552"
-            style="max-width:552px; height: auto; margin: 0 auto;   font-size: 14px !important; color: #403e3c; line-height: 24px;table-layout:fixed; width:100%;border:1px solid rgba(44, 43, 43, 0.185);border-radius:5px;padding:10px">
-            <tbody>
-                {{-- @if (Str::contains(currentLoggedInUserRole(), ['Employee'])) --}}
-                <tr>
-                    <td>
-                        <table border="0" cellpadding="24" cellspacing="0" bgcolor="#ffffff"
-                            style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;padding-top:0px;">
-                            <tbody>
-                                <tr>
-                                    <td align="center" style="padding:0;">
-
-                                        <table cellpadding="20" cellspacing="0" width="100%" align="center">
-                                            <tbody>
-                                                {{-- <tr>
-                                                    <td colspan="4" align="center" class="border-less">
-                                                        <img src={{ $client_logo }} style="height:45px;width:150px;"
-                                                            title="">
-                                                    </td>
-                                                </tr> --}}
-
-
-                                                <tr>
-                                                    <td colspan="4" align="left" class="border-less"
-                                                        style="padding:10px ;">
-
-                                                        <p class="" style="margin:0px ">Dear <b>Mr./Ms.
-                                                                @php echo $user_emp_name; @endphp </b></p>
-                                                        <p class="" style="  ">
-                                                            The purpose of this mail is to inform you that, your
-                                                            respective
-                                                            OKR/Goals as well as your reporting manager's expectations
-                                                            and
-                                                            directions for <b>{{ $appraisal_year }} - {{ $appraisal_period}}</>
-                                                        </p>
-                                                        <p>
-                                                            As you all must be aware that this is a mandate process that
-                                                            we
-                                                            all must adhere ensuring both you and your reporting manager
-                                                            are
-                                                            clear about your job objectives and expected results from
-                                                            you.
-                                                        </p>
-                                                        <p>
-                                                            Kindly go through your OKR/PMS uploaded in your respective
-                                                            HRMS
-                                                            login and have a great conversation with your reporting
-                                                            manager.
-                                                        </p>
-                                                        <p>
-                                                            <a class=""
-                                                                    href="{{ $login_Link }}">
-                                                                 Click Here
-                                                                </a>
-                                                            </p>
-
-                                                        <p>
-                                                            We wish you achieve your greatest goals moving forward.
-                                                        </p>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="left" style="padding: 10px"
-                                                        class="padding-top_0 padding-b_0">
-                                                        <p class="txt-left margin-t-b_0 " class="margin:0px;"><b>Cheers,</b>
-                                                        </p>
-                                                        <p class="txt-left margin-t-b_0 "><b>ABS_OKR Automated System.</b>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td style="padding: 0px;">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" style="padding:10px 0px 0px 0px">
-                                                        This e-mail was generated from ABShrms if you think this is
-                                                        SPAM,please do report to <a href="info@abshrms.com"
-                                                            style="text-decoration: none;color:none;">info<span
-                                                                style="color:#fa9530;">@abshrms.com</span></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-bottom: 10px">
-                                        <table style="text-align:center; width:100%; padding:10px 0px;">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="right" colspan="4" style="padding: 0;">
-                                                        <a href="#" class="">
-                                                            <img src="{{ URL::asset('assets/images/apple_play_store.png') }}"
-                                                                alt="" class=""
-                                                                style="margin:0px 0px 0px 20px;">
-                                                        </a>
-
-                                                    </td>
-                                                    <td align="left" colspan="4" style="padding: 0;">
-                                                        <a href="#" class="">
-                                                            <img src="{{ URL::asset('assets/images/Google_Play_Store.png') }}"
-                                                                alt="" class=""
-                                                                style="margin:0px 0px 0px 20px;">
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 !important;">
-                                        <table align="center" style="text-align:center;width:100%" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="center" width="100%"
-                                                        style="padding-bottom:0px !important;"
-                                                        style="margin-right: 10px">
-                                                        <div class="fm-sm-container">
-                                                            <a href="https://www.linkedin.com/company/ardenshr-services-private-limited/"
-                                                                target="_blank" style="margin-right: 20px"><img
-                                                                    src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-001.png"
-                                                                    alt="LinkedIn"></a>
-                                                            <a href="https://www.instagram.com/ardenshr/"
-                                                                target="_blank" style="margin-right: 20px"><img
-                                                                    src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-002.png"
-                                                                    alt="Instagram"></a>
-                                                            <a href="https://www.facebook.com/ArdensHR" target="_blank"
-                                                                style="margin-right: 20px"><img
-                                                                    src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-004.png"
-                                                                    alt="Facebook"></a>
-                                                            <a href="https://www.youtube.com/channel/UCgZ7XpBoJvcWWvaiBS5GxHg"
-                                                                target="_blank"><img
-                                                                    src="https://abs-website-assets.s3.ap-south-1.amazonaws.com/common-assets/social-media-ic/sm-ic-003.png"
-                                                                    alt="Youtube"></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                    </td>
-                </tr>
-                {{-- @endif --}}
-
-
-            </tbody>
-        </table>
     @elseif ($approvalStatus == 'approved')
         {{-- <p>Personal Assessment goal has been approved by your Manager</p> --}}
     @elseif ($approvalStatus == 'rejected')

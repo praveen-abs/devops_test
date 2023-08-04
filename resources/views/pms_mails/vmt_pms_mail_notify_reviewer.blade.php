@@ -111,7 +111,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td style="width: 100%;">
                               <p class="sm-text-sm" style="margin: 0 0 16px; text-align: justify; font-size: 14px; color: #334155">
-                                This is to inform you that your team member Mr./Ms. {{ $employeeName }} Successfully submitted his/her Self-Review for {{ $appraisal_period }} . Request you to complete the OKR Manager review against OKR?PMS forms using the butons below.
+                                This is to inform you that your team member {{ $emp_gender }}{{ $employeeName }} Successfully submitted his/her Self-Review for {{ $appraisal_period }} . Request you to complete the OKR Manager review against OKR?PMS forms using the butons below.
                               </p>
                             </td>
                           </tr>
@@ -135,7 +135,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td style="width: 100%;">
                               <p class="sm-text-sm" style="margin-bottom: 16px; margin-top: 16px; text-align: center; font-size: 14px; color: #334155">
-                                Also, kindly have a “Great Conversation” with “Mr. / Ms. {{ $employeeName }}” Complete the OKR/PMS within the time frame.
+                                Also, kindly have a “Great Conversation” with “{{ $emp_gender }} {{ $employeeName }}” Complete the OKR/PMS within the time frame.
                               </p>
                             </td>
                           </tr>

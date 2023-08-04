@@ -194,7 +194,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td style="width: 100%;">
                               <p class="sm-text-sm" style="margin: 0 0 16px; text-align: center; color: #334155">
-                                The purpose of this mail is to inform you that, Mr. / Ms. {{$user_emp_name}} has updated his/ her OKR/Goals for {{$appraisal_period }}.
+                                The purpose of this mail is to inform you that,{{ $emp_neutralgender }} {{$user_emp_name}} has updated his/ her OKR/Goals for {{$appraisal_period }}.
                               </p>
                             </td>
                           </tr>
@@ -210,14 +210,14 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                             <td style="text-align: center;">
                               <table style="margin-top: 32px; width: 100%" cellpadding="0" cellspacing="0" role="none">
                                 <tr>
-                                  <td> <a href class="hover-bg-green-700 sm-mx-3" style="border-radius: 9999px; background-color: #22c55e; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
+                                  <td> <a href="{{ $login_Link }}/team-appraisal" class="hover-bg-green-700 sm-mx-3" style="border-radius: 9999px; background-color: #22c55e; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 12px; width: 12px">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
                                       </svg>
                                       Approve
                                     </a></td>
                                   <td>
-                                    <a href class="hover-bg-red-700 sm-mx-3" style="border-radius: 9999px; background-color: #ef4444; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
+                                    <a href="{{ $login_Link }}/team-appraisal" class="hover-bg-red-700 sm-mx-3" style="border-radius: 9999px; background-color: #ef4444; padding: 8px 16px; font-size: 14px; font-weight: 600; color: #fff; text-decoration: none">
                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="height: 12px; width: 12px; padding-right: 8px; font-weight: 600">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                                       </svg>
@@ -431,10 +431,10 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
 
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
                                     The purpose of this mail is to inform you that,
-                                    {{ $user_emp_name}} has accepted his / her OKR/ PMS forms.
+                                    {{ $emp_neutralgender }}{{ $user_emp_name}} has accepted his / her OKR/ PMS forms.
                               </p>
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    Request you to Kindly have a "Great Conversation" with {{ $user_emp_name }} and Complete the OKR/PMS within the time frame.
+                                    Request you to Kindly have a "Great Conversation" with {{ $emp_neutralgender }}{{ $user_emp_name }} and Complete the OKR/PMS within the time frame.
                               </p>
                                   </p>
 
@@ -632,10 +632,10 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 <td>
 
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    This is to inform you that {{ $user_emp_name }} has been rejected his/ her OKR/ PMS forms due to. " {{ $comments_employee }} ".
+                                    This is to inform you that {{ $emp_neutralgender }}{{ $user_emp_name }} has been rejected his/ her OKR/ PMS forms due to. " {{ $comments_employee }} ".
                               </p>
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    Request you to Kindly have a "Great Conversation" with {{ $user_emp_name }} and Complete the OKR/PMS within the time frame.
+                                    Request you to Kindly have a "Great Conversation" with {{ $emp_neutralgender }}{{ $user_emp_name }} and Complete the OKR/PMS within the time frame.
                               </p>
                                   </p>
 

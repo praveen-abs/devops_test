@@ -591,7 +591,7 @@ function getGenderNeutralTerm($user_id){
     $emp_details  = strtoupper($emp_details->gender);
 
     if(empty($emp_details)){
-        $result =  "Mr. / Ms.";
+        $result =  "Mr / Ms.";
     }else if($emp_details == "FEMALE"){
         $result =  "Ms.";
     }else if($emp_details == "MALE"){

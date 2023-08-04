@@ -689,6 +689,8 @@ class VmtPMSModuleController extends Controller
 
                     $emp_avatar    =  json_decode(newgetEmployeeAvatarOrShortName(auth()->user()->id),true);
 
+                    $emp_neutralgender  = getGenderNeutralTerm(auth()->user()->id);
+
                         \Mail::to($reviewerMailSend)
                         ->cc($hr_details->officical_mail)
                         ->send(new VmtPMSMail_Assignee("none",$request->flowCheck,
@@ -697,7 +699,8 @@ class VmtPMSModuleController extends Controller
                                                        $receiverName,
                                                        $comments_employee,
                                                        $login_Link,
-                                                       $emp_avatar
+                                                       $emp_avatar,
+                                                       $emp_neutralgender
                                                     ));
                     }
                 }
@@ -896,13 +899,18 @@ class VmtPMSModuleController extends Controller
                             array_push($kpiFormAssignedReviewersOfficialMails,$userEmployeeDetails->getEmployeeOfficeDetails->officical_mail);
 
                             $assignment_period =  $kpiReviewCheck->getPmsKpiFormAssigned->year." - ".strtoupper($kpiReviewCheck->getPmsKpiFormAssigned->assignment_period);
+
+                            $emp_gender  =  getGenderNeutralTerm($assigneeUser->id);
+
                             // Send mail to All Reviewers
                             \Mail::to($userEmployeeDetails->getEmployeeOfficeDetails->officical_mail)
                                     ->cc($hr_details->officical_mail)
                                     ->send(new VmtPMSMail_NotifyManager($assigneeUser->name,
                                                                         $currentUser_empDetails->designation,
                                                                         $userEmployeeDetails->name,
-                                                                        $assignment_period, request()->getSchemeAndHttpHost() ));
+                                                                        $assignment_period,
+                                                                        request()->getSchemeAndHttpHost(),
+                                                                        $emp_gender ));
 
                             $message = "Employee has submitted KPI Assessment.  ";
                             // Send notification to All Revie
@@ -983,7 +991,7 @@ class VmtPMSModuleController extends Controller
                 $login_link= request()->getSchemeAndHttpHost();
                 $notification_user = User::where('id',auth::user()->id)->first();
                 //dd($hr_details);
-
+                $emp_gender  =  getGenderNeutralTerm(Auth::user()->id);
                 //dd($kpiForAssignedDetails->toArray());
                 //Send mail to employee stating that Manager has submitted his review
                 \Mail::to($assigneeOfficeDetails->officical_mail)
@@ -995,7 +1003,9 @@ class VmtPMSModuleController extends Controller
                                          strtoupper($kpiForAssignedDetails->assignment_period) ,
                                          Auth::user()->name,
                                          "",
-                                         $login_link)
+                                         $login_link,
+                                         $emp_gender
+                                         )
                                 );
 
                 //Send mail to HR stating that KPI review is completed
@@ -1299,6 +1309,7 @@ class VmtPMSModuleController extends Controller
                 $mailingList = VmtEmployeeOfficeDetails::where('user_id', $vmtAssignedDetails->assignee_id)->pluck('officical_mail');
                 $receiverDetails = User::where('id',$vmtAssignedFormReview->assignee_id)->first();
                 $senderDetails = Auth::user();
+                $sender_gender =  getGenderNeutralTerm($senderDetails->id);
                 if($isApproveOrReject == "1")
                 {
                     \Mail::to($mailingList)
@@ -1310,7 +1321,9 @@ class VmtPMSModuleController extends Controller
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
                                                              $senderDetails->name,
                                                              $rejectedReason,
-                                                             $login_Link)
+                                                             $login_Link,
+                                                             $sender_gender,
+                                                             )
                             );
 
                     $returnMsg = 'KPI has been accepted. Mail notification sent';
@@ -1333,7 +1346,10 @@ class VmtPMSModuleController extends Controller
                                                              $request->hidden_calendar_year,
                                                              $vmtAssignedDetails->year." - ".strtoupper($vmtAssignedDetails->assignment_period) ,
                                                              $senderDetails->name,
-                                                             $rejectedReason,$login_Link)
+                                                             $rejectedReason,
+                                                             $login_Link,
+                                                             $sender_gender
+                                                             )
                             );
 
                     $returnMsg = 'KPI has been rejected. Mail notification sent';

@@ -447,13 +447,13 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 <td>
 
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    This is to inform you that , has Mr. /Ms. {{ $user_manager_name }}, has
+                                    This is to inform you that , has {{ $sender_gender }} {{ $user_manager_name }}, has
                                     Approved your OKR/ PMS forms.
                                 </p>
                               </p>
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
                                     Request you to kindly have a “Great Conversation” with
-                                        Mr. /Ms. {{ $user_manager_name }} and
+                                        {{ $sender_gender }} {{ $user_manager_name }} and
                                         Complete the OKR/PMS
                                         within the time
                                         frame.
@@ -550,8 +550,6 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
 
 
     @elseif ($approvalStatus == 'rejected')
-
-
 
 
     <!DOCTYPE html>
@@ -666,12 +664,12 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                                 <td>
 
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    This is to inform you that, Mr. / Ms.  {{ $user_manager_name }} has rejected your OKR/ PMS forms due to " {{ $comments_manager }} "
+                                    This is to inform you that, {{ $sender_gender }} {{ $user_manager_name }} has rejected your OKR/ PMS forms due to " {{ $comments_manager }} "
                                 </p>
 
                               </p>
                                   <p class="sm-text-sm" style="margin: 0 0 24px; color: #334155">
-                                    Request you to kindly have a “Great Conversation” with  Mr. / Ms. {{ $user_manager_name }} and Complete the OKR/PMS within the time frame.
+                                    Request you to kindly have a “Great Conversation” with  {{ $sender_gender }} {{ $user_manager_name }} and Complete the OKR/PMS within the time frame.
                               </p>
                                   </p>
                                   <p>
@@ -867,7 +865,7 @@ $client_logo = request()->getSchemeAndHttpHost() . '' . $general_info->client_lo
                           <tr>
                             <td style="width: 100%;">
                               <p class="sm-text-sm" style="margin: 0 0 16px; text-align: justify; font-size: 14px; color: #334155">
-                                This is to inform you that your Manager <b> Mr./ Ms. {{ $user_manager_name }} </b> has successfully submitted his/her
+                                This is to inform you that your Manager <b> {{ $sender_gender }} {{ $user_manager_name }} </b> has successfully submitted his/her
                                                             Manager-Review for <b>{{ $appraisal_year }} - {{ $appraisal_period}}</b>.
                               </p>
                             </td>

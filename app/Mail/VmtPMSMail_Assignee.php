@@ -17,7 +17,7 @@ class VmtPMSMail_Assignee extends Mailable
      * @return void
      */
     // protected $linkUri;
-    public function __construct( $approvalStatus,$flowType, $user_emp_name,$appraisal_period,$user_manager_name,$comments_employee,$login_Link,$emp_avatar)
+    public function __construct( $approvalStatus,$flowType, $user_emp_name,$appraisal_period,$user_manager_name,$comments_employee,$login_Link,$emp_avatar,$emp_neutralgender)
 
     {
         //
@@ -30,6 +30,7 @@ class VmtPMSMail_Assignee extends Mailable
         $this->comments_employee = $comments_employee;
         $this->login_Link = $login_Link;
         $this->emp_avatar = $emp_avatar;
+        $this->emp_neutralgender = $emp_neutralgender;
 
     }
 
@@ -73,7 +74,8 @@ class VmtPMSMail_Assignee extends Mailable
                 ->with('user_manager_name', $this->user_manager_name)
                 ->with('comments_employee', $this->comments_employee)
                 ->with('login_Link', $this->login_Link)
-                ->with('emp_avatar', $this->emp_avatar);
+                ->with('emp_avatar', $this->emp_avatar)
+                ->with('emp_neutralgender', $this->emp_neutralgender);
 
     }
 }
