@@ -74,12 +74,11 @@
                     <p class="font-semibold fs-6 px-2 py-auto">{{ data['Email'] }}</p>
                     </p>
                     <p v-else-if="field.includes('Mobile Number')"
-                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableMobileNumberValues, data['Mobile Number']) || useStore.isValidMobileNumber(data['Mobile Number']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableMobileNumberValues, data[field]) || useStore.existingMobileNumbers.includes(data[field]) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'Mobile number is already exists'"
                             v-if="useStore.existingMobileNumbers.includes(data[field])"></i>
-                        <!-- {{ field }} -->
                         {{ data['Mobile Number'] }}
                     </p>
 
@@ -206,6 +205,7 @@ onUpdated(() => {
         useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
         useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
         useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
+        useStore.currentlyImportedTableMobileNumberValues.splice(0, useStore.currentlyImportedTableMobileNumberValues.length)
         setTimeout(() => {
             useStore.getCurrentlyImportedTableDuplicateEntries(useStore.EmployeeQuickOnboardingSource)
         }, 100);

@@ -303,7 +303,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         }
     }
     const isValidBankIfsc = (e) => {
-        if (/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(e)) {
+        let ifscFormat = ''
+        e ? ifscFormat = e.toUpperCase() : ''
+        if (/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(ifscFormat)) {
             return false
         } else {
             return true
@@ -399,7 +401,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                             if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
                                 errorRecordsCount.value.push('invalid')
                             } else
-                                if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
+                                if (isValidDate(data['DOJ']) || isValidDate(data['DOB']) || isValidBankIfsc(data['Bank ifsc'])) {
                                     errorRecordsCount.value.push('invalid')
                                 }
 
