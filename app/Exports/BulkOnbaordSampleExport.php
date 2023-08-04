@@ -21,7 +21,7 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use Maatwebsite\Excel\Concerns\WithTitle;
+//use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -29,7 +29,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping,WithCalculatedFormulas,WithTitle,
+class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping , WithCalculatedFormulas
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -61,7 +61,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     {
         //For First Row
         // $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
-        $sheet->getActiveSheet()->setTitle("Title");
         $sheet->getStyle('A1:AG1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
@@ -130,14 +129,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
             'dearness  allowance'
         ];
     }
-
-    public function title(): string
-    {
-        return 'Sheet1';
-    }
-    // public function array(): array
-    // {
-    //}
 
     public function map($row): array
     {
@@ -217,23 +208,6 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 //         'A1:A2'
                 //     )
                 // );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 //get layout counts (add 1 to rows for heading row)
                 // $row_count = $this->results->count() + 1;
