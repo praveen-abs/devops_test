@@ -47,7 +47,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const excelRowData = ref([])
 
 
-    const convertExcelIntoArray = (e) => {
+    const convertExcelIntoArray = (onboardingType) => {
 
         canShowloading.value = true
 
@@ -55,9 +55,13 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         // var file = e.target.files[0];
         // input canceled, return
         if (!file) return;
-
         setTimeout(() => {
-            router.push({ path: `/testing_shelly/${'quickOnboarding'}` })
+            if (onboardingType == 'quick') {
+                router.push({ path: `/quickEmployeeOnboarding/${'quickOnboarding'}` })
+            } else
+                if (onboardingType == 'bulk') {
+                    router.push({ path: `/bulkEmployeeOnboarding/${'bulkOnboarding'}` })
+                }
             canShowloading.value = false
         }, 500);
 
