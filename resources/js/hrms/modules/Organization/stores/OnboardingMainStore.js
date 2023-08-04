@@ -60,7 +60,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             var reader = new FileReader();
             reader.onload = function (e) {
                 const data = reader.result;
-                var workbook = XLSX.read(data, { type: 'binary', cellDates: true, dateNF: "dd/mm/yyyy" });
+                var workbook = XLSX.read(data, { type: 'binary', cellDates: true, dateNF: "dd-mm-yyyy" });
                 var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 
                 // Dynamically Find header's from imported excel sheet
@@ -92,7 +92,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 // var result = XLSX.utils.sheet_to_json(firstSheet, { raw: false, header: 1, dateNF: "dd/mm/yyyy" });
                 const jsonData = workbook.SheetNames.reduce((initial, name) => {
                     const sheet = workbook.Sheets[name];
-                    initial[name] = XLSX.utils.sheet_to_json(sheet, { raw: false, dateNF: "dd/mm/yyyy" });
+                    initial[name] = XLSX.utils.sheet_to_json(sheet, { raw: false, dateNF: "dd-mm-yyyy" });
                     return initial;
                 }, {});
 
@@ -119,7 +119,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             toast.add({
                 severity: "error",
                 summary: 'file missing!',
-                detail: "selected file",
+                detail: "selected",
                 life: 2000,
             });
         }
@@ -129,7 +129,10 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     //Upload selected file
     const uploadOnboardingFile = (data) => {
         if (errorRecordsCount.value == 0) {
-            axios.post('/onboarding/storeQuickOnboardEmployees', data).finally(() => {
+            canShowloading.value = true
+            axios.post('/onboarding/storeQuickOnboardEmployees', data).then(res=>{
+                canShowloading.value = false
+            }).finally(() => {
                 data.forEach(element => {
                     toast.add({
                         severity: "success",
@@ -167,7 +170,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     // Getting currently imported duplicate entries in table
     const getCurrentlyImportedTableDuplicateEntries = (data) => {
         data.forEach(element => {
-            currentlyImportedTableEmployeeCodeValues.value.push(element['Employee code'])
+            currentlyImportedTableEmployeeCodeValues.value.push(element['Employee Code'])
             currentlyImportedTableEmailValues.value.push(element['Email'])
             currentlyImportedTableMobileNumberValues.value.push(element['Mobile Number'])
             currentlyImportedTablePanValues.value.push(element['Pan No'])
@@ -317,7 +320,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isValidDate = (e) => {
-        if (/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/.test(e) || /^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4}$/.test(e)) {
+        if (/^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4}$/.test(e)) {
             return false
         } else {
             return true
@@ -381,7 +384,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee code']) || !isUserExists(data["Employee code"])) {
+        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"])) {
             errorRecordsCount.value.push('invalid')
         }
         else
@@ -393,20 +396,39 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     errorRecordsCount.value.push('invalid')
                 }
                 else
-                    if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
-                        errorRecordsCount.value.push('invalid')
-                    }
-                    else
-                        if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
+                    if (data['Aadhar']) {
+                        if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
                             errorRecordsCount.value.push('invalid')
                         }
-                        else
-                            if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
+                    }
+                    else
+                        if (data['Pan No']) {
+                            if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
                                 errorRecordsCount.value.push('invalid')
-                            } else
-                                if (isValidDate(data['DOJ']) || isValidDate(data['DOB']) || isValidBankIfsc(data['Bank ifsc'])) {
+                            }
+                        }
+                        else
+                            if (data['Account No']) {
+                                if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
                                     errorRecordsCount.value.push('invalid')
                                 }
+                            }
+                            else
+                                if (data['Bank ifsc']) {
+                                    if (isValidBankIfsc(data['Bank ifsc'])) {
+                                        errorRecordsCount.value.push('invalid')
+                                    }
+                                } else
+                                    // if (data['DOJ'] || data['DOB']) {
+                                    //     if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
+                                    //         errorRecordsCount.value.push('invalid')
+                                    //     }
+                                    // }else
+                                    {
+                                        console.log("No more error record found!");
+                                    }
+
+
 
 
         return errorMessages;
