@@ -1,14 +1,15 @@
 <template>
+    <Toast />
     <div class="" v-if="route.params.module == 'quickOnboarding'">
         <ImportQuickOnboarding />
     </div>
     <Transition name="fade" v-else>
-        <div class="h-screen w-full" >
+        <div class="h-screen w-full">
             <div class="flex">
                 <div class="w-6 px-2">
                     <p class="font-bold text-2xl">Employee Quick Onboarding</p>
                     <ul class="list-disc p-2 my-3">
-                        <li  class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
+                        <li class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
                                 class="text-blue-300 font-semibold fs-6 cursor-pointer">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
@@ -93,18 +94,45 @@
 
 <script setup>
 
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import * as XLSX from 'xlsx';
 import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
 import { useRouter, useRoute } from "vue-router";
 import { useOnboardingMainStore } from '../stores/OnboardingMainStore';
+import { Service } from '../../Service/Service';
+import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore';
 
 
 const useStore = useOnboardingMainStore()
+const useNormalOnboardingStore = useNormalOnboardingMainStore()
+
 
 onMounted(() => {
     useStore.getExistingOnboardingDocuments()
+    useNormalOnboardingStore.getBasicDeps()
 })
+
+onUpdated(() => {
+
+
+    if (useStore.initialUpdate) {
+        useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
+        useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
+        useStore.currentlyImportedTableMobileNumberValues.splice(0, useStore.currentlyImportedTableMobileNumberValues.length)
+        useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
+        useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
+        useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
+    }
+    // if (useStore.isValueUpdated) {
+    //     useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
+    //     useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
+    //     useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
+    //     useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
+    //     useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
+    // };
+})
+
+
 
 
 const router = useRouter();
