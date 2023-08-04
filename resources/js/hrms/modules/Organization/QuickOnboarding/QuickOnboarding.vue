@@ -9,7 +9,7 @@
                 <div class="w-6 px-2">
                     <p class="font-bold text-2xl">Employee Quick Onboarding</p>
                     <ul class="list-disc p-2 my-3">
-                        <li class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
+                        <li class="font-semibold fs-6">Download the <a href="/assets//ABSQuickOnboarding.xlsx"
                                 class="text-blue-300 font-semibold fs-6 cursor-pointer">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
@@ -26,7 +26,7 @@
                         </p> -->
                     </div>
                     <button class="btn btn-orange mt-6 float-right mx-5"
-                        @click="useStore.convertExcelIntoArray">Upload</button>
+                        @click="useStore.convertExcelIntoArray('quick')">Upload</button>
                 </div>
                 <div>
                     <div class="col-form-label">

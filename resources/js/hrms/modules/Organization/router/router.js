@@ -9,12 +9,12 @@ const router = createRouter({
     routes: [
         {
             path: "/quickEmployeeOnboarding/:module",
-            name: "home",
+            name: "QuickOnboarding",
             component: QuickOnboarding,
         },
         {
             path: "/bulkEmployeeOnboarding/:module",
-            name: "home",
+            name: "BulkOnboarding",
             component: BulkOnboarding,
         },
     ],
