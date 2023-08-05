@@ -786,11 +786,8 @@ class VmtProfilePagesService
              }
              $i++;
        }
-        return $response=([
-            'status' => 'success',
-            'message' => '',
-            'data' => $emp_documents
-        ]);
+        return $response= $emp_documents;
+     
 
     }
     catch(\Exception $e){

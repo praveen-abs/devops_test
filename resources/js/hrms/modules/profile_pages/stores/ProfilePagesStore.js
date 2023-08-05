@@ -60,6 +60,7 @@ export const profilePagesStore = defineStore("employeeService", () => {
             console.log("fetchEmployeeDetails() : " + res.data);
             loading_screen.value = false
             employeeDetails.value = res.data
+            console.log("Current User code :"+ res.data.user_code);
             if(url_param_UID)
             {
                 user_code.value =res.data.user_code
