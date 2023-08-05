@@ -2,12 +2,12 @@
 @section('title')
 @endsection
 @section('css')
-    <link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
-    <style>
+<link href="{{ URL::asset('assets/css/login_page.css') }}" rel="stylesheet">
+<style>
     .fade {
         transition: opacity 0.2s linear !important;
-      }
-    </style>
+    }
+</style>
 @endsection
 @section('content')
 <!doctype html>
@@ -18,18 +18,18 @@
 
 <body>
 
-@vite( 'resources/js/hrms/modules/login_Page/login_Page.js')
+    @vite( 'resources/js/hrms/modules/login_Page/login_Page.js')
     <div id="login_Page"></div>
 
 </body>
+
 </html>
 
 
 
 
 
-  
+
 
 
 @endsection
-

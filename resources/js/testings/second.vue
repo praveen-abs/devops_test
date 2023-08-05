@@ -1,79 +1,99 @@
 <template>
     <div class="image-slider">
-      <transition name="fade" mode="out-in">
-        <img :src="currentImage" :key="currentImage" alt="Holiday Image" />
-      </transition>
-      <div class="controls">
-        <button @click="prevImage">Previous</button>
-        <button @click="nextImage">Next</button>
+      <div class="slider-container">
+        <img v-for="(image, index) in images" :key="index" :src="image" :class="{ active: currentIndex === index }">
+      </div>
+      <div class="indicator">
+        <span v-for="(image, index) in images" :key="index" :class="{ active: currentIndex === index }" @click="setCurrentIndex(index)"></span>
       </div>
     </div>
   </template>
 
   <script setup>
-  import { ref, computed, onMounted } from 'vue';
+  import { onMounted, ref } from 'vue';
 
+  // Sample image URLs (replace with your actual image URLs)
+  const images = ref([
+    '../hrms/assests/images/gear-wide(1).svg',
+    '../hrms/assests/images/gear-wide(1).svg',
+    '../hrms/assests/images/gear-wide(1).svg',
+    '../hrms/assests/images/gear-wide(1).svg',
+    '../hrms/assests/images/gear-wide(1).svg',
+  ]);
 
   const currentIndex = ref(0);
 
-  const currentImage = computed(() => images[currentIndex.value]);
-
   function nextImage() {
-    currentIndex.value = (currentIndex.value + 1) % images.length;
-  }
+    currentIndex.value = (currentIndex.value + 1) % images.value.length;
+}
 
-  function prevImage() {
-    currentIndex.value = (currentIndex.value - 1 + images.length) % images.length;
-  }
+function prevImage() {
+    currentIndex.value = (currentIndex.value - 1 + images.value.length) % images.length;
+}
 
-  // Autoplay functionality (optional)
-  const autoplayInterval = 5000; // Set the time in milliseconds
-  let autoplayTimer;
+// Autoplay functionality (optional)
+const autoplayInterval = 5000; // Set the time in milliseconds
+let autoplayTimer;
 
-  function startAutoplay() {
+function startAutoplay() {
     autoplayTimer = setInterval(nextImage, autoplayInterval);
-  }
+}
 
-  function stopAutoplay() {
+function stopAutoplay() {
     clearInterval(autoplayTimer);
-  }
+}
 
-  onMounted(startAutoplay);
+// onMounted(startAutoplay);
+
+onMounted(() => {
+    startAutoplay()
+})
+
+  const setCurrentIndex = (index) => {
+    currentIndex.value = index;
+  };
   </script>
 
-  <style scoped>
+  <style>
+  /* Styling for the image slider and indicator */
   .image-slider {
-    position: relative;
-    max-width: 100%;
-    overflow: hidden;
-    margin: 0 auto;
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s;
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-    opacity: 0;
-  }
-
-  .controls {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
   }
 
-  button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
+  .slider-container {
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .slider-container img {
+    width: 100%;
+    max-width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .slider-container img.active {
+    opacity: 1;
+  }
+
+  .indicator {
+    display: flex;
+    gap: 10px;
+  }
+
+  .indicator span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
     cursor: pointer;
   }
 
-  button:hover {
-    background-color: #0056b3;
+  .indicator span.active {
+    background-color: #555;
   }
   </style>

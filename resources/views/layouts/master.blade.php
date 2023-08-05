@@ -191,9 +191,7 @@ clearstatcache();
         <div id="Topbar"></div>
         <div class="main-content ">
             <div class="page-content h-screen w-full overflow-x-scroll">
-                <!-- <div class=" "> -->
                     @yield('content')
-                <!-- </div> -->
             </div>
         </div>
     </div>
@@ -269,3 +267,4 @@ clearstatcache();
 </body>
 
 </html>
+

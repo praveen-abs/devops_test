@@ -1,5 +1,4 @@
 <template>
-
     <div class=" bg-white h-[60px]" v-if="canShowLoading">
         <div class=" grid grid-cols-4 items-center">
             <!-- Organization List  -->
@@ -21,7 +20,7 @@
                     <div v-if="isOpens" class="absolute top-5 left-2 mt-12  w-full bg-white shadow-lg rounded z-20">
                         <!-- Dropdown content goes here -->
                         <div class="" v-for="client in clientList">
-                            <div   class="justify-between flex p-2 hover:bg-gray-200    items-center">
+                            <div class="justify-between flex p-2 hover:bg-gray-200    items-center">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
                                     <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
                                         style="height: 40px;width:40px">
@@ -79,9 +78,10 @@
                         enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                         leave-active-class="transition ease-in duration-100 transform"
                         leave-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
-                        <div v-if="isOpen" class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded">
+                        <div v-if="isOpen" class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded z-30">
                             <!-- Dropdown content goes here -->
-
+                             <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 "><a href="pages-profile-new">View profile</a></p>
+                             <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 "><a href="">Log out</a></p>
                         </div>
                     </transition>
                 </div>
@@ -96,7 +96,7 @@
 
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import {useMainDashboardStore} from '../dashboard/stores/dashboard_service'
+import { useMainDashboardStore } from '../dashboard/stores/dashboard_service'
 
 
 const useDashboard = useMainDashboardStore()
@@ -115,7 +115,7 @@ const getClientList = () => {
     axios.get('/clients-fetchAll').then(res => {
         clientList.value = res.data
         currentlySelectedClient.value = res.data[0]
-    }).finally(()=>{
+    }).finally(() => {
         // canShowLoading.value = true
     })
 }
