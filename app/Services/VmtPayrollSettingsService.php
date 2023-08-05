@@ -154,10 +154,10 @@ class VmtPayrollSettingsService{
         }
 
         try{
-            $update_payroll_cycle =VmtPayrollCycle::where('id',$record_id)->first();
-            if(!empty($update_payroll_cycle)){
 
-            $update_payroll_cycle = $update_payroll_cycle;
+            $update_payroll_cycle =VmtPayrollCycle::where('id',$record_id)->first();
+            
+        if(!empty($update_payroll_cycle)){
             $update_payroll_cycle->client_id = auth()->user()->client_id;
             $update_payroll_cycle->pay_frequency = $pay_frequency;
             $update_payroll_cycle->payperiod_start_month =$payperiod_start_month ;
@@ -166,27 +166,27 @@ class VmtPayrollSettingsService{
             $update_payroll_cycle->currency_type = $currency_type;
             $update_payroll_cycle->remuneration_type =$remuneration_type ;
             $update_payroll_cycle->save();
-            }
+        }
             $update_attendance_cycle =VmtAttendanceCycle::where('id',$record_id)->first();
-            if(!empty($update_attendance_cycle)){
-           $update_attendance_cycle = $update_attendance_cycle;
-           $update_attendance_cycle->client_id = auth()->user()->client_id;
-           $update_attendance_cycle->att_cutoff_period_id = $att_cutoff_period_id;
-           $update_attendance_cycle->post_attendance_cutoff_date =$post_attendance_cutoff_date ;
-           $update_attendance_cycle->emp_attedance_cutoff_date =$emp_attedance_cutoff_date ;
-           $update_attendance_cycle->paydays_in_month =$paydays_in_month ;
-           $update_attendance_cycle->include_weekoffs = $include_weekoffs;
-           $update_attendance_cycle->include_holidays =$include_holidays ;
-           $update_attendance_cycle->save();
-            }
+        if(!empty($update_attendance_cycle)){
+            $update_attendance_cycle->client_id = auth()->user()->client_id;
+            $update_attendance_cycle->att_cutoff_period_id = $att_cutoff_period_id;
+            $update_attendance_cycle->post_attendance_cutoff_date =$post_attendance_cutoff_date ;
+            $update_attendance_cycle->emp_attedance_cutoff_date =$emp_attedance_cutoff_date ;
+            $update_attendance_cycle->paydays_in_month =$paydays_in_month ;
+            $update_attendance_cycle->include_weekoffs = $include_weekoffs;
+            $update_attendance_cycle->include_holidays =$include_holidays ;
+            $update_attendance_cycle->save();
+        }
 
-            return $response=([
+        return $response=([
                 "status" => "success",
-                "message" => "payroll setting saved successfully",
+                "message" => "payroll settings updated successfully",
                 "data" => "",
             ]);
 
          }catch(\Exception $e){
+
             return response()->json([
                 "status" => "failure",
                 "message" => "Unable to create esi employee ",
