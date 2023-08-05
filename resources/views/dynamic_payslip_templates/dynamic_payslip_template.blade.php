@@ -8,18 +8,7 @@
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no, url=no">
     <meta name="color-scheme" content="light dark">
     <meta name="supported-color-schemes" content="light dark">
-    <!--[if mso]>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
-  <style>
-    td,th,div,p,a,h1,h2,h3,h4,h5,h6 {font-family: "Segoe UI", sans-serif; mso-line-height-rule: exactly;}
-  </style>
-  <![endif]-->
+
     <style>
         .border {
             border: 1px solid #f3f4f6 !important;
@@ -33,21 +22,8 @@
             float: left
         }
 
-        @media (max-width: 600px) {
-            .sm-w-full {
-                width: 100% !important
-            }
 
-            .sm-px-2 {
-                padding-left: 8px !important;
-                padding-right: 8px !important
-            }
 
-            .sm-py-3 {
-                padding-top: 12px !important;
-                padding-bottom: 12px !important
-            }
-        }
     </style>
 </head>
 
@@ -65,9 +41,9 @@
                                         style="margin-left: auto; margin-right: auto; margin-top: 16px; width: 100%; background-color: #fff; height: 150px"
                                         cellpadding="0" cellspacing="0" role="none">
                                         <tr
-                                            style="display: flex; width: 100%; align-items: center; justify-content: space-between">
+                                            style="display: float width: 100%; align-items: center; justify-content: space-between">
                                             <td
-                                                style="display: flex; width: 100%; flex-direction: column; justify-content: center; padding-left: 40px">
+                                                style="display: float width: 100%; flex-direction: column; justify-content: center; padding-left: 40px">
                                                 <p style="font-size: 35px; font-weight: 600; color: #000">PAYSLIP <span
                                                         style="font-weight: 400; color: #6b7280"> MAR 2023</span></p>
                                                 <p style="font-size: 14px; color: #000; height: 4px; margin-top:-20px ">
@@ -85,7 +61,7 @@
                                     </table>
                                 </td>
                             </tr>
-                            <tr style="display: flex; justify-content: center; width: 100% ; marign-top:10px;">
+                            <tr style="display: float justify-content: center; width: 100% ; marign-top:10px;">
                                 <td style="margin-left: 50px; width: 100%">
                                     <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 100%"
                                         cellpadding="0" cellspacing="0" role="none">
@@ -103,34 +79,34 @@
                                                     <tr style="height: 16px; width: 100%;">
                                                         <td style="width: 25%">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280">
                                                                 Employee Code</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000; font-size: 14px; ">
+                                                                style="display: float font-weight: 600; color: #000; font-size: 14px; ">
                                                                 {{ $personal_details[0]['user_code'] }}</p>
                                                         </td>
                                                         <td style="height: 16px;width: 25%">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280; ">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280; ">
                                                                 Date Joined</p>
                                                             <p
-                                                                style="display: flex; border-width: 1px; font-size: 14px;  border-color: #000; font-weight: 600; color: #000">
+                                                                style="display: float border-width: 1px; font-size: 14px;  border-color: #000; font-weight: 600; color: #000">
                                                                 {{ $personal_details[0]['doj'] }}</p>
                                                         </td>
                                                         <td style="width: 25%">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 Department</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000;  font-size: 13px;">
+                                                                style="display: float font-weight: 600; color: #000;  font-size: 13px;">
                                                                 {{ $personal_details[0]['department_name'] }}</p>
                                                         </td>
                                                         <td style="height: 16px;width: 25%">
                                                             <p
-                                                                style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280">
+                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280">
                                                                 Sub Department</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000;  font-size: 13px;">
+                                                                style="display: float font-weight: 600; color: #000;  font-size: 13px;">
                                                                 -</p>
                                                         </td>
                                                     </tr>
@@ -145,35 +121,35 @@
                                                     <tr style="width: 100%;">
                                                         <td class="" style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 13px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 13px; color: #6b7280;">
                                                                 Designation</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000; font-size: 13px; ">
+                                                                style="display: float font-weight: 600; color: #000; font-size: 13px; ">
                                                                 {{ $personal_details[0]['designation'] }}</p>
                                                         </td>
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 Payment Mode</p>
                                                             <p
-                                                                style="display: flex; border-width: 1px; font-size: 13px; border-color: #000; font-weight: 600; color: #000;">
+                                                                style="display: float border-width: 1px; font-size: 13px; border-color: #000; font-weight: 600; color: #000;">
                                                                 -</p>
                                                         </td>
 
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 Bank</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000; font-size: 13px;">
+                                                                style="display: float font-weight: 600; color: #000; font-size: 13px;">
                                                                 {{ $personal_details[0]['bank_name'] }}</p>
                                                         </td>
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 Bank IFSC</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000;  font-size: 13px;">
+                                                                style="display: float font-weight: 600; color: #000;  font-size: 13px;">
                                                                 {{ $personal_details[0]['bank_ifsc_code'] }}</p>
                                                         </td>
                                                     </tr>
@@ -188,34 +164,34 @@
                                                     <tr style="width: 100%;">
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 Bank Account</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; color: #000; font-size: 13px;">
+                                                                style="display: float font-weight: 600; color: #000; font-size: 13px;">
                                                                 {{ $personal_details[0]['bank_account_number'] }}</p>
                                                         </td>
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 PAN</p>
                                                             <p
-                                                                style="display: flex; font-size: 13px; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">
+                                                                style="display: float font-size: 13px; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">
                                                                 {{ $personal_details[0]['pan_number'] }}</p>
                                                         </td>
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 UAN</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; font-size: 13px; color: #000;">
+                                                                style="display: float font-weight: 600; font-size: 13px; color: #000;">
                                                                 {{ $personal_details[0]['uan_number'] }}</p>
                                                         </td>
                                                         <td style=" width:25%; padding:4px;">
                                                             <p
-                                                                style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 PF Number</p>
                                                             <p
-                                                                style="display: flex; font-weight: 600; font-size: 13px; color: #000;">
+                                                                style="display: float font-weight: 600; font-size: 13px; color: #000;">
                                                                 {{ $personal_details[0]['epf_number'] }}</p>
                                                         </td>
                                                     </tr>
@@ -245,31 +221,31 @@
                                                     <tr style="width: 100%;">
                                                         <td>
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 ACTUAL PAYABLE DAYS</p>
-                                                            <p style="display: flex; font-weight: 600; color: #000;">
+                                                            <p style="display: float font-weight: 600; color: #000;">
                                                                 {{ $salary_details[0]['month_days'] }}</p>
                                                         </td>
                                                         <td>
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 TOTAL WORKING DAYS</p>
                                                             <p
-                                                                style="display: flex; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">
+                                                                style="display: float border-width: 1px; border-color: #000; font-weight: 600; color: #000;">
                                                                 {{ $salary_details[0]['worked_Days'] }}</p>
                                                         </td>
                                                         <td>
                                                             <p
-                                                                style="display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 LOSS OF PAY DAYS</p>
-                                                            <p style="display: flex; font-weight: 600; color: #000;">
+                                                            <p style="display: float font-weight: 600; color: #000;">
                                                                 {{ $salary_details[0]['lop'] }}</p>
                                                         </td>
                                                         <td>
                                                             <p
-                                                                style="margin-bottom: 0; display: flex; height: 8px; font-size: 14px; color: #6b7280;">
+                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280;">
                                                                 DAYS PAYABLE</p>
-                                                            <p style="display: flex; font-weight: 600; color: #000;">
+                                                            <p style="display: float font-weight: 600; color: #000;">
                                                                 {{ $salary_details[0]['worked_Days'] }}</p>
                                                         </td>
                                                     </tr>
@@ -282,7 +258,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="display: flex; width: 100%; justify-content: center;">
+                                            <td style="display: float width: 100%; justify-content: center;">
                                                 <table style="height: 20px; width: 50%" cellpadding="0"
                                                     cellspacing="0" role="none">
                                                     <tr style="height: 1px">
@@ -299,7 +275,7 @@
                                                                 {{ str_replace('_', ' ', $key) }}</p>
                                                         </td>
                                                         <td class=""
-                                                            style="display: flex; justify-content:center; align-items:center">
+                                                            style="display: float justify-content:center; align-items:center">
                                                             <p
                                                                 style="height: 2px; font-weight: 700; color: #000;text-align: center;">
                                                                 {{ $single_data }}</p>
@@ -313,7 +289,7 @@
                                                                 {{ str_replace('_', ' ', $key) }}</p>
                                                         </td>
                                                         <td class=""
-                                                            style="display: flex; justify-content:center; align-items:center">
+                                                            style="display: float justify-content:center; align-items:center">
                                                             <p
                                                                 style="height: 2px; color: #000;text-align: center;">
                                                                 {{ $single_data }}</p>
@@ -414,7 +390,7 @@
                                 <td style="width: 100%;">
                                     <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
                                         <tr
-                                            style="margin-left: 45px; display: flex; width: 100%; justify-content: center">
+                                            style="margin-left: 45px; display: float; width: 100%; justify-content: center">
                                             <td style="width: 40%">
                                                 <p style="height: 16px; color: #000">Net Salary Payable ( A - B - C )
                                                 </p>
@@ -431,12 +407,12 @@
                                 </td>
                             </tr>
                             <tr style="height: 100px; width: 100%">
-                                <td style="display: flex; width: 60%; justify-content: center">
+                                <td style="display: float width: 60%; justify-content: center">
                                     <p style="color: #000;"> <span style="font-weight: 700;">**Note :</span> All
                                         amounts displayed in this payslip are in <span
                                             style="font-weight: 700;">INR</span> </p>
                                 </td>
-                                <td style="display: flex; width: 65%; justify-content: flex-start">
+                                <td style="display: float width: 65%; justify-content: flex-start">
                                     <p style="margin-left: 56px; color: #000">*This is computer generated statement,
                                         does not require signature.</p>
                                 </td>
