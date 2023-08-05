@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -70,10 +71,11 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
         $sheet->getStyle('A1:BH1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
         $sheet->getStyle('A1:BH1')->getAlignment()->setHorizontal('center');
     }
-    public function title(): string
-    {
-        return 'Sheet1';
-    }
+    // public function title(): string
+    // {
+    //     return 'Sheet1';
+    // }
+
 
     public function sheets(): array
     {
@@ -197,6 +199,57 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
     //     ];
     // }
 
+
+    // public function map($row): array
+    // {
+    //     return [
+    //         [
+    //         'ABS0001',
+    //         'Name',
+    //         'abs@gmail.com',
+    //         '0912345678',
+    //         'Male',
+    //         '28-06-2000',
+    //         '14-11-2022',
+    //         '',
+    //         'It',
+    //         '',
+    //         'Chennai',
+    //         'ABSM001',
+    //         '0912345678',
+    //         'test@gmail.com',
+    //         'Single',
+    //         '',
+    //         'Father Name',
+    //         'Mother Name',
+    //         'Spouse Name',
+    //         'B Positive',
+    //         'No',
+    //         'ABCTY1234D',
+    //         '0000 1111 2222',
+    //         'Axis Bank',
+    //         'AXIB0028901',
+    //         '24898240942',
+    //         'UAN0945049',
+    //         'Yes',
+    //         '942904',
+    //         'Current Address',
+    //         'Permanent Address',
+    //         'CTC - Monthly',
+    //         '18000',
+    //         '=(AG2*50)/100',
+    //         '=(AH2*50)/100',
+    //         '',
+    //         '',
+    //         '',
+    //         '',
+    //         '=AH2-AI2',
+
+    //     ],
+    //         ['','=AG2*10']
+    //     ];
+    // }
+
     public function columnFormats(): array
     {
         return [
@@ -207,14 +260,9 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
     }
 
 
-
-
-
     public function registerEvents(): array
     {
         return [
-
-
 
             //  handle by a closure.
             AfterSheet::class => function (AfterSheet $event) {
@@ -222,7 +270,8 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
                 $row_count = 10;
                 $column_count = 0;
 
-                // // set dropdown options
+
+             // set dropdown options
                 $gender_options = [
                     'Male',
                     'Female',
