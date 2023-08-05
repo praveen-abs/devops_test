@@ -16,7 +16,7 @@
                         as</label>
                 </div>
                 <div class="col-6">
-                    9.30AM
+                    <input placeholder="format-09:30:00" type="text" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                         as</label>
                 </div>
                 <div class="col-6">
-                    6.30PM
+                    <input placeholder="format-06:30:00" type="text" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400"  name="" id="" v-model="useTimesheet.AttendanceEarylOrMopRegularization">
                 </div>
             </div>
         </div>
@@ -281,5 +281,11 @@ const findStatus = (data) => {
                     return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
 
                 }
+}
+
+const isNumber = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[0-9:]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
 }
 </script>
