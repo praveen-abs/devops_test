@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import { useRouter, useRoute } from "vue-router";
 import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore'
 import dayjs from "dayjs";
+import { url } from "@vuelidate/validators";
 
 
 export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () => {
@@ -29,6 +30,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const errorRecordsCount = ref([])
     const initialUpdate = ref(false)
     const isValueUpdated = ref(false)
+    const type = ref()
+
 
 
     // Getting Selected file for upload
@@ -47,10 +50,15 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             if (!file) return;
             setTimeout(() => {
                 if (onboardingType == 'quick') {
+                    type.value  = 'quick'
                     router.push({ path: `/quickEmployeeOnboarding/${'quickOnboarding'}` })
                 } else
                     if (onboardingType == 'bulk') {
+                        type.value  = 'bulk'
                         router.push({ path: `/bulkEmployeeOnboarding/${'bulkOnboarding'}` })
+                    }else{
+                        type.value  = ''
+
                     }
                 canShowloading.value = false
             }, 500);
@@ -125,12 +133,20 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         }
 
     }
-
     //Upload selected file
     const uploadOnboardingFile = (data) => {
+
+        let url = ''
+
+        if (type.value == 'quick') {
+            url = '/onboarding/storeQuickOnboardEmployees'
+        } else
+            if (type.value == 'bulk') {
+                url = '/onboarding/storeBulkOnboardEmployees'
+            }
         if (errorRecordsCount.value == 0) {
             canShowloading.value = true
-            axios.post('/onboarding/storeQuickOnboardEmployees', data).then(res=>{
+            axios.post(url, data).then(res => {
                 canShowloading.value = false
             }).finally(() => {
                 data.forEach(element => {
@@ -419,14 +435,14 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                         errorRecordsCount.value.push('invalid')
                                     }
                                 } else
-                                    // if (data['DOJ'] || data['DOB']) {
-                                    //     if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
-                                    //         errorRecordsCount.value.push('invalid')
-                                    //     }
-                                    // }else
-                                    {
-                                        console.log("No more error record found!");
-                                    }
+                                // if (data['DOJ'] || data['DOB']) {
+                                //     if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
+                                //         errorRecordsCount.value.push('invalid')
+                                //     }
+                                // }else
+                                {
+                                    console.log("No more error record found!");
+                                }
 
 
 
@@ -437,7 +453,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile,
+        getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile,type,
         currentlyImportedTableAadharValues, currentlyImportedTablePanValues, currentlyImportedTableAccNoValues, currentlyImportedTableEmailValues, currentlyImportedTableMobileNumberValues,
         // TODO:: Separate
 
