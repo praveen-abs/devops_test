@@ -11,7 +11,8 @@ use App\Models\User;
     }
 
  }else{
-     $logoSrc =  getClientLogo();
+
+     $logoSrc =  getClientLogo(auth()->user()->id);
   }
 
 ?>

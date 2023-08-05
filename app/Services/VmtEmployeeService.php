@@ -227,7 +227,7 @@ class VmtEmployeeService
 
             return $response;
         } catch (\Exception $e) {
-            $this->deleteEmployee($newUser->id);
+
             return $response = ([
                 'status' => 'failure',
                 'message' => '',
@@ -249,8 +249,6 @@ class VmtEmployeeService
 
             $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
 
-
-            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
             $newUser->is_onboarded = $can_onboard_employee;
@@ -262,7 +260,6 @@ class VmtEmployeeService
             return $response = $newUser;
         } catch (\Exception $e) {
 
-            $this->deleteEmployee($newUser->id);
 
             return $response = ([
                 'status' => 'failure',
@@ -383,7 +380,7 @@ class VmtEmployeeService
             $newEmployee_statutoryDetails->pf_applicable = $data["pf_applicable"] ?? '';
             $newEmployee_statutoryDetails->esic_applicable = $data["esic_applicable"] ?? '';
             $newEmployee_statutoryDetails->ptax_location_state_id = $data["ptax_location"] ?? '';
-            $newEmployee_statutoryDetails->tax_regime = $data["tax_regime"] ?? '';
+            $newEmployee_statutoryDetails->tax_regime = $data["tax_regime "] ?? '';
             $newEmployee_statutoryDetails->lwf_location_state_id = $data["lwf_location"] ?? '';
             $newEmployee_statutoryDetails->save();
 
@@ -499,7 +496,6 @@ class VmtEmployeeService
                 'data' => ''
             ]);
         } catch (\Exception $e) {
-            $this->deleteEmployee($user_id);
 
             return $response = ([
                 'status' => 'failure',
@@ -623,12 +619,12 @@ class VmtEmployeeService
             $compensatory->lta = $data["lta"] ?? '';
             $compensatory->special_allowance = $data["special_allowance"] ?? '';
             $compensatory->other_allowance = $data["other_allowance"] ?? '';
-            $compensatory->gross = $data["gross"] ?? '';
+           // $compensatory->gross = $data["gross"] ?? '';
             $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '';
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
-            $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
+           // $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
@@ -643,7 +639,7 @@ class VmtEmployeeService
                 'data' => ''
             ]);
         } catch (\Exception $e) {
-            $this->deleteEmployee($user_id);
+
             return $response = ([
                 'status' => 'failure',
                 'message' => 'Error while saving record ',
@@ -836,7 +832,7 @@ class VmtEmployeeService
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
             $compensatory->dearness_allowance = $data["dearness_allowance"] ?? '';
-            $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
+            $compensatory->cic =  $data["ctc"]?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
@@ -850,7 +846,6 @@ class VmtEmployeeService
                 'data' => ''
             ]);
         } catch (\Exception $e) {
-            $this->deleteEmployee($user_id);
 
             return $response = ([
                 'status' => 'failure',

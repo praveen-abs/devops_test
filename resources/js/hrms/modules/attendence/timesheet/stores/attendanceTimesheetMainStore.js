@@ -20,6 +20,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const mipDetails = ref({})
     const lcDetails = ref({})
     const egDetails = ref({})
+    const AttendanceLateOrMipRegularization = ref()
+    const AttendanceEarylOrMopRegularization = ref()
     const absentRegularizationDetails = ref({})
     const selfieDetails = ref({})
 
@@ -150,8 +152,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             regularization_type: selectedAttendanceRegularizationType,
             attendance_date: selectedDayRegularizationRecord.date,
             user_time: selectedDayRegularizationRecord.checkin_time,
-            regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? '9:30:00' :
-                selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? '6:30:00' : '',
+            regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? AttendanceLateOrMipRegularization.value :
+                selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? AttendanceEarylOrMopRegularization.value : '',
             reason: selectedDayRegularizationRecord.reason,
             custom_reason: selectedDayRegularizationRecord.custom_reason ? selectedDayRegularizationRecord.custom_reason : '',
         }
@@ -169,7 +171,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyLcRegularization = () => {
-        att.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
@@ -398,6 +399,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
         // Attendance Regularization
 
+        AttendanceLateOrMipRegularization, AttendanceEarylOrMopRegularization,
         //   MOP
         onClickShowLcRegularization, applyMopRegularization, mopDetails, dialog_Mop,
         //   MIP
