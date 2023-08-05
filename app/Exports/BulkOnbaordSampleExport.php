@@ -31,11 +31,12 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping , WithCalculatedFormulas ,WithTitle ,WithMultipleSheets
+class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithCalculatedFormulas ,WithTitle ,WithMultipleSheets
 {
     /**
      * @return \Illuminate\Support\Collection
      */
+
 
     protected $title;
     protected $client_list;
@@ -77,8 +78,8 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
     public function sheets(): array
     {
         return [
-            'Worksheet 1' => new FirstSheetExport(),
-            'Worksheet 2' => new SecondSheet(),
+            'Sheet 1' => $this,
+            //'DropdownList' => new DropdownListSheet(),
         ];
     }
 
@@ -115,8 +116,6 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
             'Prev UAN',
             'ESI Eligible',
             'Prev ESI Number',
-            'Current Address',
-            'Permanent Address',
             'Basic',
             'HRA',
             'Dearness Allowance',
@@ -148,55 +147,55 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
         ];
     }
 
-    public function map($row): array
-    {
-        return [
-            [
-            'ABS0001',
-            'Name',
-            'abs@gmail.com',
-            '0912345678',
-            'Male',
-            '28-06-2000',
-            '14-11-2022',
-            '',
-            'It',
-            '',
-            'Chennai',
-            'ABSM001',
-            '0912345678',
-            'test@gmail.com',
-            'Single',
-            '',
-            'Father Name',
-            'Mother Name',
-            'Spouse Name',
-            'B Positive',
-            'No',
-            'ABCTY1234D',
-            '0000 1111 2222',
-            'Axis Bank',
-            'AXIB0028901',
-            '24898240942',
-            'UAN0945049',
-            'Yes',
-            '942904',
-            'Current Address',
-            'Permanent Address',
-            'CTC - Monthly',
-            '18000',
-            '=(AG2*50)/100',
-            '=(AH2*50)/100',
-            '',
-            '',
-            '',
-            '',
-            '=AH2-AI2',
+    // public function map($row): array
+    // {
+    //     return [
+    //         [
+    //         'ABS0001',
+    //         'Name',
+    //         'abs@gmail.com',
+    //         '0912345678',
+    //         'Male',
+    //         '28-06-2000',
+    //         '14-11-2022',
+    //         '',
+    //         'It',
+    //         '',
+    //         'Chennai',
+    //         'ABSM001',
+    //         '0912345678',
+    //         'test@gmail.com',
+    //         'Single',
+    //         '',
+    //         'Father Name',
+    //         'Mother Name',
+    //         'Spouse Name',
+    //         'B Positive',
+    //         'No',
+    //         'ABCTY1234D',
+    //         '0000 1111 2222',
+    //         'Axis Bank',
+    //         'AXIB0028901',
+    //         '24898240942',
+    //         'UAN0945049',
+    //         'Yes',
+    //         '942904',
+    //         'Current Address',
+    //         'Permanent Address',
+    //         'CTC - Monthly',
+    //         '18000',
+    //         '=(AG2*50)/100',
+    //         '=(AH2*50)/100',
+    //         '',
+    //         '',
+    //         '',
+    //         '',
+    //         '=AH2-AI2',
 
-        ],
-            ['','=AG2*10']
-        ];
-    }
+    //     ],
+    //         ['','=AG2*10']
+    //     ];
+    // }
 
     public function columnFormats(): array
     {
@@ -219,20 +218,7 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
 
             //  handle by a closure.
             AfterSheet::class => function (AfterSheet $event) {
-                // $countries = $event->sheet;
-                // $countries->getSheetName('Worksheet 1')->setCellValue("A1","UK");
-                // $countries->getSheetName('Worksheet 1')->setCellValue("A2","USA");
-                // $event->sheet->getDelegate()->getParent()->addNamedRange(
-                //     new NamedRange(
-                //         'countries',
-                //         $countries->getSheetByName('Worksheet 1'),
-                //         'A1:A2'
-                //     )
-                // );
 
-                //get layout counts (add 1 to rows for heading row)
-                // $row_count = $this->results->count() + 1;
-                // $column_count = count($this->results[0]->toArray());
                 $row_count = 10;
                 $column_count = 0;
 
@@ -247,7 +233,7 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
                 $manager_code_option = $this->manager_code;
                 $compansation_column = 'AF';
 
-                // // set dropdown list for Gender
+            // set dropdown list for Gender
                 $validation_gender = $event->sheet->getCell("E3")->getDataValidation();
                 $validation_gender->setType(DataValidation::TYPE_LIST);
                 $validation_gender->setErrorStyle(DataValidation::STYLE_INFORMATION);
@@ -261,7 +247,20 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
                 $validation_gender->setPrompt('Please pick a value from the drop-down list.');
                 $validation_gender->setFormula1(sprintf('"%s"', implode(',',  $gender_options)));
 
-                // // // set dropdown list for Legal Entity
+                $validation_bank_data = $event->sheet->getDataValidation('Y2');
+                $validation_bank_data->setType(\PhpOffice\PhpSpreadsheet\Cell\DataValidation::TYPE_LIST);
+                $validation_bank_data->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                $validation_bank_data->setAllowBlank(false);
+                $validation_bank_data->setShowInputMessage(true);
+                $validation_bank_data->setShowErrorMessage(true);
+                $validation_bank_data->setShowDropDown(true);
+                $validation_bank_data->setErrorTitle('Input error');
+                $validation_bank_data->setError('Value is not in list.');
+                $validation_bank_data->setPromptTitle('Pick from list');
+                $validation_bank_data->setPrompt('Please pick a value from the drop-down list.');
+                $validation_bank_data->setFormula1('DropdownList!$Y$2:$Y$1000');
+
+            // set dropdown list for Legal Entity
                 $validation_entity = $event->sheet->getCell("H3")->getDataValidation();
                 $validation_entity->setType(DataValidation::TYPE_LIST);
                 $validation_entity->setErrorStyle(DataValidation::STYLE_INFORMATION);
@@ -363,6 +362,7 @@ class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCust
                 for ($i = 2; $i <= $row_count; $i++) {
                     $event->sheet->getCell("E{$i}")->setDataValidation(clone  $validation_gender);
                     $event->sheet->getCell("{$compansation_column}{$i}")->setDataValidation(clone    $validation_compansation);
+                    $event->sheet->getCell("Y{$i}")->setDataValidation(clone    $validation_bank_data);
                     $event->sheet->getCell("H{$i}")->setDataValidation(clone  $validation_entity);
                     // $event->sheet->getCell("I{$i}")->setDataValidation(clone  $validation_dep);
                     $event->sheet->getCell("O{$i}")->setDataValidation(clone  $validation_mar_sts);
