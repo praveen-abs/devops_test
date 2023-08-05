@@ -139,7 +139,6 @@
                     <p v-else class="font-semibold fs-6">
                         {{ data[field] }}
                     </p>
-
                 </template>
                 <template #editor="{ data, field }">
                     <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
