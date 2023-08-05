@@ -534,6 +534,138 @@
 // $result = $date1->eq($date2);
 
 // dd($result);
+$employeeData =[
+    "employee_code" => "ENBL301",
+      "employee_name" => "Virat Ganesh",
+      "email" => "vishnu@abshrms.com",
+      "gender" => "male",
+      "doj" => 45171,
+      "location" => "Chennai",
+      "dob" => "09-01-2000",
+      "pan_no" => "FBVPD0808N",
+      "pan_ack" => 0.0,
+      "aadhar" => 823456789032.0,
+      "marital_status" => "unmarried",
+      "mobile_number" => 8056099319.0,
+      "bank_name" => "Axis bank",
+      "bank_ifsc" => "UTIB0000006",
+      "account_no" => 12234567932178.0,
+      "current_address" => "Tambaram Chennai-600045",
+      "permanent_address" => "Tambaram Chennai-600045",
+      "father_name" => "Singh Kumar",
+      "father_gender" => "Male",
+      "father_dob" => "09-10-1967",
+      "mother_name" => "Sakshi",
+      "mother_gender" => "Female",
+      "mother_dob" => "06-10-1967",
+      "spouse_name" => "jk",
+      "spouse_dob" => "09-09-2002",
+      "no_of_child" => 0.0,
+      "child_name" => 0.0,
+      "child_dob" => 0.0,
+      "department" => "HR",
+      "process" => "Operations",
+      "designation" => "HR Executive",
+      "cost_center" => 0.0,
+      "confirmation_period" => "30-09-2023",
+      "holiday_location" => "Chennai",
+      "l1_manager_code" => "BA001",
+      "l1_manager_name" => "Hemachandran",
+      "work_location" => "Chennai",
+      "official_mail" => "dondebijeff@gmail.com",
+      "official_mobile" => 8056099319.0,
+      "emp_notice" => 30,
+      "basic" => 12330,
+      "hra" => 12788,
+      "statutory_bonus" => 0.0,
+      "child_education_allowance" => 0.0,
+      "food_coupon" => 0.0,
+      "lta" => 0.0,
+      "special_allowance" => 12342,
+      "other_allowance" => 0.0,
+      "epf_employer_contribution" => 1800,
+      "esic_employer_contribution" => 0.0,
+      "insurance" => 0.0,
+      "graduity" => 0.0,
+      "epf_employee" => 1800,
+      "esic_employee" => 0.0,
+      "professional_tax" => 0.0,
+      "labour_welfare_fund" => 0.0,
+      "net_income" => 35000,
+      "uan_number" => 0.0,
+      "pf_applicable" => "Yes",
+      "esic_applicable" => "Yes",
+      "ptax_location" => 0.0,
+      "tax_regime" => "New",
+      "lwf_location" => 0.0,
+      "dearness_allowance" => 0.0,
+    ];
+
+ $empNameString  = $employeeData['employee_name'];
+        $filename = 'appoinment_letter_' . $empNameString . '_' . time() . '.pdf';
+        $data = $employeeData;
+        $data['basic_monthly'] = $employeeData['basic'];
+        $data['basic_yearly'] = intval($employeeData['basic']) * 12;
+        $data['hra_monthly'] = $employeeData['hra'];
+        $data['hra_yearly'] = intval($employeeData['hra']) * 12;
+        $data['spl_allowance_monthly'] = $employeeData['special_allowance'];
+        $data['spl_allowance_yearly'] = intval($employeeData['special_allowance']) * 12;
+        $data['gross_monthly'] = $employeeData["basic"] + $employeeData["hra"] + $employeeData["statutory_bonus"] + $employeeData["child_education_allowance"] + $employeeData["food_coupon"] + $employeeData["lta"] + $employeeData["special_allowance"] + $employeeData["other_allowance"];
+        $data['gross_yearly'] = intval($data['gross_monthly']) * 12;
+        $data['employer_epf_monthly'] = $employeeData['epf_employer_contribution'];
+        $data['employer_epf_yearly'] = intval($employeeData['epf_employer_contribution']) * 12;
+        $data['employer_esi_monthly'] = $employeeData['esic_employer_contribution'];
+        $data['employer_esi_yearly'] = intval($employeeData['esic_employer_contribution']) * 12;
+        $data['ctc_monthly'] = $data['gross_monthly'];
+        $data['ctc_yearly'] = intval($data['gross_monthly']) * 12;
+        $data['employee_epf_monthly'] =  $employeeData["epf_employer_contribution"];
+        $data['employee_epf_yearly'] = intval($employeeData["epf_employer_contribution"]) * 12;
+        $data['employer_pt_monthly'] = $employeeData["professional_tax"];
+        $data['employer_pt_yearly'] =  intval($employeeData["professional_tax"]) * 12;
+        $data['net_take_home_monthly'] = $employeeData["net_income"];
+        $data['net_take_home_yearly'] = intval($employeeData["net_income"]) * 12;
+
+        $VmtClientMaster = VmtClientMaster::first();
+        $image_view = url('/') . $VmtClientMaster->client_logo;
+        $appoinmentPath = "";
+
+       // if (fetchMasterConfigValue("can_send_appointmentletter_after_onboarding") == "true") {
+
+            //Fetch appointment letter based on client name
+            $client_name = str_replace(' ', '', sessionGetSelectedClientName());
+            //$client_name = Str::lower(str_replace(' ', '', getCurrentClientName()) );
+            $viewfile_appointmentletter = 'vmt_appointment_templates.mailtemplate_appointmentletter_brandavatar';
+
+            //check if template exists
+            if (view()->exists($viewfile_appointmentletter)) {
+
+                $html =  view($viewfile_appointmentletter, compact('data'));
+                
+            }
+       // }
+
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+
+                $pdf = new Dompdf($options);
+                $pdf->loadHtml($html, 'UTF-8');
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
+                $docUploads =  $pdf->output();
+                 dd( $docUploads);
+        //         \File::put(public_path('appoinmentLetter/') . $filename, $docUploads);
+        //         $appoinmentPath = public_path('appoinmentLetter/') . $filename;
+        //     }
+        // }
+
+        // $notification_user = User::where('id', auth()->user()->id)->first();
+        // $message = "Employee Bulk OnBoard was Created   ";
+
+        // Notification::send($notification_user, new ViewNotification($message . $employeeData['employee_name']));
+        // $isSent    = \Mail::to($employeeData['email'])->send(new WelcomeMail($employeeData['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(),  $appoinmentPath, $image_view));
+
+        // return $isSent;
 
 
 $data = VmtEmpAbryPmrpy::where('')
