@@ -20,6 +20,7 @@
                     <p v-if="source.lc_status.includes('Approved')"> {{source.checkin_time}} </p>
                     <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
+
             </div>
         </div>
         <div class="col-12" v-if="type == 'MIP'">

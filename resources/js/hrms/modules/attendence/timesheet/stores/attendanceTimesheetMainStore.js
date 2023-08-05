@@ -306,8 +306,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             user_code: service.current_user_code,
             attendance_date: absentRegularizationDetails.value.date,
             regularization_type: "Absent Regularization",
-            checkin_time: absentRegularizationDetails.value.start_time,
-            checkout_time: absentRegularizationDetails.value.end_time,
+            checkin_time: convertTime(absentRegularizationDetails.value.start_time),
+            checkout_time: convertTime(absentRegularizationDetails.value.end_time),
             reason: absentRegularizationDetails.value.reason,
             custom_reason: absentRegularizationDetails.value.custom_reason ? absentRegularizationDetails.value.custom_reason : "",
         })
