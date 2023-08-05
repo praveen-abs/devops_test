@@ -10,23 +10,50 @@
                 </div>
             </div>
         </div>
-        <div class="col-12" v-if="type == 'LC' || type == 'MIP'">
+        <!-- {{ source }} -->
+        <div class="col-12" v-if="type == 'LC'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
                 </div>
                 <div class="col-6">
-                    <input placeholder="format-09:30:00" type="text" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
+                    <p v-if="source.lc_status.includes('Approved')"> {{source.checkin_time}} </p>
+                    <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
             </div>
         </div>
-        <div class=" col-12" v-if="type == 'EG' || type == 'MOP'">
+        <div class="col-12" v-if="type == 'MIP'">
             <div class="row">
                 <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
                         as</label>
                 </div>
                 <div class="col-6">
-                    <input placeholder="format-06:30:00" type="text" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400"  name="" id="" v-model="useTimesheet.AttendanceEarylOrMopRegularization">
+                    <p v-if="source.mip_status.includes('Approved')"> {{source.checkin_time}} </p>
+                    <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
+                </div>
+            </div>
+        </div>
+
+
+        <div class=" col-12" v-if="type == 'EG'">
+            <div class="row">
+                <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
+                        as</label>
+                </div>
+                <div class="col-6">
+                    <p v-if="source.eg_status.includes('Approved')"> {{source.checkout_time}} </p>
+                    <input v-else placeholder="format-06:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400  w-full"  name="" id="" v-model="useTimesheet.AttendanceEarylOrMopRegularization">
+                </div>
+            </div>
+        </div>
+        <div class=" col-12" v-if="type == 'MOP'">
+            <div class="row">
+                <div class="col-6"><label class="font-medium fs-6 text-gray-700">Regularize Timing
+                        as</label>
+                </div>
+                <div class="col-6">
+                    <p v-if="source.mop_status.includes('Approved')"> {{source.checkout_time}} </p>
+                    <input placeholder="format-06:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400  w-full"  name="" id="" v-model="useTimesheet.AttendanceEarylOrMopRegularization">
                 </div>
             </div>
         </div>
@@ -248,6 +275,7 @@
 </template>
 
 <script setup>
+import { onUpdated } from 'vue';
 import { useAttendanceTimesheetMainStore } from '../stores/attendanceTimesheetMainStore';
 
 
@@ -288,4 +316,5 @@ const isNumber = (e) => {
     if (/^[0-9:]+$/.test(char)) return true; // Match with regex
     else e.preventDefault(); // If not match, don't add to input text
 }
+
 </script>
