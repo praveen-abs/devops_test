@@ -1296,18 +1296,9 @@ class VmtEmployeePayCheckService
 
 
 
-        // $user = User::where('user_code', $user_code)->first();
-
-        // $query_client = VmtClientMaster::find($user->client_id);
-
-        // $client_name = $query_client->client_name;
-
-        // $processed_clientName = strtolower(str_replace(' ', '', $client_name));
-
-
         $html = view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
 
-        // return $html;
+    //    return $html;
 
         $pdf = new Dompdf();
         $pdf->loadhtml($html, 'UTF-8');
