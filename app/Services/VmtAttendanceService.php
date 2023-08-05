@@ -45,64 +45,93 @@ class VmtAttendanceService
     public function fetchAttendanceRegularizationData($manager_user_code = null, $month, $year)
     {
 
+        $validator = Validator::make(
+            $data = [
+                'manager_user_code' => $manager_user_code,
+                'month' => $month,
+                'year' => $year,
+            ],
+            $rules = [
+                'manager_user_code' => 'required|exists:users,user_code',
+                'month' => 'required',
+                'year' => 'required',
+            ],
+            $messages = [
+                'required' => 'Field :attribute is missing',
+                'exists' => 'Field :attribute is invalid',
+                'integer' => 'Field :attribute should be integer',
+                'in' => 'Field :attribute is invalid',
+            ]
+        );
 
-        $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+        try {
+            $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
 
-        $allEmployees_lateComing = null;
+            $allEmployees_lateComing = null;
 
-        //If manager ID not set, then show all employees
-        if (empty($manager_user_code)) {
-            if (empty($month) && empty($year))
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
-            else
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
-                    ->whereMonth('attendance_date', $month)
-                    ->get();
-        } else {
-            //If manager ID set, then show only the team level employees
-
-            $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
-
-
-            if (empty($month) && empty($year))
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
-            else
-                $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)
-                    ->whereYear('attendance_date', $year)
-                    ->whereMonth('attendance_date', $month)
-                    ->get();
-        }
-
-        //dd($map_allEmployees->toArray());
-        //dd($allEmployees_lateComing->toArray());
-
-        foreach ($allEmployees_lateComing as $singleItem) {
-
-            //check whether user_id from regularization table exists in USERS table
-            if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
-
-                $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
-                $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
-
-                //If reviewer_id = 0, then its not yet reviewed
-                if ($singleItem->reviewer_id != 0) {
-                    $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
-                    $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
-                }
+            //If manager ID not set, then show all employees
+            if (empty($manager_user_code)) {
+                if (empty($month) && empty($year))
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::all();
+                else
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereYear('attendance_date', $year)
+                        ->whereMonth('attendance_date', $month)
+                        ->get();
             } else {
-                //  dd("Missing User ID : " . $singleItem->user_id);
+                //If manager ID set, then show only the team level employees
+
+                $employees_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_user_code)->pluck('user_id');
+
+
+                if (empty($month) && empty($year))
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)->get();
+                else
+                    $allEmployees_lateComing = VmtEmployeeAttendanceRegularization::whereIn('user_id', $employees_id)
+                        ->whereYear('attendance_date', $year)
+                        ->whereMonth('attendance_date', $month)
+                        ->get();
             }
+
+            //dd($map_allEmployees->toArray());
+            //dd($allEmployees_lateComing->toArray());
+
+            foreach ($allEmployees_lateComing as $singleItem) {
+
+                //check whether user_id from regularization table exists in USERS table
+                if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
+
+                    $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
+
+                    //If reviewer_id = 0, then its not yet reviewed
+                    if ($singleItem->reviewer_id != 0) {
+                        $singleItem->reviewer_name = $map_allEmployees[$singleItem->reviewer_id]["name"];
+                        $singleItem->reviewer_avatar = getEmployeeAvatarOrShortName($singleItem->reviewer_id);
+                    }
+                } else {
+                    //  dd("Missing User ID : " . $singleItem->user_id);
+                }
+            }
+
+            // dd($allEmployees_lateComing);
+            // return [
+            //     "status"=>"success",
+            //     "message"=>"",
+            //     "data"=>$allEmployees_lateComing
+            // ];
+
+            return $allEmployees_lateComing;
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "failure",
+                "message" => "Error while fetching Attendance Regularization data",
+                "data" => $e,
+            ]);
         }
-
-        // dd($allEmployees_lateComing);
-        // return [
-        //     "status"=>"success",
-        //     "message"=>"",
-        //     "data"=>$allEmployees_lateComing
-        // ];
-
-        return $allEmployees_lateComing;
     }
+
+
+
 
 
     public function fetchAbsentRegularizationData($manager_user_code = null, $month, $year)
@@ -702,7 +731,7 @@ class VmtAttendanceService
             $rules = [
                 'record_id' => 'required|exists:vmt_employee_leaves,id',
                 'approver_user_code' => 'required|exists:users,user_code',
-                'status' => ['required', Rule::in(['Approved', 'Rejected','Revoked'])],
+                'status' => ['required', Rule::in(['Approved', 'Rejected', 'Revoked'])],
                 'review_comment' => 'nullable',
             ],
             $messages = [
@@ -721,93 +750,122 @@ class VmtAttendanceService
         }
 
 
+        try{
+            //Get the user_code
+            $query_user = User::where('user_code', $approver_user_code)->first();
+            $approver_user_id = $query_user->id;
 
-        //Get the user_code
-        $query_user = User::where('user_code', $approver_user_code)->first();
-        $approver_user_id = $query_user->id;
+            // $approval_status = $request->status;
+            $leave_record = VmtEmployeeLeaves::where('id', $record_id)->first();
+            //dd($leave_record);
+            //dd( $leave_record);
+            //dd( $request->status);
+            if ($status == "Revoked") {
+                $leave_record->is_revoked = "true";
+                $leave_record->status = "Pending";
+            } else {
+                //For Approved or rejected status
+                $leave_record->status = $status;
+            }
 
-        // $approval_status = $request->status;
-        $leave_record = VmtEmployeeLeaves::where('id', $record_id)->first();
-        //dd($leave_record);
-        //dd( $leave_record);
-        //dd( $request->status);
-        if ($status == "Revoked") {
-            $leave_record->is_revoked = "true";
-            $leave_record->status = "Pending";
-        } else {
-            //For Approved or rejected status
-            $leave_record->status = $status;
+            $leave_record->reviewer_user_id = $approver_user_id;
+            $leave_record->reviewer_comments = $review_comment ?? "";
+            $leave_record->reviewed_date = Carbon::now();
+            $leave_record->save();
+
+            //Send mail to the employee
+            $employee_user_id = $leave_record->user_id;
+            $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->first()->officical_mail;
+            $obj_employee = User::where('id', $employee_user_id)->first();
+            $manager_user_id = $leave_record->reviewer_user_id;
+
+            $message = "";
+            $mail_status = "";
+
+            $VmtClientMaster = VmtClientMaster::first();
+            $image_view = url('/') . $VmtClientMaster->client_logo;
+
+            $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
+
+
+            $isSent    = \Mail::to($employee_mail)->send(
+                new ApproveRejectLeaveMail(
+                    $obj_employee->name,
+                    $obj_employee->user_code,
+                    VmtLeaves::find($leave_record->leave_type_id)->leave_type,
+                    User::find($manager_user_id)->name,
+                    User::find($manager_user_id)->user_code,
+                    request()->getSchemeAndHttpHost(),
+                    $image_view,
+                    $emp_avatar,
+                    $status
+                )
+
+            );
+
+            if ($isSent) {
+                $mail_status = "success";
+            } else {
+                $mail_status = "failure";
+            }
+
+            if ($status == "Approved") {
+                $text_status = "approved";
+                $leave_module_type = 'manager_approves_leave';
+            } else
+            if ($status == "Rejected") {
+                $text_status = "rejected";
+                $leave_module_type = 'manager_rejects_leave';
+            } else
+            if ($status == "Revoked") {
+                $text_status = "revoked";
+                $leave_module_type = 'manager_withdraw_leave';
+            }
+
+            $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code);
+
+            if($users_id->exists()){
+               $users_id = $users_id->first()->user_id;
+
+                $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
+                    notif_user_id: User::where('id', $users_id)->first()->user_code,
+                    leave_module_type: $leave_module_type,
+                    manager_user_code: $approver_user_code,
+                );
+
+            }
+
+
+
+            $response = [
+                'status' => 'success',
+                'message' => 'Leave Request ' . $text_status . ' successfully',
+                'mail_status' => $mail_status,
+                'notification' => $res_notification ?? 'Not sent',
+                'error' => '',
+                'error_verbose' => ''
+            ];
+
+            return $response;
+
+        } catch (TransportException $e) {
+
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'message' => 'Leave Request ' . $text_status . ' successfully',
+                    'mail_status' => 'failure',
+                    'error' => $e->getMessage(),
+                    'error_verbose' => $e
+                ]
+            );
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ approveRejectRevokeLeaveRequest() ] " . $e->getMessage(),
+                'data' => $e->getMessage()
+            ]);
         }
-
-        $leave_record->reviewer_user_id = $approver_user_id;
-        $leave_record->reviewer_comments = $review_comment ?? "";
-        $leave_record->reviewed_date = Carbon::now();
-        $leave_record->save();
-
-        //Send mail to the employee
-        $employee_user_id = $leave_record->user_id;
-        $employee_mail =  VmtEmployeeOfficeDetails::where('user_id', $employee_user_id)->first()->officical_mail;
-        $obj_employee = User::where('id', $employee_user_id)->first();
-        $manager_user_id = $leave_record->reviewer_user_id;
-
-        $message = "";
-        $mail_status = "";
-
-        $VmtClientMaster = VmtClientMaster::first();
-        $image_view = url('/') . $VmtClientMaster->client_logo;
-
-        $emp_avatar = json_decode(getEmployeeAvatarOrShortName($approver_user_id));
-
-
-        $isSent    = \Mail::to($employee_mail)->send(
-            new ApproveRejectLeaveMail(
-                $obj_employee->name,
-                $obj_employee->user_code,
-                VmtLeaves::find($leave_record->leave_type_id)->leave_type,
-                User::find($manager_user_id)->name,
-                User::find($manager_user_id)->user_code,
-                request()->getSchemeAndHttpHost(),
-                $image_view,
-                $emp_avatar,
-                $status
-            )
-        );
-
-        if ($isSent) {
-            $mail_status = "success";
-        } else {
-            $mail_status = "failure";
-        }
-
-        if ($status == "Approved") {
-            $text_status = "approved";
-            $leave_module_type = 'manager_approves_leave';
-        } else
-        if ($status == "Rejected") {
-            $text_status = "rejected";
-            $leave_module_type = 'manager_rejects_leave';
-        } else
-        if ($status == "Revoked") {
-            $text_status = "revoked";
-            $leave_module_type = 'manager_withdraw_leave';
-        }
-        $users_id = VmtEmployeeOfficeDetails::where('l1_manager_code', $approver_user_code)->first()->user_id;
-
-        $res_notification = $serviceNotificationsService->sendLeaveApplied_FCMNotification(
-            notif_user_id: User::where('id', $users_id)->first()->user_code,
-            leave_module_type: $leave_module_type,
-            manager_user_code: $approver_user_code,
-        );
-        $response = [
-            'status' => 'success',
-            'message' => 'Leave Request ' . $text_status . ' successfully',
-            'mail_status' => $mail_status,
-            'notification' => $res_notification,
-            'error' => '',
-            'error_verbose' => ''
-        ];
-
-        return $response;
     }
 
 
@@ -3103,16 +3161,16 @@ class VmtAttendanceService
 
         return $response;
     }
-   
+
     //Get Count of Att req for given manager's team memebers
     public function getCountForAttRegularization($user_code)
     {
-                    //  $user_code = "BA011";
+        //  $user_code = "BA011";
         try {
-            $emp_users_query=VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
+            $emp_users_query = VmtEmployeeOfficeDetails::where('l1_manager_code', $user_code)->get();
             $emp_users_id = array();
-            foreach( $emp_users_query as $single_emp){
-              array_push( $emp_users_id,$single_emp->user_id);
+            foreach ($emp_users_query as $single_emp) {
+                array_push($emp_users_id, $single_emp->user_id);
             }
 
             $month = Carbon::now()->format('m');
@@ -3120,7 +3178,7 @@ class VmtAttendanceService
 
             $total_count['pending_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Pending')->count();
-            $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id',$emp_users_id)->whereMonth('attendance_date', $month)
+            $total_count['approved_count']  = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Approved')->count();
             $total_count['rejected_count']   = VmtEmployeeAttendanceRegularization::whereIn('user_id', $emp_users_id)->whereMonth('attendance_date', $month)
                 ->where('status', 'Rejected')->count();
