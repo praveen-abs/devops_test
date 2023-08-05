@@ -142,7 +142,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             url = '/onboarding/storeQuickOnboardEmployees'
         } else
             if (type.value == 'bulk') {
-                url = '/onboarding/storeBulkOnboardEmployee'
+                url = '/onboarding/storeBulkOnboardEmployees'
             }
         if (errorRecordsCount.value == 0) {
             canShowloading.value = true
