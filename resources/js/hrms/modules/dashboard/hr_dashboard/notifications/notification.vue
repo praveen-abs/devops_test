@@ -1,12 +1,12 @@
 <template>
-       <div class="card-body">
+       <div class="card-body " style="width: 100%; height: 350px">
           <div
             class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
             id=""
           >
             <span>Request</span>
           </div>
-          <div class="contents">
+          <!-- <div class="contents">
             <div class="mb-0 mb-3 border-0 card bg-orange-lighten box-shadow-sm">
               <div class="p-2 card-body">
                 <div
@@ -72,6 +72,6 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 </template>

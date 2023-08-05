@@ -67,8 +67,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Reimbursements
     Route::post('/reimbursements/save_reimbursement_data', [VmtAPIReimbursementsController::class, 'saveReimbursementData']);
+    Route::post('/reimbursements/save_reimbursement_claims', [VmtAPIReimbursementsController::class, 'saveReimbursementData_Claims']);
     Route::get('/reimbursements/getReimbursementVehicleTypes', [VmtAPIReimbursementsController::class, 'getReimbursementVehicleTypes']);
     Route::get('/reimbursements/getReimbursementTypes', [VmtAPIReimbursementsController::class, 'getReimbursementTypes']);
+    Route::get('/reimbursements/getReimbursementClaimTypes', [App\Http\Controllers\VmtReimbursementController::class, 'getReimbursementClaimTypes'])->name('getReimbursementClaimTypes');
+
     Route::post('/reimbursements/isReimbursementAppliedOrNot', [VmtAPIReimbursementsController::class, 'isReimbursementAppliedOrNot']);
 
     ////Attendance
@@ -96,8 +99,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Attendance Regularize
     Route::post('/attendance/apply-att-regularization', [VmtAPIAttendanceController::class, 'applyRequestAttendanceRegularization']);
     Route::post('/attendance/approveReject-att-regularization', [VmtAPIAttendanceController::class, 'approveRejectAttendanceRegularization']);
+    Route::post('/attendance/approveReject-absent-regularization', [VmtAPIAttendanceController::class, 'approveRejectAbsentRegularization']);
     Route::post('/attendance/getData-att-regularization', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationData']);
+    Route::post('/attendance/getAttendanceRegularizationStatus', [VmtAPIAttendanceController::class, 'getAttendanceRegularizationStatus']);
     Route::post('/attendance/applyRequestAbsentRegularization', [VmtAPIAttendanceController::class, 'applyRequestAbsentRegularization']);
+    Route::post('/attendance/countOfAttendanceRegularization',[VmtAPIAttendanceController::class,'getCountForAttRegularization']);
+    Route::post('/attendance/fetchAttendadnceRegularization',[VmtAPIAttendanceController::class,'getfetchAttendadnceRegularization']);
 
 
     //Payslip API

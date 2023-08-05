@@ -35,6 +35,7 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
     protected $month_name;
     protected $year;
     protected $client_name;
+    protected $total_row;
     function __construct($reimbursements_details,$totals,$legal_entity,$month_name,$year,$client_name){
         $this->reimbursements_details=$reimbursements_details;
         $this->totals=$totals;
@@ -83,6 +84,8 @@ class ManagerReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadin
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
 
+        //For Remove Grid Lines
+        $sheet->setShowGridlines(false);
         //For First Row
         $sheet->mergeCells('A1:D1')->setCellValue('A1', "Legal Entity : ".$this->legal_entity);
         $sheet->getStyle('A1:D1')->getFont()->setBold(true);

@@ -21,7 +21,7 @@
 
     </div> -->
 
-    <!-- <non_pf_employees /> -->
+    <non_pf_employees />
     <add_new_employee_provident_fund />
 </template>
 

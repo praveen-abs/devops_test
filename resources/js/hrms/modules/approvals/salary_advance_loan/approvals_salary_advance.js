@@ -37,19 +37,20 @@ import InputNumber from 'primevue/inputnumber';
 import SelectButton from 'primevue/selectbutton';
 import RadioButton from 'primevue/radiobutton';
 import Checkbox from 'primevue/checkbox';
+import OverlayPanel from 'primevue/overlaypanel';
 
 
 
 import approvals_salary_advance from './approvals_salary_advance.vue'
 
 const app = createApp(approvals_salary_advance);
-const pinia=createPinia()
+const pinia=createPinia();
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
-app.use(pinia)
+app.use(pinia);
 
 
 app.directive('tooltip', Tooltip);
@@ -77,5 +78,6 @@ app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
 app.component('SelectButton' ,SelectButton)
 app.component('Checkbox' ,Checkbox)
+app.component('OverlayPanel' ,OverlayPanel)
 
 app.mount("#approvals_salary_advance");

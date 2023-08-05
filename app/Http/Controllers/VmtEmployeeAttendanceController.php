@@ -28,9 +28,12 @@ class VmtEmployeeAttendanceController extends Controller
 {
     public function generateDetailedAttendanceReports(Request $request,VmtAttendanceReportsService $attendance_report_service)
     {
-        $year=2023;
-        $month='03';
-        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($year,$month)), 'Attendance.xlsx');
+      
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        // $start_date ='2023-06-26';
+        // $end_date ='2023-07-26';
+        return Excel::download(new DetailedAttendanceExport($attendance_report_service->detailedAttendanceReport($start_date,$end_date)), 'Attendance.xlsx');
 
     }
 
@@ -77,5 +80,7 @@ class VmtEmployeeAttendanceController extends Controller
           //return $attendance_report_service->basicAttendanceReport($year);
          return Excel::download(new BasicAttendanceExport($attendance_report_service->basicAttendanceReport($year,$month,$client_domain)), 'Test.xlsx');
         }
+
+
     }
 

@@ -23,6 +23,7 @@ use App\Models\VmtEmployeeWorkShifts;
 use App\Models\VmtWorkShifts;
 use App\Models\VmtEmployeeOfficeDetails;
 use App\Models\Compensatory;
+use App\Models\VmtBloodGroup;
 use App\Models\VmtEmployeeStatutoryDetails;
 use App\Models\VmtEmployeeFamilyDetails;
 use App\Models\VmtOrgRoles;
@@ -51,17 +52,17 @@ class VmtOnboardingTestingService {
 
                 $user_data = $response['data'];
 
-                $save_details = $this->Save_EmployeeOnboard_Data($data,$user_data,$onboard_type);
+                $save_details = $this->Save_Employee_NormalQuick_OnboardData($data,$user_data,$onboard_type);
 
                  $response=([
                     'status' => $save_details['status'],
-                    'message' => '',
-                    'data' =>''
+                    'message' => 'Employee details saved successfully',
+                    'data' =>$save_details
                 ]);
 
                 return $response;
 
-              }catch(Exception $e){
+              }catch(\Exception $e){
 
                 return $response=([
                     'status' => 'failure',
@@ -80,11 +81,11 @@ class VmtOnboardingTestingService {
         ]);
 
        }
-  }
+    }
 
   public function createOrUpdate_BulkOnboardData($data, $can_onboard_employee, $existing_user_id = null,$onboard_type = null)
   {
-      //dd("heeey");
+
       $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type);
 
       if(!empty($response) && $response['status'] == 'success')
@@ -94,17 +95,17 @@ class VmtOnboardingTestingService {
 
               $user_data = $response['data'];
 
-              $save_details = $this->Save_EmployeeOnboard_Data($data, $user_data, $onboard_type);
+              $save_details = $this->Save_Employee_Bulk_OnboardData($data, $user_data, $onboard_type);
 
                $response=([
                   'status' => $save_details['status'],
                   'message' => 'Employee details saved successfully',
-                  'data' =>''
+                  'data' =>$save_details
               ]);
 
               return $response;
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
 
               return $response=([
                   'status' => 'failure',
@@ -123,10 +124,10 @@ class VmtOnboardingTestingService {
       ]);
 
      }
-}
+  }
   public function createOrUpdate_QuickOnboardData($data, $can_onboard_employee, $existing_user_id = null,$onboard_type = null)
   {
-      //dd("heeey");
+      dd($data);
       $response = $this->createOrUpdate_User(data: $data, can_onboard_employee : $can_onboard_employee, user_id: $existing_user_id, onboard_type : $onboard_type );
 
       if(!empty($response) && $response['status'] == 'success')
@@ -141,12 +142,12 @@ class VmtOnboardingTestingService {
                $response=([
                   'status' => $save_details['status'],
                   'message' => 'Employee details saved successfully',
-                  'data' =>''
+                  'data' =>$save_details
               ]);
 
               return $response;
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
 
               return $response=([
                   'status' => 'failure',
@@ -165,9 +166,8 @@ class VmtOnboardingTestingService {
       ]);
 
      }
-}
-
-private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
+  }
+   private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null, $onboard_type)
     {
         $newUser = null;
 
@@ -208,9 +208,7 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
         }
         catch(\Exception $e)
         {
-
             $this->deleteEmployee($newUser->id);
-
             return $response=([
                 'status' => 'failure',
                 'message' =>'',
@@ -224,17 +222,31 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
 
     private function CreateNewUser($data, $can_onboard_employee, $onboard_type)
     {
+        dd($data);
         try
         {
-
             $newUser = new User;
             $newUser->name =$data['employee_name'];
-            $newUser->email = empty($data["email"]) ? '' : $data["email"];
+              //for quick and bulk
+            if(array_key_exists('personal_email',$data)){
+                $email =$data['personal_email'];
+            }//for normal onboarding data
+            else{
+               $email =$data['email'];
+            }
+            $newUser->email = empty($email) ? '' : $email;
             $newUser->password = Hash::make('Abs@123123');
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
-            $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
-            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+            //for quick and bulk
+            if(array_key_exists('legal_entity',$data)){
+                $newUser->client_id = VmtClientMaster::where('client_fullname', $$data['legal_entity'])->first()->id;
+            }//for normal onboarding data
+            else{
+                $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
+                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+            }
+
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
             $newUser->is_onboarded = $can_onboard_employee;
@@ -258,7 +270,7 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
 
         }
     }
-    public function Save_EmployeeOnboard_Data($data,$user_data,$onboard_type){
+    public function Save_Employee_NormalQuick_OnboardData($data,$user_data,$onboard_type){
 
         try{
 
@@ -482,36 +494,35 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
             $compensatory->save();
 
         //save the onboard documents
-              if($onboard_type == 'normal'){
-                $this->uploadDocument($user_id, $data['Aadharfront'], 'Aadhar Card Front');
-                $this->uploadDocument($user_id, $data['AadharBack'],'Aadhar Card Back');
-                $this->uploadDocument($user_id, $data['panDoc'],'Pan Card');
-                $this->uploadDocument($user_id, $data['passport'],'Passport');
-                $this->uploadDocument($user_id, $data['voterId'],'Voter ID');
-                $this->uploadDocument($user_id, $data['dlDoc'],'Driving License');
-                $this->uploadDocument($user_id, $data['eductionDoc'],'Education Certificate');
-                $this->uploadDocument($user_id, $data['releivingDoc'],'Relieving Letter');
+        if($onboard_type == 'normal'){
+        $this->uploadDocument($user_id, $data['Aadharfront'], 'Aadhar Card Front');
+        $this->uploadDocument($user_id, $data['AadharBack'],'Aadhar Card Back');
+        $this->uploadDocument($user_id, $data['panDoc'],'Pan Card');
+        $this->uploadDocument($user_id, $data['passport'],'Passport');
+        $this->uploadDocument($user_id, $data['voterId'],'Voter ID');
+        $this->uploadDocument($user_id, $data['dlDoc'],'Driving License');
+        $this->uploadDocument($user_id, $data['eductionDoc'],'Education Certificate');
+        $this->uploadDocument($user_id, $data['releivingDoc'],'Relieving Letter');
 
-              }
-
-
+        }
                 return $response=([
                     'status' => 'success',
                     'message' => 'Employee details saved successfully',
                     'data' =>''
                 ]);
 
-            }catch(Exception $e){
-                $this->deleteEmployee($user_id);
+    }catch(\Exception $e){
+        $this->deleteEmployee($user_id);
 
-                return $response=([
-                    'status' => 'failure',
-                    'message' => 'Error while saving record ',
-                    'data' =>$e->getMessage()." ".$e->getline()
+        return $response=([
+            'status' => 'failure',
+            'message' => 'Error while saving record ',
+            'data' =>$e->getMessage()." ".$e->getline()
 
-                ]);
+        ]);
         }
     }
+
     public function Save_Employee_QuickOnboard_Data($data,$user_data,$onboard_type){
 
         try{
@@ -529,9 +540,8 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
             $newEmployee = new VmtEmployee;
         }
 
-        $dob=$data["dob"] ?? '';
-        $doj=$data["doj"] ?? '';
-        $passport_date =  $data["passport_date"] ?? '';
+        $dob=$data["date_of_birth"] ?? '';
+        $doj=$data["date_of_joined"] ?? '';
 
         $newEmployee->userid   =    $user_id;
         $newEmployee->marital_status_id = $data["marital_status"] ?? '';
@@ -546,7 +556,7 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
         $newEmployee->dl_no   =  $data["dl_no"] ?? '';
         $newEmployee->nationality = $data["nationality"] ?? '';
         $newEmployee->passport_number = $data["passport_no"] ?? '';
-        $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date,$user_id) : '';
+       // $newEmployee->passport_date =  $passport_date ? $this->getdateFormatForDb( $passport_date,$user_id) : '';
         //$newEmployee->pan_ack   =    $data["pan_ack"];
         $newEmployee->location   =    $data["work_location"] ?? '';
         $newEmployee->blood_group_id  = $data["blood_group_name"] ?? '';
@@ -615,6 +625,9 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
         //save statutory data of employee
 
         //save compensatory data of employee
+        $salary_data = $this->get_Employee_compensatory_calculation($data['amount']);
+
+        dd($salary_data);
             $compensatory = Compensatory::where('user_id',$user_id);
 
             if($compensatory->exists())
@@ -625,55 +638,351 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
             {
                 $compensatory = new Compensatory;
             }
+
             $compensatory->user_id = $user_id;
-            $compensatory->basic = $data["basic"] ?? '';
-            $compensatory->hra = $data["hra"] ?? '';
+            $compensatory->basic = $salary_data['basic'] ?? '';
+            $compensatory->hra = $salary_data['hra'] ?? '';
             $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
             $compensatory->child_education_allowance = $data["child_education_allowance"] ?? '' ;
             $compensatory->food_coupon = $data["food_coupon"] ?? '' ;
-            $compensatory->lta = $data["lta"] ?? '' ;
-            $compensatory->special_allowance = $data["special_allowance"] ?? '' ;
+            $compensatory->lta = $salary_data['leave_travel_allowance'] ?? '' ;
+            $compensatory->food_allowance = $salary_data['food_allowance'] ?? '' ;
+            $compensatory->communication_allowance = $salary_data['communication_allowance'] ?? '' ;
+            $compensatory->special_allowance = $salary_data['special_allowance'] ?? '' ;
             $compensatory->other_allowance = $data["other_allowance"] ?? '' ;
-            $compensatory->gross = $data["gross"] ?? '' ;
-            $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '' ;
-            $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '' ;
-            $compensatory->insurance = $data["insurance"] ?? '' ;
+            $compensatory->gross = $salary_data['gross'] ?? '' ;
+            $compensatory->epf_employer_contribution = $salary_data['epf_employer'] ?? '' ;
+            $compensatory->esic_employer_contribution = $salary_data['esi_employer'] ?? '' ;
+            $compensatory->insurance = $salary_data['insurance'] ?? '' ;
             $compensatory->graduity = $data["graduity"] ?? '' ;
-            $compensatory->cic = $data["cic"] ?? '' ;
-            $compensatory->epf_employee = $data["epf_employee"] ?? '' ;
-            $compensatory->esic_employee = $data["esic_employee"] ?? '' ;
-            $compensatory->professional_tax = $data["professional_tax"] ?? '' ;
+            $compensatory->cic = $salary_data['ctc'] ?? '' ;
+            $compensatory->epf_employee = $salary_data['epf_employee'] ?? '' ;
+            $compensatory->esic_employee =$salary_data['esi_employee'] ?? '' ;
+            $compensatory->professional_tax =$salary_data['professional_tax'] ?? '' ;
             $compensatory->labour_welfare_fund = $data["labour_welfare_fund"] ?? '' ;
-            $compensatory->net_income = $data["net_income"] ?? '' ;
+            $compensatory->net_income = $salary_data['net_take_home'] ?? '' ;
             $compensatory->save();
-
 
                 return $response=([
                     'status' => 'success',
                     'message' => 'Employee details saved successfully',
                     'data' =>''
                 ]);
-
-            }catch(Exception $e){
-                $this->deleteEmployee($user_id);
-
-                return $response=([
-                    'status' => 'failure',
-                    'message' => 'Error while saving record ',
-                    'data' =>$e->getMessage()." ".$e->getline()
-
-                ]);
+        }catch(\Exception $e){
+            $this->deleteEmployee($user_id);
+            return $response=([
+                'status' => 'failure',
+                'message' => 'Error while saving record ',
+                'data' =>$e->getMessage()." ".$e->getline()
+            ]);
         }
     }
 
 
+    public function Save_Employee_Bulk_OnboardData($data,$user_data,$onboard_type){
+
+        try{
+
+            $user_id = $user_data->id;
+            $newEmployee = VmtEmployee::where('userid',$user_id);
+            if($newEmployee->exists())
+            {
+                $newEmployee = $newEmployee->first();
+            }else{
+                $newEmployee = new VmtEmployee;
+            }
+
+            $doj=$data["date_of_joined"] ?? '';
+            $dob=$data["date_of_birth"] ?? '';
+
+            $newEmployee->userid   =    $user_id;
+            $newEmployee->gender   =    $data["gender"] ?? '';
+            $newEmployee->location   =    $data["location"] ?? '';
+            $newEmployee->doj   =  $doj ? $this->getdateFormatForDb($doj,$user_id) : '';
+            $newEmployee->dol   =  $doj ? $this->getdateFormatForDb($doj,$user_id) : '';
+            $newEmployee->dob   =  $dob ? $this->getdateFormatForDb($dob,$user_id) : '';
+           // $newEmployee->location   =    $data["work_location"] ?? '';
+            $newEmployee->pan_number   =  isset($data["pan_number"]) ? ($data["pan_number"]) : "";
+            $newEmployee->aadhar_number = $data["aadhaar_number"] ?? '';
+
+            if(!empty($data["marital_status"])){
+            $marital_status_id=VmtMaritalStatus::where('name',ucfirst($data["marital_status"]) )->first()->id; // to get marital status id
+            $newEmployee->marital_status_id = $marital_status_id ?? '';
+            }
+
+            if(!empty($data["blood_group"])){
+            $marital_status_id=VmtBloodGroup::where('name',ucfirst($data["blood_group"]) )->first()->id; // to get marital status id
+            $newEmployee->marital_status_id = $marital_status_id ?? '';
+            }
+
+            if(!empty($data['bank_name'])){
+            $bank_id=Bank::where('bank_name',$data['bank_name'])->first()->id;  // to get bank id
+            $newEmployee->bank_id  = $bank_id ?? '';
+            }
+
+            $newEmployee->bank_ifsc_code  = $data["ifsc_code"] ?? '';
+            $newEmployee->bank_account_number  = $data["bank_account_number"] ?? '';
+            $newEmployee->current_address_line_1   = $data["current_address"] ?? '';
+            $newEmployee->permanent_address_line_1   = $data["permanent_address"] ?? '';
+            $newEmployee->physically_challenged   = $data["physically_handicapped"] ?? '';
+           // $newEmployee->no_of_children = $data["no_of_child"] ?? '';
+            $data_mobile_number = empty($data["mobile_number"]) ? "" : strval($data["mobile_number"]);
+            $newEmployee->mobile_number  = $data_mobile_number;
+            $newEmployee->save();
+
+                //store employeeoffice details
+            $empOffice = VmtEmployeeOfficeDetails::where('user_id',$user_id);
+
+            if($empOffice->exists()) {
+                $empOffice = $empOffice->first();
+
+            } else{
+                $empOffice = new VmtEmployeeOfficeDetails;
+            }
+            $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
+            if(!empty($data['department'])){
+            $department_id=Department::where('name',strtolower($data['department']))->first()->id;
+            $empOffice->department_id = $department_id ?? ''; // => "lk"
+            }
+            $empOffice->process = $data["process"] ?? ''; // => "k"
+            $empOffice->designation = $data["designation"] ?? ''; // => "k"
+            $empOffice->cost_center = $data["cost_center"] ?? '';
+            $empOffice->confirmation_period  =$data['confirmation_period']??'';
+            $empOffice->holiday_location  = $data["holiday_location"] ?? ''; // => "k"
+            $empOffice->l1_manager_code  = $data["reporting_manager_employee_code"] ?? ''; // => "k"
+            $empOffice->officical_mail  = $data["official_email"] ?? ''; // => "k@k.in"
+            $empOffice->work_location  = $data["work_location"] ?? ''; // => "k"
+            $empOffice->official_mobile  = $data["work_phone"] ?? ''; // => "1234567890"
+            $empOffice->emp_notice  = $data["emp_notice"] ?? ''; // => "0"
+            $empOffice->save();
+
+
+            //assign default workshift to employee
+
+                $emp_workshift = new VmtEmployeeWorkShifts;
+                $emp_workshift->user_id = $user_id;
+                $work_shift_id =VmtWorkShifts::where('is_default','1')->first();
+                if(!empty($work_shift_id)){
+                    $emp_workshift->work_shift_id = $work_shift_id->id;
+                }
+                $emp_workshift->is_active ='1';
+                $emp_workshift->save();
+
+            //save statutory data of employee
+                $newEmployee_statutoryDetails = VmtEmployeeStatutoryDetails::where('user_id',$user_id);
+
+                if($newEmployee_statutoryDetails->exists())
+                {
+                    $newEmployee_statutoryDetails = $newEmployee_statutoryDetails->first();
+                }
+                else
+                {
+                    $newEmployee_statutoryDetails = new VmtEmployeeStatutoryDetails;
+                }
+
+                //Statutory Details
+
+                $newEmployee_statutoryDetails->user_id = $user_id;
+                $newEmployee_statutoryDetails->uan_number = $data["uan_number"] ?? '';
+                $newEmployee_statutoryDetails->epf_number = $data["epf_number"] ?? '';
+                $newEmployee_statutoryDetails->esic_number = $data["esic_number"] ?? '';
+                $newEmployee_statutoryDetails->pf_applicable = $data["pf_applicable"] ?? '';
+                $newEmployee_statutoryDetails->esic_applicable = $data["esic_applicable"] ?? '';
+                $newEmployee_statutoryDetails->ptax_location_state_id = $data["ptax_location"] ?? '';
+                $newEmployee_statutoryDetails->tax_regime = $data["tax_regime"] ?? '';
+                $newEmployee_statutoryDetails->lwf_location_state_id = $data["lwf_location"] ?? '';
+                $newEmployee_statutoryDetails->save();
+
+            //save family data of employees
+
+                VmtEmployeeFamilyDetails::where('user_id',$user_id)->delete();
+        //save father data
+                if(!empty($data['father_name'])){
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =   $data['father_name'];
+                    $familyMember->relationship = 'Father';
+                    $familyMember->gender = $data['father_gender'];
+
+                // if(!empty($data["dob_father"])){
+                //         $dob_father=$data["dob_father"];
+                //         $familyMember->dob = $this->getdateFormatForDb( $dob_father,$user_id);
+                //         }
+                   $familyMember->save();
+                }
+        //save mother data
+                if(!empty($data['mother_name'])){
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =   $data['mother_name'];
+                    $familyMember->relationship = 'Mother';
+                    $familyMember->gender = $data['mother_gender'];
+
+                // if(!empty($data["dob_mother"])){
+                //     $dob_mother=$data["dob_mother"];
+                //     $familyMember->dob = $this->getdateFormatForDb( $dob_mother,$user_id) ;
+                //     }
+                    $familyMember->save();
+                }
+        //save spouse data
+                if( !empty($data['spouse_name'])){
+                    $familyMember =  new VmtEmployeeFamilyDetails;
+                    $familyMember->user_id  = $user_id;
+                    $familyMember->name =   $data['spouse_name'];
+                    $familyMember->relationship = 'Spouse';
+                    $familyMember->gender = $data['spouse_gender'] ?? '';
+
+                // if(!empty($data["dob_spouse"])){
+                //         $dob_spouse =  $data["dob_spouse"];
+                //         $familyMember->dob = $this->getdateFormatForDb(  $dob_spouse,$user_id);
+                //     }
+
+                if(!empty($data["marriage_date"])){
+                        $wedding_date = $data["marriage_date"];
+                        $familyMember->wedding_date = $this->getdateFormatForDb( $wedding_date,$user_id) ;
+                    }
+                    $familyMember->save();
+                }
+
+                $salary_data = $this->get_Employee_compensatory_calculation($data['amount']);
+
+            //save compensatory data of employee
+
+            $salary_data = $this->get_Employee_compensatory_calculation($data['amount']);
+            
+                $compensatory = Compensatory::where('user_id',$user_id);
+
+                if($compensatory->exists())
+                {
+                    $compensatory = $compensatory->first();
+                }
+                else
+                {
+                    $compensatory = new Compensatory;
+                }
+
+                $compensatory->user_id = $user_id;
+                $compensatory->basic = $salary_data['basic'] ?? '';
+                $compensatory->hra = $salary_data['hra'] ?? '';
+                $compensatory->Statutory_bonus = $data["statutory_bonus"] ?? '' ;
+                $compensatory->child_education_allowance = $data["child_education_allowance"] ?? '' ;
+                $compensatory->food_coupon = $data["food_coupon"] ?? '' ;
+                $compensatory->lta = $salary_data['leave_travel_allowance'] ?? '' ;
+                $compensatory->food_allowance = $salary_data['food_allowance'] ?? '' ;
+                $compensatory->communication_allowance = $salary_data['communication_allowance'] ?? '' ;
+                $compensatory->special_allowance = $salary_data['special_allowance'] ?? '' ;
+                $compensatory->other_allowance = $data["other_allowance"] ?? '' ;
+                $compensatory->gross = $salary_data['gross'] ?? '' ;
+                $compensatory->epf_employer_contribution = $salary_data['epf_employer'] ?? '' ;
+                $compensatory->esic_employer_contribution = $salary_data['esi_employer'] ?? '' ;
+                $compensatory->insurance = $salary_data['insurance'] ?? '' ;
+                $compensatory->graduity = $data["graduity"] ?? '' ;
+                $compensatory->cic = $salary_data['ctc'] ?? '' ;
+                $compensatory->epf_employee = $salary_data['epf_employee'] ?? '' ;
+                $compensatory->esic_employee =$salary_data['esi_employee'] ?? '' ;
+                $compensatory->professional_tax =$salary_data['professional_tax'] ?? '' ;
+                $compensatory->labour_welfare_fund = $data["labour_welfare_fund"] ?? '' ;
+                $compensatory->net_income = $salary_data['net_take_home'] ?? '' ;
+                $compensatory->save();
+                return $response=([
+                    'status' => 'success',
+                    'message' => 'Employee details saved successfully',
+                    'data' =>''
+                ]);
+
+    }catch(\Exception $e){
+        $this->deleteEmployee($user_id);
+
+        return $response=([
+            'status' => 'failure',
+            'message' => 'Error while saving record ',
+            'data' =>$e->getMessage()." ".$e->getline()
+
+        ]);
+        }
+    }
+    public function get_Employee_compensatory_calculation($amount){
+
+    try{
+
+        $comp_amt_data = array();
+        $gross = $amount;
+
+        $basic =$gross/100*50;
+
+        $hra =$basic/100*50;
+
+        $communication_allowance = 0;
+
+        $food_allowance = 0;
+
+        if($gross > 40000){
+         $communication_allowance =2000;
+        }
+
+        $leave_travel_allowance = 0;
+
+        if($gross > 50000){
+         $leave_travel_allowance =2000;
+        }
+
+        $special_allowance =$gross - ($basic + $hra + $communication_allowance + $leave_travel_allowance );
+
+
+        $epf_employer = 0;
+        $epf_employee = 0;
+
+        if(($gross - $hra) > 15000){
+
+         $epf_employer = 15000/100*12;
+         $epf_employee = 15000/100*12;
+        }else{
+         $epf_employer = ($gross - $hra)/100*12;
+         $epf_employee =($gross - $hra)/100*12;
+        }
+
+        $esi_employer = 0;
+        $esi_employee = 0;
+
+        if($gross > 21000){
+         $esi_employer = 0;
+        $esi_employee = 0;
+
+        }else{
+         $esi_employer = $gross/100*3.25;
+         $esi_employee = $gross/100*0.75;
+        }
+        $insurance =0;
+
+        $professional_tax = 208;
+
+        $ctc = $gross + $epf_employer +$esi_employer + $insurance;
+
+        $net_take_home =$gross - ($epf_employee + $esi_employee +$professional_tax );
+
+
+        array_push($comp_amt_data,$gross,$basic,$hra, $communication_allowance,$food_allowance,$special_allowance, $leave_travel_allowance,
+                    $epf_employer,$epf_employee, $esi_employer,$esi_employee ,$insurance, $professional_tax, $ctc,$net_take_home );
+
+        return $comp_amt_data;
+
+       }catch(\Exception $e){
+
+        return $response=([
+            'status' => 'failure',
+            'message' => 'Error while saving record ',
+            'data' =>$e->getMessage()." ".$e->getline()
+
+        ]);
+        }
+
+    }
+
     public function uploadDocument($emp_id,$fileObject, $onboard_document_type){
 
         try{
+            if(!empty($fileObject)){
             $emp_code = User::find($emp_id)->user_code;
-
-            if(empty($fileObject))
-                return null;
 
             $onboard_doc_id = VmtDocuments::where('document_name',$onboard_document_type);
 
@@ -699,7 +1008,6 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
                     Storage::disk('private')->delete($file_path);
 
                 }
-
             }
             else
             {
@@ -732,7 +1040,11 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
 
 
             $employee_documents->save();
-        }
+
+            }
+    }
+
+
         catch(\Exception $e){
 
             return response()->json([
@@ -780,29 +1092,29 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
     }
     private function getdateFormatForDb($date,$user_id){
 
-
         try{
             //Check if its in proper format
-            $processed_date = \DateTime::createFromFormat('d-m-Y', $date);
+            $processed_date =null;
+            //Check if its in proper format
+            $processed_date_one = \DateTime::createFromFormat('d-m-Y', $date);
+            $processed_date_three = \DateTime::createFromFormat('Y-m-d', $date);
+            $processed_date_two = \DateTime::createFromFormat('d/m/Y', $date);
 
             //If date is in 'd-m-y' format, then convert into one
-            if( $processed_date)
+            if( $processed_date_one)
             {
                 //Then convert to Y-m-d
-                $processed_date =  $processed_date->format('Y-m-d');
+                $processed_date =  $processed_date_one->format('Y-m-d');
 
+            }else if(!empty($processed_date_two)){
+
+                $processed_date =   $processed_date_two->format('Y-m-d');
+
+            }else{
+
+                $processed_date =$processed_date_three->format('Y-m-d');
             }
-            else
-            {
-                //If date is not in 'd-m-y' format, then convert into 'd-m-y'
 
-                $processed_date = DateTime::createFromFormat('Y-m-d', $date);
-
-                if($processed_date){
-
-                    $processed_date->format('Y-m-d');
-                }
-            }
 
             return $processed_date;
         }
@@ -814,6 +1126,7 @@ private function createOrUpdate_User($data, $can_onboard_employee,$user_id=null,
                 'data' =>"Error for input date : ".$e->getMessage()
             ]);
     }
+
 }
 
 

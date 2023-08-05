@@ -43,6 +43,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
     })
     const approvalFormat = reactive([])
 
+    const selectedOption1 = ref();
+    const selectedOption2 = ref();
+    const selectedOption3 = ref();
+
 
     // Eligible Employees
 
@@ -179,7 +183,10 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         cusDeductMethod: '',
         maxTenure: '',
         approvalflow: approvalFormat,
-        loan_type:'InterestFreeLoan'
+        loan_type:'InterestFreeLoan',
+        selectedOption1:selectedOption1,
+        selectedOption2:'',
+        selectedOption3:'',
     })
     const ClientsName = ref();
     // deduction_starting_months
@@ -285,8 +292,9 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         maxTenure: '',
         loan_amt_interest:'',
         loan_type:'LoanWithInterest',
-        approvalflow: approvalFormat
-    })
+        approvalflow: approvalFormat,
+        selectedOption1:selectedOption1,
+    });
 
     const saveLoanWithInterest = () => {
         canShowLoading.value = true
@@ -335,9 +343,7 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
 
     }
 
-    const selectedOption1 = ref();
-    const selectedOption2 = ref();
-    const selectedOption3 = ref();
+
 
 
     const toSelectoption = (flow, value) => {
@@ -345,26 +351,73 @@ export const salaryAdvanceSettingMainStore = defineStore("salaryAdvanceSettingMa
         if (flow == 1) {
             option.value = 1
             selectedOption1.value = value.name
-            let approvalflow = {
-                approver: value.name,
-                order: flow
+            let  approvalflow = ref();
+            if(value.name=="Line Manager"){
+                  approvalflow.value = {
+                 approver: 'l1_manager_code',
+                 order: flow
             }
+            }else if(value.name=="HR"){
+                approvalflow.value = {
+                    approver: 'hr_user_id',
+                    order: flow
+               }
+            }
+            else if(value.name=="Finance Admin"){
+                approvalflow.value = {
+                    approver: 'fa_user_id',
+                    order: flow
+               }
+            }
+
+            // let approvalflow = {
+            //     approver: value.name,
+            //     order: flow
+            // }
             approvalFormat.push(approvalflow)
         }
         if (flow == 2) {
             selectedOption2.value = value.name
-            let approvalflow = {
-                approver: value.name,
-                order: flow
+            let  approvalflow = ref();
+            if(value.name=="Line Manager"){
+                  approvalflow.value = {
+                 approver: 'l1_manager_code',
+                 order: flow
+            }
+            }else if(value.name=="HR"){
+                approvalflow.value = {
+                    approver: 'hr_user_id',
+                    order: flow
+               }
+            }
+            else if(value.name=="Finance Admin"){
+                approvalflow.value = {
+                    approver: 'fa_user_id',
+                    order: flow
+               }
             }
             approvalFormat.push(approvalflow)
 
         }
         if (flow == 3) {
             selectedOption3.value = value.name
-            let approvalflow = {
-                approver: value.name,
-                order: flow
+            let  approvalflow = ref();
+            if(value.name=="Line Manager"){
+                  approvalflow.value = {
+                 approver: 'l1_manager_code',
+                 order: flow
+            }
+            }else if(value.name=="HR"){
+                approvalflow.value = {
+                    approver: 'hr_user_id',
+                    order: flow
+               }
+            }
+            else if(value.name=="Finance Admin"){
+                approvalflow.value = {
+                    approver: 'fa_user_id',
+                    order: flow
+               }
             }
             approvalFormat.push(approvalflow)
         } else {

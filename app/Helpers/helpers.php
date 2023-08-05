@@ -123,6 +123,8 @@ function sessionGetSelectedClientFullName()
         return "";
 }
 
+
+
 function sessionGetSelected_abs_clientcode()
 {
 
@@ -171,6 +173,27 @@ function getClientFullName($user_id)
 
     if (!empty($query_client))
         return $query_client->client_fullname;
+    else
+        return "";
+}
+
+function getClientLogo($user_id)
+{
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
+
+    if (!empty($query_client))
+        return $query_client->client_logo;
+    else
+        return "";
+}
+
+function sessionGetSelectedClientLogo()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+
+    if (!empty($query_client))
+        return $query_client->client_logo;
     else
         return "";
 }
@@ -436,6 +459,24 @@ function getEmployeeAvatarOrShortName($user_id)
         return json_encode($responseJSON);
     } catch (Throwable $e) {
         dd("ERROR : helper.php :: getEmployeeAvatarOrShortName() for user_id : " . $e);
+    }
+}
+
+function getCurrentUserGender(){
+
+    $currentuserid = auth()->user()->id;
+    $emp_gender = VmtEmployee::where('userid', $currentuserid)->first()->gender;
+    $lowerCaseGender =  strtolower($emp_gender);
+
+    if ($lowerCaseGender == 'male') {
+        return "male";
+    } else
+    if ($lowerCaseGender == 'female') {
+        return "female";
+    }
+    else
+    {
+        return "invalid gender";
     }
 }
 

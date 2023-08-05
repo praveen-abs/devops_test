@@ -57,7 +57,6 @@ label {
     align-items: center;
     pointer-events: none;
     background: #433f3f6b;
-
 }
 
 .p-button:enabled:hover {
@@ -68,7 +67,7 @@ label {
 
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
     padding: 0.2rem 0.55rem;
-    margin-right: 0.5rem;
+    margin-right: 0.2rem;
     background: #dee2e6;
     color: #495057;
     border-radius: 16px;
@@ -111,6 +110,14 @@ label {
     width: 100%;
 }
 
+.p-datepicker , .p-datepicker-inline{
+    height: 375px;
+    width: 100%;
+}
+.p-datepicker table td {
+    padding: 0.2rem;
+  }
+
 /*.p-dialog.p-component:before {
     content: "";
     background: #002f56;
@@ -118,4 +125,27 @@ label {
     border-radius: 50px 50px 0px;
     position: relative;
     top: 3px;
-}*/</style>
+}*/
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888888;
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+  }
+
+
+</style>

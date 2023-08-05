@@ -251,31 +251,32 @@ class VmtTestingController extends Controller
     public function testSendBulkMail()
     {
 
-        $array_mail = ["sheltonfdo23@gmail.com", "praveenkumar.techdev@gmail.com"];
+        // $array_mail = ["sheltonfdo23@gmail.com"];
 
-        $client_id=User::where('user_code',$user_code)->first();
+        // $client_id=User::where('user_code',$user_code)->first();
+
+        // $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
         $VmtClientMaster = VmtClientMaster::where('id',$client_id->client_id)->first();
 
         $image_view = url('/') . $VmtClientMaster->client_logo;
 
-        $response = array();
-        try {
+        //     foreach ($array_mail as $recipient) {
+                $isSent = \Mail::to('sheltonfdo23@gmail.com')->send(new WelcomeMail());
 
-            foreach ($array_mail as $recipient) {
-                $isSent = \Mail::to($recipient)->send(new WelcomeMail("emp_code 123", 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view));
+                return $isSent ? "Success" : "failure";
 
-                $temp[$recipient] = $isSent;
+                // $temp[$recipient] = $isSent;
 
-                array_push($response, $temp);
-            }
+    //             array_push($response, $temp);
+    //         }
 
-            return response()->json([
-                "output" => $response
-            ]);
-        } catch (\Exception $e) {
-            dd("Error : " . $e);
-        }
+    //         return response()->json([
+    //             "output" => $response
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         dd("Error : " . $e);
+    //     }
     }
 
     public function sendHTMLEmail(Request $request) {

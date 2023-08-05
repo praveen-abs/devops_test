@@ -18,7 +18,7 @@
                             data-bs-target="#pills-offer-resent" type="button" role="tab" aria-controls="pills-contact"
                             aria-selected="false">Reimbursement</button>
                     </li>
-                    <li class="mx-4 nav-item text-muted" role="presentation">
+                    <li class="mx-4 nav-item tex------t-muted" role="presentation">
                         <button class="pb-2 nav-link" id="pills-offer-resen-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-offer-resen" type="button" role="tab" aria-controls="pills-contact"
                             aria-selected="false">Accounting Code</button>

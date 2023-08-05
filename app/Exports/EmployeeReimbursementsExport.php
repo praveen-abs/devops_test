@@ -41,6 +41,7 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
     protected $client_name;
     protected $client_logo_path;
     protected $employee_details;
+    protected $total_row;
 
     function __construct($employee_details,$reimbursement_data,$legal_entity,$month_name,$year,$client_name, $client_logo_path,$totals){
         $this->employee_details = $employee_details;
@@ -102,6 +103,9 @@ class EmployeeReimbursementsExport implements FromArray,ShouldAutoSize,WithHeadi
         $sheet->getParent()->getActiveSheet()->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A3);
 
         ///$sheet->getParent()->getActiveSheet()->getProtection()->setSheet(true);
+
+        //For Remove Grid Lines
+        $sheet->setShowGridlines(false);
 
         //For First Row
         $sheet->mergeCells('A1:D1')->setCellValue('A1', "Legal Entity : ".$this->legal_entity);

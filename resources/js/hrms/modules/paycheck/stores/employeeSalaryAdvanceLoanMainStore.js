@@ -1,7 +1,7 @@
 import axios from "axios";
-import { constant } from "lodash";
+import { constant, functions } from "lodash";
 import { defineStore } from "pinia";
-
+import dayjs from 'dayjs';
 import { reactive, ref } from "vue";
 
 /*
@@ -20,12 +20,12 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const canShowLoading = ref(false)
 
 
-            /*
-        Salary Advance - sa
-        Loan with Interest - lwi
-        Interest free Loan  - ifl
-        Travel Advance - ta
-        */
+    /*
+Salary Advance - sa
+Loan with Interest - lwi
+Interest free Loan  - interestFreeLoan
+Travel Advance - ta
+*/
 
 
     //   Salary Advance Begins
@@ -40,32 +40,47 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
     const salaryAdvanceEmployeeData = ref()
 
     const sa = reactive({
-        ymi:'',
-        ra:'',
-        mxe:'',
-        repdate:'',
-        reason:'',
-        isEligibleEmp:'',
+        ymi: '',
+        ra: '',
+        mxe: '',
+        repdate: '',
+        reason: '',
+        isEligibleEmp: '',
     })
+
+    const arraySalaryDetails = ref();
+
+    async function getSalaryDetails() {
+
+        let url = "/getEmpsaladvDetails"
+
+        await axios.get(url).then((res) => {
+            arraySalaryDetails.value = res.data;
+            console.log(arraySalaryDetails.value);
+        }).finally(() => {
+
+        });
+    }
+
 
 
     const fetchSalaryAdvance = () => {
         canShowLoading.value = true
-        axios.get('/showEmployeeview').then(res=>{
+        axios.get('/showEmployeeview').then(res => {
             salaryAdvanceEmployeeData.value = res.data
             sa.ymi = res.data.your_monthly_income
             sa.mxe = res.data.max_eligible_amount
             sa.repdate = res.data.Repayment_date
             sa.isEligibleEmp = res.data.eligible
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false
         })
     }
 
     const saveSalaryAdvance = () => {
         dailogSalaryAdvance.value = false
-        canShowLoading.value = true
-        axios.post('/EmpSaveSalaryAmt',sa).finally(()=>{
+        canShowLoading.value = true;
+        axios.post('/EmpSaveSalaryAmt', sa).finally(() => {
             canShowLoading.value = false
         })
     }
@@ -82,52 +97,75 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const dialog_NewInterestFreeLoanRequest = ref(false)
 
-    const isInterestFreeLoaneature = ref()
+    const isInterestFreeLoanFeature = ref();
+    // const arrayInterestFreeLoan = ref();
 
     // Eligible Employees and Amount
     // Deduction Method
-    const ifl = reactive({
+
+    const max_tenure_month = ref();
+    const interestFreeLoan = reactive({
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
         maxTenure: '',
-        Ra:'',
-        M_EMI:'',
-        Term:'',
-        EMI_Start_Month:'',
-        Total_Months:'',
-        Reason:''
-    })
+        required_amount: '',
+        M_EMI: '',
+        Term: '',
+        EMI_Start_Month: '',
+        EMI_End_Month: '',
+        Total_Months: '',
+        Reason: '',
+        max_tenure_months: '',
+        details: '',
+        loan_type: 'InterestFreeLoan',
+        loan_setting_id: ''
+    });
 
 
+
+    function getinterestfreeloan() {
+
+        axios.post('/show-eligible-interest-free-loan-details', {
+            loan_type: "InterestFreeLoan"
+        }).then((res) => {
+            console.log(res);
+            interestFreeLoan.max_tenure_months = res.data.max_tenure_months;
+
+            console.log(interestFreeLoan.max_tenure_months);
+            interestFreeLoan.details = res.data;
+            interestFreeLoan.loan_setting_id = res.data.loan_setting_id;
+
+            interestFreeLoan.minEligibile = res.data.max_loan_amount;
+
+            console.log(res.data.max_tenure_months.month);
+        })
+    }
+    // const selected_date =ref();
     const fetchInterestfreeLoan = () => {
 
         // canShowLoading.value = true
 
         console.log("fetching SA");
 
-        axios.get('http://localhost:3000/Interst_free_loan').then(res=>{
+        axios.post('/employee-loan-history', { loan_type: "InterestFreeLoan" }).then(res => {
 
-        isInterestFreeLoaneature.value = res.data
+            isInterestFreeLoanFeature.value = res.data
             console.log(res.data);
 
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false
         })
     }
 
     const saveInterestfreeLoan = () => {
-
-
-        // canShowLoading.value = true
+        canShowLoading.value = true
         console.log("Saving SA");
 
-        axios.post('http://localhost:3000/Interst_free_loan',ifl).finally(()=>{
-            canShowLoading.value = false
-
-            fetchInterestfreeLoan();
-
+        axios.post('/apply-loan', interestFreeLoan).finally(() => {
+            canShowLoading.value = false;
+            // fetchInterestfreeLoan();
         })
         dialog_NewInterestFreeLoanRequest.value = false
     }
@@ -139,7 +177,7 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const isTravelAdvanceFeatureEnabled = ref(1)
 
-   const dialog_TravelAdvance = ref(false);
+    const dialog_TravelAdvance = ref(false);
 
     // Eligible Employees
 
@@ -154,32 +192,32 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
         deductMethod: '',
         sumbitWithIn: '',
         isDeductedInsubsequentpayroll: '',
-        ra:'',
-        reason:''
+        ra: '',
+        reason: ''
 
     })
 
-    const fetchTraveladvance = ()=>{
+    const fetchTraveladvance = () => {
 
         // canShowLoading.value = true
 
         console.log("fetching SA");
 
-        axios.get('http://localhost:3000/TravelAdvance').then(res=>{
+        axios.get('http://localhost:3000/TravelAdvance').then(res => {
 
-        eligibleTravelAdvanceEmployeeData.value = res.data
+            eligibleTravelAdvanceEmployeeData.value = res.data
             console.log(res.data);
 
-        }).finally(()=>{
+        }).finally(() => {
             canShowLoading.value = false
         })
 
     }
 
-    const saveTravelAdvance = ()=>{
+    const saveTravelAdvance = () => {
 
         canShowLoading.value = true;
-        axios.post('http://localhost:3000/TravelAdvance',ta).finally(()=>{
+        axios.post('http://localhost:3000/TravelAdvance', ta).finally(() => {
             canShowLoading.value = false
 
             fetchTraveladvance();
@@ -203,48 +241,71 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
     const InterestWithLoanData = ref();
 
-    const lwif = reactive({
+    const InterestWithLoan = reactive({
         minEligibile: '',
         availPerInCtc: '',
         deductMethod: '',
         cusDeductMethod: '',
         maxTenure: '',
-        ra:'',
-        Term:'',
-        Interest_rate:'2.5%',
-        month_EMI:'0',
-        EMI_Start_Month:'',
-        EMI_END_Month:'',
-        Total_Month:'',
-        Reason:'',
+        required_amount: '',
+        Term: '',
+        Interest_rate: '',
+        month_EMI: '0',
+        EMI_Start_Month: '',
+        EMI_END_Month: '',
+        Total_Month: '',
+        Reason: '',
+        total_amount: 5,
+        max_tenure_months: '',
+        details: ''
 
+    });
 
-    })
-
-    const fetchInterstWithLoan = ()=>{
-
-        console.log(lwif);
-
-        // canShowLoading.value = true;
-
-        axios.get('http://localhost:3000/InterestWithLoan').then(res=>{
-
-        InterestWithLoanData.value = res.data
-            console.log(res.data);
-
-        }).finally(()=>{
-            canShowLoading.value = false
+    const getLoanDetails = (type) => {
+        return axios.post('/show-eligible-interest-free-loan-details', {
+            loan_type: type
         })
-
-
-
     }
 
-    const saveinterestWithLoan = ()=>{
+    const fetchInterstWithLoan = () => {
+
+        console.log(InterestWithLoan);
 
         // canShowLoading.value = true;
 
-        axios.post(' http://localhost:3000/InterestWithLoan',lwif).finally(()=>{
+        axios.post('/employee-loan-history', {
+
+        }).then(res => {
+            InterestWithLoanData.value = res.data
+            console.log(res.data);
+
+        }).finally(() => {
+            canShowLoading.value = false;
+        })
+    }
+
+    // get max eligible amount
+    function getinterestwithloan() {
+
+        axios.get('http://localhost:3000/interestWithloanDetails', {
+            // loan_type:"InterestFreeLoan"
+        }).then((res) => {
+            console.log(res.data);
+            InterestWithLoan.details = res.data;
+
+            InterestWithLoan.max_tenure_months = res.data.Months;
+            InterestWithLoan.minEligibile = res.data.minEligibile;
+            InterestWithLoan.Interest_rate = res.data.Interest_rate;
+            console.log(InterestWithLoan.details);
+            console.log(InterestWithLoan.max_tenure_months);
+        });
+    }
+
+    const saveinterestWithLoan = () => {
+
+        // canShowLoading.value = true;
+
+        axios.post('/InterestWithLoan', InterestWithLoan).finally(() => {
             canShowLoading.value = false
 
             fetchInterstWithLoan();
@@ -255,6 +316,58 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
 
     }
+
+
+    // Calculating Interest
+
+    // function calculateLoanDetails(principal, rate, time) {
+    //     console.log("Principal:" + principal);
+    //     console.log("Rate:" + rate);
+    //     console.log("Time:" + time);
+
+
+    //     var monthlyInterestRate = rate / 12;
+    //     var numberOfPayments = time * 12;
+
+    //     var monthlyPayment = (principal * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+    //     var totalLoanAmount = monthlyPayment * numberOfPayments;
+
+    //     console.log("Monthly Pending:" + monthlyPayment);
+    //     console.log("Total Loan Amount:" + totalLoanAmount);
+
+    //     return {
+    //         monthlyPayment: monthlyPayment,
+    //         totalLoanAmount: totalLoanAmount
+    //     };
+    // }
+
+    const calculateLoanDetails = (amount, interest_rate, months) => {
+
+        const interest = amount * interest_rate / 100;
+
+        console.log(interest);
+
+        let finalAmount = amount + interest
+
+        console.log(finalAmount);
+
+        let payment = (finalAmount / months);
+
+        console.log(payment);
+
+        let loanDetails = {
+            monthlyDue: (payment).toFixed(0),
+            totalDue: finalAmount
+        }
+
+        InterestWithLoan.month_EMI = loanDetails.monthlyDue
+        InterestWithLoan.total_amount = loanDetails.totalDue
+    }
+
+    // Example usage
+    // var loanPrincipal = 5000;   The principal amount of the loan
+    // var loanRate = 0.05;      The annual interest rate (5% in this case)
+    // var j = 2;          The time period in years
 
 
     // Loan With interest Feature Ends
@@ -270,19 +383,24 @@ export const useEmpSalaryAdvanceStore = defineStore("useEmpSalaryAdvanceStore", 
 
         // SalaryAdvanceFeature
 
-        dailogSalaryAdvance, salaryAdvanceEmployeeData, sa,fetchSalaryAdvance, saveSalaryAdvance,
+        dailogSalaryAdvance, salaryAdvanceEmployeeData, sa, fetchSalaryAdvance, saveSalaryAdvance,
+        arraySalaryDetails,
+        getSalaryDetails,
+
 
         // Interest Free Loan
 
-        dialog_NewInterestFreeLoanRequest,isInterestFreeLoaneature, ifl, saveInterestfreeLoan,fetchInterestfreeLoan,
+        dialog_NewInterestFreeLoanRequest, isInterestFreeLoanFeature, interestFreeLoan, max_tenure_month, saveInterestfreeLoan, fetchInterestfreeLoan,
+        getinterestfreeloan,
 
         // Travel Advance Feature
 
-        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta ,dialog_TravelAdvance,saveTravelAdvance,fetchTraveladvance,
+        isTravelAdvanceFeatureEnabled, eligibleTravelAdvanceEmployeeData, ta, dialog_TravelAdvance, saveTravelAdvance, fetchTraveladvance,
 
 
         // Loan With interest Feature
-        isLoanWithInterestFeature, lwif,dialogInterestwithLoan,saveinterestWithLoan,InterestWithLoanData,fetchInterstWithLoan,
+        isLoanWithInterestFeature, InterestWithLoan, dialogInterestwithLoan, saveinterestWithLoan, InterestWithLoanData, fetchInterstWithLoan, getinterestwithloan,
+        calculateLoanDetails, getLoanDetails
 
 
     };

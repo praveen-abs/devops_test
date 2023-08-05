@@ -52,8 +52,15 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h1 class="fs-5">The employee must have served for a minimum of
-                                        <InputText type="text" v-model="salaryStore.ifl.minEligibile"
-                                            style="max-width: 100px; " class="mx-2" />
+                                        <!-- <InputText type="text" v-model="salaryStore.ifl.minEligibile"
+                                            style="max-width: 100px; " class="mx-2" /> -->
+                                            <InputNumber v-model="salaryStore.ifl.minEligibile" inputId="withoutgrouping" :useGrouping="false" :class="[
+                                                v$.minEligibile.$error ? 'p-invalid' : '',
+                                            ]" />
+                                        <span v-if="v$.minEligibile.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
+                                            {{ v$.minEligibile.required.$message.replace("Value", "") }}
+                                        </span>
+                                            months
                                     </h1>
                                 </div>
                                 <div class="col-12">
@@ -63,11 +70,9 @@
                                         years to avail the loan amount of
 
                                         <!-- <InputText type="text"   v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;" class="mx-2" /> -->
-                                        <InputText type="text" v-if="salaryStore.ifl.precent_Or_Amt == 'percnt'"
-                                            v-model="salaryStore.ifl.availPerInCtc" style="max-width: 100px;"
-                                            class="mx-2" />
-                                        <InputText type="text" v-else disabled v-model="salaryStore.ifl.availPerInCtc"
-                                            style="max-width: 100px;" class="mx-2" />
+                                            <InputNumber v-if="salaryStore.ifl.precent_Or_Amt == 'percnt'" style="max-width: 100px;"  v-model.number="salaryStore.ifl.availPerInCtc"  inputId="withoutgrouping" :useGrouping="false" class="mx-2" />
+
+                                            <InputNumber v-else disabled style="max-width: 100px;"  v-model.number="salaryStore.ifl.availPerInCtc"  inputId="withoutgrouping" :useGrouping="false" class="mx-2"  />
                                         % of their CTC.
                                     </h1>
                                 </div>
@@ -76,10 +81,13 @@
                                         name="dectmeth" value="fixed" class="mx-3" />
                                     <h1 class="fs-5">Enter the maximum eligible amount of loan can be availed by the
                                         employees
-                                        <InputText v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'" type="text"
-                                            v-model="salaryStore.ifl.max_loan_limit" style="width: 150px;" />
-                                        <InputText v-else disabled type="text" v-model="salaryStore.ifl.max_loan_limit"
-                                            style="width: 150px;" />
+                                        <!-- <InputText v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'" type="text"
+                                            v-model="salaryStore.ifl.max_loan_limit"  /> -->
+                                            <InputNumber v-if="salaryStore.ifl.precent_Or_Amt == 'fixed'"  v-model="salaryStore.ifl.max_loan_limit" inputId="withoutgrouping" :useGrouping="false" class="mx-2"  />
+
+                                            <InputNumber v-else  disabled  v-model="salaryStore.ifl.max_loan_limit" inputId="withoutgrouping" :useGrouping="false" class="mx-2"  />
+                                        <!-- <InputText v-else disabled type="text" v-model="salaryStore.ifl.max_loan_limit"
+                                            style="width: 150px;" /> -->
                                     </h1>
                                 </div>
                                 <div class="col-10">
@@ -144,9 +152,15 @@
                                         <p class="fs-5 clr-dark">Please specify the maximum duration or tenure for the
                                             employee to repay the
                                             loan amount
-                                            <InputText type="text" v-model="salaryStore.ifl.maxTenure"
-                                                style="max-width: 100px;" class="mx-2" />
-                                            years
+                                            <!-- <InputText type="text" v-model="salaryStore.ifl.maxTenure"
+                                                style="max-width: 100px;" class="mx-2" /> -->
+                                            <InputNumber  v-model="salaryStore.ifl.maxTenure" inputId="withoutgrouping" :useGrouping="false" class="mx-2" :class="[
+                                                v$.maxTenure.$error ? 'p-invalid' : '',
+                                            ]" />
+                                        <span v-if="v$.maxTenure.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14">
+                                            {{ v$.maxTenure.required.$message.replace("Value", "maximum duration") }}
+                                        </span>
+                                             months
                                         </p>
                                     </div>
                                 </div>
@@ -172,7 +186,12 @@
                                     <Dropdown v-model="salaryStore.selectedOption1" editable
                                         :options="salaryStore.filteredApprovalFlow" optionLabel="name" placeholder="Select"
                                         class="w-full pl-2 md:w-14rem"
-                                        @change="salaryStore.toSelectoption(1, salaryStore.selectedOption1)" />
+                                        @change="salaryStore.toSelectoption(1, salaryStore.selectedOption1)" :class="[
+                                                v$.selectedOption1.$error ? 'p-invalid' : '',
+                                            ]" />
+                                        <span v-if="v$.selectedOption1.$error" class="text-red-400 fs-6 font-semibold position-absolute top-14 mt-3">
+                                            {{ v$.selectedOption1.required.$message.replace("Value", "Employee Request") }}
+                                        </span>
                                     <button
                                         @click="salaryStore.option1 = 0, salaryStore.toSelectoption(4, salaryStore.selectedOption1)"
                                         v-if="salaryStore.selectedOption1" class="mx-2">
@@ -286,11 +305,15 @@ onMounted(() => {
 const rules = computed(() => {
     return {
         selectClientID: { required },
-        // Pancard: { required }
+        minEligibile: { required } ,
+        maxTenure : { required },
+        selectedOption1:{ required }
     }
 })
 
 const v$ = useValidate(rules, salaryStore.ifl)
+
+
 
 const submitForm = () => {
     v$.value.$validate() // checks all inputs
@@ -301,7 +324,6 @@ const submitForm = () => {
     } else {
         console.log('Form failed submitted.')
     }
-
 }
 
 

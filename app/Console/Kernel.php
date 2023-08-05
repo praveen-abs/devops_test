@@ -17,6 +17,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call('App\Http\Controllers\VmtStaffAttendanceController@syncStaffAttendanceFromDeviceDatabase')->everyThirtyMinutes()->timezone('Asia/Kolkata')->between('09:00', '17:45');
+
+        $schedule->call('App\Http\Controllers\VmtEmployeeBirthdayController@sendBirthdayNotificationtoEmployee')->dailyAt();
+
+        $schedule->call('App\Http\Controllers\VmtEmployeeBirthdayController@sendAniversaryNotificationtoEmployee')->dailyAt();
     }
 
     /**
@@ -31,3 +35,5 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+
+

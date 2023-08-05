@@ -7,8 +7,10 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\NamedRange;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -19,13 +21,15 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+//use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use PhpOffice\PhpSpreadsheet\Cell\DataValidation;
 
-class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents
+class BulkOnbaordSampleExport implements  ShouldAutoSize, WithHeadings, WithCustomStartCell, WithStyles, WithEvents, WithMapping , WithCalculatedFormulas
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -37,6 +41,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
     protected $marital_status;
     protected $manager_code;
     protected $salary;
+    protected $blood_grp;
     function __construct($onbaord_details)
     {
         $this->title = $onbaord_details['title'];
@@ -45,21 +50,22 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         $this->marital_status = $onbaord_details['marital_status'];
         $this->manager_code = $onbaord_details['managr_code'];
         $this->salary = $onbaord_details['salary'];
+        $this->blood_grp = $onbaord_details['blood_group'];
     }
 
     public function startCell(): string
     {
-        return 'A2';
+        return 'A1';
     }
     public function styles(Worksheet $sheet)
     {
         //For First Row
-        $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
-        $sheet->getStyle('A1:AF1')->getFill()
+        // $sheet->mergeCells('A1:AF1')->setCellValue('A1', $this->title);
+        $sheet->getStyle('A1:AG1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setRGB('002060');
-        $sheet->getStyle('A1:AF1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
-        $sheet->getStyle('A1:AF1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:AG1')->getFont()->setBold(true)->getColor()->setRGB('ffffff');
+        $sheet->getStyle('A1:AG1')->getAlignment()->setHorizontal('center');
     }
 
     public function headings(): array
@@ -96,7 +102,81 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
             'Prev ESI Number',
             'Current Address',
             'Permanent Address',
-            $this->salary
+            'Compensatory Type',
+            'Amount',
+            'Basic',
+            'HRA',
+            'Statutory Bonus',
+            'Child Education Allowance',
+            'Food Coupon',
+            'LTA',
+            'Special Allowance',
+            'Other Allowance',
+            'EPF Employer Contribution',
+            'ESIC Employer Contribution',
+            'Insurance',
+            'Graduity',
+            'EPf Employee',
+            'ESIC Employee',
+            'Professional Tax',
+            'Labour Welfare Fund',
+            'Net Income',
+            'Pf applicable',
+            'Esic applicable',
+            'Ptax location',
+            'tax regime',
+            'Lwf location',
+            'dearness  allowance'
+        ];
+    }
+
+    public function map($row): array
+    {
+        return [
+            [
+            'ABS0001',
+            'Name',
+            'abs@gmail.com',
+            '0912345678',
+            'Male',
+            '28-06-2000',
+            '14-11-2022',
+            '',
+            'It',
+            '',
+            'Chennai',
+            'ABSM001',
+            '0912345678',
+            'test@gmail.com',
+            'Single',
+            '',
+            'Father Name',
+            'Mother Name',
+            'Spouse Name',
+            'B Positive',
+            'No',
+            'ABCTY1234D',
+            '0000 1111 2222',
+            'Axis Bank',
+            'AXIB0028901',
+            '24898240942',
+            'UAN0945049',
+            'Yes',
+            '942904',
+            'Current Address',
+            'Permanent Address',
+            'CTC - Monthly',
+            '18000',
+            '=(AG2*50)/100',
+            '=(AH2*50)/100',
+            '',
+            '',
+            '',
+            '',
+            '=AH2-AI2',
+
+        ],
+            ['','=AG2*10']
         ];
     }
 
@@ -109,18 +189,25 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
         ];
     }
 
-    public function array(): array
-    {
 
-        return [];
-    }
+
 
 
     public function registerEvents(): array
     {
         return [
-            // handle by a closure.
+            //  handle by a closure.
             AfterSheet::class => function (AfterSheet $event) {
+                // $countries = $event->sheet;
+                // $countries->getSheetName('Worksheet 1')->setCellValue("A1","UK");
+                // $countries->getSheetName('Worksheet 1')->setCellValue("A2","USA");
+                // $event->sheet->getDelegate()->getParent()->addNamedRange(
+                //     new NamedRange(
+                //         'countries',
+                //         $countries->getSheetByName('Worksheet 1'),
+                //         'A1:A2'
+                //     )
+                // );
 
                 //get layout counts (add 1 to rows for heading row)
                 // $row_count = $this->results->count() + 1;
@@ -128,15 +215,7 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $row_count = 10;
                 $column_count = 0;
 
-                // set dropdown column
-                $gender_column = 'E';
-                $legal_entity_column = 'H';
-                $departments_column = 'I';
-                $marital_column = 'O';
-                $manager_code_column = 'L';
-                $mobile_num_column = 'D';
-
-                // set dropdown options
+                // // set dropdown options
                 $gender_options = [
                     'Male',
                     'Female',
@@ -145,9 +224,10 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $departments_option = $this->departments;
                 $marital_option = $this->marital_status;
                 $manager_code_option = $this->manager_code;
+                $compansation_column = 'AF';
 
-                // set dropdown list for Gender
-                $validation_gender = $event->sheet->getCell("{$gender_column}3")->getDataValidation();
+                // // set dropdown list for Gender
+                $validation_gender = $event->sheet->getCell("E3")->getDataValidation();
                 $validation_gender->setType(DataValidation::TYPE_LIST);
                 $validation_gender->setErrorStyle(DataValidation::STYLE_INFORMATION);
                 $validation_gender->setAllowBlank(false);
@@ -160,8 +240,8 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $validation_gender->setPrompt('Please pick a value from the drop-down list.');
                 $validation_gender->setFormula1(sprintf('"%s"', implode(',',  $gender_options)));
 
-                // set dropdown list for Legal Entity
-                $validation_entity = $event->sheet->getCell("{$legal_entity_column}3")->getDataValidation();
+                // // // set dropdown list for Legal Entity
+                $validation_entity = $event->sheet->getCell("H3")->getDataValidation();
                 $validation_entity->setType(DataValidation::TYPE_LIST);
                 $validation_entity->setErrorStyle(DataValidation::STYLE_INFORMATION);
                 $validation_entity->setAllowBlank(false);
@@ -174,22 +254,22 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $validation_entity->setPrompt('Please pick a value from the drop-down list.');
                 $validation_entity->setFormula1($legal_entity_option);
 
-                // set dropdown list for Legal Entity
-                $validation_dep = $event->sheet->getCell("{$departments_column}3")->getDataValidation();
-                $validation_dep->setType(DataValidation::TYPE_LIST);
-                $validation_dep->setErrorStyle(DataValidation::STYLE_INFORMATION);
-                $validation_dep->setAllowBlank(false);
-                $validation_dep->setShowInputMessage(true);
-                $validation_dep->setShowErrorMessage(true);
-                $validation_dep->setShowDropDown(true);
-                $validation_dep->setErrorTitle('Input error');
-                $validation_dep->setError('Selected Department is not in list.');
-                $validation_dep->setPromptTitle('Select Department from list');
-                $validation_dep->setPrompt('Please pick a Department from the drop-down list.');
-                $validation_dep->setFormula1($departments_option);
+                // // // set dropdown list for Legal Entity
+                // $validation_dep = $event->sheet->getCell("I3")->getDataValidation();
+                // $validation_dep->setType(DataValidation::TYPE_LIST);
+                // $validation_dep->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                // $validation_dep->setAllowBlank(false);
+                // $validation_dep->setShowInputMessage(true);
+                // $validation_dep->setShowErrorMessage(true);
+                // $validation_dep->setShowDropDown(true);
+                // $validation_dep->setErrorTitle('Input error');
+                // $validation_dep->setError('Selected Department is not in list.');
+                // $validation_dep->setPromptTitle('Select Department from list');
+                // $validation_dep->setPrompt('Please pick a Department from the drop-down list.');
+                // $validation_dep->setFormula1($departments_option);
 
-                //set dropdown list for marital status
-                $validation_mar_sts = $event->sheet->getCell("{$marital_column}3")->getDataValidation();
+                // //set dropdown list for marital status
+                $validation_mar_sts = $event->sheet->getCell("O2")->getDataValidation();
                 $validation_mar_sts->setType(DataValidation::TYPE_LIST);
                 $validation_mar_sts->setErrorStyle(DataValidation::STYLE_INFORMATION);
                 $validation_mar_sts->setAllowBlank(false);
@@ -202,42 +282,73 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                 $validation_mar_sts->setPrompt('Please pick a  Marital Status from the drop-down list.');
                 $validation_mar_sts->setFormula1($marital_option);
 
-                //set dropdown list for managercode
-                $validation_mangr_code = $event->sheet->getCell("{$manager_code_column}3")->getDataValidation();
-                $validation_mangr_code->setType(DataValidation::TYPE_LIST);
-                $validation_mangr_code->setErrorStyle(DataValidation::STYLE_WARNING);
-                $validation_mangr_code->setAllowBlank(false);
-                $validation_mangr_code->setShowInputMessage(true);
-                $validation_mangr_code->setShowErrorMessage(true);
-                $validation_mangr_code->setShowDropDown(true);
-                $validation_mangr_code->setErrorTitle('Input error');
-                $validation_mangr_code->setError('Selected Option is not in list.');
-                $validation_mangr_code->setPromptTitle('Select Manager Code from list');
-                $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
-                $validation_mangr_code->setFormula1($manager_code_option);
+                // //set dropdown list for managercode
+                // $validation_mangr_code = $event->sheet->getCell("L3")->getDataValidation();
+                // $validation_mangr_code->setType(DataValidation::TYPE_LIST);
+                // $validation_mangr_code->setErrorStyle(DataValidation::STYLE_INFORMATION);
+                // $validation_mangr_code->setAllowBlank(false);
+                // $validation_mangr_code->setShowInputMessage(true);
+                // $validation_mangr_code->setShowErrorMessage(true);
+                // $validation_mangr_code->setShowDropDown(true);
+                // $validation_mangr_code->setErrorTitle('Input error');
+                // $validation_mangr_code->setError('Selected Option is not in list.');
+                // $validation_mangr_code->setPromptTitle('Select Manager Code from list');
+                // $validation_mangr_code->setPrompt('Please pick a  Manager Code from the drop-down list.');
+                // $validation_mangr_code->setFormula1($manager_code_option);
 
-                //validation For Mobile Number
-                // $validation_mobile = $event->sheet->getCell("{$mobile_num_column}3")->getDataValidation();
-                // $validation_mobile->setType(DataValidation::TYPE_WHOLE);
-                // $validation_mobile->setErrorStyle(DataValidation::STYLE_STOP);
-                // $validation_mobile->setAllowBlank(true);
-                // $validation_mobile->setShowInputMessage(true);
-                // $validation_mobile->setShowErrorMessage(true);
-                // $validation_mobile->setErrorTitle('Input error');
-                // $validation_mobile->setError('invalid Mobile Number!');
-                // $validation_mobile->setPromptTitle('Allowed input');
-                // $validation_mobile->setPrompt('Only 10 Digits Are Allowed');
-                // $validation_mobile->setFormula1(10);
-                // $validation_mobile->setFormula2(12);
+                //set dropdown list for handicapped column
+                $validation_Q = $event->sheet->getCell("U2")->getDataValidation();
+                $validation_Q->setType(DataValidation::TYPE_LIST);
+                $validation_Q->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_Q->setAllowBlank(false);
+                $validation_Q->setShowInputMessage(true);
+                $validation_Q->setShowErrorMessage(true);
+                $validation_Q->setShowDropDown(true);
+                $validation_Q->setErrorTitle('Input error');
+                //$validation_compansation->setError('Selected Option is not in list.');
+                // $validation_compansation->setPromptTitle('Select Compansation Type  from list');
+                // $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
+                $validation_Q->setFormula1('"Yes,No"');
+
+
+                //set dropdown list for blood group column
+                $validation_bld_grp = $event->sheet->getCell("T2")->getDataValidation();
+                $validation_bld_grp->setType(DataValidation::TYPE_LIST);
+                $validation_bld_grp->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_bld_grp->setAllowBlank(false);
+                $validation_bld_grp->setShowInputMessage(true);
+                $validation_bld_grp->setShowErrorMessage(true);
+                $validation_bld_grp->setShowDropDown(true);
+                $validation_bld_grp->setErrorTitle('Input error');
+                $validation_bld_grp->setFormula1($this->blood_grp);
+
+
+
+                $validation_compansation = $event->sheet->getCell("{$compansation_column}3")->getDataValidation();
+                $validation_compansation->setType(DataValidation::TYPE_LIST);
+                $validation_compansation->setErrorStyle(DataValidation::STYLE_WARNING);
+                $validation_compansation->setAllowBlank(false);
+                $validation_compansation->setShowInputMessage(true);
+                $validation_compansation->setShowErrorMessage(true);
+                $validation_compansation->setShowDropDown(true);
+                $validation_compansation->setErrorTitle('Input error');
+                $validation_compansation->setError('Selected Option is not in list.');
+                $validation_compansation->setPromptTitle('Select Compansation Type  from list');
+                $validation_compansation->setPrompt('Please pick a  Compansation Type from the drop-down list.');
+                $validation_compansation->setFormula1('"CTC - Monthly,GROSS - Monthly,TAKE HOME - Monthly"');
+
 
                 //clone validation to remaining rows
-                for ($i = 3; $i <= $row_count; $i++) {
-                    $event->sheet->getCell("{$gender_column}{$i}")->setDataValidation(clone  $validation_gender);
-                    $event->sheet->getCell("{$legal_entity_column}{$i}")->setDataValidation(clone    $validation_entity);
-                    $event->sheet->getCell("{$departments_column}{$i}")->setDataValidation(clone   $validation_dep);
-                     $event->sheet->getCell("{$marital_column}{$i}")->setDataValidation(clone  $validation_mar_sts);
-                    $event->sheet->getCell("{$manager_code_column}{$i}")->setDataValidation(clone   $validation_mangr_code);
+                for ($i = 2; $i <= $row_count; $i++) {
+                    $event->sheet->getCell("E{$i}")->setDataValidation(clone  $validation_gender);
+                    $event->sheet->getCell("{$compansation_column}{$i}")->setDataValidation(clone    $validation_compansation);
+                    $event->sheet->getCell("H{$i}")->setDataValidation(clone  $validation_entity);
+                    // $event->sheet->getCell("I{$i}")->setDataValidation(clone  $validation_dep);
+                    $event->sheet->getCell("O{$i}")->setDataValidation(clone  $validation_mar_sts);
+                    // $event->sheet->getCell("L{$i}")->setDataValidation(clone  $validation_mangr_code);
                     //$event->sheet->getCell("{$mobile_num_column}{$i}")->setDataValidation(clone    $validation_mobile);
+                    $event->sheet->getCell("U{$i}")->setDataValidation(clone    $validation_Q);
+                    $event->sheet->getCell("T{$i}")->setDataValidation(clone      $validation_bld_grp);
                 }
 
                 // set columns to autosize
@@ -245,6 +356,8 @@ class BulkOnbaordSampleExport implements FromArray, ShouldAutoSize, WithHeadings
                     $column = Coordinate::stringFromColumnIndex($i);
                     $event->sheet->getColumnDimension($column)->setAutoSize(true);
                 }
+
+                // $event->sheet->getDelegate()->getColumnDimension('AG')->setVisible(false);
             },
 
         ];

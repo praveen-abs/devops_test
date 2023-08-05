@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('script')
-@vite('resources/js/hrms/modules/reimbursements/employee_reimbursements/EmployeeReimbursements.js')
+@vite('resources/js/hrms/modules/reimbursements/EmployeeReimbursements.js')
 @endsection
 @section('content')
     <div id="vjs_employee_reimbursement"></div>

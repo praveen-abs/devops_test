@@ -1,12 +1,12 @@
 <template>
-      <div class="card-body">
+      <div class="card-body"  style="width: 100%; height: 320px">
           <div
             class="mb-3 card-title d-flex align-items-center justify-content-between f-18 text-primary"
             id=""
           >
             <span>Employee</span>
           </div>
-          <div class="contents list-style-none employee-contents">
+          <!-- <div class="contents list-style-none employee-contents">
             <div class="mb-0 mb-3 border card box-shadow-sm">
               <div class="p-2 card-body">
                 <div
@@ -58,6 +58,6 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 </template>

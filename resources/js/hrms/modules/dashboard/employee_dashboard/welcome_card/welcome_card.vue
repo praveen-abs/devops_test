@@ -3,7 +3,7 @@
     <div class="border-0 card w-100 box-shadow-md">
         <div class="card-body">
             <div class="row">
-                <div class="col-8 col-sm-8 col-md-8 col-xl-8 col-lg-8 col-xxl-8" v-for="item in EmpDetials">
+                <div class="col-9 col-sm-9 col-md-9 col-xl-9 col-lg-9 col-xxl-9" v-for="item in EmpDetials">
                     <p class="fw-bold f-18 text-blue-900" id="greeting_text">
                         {{ current_session }}
                     </p>
@@ -24,11 +24,12 @@
 
                     <p v-if="item.checkin_time" class="f-12 text-muted  " style="width: 280px;" id="time_duration">
                         Check-in time:
-                        {{ item.checkin_time }} &nbsp;Mode: {{ item.attendance_mode_checkin }}
+                        {{ item.checkin_time }} &nbsp;Mode:<i class="text-green-800 font-semibold text-sm"
+                        :class="findAttendanceMode(item.attendance_mode_checkin)"></i>
                     </p>
                     <p v-else class="f-12 text-muted" id="time_duration">
                         Check-in time:
-                        {{ "--:--:--" }} &nbsp; Mode : {{ "--:--:--" }}
+                        {{ "--:--:--" }} &nbsp;
                     </p>
 
                     <p v-if="item.checkin_date" class="f-12 text-muted" id="time_duration">
@@ -42,7 +43,8 @@
 
                     <p v-if="item.checkout_time" class="f-12 text-muted" id="time_duration">
                         Check-out time:
-                        {{ item.checkout_time }} &nbsp; Mode : {{ item.attendance_mode_checkout }}
+                        {{ item.checkout_time }} &nbsp; Mode : <i class="text-green-800 font-semibold text-sm"
+                        :class="findAttendanceMode(item.attendance_mode_checkout)"></i>
                     </p>
                     <p v-else class="f-12 text-muted" id="time_duration">
                         Check-out time:
@@ -56,12 +58,9 @@
                         Check-out date:
                         {{ "--:--:--" }}
                     </p>
-                    <!-- <p class="f-12 text-muted" id="time_duration">
-                        Time Duration:
-                        {{  }}
-                    </p> -->
+
                 </div>
-                <div class="col-4 col-sm-4 col-md-4 col-xl-4 col-lg-4 col-xxl-4">
+                <div class="col-3 col-sm-3 col-md-3 col-xl-3 col-lg-3 col-xxl-3">
                     <img src="../../dashboard/girl_walk.jpg" class="" alt="girl-walk" style="height: 140px; width: 140px" />
                 </div>
             </div>
@@ -216,12 +215,31 @@ onMounted(() => {
     getEmployeeDetials();
 });
 
+
+const findAttendanceMode = (attendance_mode) => {
+    console.log(attendance_mode);
+    if (attendance_mode == "biometric")
+        // return '&nbsp;<i class="fa-solid fa-fingerprint"></i>';
+        return 'fas fa-fingerprint fs-12'
+    else
+        if (attendance_mode == "web")
+            return 'fa fa-laptop fs-12';
+        else
+            if (attendance_mode == "mobile")
+                return 'fa fa-mobile-phone fs-12';
+            else {
+                return ''; // when attendance_mode column is empty.
+            }
+}
+
 const resetChars = () => {
     (usedashboard.check = ""),
         (usedashboard.check_in = ""),
         (usedashboard.check_out = ""),
         (usedashboard.work_mode = "");
 };
+
+
 </script>
 
 <style>

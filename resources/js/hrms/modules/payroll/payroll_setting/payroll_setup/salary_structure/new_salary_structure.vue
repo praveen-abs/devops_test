@@ -128,7 +128,7 @@
             <Column field="comp_name" header="Type" style="min-width: 15rem"></Column>
             <Column header="Type of calculation" style="min-width: 22rem">
                 <template #body="{ data }">
-                    <p>{{ helper.findCompType(data.comp_type_id) }};{{ data.calculation_method }}</p>
+                    <!-- <p>{{ helper.findCompType(data.comp_type_id) }};{{ data.calculation_method }}</p> -->
                 </template>
             </Column>
         </DataTable>
@@ -223,7 +223,7 @@
         </div>
     </Dialog>
 </template>
-  
+
 <script setup>
 import { ref, onMounted } from "vue";
 import { FilterMatchMode } from 'primevue/api';
@@ -292,4 +292,3 @@ onMounted(() => {
     border: 2px solid #003487 !important;
 }
 </style>
-  
