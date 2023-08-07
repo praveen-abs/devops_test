@@ -1,3 +1,12 @@
+<?php
+
+ $client_logo_path   = public_path($client_details[0]['client_logo']);
+
+ $client_image  = base64_encode(file_get_contents($client_logo_path));
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 
@@ -44,12 +53,12 @@
                     <p style="color:#000; font-size:9px;width:220px;line-height:16px ">{{ $client_details[0]['address'] }}</p>
                 </td>
                 <td colspan="1" style="">
-                    <img src="https://www.w3schools.com/images/lamp.jpg" style="margin-top:40px; " width="160px" height="60px"  >
+                    <img src="data:image/png;base64,{{ $client_image }}" style="margin-top:40px; " width="160px" height="60px"  >
                 </td>
             </tr>
         <tr class="td"  style="height:20px; marign:0px;" >
             <td colspan="4" class="td"  border="2" style="marign:0px;">
-                <h5 style="font-size: 12px; margin-bottom:2px ">{{ $personal_details[0]['name']}}</h5>
+                <h5 style="font-size: 12px; margin-bottom:2px ">{{ $personal_details[0]['name'] }}</h5>
             </td>
         </tr>
         <tr>
@@ -158,18 +167,29 @@
                 <table style="width: 100%; margin-top:0%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); padding-right:8px;" >
                     <tr style="height: 12px">
                         <td colspan="2" style="height: 12px">
-                            <h1 style="font-size:10px; font-weight:900">EARNINGS</h1>
+                            <h1 style="font-size:10px; font-weight:900"><b>EARNINGS</b></h1>
                         </td>
                     </tr>
                     @foreach ($earnings[0] as $key => $single_earnings)
+                    @if ($key == "Total Earnings")
                     <tr style="height: 12px; ">
                         <td style="height: 12px;">
-                            <p style="font-size:10px;margin-top:-4px; ">{{ $key }}</p>
+                            <p style="font-size:10px;margin-top:-4px; font-weight:900 ">{{ $key }}</p>
                         </td>
                         <td>
-                            <p style="font-size:10px; float: right;margin-top:-4px;">{{ $single_earnings }}</p>
+                            <p style="font-size:10px; float: right;margin-top:-4px; font-weight:900">{{ $single_earnings }}</p>
                         </td>
                     </tr>
+                        @else
+                        <tr style="height: 12px; ">
+                            <td style="height: 12px;">
+                                <p style="font-size:10px;margin-top:-4px; ">{{ $key }}</p>
+                            </td>
+                            <td>
+                                <p style="font-size:10px; float: right;margin-top:-4px;">{{ $single_earnings }}</p>
+                            </td>
+                        </tr>
+                    @endif
                     @endforeach
                 </table>
 
@@ -178,33 +198,56 @@
                 <table style="width: 100%;" >
                     <tr style="height: 12px">
                         <td colspan="2" style="height: 12px">
-                            <h1 style="font-size:10px;">CONTRIBUTIONS</h1>
+                            <h1 style="font-size:10px;"><b>CONTRIBUTIONS</b></h1>
                         </td>
                     </tr>
                     @foreach ($contribution[0] as $key => $single_contribution)
+                    @if ($key =="Total Contribution")
                     <tr style="height: 12px">
                         <td style="height: 12px">
-                            <p style="font-size:10px; margin-top:-4px;">{{ $key }}</p>
+                            <p style="font-size:10px; margin-top:-4px; font-weight:900">{{ $key }}</p>
                         </td>
                         <td>
-                            <p style="font-size:10px; float: right; margin-top:-4px;">{{ $single_contribution }}</p>
+                            <p style="font-size:10px; float: right; margin-top:-4px; font-weight:900">{{ $single_contribution }}</p>
                         </td>
                     </tr>
+                        @else
+                        <tr style="height: 12px">
+                            <td style="height: 12px">
+                                <p style="font-size:10px; margin-top:-4px;">{{ $key }}</p>
+                            </td>
+                            <td>
+                                <p style="font-size:10px; float: right; margin-top:-4px;">{{ $single_contribution }}</p>
+                            </td>
+                        </tr>
+                    @endif
                     @endforeach
                     <tr>
                         <td colspan="2">
-                            <h1  style="font-size:10px; margin-top:-4px;">TAXES & DEDUCTIONS  </h1>
+                            <h1  style="font-size:10px; margin-top:-4px;"><b>TAXES & DEDUCTIONS</b></h1>
                         </td>
                     </tr>
                     @foreach ($Tax_Deduction[0] as $key => $single_taxdeduction)
+                    @if ( $key == "Total Deduction")
                     <tr>
                         <td>
-                            <p  style="font-size:10px; margin-top:-4px;">{{ $key }}</p>
+                            <p  style="font-size:10px; margin-top:-4px; font-weight:900">{{ $key }}</p>
                         </td>
                         <td>
-                            <p style="font-size:10px; float: right; margin-top:-4px;">{{ $single_taxdeduction }}</p>
+                            <p style="font-size:10px; float: right; margin-top:-4px; font-weight:900">{{ $single_taxdeduction }}</p>
                         </td>
                     </tr>
+                        @else
+                        <tr>
+                            <td>
+                                <p  style="font-size:10px; margin-top:-4px;">{{ $key }}</p>
+                            </td>
+                            <td>
+                                <p style="font-size:10px; float: right; margin-top:-4px;">{{ $single_taxdeduction }}</p>
+                            </td>
+                        </tr>
+                    @endif
+
                     @endforeach
                 </table>
             </td>
@@ -215,18 +258,29 @@
             </td>
         </tr>
         @foreach ($over_all[0] as $key => $total_sumvalue)
+        @if ($key == "Net Salary in words")
         <tr>
             <td colspan="1">
-                <p style="font-size:12px">{{ $key}}</p>
+                <p style="font-size:12px font-weight:900">{{ $key }}</p>
             </td>
             <td colspan="4">
-                <p style="font-size:12px; margin-left:110px;">{{  $total_sumvalue }}</p>
+                <p style="font-size:12px; margin-left:110px; font-weight:900">{{  $total_sumvalue }}</p>
             </td>
         </tr>
+            @else
+            <tr>
+                <td colspan="1">
+                    <p style="font-size:12px">{{ $key }}</p>
+                </td>
+                <td colspan="4">
+                    <p style="font-size:12px; margin-left:110px;">{{  $total_sumvalue }}</p>
+                </td>
+            </tr>
+        @endif
         @endforeach
         <tr>
             <td colspan="2">
-                <p style="font-size: 12px;">**Note : All amounts displayed in this payslip are in INR</p>
+                <p style="font-size: 12px;"><b>**Note :</b> All amounts displayed in this payslip are in <b>INR</b></p>
             </td>
 
         </tr>
@@ -235,13 +289,6 @@
                 <p style="font-size: 10px; margin-top:40px">*This is computer generated statement, does not require signature</p>
             </td>
         </tr>
-
-
     </table>
-
 </body>
-
-
-
-
 </html>
