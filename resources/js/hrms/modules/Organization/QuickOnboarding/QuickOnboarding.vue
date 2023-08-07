@@ -9,24 +9,21 @@
                 <div class="w-6 px-2">
                     <p class="font-bold text-2xl">Employee Quick Onboarding</p>
                     <ul class="list-disc p-2 my-3">
-                        <li class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
+                        <li class="font-semibold fs-6">Download the <a href="/assets//ABSQuickOnboarding.xlsx"
                                 class="text-blue-300 font-semibold fs-6 cursor-pointer">Sample</a>
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
-                    <div class="flex">
-                        <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer w-full mr-3"
-                            for="file"><i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse <span
-                                class=" p-2 border-l border-l-gray-500 px-6">
-                                {{ useStore.selectedFile ? useStore.selectedFile.name : '' }}</span></label>
-                        <input type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
-                            accept=".xls, .xlsx">
-                        <!-- <p class="border-1 p-2 w-8 mx-2 border-gray-500 rounded-lg">
-                            {{ selectedFile ? selectedFile.name : '' }}
-                        </p> -->
+                    <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border-1 p-2  mr-3">
+                        <label class="col-span-3 font-semibold fs-6  cursor-pointer w-full"
+                            for="file"><i class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
+                        <span class="col-span-9 px-4">
+                            {{ useStore.selectedFile ? useStore.selectedFile.name : '' }}</span>
                     </div>
-                    <button class="btn btn-orange mt-6 float-right mx-5"
-                        @click="useStore.convertExcelIntoArray">Upload</button>
+                    <input type="file" name="" id="file" hidden @change="useStore.getExcelForUpload($event)"
+                        accept=".xls, .xlsx">
+                    <button class="btn btn-orange mt-4 float-right mx-5"
+                        @click="useStore.convertExcelIntoArray('quick')">Upload</button>
                 </div>
                 <div>
                     <div class="col-form-label">
@@ -75,8 +72,7 @@
             </DataTable>
         </div>
     </Transition>
-
-    <Transition name="fade">
+    <Transition name="fade"  mode="out-in">
         <Dialog header="Header" v-model:visible="useStore.canShowloading"
             :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '25vw' }" :modal="true" :closable="false"
             :closeOnEscape="false">
@@ -95,11 +91,9 @@
 <script setup>
 
 import { onMounted, onUpdated, ref } from 'vue';
-import * as XLSX from 'xlsx';
-import ImportQuickOnboarding from './ImportQuickOnboarding.vue'
-import { useRouter, useRoute } from "vue-router";
-import { useOnboardingMainStore } from '../stores/OnboardingMainStore';
-import { Service } from '../../Service/Service';
+import ImportQuickOnboarding from './importquickonboarding.vue'
+import { useRoute } from "vue-router";
+import { useOnboardingMainStore } from '../stores/OnboardingMainStore'
 import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore';
 
 
@@ -113,8 +107,6 @@ onMounted(() => {
 })
 
 onUpdated(() => {
-
-
     if (useStore.initialUpdate) {
         useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
         useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
@@ -123,99 +115,24 @@ onUpdated(() => {
         useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
         useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
     }
-    // if (useStore.isValueUpdated) {
-    //     useStore.currentlyImportedTableEmployeeCodeValues.splice(0, useStore.currentlyImportedTableEmployeeCodeValues.length)
-    //     useStore.currentlyImportedTableAadharValues.splice(0, useStore.currentlyImportedTableAadharValues.length)
-    //     useStore.currentlyImportedTableAccNoValues.splice(0, useStore.currentlyImportedTableAccNoValues.length)
-    //     useStore.currentlyImportedTablePanValues.splice(0, useStore.currentlyImportedTablePanValues.length)
-    //     useStore.currentlyImportedTableEmailValues.splice(0, useStore.currentlyImportedTableEmailValues.length)
-    // };
 })
-
-
-
-
-const router = useRouter();
 const route = useRoute();
 
-const sampleTemplate = ref([
-    {
-        "Location": "",
-        Aadhar: '',
-        "Account No": '',
-        "Bank Name": " ",
-        "Bank ifsc": "",
-        Basic: '',
-        "Child DOB": '',
-        "Child Education Allowance": '',
-        "Child Name": '',
-        "Confirmation Period": '',
-        "Cost Center": '',
-        "Current Address": "",
-        DOB: '',
-        DOJ: '',
-        Department: "",
-        Designation: "",
-        "EPF Employer Contribution": '',
-        "EPf Employee": '',
-        "ESIC Employee": '',
-        "ESIC Employer Contribution": '',
-        Email: "",
-        "Emp Notice": '',
-        "Employee Name": "",
-        "Employee code": "",
-        "Esic applicable": "",
-        "Father DOB": "",
-        "Father Gender": "",
-        "Father name": "",
-        "Food Coupon": "",
-        Gender: "",
-        Graduity: "",
-        HRA: "",
-        "Holiday Location": "",
-        Insurance: "",
-        "L1 Manager Code": "",
-        "L1 Manager Name": "",
-        LTA: "",
-        "Labour Welfare Fund": "",
-        "Lwf location": "",
-        "Marital Status": " ",
-        "Mobile Number": "",
-        "Mother DOB": "",
-        "Mother Gender": "",
-        "Mother Name": "",
-        "Net Income ": "",
-        "No of child": "",
-        "Official Mail": "",
-        "Official Mobile": "",
-        "Other Allowance": "",
-        "Pan Ack": "",
-        "Pan No": "",
-        "Permanent Address": "",
-        "Pf applicable ": "",
-        Process: "",
-        "Professional Tax": "",
-        "Ptax location ": "",
-        "Special Allowance": "",
-        "Spouse DOB": "",
-        "Spouse Name": "",
-        "Statutory Bonus": "",
-        "Work Location": "",
-        "dearness  allowance ": "",
-        "tax regime ": "",
-        "uan number": ""
-    }
-])
-
-const selectedFile = ref()
-
-
 </script>
-
-
 
 <style>
 .page-content {
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>
+
+

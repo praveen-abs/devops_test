@@ -63,6 +63,7 @@ class VmtExcelGeneratorService
         $onbaord_excel_details['marital_status'] = (sprintf('"%s"', implode(',', VmtMaritalStatus::pluck('name')->toArray())));
         $onbaord_excel_details['blood_group'] = (sprintf('"%s"', implode(',', VmtBloodGroup::pluck('name')->toArray())));
         $onbaord_excel_details['department'] = (sprintf('"%s"', implode(',', Department::pluck('name')->toArray())));
+        $onbaord_excel_details['bank_details'] = (sprintf('"%s"', implode(',', Bank::pluck('bank_name')->toArray())));
         $onbaord_excel_details['salary'] = 'CTC';
        // dd($onbaord_excel_details);
         return  $onbaord_excel_details;
