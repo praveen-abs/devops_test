@@ -50,14 +50,14 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             if (!file) return;
             setTimeout(() => {
                 if (onboardingType == 'quick') {
-                    type.value  = 'quick'
+                    type.value = 'quick'
                     router.push({ path: `/quickEmployeeOnboarding/${'quickOnboarding'}` })
                 } else
                     if (onboardingType == 'bulk') {
-                        type.value  = 'bulk'
+                        type.value = 'bulk'
                         router.push({ path: `/bulkEmployeeOnboarding/${'bulkOnboarding'}` })
-                    }else{
-                        type.value  = ''
+                    } else {
+                        type.value = ''
 
                     }
                 canShowloading.value = false
@@ -148,15 +148,26 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
             canShowloading.value = true
             axios.post(url, data).then(res => {
                 canShowloading.value = false
-            }).finally(() => {
-                data.forEach(element => {
+                if (res.data.status == 'failure') {
                     toast.add({
-                        severity: "success",
-                        summary: `${element['Employee Name']}`,
-                        detail: "Onboarding successfully",
-                        life: 2000,
+                        severity: "error",
+                        summary: "failure",
+                        detail: `${res.data.message}`,
+                        life: 3000,
                     });
-                });
+                } else
+                    if (res.data.status == 'success') {
+                        data.forEach(element => {
+                            toast.add({
+                                severity: "success",
+                                summary: `${element['Employee Name']}`,
+                                detail: `${res.data.message}`,
+                                life: 2000,
+                            });
+                        });
+                    }
+            }).finally(() => {
+
             })
         } else {
             toast.add({
@@ -453,7 +464,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     return {
 
-        getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile,type,
+        getCurrentlyImportedTableDuplicateEntries, currentlyImportedTableEmployeeCodeValues, findCurrentTableDups, uploadOnboardingFile, type,
         currentlyImportedTableAadharValues, currentlyImportedTablePanValues, currentlyImportedTableAccNoValues, currentlyImportedTableEmailValues, currentlyImportedTableMobileNumberValues,
         // TODO:: Separate
 
