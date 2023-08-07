@@ -55,8 +55,8 @@ class WelcomeMail extends Mailable
 
 
         //Only for Employee Onboarding
-        //if($this->filename != "")
-        // $output->attach($this->filename);
+        if($this->filename != "")
+        $output->attach($this->filename);
 
         return $output;
 

@@ -20,6 +20,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
     const mipDetails = ref({})
     const lcDetails = ref({})
     const egDetails = ref({})
+    const AttendanceLateOrMipRegularization = ref()
+    const AttendanceEarylOrMopRegularization = ref()
     const absentRegularizationDetails = ref({})
     const selfieDetails = ref({})
 
@@ -144,18 +146,19 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
     /* Creating constructor for Attendance Regularization request */
     const AttendanceRegularizationApplyFormat = (selectedDayRegularizationRecord, selectedAttendanceRegularizationType) => {
-
         let AttendanceRegularizeFormat = {
             user_code: service.current_user_code,
             regularization_type: selectedAttendanceRegularizationType,
             attendance_date: selectedDayRegularizationRecord.date,
             user_time: selectedDayRegularizationRecord.checkin_time,
-            regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? '9:30:00' :
-                selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? '6:30:00' : '',
+            regularize_time: selectedAttendanceRegularizationType == 'LC' || selectedAttendanceRegularizationType == 'MIP' ? convertTime(AttendanceLateOrMipRegularization.value) :
+                selectedAttendanceRegularizationType == 'EG' || selectedAttendanceRegularizationType == 'MOP' ? convertTime(AttendanceEarylOrMopRegularization.value) : '',
             reason: selectedDayRegularizationRecord.reason,
             custom_reason: selectedDayRegularizationRecord.custom_reason ? selectedDayRegularizationRecord.custom_reason : '',
         }
         console.log(AttendanceRegularizeFormat);
+        AttendanceLateOrMipRegularization.value = null
+        AttendanceEarylOrMopRegularization.value = null
         return AttendanceRegularizeFormat
     }
 
@@ -169,7 +172,6 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     const applyLcRegularization = () => {
-        att.value = false
         canShowLoading.value = true
         axios.post('/attendance-req-regularization', AttendanceRegularizationApplyFormat(lcDetails.value, 'LC'))
             .then((res) => {
@@ -304,8 +306,8 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
             user_code: service.current_user_code,
             attendance_date: absentRegularizationDetails.value.date,
             regularization_type: "Absent Regularization",
-            checkin_time: absentRegularizationDetails.value.start_time,
-            checkout_time: absentRegularizationDetails.value.end_time,
+            checkin_time: convertTime(absentRegularizationDetails.value.start_time),
+            checkout_time: convertTime(absentRegularizationDetails.value.end_time),
             reason: absentRegularizationDetails.value.reason,
             custom_reason: absentRegularizationDetails.value.custom_reason ? absentRegularizationDetails.value.custom_reason : "",
         })
@@ -342,6 +344,22 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
 
     // Helper Functions
+
+
+    // Time conversion
+
+    const convertTime = (inputTime) => {
+        const [time, period] = inputTime.split(' ');
+        const [hours, minutes] = time.split(':');
+        let convertedHours = parseInt(hours);
+        if (period === 'PM' && convertedHours !== 12) {
+          convertedHours += 12;
+        } else if (period === 'AM' && convertedHours === 12) {
+          convertedHours = 0;
+        }
+        let convertFormat = `${convertedHours.toString().padStart(2, '0')}:${minutes}:00`;
+        return convertFormat
+      };
 
     //  Finding Difference between start date and end date
 
@@ -398,6 +416,7 @@ export const useAttendanceTimesheetMainStore = defineStore("Timesheet", () => {
 
         // Attendance Regularization
 
+        AttendanceLateOrMipRegularization, AttendanceEarylOrMopRegularization,
         //   MOP
         onClickShowLcRegularization, applyMopRegularization, mopDetails, dialog_Mop,
         //   MIP

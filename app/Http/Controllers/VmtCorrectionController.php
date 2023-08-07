@@ -1090,6 +1090,12 @@ $user_id = User::where('user_code',$data['employee_code'])->first();
                         $update_employee_data->doj   =  $doj ? $this->getdateFormatForDb($doj) : '';
 
                         }
+                   else if($data_key =='dol'){
+
+                        $dol=$single_data;
+                        $update_employee_data->dol   =  $dol ? $this->getdateFormatForDb($dol) : '';
+
+                        }
                     else if($data_key =='martial_status'){
 
                         $martial_status_id =VmtMaritalStatus::where('name',ucfirst($single_data ?? ''))->first();
