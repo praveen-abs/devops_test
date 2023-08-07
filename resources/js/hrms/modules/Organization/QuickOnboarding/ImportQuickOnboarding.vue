@@ -44,15 +44,18 @@
 
                 <template #body="{ data, field }">
                     <div v-if="field.includes('Employee Code')"
-                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) || !useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code'])  ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                            v-tooltip.right="'Client code is not eligible'"
+                            v-if="!useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code'])"></i>
+                            <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
-                                v-if="!useStore.isUserExists(data['Employee Code'])"></i>
+                                v-else-if="!useStore.isUserExists(data['Employee Code'])"></i>
                             {{ data['Employee Code'] }}
                         </p>
                     </div>
-                    <p v-else-if="field == 'Aadhar'"
+                    <p v-else-if="field.includes('Aadhar')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAadharValues, data['Aadhar']) || useStore.isValidAadhar(data['Aadhar']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
@@ -60,12 +63,12 @@
                             v-if="useStore.isAadharExists(data['Aadhar'])"></i>
                         {{ data['Aadhar'] }}
                     </p>
-                    <p v-else-if="field == 'Employee Name'"
+                    <p v-else-if="field.includes('Employee Name')"
                         :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Employee Name'] }}
                     </p>
-                    <p v-else-if="field == 'Email'"
+                    <p v-else-if="field.includes('Email')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmailValues, data['Email']) || useStore.isEmail(data['Email']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6 flex items-center">
                         <i class="fa fa-exclamation-circle text-warning  cursor-pointer" aria-hidden="true"
@@ -82,7 +85,7 @@
                         {{ data['Mobile Number'] }}
                     </p>
 
-                    <p v-else-if="field == 'Account No'"
+                    <p v-else-if="field.includes('Account No')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableAccNoValues, data['Account No']) || useStore.isValidBankAccountNo(data['Account No']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         <i class="fa fa-exclamation-circle text-warning cursor-pointer" aria-hidden="true"
@@ -91,7 +94,7 @@
                         {{ data['Account No'] }}
                     </p>
 
-                    <p v-else-if="field == 'Bank Name'"
+                    <p v-else-if="field.includes('Bank Name')"
                         :class="[useStore.isLetter(data['Bank Name']) || !useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank Name'] }}
@@ -105,17 +108,17 @@
                             v-if="!useStore.isValidPancard(data['Pan No'])"></i>
                         {{ data['Pan No'].toUpperCase() }}
                     </p>
-                    <p v-else-if="field == 'DOB'"
+                    <p v-else-if="field.includes('DOB')"
                         :class="[useStore.isValidDate(data['DOB']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['DOB'] }}
                     </p>
-                    <p v-else-if="field == 'DOJ'"
+                    <p v-else-if="field.includes('DOJ')"
                         :class="[useStore.isValidDate(data['DOJ']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['DOJ'] }}
                     </p>
-                    <p v-else-if="field == 'Bank ifsc'"
+                    <p v-else-if="field.includes('Bank ifsc')"
                         :class="[useStore.isValidBankIfsc(data['Bank ifsc']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank ifsc'].toUpperCase() }}

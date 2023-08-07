@@ -139,10 +139,10 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         let url = ''
 
         if (type.value == 'quick') {
-            url = '/onboarding/storeQuickOnboardEmployees'
+            // url = '/onboarding/storeQuickOnboardEmployees'
         } else
             if (type.value == 'bulk') {
-                url = '/onboarding/storeBulkOnboardEmployees'
+                // url = '/onboarding/storeBulkOnboardEmployees'
             }
         if (errorRecordsCount.value == 0) {
             canShowloading.value = true
@@ -225,6 +225,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     //  Variable declared for already existing records in current organization
 
+    const existingClientCode = ref()
     const existingUserCode = ref()
     const existingEmails = ref()
     const existingMobileNumbers = ref()
@@ -242,6 +243,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         axios.get('/onboarding/getEmployeeMandatoryDetails').then(res => {
 
             Object.values(res.data).forEach(element => {
+                existingClientCode.value = element.client_code
                 existingUserCode.value = element.user_code
                 existingMobileNumbers.value = element.mobile_number
                 existingEmails.value = element.email
@@ -275,8 +277,16 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         }
     }
 
+    function isClientCodeExists(obj, value) {
+        console.log(obj);
+        console.log(value);
+        const splitedClientCodeParts = value.split(/(?=\d)/);
+        console.log(splitedClientCodeParts[0]);
+        console.log(Object.values(obj).includes(splitedClientCodeParts[0]));
+        return (Object.values(obj).includes(splitedClientCodeParts[0])) ? true : false
+    }
+
     const isUserExists = (e) => {
-        console.log(e);
         if (existingUserCode.value.includes(e)) {
             return false
         } else {
@@ -411,7 +421,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"])) {
+        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"]) || !isClientCodeExists(existingClientCode.value, data['Employee Code'])) {
             errorRecordsCount.value.push('invalid')
         }
         else
@@ -446,8 +456,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                         errorRecordsCount.value.push('invalid')
                                     }
                                 } else
-                                // if (data['DOJ'] || data['DOB']) {
-                                //     if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
+                                // if (data['DOJ']) {
+                                //     if (!isValidDate(data['DOJ'])) {
                                 //         errorRecordsCount.value.push('invalid')
                                 //     }
                                 // }else
@@ -469,11 +479,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         // TODO:: Separate
 
         getExistingOnboardingDocuments, existingUserCode, existingEmails, existingMobileNumbers, existingAadharCards, existingPanCards, existingBankAccountNumbers, initialUpdate, isValueUpdated,
-        existingMartialStatus, existingBloodgroups,
+        existingMartialStatus, existingBloodgroups, existingClientCode,
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists, isAadharExists, isExistsOrNot,
+        isOfficialMailExists, isAadharExists, isExistsOrNot, isClientCodeExists,
 
 
 
