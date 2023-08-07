@@ -34,34 +34,35 @@
             <table align="center" cellpadding="0" cellspacing="0" role="none">
                 <tr>
                     <td style="height: 100vh; background-color: #fff">
-                        <table style="width: 90%" cellpadding="0" cellspacing="0" role="none">
+                        <table style="width: 100%;margin-top:-35px;  " cellpadding="0" cellspacing="0" role="none">
                             <tr>
-                                <td class="sm-py-3 sm-px-2" style="width: 900px; padding: 12px">
-                                    <table class="sm-w-full"
-                                        style="margin-left: auto; margin-right: auto; margin-top: 16px; width: 100%; background-color: #fff; height: 150px"
+                                <td class="sm-py-3 sm-px-2" style="width:100%; padding: 12px">
+                                    <table class="sm-w-full"  border="2"
+                                        style=" margin-top: 16px; width:700px; margin-left:-12px; background-color: #fff; height: 150px"
                                         cellpadding="0" cellspacing="0" role="none">
                                         <tr
-                                            style="display: float width: 100%; align-items: center; justify-content: space-between">
-                                            <td
-                                                style="display: float width: 100%; flex-direction: column; justify-content: center; padding-left: 40px">
-                                                <p style="font-size: 35px; font-weight: 600; color: #000">PAYSLIP <span
+                                            style=" width: 100%; float: left; ">
+                                            <td border="2"
+                                                style="display: float width: 50%;">
+                                                <p style="font-size: 20px; font-weight: 600; color: #000">PAYSLIP <span
                                                         style="font-weight: 400; color: #6b7280"> MAR 2023</span></p>
-                                                <p style="font-size: 14px; color: #000; height: 4px; margin-top:-20px ">
+                                                <p style="font-size: 12px; color: #000; height: 4px; margin-top:20px;  ">
                                                     {{ $client_details[0]['client_fullname'] }}</p>
                                                 <p
-                                                    style="width: 300px; font-size: 14px; color: #000; margin-bottom: 30px; height: 24px">
+                                                    style="width: 300px; font-size: 12px; color: #000; height: 24px">
                                                     REGISTERED ADDRESS:
                                                     {{ $client_details[0]['address'] }}</p>
                                             </td>
-                                            <td style="" border="2">
+                                            <td style=" width:50%; " border="2">
+                                                {{-- <p style="color:black; float: right !important; ">text right</p> --}}
                                                 <img src='{{ $client_details[0]['client_logo'] }}' width="100" alt
-                                                    style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; width: 300px; margin-top:25px;">
+                                                    style="max-width: 100%; margin-left:40px; line-height: 1; border: 0; width: 300px; margin-top:25px; height:100px">
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
-                            <tr style="display: float justify-content: center; width: 100% ; marign-top:10px;">
+                            <tr style="display: float justify-content: center; width: 100% ;">
                                 <td style="margin-left: 50px; width: 100%">
                                     <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 100%"
                                         cellpadding="0" cellspacing="0" role="none">
