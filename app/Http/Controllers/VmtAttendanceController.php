@@ -758,9 +758,10 @@ class VmtAttendanceController extends Controller
                 "vmt_employee_workshift_id" => null, "workshift_code" => null, "workshift_name" => null,
                 "absent_status" => null, "leave_type" => null, "checkin_time" => null, "checkout_time" => null,
                 "selfie_checkin" => null, "selfie_checkout" => null,
-                "isLC" => false, "lc_status" => null, "lc_reason" => null, "lc_reason_custom" => null,
-                "isEG" => false, "eg_status" => null, "eg_reason" => null, "eg_reason_custom" => null,
-                "isMIP" => false, "mip_status" => null, "isMOP" => false, "mop_status" => null,
+                "isLC" => false, "lc_status" => null, "lc_reason" => null, "lc_reason_custom" => null,"lc_regularized_time" => null,
+                "isEG" => false, "eg_status" => null, "eg_reason" => null, "eg_reason_custom" => null,"eg_regularized_time" => null,
+                "isMIP" => false, "mip_status" => null, "mip_reason"=>null, "mip_reason_custom" => null, "mip_regularized_time" => null,
+                "isMOP" => false, "mop_status" => null, "mop_reason"=>null, "mop_reason_custom" => null, "mop_regularized_time" => null,
                 "absent_reg_status" => null, "absent_reg_checkin" => null, "absent_reg_checkout" => null
             );
 
@@ -946,12 +947,10 @@ class VmtAttendanceController extends Controller
 
                         //check regularization status
                         //dd(  $regularization_record['reason']);
-                        $status = $regularization_record['status'];
-                        $reason =$regularization_record['reason'];
-                        $cst_reason = $regularization_record['cst_reason'];
-                        $attendanceResponseArray[$key]["lc_status"] =    $status ;
-                        $attendanceResponseArray[$key]["lc_reason"] =    $reason ;
-                        $attendanceResponseArray[$key]["lc_reason_custom"] =     $cst_reason ;
+                        $attendanceResponseArray[$key]["lc_status"] =  $regularization_record['status'];
+                        $attendanceResponseArray[$key]["lc_reason"] = $regularization_record['reason'];
+                        $attendanceResponseArray[$key]["lc_reason_custom"] = $regularization_record['cst_reason'];
+                        $attendanceResponseArray[$key]["lc_regularized_time"] = $regularization_record['regularized_time'];
                     }
                 }
 
@@ -974,12 +973,16 @@ class VmtAttendanceController extends Controller
                         //check whether regularization applied.
                         $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'EG');
                         //check regularization status
-                        $status = $regularization_record['status'];
-                        $reason =  $regularization_record['reason'];
-                        $cst_reason = $regularization_record['cst_reason'];
-                        $attendanceResponseArray[$key]["eg_status"] =   $status  ;
-                        $attendanceResponseArray[$key]["eg_reason"] =   $reason  ;
-                        $attendanceResponseArray[$key]["eg_reason_custom"] =   $reason  ;
+
+
+                        $attendanceResponseArray[$key]["eg_status"] = $regularization_record['status'];
+                        $attendanceResponseArray[$key]["eg_reason"] = $regularization_record['reason'];
+                        $attendanceResponseArray[$key]["eg_reason_custom"] = $regularization_record['cst_reason'];
+                        $attendanceResponseArray[$key]["eg_regularized_time"] = $regularization_record['regularized_time'];
+
+
+
+
                     } else {
                         //employee left late
 
@@ -1010,16 +1013,20 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isMOP"] = true;
 
                 ////Is any permission applied
+                //check whether regularization applied.
+                $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP');
 
-                $attendanceResponseArray[$key]["mop_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MOP')['status'];
+                //check regularization status
+                $attendanceResponseArray[$key]["mop_status"] = $regularization_record['status'];
+                $attendanceResponseArray[$key]["mop_reason"] =  $regularization_record['reason'];
+                $attendanceResponseArray[$key]["mop_reason_custom"] = $regularization_record['cst_reason'];
+                $attendanceResponseArray[$key]["mop_regularized_time"] = $regularization_record['regularized_time'];
+
 
                 if ($attendanceResponseArray[$key]["mop_status"] == "Approved") {
 
-                    //If Approved, then set the regularize time as checkin time
-                    $attendanceResponseArray[$key]["checkout_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
-                        ->where('user_id',  $request->user_id)->where('regularization_type', 'MOP')->value('regularize_time');
-
-                    //  $attendanceResponseArray[$key]["checkin_time"] = ""
+                    //If Approved, then set the regularize time as checkout time
+                    $attendanceResponseArray[$key]["checkout_time"] =  $regularization_record['regularized_time'];
                 }
             } elseif ($checkin_time == null && $checkout_time != null) {
 
@@ -1027,13 +1034,19 @@ class VmtAttendanceController extends Controller
                 $attendanceResponseArray[$key]["isMIP"] = true;
 
                 ////Is any permission applied
-                $attendanceResponseArray[$key]["mip_status"] = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP')['status'];
+                $regularization_record = $this->isRegularizationRequestApplied($request->user_id, $key, 'MIP');
+
+                //check regularization status
+                $attendanceResponseArray[$key]["mip_status"] = $regularization_record['status'];
+                $attendanceResponseArray[$key]["mip_reason"] =  $regularization_record['reason'];
+                $attendanceResponseArray[$key]["mip_reason_custom"] = $regularization_record['cst_reason'];
+                $attendanceResponseArray[$key]["mip_regularized_time"] = $regularization_record['regularized_time'];
+
 
                 if ($attendanceResponseArray[$key]["mip_status"] == "Approved") {
 
                     //If Approved, then set the regularize time as checkin time
-                    $attendanceResponseArray[$key]["checkin_time"] =  VmtEmployeeAttendanceRegularization::where('attendance_date', $key)
-                        ->where('user_id',  $request->user_id)->where('regularization_type', 'MIP')->value('regularize_time');
+                    $attendanceResponseArray[$key]["checkin_time"] =  $regularization_record['regularized_time'];
 
                     //  $attendanceResponseArray[$key]["checkin_time"] = ""
                 }
@@ -1095,8 +1108,9 @@ class VmtAttendanceController extends Controller
         // dd($user_id ." , ". $attendance_date." , ".$regularizeType);
         $record = array();
         if ($regularize_record->exists()) {
-           unset(   $record);
+           unset($record);
            $record['status']=$regularize_record->value('status');
+           $record['regularized_time']=$regularize_record->value('regularize_time');
           // dd($regularize_record->value('reason_type'));
             if($regularize_record->value('reason_type')=='Others'){
                 $record['reason']=$regularize_record->value('reason_type');
@@ -1107,13 +1121,14 @@ class VmtAttendanceController extends Controller
             }
 
         } else {
-            unset(   $record);
+            unset($record);
             $record['status']="None";
             $record['reason']="None";
             $record['cst_reason'] = null;
+            $record['regularized_time'] = null;
 
         }
-        return   $record;
+        return  $record;
     }
 
     /*
