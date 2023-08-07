@@ -200,10 +200,10 @@
                                         class="py-1 nav-link sidebar"><span>ORG
                                             structure</span></a>
                                 </li>
-                                <li class="nav-item ">
+                                {{-- <li class="nav-item ">
                                     <a href="{{ route('department') }}"
                                         class="py-1 nav-link sidebar"><span>Department</span></a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item ">
                                     <a href="{{ route('employee-onboarding-v2') }}" id=""
                                         class="py-1 nav-link sidebar" aria-expanded="false"><span>Onboarding</span>
