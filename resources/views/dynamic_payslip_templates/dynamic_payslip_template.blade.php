@@ -10,10 +10,14 @@
     <meta name="supported-color-schemes" content="light dark">
 
     <style>
+       @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins&display=swap');
+       *{
+        font-family: 'Lobster', cursive ;
+        font-family: 'Poppins', sans-serif;
+       }
         .border {
             border: 1px solid #f3f4f6 !important;
         }
-
         .float-right {
             float: right
         }
@@ -21,413 +25,289 @@
         .float-left {
             float: left
         }
-
-
-
+        .td{
+            height: 20px !important;
+        }
+        .marign-top1{
+            
+        }  
     </style>
 </head>
 
-<body style="margin: 0; width: 100%; padding: 0; -webkit-font-smoothing: antialiased; word-break: break-word">
-    <div role="article" aria-roledescription="email" aria-label lang="en">
-        <div class="sm-px-2"
-            style="border-radius: 8px; background-color: #000; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif">
-            <table align="center" cellpadding="0" cellspacing="0" role="none">
-                <tr>
-                    <td style="height: 100vh; background-color: #fff">
-                        <table style="width: 100%;margin-top:-35px;  " cellpadding="0" cellspacing="0" role="none">
-                            <tr>
-                                <td class="sm-py-3 sm-px-2" style="width:100%; padding: 12px">
-                                    <table class="sm-w-full"  border="2"
-                                        style=" margin-top: 16px; width:700px; margin-left:-12px; background-color: #fff; height: 150px"
-                                        cellpadding="0" cellspacing="0" role="none">
-                                        <tr
-                                            style=" width: 100%; float: left; ">
-                                            <td border="2"
-                                                style="display: float width: 50%;">
-                                                <p style="font-size: 20px; font-weight: 600; color: #000">PAYSLIP <span
-                                                        style="font-weight: 400; color: #6b7280"> MAR 2023</span></p>
-                                                <p style="font-size: 12px; color: #000; height: 4px; margin-top:20px;  ">
-                                                    {{ $client_details[0]['client_fullname'] }}</p>
-                                                <p
-                                                    style="width: 300px; font-size: 12px; color: #000; height: 24px">
-                                                    REGISTERED ADDRESS:
-                                                    {{ $client_details[0]['address'] }}</p>
-                                            </td>
-                                            <td style=" width:50%; " border="2">
-                                                {{-- <p style="color:black; float: right !important; ">text right</p> --}}
-                                                <img src='{{ $client_details[0]['client_logo'] }}' width="100" alt
-                                                    style="max-width: 100%; margin-left:40px; line-height: 1; border: 0; width: 300px; margin-top:25px; height:100px">
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr style="display: float justify-content: center; width: 100% ;">
-                                <td style="margin-left: 50px; width: 100%">
-                                    <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 100%"
-                                        cellpadding="0" cellspacing="0" role="none">
-                                        <tr style="width: 100%;">
-                                            <td style="width: 100%;">
-                                                <p
-                                                    style="position: relative; font-weight: 700; color: #000 ;  margin-top:50px">
-                                                    Employee Name : {{ $personal_details[0]['name'] }}</p>
-                                                <table border="1" style="border-color: #000; width: 100%"
-                                                    cellpadding="0" cellspacing="0" role="none">
 
-                                                </table>
-                                                <table style="height: 16px; width: 100%" cellpadding="0" cellspacing="0"
-                                                    role="none">
-                                                    <tr style="height: 16px; width: 100%;">
-                                                        <td style="width: 25%">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280">
-                                                                Employee Code</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000; font-size: 14px; ">
-                                                                {{ $personal_details[0]['user_code'] }}</p>
-                                                        </td>
-                                                        <td style="height: 16px;width: 25%">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280; ">
-                                                                Date Joined</p>
-                                                            <p
-                                                                style="display: float border-width: 1px; font-size: 14px;  border-color: #000; font-weight: 600; color: #000">
-                                                                {{ $personal_details[0]['doj'] }}</p>
-                                                        </td>
-                                                        <td style="width: 25%">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                Department</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000;  font-size: 13px;">
-                                                                {{ $personal_details[0]['department_name'] }}</p>
-                                                        </td>
-                                                        <td style="height: 16px;width: 25%">
-                                                            <p
-                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280">
-                                                                Sub Department</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000;  font-size: 13px;">
-                                                                -</p>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table border="1" style="border-color: #f3f4f6; width: 100%"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                    <tr>
-                                                    </tr>
-                                                </table>
-                                                <table style="width: 100%;" cellpadding="0" cellspacing="0"
-                                                    role="none">
-                                                    <tr style="width: 100%;">
-                                                        <td class="" style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 13px; color: #6b7280;">
-                                                                Designation</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000; font-size: 13px; ">
-                                                                {{ $personal_details[0]['designation'] }}</p>
-                                                        </td>
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                Payment Mode</p>
-                                                            <p
-                                                                style="display: float border-width: 1px; font-size: 13px; border-color: #000; font-weight: 600; color: #000;">
-                                                                -</p>
-                                                        </td>
+<body>
+    <table style="width: 100%;  border-collapse: collapse; background:#fff; ">
+            <tr>
+                <td colspan="3" >
+                    <h3 style="color:#000; ">PAYSLIP <span style="color:gray; font-weight:500;   font-family: 'Poppins', sans-serif !important;">MAR 2023</span></h3>
+                    <p style="color:#000;font-size:10px;">ARHA MEDIA & BROADCASTING PVT. LTD. </p>
+                    <p style="color:#000; font-size:9px;width:220px;line-height:16px ">REGISTERED ADDRESS: 4TH FLOOR, 8-2-337,
+                        ROAD NO. 3, BANJARA HILLS,
+                        HYDERABAD TELANGANA 500034 </p>
+                </td>
+                <td colspan="1" style=""> 
+                    <img src="https://www.w3schools.com/images/lamp.jpg" style="margin-top:40px; " width="160px" height="60px"  >
+                </td>
+            </tr>
+        <tr class="td"  style="height:20px; marign:0px;" >
+            <td colspan="4" class="td"  border="2" style="marign:0px;">
+                <h5 style="font-size: 12px; margin-bottom:2px ">SWATHI BALASUBRAMANIAN</h5>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"> 
+                <table border="1" style="width:100%;border-collapse: collapse; border-color:black"></table>
+            </td>
+        </tr>
+        <tr class="td" style="height: 30px">
+            <td class=" " style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray;">Employee Number</p>
+                <p style="font-size:11px; margin-top:-8px">AMBPL-280</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Date Joined</p>
+                <p style="font-size:11px; margin-top:-8px">03 Oct 2022</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Department</p>
+                <p style="font-size:11px; margin-top:-8px">Marketing</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Sub Department</p>
+                <p style="font-size:11px; margin-top:-8px">Content Marketing</p>
+            </td>
 
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                Bank</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000; font-size: 13px;">
-                                                                {{ $personal_details[0]['bank_name'] }}</p>
-                                                        </td>
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                Bank IFSC</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000;  font-size: 13px;">
-                                                                {{ $personal_details[0]['bank_ifsc_code'] }}</p>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table border="1" style="border-color: #f3f4f6; width: 100%;"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                    <tr>
-                                                    </tr>
-                                                </table>
-                                                <table style="width: 100%;" cellpadding="0" cellspacing="0"
-                                                    role="none">
-                                                    <tr style="width: 100%;">
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                Bank Account</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; color: #000; font-size: 13px;">
-                                                                {{ $personal_details[0]['bank_account_number'] }}</p>
-                                                        </td>
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                PAN</p>
-                                                            <p
-                                                                style="display: float font-size: 13px; border-width: 1px; border-color: #000; font-weight: 600; color: #000;">
-                                                                {{ $personal_details[0]['pan_number'] }}</p>
-                                                        </td>
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                UAN</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; font-size: 13px; color: #000;">
-                                                                {{ $personal_details[0]['uan_number'] }}</p>
-                                                        </td>
-                                                        <td style=" width:25%; padding:4px;">
-                                                            <p
-                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                PF Number</p>
-                                                            <p
-                                                                style="display: float font-weight: 600; font-size: 13px; color: #000;">
-                                                                {{ $personal_details[0]['epf_number'] }}</p>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table border="1" style="border-color: #000; width: 100%"
-                                                    cellpadding="0" cellspacing="0" role="none">
+        </tr>
+        <tr class="td" style="height: 30px">
+            <td class=" " style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray;">Designation </p>
+                <p style="font-size:11px; margin-top:-8px">AMBPL-280</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Date Joined</p>
+                <p style="font-size:11px; margin-top:-8px">03 Oct 2022</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Department</p>
+                <p style="font-size:11px; margin-top:-8px">Marketing</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Sub Department</p>
+                <p style="font-size:11px; margin-top:-8px">Content Marketing</p>
+            </td>
 
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table class="sm-w-full" style="margin-right: auto; width: 95%; margin-left: 50px"
-                                        cellpadding="0" cellspacing="0" role="none">
-                                        <tr>
-                                            <td>
-                                                <p style="height:20px; font-weight: 700; color: #000; margin-top:50px">
-                                                    SALARY DETAILS</p>
-                                                <table border="1" style="border-color: #000; width: 100%"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                </table>
-                                                <table style="width: 100%;" cellpadding="0" cellspacing="0"
-                                                    role="none">
-                                                    <tr style="width: 100%;">
-                                                        <td>
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                ACTUAL PAYABLE DAYS</p>
-                                                            <p style="display: float font-weight: 600; color: #000;">
-                                                                {{ $salary_details[0]['month_days'] }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                TOTAL WORKING DAYS</p>
-                                                            <p
-                                                                style="display: float border-width: 1px; border-color: #000; font-weight: 600; color: #000;">
-                                                                {{ $salary_details[0]['worked_Days'] }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p
-                                                                style="display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                LOSS OF PAY DAYS</p>
-                                                            <p style="display: float font-weight: 600; color: #000;">
-                                                                {{ $salary_details[0]['lop'] }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p
-                                                                style="margin-bottom: 0; display: float height: 8px; font-size: 14px; color: #6b7280;">
-                                                                DAYS PAYABLE</p>
-                                                            <p style="display: float font-weight: 600; color: #000;">
-                                                                {{ $salary_details[0]['worked_Days'] }}</p>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table border="1" style="border-color: #f3f4f6; width: 100%;"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                    <tr>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="display: float width: 100%; justify-content: center;">
-                                                <table style="height: 20px; width: 50%" cellpadding="0"
-                                                    cellspacing="0" role="none">
-                                                    <tr style="height: 1px">
-                                                        <td>
-                                                            <p style="height: 1px; font-weight: 700; color: #000;">
-                                                                EARNINGS</p>
-                                                        </td>
-                                                    </tr>
-                                                    @foreach ($earnings[0] as $key => $single_data)
-                                                    @if ($key == "Total_Earnings")
-                                                    <tr style="height: 2px ">
-                                                        <td style="">
-                                                            <p style="height: 2px; font-weight: 700; color: #000;">
-                                                                {{ str_replace('_', ' ', $key) }}</p>
-                                                        </td>
-                                                        <td class=""
-                                                            style="display: float justify-content:center; align-items:center">
-                                                            <p
-                                                                style="height: 2px; font-weight: 700; color: #000;text-align: center;">
-                                                                {{ $single_data }}</p>
-                                                        </td>
-                                                    </tr>
+        </tr>
+        <tr class="td" style="height: 30px">
+            <td class=" " style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray;">Employee Number</p>
+                <p style="font-size:11px; margin-top:-8px">AMBPL-280</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Date Joined</p>
+                <p style="font-size:11px; margin-top:-8px">03 Oct 2022</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Department</p>
+                <p style="font-size:11px; margin-top:-8px">Marketing</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Sub Department</p>
+                <p style="font-size:11px; margin-top:-8px">Content Marketing</p>
+            </td>
 
-                                                    @else
-                                                    <tr style="height: 2px ">
-                                                        <td style="">
-                                                            <p style="height: 2px; color: #000;">
-                                                                {{ str_replace('_', ' ', $key) }}</p>
-                                                        </td>
-                                                        <td class=""
-                                                            style="display: float justify-content:center; align-items:center">
-                                                            <p
-                                                                style="height: 2px; color: #000;text-align: center;">
-                                                                {{ $single_data }}</p>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
+        </tr>
+        <tr>
+            <td colspan="4"> 
+                <table border="0.5" style="width:100%;border-collapse: collapse; border-color:black"></table>
+            </td>
+        </tr>
+        <tr class="td"  style="height:20px; marign:0px;">
+            <td colspan="4" class="td"  border="2" style="marign:0px;padding-top:20px">
+                <p style="font-size: 12px; margin-bottom:2px ">SALARY DETAILS</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"> 
+                <table border="0.5" style="width:100%;border-collapse: collapse; border-color:black"></table>
+            </td>
+        </tr>
+        <tr class="td" style="height: 30px">
+            <td class=" " style="height: 30px;width:25%;">
+                <p style="font-size:10px;color:gray;">Employee Number</p>
+                <p style="font-size:11px; margin-top:-8px">AMBPL-280</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Date Joined</p>
+                <p style="font-size:11px; margin-top:-8px">03 Oct 2022</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Department</p>
+                <p style="font-size:11px; margin-top:-8px">Marketing</p>
+            </td>
+            <td style="width:25%;">
+                <p style="font-size:10px;color:gray;">Sub Department</p>
+                <p style="font-size:11px; margin-top:-8px">Content Marketing</p>
+            </td>
 
-                                                    @endforeach
+        </tr>
+        <tr>
+            <td colspan="4" >
+                    <table  style="width:100%;border-collapse: collapse; border-bottom: 0.4px solid rgba(128, 128, 128, 0.603);  "></table>
+            </td>
+        </tr>
+        <tr style="width: 100%;">
+            <td colspan="2" style=""  >
+                <table style="width: 100%; margin-top:0%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); padding-right:8px;" >
+                    <tr style="height: 12px">
+                        <td colspan="2" style="height: 12px">
+                            <h1 style="font-size:10px; ">EARNINGS</h1>
+                        </td>
+                    </tr>
+                    <tr style="height: 12px; ">
+                        <td style="height: 12px;">
+                            <p style="font-size:10px;margin-top:-4px; ">Basic </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right;margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
 
-                                                </table>
-                                                <table border="1"
-                                                    style="border-color: #f3f4f6; width:1px; height:40vh; marign-left:30px !important;"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                </table>
-                                                <table style="height: 20px; width: 50%; padding-left:10px;"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                    <tr style="height: 2px">
-                                                        <td>
-                                                            <p style="height: 2px; font-weight: 700; color: #000;">
-                                                                CONTRIBUTIONS</p>
-                                                        </td>
-                                                    </tr>
-                                                    @foreach ($contribution[0] as $key => $single_data)
-                                                        @if ($key == 'Total_Contribution')
-                                                            <tr style="height: 2px;">
-                                                                <td style="margin-top:-20px">
-                                                                    <p
-                                                                        style="height: 2px; font-weight: 700; color: #000;">
-                                                                        {{ str_replace('_', ' ', $key) }}</p>
-                                                                </td>
-                                                                <td>
-                                                                    <p
-                                                                        style="height: 2px; font-weight: 700; color: #000;">
-                                                                        {{ $single_data }}</p>
-                                                                </td>
-                                                            </tr>
-                                                        @else
-                                                            <tr style="height: 2px;">
-                                                                <td style="margin-top:-20px">
-                                                                    <p style="height: 2px; color: #000;">
-                                                                        {{ str_replace('_', ' ', $key) }}</p>
-                                                                </td>
-                                                                <td>
-                                                                    <p style="height: 2px; color: #000;">
-                                                                        {{ $single_data }}</p>
-                                                                </td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-
-                                                    <tr style="height: 2px;">
-                                                        <td>
-                                                            <p style="height: 2px; font-weight: 700; color: #000">TAXES & DEDUCTIONS</p>
-                                                        </td>
-                                                    </tr>
-                                                    @foreach ($Tax_Deduction[0] as $key => $single_data)
-                                                    @if ($key == "Total_Deduction")
-                                                    <tr style="height: 2px;">
-                                                        <td>
-                                                            <p style="height: 2px; font-weight: 700; color: #000;">
-                                                                {{ str_replace('_', ' ', $key) }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p style="height: 2px; font-weight: 700; color: #000;">
-                                                                {{ $single_data }}</p>
-                                                        </td>
-                                                    </tr>
-                                                    @else
-                                                    <tr style="height: 2px;">
-                                                        <td>
-                                                            <p style="height: 2px; color: #000;">
-                                                                {{ str_replace('_', ' ', $key) }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <p style="height: 2px; color: #000;">
-                                                                {{ $single_data }}</p>
-                                                        </td>
-                                                    </tr>
-                                                    @endif
-
-                                                    @endforeach
-                                                </table>
-                                            </td>
-                                            <td> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table border="1" style="border-color: #000; width: 100%"
-                                                    cellpadding="0" cellspacing="0" role="none">
-                                                </table>
-
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr style="height: 100px">
-                                <td style="width: 100%;">
-                                    <table style="width: 100%;" cellpadding="0" cellspacing="0" role="none">
-                                        <tr
-                                            style="margin-left: 45px; display: float; width: 100%; justify-content: center">
-                                            <td style="width: 40%">
-                                                <p style="height: 16px; color: #000">Net Salary Payable ( A - B - C )
-                                                </p>
-                                                <p style="height: 8px; color: #000;">Net Salary in words</p>
-                                            </td>
-                                            <td style="width: 70%">
-                                                <p style="height: 16px; color: #000;">
-                                                    {{ $over_all[0]['Net_Salary_Payable'] }}</p>
-                                                <p style="height: 16px; font-weight: 700; color: #000;">
-                                                    {{ $over_all[0]['Net_Salary_in_words'] }}</p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr style="height: 100px; width: 100%">
-                                <td style="display: float width: 60%; justify-content: center">
-                                    <p style="color: #000;"> <span style="font-weight: 700;">**Note :</span> All
-                                        amounts displayed in this payslip are in <span
-                                            style="font-weight: 700;">INR</span> </p>
-                                </td>
-                                <td style="display: float width: 65%; justify-content: flex-start">
-                                    <p style="margin-left: 56px; color: #000">*This is computer generated statement,
-                                        does not require signature.</p>
-                                </td>
-                            </tr>
-                            <tr style="height: 100px; width: 100%;"> </tr>
-                            <tr style="height: 100px;">
-                                <td> </td>
-                            </tr>
-                        </table>
+                    <tr style="marign-top:-20px;">
+                        <td>
+                            <p  style="font-size:10px;margin-top:-4px;">HRA  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right;margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p  style="font-size:10px; margin-top:-4px;">Conveyance Allowance  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p  style="font-size:10px; margin-top:-4px;">Special Allowance  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p  style="font-size:10px; margin-top:-4px;">Educational Allowance  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <td>
+                        <p  style="font-size:10px; margin-top:-4px;">200.00Bonus </p>
+                    </td>
+                    <td>
+                        <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
                     </td>
                 </tr>
-            </table>
-        </div>
-    </div>
+                <tr>
+                    <td>
+                        <h1  style="font-size:10px; margin-top:-4px;">Total Earnings (A)</h1>
+                    </td>
+                    <td>
+                        <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                    </td>
+                </tr>
+                </table>
+            </td>
+            <td colspan="2" style="padding:0px">
+                <table style="width: 100%;" >
+                    <tr style="height: 12px">
+                        <td colspan="2" style="height: 12px">
+                            <h1 style="font-size:10px;">CONTRIBUTIONS</h1>
+                        </td>
+                    </tr>
+                    <tr style="height: 12px">
+                        <td style="height: 12px">
+                            <p style="font-size:10px; margin-top:-4px;">PF Employee </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p  style="font-size:10px; margin-top:-4px;">Total Contributions (B)  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h1  style="font-size:10px; margin-top:-4px;">TAXES & DEDUCTIONS  </h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p  style="font-size:10px; margin-top:-4px;">Total Contributions (B)  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p  style="font-size:10px; margin-top:-4px;">Total Contributions (B)  </p>
+                        </td>
+                        <td>
+                            <p style="font-size:10px; float: right; margin-top:-4px;">22,084.00</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"> 
+                <table border="1" style="width:100%;border-collapse: collapse; border-color:black"></table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                <p style="font-size:12px">Net Salary Payable ( A - B - C )</p>
+            </td>
+            <td colspan="4">
+                <p style="font-size:12px; margin-left:110px;">40,359.00</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                <p style="font-size:12px">Net Salary in words</p>
+
+            </td>
+            <td colspan="3">
+                <h1 style="font-size:12px; margin-left:110px;">Forty Thousand Three Hundred and Fifty Nine only</h1>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p style="font-size: 12px;">**Note : All amounts displayed in this payslip are in INR</p>
+            </td>
+       
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p style="font-size: 10px; margin-top:40px">*This is computer generated statement, does not require signature</p>
+            </td>
+        </tr>
+
+
+    </table>
+
 </body>
+
+
+
 
 </html>
