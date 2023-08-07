@@ -17,8 +17,10 @@
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.lc_status.includes('Approved')"> {{source.checkin_time}} </p>
-                    <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
+                    <p v-if="source.lc_status.includes('Approved')"> {{ source.checkin_time }} </p>
+                    <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
+                        class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                        v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
 
             </div>
@@ -29,8 +31,10 @@
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.mip_status.includes('Approved')"> {{source.checkin_time}} </p>
-                    <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id="" v-model="useTimesheet.AttendanceLateOrMipRegularization">
+                    <p v-if="source.mip_status.includes('Approved')"> {{ source.checkin_time }} </p>
+                    <input v-else placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
+                        class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                        v-model="useTimesheet.AttendanceLateOrMipRegularization">
                 </div>
             </div>
         </div>
@@ -42,8 +46,10 @@
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.eg_status.includes('Approved')"> {{source.checkout_time}} </p>
-                    <input v-else placeholder="format-06:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400  w-full"  name="" id="" v-model="useTimesheet.AttendanceEarylOrMopRegularization">
+                    <p v-if="source.eg_status.includes('Approved')"> {{ source.checkout_time }} </p>
+                    <input v-else placeholder="format-06:30:00" type="time" @keypress="isNumber($event)"
+                        class="border-1 p-1.5 rounded-lg border-gray-400  w-full" name="" id=""
+                        v-model="useTimesheet.AttendanceEarylOrMopRegularization">
                 </div>
             </div>
         </div>
@@ -53,8 +59,10 @@
                         as</label>
                 </div>
                 <div class="col-6">
-                    <p v-if="source.mop_status.includes('Approved')"> {{source.checkout_time}} </p>
-                    <input placeholder="format-06:30:00" type="time" @keypress="isNumber($event)" class="border-1 p-1.5 rounded-lg border-gray-400  w-full"  name="" id="" v-model="useTimesheet.AttendanceEarylOrMopRegularization">
+                    <p v-if="source.mop_status.includes('Approved')"> {{ source.checkout_time }} </p>
+                    <input v-else placeholder="format-06:30:00" type="time" @keypress="isNumber($event)"
+                        class="border-1 p-1.5 rounded-lg border-gray-400  w-full" name="" id=""
+                        v-model="useTimesheet.AttendanceEarylOrMopRegularization">
                 </div>
             </div>
         </div>
@@ -102,7 +110,9 @@
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
             <div class="col-6">
-                <p class="max-w-min ml-3 p-1" :class="findStatus(source.lc_status)"> {{ source.lc_status }}</p>
+                <p v-if="source.lc_status.includes('None')" class="max-w-min ml-3 p-1"
+                    :class="findStatus(source.lc_status)">-</p>
+                <p v-else class="max-w-min ml-3 p-1" :class="findStatus(source.lc_status)"> {{ source.lc_status }}</p>
             </div>
         </div>
         <div v-if="type == 'LC'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
@@ -156,7 +166,9 @@
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
             <div class="col-6">
-                <p class="p-1 ml-3 min-w-max" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
+                <p v-if="source.mip_status.includes('None')" class="p-1 ml-3 min-w-max"
+                    :class="findStatus(source.mip_status)"> - </p>
+                <p v-else class="p-1 ml-3 min-w-max" :class="findStatus(source.mip_status)"> {{ source.mip_status }}</p>
             </div>
         </div>
         <div v-if="source.mip_status == 'None'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
@@ -210,7 +222,9 @@
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
             <div class="col-6">
-                <p class="max-w-min p-1 ml-3" :class="findStatus(source.eg_status)"> {{ source.eg_status }}</p>
+                <p v-if="source.eg_status.includes('None')" class="max-w-min p-1 ml-3"
+                    :class="findStatus(source.eg_status)"> - </p>
+                <p v-else class="max-w-min p-1 ml-3" :class="findStatus(source.eg_status)"> {{ source.eg_status }}</p>
             </div>
         </div>
         <div v-if="type == 'EG'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
@@ -264,7 +278,9 @@
                 <label class="font-medium fs-6 text-gray-700">Status</label>
             </div>
             <div class="col-6" v-if="!source.mop_status == 'None'">
-                <p class="max-w-min p-1 ml-3" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
+                <p v-if="source.mop_status.includes('None')" class="max-w-min p-1 ml-3"
+                    :class="findStatus(source.mop_status)"> - </p>
+                <p v-else class="max-w-min p-1 ml-3" :class="findStatus(source.mop_status)"> {{ source.mop_status }}</p>
             </div>
         </div>
         <div v-if="type == 'MOP'" class="py-2 border-0 modal-footer" id="div_btn_applyRegularize">
@@ -308,7 +324,6 @@ const findStatus = (data) => {
             } else
                 if (data.includes('Revoked')) {
                     return ' bg-gray-50 text-gray-600  fs-6 rounded-lg'
-
                 }
 }
 
