@@ -356,7 +356,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     }
 
     const beforeYears = (value) => {
-        const newDate = subYears(value, 18);
+        const newDate = subYears(value, 10);
         return newDate;
     }
 
