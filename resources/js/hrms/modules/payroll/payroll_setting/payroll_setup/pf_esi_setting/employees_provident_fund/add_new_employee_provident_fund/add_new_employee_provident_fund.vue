@@ -22,9 +22,10 @@
 
             </div>
         </div>
-        <div class="grid grid-cols-5 gap-4">
-            <div class="col-span-2  p-3 my-1 bg-gray-100 rounded-lg shadow-md border-1">
-                <div class="mr-3">
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-6  p-3 my-1 bg-gray-100 rounded-lg shadow-md border-1">
+               <div class="grid grid-cols-12">
+                <div class="col-span-6">
                     <div class="my-1 ">
                         <h5 class="my-2 fs-6 font-semibold">EPF Number</h5>
                         <div class="flex gap-8 justify-evenly ">
@@ -44,19 +45,20 @@
                         </div>
                     </div>
                 </div>
-                <div class=" pl-4 ">
+                <div class="col-span-5 p-2 items-center justify-center my-auto">
                     <input type="checkbox" class="mr-3 rounded-sm" style="width: 18px ; height: 20px;" name="" id=""
                         >
                     <label for="" class=" text-gray-600 fs-6">Is Default</label>
-                    <p class=" text-gray-600 w-full mt-1 text-sm">
+                    <p class=" text-gray-600 w-full mt-1 text-xs font-semibold">
                         (Note: Once employees are onboarded they will be automatically enrolled in this PF scheme. Any
                         modifications to the enrolement can only be made before the start of payroll processing )
                     </p>
                 </div>
+               </div>
 
             </div>
 
-            <div class=" col-span-3 p-4 my-4  rounded-lg shadow-md border-1">
+            <div class=" col-span-6 p-4 my-4  rounded-lg shadow-md border-1">
                 <div class="mx-2 my-4 d-flex align-center">
                     <input type="checkbox" name="" id="" class="mr-4 rounded-sm" style="width: 18px ;height: 20px;">
                     <label for="" class="fs-6  text-gray-600">Employer's Contribution is included in the CTC.</label>
@@ -83,7 +85,7 @@
             <div class="col-span-2">
                 <div class="p-3 my-4 bg-gray-100 rounded-lg shadow-md border-1">
                     <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
+                        <h5 class="my-2 text-sm font-semibold">
                             Select the Rule
                         </h5>
                         <div class="flex gap-8 justify-evenly ">
@@ -93,7 +95,7 @@
                         </div>
                     </div>
                     <div class="my-4">
-                        <h5 class="my-2 text-lg font-semibold">
+                        <h5 class="my-2 text-sm font-semibold">
                             Select the Contribution Tye
                         </h5>
                         <div class="flex gap-8 justify-evenly">

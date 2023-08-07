@@ -17,7 +17,7 @@
         ><div>4</div><p class="max-[1280px]:text-[12px] max-[1280px]:text-center">Salary Structure</p></a
       >
       <a class="d-flex font-semibold fs-6  justify-content-content align-items-center max-[1280px]:flex-col" @click="activetab = 5" :class="[activetab === 5 ? 'active' : '']"
-        ><div>5</div><p class="max-[1280px]:text-[12px] max-[1280px]:text-center">Finance Setting</p> 
+        ><div>5</div><p class="max-[1280px]:text-[12px] max-[1280px]:text-center">Finance Setting</p>
       </a>
       <a class="d-flex font-semibold fs-6  justify-content-content align-items-center max-[1280px]:flex-col" @click="activetab = 6" :class="[activetab === 6 ? 'active' : '']"><div>6</div><p class="max-[1280px]:text-[12px] max-[1280px]:text-center"> Statutory Filling</p>
        </a
@@ -66,7 +66,7 @@ import salary_components from "./salary_components/salary_components.vue";
 import salart_structure from "./salary_structure/salary_structure.vue";
 import statutory_filling from "./statutory_filling/statutory_filling.vue";
 import finance_setting from "./finance_setting/finance_setting.vue";
-const activetab = ref(1);
+const activetab = ref(2);
 
 import {usePayrollMainStore} from '../../stores/payrollMainStore'
 
