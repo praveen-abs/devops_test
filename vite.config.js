@@ -40,6 +40,8 @@ export default defineConfig({
                 'resources/js/hrms/modules/Organization/manage_employee/ManageEmployee.js',
                 'resources/js/hrms/modules/Organization/Normal_Onboarding/NormalOnboarding.js',
                 'resources/js/hrms/modules/Organization/employee_docs_upload/EmployeeDocsUpload.js',
+                'resources/js/hrms/modules/Organization/QuickOnboarding/QuickOnboarding.js',
+                'resources/js/hrms/modules/Organization/BulkOnboarding/BulkOnboarding.js',
 
                 // Approval Module
                 'resources/js/hrms/modules/approvals/att_regularization/AttRegularizationApproval.js',

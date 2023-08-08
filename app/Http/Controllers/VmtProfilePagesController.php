@@ -802,14 +802,14 @@ class VmtProfilePagesController extends Controller
 
 
         try {
-
+            $user_id=User::where('user_code',$request->user_code)->first()->id;
             $doc_upload_status = array();
 
             foreach ($bulkonboard_docs as $doc_name => $doc_obj) {
 
                 $processed_doc_name = str_replace('_', ' ', $doc_name);
 
-                $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
+                $doc_upload_status[$doc_name] = $employeeService->uploadDocument($user_id, $doc_obj, $processed_doc_name);
             }
 
 
