@@ -157,11 +157,11 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                     });
                 } else
                     if (res.data.status == 'success') {
-                        data.forEach(element => {
+                        res.data.data.forEach(element => {
                             toast.add({
                                 severity: "success",
-                                summary: `${element['Employee Name']}`,
-                                detail: `${res.data.message}`,
+                                summary: `${element['Employee_Name']}`,
+                                detail: `${element.message}`,
                                 life: 3000,
                             });
                         });
