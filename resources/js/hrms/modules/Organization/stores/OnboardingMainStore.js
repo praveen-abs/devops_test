@@ -165,9 +165,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                 life: 3000,
                             });
                         });
-                         setTimeout(() => {
-                             window.location.replace('/manageEmployees')
-                         }, 4000);
+                        setTimeout(() => {
+                            window.location.replace('/manageEmployees')
+                        }, 4000);
                     }
             }).finally(() => {
             })
@@ -314,13 +314,28 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isValidAadhar = (e) => {
-        console.log(e);
-        if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(e) && !existingAadharCards.value.includes(e)) {
+        const result = splitNumberWithSpaces(e);
+        console.log(result);
+        if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(result) && !existingAadharCards.value.includes(result)) {
             return false
         } else {
             return true
         }
     }
+
+    function splitNumberWithSpaces(number) {
+        const numberString = String(number);
+        const groups = [];
+
+        for (let i = 0; i < numberString.length; i += 4) {
+            groups.push(numberString.substr(i, 4));
+        }
+
+        return groups.join(' ');
+    }
+
+
+
 
     const isAadharExists = (e) => {
         if (!existingAadharCards.value.includes(e)) {
@@ -485,7 +500,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists, isAadharExists, isExistsOrNot, isClientCodeExists,
+        isOfficialMailExists, isAadharExists, isExistsOrNot, isClientCodeExists,splitNumberWithSpaces,
 
 
 
