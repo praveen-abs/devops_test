@@ -1,12 +1,11 @@
 <template>
     <nav class="bg-gray-900  transition-all duration-700 overflow-x-scroll pt-2 h-screen" ref="content"
-        :class="[!open ? 'w-[54px] ' : 'w-56 px-2']">
-        <!-- @mouseenter="open = true, isActive = true" @mouseleave="open = false, isActive = false,subMenuDisable = false" -->
+        :class="[!open ? 'w-[54px] ' : 'w-56 px-2']" @mouseenter="open = true, isActive = true" @mouseleave="open = false, isActive = false,subMenuDisable = false">
         <div class="w-full">
             <button class="mx-4 my-3" @click="toggleSwitch">
-                <img src="../../assests/images/ABS Logo(1).png" class="px-auto h-6 w-8 animate-bounce" alt=""
+                <img src="./assests/images/ABS Logo(1).png" class="px-auto h-6 w-8 animate-bounce" alt=""
                     v-if="!isActive">
-                <img src="../../assests/images/Group 35210(1).png" class="h-6" alt="" v-if="isActive">
+                <img src="./assests/images/Group 35210(1).png" class="h-6" alt="" v-if="isActive">
             </button>
         </div>
         <template v-for="(menu, index) in menuItems" :key="index" class="relative">
