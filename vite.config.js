@@ -120,21 +120,6 @@ export default defineConfig({
                 //Investments Form Mgmt
                 'resources/js/hrms/modules/paycheck/inv_forms_mgmt/InvFormsMgmt.js',
 
-                //// Profile pages
-                // familyinfo_table_page
-                'resources/js/hrms/modules/profile_pages/employee_details/EmployeeDetails.js',
-
-                // 'resources/js/hrms/modules/profile_pages/FamilyDetails.js',
-
-                // // Experience page
-                // 'resources/js/hrms/modules/profile_pages/ExperienceDetails.js',
-
-                // // financeDetails page
-                // 'resources/js/hrms/modules/profile_pages/FinanceDetails.js',
-                // // Documents Review
-
-                // 'resources/js/hrms/modules/approvals/onboarding/review_document.js'
-
 
                 // Payslip Template
 
