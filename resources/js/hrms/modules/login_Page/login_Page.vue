@@ -74,11 +74,11 @@
 
                             <div class="mt-[14px]  d-flex justify-content-center">
                                 <div class="w-[150px] py-2 bg-[#E6E6E6] d-flex justify-content-between rounded-md">
-                                    <img src="../../assests/images/Google logo.png" alt="" class="mx-2"
+                                    <img src="../../assests/images/Google_logo.png" alt="" class="mx-2"
                                         style="width: 25px; height:25px">
-                                    <img src="../../assests/images/Linkedin logo.png" alt="" class="mx-2"
+                                    <img src="../../assests/images/Linkedin_logo.png" alt="" class="mx-2"
                                         style="width: 25px; height:25px">
-                                    <img src="../../assests/images/Microsoft logo.png" alt="" class="mx-2"
+                                    <img src="../../assests/images/Microsoft_logo.png" alt="" class="mx-2"
                                         style="width: 25px; height:25px">
                                 </div>
 
@@ -92,10 +92,10 @@
 
                                 <div class=" flex justify-center relative top-3">
                                     <div class="w-[120px]">
-                                        <img src="../../assests/images/Playstore Logo.png" class="" alt="">
+                                        <img src="../../assests/images/Playstore_Logo.png" class="" alt="">
                                     </div>
                                     <div class="w-[120px] mx-2">
-                                        <img src="../../assests/images/App Store Logo.png" class="w-full h-full" alt="">
+                                        <img src="../../assests/images/App_Store_Logo.png" class="w-full h-full" alt="">
                                     </div>
                                 </div>
                             </div>
