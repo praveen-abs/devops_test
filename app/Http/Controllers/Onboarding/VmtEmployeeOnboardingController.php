@@ -425,6 +425,7 @@ class VmtEmployeeOnboardingController extends Controller
                 array_push($onboard_data, $Emp_data);
             }
 
+            $existing_user_data = array();
             foreach ( $onboard_data  as $key => $excelRowdata) {
 
                 $user_id = User::where('user_code',  $excelRowdata['employee_code'])->first();
@@ -434,33 +435,35 @@ class VmtEmployeeOnboardingController extends Controller
 
                     $emp_data = VmtEmployee::where('userid',  $user_id);
                     $emp_office_data =VmtEmployeeOfficeDetails::where('user_id',  $user_id);
-                    $emp_fam_data =VmtEmployeeFamilyDetails::where('user_id',  $user_id);
                     $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
-                    $emp_statutory_data =VmtEmployeeStatutoryDetails::where('user_id',  $user_id);
 
-                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() && $emp_statutory_data->exists()){
+                    if($emp_data->exists() && $emp_office_data->exists() && $emp_compensatory_data->exists() ){
 
 
-                        $response = [
-                            'status' => 'failure',
-                            'message' =>$excelRowdata['employee_code'] . " Employee already added",
-                        ];
+                        $message =$excelRowdata['employee_code'] . "Employee already added" ;
 
-                        return response()->json($response);
+                        array_push($existing_user_data,$message);
+
 
 
                     }else{
-
                      $emp_data->delete();
                      $emp_office_data->delete();
-                     $emp_fam_data->delete();
                      $emp_compensatory_data->delete();
-                     $emp_statutory_data->delete();
 
                     }
 
                 }
+            }
+            if(!empty($existing_user_data))
+            {
+                $response = [
+                    'status' => 'failure',
+                    'message' =>$existing_user_data ,
+                    'data' =>""
+                ];
 
+                return response()->json($response);
             }
             // dd($onboard_data);
             foreach ($onboard_data  as $key => $excelRowdata) {
@@ -506,8 +509,7 @@ class VmtEmployeeOnboardingController extends Controller
             $status = $response['status'];
 
             if ($response['status'] == "success") {
-                $message =  $row['employee_code']  . ' added successfully';
-
+                $message =  $row['employee_code'] . ' added successfully';
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
 
@@ -519,13 +521,14 @@ class VmtEmployeeOnboardingController extends Controller
                     $mail_message = 'failure';
                 }
             } else {
-                $message =  $row['employee_code']  . ' has failed';
+                $message = $row['employee_code']  . ' has failed';
             }
             //Sending mail
 
             $rowdata_response = [
                 'status' => $status,
                 'message' => $message,
+                'Employee_Name' => $row['employee_name'],
                 'mail_status' => $mail_message ?? '',
                 'data' => $response['data']
             ];
@@ -558,7 +561,6 @@ class VmtEmployeeOnboardingController extends Controller
 
                 array_push($onboard_data, $Emp_data);
             }
-
 
             foreach ( $onboard_data  as $key => $excelRowdata) {
 
@@ -597,6 +599,7 @@ class VmtEmployeeOnboardingController extends Controller
                 }
 
             }
+
 
             foreach ($onboard_data  as $key => $excelRowdata) {
                 $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata, $employeeService);
@@ -640,7 +643,7 @@ class VmtEmployeeOnboardingController extends Controller
 
             if ($status == "success") {
 
-                $message =  $row['employee_code']  . ' added successfully';
+                $message = $row['employee_code'] . ' added successfully';
 
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
@@ -651,7 +654,7 @@ class VmtEmployeeOnboardingController extends Controller
                     $mail_message = 'failure';
                 }
             } else {
-                $message =  $row['employee_code']  . ' has failed';
+                $message =$row['employee_code']  . ' has failed';
             }
 
 
@@ -664,6 +667,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'row_number' => '',
                 'status' => $status,
                 'message' => $message,
+                'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
                 'data' => '',
             ];
