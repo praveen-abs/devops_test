@@ -29,6 +29,12 @@
         .td {
             height: 20px !important;
         }
+        .m-11 p-2{
+            margin-top:-6px !important;
+        }
+        .p-2{
+            padding:0 4px !important;
+        }
     </style>
 </head>
 
@@ -91,7 +97,7 @@
         <tr>
             <td colspan="4">
                 <table style="width: 100%;  border-collapse: collapse; " border="1" >
-                    <tr style="border-top:0px !important">
+                    <tr style="border-top:0px !important; height:20px !important;">
                         <td colspan="2" style="border-top:0px !important">
                             <p style="font-size:11px">Particulars</p>
                         </td>
@@ -105,63 +111,52 @@
                             <p style="font-size:11px">Total</p>
                         </td>
                     </tr>
-                    <tr style="border-top:0px !important ;">
+                    <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px;">Basic</p>
-                            <p style="font-size:11px;">House Rent Allowance</p>
-                            
+                            <p style="font-size:11px; " class="m-11 p-2" >Basic</p>
+                             <p style="font-size:11px; " class="m-11 p-2">Basic</p>                         
+                            <p style="font-size:11px; " class="m-11 p-2">House Rent Allowance</p>
                         </td> 
                         <td  colspan="1">
-                            <p style="font-size:11px">Actual</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">Projection</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Projection</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Actual</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">Total</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Total</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Total</p>
+                            <p style="font-size:11px; " class="m-11 p-2">Total</p>
                         </td>
                     </tr>
                     <tr style="border-top:0px !important;">
                         <td colspan="2">
-                            <p style="font-size:11px">Particulars</p>
+                            <p style="font-size:11px; marign-top:-11px">Particulars</p>
+                            <p style="font-size:11px; marign-top:-11px">Particulars</p>
+                            <p style="font-size:11px; marign-top:-11px">Particulars</p>
                         </td>
                         <td  colspan="1">
-                            <p style="font-size:11px">Actual</p>
+                            <p style="font-size:11px; marign-top:-11px">Actual</p>
+                            <p style="font-size:11px; marign-top:-11px">Actual</p>
+                            <p style="font-size:11px; marign-top:-11px">Actual</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">Projection</p>
+                            <p style="font-size:11px; marign-top:-11px">Projection</p>
+                            <p style="font-size:11px; marign-top:-11px">Projection</p>
+                            <p style="font-size:11px; marign-top:-11px">Projection</p>
                         </td>
                         <td colspan="1">
-                            <p style="font-size:11px">Total</p>
+                            <p style="font-size:11px; marign-top:-11px">Total</p>
+                            <p style="font-size:11px; marign-top:-11px">Total</p>
+                            <p style="font-size:11px; marign-top:-11px">Total</p>
+ 
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="5">
-                            <table style="width:100%;border:0px !important;  border-collapse: collapse;">
-                                <tr>
-                                    <td colspan="2">
-                                        <p style="font-size:11px"> 1 ) Gross Earnings</p>
-                                    </td>
-                                    <td colspan="1">
-                                        <p style="" ></p>
-                                    </td>
-                                    <td  colspan="1"></td>
-                                    <td  colspan="1"></td>
-                                </tr>
-                                <tr >
-                                    <td colspan="2">
-                                        <p style="font-size:11px"> Basic</p>
-                                    </td>
-                                    <td colspan="1">
-                                        <p style="font-size:11px" >₹2,16,668.00</p>
-                                    </td>
-                                    <td  colspan="1"> <p style="font-size:11px">₹4,33,336.00</p></td>
-                                    <td  colspan="1"><p style="font-size:11px">₹6,50,004.00</p></td>
-                                </tr>
-                            </table>
 
-                        </td>
-                    </tr>
 
                 </table>
             </td>
