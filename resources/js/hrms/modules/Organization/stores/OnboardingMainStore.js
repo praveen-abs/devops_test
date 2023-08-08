@@ -162,19 +162,21 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                 severity: "success",
                                 summary: `${element['Employee Name']}`,
                                 detail: `${res.data.message}`,
-                                life: 2000,
+                                life: 3000,
                             });
                         });
+                         setTimeout(() => {
+                             window.location.replace('/manageEmployees')
+                         }, 4000);
                     }
             }).finally(() => {
-
             })
         } else {
             toast.add({
                 severity: "error",
                 summary: 'Failure!',
                 detail: "Clear error fields",
-                life: 2000,
+                life: 3000,
             });
         }
     }
