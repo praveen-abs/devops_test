@@ -245,10 +245,8 @@ class VmtEmployeeService
             $newUser->password = Hash::make('Abs@123123');
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
-            $emp_client_code = preg_replace('/\d+/', '', strtoupper($data['employee_code']));
-
-            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
-
+            $emp_client_code = trim($data['legal_entity']);
+            $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
             $newUser->is_onboarded = $can_onboard_employee;
