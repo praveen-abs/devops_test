@@ -30,20 +30,20 @@
                     <div class="flex my-4">
                         <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check In Time</label>
                         </div>
-                        <span class=" p-input-icon-right">
-                            <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
-                                v-model="useTimesheet.absentRegularizationDetails.start_time" />
-                            <i class="pi pi-clock" />
-                        </span>
+                        <div class="w-6">
+                            <input placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
+                                class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                                v-model="useTimesheet.absentRegularizationDetails.start_time">
+                        </div>
                     </div>
                     <div class="flex">
                         <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Check Out Time</label>
                         </div>
-                        <span class=" p-input-icon-right">
-                            <Calendar inputId="time12" class="h-10" :timeOnly="true" hourFormat="12" icon="your-icon"
-                                v-model="useTimesheet.absentRegularizationDetails.end_time" />
-                            <i class="pi pi-clock" />
-                        </span>
+                        <div class="w-6">
+                            <input placeholder="format-09:30:00" type="time" @keypress="isNumber($event)"
+                                class="border-1 p-1.5 rounded-lg border-gray-400 w-full" name="" id=""
+                                v-model="useTimesheet.absentRegularizationDetails.end_time">
+                        </div>
                     </div>
                     <div class="flex my-4">
                         <div class="w-6"><label class="font-semibold fs-6 text-gray-700">Reason</label></div>
@@ -103,7 +103,9 @@
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkin)"></i> -->
                         <i v-if="currentlySelectedCellRecord.attendance_mode_checkin == 'Mobile'"
-                            class="fa fa-picture-o fs-6"  @click="viewSelfieImage('checkin', currentlySelectedCellRecord.selfie_checkin)" aria-hidden="true"></i>
+                            class="fa fa-picture-o fs-6"
+                            @click="viewSelfieImage('checkin', currentlySelectedCellRecord.selfie_checkin)"
+                            aria-hidden="true"></i>
                     </p>
 
                 </div>
@@ -136,7 +138,8 @@
                     <p class="font-semibold fs-6">:</p>
                     <p class="font-semibold fs-6">{{ currentlySelectedCellRecord.attendance_mode_checkout }}
                         <i v-if="currentlySelectedCellRecord.attendance_mode_checkout == 'Mobile'"
-                            class="fa fa-picture-o fs-6" aria-hidden="true"  @click="viewSelfieImage('checkout',currentlySelectedCellRecord.selfie_checkout)"></i>
+                            class="fa fa-picture-o fs-6" aria-hidden="true"
+                            @click="viewSelfieImage('checkout', currentlySelectedCellRecord.selfie_checkout)"></i>
 
                         <!-- <i class="text-green-800 font-semibold text-sm mx-2"
                             :class="findAttendanceMode(currentlySelectedCellRecord.attendance_mode_checkout)"></i> -->
@@ -380,16 +383,16 @@ const visibleRight = ref(false)
 
 
 
-const viewSelfieImage = (isSelected ,selectedCells) => {
+const viewSelfieImage = (isSelected, selectedCells) => {
     useTimesheet.dialog_Selfie = true
-    if(isSelected == 'checkin'){
-        useTimesheet.selfieDetails =  selectedCells
-    }else
-    if(isSelected == 'checkout'){
-        useTimesheet.selfieDetails =   selectedCells
-    }else{
-        useTimesheet.selfieDetails =  ''
-    }
+    if (isSelected == 'checkin') {
+        useTimesheet.selfieDetails = selectedCells
+    } else
+        if (isSelected == 'checkout') {
+            useTimesheet.selfieDetails = selectedCells
+        } else {
+            useTimesheet.selfieDetails = ''
+        }
 
 }
 
@@ -848,10 +851,11 @@ const getSession = (time) => {
     return timeFormat
 };
 
-const isAbesent = (date) => {
-
+const isNumber = (e) => {
+    let char = String.fromCharCode(e.keyCode); // Get the character
+    if (/^[0-9:]+$/.test(char)) return true; // Match with regex
+    else e.preventDefault(); // If not match, don't add to input text
 }
-
 
 /**
  * Validates a day to check if event start date is current calendar date or not

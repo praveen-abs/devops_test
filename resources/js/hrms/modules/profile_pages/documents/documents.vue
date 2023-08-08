@@ -1,8 +1,7 @@
 <template>
     <div class="card "  >
-
         <div class="w-full">
-        <DataTable ref="dt" :value="EmployeeDocumentManagerService.getEmployeeDoc" dataKey="id" :paginator="true"
+        <DataTable ref="dt" :value="usedata.employeeDetails.employee_documents "   dataKey="id" :paginator="true"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]" :rows="5"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Records" responsiveLayout="scroll">
@@ -14,15 +13,14 @@
             <Column field="status" header="status" style="min-width: 12rem">
                 <template #body="slotProps">
 
-                    <div v-if="slotProps.data.status === 'Pending'">
-
-                        <p class=" text-orange-500 font-semibold fs-5">Pending</p>
+                    <div v-if="slotProps.data.status === 'Pending'" class=" w-100 flex justify-center">
+                        <p class="px-2 py-1 w-[80px] rounded-md bg-yellow-400 text-white font-semibold text-[12px] ">Pending</p>
                     </div>
-                    <div v-if="slotProps.data.status === 'Approved'">
-                        <p class="text-green-600 font-semibold fs-5">Approved</p>
+                    <div v-if="slotProps.data.status === 'Approved'" class="flex justify-center">
+                        <p class="px-2 py-1 w-[80px] rounded-md text-white bg-green-500 font-semibold text-[12px] ">Approved</p>
                     </div>
-                    <div v-if="slotProps.data.status === 'Rejected'">
-                        <p class="text-red-600 font-semibold fs-5">Rejected</p>
+                    <div v-if="slotProps.data.status === 'Rejected'" class="flex justify-center">
+                        <p class=" px-2 py-1 w-[80px] rounded-md bg-red-600 text-white p-2 font-semibold text-[12px] ">Rejected</p>
                     </div>
                     <div v-if="slotProps.data.status === null">
                         <p class="text-green-600 font-semibold">-</p>
@@ -94,8 +92,7 @@
 
     </div>
     </div>
-
-
+<!-- {{ EmployeeDocumentManagerService.getEmployeeDetails }} -->
 
 </template>
 
@@ -103,15 +100,24 @@
 import { ref, reactive, onMounted } from "vue";
 import axios from "axios";
 import { useToast } from "primevue/usetoast";
-import { UseEmployeeDocumentManagerService } from '../EmployeeDocumentsManagerService'
+import { UseEmployeeDocumentManagerService } from '../EmployeeDocumentsManagerService';
+import { profilePagesStore } from "../stores/ProfilePagesStore";
+
+const EmployeeDoc = ref([]) ;
 
 onMounted(() => {
     EmployeeDocumentManagerService.fetch_EmployeeDocument();
     console.log(" ", view_document.value);
+
+    console.log("employeeDetails employee_documents " ,usedata.employeeDetails.employee_documents);
+    EmployeeDoc.value  = usedata;
 })
 
+let usedata = profilePagesStore();
 // Stores
 const EmployeeDocumentManagerService = UseEmployeeDocumentManagerService();
+
+
 
 // Loading
 const toast = useToast();
@@ -136,7 +142,7 @@ const showDocument = (document) => {
     visible.value = true
     EmployeeDocumentManagerService.loading = true;
     axios.post('/view-profile-private-file', {
-        user_code: EmployeeDocumentManagerService.getEmployeeDetails.current_user_code,
+        user_code: usedata.user_code,
         document_name: document.document_name
     }).then(res => {
         documentPath.value = res.data.data
@@ -145,6 +151,23 @@ const showDocument = (document) => {
         EmployeeDocumentManagerService.loading = false;
     })
 }
+
+const getSeverity = (status) => {
+    switch (status) {
+        case 'Rejected':
+            return 'danger';
+
+        case 'Approved':
+            return 'success';
+
+
+        case 'Pending':
+            return 'warning';
+
+    }
+};
+
+const statuses = ref(["Pending", "Approved", "Rejected"]);
 
 
 const getFileName = (filename) => {
@@ -160,6 +183,7 @@ const uploadDocument = (e) => {
         // Get file size
         // Print to console
         formdata.append(`${fileName.value}`, uploadDocs.value);
+        formdata.append('user_code',usedata.employeeDetails.user_code);
 
         console.log(formdata);
         // console.log("testing", fileName.value);
@@ -218,6 +242,7 @@ async function submitEmployeeDocsUpload() {
                 }
             })
             .finally(() => {
+                usedata.fetchEmployeeDetails();
                 EmployeeDocumentManagerService.fetch_EmployeeDocument();
                 EmployeeDocumentManagerService.loading = false ;
             });
