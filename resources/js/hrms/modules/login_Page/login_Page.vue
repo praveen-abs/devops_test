@@ -20,27 +20,42 @@
             <div class="lg:w-1/2 xl:w-5/12  sm:p-12  w-[100%] float-right h-[100vh]">
                 <div class=" w-100 d-flex justify-content-center  flex-col align-items-center ">
                     <div class="flex flex-col items-center">
-                        <img src="../../assests/images/evangelist.png" class="w-[200px] mx-auto" />
+                        <img src="../../assests/images/evangelist.png" class="w-[150px] mx-auto" />
                     </div>
                     <div
                         class="flex-1 w-[400px] h-[480px] mt-[30px] d-flex justify-content-center align-item-center flex-col">
-                        <h1 class="text-[18px] font-medium float-left font-['Poppins']">Login to run your business together
+                        <h1 class="text-[16px] font-medium text-center font-['Poppins']">Login to run your business together
                         </h1>
-                        <div class="w-full mt-[20px]">
+                        <div class="w-full mt-[30px]">
                             <div class="">
                                 <span class="p-float-label">
                                     <InputText id="username" v-model="name" class="w-full !rounded-[20px]" />
-                                    <label for="username" class="pl-[12px] text-blue-800 font-['Poppins']">Username</label>
+                                    <label for="username" class="pl-[18] text-blue-800 font-['Poppins'] flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" class="w-6 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                        <p class="px-2">Username</p>
+                                    </label>
                                 </span>
                             </div>
                             <div class="w-full mt-[24px]">
                                 <span class="p-float-label">
                                     <Password v-model="value" toggleMask />
-                                    <label for="username" class="pl-[12px] text-blue-800 font-['Poppins']">password</label>
+                                    <label for="username"
+                                        class="pl-[18] text-blue-800 font-['Poppins'] cursor-pointer flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" class="w-6 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                        </svg>
+                                        <p class="px-2">password</p>
+                                    </label>
                                 </span>
                                 <div class="w-full">
                                     <p
-                                        class="w-[140px] py-2 hover:text-blue-500 text-[12px] text-color[#535353] float-right font-['Poppins']  font-medium ">
+                                        class="w-[140px] py-2 hover:text-blue-500 text-[12px] text-color[#535353] cursor-pointer float-right font-['Poppins']  font-medium ">
                                         Forgot Password ?</p>
                                 </div>
 
@@ -130,7 +145,8 @@ const value = ref(null);
 .p-password-input ::placeholder
 {
     padding-left: 12px !important;
-}</style>
+}
+</style>
 
 <!-- .p-input-icon-right .pi-eye{
     padding-right: 12px;

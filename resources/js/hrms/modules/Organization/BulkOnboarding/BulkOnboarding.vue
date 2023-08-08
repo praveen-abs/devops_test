@@ -5,8 +5,8 @@
     </div>
     <Transition name="fade" v-else>
         <div class="h-screen w-full">
-            <div class="flex">
-                <div class="w-6 px-2">
+            <div class="grid grid-cols-12">
+                <div class=" col-span-5 px-2">
                     <p class="font-bold text-2xl">Employee Bulk Onboarding</p>
                     <ul class="list-disc p-2 my-3">
                         <li class="font-semibold fs-6">Download the <a href="/assets/ABSBulkOnboarding.xls"
@@ -14,7 +14,7 @@
                         </li>
                         <li class="font-semibold fs-6">Fill the information in excel template</li>
                     </ul>
-                    <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border-1 p-2  mr-3">
+                    <div class="grid grid-cols-12 divide-x-2 divide-gray-600 border-gray-500 rounded-lg border p-2  mr-3">
                         <label class="col-span-3 font-semibold fs-6  cursor-pointer w-full" for="file"><i
                                 class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
                         <span class="col-span-9 px-4">
@@ -25,7 +25,7 @@
                     <button class="btn btn-orange mt-6 float-right mx-5"
                         @click="useStore.convertExcelIntoArray('bulk')">Upload</button>
                 </div>
-                <div>
+                <div class="col-span-7  ">
                     <div class="col-form-label">
                         <!-- <p class="font-semibold fs-4"> Upload Instructions</p> -->
                         <div class="py-2  bg-red-100 rounded-lg f-12 alert-warning font-semibold fs-6"><i
@@ -126,7 +126,8 @@ const route = useRoute();
 
 
 <style>
-.page-content {
+.page-content
+{
     padding: calc(20px + 1.5rem) calc(1.5rem / 2) 50px calc(1.5rem / 2);
 }
 </style>

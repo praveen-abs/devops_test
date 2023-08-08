@@ -1,82 +1,90 @@
 <template>
-  <div>
-    <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-      :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
-      <template #header>
-        <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
-          animationDuration="2s" aria-label="Custom ProgressSpinner" />
-      </template>
-      <template #footer>
-        <h5 style="text-align: center">Please wait...</h5>
-      </template>
-    </Dialog>
-
-
     <div>
-      <DataTable :value="manageEmployeesStore.array_active_employees" :paginator="true" :rows="10" dataKey="id"
-        paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-        responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"  :rowsPerPageOptions="[5, 10, 25]"
-        v-model:filters="filters" filterDisplay="menu" :loading="canShowLoadingScreen"
-        :globalFilterFields="['emp_name', 'emp_code', 'status']">
-        <template #empty> No customers found.</template>
-        <template #loading> Loading customers data. Please wait. </template>
-        <Column class="font-bold" field="emp_name" header="Employee Name" style="min-width: 20rem; text-align: center:  !important;">
-          <template #body="slotProps"  >
-
-           <div class="d-flex justify-content-center align-items-center">
-            <p v-if="JSON.parse(slotProps.data.emp_avatar).type =='shortname'" if class="p-2 w-2 h-18 text-semibold rounded-full bg-blue-900 text-white">{{ JSON.parse(slotProps.data.emp_avatar).data }} </p>
-
-            <img v-else
-            class="rounded-circle img-md w-2  userActive-status profile-img" style="height: 30px !important;"
-            :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset="" alt="" />
-            <p class=" text-left pl-2">{{ slotProps.data.emp_name }} </p>
-           </div>
+        <Dialog header="Header" v-model:visible="canShowLoadingScreen" :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '25vw' }" :modal="true" :closable="false" :closeOnEscape="false">
+            <template #header>
+                <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(--surface-ground)"
+                    animationDuration="2s" aria-label="Custom ProgressSpinner" />
             </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
-          </template>
-        </Column>
-        <Column field="emp_code" header="Employee Code"  class="" style="min-width: 5rem !important;" >
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search" class="p-column-filter"
-              :showClear="true" />
-          </template>
-        </Column>
-        <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
-        <Column field="reporting_manager_name" header="Reporting Manager"></Column>
-        <Column field="doj" header="DOJ"  style="min-width: 10rem;">
-          <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
-        </Column>
-        <!-- <Column field="blood_group_name" header="Blood Group"></Column> -->
-        <Column field="profile_completeness" header="Profile Completeness">
-          <template #body="slotProps">
-            <!-- <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar> -->
+            <template #footer>
+                <h5 style="text-align: center">Please wait...</h5>
+            </template>
+        </Dialog>
 
-            <ProgressBar  v-if="slotProps.data.profile_completeness <=39 "
-                                :value="slotProps.data.profile_completeness" :class="[slotProps.data.profile_completeness <=39 ? 'progressbar' : '' ]" >
-                            </ProgressBar>
-                            <ProgressBar  class="progressbar_val2" v-if="slotProps.data.profile_completeness >=40 && slotProps.data.profile_completeness <=59"
-                            :class="[slotProps.data.profile_completeness >=40 &&  slotProps.data.profile_completeness <=59]"  :value="slotProps.data.profile_completeness" >
-                            </ProgressBar>
 
-                            <ProgressBar class="progressbar_val3" v-if="slotProps.data.profile_completeness >=60"
-                            :class="[slotProps.data.profile_completeness >=60]"
-                                :value="slotProps.data.profile_completeness" >
-                            </ProgressBar>
+        <div>
+            <DataTable :value="manageEmployeesStore.array_active_employees" :paginator="true" :rows="10" dataKey="id"
+                paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+                responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+                :rowsPerPageOptions="[5, 10, 25]" v-model:filters="filters" filterDisplay="menu"
+                :loading="canShowLoadingScreen" :globalFilterFields="['emp_name', 'emp_code', 'status']">
+                <template #empty> No customers found.</template>
+                <template #loading> Loading customers data. Please wait. </template>
+                <Column class="font-bold" field="emp_name" header="Employee Name"
+                    style="min-width: 20rem; text-align: center:  !important;">
+                    <template #body="slotProps">
 
-          </template>
-          <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
-        </Column>
-        <Column field="enc_user_id" header="View Profile">
-          <template #body="slotProps">
-            <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data)" class="btn btn-orange " style="height: 2em" raised />
-          </template>
-        </Column>
-      </DataTable>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <p v-if="JSON.parse(slotProps.data.emp_avatar).type == 'shortname'" if
+                                class="p-2 w-2 h-18 text-semibold rounded-full bg-blue-900 text-white">{{
+                                    JSON.parse(slotProps.data.emp_avatar).data }} </p>
 
+                            <img v-else class="rounded-circle img-md w-2  userActive-status profile-img"
+                                style="height: 30px !important;"
+                                :src="`data:image/png;base64,${JSON.parse(slotProps.data.emp_avatar).data}`" srcset=""
+                                alt="" />
+                            <p class=" text-left pl-2">{{ slotProps.data.emp_name }} </p>
+                        </div>
+                    </template>
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
+                <Column field="emp_code" header="Employee Code" class="" style="min-width: 5rem !important;">
+                    <template #filter="{ filterModel, filterCallback }">
+                        <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Search"
+                            class="p-column-filter" :showClear="true" />
+                    </template>
+                </Column>
+                <Column field="emp_designation" header="Designation" style="min-width: 15rem;"></Column>
+                <Column field="reporting_manager_name" header="Reporting Manager"></Column>
+                <Column field="doj" header="DOJ" style="min-width: 10rem;">
+                    <template #body="slotProps">{{ dayjs(slotProps.data.doj).format('DD-MMM-YYYY') }}</template>
+                </Column>
+                <!-- <Column field="blood_group_name" header="Blood Group"></Column> -->
+                <Column field="profile_completeness" header="Profile Completeness">
+                    <template #body="slotProps">
+                        <!-- <ProgressBar :value="slotProps.data.profile_completeness"></ProgressBar> -->
+
+                        <ProgressBar v-if="slotProps.data.profile_completeness <= 39"
+                            :value="slotProps.data.profile_completeness"
+                            :class="[slotProps.data.profile_completeness <= 39 ? 'progressbar' : '']">
+                        </ProgressBar>
+                        <ProgressBar class="progressbar_val2"
+                            v-if="slotProps.data.profile_completeness >= 40 && slotProps.data.profile_completeness <= 59"
+                            :class="[slotProps.data.profile_completeness >= 40 && slotProps.data.profile_completeness <= 59]"
+                            :value="slotProps.data.profile_completeness">
+                        </ProgressBar>
+
+                        <ProgressBar class="progressbar_val3" v-if="slotProps.data.profile_completeness >= 60"
+                            :class="[slotProps.data.profile_completeness >= 60]"
+                            :value="slotProps.data.profile_completeness">
+                        </ProgressBar>
+
+                    </template>
+                    <!-- <template #body="slotProps">{{ slotProps.data.profile_completeness + "%" }}</template> -->
+                </Column>
+                <Column field="enc_user_id" header="View Profile">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-eye" severity="success" label="View" @click="openProfilePage(slotProps.data)"
+                            class="btn btn-orange " style="height: 2em" raised />
+                    </template>
+                </Column>
+            </DataTable>
+
+        </div>
     </div>
-  </div>
 </template>
 <script setup>
 import dayjs from 'dayjs';
@@ -91,240 +99,38 @@ const profilePageStore = profilePagesStore()
 
 let canShowLoadingScreen = ref(true);
 
- const enc_user_id = ref();
+const enc_user_id = ref();
 
 const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  emp_name: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
-  emp_code: {
-    value: null,
-    matchMode: FilterMatchMode.STARTS_WITH,
-    matchMode: FilterMatchMode.EQUALS,
-    matchMode: FilterMatchMode.CONTAINS,
-  },
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    emp_name: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
+    emp_code: {
+        value: null,
+        matchMode: FilterMatchMode.STARTS_WITH,
+        matchMode: FilterMatchMode.EQUALS,
+        matchMode: FilterMatchMode.CONTAINS,
+    },
 
-  status: { value: null, matchMode: FilterMatchMode.EQUALS },
+    status: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
 
 onMounted(async () => {
-  await manageEmployeesStore.getActiveEmployees();
-  canShowLoadingScreen.value = false;
+    await manageEmployeesStore.getActiveEmployees();
+    canShowLoadingScreen.value = false;
 
 });
 
-async function openProfilePage(uid){
+async function openProfilePage(uid) {
     console.log(uid);
     enc_user_id.value = uid.data;
     profilePageStore.user_code = uid.enc_user_id
-    window.location.href = "/pages-profile-new?uid="+uid.enc_user_id;
+    window.location.href = "/pages-profile-new?uid=" + uid.enc_user_id;
 }
 
 </script>
-<style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,200&display=swap");
-
-.p-datatable .p-datatable-thead>tr>th {
-  text-align: center;
-  padding: 1.3rem 1rem;
-  border: 1px solid #dee2e6;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-width: 0 0 1px 0;
-  font-weight: 600;
-  color: #fff;
-  background: #003056;
-  transition: box-shadow 0.2s;
-  font-size: 13px;
-
-  .p-column-title {
-    font-size: 13px;
-  }
-
-  .p-column-filter {
-    width: 100%;
-  }
-
-  #pv_id_2 {
-    height: 30px;
-  }
-
-  .p-fluid .p-dropdown .p-dropdown-label {
-    margin-top: -10px;
-  }
-
-  .p-dropdown .p-dropdown-label.p-placeholder {
-    margin-top: -12px;
-  }
-
-  .p-column-filter-menu-button {
-    color: white;
-    margin-left: 10px;
-  }
-
-  .p-column-filter-menu-button:hover {
-    color: white;
-    border-color: transparent;
-    background: #023e70;
-  }
-}
-
-.p-column-filter-overlay-menu .p-column-filter-constraint .p-column-filter-matchmode-dropdown {
-  margin-bottom: 0.5rem;
-  visibility: hidden;
-  position: absolute;
-}
-
-.p-button .p-component .p-button-sm {
-  background-color: #003056;
-}
-
-.p-datatable .p-datatable-tbody>tr {
-  font-size: 13px;
-
-  .employee_name {
-    font-weight: bold;
-    font-size: 13.5px;
-  }
-}
-
-.p-datatable .p-datatable-tbody>tr>td {
-  text-align: left;
-  border: 1px solid #dee2e6;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-width: 0 0 1px 0;
-  padding: 1rem 0.6rem;
-}
-
-.p-datatable .p-datatable-tbody>tr>td:nth-child(1) {
-  width: 20%;
-}
-
-//   .main-content {
-//     width: 110%;
-//   }
-
-.pending {
-  font-weight: 700;
-}
-
-.approved {
-  font-weight: 700;
-}
-
-.p-button.p-component.p-button-success.Button {
-  padding: 8px;
-}
-
-.rejected {
-  font-weight: 700;
-  color: #ff2634;
-}
-
-.p-button.p-component.p-button-danger.Button {
-  padding: 8px;
-}
-
-.p-confirm-dialog-icon.pi.pi-exclamation-triangle {
-  color: red;
-}
-
-.p-button.p-component.p-confirm-dialog-accept {
-  background-color: #003056;
-}
-
-.p-button.p-component.p-confirm-dialog-reject.p-button-text {
-  color: #003056;
-}
-
-.p-column-filter-overlay-menu .p-column-filter-buttonbar {
-  padding: 1.25rem;
-  position: absolute;
-  visibility: hidden;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter-menu-button {
-  color: white;
-  border-color: transparent;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-open {
-  background: none;
-}
-
-.p-column-filter-menu-button.p-column-filter-menu-button-active {
-  background: none;
-}
-
-.p-datatable .p-datatable-thead>tr>th .p-column-filter {
-  width: 55%;
-}
-
-/* For Sort */
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover {
-  background: #003056;
-  color: white;
-}
-
-.p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
-  color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight {
-  background: #003056;
-  color: white;
-}
-
-.p-datatable .p-sortable-column.p-highlight:hover {
-  background: #003056;
-  color: white;
-}
-
-.p-datatable .p-sortable-column:focus {
-  box-shadow: none;
-  outline: none;
-  color: white;
-}
-
-.p-datatable .p-sortable-column .p-sortable-column-icon {
-  color: white;
-}
-
-.pi-sort-amount-down::before {
-  content: "\e9a0";
-  color: white;
-}
-
-.pi-sort-amount-up-alt::before {
-  content: "\e9a2";
-  color: white;
-}
-
-
-.progressbar_val3 .p-progressbar-value.p-progressbar-value-animate  {
-    /* background-color:#fff !important; */
-    background-color: rgb(48, 218, 48) !important;
-     color: #fff !important;
-}
-.progressbar .p-progressbar-value.p-progressbar-value-animate {
-    /* background-color:#fff !important; */
-    background-color: red !important;
-     color: #fff !important;
-}
-.progressbar_val2 .p-progressbar-value.p-progressbar-value-animate {
-    background-color:orange !important;
-    color: black !important;
-}
-
-</style>

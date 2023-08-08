@@ -6,8 +6,20 @@
         </transition>
         <div class="controls absolute top-16 w-full px-3">
             <div class="flex justify-between">
-                <button class="sliderButton" @click="prevImage">Previous</button>
-                <button class="sliderButton" @click="nextImage">Next</button>
+                <button class="sliderButton" @click="prevImage">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+                <button class="sliderButton" @click="nextImage">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
@@ -17,30 +29,38 @@
 import axios from 'axios';
 import { ref, computed, onMounted } from 'vue';
 
-
+const currentIndex = ref();
 const holidays = ref()
+const currentImage = ref()
+
 
 const getHolidays = () => {
     axios.get('/holiday/master-page').then(res => {
         console.log(res.data);
         holidays.value = res.data
-        currentImage.value = holidays.value[0].image
-        // currentImage.value = computed(() => holidays.value[currentIndex.value].image );
+        let conditionPass = true
+        res.data.forEach((element, i) => {
+            if (conditionPass) {
+                if (new Date(element.holiday_date) >= new Date()) {
+                    currentIndex.value  = i
+                    conditionPass = false
+                }
+            }
+        });
+        currentImage.value = holidays.value[currentIndex.value].image
     })
 }
 
-const currentImage = ref()
-const images = []
-
-const currentIndex = ref(0);
-
-
 function nextImage() {
+
     currentIndex.value = (currentIndex.value + 1) % holidays.value.length;
+    currentImage.value = holidays.value[currentIndex.value].image
+
 }
 
 function prevImage() {
-    currentIndex.value = (currentIndex.value - 1 + holidays.value.length) % images.length;
+    currentIndex.value = (currentIndex.value - 1 + holidays.value.length) % holidays.value.length;
+    currentImage.value = holidays.value[currentIndex.value].image
 }
 
 // Autoplay functionality (optional)
@@ -58,14 +78,14 @@ function stopAutoplay() {
 // onMounted(startAutoplay);
 
 onMounted(() => {
-    startAutoplay()
     getHolidays()
 })
 
 </script>
 
 <style>
-.image-slider {
+.image-slider
+{
     position: relative;
     max-width: 100%;
     overflow: hidden;
@@ -73,7 +93,8 @@ onMounted(() => {
 }
 
 .fade-enter-active,
-.fade-leave-active {
+.fade-leave-active
+{
     transition: opacity 0.5s;
 }
 
@@ -81,21 +102,17 @@ onMounted(() => {
 .fade-leave-to
 
 /* .fade-leave-active in <2.1.8 */
-    {
+{
     opacity: 0;
 }
 
 
-.sliderButton {
+.sliderButton
+{
     padding: 8px 12px;
-    background-color: #007bff;
-    color: #fff;
+    color: black;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.sliderButton:hover {
-    background-color: #0056b3;
 }
 </style>
