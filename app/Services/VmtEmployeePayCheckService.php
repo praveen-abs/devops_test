@@ -1125,7 +1125,7 @@ class VmtEmployeePayCheckService
     {
 
         $user_code = "BA002";
-        $payroll_date = "2023-05-01";
+        $payroll_date = "2023-06-01";
 
 
         $payroll_data = VmtPayroll::join('vmt_client_master', 'vmt_client_master.id', '=', 'vmt_payroll.client_id')
@@ -1233,7 +1233,7 @@ class VmtEmployeePayCheckService
             foreach ($getpersonal['earnings'][0] as $single_data) {
                 $total_value += ((int) $single_data);
             }
-            $getpersonal['earnings'][0]['Total_Earnings'] = $total_value;
+            $getpersonal['earnings'][0]['Total Earnings'] = $total_value;
         }
 
         // Total contribution
@@ -1255,7 +1255,7 @@ class VmtEmployeePayCheckService
             foreach ($getpersonal['contribution'][0] as $single_simma) {
                 $total_value += ((int) $single_simma);
             }
-            $getpersonal['contribution'][0]['Total_Contribution'] = $total_value;
+            $getpersonal['contribution'][0]['Total Contribution'] = $total_value;
 
         }
 
@@ -1278,54 +1278,40 @@ class VmtEmployeePayCheckService
             foreach ($getpersonal['Tax_Deduction'][0] as $single_data) {
                 $total_value += ((int) $single_data);
             }
-            $getpersonal['Tax_Deduction'][0]['Total_Deduction'] = $total_value;
+            $getpersonal['Tax_Deduction'][0]['Total Deduction'] = $total_value;
 
         }
 
 
         if (!empty($getpersonal['earnings']) && !empty($getpersonal['contribution']) && !empty($getpersonal['Tax_Deduction'])) {
-            $total_amount = ($getpersonal['earnings'][0]['Total_Earnings']) - ($getpersonal['contribution'][0]['Total_Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total_Deduction']);
+            $total_amount = ($getpersonal['earnings'][0]['Total Earnings']) - ($getpersonal['contribution'][0]['Total Contribution']) - ($getpersonal['Tax_Deduction'][0]['Total Deduction']);
 
             $getpersonal['over_all'] = [
                 [
-                    "Net_Salary_Payable" => $total_amount,
-                    "Net_Salary_in_words" => numberToWord($total_amount),
+                    "Net Salary Payable" => $total_amount,
+                    "Net Salary in words" => numberToWord($total_amount),
                 ]
             ];
         }
 
-
+            // dd($getpersonal);
 
         $html = view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
 
     //    return $html;
 
-        $pdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $pdf = new Dompdf($options);
         $pdf->loadhtml($html, 'UTF-8');
         $pdf->setPaper('A4', 'portrait');
         $pdf->render();
         $pdf->stream("payslip.pdf");
 
-        return $pdf;
+         return redirect()->back();
 
-
-
-
-        // Remove empty value in array
-
-        //     $get_payslip_details = [];
-        //     $get_employee_salary_details = [];
-        //     $get_employee_earnings = [];
-
-        //     foreach ($getpayslip as $single_payslip) {
-        //         foreach ($single_payslip as $key => $single_details) {
-
-        //             if ($single_details == "0" || $single_details == null || $single_details == "") {
-        //                 unset($single_payslip[$key]);
-        //             }
-        //         }
-        //         array_push($get_payslip_details, $single_payslip);
-        //     }
 
 
     }
