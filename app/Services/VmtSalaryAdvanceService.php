@@ -2139,4 +2139,8 @@ class VmtSalaryAdvanceService
             ]);
         }
     }
+
+    public function employeeLoanAndAdvance()
+    {
+    }
 }

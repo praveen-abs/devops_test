@@ -398,7 +398,14 @@ class VmtSalaryAdvanceController extends Controller
     public function isEligibleForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         $loan_type = "int_free_loan";
-        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance($loan_type);
+        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance
+        
+        
+        ($loan_type);
         return $response;
+    }
+
+    public function employeeLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
+        
     }
 }
