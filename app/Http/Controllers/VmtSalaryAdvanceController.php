@@ -406,6 +406,6 @@ class VmtSalaryAdvanceController extends Controller
     }
 
     public function employeeLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
-        
+        $response = $vmtSalaryAdvanceService->employeeLoanAndAdvance();
     }
 }
