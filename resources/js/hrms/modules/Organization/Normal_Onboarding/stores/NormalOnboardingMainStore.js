@@ -565,7 +565,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
     const v$ = useValidate(rules, employee_onboarding);
 
 
-    const submit = () => {
+    const submit = (isSubmitted) => {
 
         let formData = new FormData();
         formData.append("can_onboard_employee", employee_onboarding.can_onboard_employee);
@@ -730,9 +730,15 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                                 window.location.reload();
                             }
                         }
-
                     });
-                } else {
+
+                    if (isSubmitted == 1) {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    }
+                }
+                else {
                     Swal.fire(
                         'Failure',
                         `${response.data.message}`,
@@ -766,7 +772,7 @@ export const useNormalOnboardingMainStore = defineStore("useNormalOnboardingMain
                 if (isEmployeeOnboard == 0) {
                     if (employee_onboarding.employee_code && employee_onboarding.employee_name) {
                         if (employee_onboarding.mobile_number && employee_onboarding.email) {
-                            submit()
+                            submit(isEmployeeOnboard)
                             v$.value.$reset()
                         } else {
                             RequiredDocument.value = true

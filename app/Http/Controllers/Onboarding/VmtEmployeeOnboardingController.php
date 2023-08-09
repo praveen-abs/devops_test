@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Onboarding;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Countries;
@@ -51,73 +52,76 @@ use App\Services\Admin\VmtEmployeeMailNotifMgmtService;
 class VmtEmployeeOnboardingController extends Controller
 {
 
-    public function isEmployeePersonalEmailAlreadyExists(Request $request){
+    public function isEmployeePersonalEmailAlreadyExists(Request $request)
+    {
         //dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
 
-        if(!empty($request->mail))
-            return User::where('email',$request->mail)->exists() ? "true" : "false";
+        if (!empty($request->mail))
+            return User::where('email', $request->mail)->exists() ? "true" : "false";
         else
             return false;
     }
 
-    public function isEmployeeCodeAlreadyExists(Request $request){
+    public function isEmployeeCodeAlreadyExists(Request $request)
+    {
         //dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
 
-        if(!empty($request->user_code))
-            return User::where('user_code',$request->user_code)->exists() ? "true" : "false";
+        if (!empty($request->user_code))
+            return User::where('user_code', $request->user_code)->exists() ? "true" : "false";
         else
             return false;
     }
-    public function isAadharNoAlreadyExists(Request $request){
+    public function isAadharNoAlreadyExists(Request $request)
+    {
         //dd($request->aadhar_number);
         //dd(User::where('email',$request->mail)->exists());
 
-        $aadhar_number = str_replace(" ",'',$request->aadhar_number);
+        $aadhar_number = str_replace(" ", '', $request->aadhar_number);
 
-        if(!empty($request->aadhar_number))
-            return VmtEmployee::where('aadhar_number',$aadhar_number)->exists() ? "true" : "false";
+        if (!empty($request->aadhar_number))
+            return VmtEmployee::where('aadhar_number', $aadhar_number)->exists() ? "true" : "false";
         else
             return false;
     }
-    public function isPanCardAlreadyExists(Request $request){
+    public function isPanCardAlreadyExists(Request $request)
+    {
 
 
 
-        if(!empty($request->pan_number) && !empty($request->user_code))
-        {
+        if (!empty($request->pan_number) && !empty($request->user_code)) {
             $user_id = User::where('user_code', $request->user_code)->first()->id;
 
             //Check if pan exists for user other than given user_code user
-            return VmtEmployee::where('pan_number',$request->pan_number)
-                                ->where('userid','<>',$user_id)
-                                ->exists() ? "true" : "false";
-        }
-        else
-        if(!empty($request->pan_number))
-            return VmtEmployee::where('pan_number',$request->pan_number)->exists() ? "true" : "false";
+            return VmtEmployee::where('pan_number', $request->pan_number)
+                ->where('userid', '<>', $user_id)
+                ->exists() ? "true" : "false";
+        } else
+        if (!empty($request->pan_number))
+            return VmtEmployee::where('pan_number', $request->pan_number)->exists() ? "true" : "false";
         else
             return false;
     }
 
-    public function isMobileNoAlreadyExists(Request $request){
-       // dd($request->all());
+    public function isMobileNoAlreadyExists(Request $request)
+    {
+        // dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
 
-        if(!empty($request->mobile_number)){
+        if (!empty($request->mobile_number)) {
 
-            return VmtEmployee::where('mobile_number',$request->mobile_number)->exists() ? "true" : "false";
-        }
-        else
+            return VmtEmployee::where('mobile_number', $request->mobile_number)->exists() ? "true" : "false";
+        } else
             return false;
     }
-    public function isAcNoAlreadyExists(Request $request){
+    public function isAcNoAlreadyExists(Request $request)
+    {
         //dd($request->all());
         //dd(User::where('email',$request->mail)->exists());
 
-        if(!empty($request->mobile_number))
-            return User::where('user_code',$request->AccountNumber)->exists() ? "true" : "false";
+        if (!empty($request->mobile_number))
+            return User::where('user_code', $request->AccountNumber)->exists() ? "true" : "false";
         else
             return false;
     }
@@ -125,7 +129,7 @@ class VmtEmployeeOnboardingController extends Controller
     private function generateEmployeeCode()
     {
         $employeeCode_Format = VmtMasterConfig::where('config_name', '=', 'employee_code_prefix')->value('config_value') .
-                               VmtMasterConfig::where('config_name', '=', 'employee_code_median')->value('config_value');
+            VmtMasterConfig::where('config_name', '=', 'employee_code_median')->value('config_value');
 
         //dd("Emp code format : " .$employeeCode_Format);
 
@@ -133,11 +137,11 @@ class VmtEmployeeOnboardingController extends Controller
 
         //Get the recently created employee based on DOJ
         //$employee  =  User::orderBy('created_at', 'DESC')->where('user_code', 'LIKE', '%' . $employeeCode_Format . '%')->first();
-        $recentlyJoinedEmployee_usercode = User::leftJoin('vmt_employee_details','vmt_employee_details.userid', '=' , 'users.id')
-                                //->get('users.user_code');
-                                ->orderBy('vmt_employee_details.doj','DESC')
-                                ->first('users.user_code');
-                               // ->get(['users.user_code', 'vmt_employee_details.doj']);
+        $recentlyJoinedEmployee_usercode = User::leftJoin('vmt_employee_details', 'vmt_employee_details.userid', '=', 'users.id')
+            //->get('users.user_code');
+            ->orderBy('vmt_employee_details.doj', 'DESC')
+            ->first('users.user_code');
+        // ->get(['users.user_code', 'vmt_employee_details.doj']);
 
 
         //dd($recentlyJoinedEmployee_usercode);
@@ -148,10 +152,9 @@ class VmtEmployeeOnboardingController extends Controller
             $maxId  = $ucode + 1;
         }
 
-        return $employeeCode_Format.$maxId;
-
+        return $employeeCode_Format . $maxId;
     }
-    public function showEmployeeOnboardingPage($user_id=null)
+    public function showEmployeeOnboardingPage($user_id = null)
     {
         // Used for Quick onboarding
         //dd($request->email);
@@ -161,7 +164,7 @@ class VmtEmployeeOnboardingController extends Controller
         $countries = Countries::all();
         $emp = VmtEmployeeOfficeDetails::all();
         $department = Department::all();
-        $state = State::where('country_code','IN')->get(['id','state_name']);
+        $state = State::where('country_code', 'IN')->get(['id', 'state_name']);
         $blood_group = VmtBloodGroup::all();
 
         $bank = Bank::all();
@@ -180,54 +183,52 @@ class VmtEmployeeOnboardingController extends Controller
             }
 
 
-            $allEmployeesUserCode = User::where('id','<>',$employee_user->id)
-                            ->where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
+            $allEmployeesUserCode = User::where('id', '<>', $employee_user->id)
+                ->where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
 
             $assigned_l1_manager_name = User::where('user_code', $emp_office_details->l1_manager_code)->value('name');
             $emp_family_details = VmtEmployeeFamilyDetails::where('user_id', $user_id)->get();
 
-            return view('vmt_employeeOnboarding', compact('empNo','user_id','is_employeeCode_editable','emp_family_details', 'emp_office_details', 'emp_statutory_details','employee_user','blood_group', 'employee_details', 'countries','state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode','assigned_l1_manager_name'));
-        }
-        else
-        {
+            return view('vmt_employeeOnboarding', compact('empNo', 'user_id', 'is_employeeCode_editable', 'emp_family_details', 'emp_office_details', 'emp_statutory_details', 'employee_user', 'blood_group', 'employee_details', 'countries', 'state', 'compensatory', 'bank', 'emp', 'department', 'allEmployeesUserCode', 'assigned_l1_manager_name'));
+        } else {
             $empNo = $this->generateEmployeeCode();
 
             $emp = VmtEmployeeOfficeDetails::all();
             $allEmployeesUserCode = User::where('is_ssa', 0)->where('active', 1)->whereNotNull('user_code')->get(['user_code', 'name']);
             //dd($allEmployeesCode);
-            return view('vmt_employeeOnboarding', compact('empNo','is_employeeCode_editable', 'countries', 'state', 'emp', 'bank', 'department', 'allEmployeesUserCode','blood_group'));
+            return view('vmt_employeeOnboarding', compact('empNo', 'is_employeeCode_editable', 'countries', 'state', 'emp', 'bank', 'department', 'allEmployeesUserCode', 'blood_group'));
         }
     }
 
     public function showNormalOnboardingPage(Request $request)
     {
 
-        if(empty($request->all())){
+        if (empty($request->all())) {
             return view('onboarding.vmt_normal_onboarding_v2');
-        }else{
-        $user_id = Crypt::decrypt($request->uid);
-        $can_onboard_employee =User::where('id',$user_id)->first()->is_onboarded;
+        } else {
+            $user_id = Crypt::decrypt($request->uid);
+            $can_onboard_employee = User::where('id', $user_id)->first()->is_onboarded;
 
-        if($can_onboard_employee == '0'){
-            return view('onboarding.vmt_normal_onboarding_v2');
-        }else{
-            return redirect()->route('index');
+            if ($can_onboard_employee == '0') {
+                return view('onboarding.vmt_normal_onboarding_v2');
+            } else {
+                return redirect()->route('index');
+            }
         }
-    }
-
     }
 
     /*
         Fetches all the required data for the normal onboarding page.
         These data are shown in onboarding form. Only standard selection data are sent
     */
-    public function fetchNormalOnboardingPageData(Request $request){
+    public function fetchNormalOnboardingPageData(Request $request)
+    {
         $is_employeeCode_editable = fetchMasterConfigValue("is_employee_code_editable_in_normal_onboarding");
 
         $db_countries = Countries::all();
         $employee_office_details = VmtEmployeeOfficeDetails::all();
         $db_departments = Department::all();
-        $db_indianStates = State::where('country_code','IN')->get(['id','state_name']);
+        $db_indianStates = State::where('country_code', 'IN')->get(['id', 'state_name']);
         $db_bloodGroups = VmtBloodGroup::all();
 
         $db_banks = Bank::all();
@@ -240,47 +241,45 @@ class VmtEmployeeOnboardingController extends Controller
 
 
     */
-    public function fetchQuickOnboardedEmployeeData(Request $request, VmtEmployeeService $employeeService){
+    public function fetchQuickOnboardedEmployeeData(Request $request, VmtEmployeeService $employeeService)
+    {
 
-            try{
+        try {
 
 
-                $user_id = Crypt::decrypt($request->encr_uid);
-                $response = $employeeService->getQuickOnboardedEmployeeData($user_id);
+            $user_id = Crypt::decrypt($request->encr_uid);
+            $response = $employeeService->getQuickOnboardedEmployeeData($user_id);
 
-                return response()->json($response, 200);
-            }
-            catch(\Exception $e)
-            {
-                return response()->json("Decrypt Error : ".$e->getMessage(), 500);
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json("Decrypt Error : " . $e->getMessage(), 500);
+        }
 
-            }
-
-            return $response;
+        return $response;
     }
 
-     // Show quick onboard form to employee
-     public function showQuickOnboardForEmployee(Request $request)
-     {
-         if ($request->has('email')) {
-             $employee  =  User::where('email', $request->email)->first();
-             $clientData  = VmtEmployee::where('userid', $employee->id)->first();
-             $empNo = '';
-             if ($clientData) {
-                 $empNo = $employee->user_code;
-             }
-             $countries = Countries::all();
-             $compensatory = Compensatory::where('user_id', $employee->id)->first();
-             $india = Countries::where('country_code', 'IN')->first();
-             $emp = VmtEmployeeOfficeDetails::all();
-             $emp_details = VmtEmployeeOfficeDetails::where('user_id', $clientData->id)->first();
-             // dd($emp);
-             $department = Department::all();
-             $bank = Bank::all();
+    // Show quick onboard form to employee
+    public function showQuickOnboardForEmployee(Request $request)
+    {
+        if ($request->has('email')) {
+            $employee  =  User::where('email', $request->email)->first();
+            $clientData  = VmtEmployee::where('userid', $employee->id)->first();
+            $empNo = '';
+            if ($clientData) {
+                $empNo = $employee->user_code;
+            }
+            $countries = Countries::all();
+            $compensatory = Compensatory::where('user_id', $employee->id)->first();
+            $india = Countries::where('country_code', 'IN')->first();
+            $emp = VmtEmployeeOfficeDetails::all();
+            $emp_details = VmtEmployeeOfficeDetails::where('user_id', $clientData->id)->first();
+            // dd($emp);
+            $department = Department::all();
+            $bank = Bank::all();
 
-             return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'emp_details', 'countries', 'compensatory', 'bank', 'emp', 'department'));
-         }
-     }
+            return view('vmt_employeeOnboarding_QuickUpload', compact('empNo', 'emp_details', 'countries', 'compensatory', 'bank', 'emp', 'department'));
+        }
+    }
 
     // Showing view for uploading quick onboaring excel sheet
     public function showQuickOnboardUploadPage()
@@ -295,760 +294,395 @@ class VmtEmployeeOnboardingController extends Controller
         return view('vmt_employeeOnboarding_BulkUpload');
     }
 
- public function processEmployeeOnboardForm_Normal(Request $request,VmtEmployeeService $employeeService ){
+    public function processEmployeeOnboardForm_Normal(Request $request, VmtEmployeeService $employeeService)
+    {
 
-   try{
-        $data=$request->all();
+        try {
+            $data = $request->all();
 
 
-            $user_code =$data['employee_code'];
+            $user_code = $data['employee_code'];
 
-        $onboard_form_data =  array();
+            $onboard_form_data =  array();
 
-        $onboard_form_data  = $data;
+            $onboard_form_data  = $data;
 
-        $currentLoggedinInUser = auth()->user();
+            $currentLoggedinInUser = auth()->user();
 
-        //Check whether we are updating existing user or adding new user.
+            //Check whether we are updating existing user or adding new user.
 
-              $existingUser = User::where('user_code',$user_code);
+            $existingUser = User::where('user_code', $user_code);
 
-              if($existingUser->exists())
-              {
+            if ($existingUser->exists()) {
 
-                  //If current user is Admin, then its normal onboarding or updating existing user details.
-                if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]))
-                {
-                      $result = $employeeService->createOrUpdate_OnboardData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, $onboard_type = 'normal');
+                //If current user is Admin, then its normal onboarding or updating existing user details.
+                if (Str::contains(currentLoggedInUserRole(), ["Super Admin", "Admin", "HR"])) {
+                    $result = $employeeService->createOrUpdate_OnboardData($onboard_form_data, $onboard_form_data['can_onboard_employee'], $existingUser->first()->id, $onboard_type = 'normal');
 
-                      $message = "";
-                      $isEmailSent = '';
+                    $message = "";
+                    $isEmailSent = '';
 
-                      if($result['status'] == "success")
-                      {
-                          if($request->input('can_onboard_employee') == "1")
-                          {
-                               $user_mail=User::where('user_code',$data['employee_code'])->first('email');
+                    if ($result['status'] == "success") {
+                        if ($request->input('can_onboard_employee') == "1") {
+                            $user_mail = User::where('user_code', $data['employee_code'])->first('email');
 
                             $VmtClientMaster = VmtClientMaster::first();
                             $image_view = url('/') . $VmtClientMaster->client_logo;
-                            $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'] ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                            $isEmailSent = \Mail::to($user_mail)->send(new WelcomeMail($data['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-                              //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
-                              $message="Employee onboarded successfully";
-                          }
-                          else
-                          {
-                              $message="Employee details updated in draft";
-                          }
+                            //$isEmailSent  = $employeeService->attachAppointmentLetterPDF($onboard_form_data);
+                            $message = "Employee onboarded successfully";
+                        } else {
+                            $message = "Employee details updated in draft";
+                        }
 
-                          $response = [
-                              'status' => $result['status'],
-                              'message' => $message,
-                              'mail_status' => $isEmailSent ? "success" : "failure",
-                               'data' =>$result['data'],
-                          ];
-                      }
-                      else
-                      {
-                          //When error occured while storing User, then show error to UI
-                          $response = [
-                              'status' => $result['status'],
-                              'message' => "Error while creating/update User details. LINE : ".__LINE__,
-                              'data' => $result,
-                          ];
+                        $response = [
+                            'status' => $result['status'],
+                            'message' => $message,
+                            'mail_status' => $isEmailSent ? "success" : "failure",
+                            'data' => $result['data'],
+                        ];
+                    } else {
+                        //When error occured while storing User, then show error to UI
+                        $response = [
+                            'status' => $result['status'],
+                            'message' => "Error while creating/update User details. LINE : " . __LINE__,
+                            'data' => $result,
+                        ];
+                    }
+                } else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
+                    if ($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code &&  $currentLoggedinInUser->onboard_type  == "quick") {
+                        $result = $employeeService->createOrUpdate_OnboardData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id, $onboard_type = 'quick');
 
-                      }
+                        $message = "";
 
-                  }
-                  else //If the currentuser is quick onboareded emp and not yet onboarded, then save the form.
-                  if($onboard_form_data['employee_code'] == $currentLoggedinInUser->user_code &&  $currentLoggedinInUser->onboard_type  == "quick")
-                   {
-                          $result = $employeeService->createOrUpdate_OnboardData($onboard_form_data, $request->input('can_onboard_employee'), $existingUser->first()->id,$onboard_type ='quick');
+                        if ($result['status'] == "success") {
+                            if ($request->input('can_onboard_employee') == "1") {
+                                $message = "Employee onboarded successfully";
+                            } else {
+                                $message = "Your Onboard information Saved in draft";
+                            }
 
-                          $message = "";
+                            $response = [
+                                'status' => $result['status'],
+                                'message' => $message,
+                                'can_redirect' => $request->input('can_onboard_employee'), //if its "1", then redirect from onboarding form to under review page
+                                'data' => $result['data'],
 
-                          if($result['status'] == "success")
-                          {
-                              if($request->input('can_onboard_employee') == "1")
-                              {
-                                  $message="Employee onboarded successfully";
-                              }else
-                              {
-                                 $message="Your Onboard information Saved in draft";
-                              }
+                            ];
+                        } else { //When error occured while storing User, then show error to UI
+                            $response = [
+                                'status' => $result['status'],
+                                'message' => "Error while creating/update User details : LINE : " . __LINE__,
+                                'data' => $result['data'],
+                            ];
+                        }
+                    }
+            } else { //we are inserting new user as NORMAL onboard.
+                //Check whether current login is admin
 
-                              $response = [
-                                  'status' => $result['status'],
-                                  'message' => $message,
-                                  'can_redirect' => $request->input('can_onboard_employee'), //if its "1", then redirect from onboarding form to under review page
-                                  'data' =>$result['data'],
+                if (Str::contains(currentLoggedInUserRole(), ["Super Admin", "Admin", "HR"])) {
+                    $result = $employeeService->createOrUpdate_OnboardData($onboard_form_data, $onboard_form_data['can_onboard_employee'], '', $onboard_type = 'normal');
 
-                              ];
-                          }
-                          else
-                          { //When error occured while storing User, then show error to UI
-                              $response = [
-                                      'status' => $result['status'],
-                                      'message' => "Error while creating/update User details : LINE : ".__LINE__,
-                                      'data' => $result['data'],
-                              ];
-                          }
-                  }
+                    if ($result['status'] == "success") {
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'New Employee information Saved in draft',
+                            'data' => $result['data']
+                        ];
+                    } else { //When error occured while storing User, then show error to UI
+                        $response = [
+                            'status' => $result['status'],
+                            'message' => "Error while creating/update User details : LINE : " . __LINE__,
+                            'data' => $result['data']
+                        ];
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            $response = [
+                'status' => 'failure',
+                'message' => "Error while creating/update Employee details",
+                'data' => $e->getmessage() . " " . $e->getline(),
+                'erreo_line' => $e->getTraceAsString(),
+            ];
+        }
+        return response()->json($response);
+    }
 
-              } else { //we are inserting new user as NORMAL onboard.
-                     //Check whether current login is admin
+    public function storeQuickOnboardEmployees(Request $request, VmtEmployeeService $employeeService)
+    {
+        try {
+            $data = $request->all();
+            $data_array = array();
+            $onboard_data = array();
+            foreach ($data  as $key => $excelRowdata) {
 
-                  if(Str::contains( currentLoggedInUserRole(), ["Super Admin","Admin","HR"]) )
-                  {
-                      $result = $employeeService->createOrUpdate_OnboardData($onboard_form_data, $onboard_form_data['can_onboard_employee'],'', $onboard_type ='normal');
+                $processed_data = str_replace(array(' (dd-mmm-yyyy)', ' '), array('', '_'), array_keys($excelRowdata));
 
-                      if($result['status'] == "success")
-                      {
-                          $response = [
-                              'status' => 'success',
-                              'message' => 'New Employee information Saved in draft',
-                              'data'=>$result['data']
-                          ];
-                      }else
-                      { //When error occured while storing User, then show error to UI
-                          $response = [
-                                  'status' => $result['status'],
-                                  'message' => "Error while creating/update User details : LINE : ".__LINE__,
-                                   'data' =>$result['data']
-                          ];
-                      }
-                  }
-              }
-             }catch(\Exception $e){
+                $Emp_data = array_combine(array_map('strtolower', $processed_data), array_values($excelRowdata));
+
+                array_push($onboard_data, $Emp_data);
+            }
+
+            $existing_user_data = array();
+            foreach ( $onboard_data  as $key => $excelRowdata) {
+
+                $user_id = User::where('user_code',  $excelRowdata['employee_code'])->first();
+
+                if(!empty($user_id)){
+                                  $user_id = $user_id->id;
+
+                    $emp_data = VmtEmployee::where('userid',  $user_id);
+                    $emp_office_data =VmtEmployeeOfficeDetails::where('user_id',  $user_id);
+                    $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
+
+                    if($emp_data->exists() && $emp_office_data->exists() && $emp_compensatory_data->exists() ){
+
+
+                        $message =$excelRowdata['employee_code'] . "Employee already added" ;
+
+                        array_push($existing_user_data,$message);
+
+
+
+                    }else{
+                     $emp_data->delete();
+                     $emp_office_data->delete();
+                     $emp_compensatory_data->delete();
+
+                    }
+
+                }
+            }
+            if(!empty($existing_user_data))
+            {
                 $response = [
                     'status' => 'failure',
-                    'message' => "Error while creating/update Employee details",
-                    'data' =>$e->getmessage()." ".$e->getline(),
-                    'erreo_line' =>$e->getTraceAsString(),
+                    'message' =>$existing_user_data ,
+                    'data' =>""
                 ];
+
+                return response()->json($response);
             }
+            // dd($onboard_data);
+            foreach ($onboard_data  as $key => $excelRowdata) {
+
+                $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata, $employeeService);
+                array_push($data_array, $rowdata_response);
+            }
+
+            if($rowdata_response['status'] =='success'){
+                $message = "Excelsheet data import success";
+            }else{
+                $message = "Errorwhile importing Excelsheet data ";
+            }
+             $response = [
+                 'status' => $rowdata_response['status'],
+                 'message' =>$message ,
+                 'data' => $data_array
+             ];
+
             return response()->json($response);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Error while uploading Excel data',
+                'mail_status' => 'failure',
+                'error_fields' =>  $e->getMessage() . " " . $e->getline(),
+            ]);
         }
-
-
-
-
-     // Store employees with partial details for quick onboarding
-    public function importQuickOnboardEmployeesExcelData(Request $request, VmtEmployeeService $employeeService)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xls,xlsx'
-        ]);
-
-        $importDataArry = Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-
-        return $this->storeQuickOnboardEmployees($importDataArry, $employeeService);
     }
 
 
-//insert the employee to database for quick onboarding
-     private function storeQuickOnboardEmployees($data,  $employeeService)
-        {
-//dd($data);
-            //For output jsonresponse
-            $onboard_data =$data;
-            $data_array = [];
-            //For validation
-            $isAllRecordsValid = true;
-            $rules = [];
+    private function storeSingleRecord_QuickEmployee($row, VmtEmployeeService $employeeService)
+    {
 
-            foreach ($onboard_data[0] as &$Single_data) {
+        $message = $row['employee_code']  . " not imported ";
+        $mail_message = '';
+        $status = 'failure';
+        try {
 
-                    if (array_key_exists('doj', $Single_data) && is_int($Single_data['doj'])) {
+            $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: 'quick');
 
-                        $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
-                    }
+            $status = $response['status'];
 
-            }
-            unset($Single_data);
+            if ($response['status'] == "success") {
+                $message =  $row['employee_code'] . ' added successfully';
+                $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
 
+                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
 
-            $excelRowdata_row = $onboard_data;
-            $currentRowInExcel = 0;
-
-        if(empty($excelRowdata_row )){
-            return $rowdata_response = [
-                'status' => 'failure',
-                'message' => 'Please fill the excel',
-            ];
-        }else{
-                $emp_user_code = array();
-            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-
-                $currentRowInExcel++;
-                //$emp_user_code = $excelRowdata['employee_code'];
-
-                //Validation
-                $rules = [
-                    'employee_code' => ['unique:users,user_code',
-                    function ($attribute, $value, $fail ) {
-
-                        $emp_client_code = preg_replace('/\d+/', '', $value );
-                        $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
-
-                        if (!$result) {
-                            $fail('No matching client exists for the given <b> Employee Code <b>: '. $value);
-                        }
-
-                    },
-                  ],
-
-                    'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                    'email' => 'nullable|email:strict|unique:users,email',
-                    'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                    'doj' => 'required|date',
-                    'mobile_number' => 'required|regex:/^([0-9]{10})?$/u|numeric|unique:vmt_employee_details,mobile_number',
-                    'designation' => 'required',
-                    'basic' => 'required|numeric|min:0|not_in:0',
-                    'hra' => 'required|numeric',
-                    'statutory_bonus' => 'required|numeric',
-                    'child_education_allowance' => 'required|numeric',
-                    'food_coupon' => 'required|numeric',
-                    'lta' => 'required|numeric',
-                    'special_allowance' => 'required|numeric',
-                    'other_allowance' => 'required|numeric',
-                    'epf_employer_contribution' => 'required|numeric',
-                    'esic_employer_contribution' => 'required|numeric',
-                    'insurance' => 'required|numeric',
-                    'graduity' => 'required|numeric',
-                    'epf_employee' => 'required|numeric',
-                    'esic_employee' => 'required|numeric',
-                    'professional_tax' => 'required|numeric',
-                    'labour_welfare_fund' => 'required|numeric',
-                ];
-
-                $messages = [
-                    'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
-                    'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-                    'not_in' => 'Field <b>:attribute</b> should be greater than zero: :values .',
-                    'required' => 'Field <b>:attribute</b> is required',
-                    'regex' => 'Field <b>:attribute</b> is invalid',
-                    'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-                    'unique' => 'Field <b>:attribute</b> should be unique',
-                    'numeric' => 'Field <b>:attribute</b> is invalid',
-                    'email' => 'Field <b>:attribute</b> is invalid'
-                ];
-
-                  if(!empty($emp_user_code))
-                  {
-                         $fail_data =array();
-                    foreach($emp_user_code as $key => $single_user_code){
-
-                        if( $key == 0 && $single_user_code == $excelRowdata['employee_code']){
-
-                            $fail_data[0] = 'Employee Code should be unique :'.' '.$excelRowdata['employee_code'];
-                            //    array_push($fail_data, $fails);
-                        }
-                         if( $key == 1 && $single_user_code == $excelRowdata['email']){
-
-                             $fail_data[1] = 'email should be unique :'.' '.$excelRowdata['email'];
-
-                         }
-                         if( $key == 2 && $single_user_code == $excelRowdata['mobile_number']){
-
-                             $fail_data[2] = 'mobile_number should be unique :'.' '.$excelRowdata['mobile_number'];
-
-                         }
-                    }
+                if ($isEmailSent) {
+                    $mail_message = 'success';
+                } else {
+                    $mail_message = 'failure';
                 }
-                array_push($emp_user_code,$excelRowdata['employee_code'],$excelRowdata['email'],$excelRowdata['mobile_number']);
+            } else {
+                $message = $row['employee_code']  . ' has failed';
+            }
+            //Sending mail
 
-                $validator = Validator::make($excelRowdata, $rules, $messages);
+            $rowdata_response = [
+                'status' => $status,
+                'message' => $message,
+                'Employee_Name' => $row['employee_name'],
+                'mail_status' => $mail_message ?? '',
+                'data' => $response['data']
+            ];
+            return $rowdata_response;
+        } catch (\Exception $e) {
+            $rowdata_response = [
+                'status' => $status,
+                'message' => $message,
+                'mail_status' => 'failure',
+                'error_fields' =>  $e->getMessage() . " " . $e->getline(),
+            ];
+            return $rowdata_response;
+        }
+    }
 
-                if (!$validator->passes() || !empty($fail_data)) {
-                   if(!empty($fail_data)){
+    public function storeBulkOnboardEmployees(Request $request, VmtEmployeeService $employeeService)
+    {
+        try {
 
-                        $error_data =json_encode($fail_data);
+
+            $data = $request->all();
+
+            $data_array = array();
+            $onboard_data = array();
+            foreach ($data  as $key => $excelRowdata) {
+
+                $processed_data = str_replace(array(' (dd-mmm-yyyy)', ' '), array('', '_'), array_keys($excelRowdata));
+
+                $Emp_data = array_combine(array_map('strtolower', $processed_data), array_values($excelRowdata));
+
+                array_push($onboard_data, $Emp_data);
+            }
+
+            foreach ( $onboard_data  as $key => $excelRowdata) {
+
+                $user_id = User::where('user_code',  $excelRowdata['employee_code'])->first();
+
+                if(!empty($user_id)){
+                                  $user_id = $user_id->id;
+
+                    $emp_data = VmtEmployee::where('userid',  $user_id);
+                    $emp_office_data =VmtEmployeeOfficeDetails::where('user_id',  $user_id);
+                    $emp_fam_data =VmtEmployeeFamilyDetails::where('user_id',  $user_id);
+                    $emp_compensatory_data =Compensatory::where('user_id',  $user_id);
+                    $emp_statutory_data =VmtEmployeeStatutoryDetails::where('user_id',  $user_id);
+
+                    if($emp_data->exists() && $emp_office_data->exists() && $emp_fam_data->exists() && $emp_compensatory_data->exists() && $emp_statutory_data->exists()){
+
+
+                        $response = [
+                            'status' => 'failure',
+                            'message' =>$excelRowdata['employee_code'] . " Employee already added",
+                        ];
+
+                        return response()->json($response);
+
 
                     }else{
-                        $error_data =json_encode($validator->errors());
+
+                     $emp_data->delete();
+                     $emp_office_data->delete();
+                     $emp_fam_data->delete();
+                     $emp_compensatory_data->delete();
+                     $emp_statutory_data->delete();
+
                     }
 
-                    $rowDataValidationResult = [
-                        'row_number' => $currentRowInExcel,
-                        'status' => 'failure',
-                        'message' => 'In Excel Row : ' . $currentRowInExcel . ' has following error(s)',
-                        'error_fields' => $error_data,
-                    ];
-
-                    array_push($data_array, $rowDataValidationResult);
-                    $isAllRecordsValid = false;
-                  }
-             }
-
-         }
-
-           //for each
-            //Runs only if all excel records are valid
-            if ($isAllRecordsValid) {
-                foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-                    $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$employeeService);
-                    array_push($data_array, $rowdata_response);
-                }
-             $response = [
-                 'status' => $rowdata_response['status'],
-                 'message' => "Excelsheet data import success",
-                 'mail_status' => $rowdata_response['mail_status'],
-                 'data' =>$data_array
-              ];
-
-            }else{
-             $response = [
-                 'status' => 'failure',
-                 'message' =>"Please fix the below excelsheet data",
-                 'data' =>$data_array
-              ];
-            }
-            return response()->json($response);
-
-        }
-
-
-        // public function storeQuickOnboardEmployees( Request $request,VmtEmployeeService $employeeService )
-        // {
-        //     try{
-        //     $data = $request->all();
-        //     $data_array =array();
-        //     $onboard_data =array();
-        //     foreach ($data  as $key => $excelRowdata) {
-
-        //     $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($excelRowdata));
-
-        //     $Emp_data = array_combine(array_map('strtolower', $processed_data),array_values($excelRowdata));
-
-        //     array_push($onboard_data,$Emp_data);
-        //     }
-        //    // dd($onboard_data);
-        //     foreach ($onboard_data  as $key => $excelRowdata) {
-
-        //                     $rowdata_response = $this->storeSingleRecord_QuickEmployee($excelRowdata,$employeeService);
-        //                     array_push($data_array, $rowdata_response);
-        //                 }
-
-        //              $response = [
-        //                  'status' => $rowdata_response['status'],
-        //                  'message' => "Excelsheet data import success",
-        //                  'data' =>$data_array
-        //               ];
-
-        //               return response()->json($response);
-
-        //     }catch(\Exception $e){
-
-        //             return response()->json([
-        //                         'status' => 'failure',
-        //                         'message' => 'Error while uploading Excel data',
-        //                         'mail_status'=>'failure',
-        //                         'error_fields' =>  $e->getMessage()." ".$e->getline(),
-        //             ]);
-
-        //             }
-        // }
-
-
-     private function storeSingleRecord_QuickEmployee($row,VmtEmployeeService $employeeService)
-        {
-
-             $message = $row['employee_code']  ." not imported ";
-             $mail_message='';
-             $status = 'failure';
-             try {
-
-                $response = $employeeService->createOrUpdate_QuickOnboardData(data: $row, can_onboard_employee:"0", existing_user_id : null, onboard_type:'quick');
-
-                 $status = $response['status'];
-
-                if($response['status'] == "success"){
-                     $message =  $row['employee_code']  . ' added successfully';
-
-                     $VmtClientMaster = VmtClientMaster::first();
-                     $image_view = url('/') . $VmtClientMaster->client_logo;
-
-                     $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'] ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-
-                     if($isEmailSent){
-                        $mail_message ='success';
-                     }else{
-                        $mail_message ='failure';
-                     }
-
-                }else{
-                     $message =  $row['employee_code']  . ' has failed';
-                }
-                //Sending mail
-
-             $rowdata_response = [
-                    'status' => $status,
-                    'message' => $message,
-                    'mail_status' =>$mail_message ?? '',
-                    'data' =>$response['data']
-                ];
-                return $rowdata_response;
-            }
-            catch (\Exception $e) {
-             $rowdata_response = [
-                    'status' => $status,
-                    'message' => $message,
-                    'mail_status'=>'failure',
-                    'error_fields' =>  $e->getMessage()." ".$e->getline(),
-                ];
-                return $rowdata_response;
-            }
-        }
-
-// store employeess from excel sheet to database
-
-
-      public function importBulkOnboardEmployeesExcelData(Request $request,VmtEmployeeService $employeeService)
-        {
-
-            $validator =    Validator::make(
-                $request->all(),
-                ['file' => 'required|file|mimes:xls,xlsx'],
-                ['required' => 'The :attribute is required.']
-            );
-
-            if ($validator->passes()) {
-                $importDataArry = Excel::toArray(new VmtEmployeeImport, request()->file('file'));
-                return $this->storeBulkOnboardEmployees($importDataArry, $employeeService);
-            } else {
-                $data['failed'] = $validator->errors()->all();
-                return response()->json($data);
-            }
-            // linking Manager To the employees;
-            // $linkToManager  = \Excel::import(new VmtEmployeeManagerImport, request()->file('file'));
-        }
-    private function storeBulkOnboardEmployees($data,$employeeService)
-    {
-        // dd($data);
-       ini_set('max_execution_time', 300);
-        //For output jsonresponse
-        $data_array = [];
-        //For validation
-        $isAllRecordsValid = true;
-
-        $rules = [];
-       $onboard_data =$data;
-
-         foreach ($onboard_data[0] as &$Single_data) {
-
-                if (array_key_exists('doj', $Single_data) &&is_int($Single_data['doj'])) {
-
-                    $Single_data['doj'] = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($Single_data['doj'])->format('Y-m-d');
                 }
 
-        }
-        unset($Single_data);
-
-        $excelRowdata_row = $onboard_data;
-        $currentRowInExcel = 0;
-    if(empty($excelRowdata_row )){
-        return $rowdata_response = [
-            'status' => 'failure',
-            'message' => 'Please fill the excel',
-        ];
-
-    }else{
-        //$emp_user_code= array(); $emp_email= array(); $emp_mobile_number= array();
-        foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
-          //  dd($excelRowdata);
-
-            $currentRowInExcel++;
-
-            //Validation
-            $rules = [
-                'employee_code' => ['unique:users,user_code',
-                        function ($attribute, $value, $fail) {
-
-                            $emp_client_code = preg_replace('/\d+/', '', $value );
-                            $result = VmtClientMaster::where('client_code', $emp_client_code)->exists();
-
-                            if (!$result) {
-                                $fail('No matching client exists for the given <b> Employee Code <b>: '.$value);
-                            }
-                        },
-                    ],
-                'employee_name' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'email' => 'nullable|email:strict|unique:users,email',
-                'gender' => 'required|in:Male,male,Female,female,other',
-                'doj' => 'required|date',
-                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'dob' => 'required|date|before:-18 years',
-                'father_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'father_gender' => 'nullable|in:Male,male,Female,female,other',
-                'father_dob' => 'nullable|date',
-                'pan_no' => 'nullable|regex:/(^([A-Z]){3}P([A-Z]){1}([0-9]){4}([A-Z]){1}$)/u|unique:vmt_employee_details,pan_number',
-                'pan_ack' => 'nullable',
-                'aadhar' => 'required|regex:/(^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$)/u',
-                'marital_status' => 'required|in:unmarried,married,widowed,separated,divorced',
-                'mobile_number' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-                'bank_name' => 'required|exists:vmt_banks,bank_name',
-                'bank_ifsc' => 'required|regex:/(^([A-Z]){4}0([A-Z0-9]){6}?$)/u',
-                'account_no' => 'required',
-                'current_address' => 'nullable',
-                'permanent_address' => 'nullable',
-                'mother_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'mother_gender' => 'nullable|in:Male,male,Female,female,other',
-                'mother_dob' => 'nullable|date',
-                'spouse_name' => 'nullable|required_unless:marital_status,unmarried|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'spouse_dob' => 'nullable',
-                'no_of_child' => 'nullable|numeric',
-                'child_name' => 'nullable',
-                'child_dob' => 'nullable',
-                'department' => 'required|exists:vmt_department,name',
-                'process' => 'nullable',
-                'designation' => 'required',
-                'cost_center' => 'nullable',
-                'confirmation_period' => 'nullable|date',
-                'holiday_location' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'l1_manager_code' => 'nullable|regex:/(^([a-zA-z0-9.]+)(\d+)?$)/u',
-                'l1_manager_name' => 'nullable|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'work_location' => 'required|regex:/(^([a-zA-z. ]+)(\d+)?$)/u',
-                'official_mail' => 'nullable|email',
-                'official_mobile' => 'nullable|regex:/^([0-9]{10})?$/u|numeric',
-                'emp_notice' => 'nullable|numeric',
-                'basic' => 'required|numeric',
-                'hra' => 'required|numeric',
-                'statutory_bonus' => 'required|numeric',
-                'child_education_allowance' => 'required|numeric',
-                'food_coupon' => 'required|numeric',
-                'lta' => 'required|numeric',
-                'special_allowance' => 'required|numeric',
-                'other_allowance' => 'required|numeric',
-                'epf_employer_contribution' => 'required|numeric',
-                'insurance' => 'required|numeric',
-                'graduity' => 'required|numeric',
-                'epf_employee' => 'required|numeric',
-                'esic_employee' => 'required|numeric',
-                'professional_tax' => 'required|numeric',
-                'labour_welfare_fund' => 'nullable|numeric',
-                'uan_number' => 'nullable|numeric',
-                'pf_applicable' => 'nullable|in:yes,Yes,no,No',
-                'esic_applicable' => 'nullable|in:yes,Yes,no,No',
-                'ptax_location' => 'nullable',
-                'tax_regime' => 'nullable|in:old,Old,new,New',
-                'lwf_location' => 'nullable',
-                'esic_employer_contribution' => 'required|numeric',
-                 'dearness_allowance' => 'nullable',
-            ];
-
-            $messages = [
-                'numeric' => 'Field <b>:attribute</b> should be numeric',
-                'date' => 'Field <b>:attribute</b> should have the following format DD-MM-YYYY ',
-                'in' => 'Field <b>:attribute</b> should have the following values : :values .',
-                'required' => 'Field <b>:attribute</b> is required',
-                'regex' => 'Field <b>:attribute</b> is invalid',
-                'employee_name.regex' => 'Field <b>:attribute</b> should not have special characters',
-                'unique' => 'Field <b>:attribute</b> should be unique',
-                'dob.before' => 'Field <b>:attribute</b> should be above 18 years',
-                'email' => 'Field <b>:attribute</b> is invalid',
-                'pan_no.required_if' =>'Field <b>:attribute</b> is required if <b>pan ack</b> not provided ',
-                'pan_ack.required_if' =>'Field <b>:attribute</b> is required if <b>pan no</b> not provided ',
-                'required_unless' => 'Field <b>:attribute</b> is invalid',
-                'exists' => 'Field <b>:attribute</b> doesnt exist in application.Kindly create one',
-
-            ];
-            $fail_data =array();
-            if(!empty($emp_user_code))
-            {$i=0;
-              foreach($emp_user_code as $key => $single_user_code){
-
-                  if( $key == $i && $single_user_code == $excelRowdata['employee_code']){
-
-                      $fail_data[$i] = 'Employee Code should be unique :'.' '.$excelRowdata['employee_code'];
-                   $i++;
-               }
-              }
-
-          }
-            if(!empty($emp_email))
-            {
-                $j=0;
-              foreach($emp_email as $key => $single_user_code){
-
-                   if( $key == $j && $single_user_code == $excelRowdata['email']){
-
-                       $fail_data[$j] = 'email should be unique :'.' '.$excelRowdata['email'];
-                       $j++;
-                   }
-              }
-
-          }
-            if(!empty($emp_mobile_number))
-            {
-                $k=0;
-              foreach($emp_mobile_number as $key => $single_user_code){
-
-                     if( $key == $k && $single_user_code == $excelRowdata['mobile_number']){
-
-                       $fail_data[$k] = 'mobile_number should be unique :'.' '.$excelRowdata['mobile_number'];
-                       $k++;
-                   }
-              }
-
-          }
-
-          array_push($emp_user_code,$excelRowdata['employee_code']);
-          array_push($emp_email,$excelRowdata['email']);
-          array_push($emp_mobile_number,$excelRowdata['mobile_number']);
-
-            $validator = Validator::make($excelRowdata, $rules, $messages);
-
-            if (!$validator->passes() || !empty($fail_data)) {
-                if(!empty($fail_data)){
-                    $rowDataValidationResult = [
-                        'row_number' => $currentRowInExcel,
-                        'status' => 'failure',
-                        'message' => 'In Excel Row - '.$excelRowdata['employee_code'].' : ' . $currentRowInExcel . ' has following error(s)',
-                        'error_fields' =>json_encode($fail_data),
-                    ];
-
-
-              }
-
-              if(!$validator->passes()){
-                    $rowDataValidationResult = [
-                        'row_number' => $currentRowInExcel,
-                        'status' => 'failure',
-                        'message' => 'In Excel Row - '.$excelRowdata['employee_code'].' : ' . $currentRowInExcel . ' has following error(s)',
-                        'error_fields' => json_encode($validator->errors()),
-                    ];
-
-                 }
-                 array_push($data_array, $rowDataValidationResult);
-
-                $isAllRecordsValid = false;
             }
-        }
 
-        } //for loop
 
-        //Runs only if all excel records are valid
-        if ($isAllRecordsValid) {
-            foreach ($excelRowdata_row[0]  as $key => $excelRowdata) {
+            foreach ($onboard_data  as $key => $excelRowdata) {
                 $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata, $employeeService);
                 array_push($data_array, $rowdata_response);
             }
 
+           if($rowdata_response['status'] =='success'){
+               $message = "Excelsheet data import success";
+           }else{
+               $message = "Errorwhile importing Excelsheet data ";
+           }
             $response = [
                 'status' => $rowdata_response['status'],
-                'message' => "Excelsheet data import success",
-                'mail_status' => $rowdata_response['mail_status'],
-                'data' =>$data_array
-             ];
+                'message' =>$message ,
+                'data' => $data_array
+            ];
 
-        } else {
-            $response = [
+            return response()->json($response);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
                 'status' => 'failure',
-                'message' =>"Please fix the below excelsheet data",
-                'mail_status' => '',
-                'data' =>$data_array
-             ];
+                'message' => 'Error while uploading Excel data',
+                'mail_status' => 'failure',
+                'error_fields' =>  $e->getMessage() . " " . $e->getline(),
+            ]);
         }
-
-         return response()->json($response);
     }
 
-    //    public function storeBulkOnboardEmployees(Request $request,VmtEmployeeService $employeeService){
-    //      try{
+    private function storeSingleRecord_BulkEmployee($row, $employeeService)
+    {
+        //DB level validation
 
-    //         $data = $request->all();
+        try {
 
-    //         $data_array=array();
-    //         $onboard_data =array();
-    //         foreach ($data  as $key => $excelRowdata) {
+            $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: "bulk");
+            $mail_message = '';
 
-    //         $processed_data = str_replace(array(' (dd-mmm-yyyy)',' '),array('','_'),array_keys($excelRowdata));
+            $status = $response['status'];
 
-    //         $Emp_data = array_combine(array_map('strtolower', $processed_data),array_values($excelRowdata));
+            if ($status == "success") {
 
-    //         array_push($onboard_data,$Emp_data);
-    //         }
+                $message = $row['employee_code'] . ' added successfully';
 
-    //         foreach ($onboard_data  as $key => $excelRowdata) {
-    //                         $rowdata_response = $this->storeSingleRecord_BulkEmployee($excelRowdata,$employeeService);
-    //                         array_push($data_array, $rowdata_response);
-    //                     }
-
-    //                  $response = [
-    //                      'status' => $rowdata_response['status'],
-    //                      'message' => "Excelsheet data import success",
-    //                      'data' =>$data_array
-    //                   ];
-
-    //                   return response()->json($response);
-    //         }catch(\Exception $e){
-    //                     return response()->json([
-    //                                 'status' => 'failure',
-    //                                 'message' => 'Error while uploading Excel data',
-    //                                 'mail_status'=>'failure',
-    //                                 'error_fields' =>  $e->getMessage()." ".$e->getline(),
-    //                     ]);
-    //          }
-    //     }
-
-        private function storeSingleRecord_BulkEmployee($row, $employeeService)
-        {
-            //DB level validation
-
-              try{
-
-                $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row,can_onboard_employee:"0",existing_user_id : null,onboard_type  : "bulk");
-                  $mail_message ='';
-
-                  $status = $response['status'];
-
-                 if($status == "success"){
-
-                    $message =  $row['employee_code']  . ' added successfully';
-
-                    $VmtClientMaster = VmtClientMaster::first();
-                    $image_view = url('/') . $VmtClientMaster->client_logo;
-                    $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'] ,'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
-                    if($isEmailSent){
-                        $mail_message ='success';
-                     }else{
-                        $mail_message ='failure';
-                     }
-
-                 } else{
-                    $message =  $row['employee_code']  . ' has failed';
-                 }
-
-
-                       //  $message = "Employee OnBoard was Created   ";
-                    //      $VmtClientMaster = VmtClientMaster::first();
-                    //      $image_view = url('/') . $VmtClientMaster->client_logo;
-
-
-                        return  $rowdata_response = [
-                            'row_number' => '',
-                            'status' => $status,
-                            'message' => $message,
-                            'mail_status' => $mail_message,
-                            'data' => '',
-                        ];
-
-
-                } catch(\Exception $e) {
-
-                   return $rowdata_response = [
-                    'status' => $status,
-                    'message' => $message,
-                    'mail_status'=>'failure',
-                    'data' => json_encode(['error' => $e->getMessage()]),
-                ];
+                $VmtClientMaster = VmtClientMaster::first();
+                $image_view = url('/') . $VmtClientMaster->client_logo;
+                $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+                if ($isEmailSent) {
+                    $mail_message = 'success';
+                } else {
+                    $mail_message = 'failure';
                 }
-
+            } else {
+                $message =$row['employee_code']  . ' has failed';
             }
 
-     /*
+
+            //  $message = "Employee OnBoard was Created   ";
+            //      $VmtClientMaster = VmtClientMaster::first();
+            //      $image_view = url('/') . $VmtClientMaster->client_logo;
+
+
+            return  $rowdata_response = [
+                'row_number' => '',
+                'status' => $status,
+                'message' => $message,
+                'Employee_Name' =>$row['employee_name']  ,
+                'mail_status' => $mail_message,
+                'data' => '',
+            ];
+        } catch (\Exception $e) {
+
+            return $rowdata_response = [
+                'status' => $status,
+                'message' => $message,
+                'mail_status' => 'failure',
+                'data' => json_encode(['error' => $e->getMessage()]),
+            ];
+        }
+    }
+
+    /*
         Called when quick onboarded employee submits the documents from their login.
         After this, the employee is onboarded sucessfully.
     */
@@ -1062,23 +696,22 @@ class VmtEmployeeOnboardingController extends Controller
         ];
 
 
-        try
-        {
+        try {
             $doc_upload_status = array();
 
-            foreach( $bulkonboard_docs as $doc_name => $doc_obj){
+            foreach ($bulkonboard_docs as $doc_name => $doc_obj) {
 
-               $processed_doc_name = str_replace('_',' ',$doc_name);
+                $processed_doc_name = str_replace('_', ' ', $doc_name);
 
-               $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
+                $doc_upload_status[$doc_name] = $employeeService->uploadDocument(auth()->user()->id, $doc_obj, $processed_doc_name);
             }
 
 
             //Check if all mandatory docs are uploaded by user
-            $mandatory_doc_ids = VmtDocuments::where('is_mandatory','1')->pluck('id');
-            $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id',$mandatory_doc_ids)
-                                                           ->where('vmt_employee_documents.user_id',auth()->user()->id)
-                                                           ->pluck('doc_id');
+            $mandatory_doc_ids = VmtDocuments::where('is_mandatory', '1')->pluck('id');
+            $user_uploaded_docs_ids = VmtEmployeeDocuments::whereIn('doc_id', $mandatory_doc_ids)
+                ->where('vmt_employee_documents.user_id', auth()->user()->id)
+                ->pluck('doc_id');
 
             $missing_mandatory_doc_ids = array_diff($mandatory_doc_ids->toArray(), $user_uploaded_docs_ids->toArray());
 
@@ -1088,33 +721,26 @@ class VmtEmployeeOnboardingController extends Controller
             //     $missing_mandatory_doc_name[] = VmtDocuments::where('id',$single_mandatory_id)->first()->document_name;
             // }
             //dd("DOc upload status : ".$pending_docs);
-  //dd(count($mandatory_doc_ids) == count($user_uploaded_docs_ids));
+            //dd(count($mandatory_doc_ids) == count($user_uploaded_docs_ids));
 
-            if(count($mandatory_doc_ids) == count($user_uploaded_docs_ids))
-              {
-                  //set the onboard status to 1
-                  $currentUser = User::where('id', auth()->user()->id)->first();
-                  $currentUser->is_onboarded = '1';
-                  $currentUser->save();
+            if (count($mandatory_doc_ids) == count($user_uploaded_docs_ids)) {
+                //set the onboard status to 1
+                $currentUser = User::where('id', auth()->user()->id)->first();
+                $currentUser->is_onboarded = '1';
+                $currentUser->save();
 
                 return  $rowdata_response = [
                     'status' => 'Success',
                     'message' => 'All documents uploaded. You have been successfully onboarded',
                     'data' => $doc_upload_status
                 ];
-
-             }
-            else
-             {
+            } else {
                 return $rowdata_response = [
                     'status' => 'Failure',
                     'message' => 'Please upload all mandatory documents',
                 ];
-
-             }
-
-        }
-        catch (\Throwable $e) {
+            }
+        } catch (\Throwable $e) {
             //dd("error! ".$e);
             return $rowdata_response = [
                 'status' => 'failure',
@@ -1124,125 +750,136 @@ class VmtEmployeeOnboardingController extends Controller
         }
     }
 
-    public function viewProfilePagePrivateFile(Request $request){
+    public function viewProfilePagePrivateFile(Request $request)
+    {
 
-        $private_file = 'employees/'.$request->user_code."/onboarding_documents";
+        $private_file = 'employees/' . $request->user_code . "/onboarding_documents";
         // dd(file(storage_path('employees'.$private_file)));
-       return response()->file(storage_path($private_file));
-
+        return response()->file(storage_path($private_file));
     }
 
-    public function updateEmployeeActiveStatus(Request $request, VmtEmployeeService $employeeService ,VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService){
+    public function updateEmployeeActiveStatus(Request $request, VmtEmployeeService $employeeService, VmtEmployeeMailNotifMgmtService $serviceVmtEmployeeMailNotifMgmtService)
+    {
 
-       $response= $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
+        $response = $employeeService->updateEmployeeActiveStatus($request->user_code, $request->active_status);
 
-      // $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
+        // $Activation_mail_status =$serviceVmtEmployeeMailNotifMgmtService->send_AccActivationMailNotification($request->user_code);
 
-       return $response;
-
+        return $response;
     }
 
-    public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService){
-            return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
+    public function getEmployeeAllDocumentDetails(Request $request, VmtEmployeeDocumentsService $serviceVmtEmployeeDocumentsService)
+    {
+        return $serviceVmtEmployeeDocumentsService->getEmployeeAllDocumentDetails($request->user_code);
     }
 
 
 
-    public function getEmployeeMandatoryDetails(Request $request){
+    public function getEmployeeMandatoryDetails(Request $request)
+    {
 
-        try{
-        $data =array();
+        try {
+            $data = array();
 
-//get existing employee_code
-        $employees_user_code =User::pluck('user_code')->toarray();
-        $user_code= array_filter($employees_user_code, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['user_code']=array_values($user_code);
-//get existing employee_email
+            // Get Existing Client Code's
 
-        $employees_email =User::pluck('email')->toarray();
-        $email=array_filter($employees_email, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['email']=array_values($email);
+            $existing_clients = VmtClientMaster::pluck('client_code')->toarray();
+            $client_code = array_filter($existing_clients, static function ($data) {
+                return !is_null($data) && trim($data) != '';
+            });
 
-//get existing employee_mobile_number
-        $employees_mobile_number =VmtEmployee::pluck('mobile_number')->toarray();
-        $mobile_number = array_filter($employees_mobile_number, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['mobile_number']=array_values($mobile_number);
+            $data['client_code']= $client_code;
 
-//get existing employee_aadhar_number
-        $employees_aadhar_number =VmtEmployee::pluck('aadhar_number')->toarray();
-        $aadhar_number= array_filter($employees_aadhar_number, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['aadhar_number']=array_values($aadhar_number);
+            //get existing employee_code
+            $employees_user_code = User::pluck('user_code')->toarray();
+            $user_code = array_filter($employees_user_code, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['user_code'] = array_values($user_code);
+            //get existing employee_email
 
-//get existing employee_pan_number
-        $employees_pan_number =VmtEmployee::pluck('pan_number')->toarray();
-        $pan_number = array_filter($employees_pan_number, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['pan_number']=array_values($pan_number);
+            $employees_email = User::pluck('email')->toarray();
+            $email = array_filter($employees_email, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['email'] = array_values($email);
 
-//get existing bank_name
-        $bank_name =Bank::pluck('bank_name')->toarray();
-        $bank_name = array_filter($bank_name, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['bank_name']=array_values($bank_name);
+            //get existing employee_mobile_number
+            $employees_mobile_number = VmtEmployee::pluck('mobile_number')->toarray();
+            $mobile_number = array_filter($employees_mobile_number, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['mobile_number'] = array_values($mobile_number);
 
-//get existing department_name
-        $department_name =Department::pluck('name')->toarray();
-        $department_name = array_filter($department_name, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['department_name']=array_values($department_name);
+            //get existing employee_aadhar_number
+            $employees_aadhar_number = VmtEmployee::pluck('aadhar_number')->toarray();
+            $aadhar_number = array_filter($employees_aadhar_number, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['aadhar_number'] = array_values($aadhar_number);
 
-//get existing employees_bankaccount_number
-        $employees_bankaccount_number =VmtEmployee::pluck('bank_account_number')->toarray();
-        $bankaccount_number = array_filter($employees_bankaccount_number, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['bankaccount_number']=array_values($bankaccount_number);
+            //get existing employee_pan_number
+            $employees_pan_number = VmtEmployee::pluck('pan_number')->toarray();
+            $pan_number = array_filter($employees_pan_number, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['pan_number'] = array_values($pan_number);
 
-//get existing employees_bankaccount_number
-        $employees_blood_group =VmtBloodGroup::pluck('name')->toarray();
-        $bankaccount_number = array_filter($employees_blood_group, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['employees_blood_group']=array_values($employees_blood_group);
+            //get existing bank_name
+            $bank_name = Bank::pluck('bank_name')->toarray();
+            $bank_name = array_filter($bank_name, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['bank_name'] = array_values($bank_name);
 
-//get existing employees_bankaccount_number
-        $employees_marital_status =VmtMaritalStatus::pluck('name')->toarray();
-        $bankaccount_number = array_filter($employees_marital_status, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['employees_marital_status']=array_values($employees_marital_status);
+            //get existing department_name
+            $department_name = Department::pluck('name')->toarray();
+            $department_name = array_filter($department_name, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['department_name'] = array_values($department_name);
 
-//get existing employees_bankaccount_number
-        $employees_officical_mail =VmtEmployeeOfficeDetails::join('users','users.id','=','vmt_employee_office_details.user_id')
-                                                           ->where('active','<>','-1')
-                                                           ->pluck('officical_mail')->toarray();
-        $official_mail = array_filter($employees_officical_mail, static function($data){
-            return !is_null($data) && $data !='NULL';
-        });
-        $data['official_mail']=array_values($official_mail);
+            //get existing employees_bankaccount_number
+            $employees_bankaccount_number = VmtEmployee::pluck('bank_account_number')->toarray();
+            $bankaccount_number = array_filter($employees_bankaccount_number, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['bankaccount_number'] = array_values($bankaccount_number);
+
+            //get existing employees_bankaccount_number
+            $employees_blood_group = VmtBloodGroup::pluck('name')->toarray();
+            $bankaccount_number = array_filter($employees_blood_group, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['employees_blood_group'] = array_values($employees_blood_group);
+
+            //get existing employees_bankaccount_number
+            $employees_marital_status = VmtMaritalStatus::pluck('name')->toarray();
+            $bankaccount_number = array_filter($employees_marital_status, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['employees_marital_status'] = array_values($employees_marital_status);
+
+            //get existing employees_bankaccount_number
+            $employees_officical_mail = VmtEmployeeOfficeDetails::join('users', 'users.id', '=', 'vmt_employee_office_details.user_id')
+                ->where('active', '<>', '-1')
+                ->pluck('officical_mail')->toarray();
+            $official_mail = array_filter($employees_officical_mail, static function ($data) {
+                return !is_null($data) && $data != 'NULL';
+            });
+            $data['official_mail'] = array_values($official_mail);
 
 
-        $response = ([
-            'status'=>'success',
-            'message'=>'',
-            "data"=> $data
-         ]);
-        }catch(\Exception $e){
             $response = ([
-                'status'=>'success',
-                'message'=>'',
-                "data"=> $e->getmessage()." ".$e->getline()
+                'status' => 'success',
+                'message' => '',
+                "data" => $data
+            ]);
+        } catch (\Exception $e) {
+            $response = ([
+                'status' => 'success',
+                'message' => '',
+                "data" => $e->getmessage() . " " . $e->getline()
             ]);
         }
 
