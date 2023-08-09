@@ -407,5 +407,6 @@ class VmtSalaryAdvanceController extends Controller
         $loan_type = "int_free_loan";
         $user_id = auth()->user()->id;
         $response = $vmtSalaryAdvanceService->employeeDashboardLoanAndAdvance($loan_type, $user_id);
+        return   $response;
     }
 }

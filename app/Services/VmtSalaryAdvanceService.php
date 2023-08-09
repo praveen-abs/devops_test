@@ -30,6 +30,8 @@ use Exception;
 use App\Models\VmtClientMaster;
 use Mail;
 use App\Mail\ApproveRejectLoanAndSaladvMail;
+use App\Models\VVmtInterestFreeLoanTransaction;
+use App\Models\VmtLoanWithInterestTransactionRecord;
 use App\Mail\ApproverejectloanMail;
 use App\Mail\EmpApplyLoanMail;
 use App\Mail\FinanceApproverejectloanMail;
@@ -2140,8 +2142,52 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function employeeDashboardLoanAndAdvance()
+    public function employeeDashboardLoanAndAdvance($loan_type, $user_id)
     {
-        dd('working');
+        $total_borrowed_amt = 0;
+        $total_repaid_amt = 0;
+        $balance_amt = 0;
+        $pending_request = 0; // need writed code for this in future
+        $compeleted_request = 0;  // need writed code for this in future
+        if ($loan_type == 'loan_with_int') {
+            $loan_amt_query = VmtLoanWithInterestTransactionRecord::join(
+                'vmt_emp_int_loan_details',
+                'vmt_emp_int_loan_details.id',
+                '=',
+                'vmt_loan_with_int_transaction_record.emp_loan_details_id'
+            )->where('vmt_emp_int_loan_details.loan_crd_sts', 1)
+                ->where('vmt_emp_int_loan_details.user_id', $user_id)
+                ->get([
+                    'vmt_loan_with_int_transaction_record.payroll_date as payroll_date',
+                    'vmt_loan_with_int_transaction_record.expected_emi as expected_emi',
+                    'vmt_loan_with_int_transaction_record.paid_emi as paid_emi',
+                ]);
+        } else if ($loan_type == 'int_free_loan') {
+            $loan_amt_query = VmtInterestFreeLoanTransaction::join(
+                'vmt_emp_int_free_loan_details',
+                'vmt_emp_int_free_loan_details.id',
+                '=',
+                'vmt_int_free_loan_transaction_record.emp_loan_details_id'
+            )
+                ->where('vmt_emp_int_free_loan_details.loan_crd_sts', 1)->where('vmt_emp_int_free_loan_details.user_id', $user_id)
+                ->get([
+                    'vmt_int_free_loan_transaction_record.payroll_date as payroll_date',
+                    'vmt_int_free_loan_transaction_record.expected_emi as expected_emi',
+                    'vmt_int_free_loan_transaction_record.paid_emi as paid_emi',
+                ]);
+        } else if ($loan_type == 'sal_adv') {
+        } else {
+            return response()->json([
+                'status' => 'failure',
+                'message' => 'Undefined Loan type'
+            ]);
+        }
+        foreach ($loan_amt_query  as $single_record) {
+            $total_borrowed_amt = $total_borrowed_amt + $single_record->expected_emi;
+            $total_repaid_amt = $total_repaid_amt + $single_record->paid_emi;
+        }
+
+
+        return "";
     }
 }
