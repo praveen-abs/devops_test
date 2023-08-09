@@ -361,7 +361,7 @@ class VmtSalaryAdvanceController extends Controller
     {
         //$loan_type = $request->loan_type;
         $loan_type = 'InterestFreeLoan';
-        $loan_details_id = 2;
+        $loan_details_id = 3;
         $response = $vmtSalaryAdvanceService->loanTransectionRecord($loan_type, $loan_details_id);
     }
 
@@ -398,14 +398,14 @@ class VmtSalaryAdvanceController extends Controller
     public function isEligibleForLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
         $loan_type = "int_free_loan";
-        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance
-        
-        
-        ($loan_type);
+        $response = $vmtSalaryAdvanceService->isEligibleForLoanAndAdvance($loan_type);
         return $response;
     }
 
-    public function employeeLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService){
-        $response = $vmtSalaryAdvanceService->employeeLoanAndAdvance();
+    public function employeeDashboardLoanAndAdvance(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
+    {
+        $loan_type = "int_free_loan";
+        $user_id = auth()->user()->id;
+        $response = $vmtSalaryAdvanceService->employeeDashboardLoanAndAdvance($loan_type, $user_id);
     }
 }

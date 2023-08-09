@@ -913,7 +913,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
     Route::get('/is-eligible-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'isEligibleForLoanAndAdvance']);
 
-    Route::get('/employee-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'employeeLoanAndAdvance']);
+    Route::get('/employee-dashboard-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'employeeDashboardLoanAndAdvance']);
  
     Route::get('/testing-karthi',[App\Http\Controllers\VmtSalaryAdvanceController::class,'testingKarthi']);
 

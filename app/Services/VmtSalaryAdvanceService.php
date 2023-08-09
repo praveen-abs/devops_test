@@ -2140,7 +2140,8 @@ class VmtSalaryAdvanceService
         }
     }
 
-    public function employeeLoanAndAdvance()
+    public function employeeDashboardLoanAndAdvance()
     {
+        dd('working');
     }
 }
