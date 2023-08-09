@@ -257,8 +257,8 @@ const sampleTemplate = ref([
     {
         'Employee Code': 'ABS01',
         'Employee Name': 'Vishu',
-        'Date Of Birth (dd-mmm-yyyy)': '23-09-2001',
-        'Date of Joined (dd-mmm-yyyy)': '23-09-2023',
+        'Date Of Birth (dd-mm-yyyy)': '23-09-2001',
+        'Date of Joined (dd-mm-yyyy)': '23-09-2023',
         'Mobile Number': '9898989898',
         'Aadhaar Number': '2222 3333 4444',
         'Personal Email': 'abs@gmail.com',
@@ -270,16 +270,14 @@ const sampleTemplate = ref([
         'Department': 'IT',
         'Location': 'Chennai',
         'Father Name': 'Simma',
-        'Physically Handicapped': [
-            "one", "two", "three", "four"
-        ],
+        'Physically Handicapped': 'No',
     }
 ])
 const sampleTemplateHeaders = [
     { title: 'Employee Code' },
     { title: 'Employee Name' },
-    { title: 'Date Of Birth (dd-mmm-yyyy)', },
-    { title: 'Date of Joined (dd-mmm-yyyy)' },
+    { title: 'Date Of Birth (dd-mm-yyyy)', },
+    { title: 'Date of Joined (dd-mm-yyyy)' },
     { title: 'Mobile Number' },
     { title: 'Aadhaar Number' },
     { title: 'Personal Email' },
