@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-3 w-8/12 place-content-center mx-auto my-2">
+    <div class="grid grid-cols-3 w-10/12 place-content-center mx-auto my-2">
         <!-- <div class="flex">
             <label class="border-1 p-2 font-semibold fs-6 border-gray-500 rounded-lg cursor-pointer" for="file"><i
                     class="pi pi-folder px-2" style="font-size: 1rem"></i>Browse</label>
@@ -153,7 +153,9 @@
                     </p>
                 </template>
                 <template #editor="{ data, field }">
-                    <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" />
+                    <!-- <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" /> -->
+                    <InputText v-if="field == 'Aadhar'" v-model="data[field]" minLength="12" maxLength="12"
+                    @keypress="useStore.isEnteredNos($event)" />
                     <Dropdown v-else-if="field == 'Gender'" v-model="data[field]" :options="Gender" optionLabel="name"
                         optionValue="name" placeholder="Select Gender" class="w-full" />
                     <InputMask v-else-if="field == 'Pan No'" id="serial" mask="aaaPa9999a" v-model="data[field]"
