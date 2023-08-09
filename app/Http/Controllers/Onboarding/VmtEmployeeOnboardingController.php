@@ -637,6 +637,7 @@ class VmtEmployeeOnboardingController extends Controller
         try {
 
             $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: "bulk");
+
             $mail_message = '';
 
             $status = $response['status'];
@@ -669,7 +670,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => $message,
                 'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
-                'data' => '',
+                'data' => $response['data'] ,
             ];
         } catch (\Exception $e) {
 
