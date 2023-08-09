@@ -15,7 +15,18 @@ return new class extends Migration
     {
         //
         Schema::table('vmt_payroll_components', function (Blueprint $table) {
-            $table->renameColumn("calculation_method", "calculation_method_id");
+            if (Schema::hasColumn('vmt_payroll_components', 'calculation_method')) {
+                $table->renameColumn("calculation_method", "calculation_method_id");
+            }
+            if (Schema::hasColumn('vmt_payroll_components', 'epf')) {
+                $table->renameColumn("epf", "is_part_of_epf");
+            }
+            if (Schema::hasColumn('vmt_payroll_components', 'esi')) {
+                $table->renameColumn("esi", "is_part_of_esi");
+            }
+
+
+
 
         });
     }
@@ -29,7 +40,14 @@ return new class extends Migration
     {
         //
         Schema::table('vmt_payroll_components', function (Blueprint $table) {
-            $table->dropColumn('calculation_method_id');
+            
+            if (Schema::hasColumn('vmt_payroll_components', 'is_part_of_epf')) {
+                $table->dropColumn('is_part_of_epf');
+            }
+            if (Schema::hasColumn('vmt_payroll_components', 'is_part_of_esi')) {
+                $table->dropColumn('is_part_of_esi');
+            }
+
         });
 
     }

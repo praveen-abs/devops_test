@@ -68,8 +68,11 @@ use App\Models\VmtClientMaster;
     @vite('resources\js\hrms\modules\paycheck\salary_advance_loan\employee_salary_loan.js')
     {{-- <div id="EmpSalaryAdvanceLoan"></div> --}}
 
-    @vite('resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js')
-    <div id="on_run_client_onboarding"></div>
+    {{-- @vite('resources/js/hrms/modules/configurations/client_onboarding/on_run_client_onboarding.js')
+    <div id="on_run_client_onboarding"></div> --}}
+
+     @vite('resources/js/hrms/modules/payroll/salary_Revision/salary_Revision.js')
+         <div id="salary_Revision"></div>
 
 </body>
 
