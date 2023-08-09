@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen">
+    <div class="w-full">
         <div class="mb-2 card left-line">
             <div class="py-1 card-body">
                 <div class="row">

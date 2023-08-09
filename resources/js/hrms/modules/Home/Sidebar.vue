@@ -10,7 +10,7 @@
         </div>
         <template v-for="(menu, index) in menuItems" :key="index" class="relative">
             <div class="">
-                <a v-if="open" role="button" @click="toggleMenu(index)" :class="{
+                <a v-if="open" :href="menu.to" role="button" @click="toggleMenu(index)" :class="{
                     'bg-yellow-400 text-[001820] ': isOpen(index),
                 }"
                     class=" flex items-center rounded-l-md my-2 p-2  w-full  relative left-3 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover: duration-300 hover:bg-yellow-400">

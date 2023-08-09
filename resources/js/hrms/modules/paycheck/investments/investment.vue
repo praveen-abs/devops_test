@@ -1,7 +1,7 @@
 <template>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
-    <div class=" mt-30 investments-wrapper">
+    <div class="">
         <div class="mb-2 shadow card left-line ">
             <div class="pt-1 pb-0 card-body">
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed" id="pills-tab" role="tablist">
@@ -204,8 +204,5 @@ Dialog {
     background: #f6f4f46e;
 }
 
-.page-content {
-    padding: calc(30px + 1.5rem) calc(1.5rem / 2) 60px calc(1.5rem / 2);
-}
 </style>
 

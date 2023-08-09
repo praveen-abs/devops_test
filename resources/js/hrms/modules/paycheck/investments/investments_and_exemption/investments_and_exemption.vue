@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <div>
+    <div class="w-[96%]">
         <TaxSavingInvestments />
 
         <!-- Navigation Bar -->

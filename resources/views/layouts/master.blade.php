@@ -177,7 +177,7 @@ clearstatcache();
         <div id="loading-content" class="loading-content"></div>
     </section> -->
 {{-- @yield('loading') --}}
-<div class="flex flex-row h-screen overflow-hidden relative ">
+<div class="flex flex-row h-screen fixed  w-[100%]">
     @if (Auth::user()->active == 0)
     @vite('resources/js/hrms/modules/Home/Sidebar.js')
     <div id="Sidebar"></div>
@@ -186,13 +186,11 @@ clearstatcache();
     <div id="Sidebar"></div>
     @endif
 
-    <div class="bg-gray-50 text-gray-700  h-screen w-screen">
+    <div class="bg-gray-50  text-gray-700  h-screen w-[100%] p-2">
         @vite('resources/js/hrms/modules/Home/Topbar.js')
         <div id="Topbar"></div>
-        <div class="main-content ">
-            <div class="page-content h-screen w-full overflow-x-scroll overflow-y-auto">
-                    @yield('content')
-            </div>
+        <div class=" w-[100%] h-full overflow-auto p-2">
+            @yield('content')
         </div>
     </div>
 </div>
@@ -267,4 +265,3 @@ clearstatcache();
 </body>
 
 </html>
-
