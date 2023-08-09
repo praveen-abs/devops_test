@@ -6,7 +6,7 @@
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
                 <ul class="divide-x nav nav-pills divide-solid nav-tabs-dashed border-none border-0" id="pills-tab" role="tablist">
                     <li class=" nav-item" role="presentation">
-                        <a class="px-2 position-relative border-0 font-['poppins']" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
+                        <a class="px-4 position-relative border-0 font-['poppins'] text-[14px]" id="" data-bs-toggle="pill" href="" role="tab" aria-controls=""
                             aria-selected="true" @click="activetab_btn1" :class="[activetab === 1 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']">
                             pending
                         </a>                      
@@ -15,7 +15,7 @@
                     </li>
     
                     <li class=" nav-item position-relative  border-0" role="presentation">
-                        <a class=" text-center px-2  border-0 font-['poppins']" id="" data-bs-toggle="pill" href="" @click="activetab_btn2"
+                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px]" id="" data-bs-toggle="pill" href="" @click="activetab_btn2"
                             :class="[activetab === 2 ? 'active font-semibold' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
                            Processed
                         </a>
@@ -24,7 +24,7 @@
                         <div v-else class=" border-3 h-1  border-gray-400"></div>
                     </li>
                     <li class=" nav-item position-relative  border-0" role="presentation">
-                        <a class=" text-center px-2  border-0 font-['poppins']" id="" data-bs-toggle="pill" href="" @click="activetab_btn3"
+                        <a class=" text-center px-4  border-0 font-['poppins'] text-[14px]" id="" data-bs-toggle="pill" href="" @click="activetab_btn3"
                             :class="[activetab === 3 ? 'active font-semibold ' : 'font-medium !text-[#8B8B8B]']" role="tab" aria-controls="" aria-selected="true">
                            Cancelled
                         </a>
