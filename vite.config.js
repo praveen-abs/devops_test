@@ -170,7 +170,10 @@ export default defineConfig({
                 'resources/js/hrms/modules/approvals/employeeDetails_approvals/EmpDetails_approvals.js',
 
                 //approvals_salary_advance
-                'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js'
+                'resources/js/hrms/modules/approvals/salary_advance_loan/approvals_salary_advance.js',
+
+                // salary Revision
+               'resources/js/hrms/modules/payroll/salary_Revision/salary_Revision.js'
 
 
             ],
