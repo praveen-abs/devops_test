@@ -95,7 +95,7 @@
                     </p>
 
                     <p v-else-if="field.includes('Bank Name')"
-                        :class="[useStore.isLetter(data['Bank Name']) || !useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        :class="[!useStore.isBankExists(data['Bank Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
                         class="font-semibold fs-6">
                         {{ data['Bank Name'] }}
                     </p>
@@ -147,7 +147,11 @@
                         class="font-semibold fs-6">
                         {{ data['Blood Group'] }}
                     </p>
-
+                    <p v-else-if="field.includes('Department')"
+                        :class="[!useStore.isDepartmentExists(data['Department']) ? 'bg-red-100 p-2 rounded-lg' : '']"
+                        class="font-semibold fs-6">
+                        {{ data['Department'] }}
+                    </p>
                     <p v-else class="font-semibold fs-6">
                         {{ data[field] }}
                     </p>
@@ -155,7 +159,7 @@
                 <template #editor="{ data, field }">
                     <!-- <InputMask v-if="field == 'Aadhar'" id="ssn" mask="9999 9999 9999" v-model="data[field]" /> -->
                     <InputText v-if="field == 'Aadhar'" v-model="data[field]" minLength="12" maxLength="12"
-                    @keypress="useStore.isEnteredNos($event)" />
+                        @keypress="useStore.isEnteredNos($event)" />
                     <Dropdown v-else-if="field == 'Gender'" v-model="data[field]" :options="Gender" optionLabel="name"
                         optionValue="name" placeholder="Select Gender" class="w-full" />
                     <InputMask v-else-if="field == 'Pan No'" id="serial" mask="aaaPa9999a" v-model="data[field]"
@@ -172,6 +176,9 @@
                     <Dropdown v-else-if="field == 'Blood Group'" v-model="data[field]"
                         :options="useNormalOnboardingStore.bloodGroups" optionLabel="name" optionValue="name"
                         placeholder="Select Bloodgroup" class="p-error" />
+                    <Dropdown v-else-if="field == 'Department'" v-model="data[field]"
+                        :options="useNormalOnboardingStore.departmentDetails" optionLabel="name" optionValue="name"
+                        placeholder="Select Department" class="p-error" />
                     <InputText v-else v-model="data[field]" :readonly="checkingNonEditableFields(field)" />
                 </template>
             </Column>
