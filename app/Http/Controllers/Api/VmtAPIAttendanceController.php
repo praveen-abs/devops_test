@@ -279,11 +279,12 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     {
 
         //Fetch the data
-        return $serviceVmtAttendanceService->approveRejectAbsentRegularization( approver_user_code : $request->approver_user_code,
-                                                                                    record_id : auth()->user()->record_id,
-                                                                                    status : $request->status,
-                                                                                    status_text:$request->status_text);
-
+        return $serviceVmtAttendanceService->approveRejectAbsentRegularization(
+            approver_user_code: $request->approver_user_code,
+            record_id: auth()->user()->record_id,
+            status: $request->status,
+            status_text: $request->status_text
+        );
     }
 
     public function approveRejectRevokeLeaveRequest(Request $request, VmtAttendanceService $serviceVmtAttendanceService, VmtNotificationsService $serviceVmtNotificationsService)
@@ -495,8 +496,39 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
     }
     public function getTeamEmployeesLeaveDetails(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
     {
-
-        return $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code, $request->filter_month, $request->filter_year, $request->filter_leave_status);
+        try {
+            $response = array();
+            $emp_details = $serviceVmtAttendanceService->getTeamEmployeesLeaveDetails($request->manager_code, $request->filter_month, $request->filter_year, $request->filter_leave_status);
+          
+            $emp_details = json_encode($emp_details, true);
+            $emp_details = json_decode($emp_details, true);
+            foreach ($emp_details['original']['data'] as $single_details) {
+                $temp_ar = array();
+                $temp_detail_ar = array();
+                $temp_user_code = $single_details['user_code'];
+                if (array_key_exists($temp_user_code, $response)) {
+                    array_push($response[$temp_user_code]['leave_details'], $single_details);
+                } else {
+                    $temp_ar['user_code'] =  $single_details['user_code'];
+                    $temp_ar['name'] =  $single_details['employee_name'];
+                    array_push($temp_detail_ar, $single_details);
+                    $temp_ar['leave_details'] = $temp_detail_ar;
+                    $response[$temp_user_code] = $temp_ar;
+                }
+            }
+        } catch (\Exception $e) {
+            // dd($e);
+            return response()->json([
+                'status' => 'failure',
+                'message' => "Error[ getAllEmployeesLeaveDetails() ] ",
+                'data' => $e
+            ]);
+        }
+        return response()->json([
+            'status' => 'success',
+            'message' => '',
+            'data' => $response
+        ]);
     }
 
     public function getCountForAttRegularization(Request $request, VmtAttendanceService $serviceVmtAttendanceService)
@@ -530,14 +562,14 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
             $request->all(),
             $rules = [
                 "user_code" => 'required|exists:users,user_code',
-                 "year"=>'required',
-                 "month"=>'required',
-                 "status"=>'required|in:Pending,Approved,Rejected',
+                "year" => 'required',
+                "month" => 'required',
+                "status" => 'required|in:Pending,Approved,Rejected',
             ],
             $messages = [
                 "required" => "Field :attribute is missing",
                 "exists" => "Field :attribute is invalid",
-                "in"=>"Field :attribute is invalid"
+                "in" => "Field :attribute is invalid"
             ]
         );
 
@@ -547,7 +579,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'message' => $validator->errors()->all()
             ]);
         }
-        $response =  $serviceVmtAttendanceService->getfetchAttendadnceRegularization($request->user_code,$request->year,$request->month,$request->status);
+        $response =  $serviceVmtAttendanceService->getfetchAttendadnceRegularization($request->user_code, $request->year, $request->month, $request->status);
 
         return $response;
     }
