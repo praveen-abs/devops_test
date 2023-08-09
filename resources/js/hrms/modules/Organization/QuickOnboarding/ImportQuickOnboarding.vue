@@ -41,10 +41,10 @@
 
             <Column v-for="col of  useStore.EmployeeQuickOnboardingDynamicHeader " :key="col.title" :field="col.title"
                 style="min-width: 12rem;" :header="col.title">
-
+                <!-- || !useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code']) -->
                 <template #body="{ data, field }">
                     <div v-if="field.includes('Employee Code')"
-                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) || !useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
+                        :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
                             <!-- <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'Client code is not eligible'"
