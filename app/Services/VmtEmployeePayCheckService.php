@@ -1294,25 +1294,35 @@ class VmtEmployeePayCheckService
             ];
         }
 
-            // dd($getpersonal);
 
-        $html = view('dynamic_payslip_templates.dynamic_payslip_template', $getpersonal);
-
-    //    return $html;
-
-        $options = new Options();
-        $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true);
-
-        $pdf = new Dompdf($options);
-        $pdf->loadhtml($html, 'UTF-8');
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->render();
-        $pdf->stream("payslip.pdf");
-
-         return redirect()->back();
+        // dd($getpersonal);
 
 
+            $type = "html";
+
+        if($type =="pdf"){
+
+            $html = view('dynamic_payslip_templates.dynamic_payslip_template_pdf', $getpersonal);
+
+                $options = new Options();
+                $options->set('isHtml5ParserEnabled', true);
+                $options->set('isRemoteEnabled', true);
+
+                $pdf = new Dompdf($options);
+                $pdf->loadhtml($html, 'UTF-8');
+                $pdf->setPaper('A4', 'portrait');
+                $pdf->render();
+                $pdf->stream("payslip.pdf");
+
+                 return redirect()->back();
+
+        }elseif($type =="html"){
+
+            $html = view('dynamic_payslip_templates.dynamic_payslip_template_view', $getpersonal);
+
+            return $html;
+
+        }
 
     }
 

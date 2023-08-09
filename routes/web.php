@@ -468,6 +468,12 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('vmt-kpi/data', 'App\Http\Controllers\VmtEmployeeController@showKpiData')->name('kpi-data');
     Route::post('vmt-employess/status', 'App\Http\Controllers\VmtEmployeeController@updateUserAccountStatus')->name('updateUserAccountStatus');
 
+    //payrolltax calculation
+
+    Route::get('get_comp_value', [App\Http\Controllers\VmtPayrollTaxController::class,'getEmpCompValues']);
+
+
+
     //Asset Inventory
     Route::get('assetinventory-index', 'App\Http\Controllers\VmtAssetInventoryController@index')->name('assetinventory-index');
 
