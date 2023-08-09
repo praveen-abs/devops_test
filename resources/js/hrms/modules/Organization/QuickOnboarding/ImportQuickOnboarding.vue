@@ -61,7 +61,7 @@
                         <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                             v-tooltip.right="'User code is already exists'"
                             v-if="useStore.isAadharExists(data['Aadhar'])"></i>
-                        {{ data['Aadhar'] }}
+                        {{ useStore.splitNumberWithSpaces(data['Aadhar']) }}
                     </p>
                     <p v-else-if="field.includes('Employee Name')"
                         :class="[useStore.isLetter(data['Employee Name']) ? 'bg-red-100 p-2 rounded-lg' : '']"
