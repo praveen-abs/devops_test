@@ -13,7 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vmt_payroll_components', function (Blueprint $table) {
+        Schema::create('
+        ', function (Blueprint $table) {
             $table->id();
             $table->text('comp_name');
             $table->integer('comp_type_id');
