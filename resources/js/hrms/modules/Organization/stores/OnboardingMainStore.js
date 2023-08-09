@@ -432,9 +432,10 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-        console.log(data["Bank ifsc"]);
+        // console.log(data["Bank ifsc"]);
+        // !isClientCodeExists(existingClientCode.value, data['Employee Code'])
 
-        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"]) || !isClientCodeExists(existingClientCode.value, data['Employee Code'])) {
+        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"])) {
             errorRecordsCount.value.push('invalid')
         }
         else

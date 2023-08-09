@@ -46,12 +46,12 @@
                     <div v-if="field.includes('Employee Code')"
                         :class="[useStore.findCurrentTableDups(useStore.currentlyImportedTableEmployeeCodeValues, data['Employee Code']) || !useStore.isUserExists(data['Employee Code']) || !useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code']) ? 'bg-red-100 p-2 rounded-lg' : '']">
                         <p class="font-semibold fs-6">
-                            <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
+                            <!-- <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'Client code is not eligible'"
-                                v-if="!useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code'])"></i>
+                                v-if="!useStore.isClientCodeExists(useStore.existingClientCode, data['Employee Code'])"></i> -->
                             <i class="fa fa-exclamation-circle text-warning mx-2 cursor-pointer" aria-hidden="true"
                                 v-tooltip.right="'User code is already exists'"
-                                v-else-if="!useStore.isUserExists(data['Employee Code'])"></i>
+                                v-if="!useStore.isUserExists(data['Employee Code'])"></i>
                             {{ data['Employee Code'] }}
                         </p>
                     </div>
