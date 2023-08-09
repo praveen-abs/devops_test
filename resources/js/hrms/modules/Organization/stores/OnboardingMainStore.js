@@ -8,7 +8,6 @@ import * as XLSX from 'xlsx';
 import { useRouter, useRoute } from "vue-router";
 import { useNormalOnboardingMainStore } from '../Normal_Onboarding/stores/NormalOnboardingMainStore'
 import dayjs from "dayjs";
-import { url } from "@vuelidate/validators";
 
 
 export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () => {
@@ -280,11 +279,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     function isClientCodeExists(obj, value) {
-        console.log(obj);
-        console.log(value);
         const splitedClientCodeParts = value.split(/(?=\d)/);
-        console.log(splitedClientCodeParts[0]);
-        console.log(Object.values(obj).includes(splitedClientCodeParts[0]));
         return (Object.values(obj).includes(splitedClientCodeParts[0])) ? true : false
     }
 
@@ -315,7 +310,6 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
     const isValidAadhar = (e) => {
         const result = splitNumberWithSpaces(e);
-        console.log(result);
         if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(result) && !existingAadharCards.value.includes(result)) {
             return false
         } else {
@@ -500,7 +494,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
 
         isLetter, isEmail, isNumber, isEnterLetter, isEnterSpecialChars, isEnterSpecialChars, isValidAadhar, isValidBankAccountNo, isValidBankIfsc, isSpecialChars,
         isValidDate, isValidMobileNumber, isValidPancard, isEnteredNos, totalRecordsCount, errorRecordsCount, selectedFile, isUserExists, isBankExists, isDepartmentExists,
-        isOfficialMailExists, isAadharExists, isExistsOrNot, isClientCodeExists,splitNumberWithSpaces,
+        isOfficialMailExists, isAadharExists, isExistsOrNot, isClientCodeExists, splitNumberWithSpaces,
 
 
 
