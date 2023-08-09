@@ -29,6 +29,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const errorRecordsCount = ref([])
     const initialUpdate = ref(false)
     const isValueUpdated = ref(false)
+    const onboardedType = ref()
     const type = ref()
 
 
@@ -39,7 +40,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const convertExcelIntoArray = (onboardingType) => {
+        onboardedType.value = onboardingType
 
+        console.log(onboardingType);
         if (selectedFile.value) {
             canShowloading.value = true
 
@@ -115,7 +118,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 for (let index = 0; index < jsonData[importedExcelKey].length; index++) {
                     console.log("jsonData['Sheet1'].length :", jsonData[importedExcelKey].length);
                     const validationResult = getValidationMessages(
-                        EmployeeQuickOnboardingSource.value[index]
+                        EmployeeQuickOnboardingSource.value[index], onboardingType
                     )
 
                 }
@@ -262,7 +265,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isLetter = (e) => {
-        if (/^[A-Za-z_ ]+$/.test(e)) {
+        if (/^[ A-Za-z_ ]+$/.test(e)) {
             return false
         } else {
             return true
@@ -412,7 +415,8 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isBankExists = (e) => {
-        let bankName = e.toUpperCase()
+        let value = e.toUpperCase()
+        let bankName = value.trim()
         return existingBankNames.value.includes(bankName) ? true : false
     }
 
@@ -425,6 +429,7 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const getValidationMessages = (data) => {
+        console.log(onboardedType.value);
         let errorMessages = [];
         const digitRegexp = /\w*\d{1,}\w*/;
         const emailRegexp =
@@ -432,57 +437,78 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
         const websiteRegexp =
             new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
 
-        // console.log(data["Bank ifsc"]);
-        // !isClientCodeExists(existingClientCode.value, data['Employee Code'])
 
-        if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"])) {
-            errorRecordsCount.value.push('invalid')
-        }
-        else
-            if (findDuplicates(currentlyImportedTableEmailValues.value).includes(data['Email']) || isEmail(data['Email'])) {
+        if (onboardedType.value == 'quick') {
+            if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"])) {
                 errorRecordsCount.value.push('invalid')
             }
             else
-                if (data['DOJ'] || data['DOB']) {
-                    if (isValidDate(data['DOJ']) || isValidDate(data['DOB'])) {
-                        errorRecordsCount.value.push('invalid')
-                    }
+                if (findDuplicates(currentlyImportedTableEmailValues.value).includes(data['Email']) || isEmail(data['Email'])) {
+                    errorRecordsCount.value.push('invalid')
                 }
                 else
-                    if (data['Pan No']) {
-                        if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
-                            errorRecordsCount.value.push('invalid')
-                        }
+                    if (isValidDate(data['DOJ'])) {
+                        errorRecordsCount.value.push('invalid')
                     }
                     else
-                        if (data['Aadhar']) {
-                            if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
-                                console.log(isValidAadhar(data['Aadhar']));
-                                errorRecordsCount.value.push('invalid')
-                            }
+                        if (findDuplicates(currentlyImportedTableMobileNumberValues.value).includes(data['Mobile Number']) || isValidMobileNumber(data['Mobile Number'])) {
+                            errorRecordsCount.value.push('invalid')
+                        }
+        } else
+            if (onboardedType.value == 'bulk') {
+
+
+                if (findDuplicates(currentlyImportedTableEmployeeCodeValues.value).includes(data['Employee Code']) || !isUserExists(data["Employee Code"])) {
+                    errorRecordsCount.value.push('invalid')
+                }
+                else
+                    if (findDuplicates(currentlyImportedTableEmailValues.value).includes(data['Email']) || isEmail(data['Email'])) {
+                        errorRecordsCount.value.push('invalid')
+                    }
+                    else
+                        if (isValidDate(data['DOJ'])) {
+                            errorRecordsCount.value.push('invalid')
                         }
                         else
-                            if (findDuplicates(currentlyImportedTableMobileNumberValues.value).includes(data['Mobile Number']) || isValidMobileNumber(data['Mobile Number'])) {
+                            if (isValidDate(data['DOB'])) {
                                 errorRecordsCount.value.push('invalid')
                             }
                             else
-                                if (data["Bank ifsc"]) {
-                                    if (isValidBankIfsc(data['Bank ifsc'])) {
-                                        errorRecordsCount.value.push('invalid')
-                                    }
+                                if (findDuplicates(currentlyImportedTablePanValues.value).includes(data['Pan No']) || !isValidPancard(data['Pan No'])) {
+                                    errorRecordsCount.value.push('invalid')
+
                                 }
                                 else
-                                    if (data['Account No']) {
-                                        if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
+                                    if (findDuplicates(currentlyImportedTableAadharValues.value).includes(data['Aadhar']) || isValidAadhar(data['Aadhar'])) {
+                                        console.log(isValidAadhar(data['Aadhar']));
+                                        errorRecordsCount.value.push('invalid')
+                                    }
+
+                                    else
+                                        if (findDuplicates(currentlyImportedTableMobileNumberValues.value).includes(data['Mobile Number']) || isValidMobileNumber(data['Mobile Number'])) {
                                             errorRecordsCount.value.push('invalid')
                                         }
-                                    }
-                                    else {
-                                        console.log("No more error record found!");
-                                    }
+                                        else
+                                            if (!isBankExists(data['Bank Name'])) {
+                                                errorRecordsCount.value.push('invalid')
+                                            }
+                                            else
+                                                if (isValidBankIfsc(data['Bank ifsc'])) {
+                                                    errorRecordsCount.value.push('invalid')
+                                                }
 
-
-
+                                                else
+                                                    if (findDuplicates(currentlyImportedTableAccNoValues.value).includes(data['Account No']) || isValidBankAccountNo(data['Account No'])) {
+                                                        errorRecordsCount.value.push('invalid')
+                                                    }
+                                                    else
+                                                        if (!isDepartmentExists(data['Department'])) {
+                                                            errorRecordsCount.value.push('invalid')
+                                                        }
+            }
+            else {
+                console.log("No more error record found!");
+            }
 
         return errorMessages;
     }
