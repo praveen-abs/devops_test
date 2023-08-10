@@ -42,6 +42,32 @@ class VmtSalaryAdvanceController extends Controller
     {
         return view('salaryAndLoanAdvance.SA_settings_view');
     }
+    public function empLoanAndAdvUploads()
+    {
+
+        return view('salaryAndLoanAdvance.employees_previous_loan_adv');
+    }
+    public function inmportLoanAdvExcelData(Request $request)
+    {
+        dd(request()->file('file'));
+
+        $validator = Validator::make(
+            $request->all(),
+            ['file' => 'required|file|mimes:xls,xlsx'],
+            ['required' => 'The :attribute is required.']
+        );
+
+
+        if ($validator->passes()) {
+
+            $importDataArry = \Excel::toArray(new VmtMasterImport, request()->file('file'));
+            //DD($importDataArry );
+            return $this->storeMasterdEmployeesData($importDataArry);
+        } else {
+            $data['failed'] = $validator->errors()->all();
+            return response()->json($data);
+        }
+    }
 
     public function getAllDropdownFilterSetting(Request $request, VmtSalaryAdvanceService $vmtSalaryAdvanceService)
     {
