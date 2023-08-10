@@ -26,10 +26,10 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
         1) general payroll Setup
 
         2)Pf & Esi Setting
-            1)Employee provident fund
-            2)Employee state insurance
-            3)Aatmanirbhar Bharat Yojana(ABRY)Scheme
-            4)Pradhan Matri Rojgar Protsahan Yojana(PMRPY)Scheme
+            1)Employee provident fund - epf
+            2)Employee state insurance -esi
+            3)Aatmanirbhar Bharat Yojana(ABRY)Scheme - abry
+            4)Pradhan Matri Rojgar Protsahan Yojana(PMRPY)Scheme - pmrpy
 
 
         3)Salary components
@@ -50,7 +50,25 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
 
     //  - Employee provident fund
 
+    // Add new rule for Employee provident fund
 
+    const addNewEpf = ref({})
+
+    const saveNewEpf = (data) => {
+        console.log(data);
+        axios.post('/Paygroup/CreatePayrollEpf', data)
+    }
+
+
+    // Employee's State Insurance
+
+    const addNewEsi = ref({})
+
+    const saveNewEsi = (data) => {
+        console.log(data);
+        axios.post('/Paygroup/CreatePayrollEsi', data)
+
+    }
 
 
 
@@ -346,6 +364,15 @@ export const usePayrollMainStore = defineStore('usePayrollMainStore', () => {
     return {
         // Varaible Declaration
         canShowLoading,
+
+        // Pf & ESI Setting - EPF
+
+        addNewEpf, saveNewEpf,
+
+        // Pf & ESI Setting - ESI
+
+        addNewEsi, saveNewEsi,
+
 
         // Salary Components - Earnings
         dailogNewSalaryComponents, salaryComponents, salaryComponentsSource, getSalaryComponents, saveNewSalaryComponent, editNewSalaryComponent, deleteSalaryComponent,

@@ -227,7 +227,7 @@ class VmtPayrollComponentsController extends Controller
     }
     public function CreatePayrollEpf(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        // dd($request->all());
+        dd($request->all());
             $response = $serviceVmtPayrollComponentsService->CreatePayrollEpf(
             $request->epf_number,
             $request->epf_deduction_cycle,
