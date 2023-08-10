@@ -20,7 +20,7 @@
                     <div v-if="isOpens" class="absolute top-5 left-2 mt-12  w-full bg-white shadow-lg rounded z-20">
                         <!-- Dropdown content goes here -->
                         <div class="" v-for="client in clientList">
-                            <div class="justify-between flex p-2 hover:bg-gray-200    items-center">
+                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
                                     <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
                                         style="height: 40px;width:40px">
@@ -57,7 +57,7 @@
                     <div v-if="query"
                         class="z-40 absolute top-0 left-0 mt-16 w-full  bg-white shadow-lg rounded px-3 py-4  overflow-x-scroll">
                         <!-- Dropdown content goes here -->
-                        <div class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 "
+                        <div class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none "
                             v-for="employee in globalSearch(query, orgList)">
                             <div>
                                 <p class="text-gray-900 font-bold text-sm">{{ employee.name }}</p>
@@ -78,15 +78,15 @@
                     leave-active-class="transition ease-in duration-100 transform" leave-class="opacity-100 translate-y-0"
                     leave-to-class="opacity-0 translate-y-2">
                     <div v-if="isConfigurationOpen" @click="isConfigurationOpen = !isConfigurationOpen"
-                        class="absolute top-0 right-40 mt-16 w-60 bg-white shadow-lg rounded z-40 p-2">
+                        class="absolute top-0 right-40 mt-16 w-60 bg-white shadow-lg rounded z-40 p-2 ">
                         <!-- Dropdown content goes here -->
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Master config</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Client onboarding</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Document template</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Leave setting</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Attendance setting</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Investment setting</p>
-                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 ">Loan and salary advance setting
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Master config</p>
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Client onboarding</p>
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Document template</p>
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Leave setting</p>
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Attendance setting</p>
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Investment setting</p>
+                        <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">Loan and salary advance setting
                         </p>
                     </div>
                 </transition>
@@ -102,17 +102,16 @@
                     <button class="py-2 px-4 bg-blue-500 text-white rounded focus:outline-none">
                         SA
                     </button>
-
                     <transition enter-active-class="transition ease-out duration-200 transform"
                         enter-class="opacity-0 translate-y-2" enter-to-class="opacity-100 translate-y-0"
                         leave-active-class="transition ease-in duration-100 transform"
                         leave-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-2">
                         <div v-if="isOpen" class="absolute top-0 right-0 mt-14 w-48 bg-white shadow-lg rounded z-30">
                             <!-- Dropdown content goes here -->
-                            <p class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 "><a
-                                    href="pages-profile-new">View profile</a></p>
-                            <p @click="logout" class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 "><a
-                                    href="">Log out</a></p>
+                            <a class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 block"
+                                href="pages-profile-new ">View profile</a>
+                            <a @click="logout" class="p-2  rounded-lg cursor-pointer w-full hover:bg-gray-100 block" href="">Log
+                                out</a>
                         </div>
                     </transition>
                 </div>

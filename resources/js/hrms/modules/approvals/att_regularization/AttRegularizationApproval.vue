@@ -1,6 +1,6 @@
 <template>
     <Toast />
-    <div class="Attendance regularization">
+    <div class="w-full">
         <div class="p-2 pb-0 mb-3  rounded-lg shadow tw-card left-line">
             <div class="flex justify-between">
                 <ul class="bg-white divide-x py-auto nav nav-pills divide-solid nav-tabs-dashed " id="pills-tab"

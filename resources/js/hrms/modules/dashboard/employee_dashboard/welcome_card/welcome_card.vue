@@ -1,6 +1,7 @@
 <template>
-    <div class=" rounded overflow-hidden shadow-lg bg-white p-3 grid grid-cols-12 gap-4 justify-between leading-normal h-full">
-        <div class="mb-8 col-span-7"  v-for="item in EmpDetials">
+    <div
+        class=" rounded overflow-hidden shadow-lg bg-white p-3 grid grid-cols-12 gap-4 justify-between leading-normal h-full">
+        <div class="mb-8 col-span-7" v-for="item in EmpDetials">
 
             <p class="font-medium fs-6 text-gray-500 flex items-center">
                 {{ current_session }}
@@ -10,23 +11,23 @@
                 <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
                 <p class="fs-6 my-auto px-2">General Shift</p>
                 <label class="switch-checkbox f-12 text-muted ">
-                    <input type="checkbox" id="checkin_function" class="f-13 text-muted"
-                        v-model="welcome_card.check" @change="getTime" />
+                    <input type="checkbox" id="checkin_function" class="f-13 text-muted" v-model="welcome_card.check"
+                        @change="getTime" />
                     <span class="slider-checkbox check-inw round">
                         <span class="slider-checkbox-text"> </span>
                     </span>
                 </label>
             </div>
-            <div >
+            <div>
                 <p class="text-sm text-gray-600 flex items-center">
                     Time duration:<span>09:30</span>
                 </p>
             </div>
         </div>
         <div class="col-span-5 h-full">
-           <div class=" grid justify-center items-centers my-auto h-full">
-            <img src="../../dashboard/femaleDashboardImage.svg" alt="" srcset="" class="w-full h-full">
-           </div>
+            <div class=" grid justify-center items-centers my-auto h-full">
+                <img src="../../dashboard/femaleDashboardImage.svg" alt="" srcset="" class="w-full h-full">
+            </div>
         </div>
 
     </div>
@@ -274,34 +275,42 @@ const resetChars = () => {
 </script>
 
 <style>
-.p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
+.p-dialog .p-dialog-header .p-dialog-header-icon:last-child
+{
     margin-right: 0;
     display: none;
 }
 
-input:checked {
-    background-color: #22c55e; /* bg-green-500 */
-  }
+input:checked
+{
+    background-color: #22c55e;
+    /* bg-green-500 */
+}
 
-  input:checked ~ span:last-child {
-    --tw-translate-x: 1.75rem; /* translate-x-7 */
-  }
+input:checked~span:last-child
+{
+    --tw-translate-x: 1.75rem;
+    /* translate-x-7 */
+}
 
 
-  .switch-checkbox {
+.switch-checkbox
+{
     position: relative;
     display: inline-block;
     width: 115px;
     height: 25px;
 }
 
-.switch-checkbox input {
+.switch-checkbox input
+{
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.slider-checkbox-text {
+.slider-checkbox-text
+{
     color: #000;
     position: absolute;
     top: 2px;
@@ -309,7 +318,8 @@ input:checked {
     font-size: 10px;
 }
 
-.slider-checkbox {
+.slider-checkbox
+{
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -327,24 +337,29 @@ input:checked {
     transition: 0.4s;
 }
 
-.slider-checkbox.check-out:before {
+.slider-checkbox.check-out:before
+{
     background-color: green;
 }
 
-.slider-checkbox.check-in:before {
+.slider-checkbox.check-in:before
+{
     background-color: green;
 }
 
-input:checked + .slider > .slider-text:after {
+input:checked+.slider>.slider-text:after
+{
     content: "Checkout";
     color: red;
 }
 
-input + .slider > .slider-text:after {
+input+.slider>.slider-text:after
+{
     content: "Check In";
 }
 
-.slider-checkbox:before {
+.slider-checkbox:before
+{
     position: absolute;
     height: 20px;
     width: 20px;
@@ -361,26 +376,31 @@ input + .slider > .slider-text:after {
     font-size: 15px;
 }
 
-input:checked + .slider-checkbox > .slider-checkbox-text {
+input:checked+.slider-checkbox>.slider-checkbox-text
+{
     left: 2px;
     color: #fff;
 }
 
-input:checked + .slider-checkbox.check-out {
+input:checked+.slider-checkbox.check-out
+{
     background-color: #f0657070;
     color: #ff0000;
 }
 
-input:checked + .slider-checkbox.check-in {
+input:checked+.slider-checkbox.check-in
+{
     background-color: #f0657070;
     color: #ff0000;
 }
 
-input:focus + .slider-checkbox {
+input:focus+.slider-checkbox
+{
     box-shadow: 0 0 1px #7cfc00;
 }
 
-input:checked + .slider-checkbox:before {
+input:checked+.slider-checkbox:before
+{
     -webkit-transform: translateX(65px);
     -ms-transform: translateX(65px);
     transform: translateX(65px);
@@ -388,23 +408,25 @@ input:checked + .slider-checkbox:before {
     background-color: #f0f0f6;
 }
 
-input:checked + .slider-checkbox.check-out:before {
+input:checked+.slider-checkbox.check-out:before
+{
     color: white;
     background-color: red;
 }
 
-input:checked + .slider-checkbox.check-in:before {
+input:checked+.slider-checkbox.check-in:before
+{
     color: white;
     background-color: red;
 }
 
-input:checked + .slider-checkbox > .slider-checkbox-text:after {
+input:checked+.slider-checkbox>.slider-checkbox-text:after
+{
     content: "Checkout";
     color: red;
 }
 
-input + .slider-checkbox > .slider-checkbox-text:after {
+input+.slider-checkbox>.slider-checkbox-text:after
+{
     content: "Check In";
-}
-
-</style>
+}</style>
