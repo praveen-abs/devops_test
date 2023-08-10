@@ -281,7 +281,7 @@ class VmtPayrollComponentsController extends Controller
     }
     public function CreatePayrollEsi(Request $request,  VmtPayrollComponentsService $serviceVmtPayrollComponentsService)
     {
-        // dd($request->all());
+        //  dd($request->status);
 
             $response = $serviceVmtPayrollComponentsService->CreatePayrollEsi(
             $request->esi_number,
@@ -291,7 +291,6 @@ class VmtPayrollComponentsController extends Controller
             $request->employee_contribution_rate,
             $request->employer_contribution_rate,
             $request->employer_contribution_in_ctc,
-            $request->override_pf_contrib_rate,
             $request->status,
         );
 

@@ -52,15 +52,37 @@
             </div>
 
             <div class="bg-gray-100 p-4 rounded-lg my-2">
-                <div>
-                    <p class="text-gray-600 text-md">Employee's contribution is included in the CTC</p>
+                <div class="flex ">
+                    <input style="height: 20px;width: 20px;" class="form-check-input" type="checkbox" name="status"
+                        :true-value=1 :false-value=0 id="full_day"
+                        v-model="usePayroll.addNewEsi.employer_contribution_in_ctc" />
+                    <label class="form-check-label leave_type text-gray-600 text-sm mx-2" for="full_day">Employee's
+                        contribution
+                        is included in the CTC</label>
                 </div>
             </div>
         </div>
         <div class="col-span-8">
-            <div>
-                <p class="font-medium text-lg">Example</p>
-                <p class="font-medium text-md text-gray-500">Let's Assume</p>
+            <div class="flex justify-between">
+                <div>
+                    <p class="font-medium text-lg">Example</p>
+                    <p class="font-medium text-md text-gray-500">Let's Assume</p>
+                </div>
+                <div>
+                    <label for="Toggle1" class="inline-flex items-center space-x-4 cursor-pointer dark:text-gray-100">
+                        <span class="font-semibold text-lg text-gray-400">Disable ESI</span>
+                        <span class="relative">
+                            <input id="Toggle1" type="checkbox" class="hidden peer"  :true-value=1 :false-value=0  :value="1" v-model="usePayroll.addNewEsi.status">
+                            <div
+                                class="w-10 h-6 rounded-full shadow-inner dark:bg-gray-400 peer-checked:dark:bg-violet-400">
+                            </div>
+                            <div
+                                class="absolute inset-y-0 left-0 w-4 h-4 m-1 rounded-full shadow peer-checked:right-0 peer-checked:left-auto dark:bg-gray-800">
+                            </div>
+                        </span>
+                        <span class="font-semibold text-lg ">Enable ESI</span>
+                    </label>
+                </div>
             </div>
             <div class="mb-6  mt-4 w-full">
                 <DataTable :value="products" style="background-color: none;">
