@@ -669,7 +669,7 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => $message,
                 'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
-                'data' => '',
+                'data' => $response['data'],
             ];
         } catch (\Exception $e) {
 
