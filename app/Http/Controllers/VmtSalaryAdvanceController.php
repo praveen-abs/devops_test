@@ -20,6 +20,7 @@ use App\Models\VmtLoanInterestSettings;
 use App\Models\VmtEmployeeInterestFreeLoanDetails;
 use App\Services\VmtSalaryAdvanceService;
 use Illuminate\Support\Facades\Validator;
+use App\imports\VmtLoanExcel;
 use Carbon\Carbon;
 use Exception;
 
@@ -49,7 +50,7 @@ class VmtSalaryAdvanceController extends Controller
     }
     public function inmportLoanAdvExcelData(Request $request)
     {
-        dd(request()->file('file'));
+      //  dd(request()->file('file'));
 
         $validator = Validator::make(
             $request->all(),
@@ -60,8 +61,8 @@ class VmtSalaryAdvanceController extends Controller
 
         if ($validator->passes()) {
 
-            $importDataArry = \Excel::toArray(new VmtMasterImport, request()->file('file'));
-            //DD($importDataArry );
+            $importDataArry = \Excel::toArray(new VmtLoanExcel, request()->file('file'));
+            DD($importDataArry );
             return $this->storeMasterdEmployeesData($importDataArry);
         } else {
             $data['failed'] = $validator->errors()->all();
