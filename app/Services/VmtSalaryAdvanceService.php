@@ -2149,6 +2149,7 @@ class VmtSalaryAdvanceService
         $balance_amt = 0;
         $pending_request = 0; // need writed code for this in future
         $compeleted_request = 0;  // need writed code for this in future
+        $response = array();
         if ($loan_type == 'loan_with_int') {
             $loan_amt_query = VmtLoanWithInterestTransactionRecord::join(
                 'vmt_emp_int_loan_details',
@@ -2185,9 +2186,18 @@ class VmtSalaryAdvanceService
         foreach ($loan_amt_query  as $single_record) {
             $total_borrowed_amt = $total_borrowed_amt + $single_record->expected_emi;
             $total_repaid_amt = $total_repaid_amt + $single_record->paid_emi;
+            $balance_amt =   $total_borrowed_amt -  $total_repaid_amt;
         }
+        $response['total_borrowed_amt'] = $total_borrowed_amt;
+        $response['balance_amt'] = $balance_amt;
+        $response['total_repaid_amt'] = $total_repaid_amt;
+        $response['pending_request'] = $pending_request;
+        $response['compeleted_request'] = $compeleted_request;
 
-
-        return "";
+        return response()->json([
+            'status' => 'failure',
+            'message' => "",
+            'data' => $response,
+        ]);
     }
 }
