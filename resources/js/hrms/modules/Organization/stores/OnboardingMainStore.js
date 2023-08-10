@@ -167,9 +167,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                 life: 3000,
                             });
                         });
-                        // setTimeout(() => {
-                        //     window.location.replace('/manageEmployees')
-                        // }, 4000);
+                        setTimeout(() => {
+                            window.location.replace('/manageEmployees')
+                        }, 4000);
                     }
             }).finally(() => {
             })
