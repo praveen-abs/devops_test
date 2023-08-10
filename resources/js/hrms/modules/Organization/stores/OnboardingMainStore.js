@@ -147,9 +147,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 url = '/onboarding/storeBulkOnboardEmployees'
             }
         if (errorRecordsCount.value == 0) {
-             canShowloading.value = true
+            canShowloading.value = true
             axios.post(url, data).then(res => {
-                 canShowloading.value = false
+                canShowloading.value = false
                 if (res.data.status == 'failure') {
                     toast.add({
                         severity: "error",
@@ -167,9 +167,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                                 life: 3000,
                             });
                         });
-                        // setTimeout(() => {
-                        //     window.location.replace('/manageEmployees')
-                        // }, 4000);
+                        setTimeout(() => {
+                            window.location.replace('/manageEmployees')
+                        }, 4000);
                     }
             }).finally(() => {
             })
@@ -287,8 +287,12 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isUserExists = (e) => {
-        if (existingUserCode.value.includes(e)) {
-            return false
+        if (e) {
+            if (existingUserCode.value.includes(e)) {
+                return false
+            } else {
+                return true
+            }
         } else {
             return true
         }
@@ -304,19 +308,27 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     }
 
     const isEmail = (e) => {
-        if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e) && !existingEmails.value.includes(e)) {
-            return false
+        if (e) {
+            if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.trim()) && !existingEmails.value.includes(e.trim())) {
+                return false
+            } else {
+                return true
+            }
         } else {
-            return true
+            return false
         }
     }
 
     const isValidAadhar = (e) => {
         const result = splitNumberWithSpaces(e);
-        if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(result) && !existingAadharCards.value.includes(result)) {
-            return false
+        if (e) {
+            if (/^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/.test(result) && !existingAadharCards.value.includes(result)) {
+                return false
+            } else {
+                return true
+            }
         } else {
-            return true
+            return false
         }
     }
 
@@ -345,45 +357,65 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
     const isValidPancard = (e) => {
         let panFormat = ''
         e ? panFormat = e.toUpperCase() : ''
-        if (/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/.test(panFormat) && existingPanCards.value.includes(panFormat)) {
-            return false
+        if (e) {
+            if (/^([a-zA-Z]){3}([Pp]){1}([a-zA-Z]){1}([0-9]){4}([a-zA-Z]){1}?$/.test(panFormat.trim()) && existingPanCards.value.includes(panFormat.trim())) {
+                return false
+            } else {
+                return true
+            }
         } else {
             return true
         }
     }
 
     const isValidBankAccountNo = (e) => {
-        if (!existingBankAccountNumbers.value.includes(e)) {
-            return false
+        if (e) {
+            if (!existingBankAccountNumbers.value.includes(e.trim())) {
+                return false
+            } else {
+                return true
+            }
         } else {
-            return true
+            return false
         }
     }
 
     const isValidBankIfsc = (e) => {
         let ifscFormat = ''
         e ? ifscFormat = e.toUpperCase() : ''
-        if (/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(ifscFormat)) {
-            return false
+        if (e) {
+            if (/^[A-Za-z]{4}0[A-Za-z0-9]{6}$/.test(ifscFormat.trim())) {
+                return false
+            } else {
+                return true
+            }
         } else {
-            return true
+            return false
         }
     }
 
     const isValidDate = (e) => {
-        if (/^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$/.test(e)) {
-            return false
+        if (e) {
+            if (/^[0-9]{1,2}-[0-9]{1,2}-[0-9]{4}$/.test(e)) {
+                return false
+            } else {
+                return true
+            }
         } else {
             return true
         }
     }
 
     const isValidMobileNumber = (e) => {
-        if (/^[0-9]{10,10}$/.test(e) && !existingMobileNumbers.value.includes(e)) {
-            return false
-        } else {
-            return true
+        if (e) {
+            if (/^[0-9]{10,10}$/.test(e.trim()) && !existingMobileNumbers.value.includes(e.trim())) {
+                return false
+            } else {
+                return true
 
+            }
+        } else {
+            return false
         }
     }
 

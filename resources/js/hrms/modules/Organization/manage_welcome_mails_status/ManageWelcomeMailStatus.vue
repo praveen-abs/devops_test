@@ -17,7 +17,9 @@
                     <Button @click="showConfirmationDialog(slotProps.data.empcode)" label="Send mail"
                         class="btn btn-primary" />
                     <br/>
-                    <h4 v-if="slotProps.data.value == null">Mail Not Sent</h4>
+
+                    <h4 v-if="slotProps.data.welcome_mail_status == null">Mail Not Sent</h4>
+                    <h4 v-else class=" text-green-500"> Sent</h4>
                 </div>
             </template>
         </Column>
@@ -89,7 +91,10 @@ function showConfirmationDialog(selected_user_code) {
     selectedUserCode.value = selected_user_code;
     console.log(selected_user_code);
     ManageWelcomeMailStatusStore.sendWelcomeMail_Status_diaconfirmation = true;
+
 }
+
+
 
 
 

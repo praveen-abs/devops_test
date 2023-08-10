@@ -524,6 +524,7 @@ class VmtAPIAttendanceController extends HRMSBaseAPIController
                 'data' => $e
             ]);
         }
+        $response = array_values($response);
         return response()->json([
             'status' => 'success',
             'message' => '',

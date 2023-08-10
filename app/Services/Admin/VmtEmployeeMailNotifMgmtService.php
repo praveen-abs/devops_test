@@ -101,7 +101,6 @@ class VmtEmployeeMailNotifMgmtService {
             }
             else
             {
-
                 //create new record
                $query_emp_welcomemailstatus = new VmtEmployeeMailStatus;
                $query_emp_welcomemailstatus->user_id=$user_id;
@@ -113,7 +112,7 @@ class VmtEmployeeMailNotifMgmtService {
             return response()->json([
                 'status' => 'success',
                 'message' => "Welcome Mail Notification sent successfully!",
-                'data' => ""
+                'data' =>  $query_emp_welcomemailstatus->welcome_mail_status,
             ]);
 
         }
