@@ -245,9 +245,13 @@ class VmtEmployeeService
             $newUser->password = Hash::make('Abs@123123');
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
-            $emp_client_code = preg_replace('/\d+/', '', strtoupper($data['employee_code']));
-
-            $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+            if($onboard_type == 'normal'){
+                $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
+                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+            }else{
+                $emp_client_code = trim($data['legal_entity']);
+                $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
+            }
 
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
@@ -471,7 +475,7 @@ class VmtEmployeeService
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
-            $compensatory->cic = $data["cic"] ?? '';
+            $compensatory->cic = $data["ctc"] ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
@@ -619,12 +623,12 @@ class VmtEmployeeService
             $compensatory->lta = $data["lta"] ?? '';
             $compensatory->special_allowance = $data["special_allowance"] ?? '';
             $compensatory->other_allowance = $data["other_allowance"] ?? '';
-           // $compensatory->gross = $data["gross"] ?? '';
+            $compensatory->gross = $data["gross"] ?? '';
             $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '';
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
-           // $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
+            $compensatory->cic =$data["ctc"] ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
