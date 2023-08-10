@@ -147,9 +147,9 @@ export const useOnboardingMainStore = defineStore("useOnboardingMainStore", () =
                 url = '/onboarding/storeBulkOnboardEmployees'
             }
         if (errorRecordsCount.value == 0) {
-            // canShowloading.value = true
+             canShowloading.value = true
             axios.post(url, data).then(res => {
-                // canShowloading.value = false
+                 canShowloading.value = false
                 if (res.data.status == 'failure') {
                     toast.add({
                         severity: "error",
