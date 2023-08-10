@@ -245,8 +245,14 @@ class VmtEmployeeService
             $newUser->password = Hash::make('Abs@123123');
             //$newUser->avatar = $data['employee_code'] . '_avatar.jpg';
             $newUser->user_code = strtoupper($data['employee_code']);
-            $emp_client_code = trim($data['legal_entity']);
-            $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
+            if($onboard_type == 'normal'){
+                $emp_client_code = preg_replace('/\d+/', '',strtoupper($data['employee_code']));
+                $newUser->client_id = VmtClientMaster::where('client_code', $emp_client_code)->first()->id;
+            }else{
+                $emp_client_code = trim($data['legal_entity']);
+                $newUser->client_id = VmtClientMaster::where('client_fullname', $emp_client_code)->first()->id;
+            }
+
             $newUser->active = '0';
             $newUser->is_default_password_updated = '0';
             $newUser->is_onboarded = $can_onboard_employee;
@@ -469,7 +475,7 @@ class VmtEmployeeService
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
-            $compensatory->cic = $data["cic"] ?? '';
+            $compensatory->cic = $data["ctc"] ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
@@ -617,12 +623,12 @@ class VmtEmployeeService
             $compensatory->lta = $data["lta"] ?? '';
             $compensatory->special_allowance = $data["special_allowance"] ?? '';
             $compensatory->other_allowance = $data["other_allowance"] ?? '';
-           // $compensatory->gross = $data["gross"] ?? '';
+            $compensatory->gross = $data["gross"] ?? '';
             $compensatory->epf_employer_contribution = $data["epf_employer_contribution"] ?? '';
             $compensatory->esic_employer_contribution = $data["esic_employer_contribution"] ?? '';
             $compensatory->insurance = $data["insurance"] ?? '';
             $compensatory->graduity = $data["graduity"] ?? '';
-           // $compensatory->cic = ($data["gross"] + $data["epf_employer_contribution"] + $data["esic_employer_contribution"] + $data["insurance"]) ?? '';
+            $compensatory->cic =$data["ctc"] ?? '';
             $compensatory->epf_employee = $data["epf_employee"] ?? '';
             $compensatory->esic_employee = $data["esic_employee"] ?? '';
             $compensatory->professional_tax = $data["professional_tax"] ?? '';
@@ -675,12 +681,12 @@ class VmtEmployeeService
             $newEmployee->aadhar_number = $data["aadhar"] ?? '';
 
             if (!empty($data["marital_status"])) {
-                $marital_status_id = VmtMaritalStatus::where('name', ucfirst($data["marital_status"]))->first()->id; // to get marital status id
+                $marital_status_id = VmtMaritalStatus::where('name', ucfirst(trim($data["marital_status"])))->first()->id; // to get marital status id
                 $newEmployee->marital_status_id = $marital_status_id ?? '';
             }
 
             if (!empty($data['bank_name'])) {
-                $bank_id = Bank::where('bank_name', $data['bank_name'])->first()->id;  // to get bank id
+                $bank_id = Bank::where('bank_name', trim($data['bank_name']))->first()->id;  // to get bank id
                 $newEmployee->bank_id  = $bank_id ?? '';
             }
 
@@ -703,7 +709,7 @@ class VmtEmployeeService
             }
             $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
             if (!empty($data['department'])) {
-                $department_id = Department::where('name', strtolower($data['department']))->first()->id;
+                $department_id = Department::where('name', strtolower(trim($data['department'])))->first()->id;
                 $empOffice->department_id = $department_id ?? ''; // => "lk"
             }
             $empOffice->process = $data["process"] ?? ''; // => "k"
@@ -770,10 +776,11 @@ class VmtEmployeeService
                 $familyMember->save();
             }
 
-            if ((strtolower($data['marital_status'])) == 'married') {
+
+            if ((strtolower($data['marital_status'])) == 'Married') {
                 $familyMember =  new VmtEmployeeFamilyDetails;
                 $familyMember->user_id  = $user_id;
-                $familyMember->name =   $data['spouse_name'];
+                $familyMember->name =   $data['spouse_name'] ?? " ";
                 $familyMember->relationship = 'Spouse';
 
                 if (!empty($data['gender'] == 'Male')) {

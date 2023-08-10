@@ -2706,12 +2706,12 @@ class VmtAttendanceService
 
         try {
 
-            $map_allEmployees = User::all(['id', 'name'])->keyBy('id');
+            $map_allEmployees = User::all(['id', 'name','user_code'])->keyBy('id');
             $map_leaveTypes = VmtLeaves::all(['id', 'leave_type'])->keyBy('id');
 
             //Get the list of employees for the given Manager
             $team_employees_ids = VmtEmployeeOfficeDetails::where('l1_manager_code', $manager_code)->get('user_id');
-
+            $team_employee_user_code= User::whereIn('id',$team_employees_ids)->get('user_code');
             //use wherein and fetch the relevant records
             $employeeLeaves_team = VmtEmployeeLeaves::whereIn('user_id', $team_employees_ids)
                 ->whereMonth('leaverequest_date', '=', $filter_month)
@@ -2725,6 +2725,7 @@ class VmtAttendanceService
 
                 if (array_key_exists($singleItem->user_id, $map_allEmployees->toArray())) {
                     $singleItem->employee_name = $map_allEmployees[$singleItem->user_id]["name"];
+                    $singleItem->user_code = $map_allEmployees[$singleItem->user_id]["user_code"];
                     $singleItem->employee_avatar = getEmployeeAvatarOrShortName($singleItem->user_id);
                 }
 
@@ -2737,7 +2738,6 @@ class VmtAttendanceService
                 //Map leave types
                 $singleItem->leave_type = $map_leaveTypes[$singleItem->leave_type_id]["leave_type"];
             }
-
 
             return response()->json([
                 'status' => 'success',
