@@ -1,31 +1,32 @@
 <template>
     <div
-        class=" rounded overflow-hidden shadow-lg bg-white p-3 grid grid-cols-12 gap-4 justify-between leading-normal h-full">
+        class=" h-[200px] overflow-hidden rounded overflow-hidden shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
         <div class="mb-8 col-span-7" v-for="item in EmpDetials">
-
-            <p class="font-medium fs-6 text-gray-500 flex items-center">
+            <p class=" font-[14px] font-['Poppins']  text-gray-500 flex items-center">
                 {{ current_session }}
             </p>
-            <div class="text-gray-900 font-bold text-2xl mb-2"> {{ service.current_user_name }}</div>
-            <div class="flex my-2">
-                <i class="fa fa-sun-o text-warning my-auto" aria-hidden="true"></i>
-                <p class="fs-6 my-auto px-2">General Shift</p>
-                <label class="switch-checkbox f-12 text-muted ">
-                    <input type="checkbox" id="checkin_function" class="f-13 text-muted" v-model="welcome_card.check"
-                        @change="getTime" />
-                    <span class="slider-checkbox check-inw round">
-                        <span class="slider-checkbox-text"> </span>
-                    </span>
-                </label>
+            <div class="text-gray-900 text-[24px] mb-2  font-['Poppins'] "> {{ service.current_user_name }}</div>
+            <div class="flex my-1 overflow-visible items-center  !z-10 ">
+                <i class="fa fa-sun-o text-warning my-auto text-[20px] " aria-hidden="true"></i>
+                <p class="text-[16px] my-auto font-semibold px-2">General Shift</p>
             </div>
+            <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
+                <input type="checkbox" id="checkin_function" class="text-[6px] font-semibold" v-model="welcome_card.check"
+                    @change="getTime" />
+                <span class="slider-checkbox check-inw round flex items-center">
+                    <span class="slider-checkbox-text !text-[8px] font-semibold"> </span>
+                </span>
+            </label>
             <div>
-                <p class="text-sm text-gray-600 flex items-center">
+                <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
                     Time duration:<span>09:30</span>
                 </p>
+                <p class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]">Check-In     : 11:55:09 AM (20, Aug 2023)</p>
+                <p class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]">Check-In     : 11:55:09 AM (20, Aug 2023)</p>
             </div>
         </div>
-        <div class="col-span-5 h-full">
-            <div class=" grid justify-center items-centers my-auto h-full">
+        <div class="col-span-5 h-full !z-5 ">
+            <div class=" grid justify-center items-centers my-auto h-full border-[1px]">
                 <img src="../../dashboard/femaleDashboardImage.svg" alt="" srcset="" class="w-full h-full">
             </div>
         </div>
@@ -275,6 +276,9 @@ const resetChars = () => {
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital@0;1&display=swap');
+
+
 .p-dialog .p-dialog-header .p-dialog-header-icon:last-child
 {
     margin-right: 0;
