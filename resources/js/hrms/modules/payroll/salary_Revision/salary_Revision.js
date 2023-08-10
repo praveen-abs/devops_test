@@ -41,6 +41,7 @@ import Checkbox from 'primevue/checkbox';
 import OrganizationChart from 'primevue/organizationchart';
 
 
+
 import salary_Revision from '../salary_Revision/salary_Revision.vue'
 
 const app = createApp(salary_Revision);
