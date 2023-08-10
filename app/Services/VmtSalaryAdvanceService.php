@@ -2163,6 +2163,8 @@ class VmtSalaryAdvanceService
                     'vmt_loan_with_int_transaction_record.expected_emi as expected_emi',
                     'vmt_loan_with_int_transaction_record.paid_emi as paid_emi',
                 ]);
+            $pending_request_query = VmtEmpInterestLoanDetails::where('user_id', $user_id)->where('loan_crd_sts', 0)->count();
+            $compeleted_request_query = VmtEmpInterestLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
         } else if ($loan_type == 'int_free_loan') {
             $loan_amt_query = VmtInterestFreeLoanTransaction::join(
                 'vmt_emp_int_free_loan_details',
@@ -2176,6 +2178,8 @@ class VmtSalaryAdvanceService
                     'vmt_int_free_loan_transaction_record.expected_emi as expected_emi',
                     'vmt_int_free_loan_transaction_record.paid_emi as paid_emi',
                 ]);
+            $pending_request_query = VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->where('loan_crd_sts', 0)->count();
+            $compeleted_request_query =VmtEmployeeInterestFreeLoanDetails::where('user_id', $user_id)->whereIn('loan_crd_sts', [1, -1])->count();
         } else if ($loan_type == 'sal_adv') {
         } else {
             return response()->json([
@@ -2188,6 +2192,8 @@ class VmtSalaryAdvanceService
             $total_repaid_amt = $total_repaid_amt + $single_record->paid_emi;
             $balance_amt =   $total_borrowed_amt -  $total_repaid_amt;
         }
+        $pending_request =  $pending_request_query;
+        $compeleted_request =   $compeleted_request_query;
         $response['total_borrowed_amt'] = $total_borrowed_amt;
         $response['balance_amt'] = $balance_amt;
         $response['total_repaid_amt'] = $total_repaid_amt;
