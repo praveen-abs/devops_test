@@ -912,7 +912,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
     Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
-    Route::get('/is-eligible-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'isEligibleForLoanAndAdvance']);
+    Route::post('/is-eligible-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'isEligibleForLoanAndAdvance']);
     Route::get('/upload-previous-loan-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'empLoanAndAdvUploads']);
     Route::post('/inmport-loan-adv-excel-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'inmportLoanAdvExcelData']);
 
