@@ -30,9 +30,9 @@ export const UseEmployeeDocumentManagerService = defineStore("EmployeeDocumentMa
 
 const fetch_EmployeeDocument = async() => {
     let user_code = usercode.employeeDetails.user_code;
-    // await getEmployeeDetails.getCurrentUserCode().then(code=>{
-    //   user_code = code.data
-    // })
+    await getEmployeeDetails.getCurrentUserCode().then(code=>{
+      user_code = code.data
+    })
     loading.value = true ;
     await axios.post('/employee-documents-details', {
         user_code:  user_code
