@@ -782,8 +782,9 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     //MasterImport
     Route::get('/updateMasterdataUploads', [App\Http\Controllers\VmtCorrectionController::class,'updateMasterdataUploads'])->name('updateMasterdataUploads');
     Route::post('/vmt_employess/Master_upload', [App\Http\Controllers\VmtCorrectionController::class,'importMasetrEmployeesExcelData'])->name('masterEmployeeOnboarding');
+    
 
-
+   
 
     Route::post('/formSubmit', [App\Http\Controllers\VmtTestingController::class, 'formSubmit'])->name('formSubmit');
 
@@ -912,6 +913,8 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
     Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
     Route::get('/is-eligible-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'isEligibleForLoanAndAdvance']);
+    Route::get('/upload-previous-loan-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'empLoanAndAdvUploads']);
+    Route::post('/inmport-loan-adv-excel-data',[App\Http\Controllers\VmtSalaryAdvanceController::class,'inmportLoanAdvExcelData']);
 
     Route::post('/employee-dashboard-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'employeeDashboardLoanAndAdvance']);
  
