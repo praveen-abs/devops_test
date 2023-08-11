@@ -5,7 +5,7 @@
                 current month - <span class="font-semibold text-xl mb-2">{{dayjs(new Date()).format('MMMM')}}</span>
             </p>
             <div class="grid grid-cols-3 gap-4 mt-4">
-                <div class="bg-gray-100 rounded-lg p-3">
+                <div class=" bg-[#F6F6F6] rounded-lg p-3">
                     <div class="px-auto">
                         <span class="font-bold text-3xl mb-2 text-center">
                             {{ useDashboard.attenanceReportPerMonth.present }}
