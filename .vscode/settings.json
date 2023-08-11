@@ -9,5 +9,7 @@
         "confirmationservice"
     ],
     "liveServer.settings.port": 5501,
+    "css.completion.triggerPropertyValueCompletion": true,
+    "css.format.braceStyle": "expand",
     "editor.wordWrap": "on"
 }
