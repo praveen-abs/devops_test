@@ -55,15 +55,15 @@
             <table style="width: 90%" cellpadding="0" cellspacing="0" role="none">
               <tr>
                 <td class="sm-py-3 sm-px-2" style="width: 900px; padding: 12px">
-                  <table class="sm-w-full" style="margin-left: auto; margin-right: auto; margin-top: 16px; width: 100%; background-color: #fff; height: 150px" cellpadding="0" cellspacing="0" role="none">
+                  <table class="sm-w-full" style="margin-left: auto; margin-right: auto;  width: 100%; background-color: #fff; height: 150px" cellpadding="0" cellspacing="0" role="none">
                     <tr style="display: flex; width: 100%; align-items: center; justify-content: space-between">
                       <td style="display: flex; width: 100%; flex-direction: column; justify-content: center; padding-left: 40px">
-                        <p style="font-size: 35px; font-weight: 600; color: #000">PAYSLIP <span style="font-weight: 400; color: #6b7280"> MAR 2023</span></p>
-                        <p style="font-size: 14px; color: #000; height: 12px">{{$client_details[0]['client_fullname']}}</p>
+                        <p style="font-size: 35px; font-weight: 600; color: #000">PAYSLIP <span style="font-weight: 400; color: #6b7280">{{ $date_month['Month']}} {{$date_month['Year']}}</span></p>
+                        <p style="font-size: 14px; color: #000; height: 12px; margin-top:-15px">{{$client_details[0]['client_fullname']}}</p>
                         <p style="width: 300px; font-size: 14px; color: #000; margin-bottom: 10px; height: 24px">{{ $client_details[0]['address'] }}</p>
                       </td>
                       <td>
-                        <img src={{ $client_details[0]['client_logo'] }} width="100" alt style="max-width: 100%; vertical-align: middle; line-height: 1; border: 0; width: 200px">
+                        <img src={{ $client_details[0]['client_logo'] }} width="100" alt style="max-width: 100%;margin-bottom:-80px; vertical-align: middle; line-height: 1; border: 0; width: 300px;">
                       </td>
                     </tr>
                   </table>
@@ -74,7 +74,7 @@
                   <table class="sm-w-full" style="margin-left: auto; margin-right: auto; width: 100%" cellpadding="0" cellspacing="0" role="none">
                     <tr style="width: 100%;">
                       <td style="width: 100%;">
-                        <p style="position: relative; font-weight: 600; color: #000">{{ $personal_details[0]['name'] }}</p>
+                        <p style="position: relative; font-weight: 600; color: #000;margin-top:50px">{{ $personal_details[0]['name'] }}</p>
                         <table border="2" style="border-color: #000; width: 100%" cellpadding="0" cellspacing="0" role="none">
                           <tr>
                           </tr>
@@ -265,7 +265,7 @@
                           @else
                           <tr style="height: 4px;">
                             <td>
-                              <p style="height: 4px; color: #000;">{{ $key }}</p>
+                              <p style="height: 4px; color: #000; padding-left: 4px;">{{ $key }}</p>
                             </td>
                             <td>
                               <p style="height: 4px; color: #000;">{{  $single_taxdeduction }}</p>

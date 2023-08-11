@@ -49,7 +49,7 @@
     <table style="width: 100%;  border-collapse: collapse; background:#fff; ">
             <tr>
                 <td colspan="3" >
-                    <h3 style="color:#000; ">PAYSLIP <span style="color:gray; font-weight:500;   font-family: 'Poppins', sans-serif !important;">MAR 2023</span></h3>
+                    <h3 style="color:#000; ">PAYSLIP <span style="color:gray; font-weight:500;   font-family: 'Poppins', sans-serif !important;">{{ $date_month['Month']}} {{$date_month['Year']}}</span></h3>
                     <p style="color:#000;font-size:10px;">{{$client_details[0]['client_fullname']}}</p>
                     <p style="color:#000; font-size:9px;width:220px;line-height:16px ">{{ $client_details[0]['address'] }}</p>
                 </td>
@@ -165,7 +165,7 @@
         </tr>
         <tr style="width: 100%;">
             <td colspan="2" style=""  >
-                <table style="width: 100%; margin-top:0%;border-right: 0.4px solid rgba(128, 128, 128, 0.603); padding-right:8px;" >
+                <table style="width: 100%; margin-top:0%; padding-right:8px;" >
                     <tr style="height: 12px">
                         <td colspan="2" style="height: 12px">
                             <h1 style="font-size:10px; "><b>EARNINGS</b></h1>
@@ -195,7 +195,7 @@
                 </table>
 
             </td>
-            <td colspan="2" style="padding:0px">
+            <td colspan="2" style="padding:0px;border-left: 0.4px solid rgba(128, 128, 128, 0.603);">
                 <table style="width: 100%;" >
                     <tr style="height: 12px">
                         <td colspan="2" style="height: 12px">
@@ -265,7 +265,7 @@
                 <p style="font-size:12px font-weight:900">{{ $key }}</p>
             </td>
             <td colspan="4">
-                <p style="font-size:12px; margin-left:110px; ">{{  $total_sumvalue }}</p>
+                <h1 style="font-size:12px; margin-left:110px; ">{{  $total_sumvalue }}</h1>
             </td>
         </tr>
             @else
@@ -286,7 +286,7 @@
         </tr>
         <tr>
             <td colspan="3">
-                <p style="font-size: 10px; margin-top:40px">*This is computer generated statement, does not require signature</p>
+                <p style="font-size: 10px; margin-top:30px">*This is computer generated statement, does not require signature</p>
             </td>
         </tr>
 

@@ -12,6 +12,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
+use DateTime;
 
 
 use App\Models\User;
@@ -1121,10 +1122,10 @@ class VmtEmployeePayCheckService
         }
     }
 
-    public function generatePayslip($user_code, $payroll_date,$month,$year)
+    public function generatePayslip($user_code,$month,$year,$type)
     {
 
-        $user_code = "BA002";
+        // $user_code = "BA002";
 
 
 
@@ -1221,6 +1222,11 @@ class VmtEmployeePayCheckService
                 ]
             )->toArray();
 
+            $getpersonal['date_month'] = [
+                "Month" => DateTime::createFromFormat('!m', $month)->format('M'),
+                "Year" => DateTime::createFromFormat('Y', $year)->format('Y'),
+            ];
+
         // Total earnings
 
         $getpersonal['earnings'] = [];
@@ -1301,7 +1307,7 @@ class VmtEmployeePayCheckService
         }
 
 
-            $type = "mail";
+        dd($getpersonal);
 
         if($type =="pdf"){
 
