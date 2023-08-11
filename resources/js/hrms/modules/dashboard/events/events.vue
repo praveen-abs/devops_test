@@ -3,20 +3,27 @@
         <span class="text-primary font-semibold fs-6">Events</span>
 
         <div class="h-[500px] overflow-x-scroll">
-            <div class="grid grid-cols-4 gap-4">
-                <div class=" relative  w-[180px] rounded-lg my-8 " v-for="data in 9">
-                    <div class=" bg-green-800 h-[100px] rounded-lg ">
-                        <p class="semibold text-xl text-center text-white my-2">Happy Birthday</p>
+            <div class="grid grid-cols-4 gap-4 ">
+                <div class=" relative  w-[180px] rounded-lg my-8 " v-for="(events, index) in useDashboard.allEventSource"
+                    :key="index">
+                    <div class="h-[80px] rounded-lg" :class="`${getBackgroundColor(index)}`">
+                        <p class="font-semibold  text-center text-white my-2 text-[12px] font-['Poppins'] ">Happy Birthday
+                        </p>
                     </div>
-                    <div class="absolute top-10 w-full z-10 ">
-                        <div class="grid grid-cols-2 w-11/12 bg-slate-100 mx-auto rounded-lg">
+                    <div class="absolute top-8 w-full z-10 ">
+                        <div class="grid grid-cols-2 w-11/12 bg-slate-100 mx-auto rounded-lg h-full">
                             <div class="">
-                                <img src="../../../assests/sampleAvatar.jpg" alt="">
+                                <img src="../../../assests/sampleAvatar.jpg" alt="" class="rounded-lg">
                             </div>
                             <div class="h-full">
-                                <div class="py-10">
-                                    <p class="font-semibold text-lg text-center text-black my-auto">Narasimma</p>
-                                    <p class="font-medium text-md text-center text-black my-auto">Developer</p>
+                                <div class="py-6">
+                                    <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
+                                        v-if="events.name.length <= 9"> {{ events.name }}</p>
+                                    <p class="font-semibold text-[12px] font-['Poppins']  text-center text-black my-auto"
+                                        v-tooltip="events.name" v-else> {{ events.name ? events.name.substring(0, 9) + '..' : ''
+                                        }}</p>
+                                    <p class="font-semibold text-sm text-center text-gray-600 my-auto"> {{
+                                        dayjs(events.dob).format('DD') }}th {{ dayjs(events.dob).format('MMM') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -27,11 +34,7 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
-
 
     <!-- <div class="my-3 event-wrapper">
         <div class="mb-0 overflow-x-hidden overflow-y-auto border-0 card">
@@ -98,6 +101,8 @@
             </div>
         </div>
     </div>  -->
+
+    <div class="bg-p"></div>
 </template>
 
 <script setup>
@@ -107,34 +112,25 @@ import { useMainDashboardStore } from "../stores/dashboard_service"
 
 const useDashboard = useMainDashboardStore()
 
-const width = ref('h-10')
+
+const colors = [
+    'bg-emerald-600',
+    'bg-yellow-600',
+    'bg-rose-600',
+    'bg-cyan-600',
+
+    'bg-amber-600',
+    'bg-red-600',
+    'bg-blue-600',
+    'bg-pink-600',
+    'bg-green-600',
+    'bg-fuchsia-600',
+];
+
+const getBackgroundColor = (index) => {
+    console.log(index);
+    return colors[index % colors.length];
+};
+
 </script>
 
-
-<style lang="scss">
-
-
-$colors-400: (1:theme('colors.orange.400'),
-2:theme('colors.red.400'),
-3:theme('colors.stone.400'),
-4:theme('colors.green.400'),
-5:theme('colors.indigo.400'),
-6:theme('colors.pink.400'),
-7:theme('colors.amber.400'),
-8:theme('colors.cyan.400'),
-9:theme('colors.blue.400'),
-10:theme('colors.slate.400'),
-);
-
-@each $key,
-$values-100 in $colors-400 {
-@for $i from 1 through 15 {
-
-    .dynamic-background{
-        &:nth-child(#{$key}) {
-            background-color: $values-100;
-        }
-    }
-}
-}
-</style>

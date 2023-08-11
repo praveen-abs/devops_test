@@ -1,14 +1,14 @@
 <template>
     <div
-        class=" h-[200px] overflow-hidden rounded overflow-hidden shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
+        class=" h-[180px] overflow-hidden rounded shadow-lg bg-[#DFE8FF] p-3 grid grid-cols-12 gap-4 justify-between leading-normal ">
         <div class="mb-8 col-span-7" v-for="item in EmpDetials">
             <p class=" font-[14px] font-['Poppins']  text-gray-500 flex items-center">
                 {{ current_session }}
             </p>
-            <div class="text-gray-900 text-[24px] mb-2  font-['Poppins'] "> {{ service.current_user_name }}</div>
+            <div class="text-gray-900 text-[18px] mb-2  font-['Poppins'] "> {{ service.current_user_name }}</div>
             <div class="flex my-1 overflow-visible items-center  !z-10 ">
                 <i class="fa fa-sun-o text-warning my-auto text-[20px] " aria-hidden="true"></i>
-                <p class="text-[16px] my-auto font-semibold px-2">General Shift</p>
+                <p class="text-[12px] my-auto font-semibold px-2">General Shift</p>
             </div>
             <label class="switch-checkbox relative left-[150px] bottom-8 !w-[98px] font-semibold z-10 font-['Poppins']">
                 <input type="checkbox" id="checkin_function" class="text-[6px] font-semibold" v-model="welcome_card.check"
@@ -21,8 +21,15 @@
                 <p class="text-[12px] mt-[-20px] text-[#8B8B8B] font-['Poppins'] flex items-center">
                     Time duration:<span>09:30</span>
                 </p>
-                <p class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]">Check-In     : 11:55:09 AM (20, Aug 2023)</p>
-                <p class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]">Check-In     : 11:55:09 AM (20, Aug 2023)</p>
+                <p v-if="item.checkin_time" class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
+                    `Check-In : ${item.checkin_time} (${dayjs(item.checkin_date).format('MMM D, YYYY')}) ` }}</p>
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-In: --:--:--` }}
+                </p>
+                <p v-if="item.checkout_time" class=" w-[300px]  max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{
+                    `Check-Out : ${item.checkout_time} (${dayjs(item.checkout_date).format('MMM D, YYYY')}) ` }}</p>
+                <p v-else class=" w-[300px] my-2 max-[1300px]:text-[9px] font-['Poppins'] text-[12px]"> {{ `Check-Out: --:--:--` }}
+                </p>
+
             </div>
         </div>
         <div class="col-span-5 h-full !z-5 ">
@@ -100,7 +107,7 @@
         </div>
     </div> -->
 
-    <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '25vw' }">
+    <Dialog v-model:visible="check_in_dailog" modal :style="{ width: '30vw' }">
         <div class="modal-content bg-white">
             <div class="p-1 text-center modal-body">
                 <div class="check-in-animate">
@@ -112,7 +119,8 @@
                     </lord-icon>
                 </div>
                 <div class="mt-2">
-                    <h4 class="mb-2">Welcome {{ service.current_user_name }}</h4>
+                    <div class="text-gray-900 text-[18px] mb-2  font-['Poppins'] "><span>Welcome</span> {{
+                        service.current_user_name }}</div>
                     <p class="mb-4 text-muted" v-if="checkInMessege">{{ checkInMessege }}</p>
                     <p class="mb-4 text-muted" v-else>Have a good day !</p>
                     <div class="gap-2 hstack justify-content-center">
@@ -158,6 +166,7 @@ import { onMounted, ref, reactive } from "vue";
 import { Service } from "../../../Service/Service";
 import { useMainDashboardStore } from "../../stores/dashboard_service";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const service = Service();
 const usedashboard = useMainDashboardStore();
@@ -276,7 +285,7 @@ const resetChars = () => {
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:ital@0;1&display=swap');
 
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:last-child

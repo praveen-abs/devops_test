@@ -1,13 +1,13 @@
 <template>
     <div class="p-3 overflow-auto h-screen">
-        <div class="grid grid-cols-12 gap-4">
-            <div class="col-span-4">
-                <WelcomeCard />
+        <div class="grid grid-cols-12 gap-4" >
+            <div class="col-span-5">
+                <WelcomeCard   />
             </div>
             <div class="col-span-4">
                 <LeaveDetials />
             </div>
-            <div class="bg-white rounded-lg col-span-4">
+            <div class="bg-white rounded-lg col-span-3">
                 <HolidayWidget />
             </div>
         </div>
@@ -42,6 +42,11 @@ import LeaveBalance from "./leave_balance/leave_balance.vue";
 import Calender from "./calender/calender.vue";
 import HolidayWidget from "./holiday_widget/holiday_widget.vue";
 import events from "../events/events.vue";
+import { useMainDashboardStore } from "../stores/dashboard_service";
+
+
+const useDashboard = useMainDashboardStore()
+
 </script>
 
 

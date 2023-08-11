@@ -1,5 +1,5 @@
 <template>
-    <div class="image-slider relative h-full w-full">
+    <div class="image-slider relative h-[180px] w-full">
         <transition name="fade" mode="out-in">
             <img :src="`data:image/jpeg;base64,${currentImage}`" :key="currentImage" alt="Holiday Image"
                 class="h-full w-full rounded-lg" />

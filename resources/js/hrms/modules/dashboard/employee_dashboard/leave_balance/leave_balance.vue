@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="px-3">
-                            <p class=" font-semibold text-primary text-[14px] align-bottom">{{ leaveBalance.leave_type }}</p>
+                            <p class=" font-semibold text-primary text-[14px] align-bottom  py-2">{{ leaveBalance.leave_type }}</p>
                         </div>
                     </div>
                 </div>
