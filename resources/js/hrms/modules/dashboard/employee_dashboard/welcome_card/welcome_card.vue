@@ -250,6 +250,8 @@ const getEmployeeDetials = async () => {
         } else {
             welcome_card.check = null;
         }
+    }).finally(()=>{
+        usedashboard.canShowTopbar = true
     });
 };
 onMounted(() => {

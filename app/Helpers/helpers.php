@@ -112,6 +112,7 @@ function sessionGetSelectedClientName()
         return "";
 }
 
+
 function sessionGetSelectedClientFullName()
 {
 
@@ -187,13 +188,31 @@ function getClientLogo($user_id)
         return "";
 }
 
+function getSessionCurrentlySelectedClientEmp($user_id)
+{
+    $query_client = VmtClientMaster::find(User::find($user_id)->client_id);
+
+    if (!empty($query_client))
+        return $query_client;
+    else
+        return "";
+}
+
 function sessionGetSelectedClientLogo()
 {
 
     $query_client = VmtClientMaster::find(session('client_id'));
-
     if (!empty($query_client))
         return $query_client->client_logo;
+    else
+        return "";
+}
+function getSessionCurrentlySelectedClient()
+{
+
+    $query_client = VmtClientMaster::find(session('client_id'));
+    if (!empty($query_client))
+        return $query_client;
     else
         return "";
 }

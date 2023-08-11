@@ -10,6 +10,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     // Varaible Declarations
 
 
+    const canShowTopbar = ref(false)
     const canShowClients = ref(false)
     const canShowOrganization = ref(false)
     const canShowConfiguration = ref(false)
@@ -117,7 +118,7 @@ export const useMainDashboardStore = defineStore("mainDashboardStore", () => {
     return {
         // varaible Declarations
         service,canShowLoading,
-        canShowClients,canShowConfiguration,canShowCurrentEmployee,canShowOrganization,
+        canShowClients,canShowConfiguration,canShowCurrentEmployee,canShowOrganization,canShowTopbar,
 
       // Welcome Card
         getCurrentlyLoginUser,

@@ -8,6 +8,7 @@
                 <button class=" text-black rounded  focus:outline-none">
                     <p class="text-md text-gray-600 text-left">Your organization</p>
                     <div class="flex justify-between  items-center gap-2 py-0.5" v-if="currentlySelectedClient">
+
                         <img :src="currentlySelectedClient.client_logo" alt="" class="h-6 w-12">
                         <p class="text-sm whitespace-nowrap  font-semibold px-2"
                             v-if="currentlySelectedClient.client_fullname.length <= 13">{{
@@ -27,7 +28,7 @@
                         <!-- Dropdown content goes here -->
                         <div class="cursor-pointer hover:bg-gray-100 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
                             v-for="client in clientList">
-                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center" @click="submitSelectedClient">
+                            <div class="justify-between flex p-2 hover:bg-gray-200  items-center" @click="submitSelectedClient(client.id)">
                                 <div class="cursor-pointer flex mx-2 align-center justify-between rounded-lg p-0.5 ">
                                     <div class="mx-2 p-1 flex items-center justify-between rounded border gap-4"
                                         style="height: 30px;width:30px">
@@ -36,7 +37,7 @@
                                             client.abs_client_code }})</p>
                                     </div>
                                 </div>
-                                <div>
+                                <div v-if="currentlySelectedClient ? currentlySelectedClient.id == client.id : ''">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor"
                                         class="w-6 h-6 text-green-600 font-semibold">
@@ -129,7 +130,7 @@
                     <button
                         class="py-2 px-3 flex bg-gray-100 text-white rounded-full focus:outline-none hover:bg-gray-200 transition duration-700 ease-in-out  transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none ">
 
-                        <p class="rounded-full  bg-red-100 text-black font-semibold p-1 text-sm">SA</p>
+                        <p class="rounded-full  bg-red-100 text-black font-semibold p-1 text-sm">{{ service.current_user_name ? service.current_user_name.substring(0, 2)  : ''}}</p>
                         <p class="text-sm whitespace-nowrap text-black font-semibold px-2 my-auto"
                             v-if="service.current_user_name.length <= 11">{{ service.current_user_name ?
                                 service.current_user_name : '' }}</p>
@@ -264,26 +265,33 @@ const currentlySelectedClient = ref()
 const getClientList = () => {
     axios.get('/clients-fetchAll').then(res => {
         clientList.value = res.data
-        currentlySelectedClient.value = res.data[0]
     }).finally(() => {
     })
 }
 
-const submitSelectedClient  = (client ) =>{
+const getSessionClient = () =>{
+    axios.get('session-sessionselectedclient').then(res=>{
+        console.log(res.data);
+        currentlySelectedClient.value = res.data
+    })
+}
+
+const submitSelectedClient  = (client) =>{
     let url = '/session-update-globalClient'
-    axios.post(url,client)
+    console.log({"client_id" :client});
+    axios.post(url,{"client_id" :client}).finally(()=>{
+        getSessionClient()
+        getOrgList()
+    })
 }
 
 
 function globalSearch(keyword, list) {
     // Use the filter method to find items whose name contains the keyword (case-insensitive)
     const searchResults = list.filter((item) =>
-        // console.log(item.emp_name)
         item.emp_name.toLowerCase().includes(keyword.toLowerCase()) ||
         item.emp_code.toLowerCase().includes(keyword.toLowerCase())
-        // item.label.toLowerCase().includes(keyword.toLowerCase()
     );
-    console.log(searchResults);
     return searchResults;
 }
 
@@ -293,7 +301,6 @@ const combinedArray = ref()
 const getOrgList = () => {
     axios.get('/vmt-activeemployees-fetchall').then(res => {
         orgList.value = res.data
-        orgList.value ? combinedArray.value = [...orgList.value, ...Modules.value] : []
     })
 
 }
@@ -302,6 +309,7 @@ const getOrgList = () => {
 onMounted(() => {
     getOrgList()
     getClientList()
+    getSessionClient()
     setTimeout(() => {
         canShowLoading.value = true
     }, 2000);

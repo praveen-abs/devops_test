@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     //Department
     Route::post('/department-add', [App\Http\Controllers\VmtDepartmentController::class, 'addDepartment'])->name('department-add');
     Route::post('/session-update-globalClient', [App\Http\Controllers\VmtMainDashboardController::class, 'updateGlobalClientSelection'])->name('session-update-globalClient');
+    Route::get('/session-sessionselectedclient', [App\Http\Controllers\VmtMainDashboardController::class, 'sessionSelectedClient'])->name('session-sessionselectedclient');
 
     Route::get('/isEmailExists/{email?}', function ($email) {
 
@@ -509,7 +510,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/payroll/paycheck/getEmployeePayslipDetailsAsPDF', [App\Http\Controllers\VmtPayCheckController::class, 'getEmployeePayslipDetailsAsPDF'])->name('getEmployeePayslipDetailsAsPDF');
     Route::post('/payroll/paycheck/sendMail_employeePayslip', [App\Http\Controllers\VmtPayCheckController::class, 'sendMail_employeePayslip'])->name('sendMail_employeePayslip');
     Route::post('/payroll/paycheck/updatePayslipReleaseStatus', [App\Http\Controllers\VmtPayCheckController::class, 'updatePayslipReleaseStatus'])->name('update-PayslipReleaseStatus');
- 
+
 
     Route::get('/payroll/setup', [App\Http\Controllers\VmtPayrollController::class, 'showPayrollSetup'])->name('showPayrollSetup');
     Route::get('payroll/work_location', [App\Http\Controllers\VmtPayrollController::class, 'showWorkLocationSetup'])->name('showWorkLocationSetup');
@@ -911,7 +912,7 @@ Route::post('/onboarding/storeBulkOnboardEmployees', [App\Http\Controllers\Onboa
     Route::post('/fetch-employee-for-loan-approval', [App\Http\Controllers\VmtSalaryAdvanceController::class, 'fetchEmployeeForLoanApprovals']);
     Route::post('/reject-or-approve-loan',[App\Http\Controllers\VmtSalaryAdvanceController::class,'rejectOrApproveLoan']);
     Route::post('/enable-or-disable-loan-settings',[App\Http\Controllers\VmtSalaryAdvanceController::class,'enableOrDisableLoanSettings']);
- 
+
     Route::get('/testing-karthi',[App\Http\Controllers\VmtSalaryAdvanceController::class,'testingKarthi']);
 
     Route::get('/get-pending-requested-for-loan-and-advance',[App\Http\Controllers\VmtSalaryAdvanceController::class,'getApprovedRequestedForLoanAndAdvance'])->name('getApprovedRequestedForLoanAndAdvance');
