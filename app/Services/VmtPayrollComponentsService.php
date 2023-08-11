@@ -1616,6 +1616,12 @@ class VmtPayrollComponentsService{
             $save_payroll_esi_data->status =$status ;
             $save_payroll_esi_data->save();
 
+            return response()->json([
+                "status" => "success",
+                "message" => "employee esi create successfully ",
+                "data" =>$save_payroll_esi_data,
+            ]);
+
          }catch(\Exception $e){
             return response()->json([
                 "status" => "failure",

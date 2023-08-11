@@ -36,6 +36,7 @@ export const useManageWelcomeMailStatusStore = defineStore("ManageWelcomeMailSta
                 console.log(data);
 
             }).finally(()=>{
+                getManageWelcomeMailStatus();
                 loading.value = false
             })
 

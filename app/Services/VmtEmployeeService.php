@@ -681,12 +681,12 @@ class VmtEmployeeService
             $newEmployee->aadhar_number = $data["aadhar"] ?? '';
 
             if (!empty($data["marital_status"])) {
-                $marital_status_id = VmtMaritalStatus::where('name', ucfirst($data["marital_status"]))->first()->id; // to get marital status id
+                $marital_status_id = VmtMaritalStatus::where('name', ucfirst(trim($data["marital_status"])))->first()->id; // to get marital status id
                 $newEmployee->marital_status_id = $marital_status_id ?? '';
             }
 
             if (!empty($data['bank_name'])) {
-                $bank_id = Bank::where('bank_name', $data['bank_name'])->first()->id;  // to get bank id
+                $bank_id = Bank::where('bank_name', trim($data['bank_name']))->first()->id;  // to get bank id
                 $newEmployee->bank_id  = $bank_id ?? '';
             }
 
@@ -709,7 +709,7 @@ class VmtEmployeeService
             }
             $empOffice->user_id = $user_id; //Link between USERS and VmtEmployeeOfficeDetails table
             if (!empty($data['department'])) {
-                $department_id = Department::where('name', strtolower($data['department']))->first()->id;
+                $department_id = Department::where('name', strtolower(trim($data['department'])))->first()->id;
                 $empOffice->department_id = $department_id ?? ''; // => "lk"
             }
             $empOffice->process = $data["process"] ?? ''; // => "k"
@@ -776,10 +776,11 @@ class VmtEmployeeService
                 $familyMember->save();
             }
 
-            if ((strtolower($data['marital_status'])) == 'married') {
+
+            if ((strtolower($data['marital_status'])) == 'Married') {
                 $familyMember =  new VmtEmployeeFamilyDetails;
                 $familyMember->user_id  = $user_id;
-                $familyMember->name =   $data['spouse_name'];
+                $familyMember->name =   $data['spouse_name'] ?? " ";
                 $familyMember->relationship = 'Spouse';
 
                 if (!empty($data['gender'] == 'Male')) {

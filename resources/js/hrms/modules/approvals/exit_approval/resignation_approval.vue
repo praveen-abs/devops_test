@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-[28px] mt-[28px] font-['poppins']">Salary Revision</h1>
+        <h1 class="text-[28px] font-['poppins']">Resignation Approval</h1>
         <div>
             <div style="position: relative;" >
                 <!-- <div class="p-4 pt-1 pb-0 mb-3 mr-4 bg-white rounded-lg tw-card left-line"> -->
@@ -32,7 +32,7 @@
                             class=" border-3 h-1 rounded-r-3xl border-[#F9BE00] position-absolute left-0 w-12"></div>
                         <div v-else class=" border-3 h-1 rounded-r-3xl border-gray-300"></div>
                     </li>
-                    <div class="border-gray-300 border-b-[7px]  w-100 mt-[-7px]"></div>
+                    <div class="border-gray-300 border-b-[6px]  w-100 mt-[-7px]"></div>
                 </ul>
                 <!-- </div> -->
                 <!-- Tab Content -->
@@ -40,14 +40,16 @@
                     <div>
                         <div class="card-body">
                             <div v-if="activetab === 1">
-                                <salary_Revision_pending />
+                                <!-- <salary_Revision_pending /> -->
+                                <resignation_pending />
                             </div>
                             <div v-if="activetab === 2">
                                 <!-- <EmployeeSummary /> -->
-                                <salary_Revision_Processed />
+                                <!-- <salary_Revision_Processed /> -->
+
                             </div>
                             <div v-if="activetab === 3">
-                                <salary_Revision_Cancelled />
+                                <!-- <salary_Revision_Cancelled /> -->
                             </div>
                         </div>
                     </div>
@@ -60,9 +62,10 @@
 
 <script setup>
 import {ref,reactive} from "vue";
-import salary_Revision_pending from "./salary_revision_pending.vue" ;
-import salary_Revision_Processed from "./salary_Revision_Processed.vue" ;
-import salary_Revision_Cancelled from "./salary_Revision_Cancelled.vue";
+import resignation_pending from "./exit_module/resignation_pending.vue";
+// import salary_Revision_pending from "./salary_revision_pending.vue" ;
+// import salary_Revision_Processed from "./salary_Revision_Processed.vue" ;
+// import salary_Revision_Cancelled from "./salary_Revision_Cancelled.vue";
 
 const activetab = ref(1);
 

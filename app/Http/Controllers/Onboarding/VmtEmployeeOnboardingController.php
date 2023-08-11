@@ -637,6 +637,7 @@ class VmtEmployeeOnboardingController extends Controller
         try {
 
             $response = $employeeService->createOrUpdate_BulkOnboardData(data: $row, can_onboard_employee: "0", existing_user_id: null, onboard_type: "bulk");
+
             $mail_message = '';
 
             $status = $response['status'];
@@ -648,6 +649,7 @@ class VmtEmployeeOnboardingController extends Controller
                 $VmtClientMaster = VmtClientMaster::first();
                 $image_view = url('/') . $VmtClientMaster->client_logo;
                 $isEmailSent = \Mail::to($row['email'])->send(new WelcomeMail($row['employee_code'], 'Abs@123123', request()->getSchemeAndHttpHost(), "", $image_view, $VmtClientMaster->abs_client_code));
+
                 if ($isEmailSent) {
                     $mail_message = 'success';
                 } else {
@@ -669,7 +671,11 @@ class VmtEmployeeOnboardingController extends Controller
                 'message' => $message,
                 'Employee_Name' =>$row['employee_name']  ,
                 'mail_status' => $mail_message,
-                'data' => '',
+<<<<<<< HEAD
+                'data' => $response['data'],
+=======
+                'data' => $response['data'] ,
+>>>>>>> ec7a047d5cc04c95b867335bede3f5a2403035ca
             ];
         } catch (\Exception $e) {
 

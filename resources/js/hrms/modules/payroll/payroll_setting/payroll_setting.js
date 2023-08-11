@@ -1,8 +1,6 @@
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import '../../../.././../../public/assets/css/tailwind.css';
 import '../../../assests/tailwind.css'
-// import router from "./router";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -38,14 +36,13 @@ import payroll_setting from './payroll_setting.vue'
 
 
 const app = createApp(payroll_setting);
-const pinia=createPinia()
+const pinia = createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 app.use(pinia)
-// app.use(router)
 
 
 app.directive('tooltip', Tooltip);
@@ -60,8 +57,8 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
 app.component('Toast', Toast);
-app.component('ConfirmDialog',ConfirmDialog);
-app.component('Dropdown',Dropdown);
+app.component('ConfirmDialog', ConfirmDialog);
+app.component('Dropdown', Dropdown);
 app.component('InputText', InputText);
 app.component('Dialog', Dialog);
 app.component('ProgressSpinner', ProgressSpinner)

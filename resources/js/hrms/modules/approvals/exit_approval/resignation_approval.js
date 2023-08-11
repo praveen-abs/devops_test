@@ -1,12 +1,17 @@
+import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
-import  '../../../../../../../../public/assets/css/tailwind.css'
+// import '../../assests/tailwind.css';
+import '../../../assests/tailwind.css';
+// import "resources/js/hrms/assests/tailwind.css";
+
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import PrimeVue from "primevue/config";
 import BadgeDirective from "primevue/badgedirective";
+import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import FocusTrap from 'primevue/focustrap';
 import Ripple from 'primevue/ripple';
@@ -25,26 +30,30 @@ import ProgressSpinner from 'primevue/progressspinner';
 import InputText from 'primevue/inputtext'
 import Row from 'primevue/row'
 import ColumnGroup from 'primevue/columngroup'
-import InputNumber from 'primevue/inputnumber'
-import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar'
 import Textarea from 'primevue/textarea'
-import Chips from 'primevue/chips';
-import Steps from 'primevue/steps';
+import Chips from 'primevue/chips'
+import MultiSelect from 'primevue/multiselect';
+import InputNumber from 'primevue/inputnumber';
+import SelectButton from 'primevue/selectbutton';
+import RadioButton from 'primevue/radiobutton';
+import Checkbox from 'primevue/checkbox';
+import OrganizationChart from 'primevue/organizationchart';
 
 
 
-import InvestmentSetting from './finance_setting.vue'
+import resignation_approval from './resignation_approval.vue'
 
-
-const app = createApp(InvestmentSetting);
+const app = createApp(resignation_approval);
 const pinia=createPinia()
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+app.use(ToastService);
 app.use(pinia)
+
 
 
 app.directive('tooltip', Tooltip);
@@ -54,6 +63,7 @@ app.directive('styleclass', StyleClass);
 app.directive('focustrap', FocusTrap);
 
 app.component('Button', Button);
+app.component('RadioButton',RadioButton);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup)
@@ -67,8 +77,11 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Calendar', Calendar)
 app.component('Textarea', Textarea)
 app.component('Chips', Chips)
+app.component('MultiSelect', MultiSelect)
 app.component('InputNumber', InputNumber)
-app.component('Steps', Steps)
+app.component('SelectButton' ,SelectButton)
+app.component('Checkbox' ,Checkbox)
+app.component('OrganizationChart' ,OrganizationChart)
 
-app.mount("#InvestmentSetting");
 
+app.mount("#resignation_approval");
