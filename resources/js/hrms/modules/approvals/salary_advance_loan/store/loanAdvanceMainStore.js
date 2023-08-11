@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted , inject } from "vue";
 import axios from "axios";
+
 
 
 export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', () => {
@@ -9,6 +10,8 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     const arraySalaryAdvance = ref();
     const currentlySelectedStatus = ref();
     const canShowLoadingScreen = ref(false);
+
+    const swal = inject('$swal')
 
     const Request_comments = ref();
 
@@ -20,7 +23,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     async function getEmpDetails() {
         canShowLoadingScreen.value = true;
         // let url = "/SalAdvApproverFlow";
-         let url = "http://localhost:3000/salaryAdvance";
+         let url = "/SalAdvApproverFlow";
         await axios.get(url).then((res) => {
             arraySalaryAdvance.value = res.data;
         }).finally(() => {
@@ -53,20 +56,21 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
 
     async function SAapproveAndReject(val, Status,reviewer_comments) {
         currentlySelectedStatus.value=Status;
+        let status = Status
         canShowLoadingScreen.value = true;
 
-        let data = val;
-        await axios.post('http://localhost:3000/submitApproveAndReject', {
+        let data = val.id;
+        await axios.post('/rejectOrApprovedSaladv', {
             record_id: data,
             status:
-                currentlySelectedStatus == "Approve"
-                    ? "Approved"
-                    : currentlySelectedStatus == "Reject"
-                        ? "Rejected"
-                        : currentlySelectedStatus,
-            reviewer_comments: "",
-        }).then(() => {
+            status == 1 ? 1
+            : status == -1 ? -1
+                        : status,
+            reviewer_comments: reviewer_comments,
+        }).then((res) => {
+               res.data.status == 'success' ?  Swal.fire("Success",res.data.message,"success") : Swal.fire("Failure",res.data.message,"error")
         }).finally(()=>{
+
             canShowLoadingScreen.value = false;
         })
 
@@ -83,9 +87,7 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
          axios.post('/fetch-employee-for-loan-approval',{
               loan_type:"InterestFreeLoan",
         }).then((res)=>{
-            console.log( res.data);
             arrayIFL_List.value = res.data
-            console.log(arrayIFL_List);
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -94,20 +96,19 @@ export const UseSalaryAdvanceApprovals = defineStore('SalaryAdvanceApprovals', (
     // Interest free loan Datatable function Approval and Rejected
 
     async function IFLapproveAndReject(val, Status,reviewer_comments) {
-        currentlySelectedStatus.value=Status;
+        let status = Status
         canShowLoadingScreen.value = true;
-console.log(reviewer_comments);
-        let data = val;
-        await axios.post('http://localhost:3000/submitApproveAndReject', {
+        let data = val.id;
+        await axios.post('/reject-or-approve-loan', {
+            loan_type : 'InterestFreeLoan',
             record_id: data,
             status:
-                currentlySelectedStatus == 1
+            status == 1
                     ? 1
-                    : currentlySelectedStatus == -1
-                        ? 1
-                        : currentlySelectedStatus,
+                    : status == -1
+                        ? -1
+                        : status,
             reviewer_comments: reviewer_comments,
-        }).then(() => {
         }).finally(()=>{
             canShowLoadingScreen.value = false;
         })
@@ -118,7 +119,6 @@ console.log(reviewer_comments);
 
     async function IFLbulkApproveAndReject(Status, val) {
         canShowLoadingScreen.value = true;
-
         currentlySelectedStatus.value = Status;
         let data = val;
         await axios.post('http://localhost:3000/submitApproveAndReject', {
@@ -136,8 +136,41 @@ console.log(reviewer_comments);
         })
     }
 
+    // interest with loan
 
+    const arrayIWL = ref();
 
+    async function getInterestWithLoanDetails(){
+        canShowLoadingScreen.value = true;
+        let url = `/fetch-employee-for-loan-approval`;
+    await  axios.post(url,{
+            loan_type:"InterestWithLoan",
+        }).then((res)=>{
+            arrayIWL.value = res.data;
+        }).finally(()=>{
+            canShowLoadingScreen.value = false;
+        })
+    }
+
+    async function IWL_ApproveAndReject(val, Status,reviewer_comments){
+        canShowLoadingScreen.value = true;
+        let status = Status
+        let data = val.id;
+        await axios.post('/reject-or-approve-loan', {
+            loan_type : 'InterestWithLoan',
+            record_id: data,
+            status:
+            status == 1
+                    ? 1
+                    : status == -1
+                        ? -1
+                        : status,
+            reviewer_comments: reviewer_comments,
+        }).finally(()=>{
+            canShowLoadingScreen.value = false;
+        })
+
+    }
 
 
 
@@ -164,7 +197,12 @@ console.log(reviewer_comments);
         //  functions
         getInterestFreeLoanDetails,
         IFLapproveAndReject,
-        IFLbulkApproveAndReject
+        IFLbulkApproveAndReject,
+
+        // interest with loan function and variables
+        arrayIWL,
+        getInterestWithLoanDetails,
+        IWL_ApproveAndReject
 
 
     }

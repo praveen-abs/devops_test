@@ -11,6 +11,17 @@
     //     box-shadow: theme("boxShadow.xl");
     // }
 
+    $EvenCard: (1:theme('colors.orange.100'),
+    2:theme('colors.red.100'),
+    3:theme('colors.stone.100'),
+    4:theme('colors.green.100'),
+    5:theme('colors.indigo.100'),
+    6:theme('colors.pink.100'),
+    7:theme('colors.amber.100'),
+    8:theme('colors.cyan.100'),
+    9:theme('colors.blue.100'),
+    10:theme('colors.slate.100'),
+);
 
 
     $colors-100: (1:theme('colors.orange.100'),
@@ -47,6 +58,16 @@
                 }
             }
             .dynamic-card-without-border {
+                &:nth-child(#{$key}) {
+                    background-color: $values-100;
+                }
+            }
+        }
+    }
+    @each $key,
+    $values-100 in $EvenCard {
+        @for $i from 1 through 15 {
+            .even-card {
                 &:nth-child(#{$key}) {
                     background-color: $values-100;
                 }

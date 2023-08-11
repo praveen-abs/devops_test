@@ -9,7 +9,6 @@
 //     ->count();
 
 //dd($approvals_leave_notif_count);
-
 ?>
 <!-- ========== App Menu ========== -->
 <div class="app-menu navbar-menu">
@@ -196,8 +195,7 @@
                                         class="py-1 nav-link sidebar"><span>Manage Employees</span></a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="{{ route('showOrgTree') }}"
-                                        class="py-1 nav-link sidebar"><span>ORG
+                                    <a href="{{ route('showOrgTree') }}" class="py-1 nav-link sidebar"><span>ORG
                                             structure</span></a>
                                 </li>
                                 {{-- <li class="nav-item ">
@@ -356,15 +354,15 @@
                                         PMS forms are approved here. Redirect to PMS dashboard
                                     </li> --}}
 
-                                      @if(!Str::contains(getCurrentClientName(),'Brand avatar'))
-                                    <li class="nav-item">
-                                        <a href="{{ route('showReimbursementApprovalPage') }}" id=""
-                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
-                                            aria-expanded="false"><span>
-                                                Reimbursement</span> </a>
-                                        {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="py-1 nav-link sidebar"><span>Dashboard</span></a> --}}
+                                    @if (!Str::contains(getCurrentClientName(), 'Brand avatar'))
+                                        <li class="nav-item">
+                                            <a href="{{ route('showReimbursementApprovalPage') }}" id=""
+                                                class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                                aria-expanded="false"><span>
+                                                    Reimbursement</span> </a>
+                                            {{-- <a href="{{ url('vmt_mail_attendance_regularization_notify') }}" class="py-1 nav-link sidebar"><span>Dashboard</span></a> --}}
 
-                                    </li>
+                                        </li>
                                     @endif
                                     <li class="nav-item">
                                         <a href="{{ route('page-not-found') }}" id=""
@@ -394,6 +392,24 @@
                                         </a>
                                     </li>
                                     {{-- @endif --}}
+
+
+                                    <li class="nav-item">
+                                        <a href="{{ route('showSAapprovalView') }}" id=""
+                                            class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                            aria-expanded="false">
+                                            {{-- <span>
+                                                Taxations<span
+                                                    class="text-white badge bg-danger rounded-circle">4</span>
+                                            </span> --}}
+                                            <span>
+                                                Loan And Salary Advance
+                                            </span>
+                                        </a>
+                                    </li>
+
+
+
                                 @endif
                             </ul>
                         </div>
@@ -401,7 +417,7 @@
                 @endif
 
                 <!-- PMS module -->
-                @if (!Str::contains(getCurrentClientName(), ['Protocol','Dunamis Machines','BREEZEE TECH']))
+                @if (!Str::contains(getCurrentClientName(), ['Protocol', 'Dunamis Machines', 'BREEZEE TECH']))
 
                     <li class="mb-1 nav-item">
                         <a class="pt-0 nav-link sidebar menu-link" href="#PerformanceDrop-Down"
@@ -561,10 +577,10 @@
                                             Run</span></a>
                                 </li>
                                 @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
-                                <li class="nav-item">
-                                    <a href="{{ route('showManagePayslipsPage') }}" class="py-1 nav-link sidebar"
-                                        role="button"><span>Manage Payslip</span></a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('showManagePayslipsPage') }}" class="py-1 nav-link sidebar"
+                                            role="button"><span>Manage Payslip</span></a>
+                                    </li>
                                 @endcan
                                 <li class="nav-item">
                                     <a href="{{ route('showPayrollClaimsPage') }}" class="py-1 nav-link sidebar"
@@ -622,12 +638,11 @@
                             </li>
 
                             @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
-
-                            <li class="nav-item">
-                                <a href="{{ route('showInvestmentsFormMgmtPage') }}" class="py-1 nav-link sidebar"
-                                    role="button"><span>Investment Form Mgmt
-                                       </span></a>
-                            </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('showInvestmentsFormMgmtPage') }}" class="py-1 nav-link sidebar"
+                                        role="button"><span>Investment Form Mgmt
+                                        </span></a>
+                                </li>
                             @endcan
 
                             <li class="nav-item">
@@ -638,6 +653,10 @@
                                 <a href="{{ route('vmt_form16_details') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>
                                         Form 16</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('showSAemployeeView') }}" class="py-1 nav-link sidebar"
+                                    role="button"><span>Loan And Salary Advance</span></a>
                             </li>
                         </ul>
                     </div>
@@ -653,18 +672,18 @@
                         data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="sidebar360questions">
                         <i> <svg xmlns="http://www.w3.org/2000/svg" width="18.46" height="24.613"
-                            viewBox="0 0 18.46 24.613">
-                            <g id="Group_34506" data-name="Group 34506" transform="translate(-9251 -13713)">
-                                <path id="file-earmark-medical-fill"
-                                    d="M13.219,0H5.077A3.077,3.077,0,0,0,2,3.077v18.46a3.077,3.077,0,0,0,3.077,3.077H17.383a3.077,3.077,0,0,0,3.077-3.077V7.241a1.538,1.538,0,0,0-.45-1.087l-5.7-5.7A1.538,1.538,0,0,0,13.219,0Zm.318,5.384V2.307l4.615,4.615H15.076A1.538,1.538,0,0,1,13.537,5.384Zm-7.692,10h7.692a.769.769,0,0,1,0,1.538H5.846a.769.769,0,0,1,0-1.538Zm0,3.077h7.692a.769.769,0,0,1,0,1.538H5.846a.769.769,0,0,1,0-1.538Z"
-                                    transform="translate(9249 13713)" fill="#686363" />
-                                <path id="rupee"
-                                    d="M3.257,1.24v.37a.112.112,0,0,1-.116.116H2.532a1.356,1.356,0,0,1-.468.849,1.84,1.84,0,0,1-1,.4q.606.646,1.665,1.944a.1.1,0,0,1,.014.123.105.105,0,0,1-.105.065H1.929a.107.107,0,0,1-.091-.044Q.729,3.732.033,2.992A.109.109,0,0,1,0,2.912V2.452A.111.111,0,0,1,.034,2.37a.111.111,0,0,1,.082-.034H.522a1.637,1.637,0,0,0,.771-.156.709.709,0,0,0,.372-.454H.116A.112.112,0,0,1,0,1.61V1.24a.112.112,0,0,1,.116-.116h1.5Q1.407.715.642.715H.116A.111.111,0,0,1,.034.68.111.111,0,0,1,0,.6V.116A.112.112,0,0,1,.116,0H3.134A.112.112,0,0,1,3.25.116v.37A.112.112,0,0,1,3.134.6H2.289a1.254,1.254,0,0,1,.232.522h.62a.112.112,0,0,1,.116.116Z"
-                                    transform="translate(9256.973 13720.691)" fill="#fff" />
-                            </g>
-                        </svg>
+                                viewBox="0 0 18.46 24.613">
+                                <g id="Group_34506" data-name="Group 34506" transform="translate(-9251 -13713)">
+                                    <path id="file-earmark-medical-fill"
+                                        d="M13.219,0H5.077A3.077,3.077,0,0,0,2,3.077v18.46a3.077,3.077,0,0,0,3.077,3.077H17.383a3.077,3.077,0,0,0,3.077-3.077V7.241a1.538,1.538,0,0,0-.45-1.087l-5.7-5.7A1.538,1.538,0,0,0,13.219,0Zm.318,5.384V2.307l4.615,4.615H15.076A1.538,1.538,0,0,1,13.537,5.384Zm-7.692,10h7.692a.769.769,0,0,1,0,1.538H5.846a.769.769,0,0,1,0-1.538Zm0,3.077h7.692a.769.769,0,0,1,0,1.538H5.846a.769.769,0,0,1,0-1.538Z"
+                                        transform="translate(9249 13713)" fill="#686363" />
+                                    <path id="rupee"
+                                        d="M3.257,1.24v.37a.112.112,0,0,1-.116.116H2.532a1.356,1.356,0,0,1-.468.849,1.84,1.84,0,0,1-1,.4q.606.646,1.665,1.944a.1.1,0,0,1,.014.123.105.105,0,0,1-.105.065H1.929a.107.107,0,0,1-.091-.044Q.729,3.732.033,2.992A.109.109,0,0,1,0,2.912V2.452A.111.111,0,0,1,.034,2.37a.111.111,0,0,1,.082-.034H.522a1.637,1.637,0,0,0,.771-.156.709.709,0,0,0,.372-.454H.116A.112.112,0,0,1,0,1.61V1.24a.112.112,0,0,1,.116-.116h1.5Q1.407.715.642.715H.116A.111.111,0,0,1,.034.68.111.111,0,0,1,0,.6V.116A.112.112,0,0,1,.116,0H3.134A.112.112,0,0,1,3.25.116v.37A.112.112,0,0,1,3.134.6H2.289a1.254,1.254,0,0,1,.232.522h.62a.112.112,0,0,1,.116.116Z"
+                                        transform="translate(9256.973 13720.691)" fill="#fff" />
+                                </g>
+                            </svg>
 
-                    </i>
+                        </i>
                         <span>Claims</span>
                     </a>
                     <div class="collapse menu-dropdown" id="claimsDrop-Down">
@@ -673,11 +692,11 @@
                                 <a href="{{ route('paycheckDashboard') }}" class="py-1 nav-link sidebar"
                                     role="button"><span>Dashboard</span></a>
                             </li> --}}
-                            @if(!Str::contains(getCurrentClientName(),'Brand avatar'))
-                            <li class="nav-item">
-                                <a href="{{ route('showReimbursementsPage') }}" class="py-1 nav-link sidebar"
-                                    role="button"><span>Reimbursements</span></a>
-                            </li>
+                            @if (!Str::contains(getCurrentClientName(), 'Brand avatar'))
+                                <li class="nav-item">
+                                    <a href="{{ route('showReimbursementsPage') }}" class="py-1 nav-link sidebar"
+                                        role="button"><span>Reimbursements</span></a>
+                                </li>
                             @endif
                         </ul>
                     </div>
@@ -796,10 +815,9 @@
                                         </span></a>
                                 </li>
                                 @can(config('vmt_roles_permissions.permissions.MANAGE_PAYSLIPS_can_view'))
-
-                                <li lass="nav-item">
-                                    <a href="/documents_settings" class="nav-link"><span>Documents Settings</span></a>
-                                </li>
+                                    <li lass="nav-item">
+                                        <a href="/documents_settings" class="nav-link"><span>Documents Settings</span></a>
+                                    </li>
                                 @endcan
                                 <li class="nav-item">
                                     {{-- <a href="{{ route('manage_emp_mail_notifications') }}" class="nav-link"><span>Document
@@ -814,12 +832,26 @@
                                         </span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('showAttendanceSettingsPage') }}" class="py-1 nav-link sidebar">
+                                    <a href="{{ route('showAttendanceSettingsPage') }}"
+                                        class="py-1 nav-link sidebar">
                                         <span> Attendance Settings</span></a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('investment_settings') }}" class="py-1 nav-link sidebar">
                                         <span> Investment Settings</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('showSAsettingsView') }}" id=""
+                                        class="py-1 nav-link sidebar" data-bs-toggle="" role="button"
+                                        aria-expanded="false">
+                                        {{-- <span>
+                                            Taxations<span
+                                                class="text-white badge bg-danger rounded-circle">4</span>
+                                        </span> --}}
+                                        <span>
+                                            Loan And Salary Advance
+                                        </span>
+                                    </a>
                                 </li>
                                 {{-- @endif --}}
                             </ul>

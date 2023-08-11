@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('vmt_loan_sal_adv_master', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained('vmt_client_master');
-            $table->integer('sal_adv');
-            $table->integer('int_free_loan');
-            $table->integer('loan_with_int');
-            $table->integer('travel_adv');
+            $table->integer('sal_adv')->default(0);
+            $table->integer('int_free_loan')->default(0);
+            $table->integer('loan_with_int')->default(0);
+            $table->integer('travel_adv')->default(0);
             $table->timestamps();
         });
     }
